@@ -51,25 +51,11 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_data_stores_site_search_engine_disable_advanced_site_search"><CopyableCode code="projects_locations_data_stores_site_search_engine_disable_advanced_site_search" /></a></td>
+    <td><a href="#projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites"><CopyableCode code="projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
     <td></td>
-    <td>Downgrade from advanced site search to basic site search.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_site_search_engine_recrawl_uris"><CopyableCode code="projects_locations_data_stores_site_search_engine_recrawl_uris" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td></td>
-    <td>Request on-demand recrawl for a list of URIs.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_site_search_engine_enable_advanced_site_search"><CopyableCode code="projects_locations_data_stores_site_search_engine_enable_advanced_site_search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td></td>
-    <td>Upgrade from basic site search to advanced site search.</td>
+    <td>Verify target sites' ownership and validity. This API sends all the target sites under site search engine for verification.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_collections_data_stores_site_search_engine_disable_advanced_site_search"><CopyableCode code="projects_locations_collections_data_stores_site_search_engine_disable_advanced_site_search" /></a></td>
@@ -93,11 +79,25 @@ The following methods are available for this resource:
     <td>Request on-demand recrawl for a list of URIs.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites"><CopyableCode code="projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites" /></a></td>
+    <td><a href="#projects_locations_data_stores_site_search_engine_disable_advanced_site_search"><CopyableCode code="projects_locations_data_stores_site_search_engine_disable_advanced_site_search" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
     <td></td>
-    <td>Verify target sites' ownership and validity. This API sends all the target sites under site search engine for verification.</td>
+    <td>Downgrade from advanced site search to basic site search.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_site_search_engine_enable_advanced_site_search"><CopyableCode code="projects_locations_data_stores_site_search_engine_enable_advanced_site_search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td></td>
+    <td>Upgrade from basic site search to advanced site search.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_site_search_engine_recrawl_uris"><CopyableCode code="projects_locations_data_stores_site_search_engine_recrawl_uris" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td></td>
+    <td>Request on-demand recrawl for a list of URIs.</td>
 </tr>
 </tbody>
 </table>
@@ -141,54 +141,26 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_data_stores_site_search_engine_disable_advanced_site_search"
+    defaultValue="projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites"
     values={[
-        { label: 'projects_locations_data_stores_site_search_engine_disable_advanced_site_search', value: 'projects_locations_data_stores_site_search_engine_disable_advanced_site_search' },
-        { label: 'projects_locations_data_stores_site_search_engine_recrawl_uris', value: 'projects_locations_data_stores_site_search_engine_recrawl_uris' },
-        { label: 'projects_locations_data_stores_site_search_engine_enable_advanced_site_search', value: 'projects_locations_data_stores_site_search_engine_enable_advanced_site_search' },
+        { label: 'projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites', value: 'projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites' },
         { label: 'projects_locations_collections_data_stores_site_search_engine_disable_advanced_site_search', value: 'projects_locations_collections_data_stores_site_search_engine_disable_advanced_site_search' },
         { label: 'projects_locations_collections_data_stores_site_search_engine_enable_advanced_site_search', value: 'projects_locations_collections_data_stores_site_search_engine_enable_advanced_site_search' },
         { label: 'projects_locations_collections_data_stores_site_search_engine_recrawl_uris', value: 'projects_locations_collections_data_stores_site_search_engine_recrawl_uris' },
-        { label: 'projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites', value: 'projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites' }
+        { label: 'projects_locations_data_stores_site_search_engine_disable_advanced_site_search', value: 'projects_locations_data_stores_site_search_engine_disable_advanced_site_search' },
+        { label: 'projects_locations_data_stores_site_search_engine_enable_advanced_site_search', value: 'projects_locations_data_stores_site_search_engine_enable_advanced_site_search' },
+        { label: 'projects_locations_data_stores_site_search_engine_recrawl_uris', value: 'projects_locations_data_stores_site_search_engine_recrawl_uris' }
     ]}
 >
-<TabItem value="projects_locations_data_stores_site_search_engine_disable_advanced_site_search">
+<TabItem value="projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites">
 
-Downgrade from advanced site search to basic site search.
-
-```sql
-EXEC google.discoveryengine.site_search_engine.projects_locations_data_stores_site_search_engine_disable_advanced_site_search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_site_search_engine_recrawl_uris">
-
-Request on-demand recrawl for a list of URIs.
+Verify target sites' ownership and validity. This API sends all the target sites under site search engine for verification.
 
 ```sql
-EXEC google.discoveryengine.site_search_engine.projects_locations_data_stores_site_search_engine_recrawl_uris 
+EXEC google.discoveryengine.site_search_engine.projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required 
-@@json=
-'{
-"siteCredential": "{{ siteCredential }}", 
-"uris": "{{ uris }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_site_search_engine_enable_advanced_site_search">
-
-Upgrade from basic site search to advanced site search.
-
-```sql
-EXEC google.discoveryengine.site_search_engine.projects_locations_data_stores_site_search_engine_enable_advanced_site_search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
 @dataStoresId='{{ dataStoresId }}' --required
 ;
 ```
@@ -237,16 +209,44 @@ EXEC google.discoveryengine.site_search_engine.projects_locations_collections_da
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites">
+<TabItem value="projects_locations_data_stores_site_search_engine_disable_advanced_site_search">
 
-Verify target sites' ownership and validity. This API sends all the target sites under site search engine for verification.
+Downgrade from advanced site search to basic site search.
 
 ```sql
-EXEC google.discoveryengine.site_search_engine.projects_locations_collections_data_stores_site_search_engine_batch_verify_target_sites 
+EXEC google.discoveryengine.site_search_engine.projects_locations_data_stores_site_search_engine_disable_advanced_site_search 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
 @dataStoresId='{{ dataStoresId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_site_search_engine_enable_advanced_site_search">
+
+Upgrade from basic site search to advanced site search.
+
+```sql
+EXEC google.discoveryengine.site_search_engine.projects_locations_data_stores_site_search_engine_enable_advanced_site_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_site_search_engine_recrawl_uris">
+
+Request on-demand recrawl for a list of URIs.
+
+```sql
+EXEC google.discoveryengine.site_search_engine.projects_locations_data_stores_site_search_engine_recrawl_uris 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required 
+@@json=
+'{
+"siteCredential": "{{ siteCredential }}", 
+"uris": "{{ uris }}"
+}'
 ;
 ```
 </TabItem>

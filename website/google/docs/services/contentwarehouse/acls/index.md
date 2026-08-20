@@ -82,7 +82,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#fetch_acl"><CopyableCode code="fetch_acl" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
     <td></td>
     <td>Gets the access control policy for a resource. Returns NOT_FOUND error if the resource does not exist. Returns an empty policy if the resource exists but does not have a policy set.</td>
 </tr>
@@ -102,6 +102,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-documentsId">
+    <td><CopyableCode code="documentsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-projectsId">
     <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
@@ -128,6 +138,8 @@ metadata,
 policy
 FROM google.contentwarehouse.acls
 WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND documentsId = '{{ documentsId }}' -- required
 ;
 ```
 </TabItem>

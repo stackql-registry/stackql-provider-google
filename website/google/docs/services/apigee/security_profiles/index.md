@@ -364,22 +364,22 @@ CreateSecurityProfile create a new custom security profile.
 
 ```sql
 INSERT INTO google.apigee.security_profiles (
+data__description,
+data__displayName,
 data__environments,
 data__name,
 data__profileConfig,
 data__scoringConfigs,
-data__description,
-data__displayName,
 organizationsId,
 securityProfileId
 )
 SELECT 
+'{{ description }}',
+'{{ displayName }}',
 '{{ environments }}',
 '{{ name }}',
 '{{ profileConfig }}',
 '{{ scoringConfigs }}',
-'{{ description }}',
-'{{ displayName }}',
 '{{ organizationsId }}',
 '{{ securityProfileId }}'
 RETURNING
@@ -406,12 +406,20 @@ scoringConfigs
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the security_profiles resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the security profile.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        DEPRECATED: DO NOT USE Display name of the security profile.
     - name: environments
       description: |
         List of environments attached to security profile.
       value:
-        - environment: "{{ environment }}"
-          attachTime: "{{ attachTime }}"
+        - attachTime: "{{ attachTime }}"
+          environment: "{{ environment }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -421,27 +429,19 @@ scoringConfigs
         Required. Customized profile configuration that computes the security score.
       value:
         categories:
-          - cors: "{{ cors }}"
+          - abuse: "{{ abuse }}"
+            authorization: "{{ authorization }}"
+            cors: "{{ cors }}"
             mediation: "{{ mediation }}"
             mtls: "{{ mtls }}"
-            abuse: "{{ abuse }}"
-            authorization: "{{ authorization }}"
             threat: "{{ threat }}"
     - name: scoringConfigs
       description: |
         List of profile scoring configs in this revision.
       value:
         - description: "{{ description }}"
-          title: "{{ title }}"
           scorePath: "{{ scorePath }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Description of the security profile.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        DEPRECATED: DO NOT USE Display name of the security profile.
+          title: "{{ title }}"
     - name: securityProfileId
       value: "{{ securityProfileId }}"
 `}</CodeBlock>
@@ -465,12 +465,12 @@ UpdateSecurityProfile update the metadata of security profile.
 ```sql
 UPDATE google.apigee.security_profiles
 SET 
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__environments = '{{ environments }}',
 data__name = '{{ name }}',
 data__profileConfig = '{{ profileConfig }}',
-data__scoringConfigs = '{{ scoringConfigs }}',
-data__description = '{{ description }}',
-data__displayName = '{{ displayName }}'
+data__scoringConfigs = '{{ scoringConfigs }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityProfilesId = '{{ securityProfilesId }}' --required

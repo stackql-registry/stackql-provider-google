@@ -200,7 +200,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the PublicAdvertisedPrefixes for a project.</td>
 </tr>
 <tr>
@@ -347,11 +347,11 @@ selfLink,
 warning
 FROM google.compute.public_advertised_prefixes
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -373,27 +373,27 @@ Creates a PublicAdvertisedPrefix in the specified project<br />using the paramet
 
 ```sql
 INSERT INTO google.compute.public_advertised_prefixes (
-data__sharedSecret,
-data__ipv6AccessType,
-data__ipCidrRange,
-data__fingerprint,
-data__dnsVerificationIp,
-data__pdpScope,
 data__description,
+data__dnsVerificationIp,
+data__fingerprint,
+data__ipCidrRange,
+data__ipv6AccessType,
 data__name,
+data__pdpScope,
+data__sharedSecret,
 data__status,
 project,
 requestId
 )
 SELECT 
-'{{ sharedSecret }}',
-'{{ ipv6AccessType }}',
-'{{ ipCidrRange }}',
-'{{ fingerprint }}',
-'{{ dnsVerificationIp }}',
-'{{ pdpScope }}',
 '{{ description }}',
+'{{ dnsVerificationIp }}',
+'{{ fingerprint }}',
+'{{ ipCidrRange }}',
+'{{ ipv6AccessType }}',
 '{{ name }}',
+'{{ pdpScope }}',
+'{{ sharedSecret }}',
 '{{ status }}',
 '{{ project }}',
 '{{ requestId }}'
@@ -436,20 +436,15 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the public_advertised_prefixes resource.
-    - name: sharedSecret
-      value: "{{ sharedSecret }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        [Output Only] The shared secret to be used for reverse DNS verification.
-    - name: ipv6AccessType
-      value: "{{ ipv6AccessType }}"
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: dnsVerificationIp
+      value: "{{ dnsVerificationIp }}"
       description: |
-        The internet access type for IPv6 Public Advertised Prefixes.
-      valid_values: ['EXTERNAL', 'INTERNAL']
-    - name: ipCidrRange
-      value: "{{ ipCidrRange }}"
-      description: |
-        The address range, in CIDR format, represented by this public advertised
-        prefix.
+        The address to be used for reverse DNS verification.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -460,10 +455,26 @@ zone
         error 412 conditionNotMet.
         To see the latest fingerprint, make a get() request to
         retrieve a PublicAdvertisedPrefix.
-    - name: dnsVerificationIp
-      value: "{{ dnsVerificationIp }}"
+    - name: ipCidrRange
+      value: "{{ ipCidrRange }}"
       description: |
-        The address to be used for reverse DNS verification.
+        The address range, in CIDR format, represented by this public advertised
+        prefix.
+    - name: ipv6AccessType
+      value: "{{ ipv6AccessType }}"
+      description: |
+        The internet access type for IPv6 Public Advertised Prefixes.
+      valid_values: ['EXTERNAL', 'INTERNAL']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: pdpScope
       value: "{{ pdpScope }}"
       description: |
@@ -477,21 +488,10 @@ zone
         BYOIP V1 legacy prefix. This is output only value and no longer
         supported in BYOIP V2.
       valid_values: ['GLOBAL', 'GLOBAL_AND_REGIONAL', 'REGIONAL']
-    - name: description
-      value: "{{ description }}"
+    - name: sharedSecret
+      value: "{{ sharedSecret }}"
       description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
+        [Output Only] The shared secret to be used for reverse DNS verification.
     - name: status
       value: "{{ status }}"
       description: |
@@ -528,14 +528,14 @@ Patches the specified Router resource with the data included in the<br />request
 ```sql
 UPDATE google.compute.public_advertised_prefixes
 SET 
-data__sharedSecret = '{{ sharedSecret }}',
-data__ipv6AccessType = '{{ ipv6AccessType }}',
-data__ipCidrRange = '{{ ipCidrRange }}',
-data__fingerprint = '{{ fingerprint }}',
-data__dnsVerificationIp = '{{ dnsVerificationIp }}',
-data__pdpScope = '{{ pdpScope }}',
 data__description = '{{ description }}',
+data__dnsVerificationIp = '{{ dnsVerificationIp }}',
+data__fingerprint = '{{ fingerprint }}',
+data__ipCidrRange = '{{ ipCidrRange }}',
+data__ipv6AccessType = '{{ ipv6AccessType }}',
 data__name = '{{ name }}',
+data__pdpScope = '{{ pdpScope }}',
+data__sharedSecret = '{{ sharedSecret }}',
 data__status = '{{ status }}'
 WHERE 
 project = '{{ project }}' --required

@@ -136,18 +136,18 @@ The following methods are available for this resource:
     <td>Updates an existing customer.</td>
 </tr>
 <tr>
-    <td><a href="#customers_provision_deployment"><CopyableCode code="customers_provision_deployment" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.</td>
-</tr>
-<tr>
     <td><a href="#customers_migrate_organization"><CopyableCode code="customers_migrate_organization" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Migrates a SAS organization to the cloud. This will create GCP projects for each deployment and associate them. The SAS Organization is linked to the gcp project that called the command. go/sas-legacy-customer-migration</td>
+</tr>
+<tr>
+    <td><a href="#customers_provision_deployment"><CopyableCode code="customers_provision_deployment" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.</td>
 </tr>
 <tr>
     <td><a href="#customers_setup_sas_analytics"><CopyableCode code="customers_setup_sas_analytics" /></a></td>
@@ -251,8 +251,8 @@ Updates an existing customer.
 ```sql
 UPDATE google.prod_tt_sasportal.customers
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__sasUserIds = '{{ sasUserIds }}'
 WHERE 
 customersId = '{{ customersId }}' --required
@@ -269,28 +269,13 @@ sasUserIds;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="customers_provision_deployment"
+    defaultValue="customers_migrate_organization"
     values={[
-        { label: 'customers_provision_deployment', value: 'customers_provision_deployment' },
         { label: 'customers_migrate_organization', value: 'customers_migrate_organization' },
+        { label: 'customers_provision_deployment', value: 'customers_provision_deployment' },
         { label: 'customers_setup_sas_analytics', value: 'customers_setup_sas_analytics' }
     ]}
 >
-<TabItem value="customers_provision_deployment">
-
-Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.
-
-```sql
-EXEC google.prod_tt_sasportal.customers.customers_provision_deployment 
-@@json=
-'{
-"newOrganizationDisplayName": "{{ newOrganizationDisplayName }}", 
-"newDeploymentDisplayName": "{{ newDeploymentDisplayName }}", 
-"organizationId": "{{ organizationId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="customers_migrate_organization">
 
 Migrates a SAS organization to the cloud. This will create GCP projects for each deployment and associate them. The SAS Organization is linked to the gcp project that called the command. go/sas-legacy-customer-migration
@@ -299,6 +284,21 @@ Migrates a SAS organization to the cloud. This will create GCP projects for each
 EXEC google.prod_tt_sasportal.customers.customers_migrate_organization 
 @@json=
 '{
+"organizationId": "{{ organizationId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="customers_provision_deployment">
+
+Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.
+
+```sql
+EXEC google.prod_tt_sasportal.customers.customers_provision_deployment 
+@@json=
+'{
+"newDeploymentDisplayName": "{{ newDeploymentDisplayName }}", 
+"newOrganizationDisplayName": "{{ newOrganizationDisplayName }}", 
 "organizationId": "{{ organizationId }}"
 }'
 ;

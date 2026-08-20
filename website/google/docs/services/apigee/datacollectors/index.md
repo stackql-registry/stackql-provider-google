@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_datacollectors_list"><CopyableCode code="organizations_datacollectors_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all data collectors.</td>
 </tr>
 <tr>
@@ -257,8 +257,8 @@ lastModifiedAt,
 type
 FROM google.apigee.datacollectors
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -280,15 +280,15 @@ Creates a new data collector.
 
 ```sql
 INSERT INTO google.apigee.datacollectors (
-data__name,
 data__description,
+data__name,
 data__type,
 organizationsId,
 dataCollectorId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
+'{{ name }}',
 '{{ type }}',
 '{{ organizationsId }}',
 '{{ dataCollectorId }}'
@@ -309,14 +309,14 @@ type
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the datacollectors resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        ID of the data collector. Must begin with \`dc_\`.
     - name: description
       value: "{{ description }}"
       description: |
         A description of the data collector.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        ID of the data collector. Must begin with \`dc_\`.
     - name: type
       value: "{{ type }}"
       description: |
@@ -345,8 +345,8 @@ Updates a data collector.
 ```sql
 UPDATE google.apigee.datacollectors
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
+data__name = '{{ name }}',
 data__type = '{{ type }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

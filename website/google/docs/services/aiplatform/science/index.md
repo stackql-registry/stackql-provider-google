@@ -110,8 +110,8 @@ EXEC google.aiplatform.science.inference
 @deployedModelId='{{ deployedModelId }}' 
 @@json=
 '{
-"data": "{{ data }}", 
 "contentType": "{{ contentType }}", 
+"data": "{{ data }}", 
 "extensions": "{{ extensions }}"
 }'
 ;

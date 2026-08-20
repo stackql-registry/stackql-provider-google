@@ -162,7 +162,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-provisioningConfigsId"><code>provisioningConfigsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-email"><code>email</code></a></td>
+    <td><a href="#parameter-email"><code>email</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update existing ProvisioningConfig.</td>
 </tr>
 <tr>
@@ -270,33 +270,33 @@ Create new ProvisioningConfig.
 
 ```sql
 INSERT INTO google.baremetalsolution.provisioning_configs (
-data__handoverServiceAccount,
-data__statusMessage,
-data__networks,
-data__location,
+data__customId,
 data__email,
+data__handoverServiceAccount,
 data__instances,
+data__location,
+data__networks,
+data__pod,
+data__statusMessage,
+data__ticketId,
 data__volumes,
 data__vpcScEnabled,
-data__pod,
-data__ticketId,
-data__customId,
 projectsId,
 locationsId,
 email
 )
 SELECT 
-'{{ handoverServiceAccount }}',
-'{{ statusMessage }}',
-'{{ networks }}',
-'{{ location }}',
+'{{ customId }}',
 '{{ email }}',
+'{{ handoverServiceAccount }}',
 '{{ instances }}',
+'{{ location }}',
+'{{ networks }}',
+'{{ pod }}',
+'{{ statusMessage }}',
+'{{ ticketId }}',
 '{{ volumes }}',
 {{ vpcScEnabled }},
-'{{ pod }}',
-'{{ ticketId }}',
-'{{ customId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ email }}'
@@ -330,94 +330,94 @@ vpcScEnabled
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the provisioning_configs resource.
-    - name: handoverServiceAccount
-      value: "{{ handoverServiceAccount }}"
-      description: |
-        A service account to enable customers to access instance credentials upon handover.
-    - name: statusMessage
-      value: "{{ statusMessage }}"
-      description: |
-        Optional status messages associated with the FAILED state.
-    - name: networks
-      description: |
-        Networks to be created.
-      value:
-        - vrf: "{{ vrf }}"
-          name: "{{ name }}"
-          type: "{{ type }}"
-          vlanAttachments: "{{ vlanAttachments }}"
-          jumboFramesEnabled: {{ jumboFramesEnabled }}
-          id: "{{ id }}"
-          gcpService: "{{ gcpService }}"
-          cidr: "{{ cidr }}"
-          userNote: "{{ userNote }}"
-          bandwidth: "{{ bandwidth }}"
-          serviceCidr: "{{ serviceCidr }}"
-          vlanSameProject: {{ vlanSameProject }}
-    - name: location
-      value: "{{ location }}"
-      description: |
-        Optional. Location name of this ProvisioningConfig. It is optional only for Intake UI transition period.
-    - name: email
-      value: "{{ email }}"
-      description: |
-        Email provided to send a confirmation with provisioning config to. Deprecated in favour of email field in request messages.
-    - name: instances
-      description: |
-        Instances to be created.
-      value:
-        - id: "{{ id }}"
-          kmsKeyVersion: "{{ kmsKeyVersion }}"
-          sshKeyNames: "{{ sshKeyNames }}"
-          hyperthreading: {{ hyperthreading }}
-          clientNetwork:
-            networkId: "{{ networkId }}"
-            existingNetworkId: "{{ existingNetworkId }}"
-            address: "{{ address }}"
-          networkConfig: "{{ networkConfig }}"
-          instanceType: "{{ instanceType }}"
-          logicalInterfaces: "{{ logicalInterfaces }}"
-          privateNetwork:
-            networkId: "{{ networkId }}"
-            existingNetworkId: "{{ existingNetworkId }}"
-            address: "{{ address }}"
-          name: "{{ name }}"
-          osImage: "{{ osImage }}"
-          userNote: "{{ userNote }}"
-          networkTemplate: "{{ networkTemplate }}"
-          accountNetworksEnabled: {{ accountNetworksEnabled }}
-    - name: volumes
-      description: |
-        Volumes to be created.
-      value:
-        - protocol: "{{ protocol }}"
-          nfsExports: "{{ nfsExports }}"
-          gcpService: "{{ gcpService }}"
-          lunRanges: "{{ lunRanges }}"
-          userNote: "{{ userNote }}"
-          snapshotsEnabled: {{ snapshotsEnabled }}
-          sizeGb: {{ sizeGb }}
-          machineIds: "{{ machineIds }}"
-          type: "{{ type }}"
-          name: "{{ name }}"
-          id: "{{ id }}"
-          performanceTier: "{{ performanceTier }}"
-    - name: vpcScEnabled
-      value: {{ vpcScEnabled }}
-      description: |
-        If true, VPC SC is enabled for the cluster.
-    - name: pod
-      value: "{{ pod }}"
-      description: |
-        Optional. Pod name. Pod is an independent part of infrastructure. Instance can be connected to the assets (networks, volumes, nfsshares) allocated in the same pod only.
-    - name: ticketId
-      value: "{{ ticketId }}"
-      description: |
-        A generated ticket id to track provisioning request.
     - name: customId
       value: "{{ customId }}"
       description: |
         Optional. The user-defined identifier of the provisioning config.
+    - name: email
+      value: "{{ email }}"
+      description: |
+        Email provided to send a confirmation with provisioning config to. Deprecated in favour of email field in request messages.
+    - name: handoverServiceAccount
+      value: "{{ handoverServiceAccount }}"
+      description: |
+        A service account to enable customers to access instance credentials upon handover.
+    - name: instances
+      description: |
+        Instances to be created.
+      value:
+        - accountNetworksEnabled: {{ accountNetworksEnabled }}
+          clientNetwork:
+            address: "{{ address }}"
+            existingNetworkId: "{{ existingNetworkId }}"
+            networkId: "{{ networkId }}"
+          hyperthreading: {{ hyperthreading }}
+          id: "{{ id }}"
+          instanceType: "{{ instanceType }}"
+          kmsKeyVersion: "{{ kmsKeyVersion }}"
+          logicalInterfaces: "{{ logicalInterfaces }}"
+          name: "{{ name }}"
+          networkConfig: "{{ networkConfig }}"
+          networkTemplate: "{{ networkTemplate }}"
+          osImage: "{{ osImage }}"
+          privateNetwork:
+            address: "{{ address }}"
+            existingNetworkId: "{{ existingNetworkId }}"
+            networkId: "{{ networkId }}"
+          sshKeyNames: "{{ sshKeyNames }}"
+          userNote: "{{ userNote }}"
+    - name: location
+      value: "{{ location }}"
+      description: |
+        Optional. Location name of this ProvisioningConfig. It is optional only for Intake UI transition period.
+    - name: networks
+      description: |
+        Networks to be created.
+      value:
+        - bandwidth: "{{ bandwidth }}"
+          cidr: "{{ cidr }}"
+          gcpService: "{{ gcpService }}"
+          id: "{{ id }}"
+          jumboFramesEnabled: {{ jumboFramesEnabled }}
+          name: "{{ name }}"
+          serviceCidr: "{{ serviceCidr }}"
+          type: "{{ type }}"
+          userNote: "{{ userNote }}"
+          vlanAttachments: "{{ vlanAttachments }}"
+          vlanSameProject: {{ vlanSameProject }}
+          vrf: "{{ vrf }}"
+    - name: pod
+      value: "{{ pod }}"
+      description: |
+        Optional. Pod name. Pod is an independent part of infrastructure. Instance can be connected to the assets (networks, volumes, nfsshares) allocated in the same pod only.
+    - name: statusMessage
+      value: "{{ statusMessage }}"
+      description: |
+        Optional status messages associated with the FAILED state.
+    - name: ticketId
+      value: "{{ ticketId }}"
+      description: |
+        A generated ticket id to track provisioning request.
+    - name: volumes
+      description: |
+        Volumes to be created.
+      value:
+        - gcpService: "{{ gcpService }}"
+          id: "{{ id }}"
+          lunRanges: "{{ lunRanges }}"
+          machineIds: "{{ machineIds }}"
+          name: "{{ name }}"
+          nfsExports: "{{ nfsExports }}"
+          performanceTier: "{{ performanceTier }}"
+          protocol: "{{ protocol }}"
+          sizeGb: {{ sizeGb }}
+          snapshotsEnabled: {{ snapshotsEnabled }}
+          type: "{{ type }}"
+          userNote: "{{ userNote }}"
+    - name: vpcScEnabled
+      value: {{ vpcScEnabled }}
+      description: |
+        If true, VPC SC is enabled for the cluster.
     - name: email
       value: "{{ email }}"
 `}</CodeBlock>
@@ -441,23 +441,23 @@ Update existing ProvisioningConfig.
 ```sql
 UPDATE google.baremetalsolution.provisioning_configs
 SET 
-data__handoverServiceAccount = '{{ handoverServiceAccount }}',
-data__statusMessage = '{{ statusMessage }}',
-data__networks = '{{ networks }}',
-data__location = '{{ location }}',
+data__customId = '{{ customId }}',
 data__email = '{{ email }}',
+data__handoverServiceAccount = '{{ handoverServiceAccount }}',
 data__instances = '{{ instances }}',
-data__volumes = '{{ volumes }}',
-data__vpcScEnabled = {{ vpcScEnabled }},
+data__location = '{{ location }}',
+data__networks = '{{ networks }}',
 data__pod = '{{ pod }}',
+data__statusMessage = '{{ statusMessage }}',
 data__ticketId = '{{ ticketId }}',
-data__customId = '{{ customId }}'
+data__volumes = '{{ volumes }}',
+data__vpcScEnabled = {{ vpcScEnabled }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND provisioningConfigsId = '{{ provisioningConfigsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND email = '{{ email}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 cloudConsoleUri,
@@ -497,8 +497,8 @@ EXEC google.baremetalsolution.provisioning_configs.submit
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"provisioningConfig": "{{ provisioningConfig }}", 
-"email": "{{ email }}"
+"email": "{{ email }}", 
+"provisioningConfig": "{{ provisioningConfig }}"
 }'
 ;
 ```

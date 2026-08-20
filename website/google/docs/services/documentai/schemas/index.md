@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_schemas_list"><CopyableCode code="projects_locations_schemas_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Schemas.</td>
 </tr>
 <tr>
@@ -264,8 +264,8 @@ updateTime
 FROM google.documentai.schemas
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -287,16 +287,16 @@ Creates a schema.
 
 ```sql
 INSERT INTO google.documentai.schemas (
+data__displayName,
 data__labels,
 data__name,
-data__displayName,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ displayName }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -319,6 +319,10 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the schemas resource.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The user-defined name of the Schema.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -327,10 +331,6 @@ updateTime
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the Schema. Format: \`projects/{project}/locations/{location}/schemas/{schema}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The user-defined name of the Schema.
 `}</CodeBlock>
 
 </TabItem>
@@ -352,9 +352,9 @@ Updates a schema. Editable fields are: - `display_name` - `labels`
 ```sql
 UPDATE google.documentai.schemas
 SET 
+data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

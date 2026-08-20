@@ -192,7 +192,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+jobId"><code>+jobId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
     <td><a href="#parameter-location"><code>location</code></a></td>
     <td>Returns information about a specific job. Job information is available for a six month period after creation. Requires that you're the person who ran the job, or have the Is Owner project role. # IAM Permissions Requires the `bigquery.jobs.get` permission on the job resource. If the user matches the creator of the job, the `bigquery.jobs.create` permission on the project is required instead.</td>
 </tr>
@@ -200,7 +200,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxCreationTime"><code>maxCreationTime</code></a>, <a href="#parameter-allUsers"><code>allUsers</code></a>, <a href="#parameter-parentJobId"><code>parentJobId</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-minCreationTime"><code>minCreationTime</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-stateFilter"><code>stateFilter</code></a></td>
+    <td><a href="#parameter-allUsers"><code>allUsers</code></a>, <a href="#parameter-maxCreationTime"><code>maxCreationTime</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-minCreationTime"><code>minCreationTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parentJobId"><code>parentJobId</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-stateFilter"><code>stateFilter</code></a></td>
     <td>Lists all jobs that you started in the specified project. Job information is available for a six month period after creation. The job list is sorted in reverse chronological order, by job creation time. Requires the Can View project role, or the Is Owner project role if you set the allUsers property. # IAM Permissions Requires no specific IAM permission(s) to use this method. Users are able to list the jobs they created. Additional access is granted based on the following permissions: - Users with the `bigquery.jobs.listAll` permission can list all jobs with all metadata. - Users with the `bigquery.jobs.list` permission can list all jobs, but with redacted information for jobs they did not create.</td>
 </tr>
 <tr>
@@ -213,9 +213,16 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+jobId"><code>+jobId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
     <td><a href="#parameter-location"><code>location</code></a></td>
     <td>Requests the deletion of the metadata of a job. This call returns when the job's metadata is deleted. # IAM Permissions Requires the `bigquery.jobs.delete` permission on the job resource.</td>
+</tr>
+<tr>
+    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td><a href="#parameter-location"><code>location</code></a></td>
+    <td>Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs. # IAM Permissions Requires the `bigquery.jobs.update` permission on the job resource. If the user matches the creator of the job, the `bigquery.jobs.create` permission on the project is required instead.</td>
 </tr>
 <tr>
     <td><a href="#query"><CopyableCode code="query" /></a></td>
@@ -223,13 +230,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
     <td>Runs a BigQuery SQL query synchronously and returns query results if the query completes within a specified timeout. # IAM Permissions Requires the `bigquery.jobs.create` permission on the project resource. Data-level permissions are highly dependent on the SQL statement being executed. While standard queries require data access (such as `bigquery.tables.getData`), complex operations like DDL or DCL may require permissions to manage reservations, IAM policies, or project settings.</td>
-</tr>
-<tr>
-    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+jobId"><code>+jobId</code></a></td>
-    <td><a href="#parameter-location"><code>location</code></a></td>
-    <td>Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs. # IAM Permissions Requires the `bigquery.jobs.update` permission on the job resource. If the user matches the creator of the job, the `bigquery.jobs.create` permission on the project is required instead.</td>
 </tr>
 </tbody>
 </table>
@@ -247,8 +247,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-+jobId">
-    <td><CopyableCode code="+jobId" /></td>
+<tr id="parameter-jobId">
+    <td><CopyableCode code="jobId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -333,7 +333,7 @@ status,
 user_email
 FROM google.bigquery.jobs
 WHERE projectId = '{{ projectId }}' -- required
-AND +jobId = '{{ +jobId }}' -- required
+AND jobId = '{{ jobId }}' -- required
 AND location = '{{ location }}'
 ;
 ```
@@ -356,12 +356,12 @@ status,
 user_email
 FROM google.bigquery.jobs
 WHERE projectId = '{{ projectId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND maxCreationTime = '{{ maxCreationTime }}'
 AND allUsers = '{{ allUsers }}'
-AND parentJobId = '{{ parentJobId }}'
+AND maxCreationTime = '{{ maxCreationTime }}'
 AND maxResults = '{{ maxResults }}'
 AND minCreationTime = '{{ minCreationTime }}'
+AND pageToken = '{{ pageToken }}'
+AND parentJobId = '{{ parentJobId }}'
 AND projection = '{{ projection }}'
 AND stateFilter = '{{ stateFilter }}'
 ;
@@ -421,261 +421,261 @@ user_email
         Required. Describes the job configuration.
       value:
         copy:
-          destinationExpirationTime: "{{ destinationExpirationTime }}"
-          operationType: "{{ operationType }}"
           createDisposition: "{{ createDisposition }}"
-          writeDisposition: "{{ writeDisposition }}"
-          sourceTables:
-            - tableId: "{{ tableId }}"
-              datasetId: "{{ datasetId }}"
-              projectId: "{{ projectId }}"
-          destinationTable:
-            tableId: "{{ tableId }}"
-            datasetId: "{{ datasetId }}"
-            projectId: "{{ projectId }}"
           destinationEncryptionConfiguration:
             kmsKeyName: "{{ kmsKeyName }}"
-          sourceTable:
-            tableId: "{{ tableId }}"
+          destinationExpirationTime: "{{ destinationExpirationTime }}"
+          destinationTable:
             datasetId: "{{ datasetId }}"
             projectId: "{{ projectId }}"
+            tableId: "{{ tableId }}"
+          operationType: "{{ operationType }}"
+          sourceTable:
+            datasetId: "{{ datasetId }}"
+            projectId: "{{ projectId }}"
+            tableId: "{{ tableId }}"
+          sourceTables:
+            - datasetId: "{{ datasetId }}"
+              projectId: "{{ projectId }}"
+              tableId: "{{ tableId }}"
+          writeDisposition: "{{ writeDisposition }}"
+        dryRun: {{ dryRun }}
         extract:
+          compression: "{{ compression }}"
+          destinationFormat: "{{ destinationFormat }}"
+          destinationUri: "{{ destinationUri }}"
+          destinationUris:
+            - "{{ destinationUris }}"
+          fieldDelimiter: "{{ fieldDelimiter }}"
+          modelExtractOptions:
+            trialId: "{{ trialId }}"
+          printHeader: {{ printHeader }}
           sourceModel:
             datasetId: "{{ datasetId }}"
             modelId: "{{ modelId }}"
             projectId: "{{ projectId }}"
-          destinationFormat: "{{ destinationFormat }}"
           sourceTable:
-            tableId: "{{ tableId }}"
             datasetId: "{{ datasetId }}"
             projectId: "{{ projectId }}"
-          compression: "{{ compression }}"
-          printHeader: {{ printHeader }}
-          destinationUri: "{{ destinationUri }}"
-          fieldDelimiter: "{{ fieldDelimiter }}"
-          destinationUris:
-            - "{{ destinationUris }}"
-          modelExtractOptions:
-            trialId: "{{ trialId }}"
+            tableId: "{{ tableId }}"
           useAvroLogicalTypes: {{ useAvroLogicalTypes }}
-        query:
-          preserveNulls: {{ preserveNulls }}
-          createDisposition: "{{ createDisposition }}"
-          defaultDataset:
-            datasetId: "{{ datasetId }}"
-            projectId: "{{ projectId }}"
-          parameterMode: "{{ parameterMode }}"
-          writeDisposition: "{{ writeDisposition }}"
-          rangePartitioning:
-            field: "{{ field }}"
-            range:
-              interval: "{{ interval }}"
-              end: "{{ end }}"
-              start: "{{ start }}"
-          tableDefinitions: "{{ tableDefinitions }}"
-          queryParameters:
-            - parameterValue:
-                arrayValues:
-                  - arrayValues: "{{ arrayValues }}"
-                    value: "{{ value }}"
-                    rangeValue:
-                      end: "{{ end }}"
-                      start: "{{ start }}"
-                    structValues: "{{ structValues }}"
-                value: "{{ value }}"
-                rangeValue:
-                  end: "{{ end }}"
-                  start: "{{ start }}"
-                structValues: "{{ structValues }}"
-              parameterType:
-                structTypes:
-                  - description: "{{ description }}"
-                    name: "{{ name }}"
-                    type:
-                      structTypes: "{{ structTypes }}"
-                      rangeElementType: "{{ rangeElementType }}"
-                      type: "{{ type }}"
-                      arrayType: "{{ arrayType }}"
-                      timestampPrecision: "{{ timestampPrecision }}"
-                rangeElementType:
-                  structTypes: "{{ structTypes }}"
-                  rangeElementType: "{{ rangeElementType }}"
-                  type: "{{ type }}"
-                  arrayType: "{{ arrayType }}"
-                  timestampPrecision: "{{ timestampPrecision }}"
-                type: "{{ type }}"
-                arrayType:
-                  structTypes: "{{ structTypes }}"
-                  rangeElementType: "{{ rangeElementType }}"
-                  type: "{{ type }}"
-                  arrayType: "{{ arrayType }}"
-                  timestampPrecision: "{{ timestampPrecision }}"
-                timestampPrecision: "{{ timestampPrecision }}"
-              name: "{{ name }}"
-          schemaUpdateOptions:
-            - "{{ schemaUpdateOptions }}"
-          userDefinedFunctionResources:
-            - resourceUri: "{{ resourceUri }}"
-              inlineCode: "{{ inlineCode }}"
-          continuous: {{ continuous }}
-          scriptOptions:
-            statementByteBudget: "{{ statementByteBudget }}"
-            statementTimeoutMs: "{{ statementTimeoutMs }}"
-            keyResultStatement: "{{ keyResultStatement }}"
-          timePartitioning:
-            expirationMs: "{{ expirationMs }}"
-            requirePartitionFilter: {{ requirePartitionFilter }}
-            field: "{{ field }}"
-            type: "{{ type }}"
-          clustering:
-            fields:
-              - "{{ fields }}"
-          allowLargeResults: {{ allowLargeResults }}
-          flattenResults: {{ flattenResults }}
-          systemVariables:
-            types: "{{ types }}"
-            values: "{{ values }}"
-          connectionProperties:
-            - key: "{{ key }}"
-              value: "{{ value }}"
-          useLegacySql: {{ useLegacySql }}
-          writeIncrementalResults: {{ writeIncrementalResults }}
-          useQueryCache: {{ useQueryCache }}
-          maximumBytesBilled: "{{ maximumBytesBilled }}"
-          query: "{{ query }}"
-          createSession: {{ createSession }}
-          destinationEncryptionConfiguration:
-            kmsKeyName: "{{ kmsKeyName }}"
-          maximumBillingTier: {{ maximumBillingTier }}
-          destinationTable:
-            tableId: "{{ tableId }}"
-            datasetId: "{{ datasetId }}"
-            projectId: "{{ projectId }}"
-          priority: "{{ priority }}"
+        jobTimeoutMs: "{{ jobTimeoutMs }}"
         jobType: "{{ jobType }}"
+        labels: "{{ labels }}"
         load:
-          createDisposition: "{{ createDisposition }}"
           allowJaggedRows: {{ allowJaggedRows }}
-          timeZone: "{{ timeZone }}"
-          timeFormat: "{{ timeFormat }}"
-          timestampTargetPrecision:
-            - {{ timestampTargetPrecision }}
-          ignoreUnknownValues: {{ ignoreUnknownValues }}
-          sourceFormat: "{{ sourceFormat }}"
-          sourceColumnMatch: "{{ sourceColumnMatch }}"
-          rangePartitioning:
-            field: "{{ field }}"
-            range:
-              interval: "{{ interval }}"
-              end: "{{ end }}"
-              start: "{{ start }}"
-          writeDisposition: "{{ writeDisposition }}"
-          maxBadRecords: {{ maxBadRecords }}
-          autodetect: {{ autodetect }}
-          dateFormat: "{{ dateFormat }}"
-          timestampFormat: "{{ timestampFormat }}"
-          schemaUpdateOptions:
-            - "{{ schemaUpdateOptions }}"
           allowQuotedNewlines: {{ allowQuotedNewlines }}
-          projectionFields:
-            - "{{ projectionFields }}"
+          autodetect: {{ autodetect }}
           clustering:
             fields:
               - "{{ fields }}"
-          fieldDelimiter: "{{ fieldDelimiter }}"
-          useAvroLogicalTypes: {{ useAvroLogicalTypes }}
-          referenceFileSchemaUri: "{{ referenceFileSchemaUri }}"
-          sourceUris:
-            - "{{ sourceUris }}"
-          timePartitioning:
-            expirationMs: "{{ expirationMs }}"
-            requirePartitionFilter: {{ requirePartitionFilter }}
-            field: "{{ field }}"
-            type: "{{ type }}"
-          schemaInline: "{{ schemaInline }}"
-          encoding: "{{ encoding }}"
-          fileSetSpecType: "{{ fileSetSpecType }}"
-          destinationTableProperties:
-            friendlyName: "{{ friendlyName }}"
-            expirationTime: "{{ expirationTime }}"
-            description: "{{ description }}"
-            labels: "{{ labels }}"
-          preserveAsciiControlCharacters: {{ preserveAsciiControlCharacters }}
           columnNameCharacterMap: "{{ columnNameCharacterMap }}"
-          nullMarkers:
-            - "{{ nullMarkers }}"
           connectionProperties:
             - key: "{{ key }}"
               value: "{{ value }}"
           copyFilesOnly: {{ copyFilesOnly }}
+          createDisposition: "{{ createDisposition }}"
+          createSession: {{ createSession }}
+          dateFormat: "{{ dateFormat }}"
+          datetimeFormat: "{{ datetimeFormat }}"
+          decimalTargetTypes:
+            - "{{ decimalTargetTypes }}"
+          destinationEncryptionConfiguration:
+            kmsKeyName: "{{ kmsKeyName }}"
+          destinationTable:
+            datasetId: "{{ datasetId }}"
+            projectId: "{{ projectId }}"
+            tableId: "{{ tableId }}"
+          destinationTableProperties:
+            description: "{{ description }}"
+            expirationTime: "{{ expirationTime }}"
+            friendlyName: "{{ friendlyName }}"
+            labels: "{{ labels }}"
+          encoding: "{{ encoding }}"
+          fieldDelimiter: "{{ fieldDelimiter }}"
+          fileSetSpecType: "{{ fileSetSpecType }}"
           hivePartitioningOptions:
+            fields:
+              - "{{ fields }}"
             mode: "{{ mode }}"
             requirePartitionFilter: {{ requirePartitionFilter }}
             sourceUriPrefix: "{{ sourceUriPrefix }}"
-            fields:
-              - "{{ fields }}"
+          ignoreUnknownValues: {{ ignoreUnknownValues }}
+          jsonExtension: "{{ jsonExtension }}"
+          maxBadRecords: {{ maxBadRecords }}
+          nullMarker: "{{ nullMarker }}"
+          nullMarkers:
+            - "{{ nullMarkers }}"
+          parquetOptions:
+            enableListInference: {{ enableListInference }}
+            enumAsString: {{ enumAsString }}
+            mapTargetType: "{{ mapTargetType }}"
+          preserveAsciiControlCharacters: {{ preserveAsciiControlCharacters }}
+          projectionFields:
+            - "{{ projectionFields }}"
           quote: "{{ quote }}"
-          decimalTargetTypes:
-            - "{{ decimalTargetTypes }}"
+          rangePartitioning:
+            field: "{{ field }}"
+            range:
+              end: "{{ end }}"
+              interval: "{{ interval }}"
+              start: "{{ start }}"
+          referenceFileSchemaUri: "{{ referenceFileSchemaUri }}"
           schema:
             fields:
               - categories:
                   names: "{{ names }}"
-                scale: "{{ scale }}"
-                roundingMode: "{{ roundingMode }}"
-                foreignTypeDefinition: "{{ foreignTypeDefinition }}"
-                rangeElementType:
-                  type: "{{ type }}"
-                type: "{{ type }}"
+                collation: "{{ collation }}"
                 dataGovernanceTagsInfo:
                   dataGovernanceTags: "{{ dataGovernanceTags }}"
                 dataPolicies: "{{ dataPolicies }}"
-                timestampPrecision: "{{ timestampPrecision }}"
-                collation: "{{ collation }}"
                 dataPolicyList:
                   dataPolicies: "{{ dataPolicies }}"
-                name: "{{ name }}"
-                precision: "{{ precision }}"
                 defaultValueExpression: "{{ defaultValueExpression }}"
+                description: "{{ description }}"
+                fields: "{{ fields }}"
+                foreignTypeDefinition: "{{ foreignTypeDefinition }}"
                 generatedColumn:
                   generatedExpressionInfo: "{{ generatedExpressionInfo }}"
                   generatedMode: "{{ generatedMode }}"
-                fields: "{{ fields }}"
                 maxLength: "{{ maxLength }}"
                 mode: "{{ mode }}"
+                name: "{{ name }}"
                 policyTags:
                   names: "{{ names }}"
-                description: "{{ description }}"
+                precision: "{{ precision }}"
+                rangeElementType:
+                  type: "{{ type }}"
+                roundingMode: "{{ roundingMode }}"
+                scale: "{{ scale }}"
+                timestampPrecision: "{{ timestampPrecision }}"
+                type: "{{ type }}"
             foreignTypeInfo:
               typeSystem: "{{ typeSystem }}"
+          schemaInline: "{{ schemaInline }}"
           schemaInlineFormat: "{{ schemaInlineFormat }}"
-          destinationEncryptionConfiguration:
-            kmsKeyName: "{{ kmsKeyName }}"
-          createSession: {{ createSession }}
-          parquetOptions:
-            mapTargetType: "{{ mapTargetType }}"
-            enableListInference: {{ enableListInference }}
-            enumAsString: {{ enumAsString }}
-          nullMarker: "{{ nullMarker }}"
+          schemaUpdateOptions:
+            - "{{ schemaUpdateOptions }}"
           skipLeadingRows: {{ skipLeadingRows }}
-          jsonExtension: "{{ jsonExtension }}"
-          datetimeFormat: "{{ datetimeFormat }}"
-          destinationTable:
-            tableId: "{{ tableId }}"
+          sourceColumnMatch: "{{ sourceColumnMatch }}"
+          sourceFormat: "{{ sourceFormat }}"
+          sourceUris:
+            - "{{ sourceUris }}"
+          timeFormat: "{{ timeFormat }}"
+          timePartitioning:
+            expirationMs: "{{ expirationMs }}"
+            field: "{{ field }}"
+            requirePartitionFilter: {{ requirePartitionFilter }}
+            type: "{{ type }}"
+          timeZone: "{{ timeZone }}"
+          timestampFormat: "{{ timestampFormat }}"
+          timestampTargetPrecision:
+            - {{ timestampTargetPrecision }}
+          useAvroLogicalTypes: {{ useAvroLogicalTypes }}
+          writeDisposition: "{{ writeDisposition }}"
+        maxSlots: {{ maxSlots }}
+        query:
+          allowLargeResults: {{ allowLargeResults }}
+          clustering:
+            fields:
+              - "{{ fields }}"
+          connectionProperties:
+            - key: "{{ key }}"
+              value: "{{ value }}"
+          continuous: {{ continuous }}
+          createDisposition: "{{ createDisposition }}"
+          createSession: {{ createSession }}
+          defaultDataset:
             datasetId: "{{ datasetId }}"
             projectId: "{{ projectId }}"
-        jobTimeoutMs: "{{ jobTimeoutMs }}"
-        labels: "{{ labels }}"
+          destinationEncryptionConfiguration:
+            kmsKeyName: "{{ kmsKeyName }}"
+          destinationTable:
+            datasetId: "{{ datasetId }}"
+            projectId: "{{ projectId }}"
+            tableId: "{{ tableId }}"
+          flattenResults: {{ flattenResults }}
+          maximumBillingTier: {{ maximumBillingTier }}
+          maximumBytesBilled: "{{ maximumBytesBilled }}"
+          parameterMode: "{{ parameterMode }}"
+          preserveNulls: {{ preserveNulls }}
+          priority: "{{ priority }}"
+          query: "{{ query }}"
+          queryParameters:
+            - name: "{{ name }}"
+              parameterType:
+                arrayType:
+                  arrayType: "{{ arrayType }}"
+                  rangeElementType: "{{ rangeElementType }}"
+                  structTypes: "{{ structTypes }}"
+                  timestampPrecision: "{{ timestampPrecision }}"
+                  type: "{{ type }}"
+                rangeElementType:
+                  arrayType: "{{ arrayType }}"
+                  rangeElementType: "{{ rangeElementType }}"
+                  structTypes: "{{ structTypes }}"
+                  timestampPrecision: "{{ timestampPrecision }}"
+                  type: "{{ type }}"
+                structTypes:
+                  - description: "{{ description }}"
+                    name: "{{ name }}"
+                    type:
+                      arrayType: "{{ arrayType }}"
+                      rangeElementType: "{{ rangeElementType }}"
+                      structTypes: "{{ structTypes }}"
+                      timestampPrecision: "{{ timestampPrecision }}"
+                      type: "{{ type }}"
+                timestampPrecision: "{{ timestampPrecision }}"
+                type: "{{ type }}"
+              parameterValue:
+                arrayValues:
+                  - arrayValues: "{{ arrayValues }}"
+                    rangeValue:
+                      end: "{{ end }}"
+                      start: "{{ start }}"
+                    structValues: "{{ structValues }}"
+                    value: "{{ value }}"
+                rangeValue:
+                  end: "{{ end }}"
+                  start: "{{ start }}"
+                structValues: "{{ structValues }}"
+                value: "{{ value }}"
+          rangePartitioning:
+            field: "{{ field }}"
+            range:
+              end: "{{ end }}"
+              interval: "{{ interval }}"
+              start: "{{ start }}"
+          schemaUpdateOptions:
+            - "{{ schemaUpdateOptions }}"
+          scriptOptions:
+            keyResultStatement: "{{ keyResultStatement }}"
+            statementByteBudget: "{{ statementByteBudget }}"
+            statementTimeoutMs: "{{ statementTimeoutMs }}"
+          systemVariables:
+            types: "{{ types }}"
+            values: "{{ values }}"
+          tableDefinitions: "{{ tableDefinitions }}"
+          timePartitioning:
+            expirationMs: "{{ expirationMs }}"
+            field: "{{ field }}"
+            requirePartitionFilter: {{ requirePartitionFilter }}
+            type: "{{ type }}"
+          useLegacySql: {{ useLegacySql }}
+          useQueryCache: {{ useQueryCache }}
+          userDefinedFunctionResources:
+            - inlineCode: "{{ inlineCode }}"
+              resourceUri: "{{ resourceUri }}"
+          writeDisposition: "{{ writeDisposition }}"
+          writeIncrementalResults: {{ writeIncrementalResults }}
         reservation: "{{ reservation }}"
-        dryRun: {{ dryRun }}
-        maxSlots: {{ maxSlots }}
     - name: jobReference
       description: |
         Optional. Reference describing the unique-per-user name of the job.
       value:
+        jobId: "{{ jobId }}"
         location: "{{ location }}"
         projectId: "{{ projectId }}"
-        jobId: "{{ jobId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -697,7 +697,7 @@ Requests the deletion of the metadata of a job. This call returns when the job's
 ```sql
 DELETE FROM google.bigquery.jobs
 WHERE projectId = '{{ projectId }}' --required
-AND +jobId = '{{ +jobId }}' --required
+AND jobId = '{{ jobId }}' --required
 AND location = '{{ location }}'
 ;
 ```
@@ -708,12 +708,24 @@ AND location = '{{ location }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="query"
+    defaultValue="cancel"
     values={[
-        { label: 'query', value: 'query' },
-        { label: 'cancel', value: 'cancel' }
+        { label: 'cancel', value: 'cancel' },
+        { label: 'query', value: 'query' }
     ]}
 >
+<TabItem value="cancel">
+
+Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs. # IAM Permissions Requires the `bigquery.jobs.update` permission on the job resource. If the user matches the creator of the job, the `bigquery.jobs.create` permission on the project is required instead.
+
+```sql
+EXEC google.bigquery.jobs.cancel 
+@projectId='{{ projectId }}' --required, 
+@jobId='{{ jobId }}' --required, 
+@location='{{ location }}'
+;
+```
+</TabItem>
 <TabItem value="query">
 
 Runs a BigQuery SQL query synchronously and returns query results if the query completes within a specified timeout. # IAM Permissions Requires the `bigquery.jobs.create` permission on the project resource. Data-level permissions are highly dependent on the SQL statement being executed. While standard queries require data access (such as `bigquery.tables.getData`), complex operations like DDL or DCL may require permissions to manage reservations, IAM policies, or project settings.
@@ -723,46 +735,34 @@ EXEC google.bigquery.jobs.query
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"preserveNulls": {{ preserveNulls }}, 
-"location": "{{ location }}", 
-"labels": "{{ labels }}", 
-"defaultDataset": "{{ defaultDataset }}", 
-"queryResultsFormat": "{{ queryResultsFormat }}", 
-"timeoutMs": {{ timeoutMs }}, 
-"parameterMode": "{{ parameterMode }}", 
-"requestId": "{{ requestId }}", 
-"queryParameters": "{{ queryParameters }}", 
-"continuous": {{ continuous }}, 
-"maxResults": {{ maxResults }}, 
-"connectionProperties": "{{ connectionProperties }}", 
-"kind": "{{ kind }}", 
-"jobTimeoutMs": "{{ jobTimeoutMs }}", 
-"formatOptions": "{{ formatOptions }}", 
-"useLegacySql": {{ useLegacySql }}, 
-"writeIncrementalResults": {{ writeIncrementalResults }}, 
 "arrowSerializationOptions": "{{ arrowSerializationOptions }}", 
-"maximumBytesBilled": "{{ maximumBytesBilled }}", 
-"query": "{{ query }}", 
-"useQueryCache": {{ useQueryCache }}, 
-"destinationEncryptionConfiguration": "{{ destinationEncryptionConfiguration }}", 
-"reservation": "{{ reservation }}", 
+"connectionProperties": "{{ connectionProperties }}", 
+"continuous": {{ continuous }}, 
 "createSession": {{ createSession }}, 
+"defaultDataset": "{{ defaultDataset }}", 
+"destinationEncryptionConfiguration": "{{ destinationEncryptionConfiguration }}", 
 "dryRun": {{ dryRun }}, 
+"formatOptions": "{{ formatOptions }}", 
+"jobCreationMode": "{{ jobCreationMode }}", 
+"jobTimeoutMs": "{{ jobTimeoutMs }}", 
+"kind": "{{ kind }}", 
+"labels": "{{ labels }}", 
+"location": "{{ location }}", 
+"maxResults": {{ maxResults }}, 
 "maxSlots": {{ maxSlots }}, 
-"jobCreationMode": "{{ jobCreationMode }}"
+"maximumBytesBilled": "{{ maximumBytesBilled }}", 
+"parameterMode": "{{ parameterMode }}", 
+"preserveNulls": {{ preserveNulls }}, 
+"query": "{{ query }}", 
+"queryParameters": "{{ queryParameters }}", 
+"queryResultsFormat": "{{ queryResultsFormat }}", 
+"requestId": "{{ requestId }}", 
+"reservation": "{{ reservation }}", 
+"timeoutMs": {{ timeoutMs }}, 
+"useLegacySql": {{ useLegacySql }}, 
+"useQueryCache": {{ useQueryCache }}, 
+"writeIncrementalResults": {{ writeIncrementalResults }}
 }'
-;
-```
-</TabItem>
-<TabItem value="cancel">
-
-Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs. # IAM Permissions Requires the `bigquery.jobs.update` permission on the job resource. If the user matches the creator of the job, the `bigquery.jobs.create` permission on the project is required instead.
-
-```sql
-EXEC google.bigquery.jobs.cancel 
-@projectId='{{ projectId }}' --required, 
-@+jobId='{{ +jobId }}' --required, 
-@location='{{ location }}'
 ;
 ```
 </TabItem>

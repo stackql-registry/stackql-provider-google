@@ -327,8 +327,8 @@ response
       description: |
         SSL configuration for this domain. If unconfigured, this domain will not serve with SSL.
       value:
-        pendingManagedCertificateId: "{{ pendingManagedCertificateId }}"
         certificateId: "{{ certificateId }}"
+        pendingManagedCertificateId: "{{ pendingManagedCertificateId }}"
         sslManagementType: "{{ sslManagementType }}"
     - name: overrideStrategy
       value: "{{ overrideStrategy }}"

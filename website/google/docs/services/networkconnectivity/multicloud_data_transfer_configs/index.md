@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the `MulticloudDataTransferConfig` resources in a specified project and location.</td>
 </tr>
 <tr>
@@ -209,14 +209,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a `MulticloudDataTransferConfig` resource in a specified project and location.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a `MulticloudDataTransferConfig` resource.</td>
 </tr>
 </tbody>
@@ -350,10 +350,10 @@ FROM google.networkconnectivity.multicloud_data_transfer_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -375,22 +375,22 @@ Creates a `MulticloudDataTransferConfig` resource in a specified project and loc
 
 ```sql
 INSERT INTO google.networkconnectivity.multicloud_data_transfer_configs (
-data__name,
 data__description,
-data__labels,
-data__services,
 data__etag,
+data__labels,
+data__name,
+data__services,
 projectsId,
 locationsId,
 multicloudDataTransferConfigId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
-'{{ labels }}',
-'{{ services }}',
 '{{ etag }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ services }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ multicloudDataTransferConfigId }}',
@@ -415,26 +415,26 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the multicloud_data_transfer_configs resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the \`MulticloudDataTransferConfig\` resource. Format: \`projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}\`.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A description of this resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels.
-    - name: services
-      value: "{{ services }}"
-      description: |
-        Optional. Maps services to their current or planned states. Service names are keys, and the associated values describe the state of the service. If a state change is expected, the value is either \`ADDING\` or \`DELETING\`, depending on the actions taken. Sample output: "services": { "big-query": { "states": [ { "effectiveTime": "2024-12-12T08:00:00Z" "state": "ADDING", }, ] }, "cloud-storage": { "states": [ { "state": "ACTIVE", } ] } }
     - name: etag
       value: "{{ etag }}"
       description: |
         The etag is computed by the server, and might be sent with update and delete requests so that the client has an up-to-date value before proceeding.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the \`MulticloudDataTransferConfig\` resource. Format: \`projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}\`.
+    - name: services
+      value: "{{ services }}"
+      description: |
+        Optional. Maps services to their current or planned states. Service names are keys, and the associated values describe the state of the service. If a state change is expected, the value is either \`ADDING\` or \`DELETING\`, depending on the actions taken. Sample output: "services": { "big-query": { "states": [ { "effectiveTime": "2024-12-12T08:00:00Z" "state": "ADDING", }, ] }, "cloud-storage": { "states": [ { "state": "ACTIVE", } ] } }
     - name: multicloudDataTransferConfigId
       value: "{{ multicloudDataTransferConfigId }}"
     - name: requestId
@@ -460,17 +460,17 @@ Updates a `MulticloudDataTransferConfig` resource in a specified project and loc
 ```sql
 UPDATE google.networkconnectivity.multicloud_data_transfer_configs
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
+data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
-data__services = '{{ services }}',
-data__etag = '{{ etag }}'
+data__name = '{{ name }}',
+data__services = '{{ services }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND multicloudDataTransferConfigsId = '{{ multicloudDataTransferConfigsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -499,8 +499,8 @@ DELETE FROM google.networkconnectivity.multicloud_data_transfer_configs
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND multicloudDataTransferConfigsId = '{{ multicloudDataTransferConfigsId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

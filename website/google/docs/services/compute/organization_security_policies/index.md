@@ -220,7 +220,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-parentId"><code>parentId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parentId"><code>parentId</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>List all the policies that have been configured for the specified<br />organization.<br /><br />Use this API to read Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to read firewall policies. This usage is now<br />disabled for most organizations. Use firewallPolicies.list instead.</td>
 </tr>
 <tr>
@@ -252,18 +252,18 @@ The following methods are available for this resource:
     <td>Deletes the specified policy.<br /><br />Use this API to remove Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to remove firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.delete instead.</td>
 </tr>
 <tr>
+    <td><a href="#copy_rules"><CopyableCode code="copy_rules" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sourceSecurityPolicy"><code>sourceSecurityPolicy</code></a></td>
+    <td>Copies rules to the specified security policy.<br /><br />Use this API to modify Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to modify firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.cloneRules<br />instead.</td>
+</tr>
+<tr>
     <td><a href="#move"><CopyableCode code="move" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
     <td><a href="#parameter-parentId"><code>parentId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Moves the specified security policy.<br /><br />Use this API to modify Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to modify firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.move instead.</td>
-</tr>
-<tr>
-    <td><a href="#copy_rules"><CopyableCode code="copy_rules" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
-    <td><a href="#parameter-sourceSecurityPolicy"><code>sourceSecurityPolicy</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Copies rules to the specified security policy.<br /><br />Use this API to modify Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to modify firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.cloneRules<br />instead.</td>
 </tr>
 </tbody>
 </table>
@@ -386,12 +386,12 @@ kind,
 nextPageToken,
 warning
 FROM google.compute.organization_security_policies
-WHERE returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND parentId = '{{ parentId }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
+WHERE filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND parentId = '{{ parentId }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -413,38 +413,38 @@ Creates a new policy in the specified organization using the data included<br />
 
 ```sql
 INSERT INTO google.compute.organization_security_policies (
-data__recaptchaOptionsConfig,
-data__type,
-data__labelFingerprint,
-data__name,
+data__adaptiveProtectionConfig,
 data__advancedOptionsConfig,
-data__rules,
-data__userDefinedFields,
-data__labels,
+data__associations,
+data__ddosProtectionConfig,
 data__description,
 data__fingerprint,
-data__ddosProtectionConfig,
-data__associations,
-data__adaptiveProtectionConfig,
+data__labelFingerprint,
+data__labels,
+data__name,
+data__recaptchaOptionsConfig,
+data__rules,
 data__shortName,
+data__type,
+data__userDefinedFields,
 parentId,
 requestId
 )
 SELECT 
-'{{ recaptchaOptionsConfig }}',
-'{{ type }}',
-'{{ labelFingerprint }}',
-'{{ name }}',
+'{{ adaptiveProtectionConfig }}',
 '{{ advancedOptionsConfig }}',
-'{{ rules }}',
-'{{ userDefinedFields }}',
-'{{ labels }}',
+'{{ associations }}',
+'{{ ddosProtectionConfig }}',
 '{{ description }}',
 '{{ fingerprint }}',
-'{{ ddosProtectionConfig }}',
-'{{ associations }}',
-'{{ adaptiveProtectionConfig }}',
+'{{ labelFingerprint }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ recaptchaOptionsConfig }}',
+'{{ rules }}',
 '{{ shortName }}',
+'{{ type }}',
+'{{ userDefinedFields }}',
 '{{ parentId }}',
 '{{ requestId }}'
 RETURNING
@@ -483,9 +483,187 @@ zone
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: organization_security_policies
   props:
+    - name: adaptiveProtectionConfig
+      description: |
+        Configuration options for Cloud Armor Adaptive Protection (CAAP).
+      value:
+        layer7DdosDefenseConfig:
+          enable: {{ enable }}
+          ruleVisibility: "{{ ruleVisibility }}"
+          thresholdConfigs:
+            - autoDeployConfidenceThreshold: {{ autoDeployConfidenceThreshold }}
+              autoDeployExpirationSec: {{ autoDeployExpirationSec }}
+              autoDeployImpactedBaselineThreshold: {{ autoDeployImpactedBaselineThreshold }}
+              autoDeployLoadThreshold: {{ autoDeployLoadThreshold }}
+              detectionAbsoluteQps: {{ detectionAbsoluteQps }}
+              detectionLoadThreshold: {{ detectionLoadThreshold }}
+              detectionRelativeToBaselineQps: {{ detectionRelativeToBaselineQps }}
+              name: "{{ name }}"
+              trafficGranularityConfigs: "{{ trafficGranularityConfigs }}"
+    - name: advancedOptionsConfig
+      value:
+        jsonCustomConfig:
+          contentTypes:
+            - "{{ contentTypes }}"
+        jsonParsing: "{{ jsonParsing }}"
+        logLevel: "{{ logLevel }}"
+        requestBodyInspectionSize: "{{ requestBodyInspectionSize }}"
+        userIpRequestHeaders:
+          - "{{ userIpRequestHeaders }}"
+    - name: associations
+      description: |
+        A list of associations that belong to this policy.
+      value:
+        - attachmentId: "{{ attachmentId }}"
+          displayName: "{{ displayName }}"
+          excludedFolders: "{{ excludedFolders }}"
+          excludedProjects: "{{ excludedProjects }}"
+          name: "{{ name }}"
+          securityPolicyId: "{{ securityPolicyId }}"
+          shortName: "{{ shortName }}"
+    - name: ddosProtectionConfig
+      value:
+        ddosAdaptiveProtection: "{{ ddosAdaptiveProtection }}"
+        ddosImpactedBaselineThreshold: {{ ddosImpactedBaselineThreshold }}
+        ddosProtection: "{{ ddosProtection }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: fingerprint
+      value: "{{ fingerprint }}"
+      description: |
+        Specifies a fingerprint for this resource, which is essentially a hash of
+        the metadata's contents and used for optimistic locking. The
+        fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update metadata. You must always provide an
+        up-to-date fingerprint hash in order to update or change metadata,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make get() request to the
+        security policy.
+    - name: labelFingerprint
+      value: "{{ labelFingerprint }}"
+      description: |
+        A fingerprint for the labels being applied to this security policy, which
+        is essentially a hash of the labels set used for optimistic locking. The
+        fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update labels. You must always provide an
+        up-to-date fingerprint hash in order to update or change labels.
+        To see the latest fingerprint, make get() request to the
+        security policy.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
+        Label values may be empty.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: recaptchaOptionsConfig
       value:
         redirectSiteKey: "{{ redirectSiteKey }}"
+    - name: rules
+      description: |
+        A list of rules that belong to this policy.
+        There must always be a default rule which is a rule with priority
+        2147483647 and match all condition (for the match condition this means
+        match  "*" for srcIpRanges and for the networkMatch condition every field
+        must be either match "*" or not set). If no rules are provided when
+        creating a security policy, a default rule with action "allow" will be
+        added.
+      value:
+        - action: "{{ action }}"
+          description: "{{ description }}"
+          headerAction:
+            requestHeadersToAdds:
+              - headerName: "{{ headerName }}"
+                headerValue: "{{ headerValue }}"
+          kind: "{{ kind }}"
+          match:
+            config:
+              srcIpRanges:
+                - "{{ srcIpRanges }}"
+            expr:
+              description: "{{ description }}"
+              expression: "{{ expression }}"
+              location: "{{ location }}"
+              title: "{{ title }}"
+            exprOptions:
+              recaptchaOptions:
+                actionTokenSiteKeys:
+                  - "{{ actionTokenSiteKeys }}"
+                sessionTokenSiteKeys:
+                  - "{{ sessionTokenSiteKeys }}"
+            versionedExpr: "{{ versionedExpr }}"
+          networkMatch:
+            destIpRanges:
+              - "{{ destIpRanges }}"
+            destPorts:
+              - "{{ destPorts }}"
+            ipProtocols:
+              - "{{ ipProtocols }}"
+            srcAsns:
+              - {{ srcAsns }}
+            srcIpRanges:
+              - "{{ srcIpRanges }}"
+            srcPorts:
+              - "{{ srcPorts }}"
+            srcRegionCodes:
+              - "{{ srcRegionCodes }}"
+            userDefinedFields:
+              - name: "{{ name }}"
+                values: "{{ values }}"
+          preconfiguredWafConfig:
+            exclusions:
+              - requestCookiesToExclude: "{{ requestCookiesToExclude }}"
+                requestHeadersToExclude: "{{ requestHeadersToExclude }}"
+                requestQueryParamsToExclude: "{{ requestQueryParamsToExclude }}"
+                requestUrisToExclude: "{{ requestUrisToExclude }}"
+                targetRuleIds: "{{ targetRuleIds }}"
+                targetRuleSet: "{{ targetRuleSet }}"
+          preview: {{ preview }}
+          priority: {{ priority }}
+          rateLimitOptions:
+            banDurationSec: {{ banDurationSec }}
+            banThreshold:
+              count: {{ count }}
+              intervalSec: {{ intervalSec }}
+            conformAction: "{{ conformAction }}"
+            enforceOnKey: "{{ enforceOnKey }}"
+            enforceOnKeyConfigs:
+              - enforceOnKeyName: "{{ enforceOnKeyName }}"
+                enforceOnKeyType: "{{ enforceOnKeyType }}"
+            enforceOnKeyName: "{{ enforceOnKeyName }}"
+            exceedAction: "{{ exceedAction }}"
+            exceedRedirectOptions:
+              target: "{{ target }}"
+              type: "{{ type }}"
+            rateLimitThreshold:
+              count: {{ count }}
+              intervalSec: {{ intervalSec }}
+          redirectOptions:
+            target: "{{ target }}"
+            type: "{{ type }}"
+    - name: shortName
+      value: "{{ shortName }}"
+      description: |
+        User-provided name of the organization security policy. The name should be
+        unique in the organization in which the security policy is created. This
+        should only be used when SecurityPolicyType is CLOUD_ARMOR.
+        The name must be 1-63 characters long, and comply with
+        https://www.ietf.org/rfc/rfc1035.txt. Specifically, the name must be 1-63
+        characters long and match the regular expression
+        \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first character must be a
+        lowercase letter, and all following characters must be a dash, lowercase
+        letter, or digit, except the last character, which cannot be a dash.
     - name: type
       value: "{{ type }}"
       description: |
@@ -508,118 +686,6 @@ zone
         served from the application.
         This field can be set only at resource creation time.
       valid_values: ['CLOUD_ARMOR', 'CLOUD_ARMOR_EDGE', 'CLOUD_ARMOR_NETWORK']
-    - name: labelFingerprint
-      value: "{{ labelFingerprint }}"
-      description: |
-        A fingerprint for the labels being applied to this security policy, which
-        is essentially a hash of the labels set used for optimistic locking. The
-        fingerprint is initially generated by Compute Engine and changes after
-        every request to modify or update labels. You must always provide an
-        up-to-date fingerprint hash in order to update or change labels.
-        To see the latest fingerprint, make get() request to the
-        security policy.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
-    - name: advancedOptionsConfig
-      value:
-        jsonParsing: "{{ jsonParsing }}"
-        logLevel: "{{ logLevel }}"
-        userIpRequestHeaders:
-          - "{{ userIpRequestHeaders }}"
-        jsonCustomConfig:
-          contentTypes:
-            - "{{ contentTypes }}"
-        requestBodyInspectionSize: "{{ requestBodyInspectionSize }}"
-    - name: rules
-      description: |
-        A list of rules that belong to this policy.
-        There must always be a default rule which is a rule with priority
-        2147483647 and match all condition (for the match condition this means
-        match  "*" for srcIpRanges and for the networkMatch condition every field
-        must be either match "*" or not set). If no rules are provided when
-        creating a security policy, a default rule with action "allow" will be
-        added.
-      value:
-        - networkMatch:
-            srcIpRanges:
-              - "{{ srcIpRanges }}"
-            userDefinedFields:
-              - name: "{{ name }}"
-                values: "{{ values }}"
-            srcRegionCodes:
-              - "{{ srcRegionCodes }}"
-            destIpRanges:
-              - "{{ destIpRanges }}"
-            srcAsns:
-              - {{ srcAsns }}
-            srcPorts:
-              - "{{ srcPorts }}"
-            destPorts:
-              - "{{ destPorts }}"
-            ipProtocols:
-              - "{{ ipProtocols }}"
-          description: "{{ description }}"
-          match:
-            expr:
-              expression: "{{ expression }}"
-              title: "{{ title }}"
-              description: "{{ description }}"
-              location: "{{ location }}"
-            exprOptions:
-              recaptchaOptions:
-                sessionTokenSiteKeys:
-                  - "{{ sessionTokenSiteKeys }}"
-                actionTokenSiteKeys:
-                  - "{{ actionTokenSiteKeys }}"
-            versionedExpr: "{{ versionedExpr }}"
-            config:
-              srcIpRanges:
-                - "{{ srcIpRanges }}"
-          preview: {{ preview }}
-          preconfiguredWafConfig:
-            exclusions:
-              - targetRuleIds: "{{ targetRuleIds }}"
-                requestHeadersToExclude: "{{ requestHeadersToExclude }}"
-                requestQueryParamsToExclude: "{{ requestQueryParamsToExclude }}"
-                targetRuleSet: "{{ targetRuleSet }}"
-                requestUrisToExclude: "{{ requestUrisToExclude }}"
-                requestCookiesToExclude: "{{ requestCookiesToExclude }}"
-          priority: {{ priority }}
-          rateLimitOptions:
-            exceedAction: "{{ exceedAction }}"
-            banDurationSec: {{ banDurationSec }}
-            exceedRedirectOptions:
-              target: "{{ target }}"
-              type: "{{ type }}"
-            enforceOnKey: "{{ enforceOnKey }}"
-            enforceOnKeyName: "{{ enforceOnKeyName }}"
-            banThreshold:
-              count: {{ count }}
-              intervalSec: {{ intervalSec }}
-            rateLimitThreshold:
-              count: {{ count }}
-              intervalSec: {{ intervalSec }}
-            conformAction: "{{ conformAction }}"
-            enforceOnKeyConfigs:
-              - enforceOnKeyType: "{{ enforceOnKeyType }}"
-                enforceOnKeyName: "{{ enforceOnKeyName }}"
-          kind: "{{ kind }}"
-          redirectOptions:
-            target: "{{ target }}"
-            type: "{{ type }}"
-          action: "{{ action }}"
-          headerAction:
-            requestHeadersToAdds:
-              - headerName: "{{ headerName }}"
-                headerValue: "{{ headerValue }}"
     - name: userDefinedFields
       description: |
         Definitions of user-defined fields for CLOUD_ARMOR_NETWORK policies. A
@@ -635,77 +701,11 @@ zone
         size: 2
         mask: "0x1fff"
       value:
-        - mask: "{{ mask }}"
+        - base: "{{ base }}"
+          mask: "{{ mask }}"
           name: "{{ name }}"
           offset: {{ offset }}
           size: {{ size }}
-          base: "{{ base }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
-        Label values may be empty.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: fingerprint
-      value: "{{ fingerprint }}"
-      description: |
-        Specifies a fingerprint for this resource, which is essentially a hash of
-        the metadata's contents and used for optimistic locking. The
-        fingerprint is initially generated by Compute Engine and changes after
-        every request to modify or update metadata. You must always provide an
-        up-to-date fingerprint hash in order to update or change metadata,
-        otherwise the request will fail with error412 conditionNotMet.
-        To see the latest fingerprint, make get() request to the
-        security policy.
-    - name: ddosProtectionConfig
-      value:
-        ddosProtection: "{{ ddosProtection }}"
-        ddosImpactedBaselineThreshold: {{ ddosImpactedBaselineThreshold }}
-        ddosAdaptiveProtection: "{{ ddosAdaptiveProtection }}"
-    - name: associations
-      description: |
-        A list of associations that belong to this policy.
-      value:
-        - displayName: "{{ displayName }}"
-          excludedProjects: "{{ excludedProjects }}"
-          name: "{{ name }}"
-          shortName: "{{ shortName }}"
-          attachmentId: "{{ attachmentId }}"
-          securityPolicyId: "{{ securityPolicyId }}"
-          excludedFolders: "{{ excludedFolders }}"
-    - name: adaptiveProtectionConfig
-      description: |
-        Configuration options for Cloud Armor Adaptive Protection (CAAP).
-      value:
-        layer7DdosDefenseConfig:
-          enable: {{ enable }}
-          thresholdConfigs:
-            - detectionRelativeToBaselineQps: {{ detectionRelativeToBaselineQps }}
-              autoDeployLoadThreshold: {{ autoDeployLoadThreshold }}
-              detectionLoadThreshold: {{ detectionLoadThreshold }}
-              autoDeployExpirationSec: {{ autoDeployExpirationSec }}
-              autoDeployConfidenceThreshold: {{ autoDeployConfidenceThreshold }}
-              name: "{{ name }}"
-              autoDeployImpactedBaselineThreshold: {{ autoDeployImpactedBaselineThreshold }}
-              trafficGranularityConfigs: "{{ trafficGranularityConfigs }}"
-              detectionAbsoluteQps: {{ detectionAbsoluteQps }}
-          ruleVisibility: "{{ ruleVisibility }}"
-    - name: shortName
-      value: "{{ shortName }}"
-      description: |
-        User-provided name of the organization security policy. The name should be
-        unique in the organization in which the security policy is created. This
-        should only be used when SecurityPolicyType is CLOUD_ARMOR.
-        The name must be 1-63 characters long, and comply with
-        https://www.ietf.org/rfc/rfc1035.txt. Specifically, the name must be 1-63
-        characters long and match the regular expression
-        \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first character must be a
-        lowercase letter, and all following characters must be a dash, lowercase
-        letter, or digit, except the last character, which cannot be a dash.
     - name: parentId
       value: "{{ parentId }}"
     - name: requestId
@@ -732,20 +732,20 @@ Patches the specified policy with the data included in the request.<br /><br />U
 ```sql
 UPDATE google.compute.organization_security_policies
 SET 
-data__recaptchaOptionsConfig = '{{ recaptchaOptionsConfig }}',
-data__type = '{{ type }}',
-data__labelFingerprint = '{{ labelFingerprint }}',
-data__name = '{{ name }}',
+data__adaptiveProtectionConfig = '{{ adaptiveProtectionConfig }}',
 data__advancedOptionsConfig = '{{ advancedOptionsConfig }}',
-data__rules = '{{ rules }}',
-data__userDefinedFields = '{{ userDefinedFields }}',
-data__labels = '{{ labels }}',
+data__associations = '{{ associations }}',
+data__ddosProtectionConfig = '{{ ddosProtectionConfig }}',
 data__description = '{{ description }}',
 data__fingerprint = '{{ fingerprint }}',
-data__ddosProtectionConfig = '{{ ddosProtectionConfig }}',
-data__associations = '{{ associations }}',
-data__adaptiveProtectionConfig = '{{ adaptiveProtectionConfig }}',
-data__shortName = '{{ shortName }}'
+data__labelFingerprint = '{{ labelFingerprint }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__recaptchaOptionsConfig = '{{ recaptchaOptionsConfig }}',
+data__rules = '{{ rules }}',
+data__shortName = '{{ shortName }}',
+data__type = '{{ type }}',
+data__userDefinedFields = '{{ userDefinedFields }}'
 WHERE 
 securityPolicy = '{{ securityPolicy }}' --required
 AND requestId = '{{ requestId}}'
@@ -786,16 +786,16 @@ Patches a rule at the specified priority.<br /><br />Use this API to modify Clou
 ```sql
 UPDATE google.compute.organization_security_policies
 SET 
-data__networkMatch = '{{ networkMatch }}',
+data__action = '{{ action }}',
 data__description = '{{ description }}',
+data__headerAction = '{{ headerAction }}',
 data__match = '{{ match }}',
-data__preview = {{ preview }},
+data__networkMatch = '{{ networkMatch }}',
 data__preconfiguredWafConfig = '{{ preconfiguredWafConfig }}',
+data__preview = {{ preview }},
 data__priority = {{ priority }},
 data__rateLimitOptions = '{{ rateLimitOptions }}',
-data__redirectOptions = '{{ redirectOptions }}',
-data__action = '{{ action }}',
-data__headerAction = '{{ headerAction }}'
+data__redirectOptions = '{{ redirectOptions }}'
 WHERE 
 securityPolicy = '{{ securityPolicy }}' --required
 AND priority = '{{ priority}}'
@@ -858,12 +858,24 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="move"
+    defaultValue="copy_rules"
     values={[
-        { label: 'move', value: 'move' },
-        { label: 'copy_rules', value: 'copy_rules' }
+        { label: 'copy_rules', value: 'copy_rules' },
+        { label: 'move', value: 'move' }
     ]}
 >
+<TabItem value="copy_rules">
+
+Copies rules to the specified security policy.<br /><br />Use this API to modify Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to modify firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.cloneRules<br />instead.
+
+```sql
+EXEC google.compute.organization_security_policies.copy_rules 
+@securityPolicy='{{ securityPolicy }}' --required, 
+@requestId='{{ requestId }}', 
+@sourceSecurityPolicy='{{ sourceSecurityPolicy }}'
+;
+```
+</TabItem>
 <TabItem value="move">
 
 Moves the specified security policy.<br /><br />Use this API to modify Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to modify firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.move instead.
@@ -872,18 +884,6 @@ Moves the specified security policy.<br /><br />Use this API to modify Cloud Arm
 EXEC google.compute.organization_security_policies.move 
 @securityPolicy='{{ securityPolicy }}' --required, 
 @parentId='{{ parentId }}', 
-@requestId='{{ requestId }}'
-;
-```
-</TabItem>
-<TabItem value="copy_rules">
-
-Copies rules to the specified security policy.<br /><br />Use this API to modify Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to modify firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.cloneRules<br />instead.
-
-```sql
-EXEC google.compute.organization_security_policies.copy_rules 
-@securityPolicy='{{ securityPolicy }}' --required, 
-@sourceSecurityPolicy='{{ sourceSecurityPolicy }}', 
 @requestId='{{ requestId }}'
 ;
 ```

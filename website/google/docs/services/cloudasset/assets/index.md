@@ -97,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="relatedAsset" /></td>
     <td><code>object</code></td>
-    <td>An asset identifier in Google Cloud which contains its name, type and ancestors. An asset can be any resource in the Google Cloud [resource hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy), a resource outside the Google Cloud resource hierarchy (such as Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM policy). See [Supported asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types) for more information. (id: RelatedAsset)</td>
+    <td>One related asset of the current asset. (id: RelatedAsset)</td>
 </tr>
 <tr>
     <td><CopyableCode code="relatedAssets" /></td>
@@ -143,14 +143,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-assetTypes"><code>assetTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-contentType"><code>contentType</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-relationshipTypes"><code>relationshipTypes</code></a></td>
+    <td><a href="#parameter-assetTypes"><code>assetTypes</code></a>, <a href="#parameter-contentType"><code>contentType</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-relationshipTypes"><code>relationshipTypes</code></a></td>
     <td>Lists assets with time and resource types and returns paged results in response.</td>
+</tr>
+<tr>
+    <td><a href="#analyze_move"><CopyableCode code="analyze_move" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-resource"><code>resource</code></a></td>
+    <td><a href="#parameter-destinationParent"><code>destinationParent</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td>Analyze moving a resource to a specified destination without kicking off the actual move. The analysis is best effort depending on the user's permissions of viewing different hierarchical policies and configurations. The policies and configuration are subject to change before the actual resource migration takes place.</td>
 </tr>
 <tr>
     <td><a href="#analyze_org_policy_governed_assets"><CopyableCode code="analyze_org_policy_governed_assets" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-scope"><code>scope</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-constraint"><code>constraint</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-constraint"><code>constraint</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Analyzes organization policies governed assets (Google Cloud resources or policies) under a scope. This RPC supports custom constraints and the following canned constraints: * constraints/ainotebooks.accessMode * constraints/ainotebooks.disableFileDownloads * constraints/ainotebooks.disableRootAccess * constraints/ainotebooks.disableTerminal * constraints/ainotebooks.environmentOptions * constraints/ainotebooks.requireAutoUpgradeSchedule * constraints/ainotebooks.restrictVpcNetworks * constraints/compute.disableGuestAttributesAccess * constraints/compute.disableInstanceDataAccessApis * constraints/compute.disableNestedVirtualization * constraints/compute.disableSerialPortAccess * constraints/compute.disableSerialPortLogging * constraints/compute.disableVpcExternalIpv6 * constraints/compute.requireOsLogin * constraints/compute.requireShieldedVm * constraints/compute.restrictLoadBalancerCreationForTypes * constraints/compute.restrictProtocolForwardingCreationForTypes * constraints/compute.restrictXpnProjectLienRemoval * constraints/compute.setNewProjectDefaultToZonalDNSOnly * constraints/compute.skipDefaultNetworkCreation * constraints/compute.trustedImageProjects * constraints/compute.vmCanIpForward * constraints/compute.vmExternalIpAccess * constraints/gcp.detailedAuditLoggingMode * constraints/gcp.resourceLocations * constraints/iam.allowedPolicyMemberDomains * constraints/iam.automaticIamGrantsForDefaultServiceAccounts * constraints/iam.disableServiceAccountCreation * constraints/iam.disableServiceAccountKeyCreation * constraints/iam.disableServiceAccountKeyUpload * constraints/iam.restrictCrossProjectServiceAccountLienRemoval * constraints/iam.serviceAccountKeyExpiryHours * constraints/resourcemanager.accessBoundaries * constraints/resourcemanager.allowedExportDestinations * constraints/sql.restrictAuthorizedNetworks * constraints/sql.restrictNoncompliantDiagnosticDataAccess * constraints/sql.restrictNoncompliantResourceCreation * constraints/sql.restrictPublicIp * constraints/storage.publicAccessPrevention * constraints/storage.restrictAuthTypes * constraints/storage.uniformBucketLevelAccess This RPC only returns either resources of types [supported by search APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types) or IAM policies.</td>
 </tr>
 <tr>
@@ -159,13 +166,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td></td>
     <td>Issue a job that queries assets using a SQL statement compatible with [BigQuery SQL](https://cloud.google.com/bigquery/docs/introduction-sql). If the query execution finishes within timeout and there's no pagination, the full query results will be returned in the `QueryAssetsResponse`. Otherwise, full query results can be obtained by issuing extra requests with the `job_reference` from the a previous `QueryAssets` call. Note, the query result has approximately 10 GB limitation enforced by [BigQuery](https://cloud.google.com/bigquery/docs/best-practices-performance-output). Queries return larger results will result in errors.</td>
-</tr>
-<tr>
-    <td><a href="#analyze_move"><CopyableCode code="analyze_move" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-resource"><code>resource</code></a></td>
-    <td><a href="#parameter-destinationParent"><code>destinationParent</code></a>, <a href="#parameter-view"><code>view</code></a></td>
-    <td>Analyze moving a resource to a specified destination without kicking off the actual move. The analysis is best effort depending on the user's permissions of viewing different hierarchical policies and configurations. The policies and configuration are subject to change before the actual resource migration takes place.</td>
 </tr>
 </tbody>
 </table>
@@ -287,11 +287,11 @@ updateTime
 FROM google.cloudasset.assets
 WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
-AND readTime = '{{ readTime }}'
 AND assetTypes = '{{ assetTypes }}'
-AND pageToken = '{{ pageToken }}'
 AND contentType = '{{ contentType }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND readTime = '{{ readTime }}'
 AND relationshipTypes = '{{ relationshipTypes }}'
 ;
 ```
@@ -302,13 +302,25 @@ AND relationshipTypes = '{{ relationshipTypes }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="analyze_org_policy_governed_assets"
+    defaultValue="analyze_move"
     values={[
+        { label: 'analyze_move', value: 'analyze_move' },
         { label: 'analyze_org_policy_governed_assets', value: 'analyze_org_policy_governed_assets' },
-        { label: 'query_assets', value: 'query_assets' },
-        { label: 'analyze_move', value: 'analyze_move' }
+        { label: 'query_assets', value: 'query_assets' }
     ]}
 >
+<TabItem value="analyze_move">
+
+Analyze moving a resource to a specified destination without kicking off the actual move. The analysis is best effort depending on the user's permissions of viewing different hierarchical policies and configurations. The policies and configuration are subject to change before the actual resource migration takes place.
+
+```sql
+EXEC google.cloudasset.assets.analyze_move 
+@resource='{{ resource }}' --required, 
+@destinationParent='{{ destinationParent }}', 
+@view='{{ view }}'
+;
+```
+</TabItem>
 <TabItem value="analyze_org_policy_governed_assets">
 
 Analyzes organization policies governed assets (Google Cloud resources or policies) under a scope. This RPC supports custom constraints and the following canned constraints: * constraints/ainotebooks.accessMode * constraints/ainotebooks.disableFileDownloads * constraints/ainotebooks.disableRootAccess * constraints/ainotebooks.disableTerminal * constraints/ainotebooks.environmentOptions * constraints/ainotebooks.requireAutoUpgradeSchedule * constraints/ainotebooks.restrictVpcNetworks * constraints/compute.disableGuestAttributesAccess * constraints/compute.disableInstanceDataAccessApis * constraints/compute.disableNestedVirtualization * constraints/compute.disableSerialPortAccess * constraints/compute.disableSerialPortLogging * constraints/compute.disableVpcExternalIpv6 * constraints/compute.requireOsLogin * constraints/compute.requireShieldedVm * constraints/compute.restrictLoadBalancerCreationForTypes * constraints/compute.restrictProtocolForwardingCreationForTypes * constraints/compute.restrictXpnProjectLienRemoval * constraints/compute.setNewProjectDefaultToZonalDNSOnly * constraints/compute.skipDefaultNetworkCreation * constraints/compute.trustedImageProjects * constraints/compute.vmCanIpForward * constraints/compute.vmExternalIpAccess * constraints/gcp.detailedAuditLoggingMode * constraints/gcp.resourceLocations * constraints/iam.allowedPolicyMemberDomains * constraints/iam.automaticIamGrantsForDefaultServiceAccounts * constraints/iam.disableServiceAccountCreation * constraints/iam.disableServiceAccountKeyCreation * constraints/iam.disableServiceAccountKeyUpload * constraints/iam.restrictCrossProjectServiceAccountLienRemoval * constraints/iam.serviceAccountKeyExpiryHours * constraints/resourcemanager.accessBoundaries * constraints/resourcemanager.allowedExportDestinations * constraints/sql.restrictAuthorizedNetworks * constraints/sql.restrictNoncompliantDiagnosticDataAccess * constraints/sql.restrictNoncompliantResourceCreation * constraints/sql.restrictPublicIp * constraints/storage.publicAccessPrevention * constraints/storage.restrictAuthTypes * constraints/storage.uniformBucketLevelAccess This RPC only returns either resources of types [supported by search APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types) or IAM policies.
@@ -316,10 +328,10 @@ Analyzes organization policies governed assets (Google Cloud resources or polici
 ```sql
 EXEC google.cloudasset.assets.analyze_org_policy_governed_assets 
 @scope='{{ scope }}' --required, 
-@filter='{{ filter }}', 
 @constraint='{{ constraint }}', 
-@pageToken='{{ pageToken }}', 
-@pageSize='{{ pageSize }}'
+@filter='{{ filter }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -333,27 +345,15 @@ EXEC google.cloudasset.assets.query_assets
 @parent='{{ parent }}' --required 
 @@json=
 '{
-"statement": "{{ statement }}", 
+"jobReference": "{{ jobReference }}", 
+"outputConfig": "{{ outputConfig }}", 
 "pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
 "readTime": "{{ readTime }}", 
-"outputConfig": "{{ outputConfig }}", 
 "readTimeWindow": "{{ readTimeWindow }}", 
-"timeout": "{{ timeout }}", 
-"jobReference": "{{ jobReference }}"
+"statement": "{{ statement }}", 
+"timeout": "{{ timeout }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="analyze_move">
-
-Analyze moving a resource to a specified destination without kicking off the actual move. The analysis is best effort depending on the user's permissions of viewing different hierarchical policies and configurations. The policies and configuration are subject to change before the actual resource migration takes place.
-
-```sql
-EXEC google.cloudasset.assets.analyze_move 
-@resource='{{ resource }}' --required, 
-@destinationParent='{{ destinationParent }}', 
-@view='{{ view }}'
 ;
 ```
 </TabItem>

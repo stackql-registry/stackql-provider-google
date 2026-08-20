@@ -155,21 +155,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Groups in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-groupId"><code>groupId</code></a></td>
+    <td><a href="#parameter-groupId"><code>groupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Group in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Group.</td>
 </tr>
 <tr>
@@ -291,10 +291,10 @@ updateTime
 FROM google.vmmigration.groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -317,21 +317,21 @@ Creates a new Group in a given project and location.
 ```sql
 INSERT INTO google.vmmigration.groups (
 data__description,
-data__migrationTargetType,
 data__displayName,
+data__migrationTargetType,
 projectsId,
 locationsId,
-requestId,
-groupId
+groupId,
+requestId
 )
 SELECT 
 '{{ description }}',
-'{{ migrationTargetType }}',
 '{{ displayName }}',
+'{{ migrationTargetType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ groupId }}'
+'{{ groupId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -356,19 +356,19 @@ response
       value: "{{ description }}"
       description: |
         User-provided description of the group.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Display name is a user defined name for this group which can be updated.
     - name: migrationTargetType
       value: "{{ migrationTargetType }}"
       description: |
         Immutable. The target type of this group.
       valid_values: ['MIGRATION_TARGET_TYPE_UNSPECIFIED', 'MIGRATION_TARGET_TYPE_GCE', 'MIGRATION_TARGET_TYPE_DISKS']
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Display name is a user defined name for this group which can be updated.
-    - name: requestId
-      value: "{{ requestId }}"
     - name: groupId
       value: "{{ groupId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -391,14 +391,14 @@ Updates the parameters of a single Group.
 UPDATE google.vmmigration.groups
 SET 
 data__description = '{{ description }}',
-data__migrationTargetType = '{{ migrationTargetType }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__migrationTargetType = '{{ migrationTargetType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND groupsId = '{{ groupsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

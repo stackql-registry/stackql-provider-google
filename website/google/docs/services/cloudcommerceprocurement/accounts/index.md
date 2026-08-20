@@ -179,18 +179,18 @@ The following methods are available for this resource:
     <td>Lists Accounts that the provider has access to.</td>
 </tr>
 <tr>
-    <td><a href="#reject"><CopyableCode code="reject" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
-    <td></td>
-    <td>Rejects an approval on an Account.</td>
-</tr>
-<tr>
     <td><a href="#approve"><CopyableCode code="approve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
     <td></td>
     <td>Grants an approval on an Account.</td>
+</tr>
+<tr>
+    <td><a href="#reject"><CopyableCode code="reject" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
+    <td></td>
+    <td>Rejects an approval on an Account.</td>
 </tr>
 <tr>
     <td><a href="#reset"><CopyableCode code="reset" /></a></td>
@@ -300,13 +300,30 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reject"
+    defaultValue="approve"
     values={[
-        { label: 'reject', value: 'reject' },
         { label: 'approve', value: 'approve' },
+        { label: 'reject', value: 'reject' },
         { label: 'reset', value: 'reset' }
     ]}
 >
+<TabItem value="approve">
+
+Grants an approval on an Account.
+
+```sql
+EXEC google.cloudcommerceprocurement.accounts.approve 
+@providersId='{{ providersId }}' --required, 
+@accountsId='{{ accountsId }}' --required 
+@@json=
+'{
+"approvalName": "{{ approvalName }}", 
+"properties": "{{ properties }}", 
+"reason": "{{ reason }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="reject">
 
 Rejects an approval on an Account.
@@ -319,23 +336,6 @@ EXEC google.cloudcommerceprocurement.accounts.reject
 '{
 "approvalName": "{{ approvalName }}", 
 "reason": "{{ reason }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="approve">
-
-Grants an approval on an Account.
-
-```sql
-EXEC google.cloudcommerceprocurement.accounts.approve 
-@providersId='{{ providersId }}' --required, 
-@accountsId='{{ accountsId }}' --required 
-@@json=
-'{
-"reason": "{{ reason }}", 
-"properties": "{{ properties }}", 
-"approvalName": "{{ approvalName }}"
 }'
 ;
 ```

@@ -1,6 +1,6 @@
 {
   "name": "stackql-provider-google",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Extracts API information from Google service discovery documents and reconstitutes into OpenAPI3 compliant specs",
   "type": "module",
   "main": "index.js",

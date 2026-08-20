@@ -81,6 +81,16 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Private settings for private instance. (id: PrivateConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
     <td>Output only. Current state of the instance. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, PAUSED, UNKNOWN)</td>
@@ -145,6 +155,16 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Private settings for private instance. (id: PrivateConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
     <td>Output only. Current state of the instance. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, PAUSED, UNKNOWN)</td>
@@ -195,14 +215,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Instances in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-instanceId"><code>instanceId</code></a></td>
+    <td><a href="#parameter-instanceId"><code>instanceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new instance in a given project and location.</td>
 </tr>
 <tr>
@@ -302,6 +322,8 @@ hostConfig,
 kmsKey,
 labels,
 privateConfig,
+satisfiesPzi,
+satisfiesPzs,
 state,
 stateNote,
 updateTime,
@@ -325,6 +347,8 @@ hostConfig,
 kmsKey,
 labels,
 privateConfig,
+satisfiesPzi,
+satisfiesPzs,
 state,
 stateNote,
 updateTime,
@@ -334,8 +358,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -357,26 +381,26 @@ Creates a new instance in a given project and location.
 
 ```sql
 INSERT INTO google.securesourcemanager.instances (
-data__workforceIdentityFederationConfig,
-data__labels,
 data__kmsKey,
+data__labels,
 data__name,
 data__privateConfig,
+data__workforceIdentityFederationConfig,
 projectsId,
 locationsId,
-requestId,
-instanceId
+instanceId,
+requestId
 )
 SELECT 
-'{{ workforceIdentityFederationConfig }}',
-'{{ labels }}',
 '{{ kmsKey }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ privateConfig }}',
+'{{ workforceIdentityFederationConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ instanceId }}'
+'{{ instanceId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -397,19 +421,14 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: workforceIdentityFederationConfig
-      description: |
-        Optional. Configuration for Workforce Identity Federation to support third party identity provider. If unset, defaults to the Google OIDC IdP.
-      value:
-        enabled: {{ enabled }}
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels as key value pairs. Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. For more information, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/best-practices-labels#label_encoding).
     - name: kmsKey
       value: "{{ kmsKey }}"
       description: |
         Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels as key value pairs. Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. For more information, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/best-practices-labels#label_encoding).
     - name: name
       value: "{{ name }}"
       description: |
@@ -418,21 +437,26 @@ response
       description: |
         Optional. Private settings for private instance.
       value:
+        caPool: "{{ caPool }}"
         customHostConfig:
+          api: "{{ api }}"
           gitHttp: "{{ gitHttp }}"
           gitSsh: "{{ gitSsh }}"
           html: "{{ html }}"
-          api: "{{ api }}"
         httpServiceAttachment: "{{ httpServiceAttachment }}"
+        isPrivate: {{ isPrivate }}
         pscAllowedProjects:
           - "{{ pscAllowedProjects }}"
-        caPool: "{{ caPool }}"
-        isPrivate: {{ isPrivate }}
         sshServiceAttachment: "{{ sshServiceAttachment }}"
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: workforceIdentityFederationConfig
+      description: |
+        Optional. Configuration for Workforce Identity Federation to support third party identity provider. If unset, defaults to the Google OIDC IdP.
+      value:
+        enabled: {{ enabled }}
     - name: instanceId
       value: "{{ instanceId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>

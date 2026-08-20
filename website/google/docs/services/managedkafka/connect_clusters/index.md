@@ -205,21 +205,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Kafka Connect clusters in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-connectClusterId"><code>connectClusterId</code></a></td>
+    <td><a href="#parameter-connectClusterId"><code>connectClusterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Kafka Connect cluster in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the properties of a single Kafka Connect cluster.</td>
 </tr>
 <tr>
@@ -351,8 +351,8 @@ updateTime
 FROM google.managedkafka.connect_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
@@ -376,28 +376,28 @@ Creates a new Kafka Connect cluster in a given project and location.
 
 ```sql
 INSERT INTO google.managedkafka.connect_clusters (
-data__config,
-data__kafkaCluster,
-data__name,
 data__capacityConfig,
+data__config,
 data__gcpConfig,
+data__kafkaCluster,
 data__labels,
+data__name,
 projectsId,
 locationsId,
-requestId,
-connectClusterId
+connectClusterId,
+requestId
 )
 SELECT 
-'{{ config }}',
-'{{ kafkaCluster }}',
-'{{ name }}',
 '{{ capacityConfig }}',
+'{{ config }}',
 '{{ gcpConfig }}',
+'{{ kafkaCluster }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ connectClusterId }}'
+'{{ connectClusterId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -418,24 +418,16 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the connect_clusters resource.
-    - name: config
-      value: "{{ config }}"
-      description: |
-        Optional. Reserved for future use. This field is meant for worker config overrides, but is unsupported for now.
-    - name: kafkaCluster
-      value: "{{ kafkaCluster }}"
-      description: |
-        Required. Immutable. The name of the Kafka cluster this Kafka Connect cluster is attached to. Structured like: projects/{project}/locations/{location}/clusters/{cluster}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the Kafka Connect cluster. Structured like: projects/{project_number}/locations/{location}/connectClusters/{connect_cluster_id}
     - name: capacityConfig
       description: |
         Required. Capacity configuration for the Kafka Connect cluster.
       value:
-        vcpuCount: "{{ vcpuCount }}"
         memoryBytes: "{{ memoryBytes }}"
+        vcpuCount: "{{ vcpuCount }}"
+    - name: config
+      value: "{{ config }}"
+      description: |
+        Optional. Reserved for future use. This field is meant for worker config overrides, but is unsupported for now.
     - name: gcpConfig
       description: |
         Required. Configuration properties for a Kafka Connect cluster deployed to Google Cloud Platform.
@@ -443,18 +435,26 @@ response
         accessConfig:
           networkConfigs:
             - additionalSubnets: "{{ additionalSubnets }}"
-              primarySubnet: "{{ primarySubnet }}"
               dnsDomainNames: "{{ dnsDomainNames }}"
+              primarySubnet: "{{ primarySubnet }}"
         secretPaths:
           - "{{ secretPaths }}"
+    - name: kafkaCluster
+      value: "{{ kafkaCluster }}"
+      description: |
+        Required. Immutable. The name of the Kafka cluster this Kafka Connect cluster is attached to. Structured like: projects/{project}/locations/{location}/clusters/{cluster}
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Labels as key value pairs.
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the Kafka Connect cluster. Structured like: projects/{project_number}/locations/{location}/connectClusters/{connect_cluster_id}
     - name: connectClusterId
       value: "{{ connectClusterId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -476,18 +476,18 @@ Updates the properties of a single Kafka Connect cluster.
 ```sql
 UPDATE google.managedkafka.connect_clusters
 SET 
-data__config = '{{ config }}',
-data__kafkaCluster = '{{ kafkaCluster }}',
-data__name = '{{ name }}',
 data__capacityConfig = '{{ capacityConfig }}',
+data__config = '{{ config }}',
 data__gcpConfig = '{{ gcpConfig }}',
-data__labels = '{{ labels }}'
+data__kafkaCluster = '{{ kafkaCluster }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectClustersId = '{{ connectClustersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

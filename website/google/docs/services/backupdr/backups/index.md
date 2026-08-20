@@ -355,14 +355,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists Backups in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a>, <a href="#parameter-backupsId"><code>backupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the settings of a Backup.</td>
 </tr>
 <tr>
@@ -546,11 +546,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backupVaultsId = '{{ backupVaultsId }}' -- required
 AND dataSourcesId = '{{ dataSourcesId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND view = '{{ view }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -572,19 +572,19 @@ Updates the settings of a Backup.
 ```sql
 UPDATE google.backupdr.backups
 SET 
-data__etag = '{{ etag }}',
-data__labels = '{{ labels }}',
-data__enforcedRetentionEndTime = '{{ enforcedRetentionEndTime }}',
 data__backupApplianceLocks = '{{ backupApplianceLocks }}',
-data__expireTime = '{{ expireTime }}'
+data__enforcedRetentionEndTime = '{{ enforcedRetentionEndTime }}',
+data__etag = '{{ etag }}',
+data__expireTime = '{{ expireTime }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupVaultsId = '{{ backupVaultsId }}' --required
 AND dataSourcesId = '{{ dataSourcesId }}' --required
 AND backupsId = '{{ backupsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -643,13 +643,13 @@ EXEC google.backupdr.backups.restore
 @backupsId='{{ backupsId }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
+"clearOverridesFieldMask": "{{ clearOverridesFieldMask }}", 
 "computeInstanceRestoreProperties": "{{ computeInstanceRestoreProperties }}", 
 "computeInstanceTargetEnvironment": "{{ computeInstanceTargetEnvironment }}", 
-"diskTargetEnvironment": "{{ diskTargetEnvironment }}", 
 "diskRestoreProperties": "{{ diskRestoreProperties }}", 
+"diskTargetEnvironment": "{{ diskTargetEnvironment }}", 
 "regionDiskTargetEnvironment": "{{ regionDiskTargetEnvironment }}", 
-"clearOverridesFieldMask": "{{ clearOverridesFieldMask }}"
+"requestId": "{{ requestId }}"
 }'
 ;
 ```

@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_security_profiles_v2_list"><CopyableCode code="organizations_security_profiles_v2_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a></td>
     <td>List security profiles v2.</td>
 </tr>
 <tr>
@@ -287,8 +287,8 @@ riskAssessmentType,
 updateTime
 FROM google.apigee.security_profiles_v2
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND riskAssessmentType = '{{ riskAssessmentType }}'
 ;
 ```
@@ -311,18 +311,18 @@ Create a security profile v2.
 
 ```sql
 INSERT INTO google.apigee.security_profiles_v2 (
-data__name,
-data__riskAssessmentType,
-data__profileAssessmentConfigs,
 data__description,
+data__name,
+data__profileAssessmentConfigs,
+data__riskAssessmentType,
 organizationsId,
 securityProfileV2Id
 )
 SELECT 
-'{{ name }}',
-'{{ riskAssessmentType }}',
-'{{ profileAssessmentConfigs }}',
 '{{ description }}',
+'{{ name }}',
+'{{ profileAssessmentConfigs }}',
+'{{ riskAssessmentType }}',
 '{{ organizationsId }}',
 '{{ securityProfileV2Id }}'
 RETURNING
@@ -344,23 +344,23 @@ updateTime
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the security_profiles_v2 resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the security profile.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. Name of the security profile v2 resource. Format: organizations/{org}/securityProfilesV2/{profile}
+    - name: profileAssessmentConfigs
+      value: "{{ profileAssessmentConfigs }}"
+      description: |
+        Required. The configuration for each assessment in this profile. Key is the name/id of the assessment.
     - name: riskAssessmentType
       value: "{{ riskAssessmentType }}"
       description: |
         Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.
       valid_values: ['RISK_ASSESSMENT_TYPE_UNSPECIFIED', 'APIGEE', 'API_HUB']
-    - name: profileAssessmentConfigs
-      value: "{{ profileAssessmentConfigs }}"
-      description: |
-        Required. The configuration for each assessment in this profile. Key is the name/id of the assessment.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the security profile.
     - name: securityProfileV2Id
       value: "{{ securityProfileV2Id }}"
 `}</CodeBlock>
@@ -384,10 +384,10 @@ Update a security profile V2.
 ```sql
 UPDATE google.apigee.security_profiles_v2
 SET 
+data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__riskAssessmentType = '{{ riskAssessmentType }}',
 data__profileAssessmentConfigs = '{{ profileAssessmentConfigs }}',
-data__description = '{{ description }}'
+data__riskAssessmentType = '{{ riskAssessmentType }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityProfilesV2Id = '{{ securityProfilesV2Id }}' --required

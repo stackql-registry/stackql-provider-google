@@ -255,14 +255,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ManagementServers in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-managementServerId"><code>managementServerId</code></a></td>
+    <td><a href="#parameter-managementServerId"><code>managementServerId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new ManagementServer in a given project and location.</td>
 </tr>
 <tr>
@@ -406,10 +406,10 @@ workforceIdentityBasedOauth2ClientId
 FROM google.backupdr.management_servers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -431,26 +431,26 @@ Creates a new ManagementServer in a given project and location.
 
 ```sql
 INSERT INTO google.backupdr.management_servers (
-data__labels,
 data__description,
+data__etag,
+data__labels,
 data__networks,
 data__type,
-data__etag,
 projectsId,
 locationsId,
-requestId,
-managementServerId
+managementServerId,
+requestId
 )
 SELECT 
-'{{ labels }}',
 '{{ description }}',
+'{{ etag }}',
+'{{ labels }}',
 '{{ networks }}',
 '{{ type }}',
-'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ managementServerId }}'
+'{{ managementServerId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -471,14 +471,18 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the management_servers resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Resource labels to represent user provided metadata. Labels currently defined: 1. migrate_from_go= If set to true, the MS is created in migration ready mode.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. The description of the ManagementServer instance (2048 characters or less).
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Server specified ETag for the ManagementServer resource to prevent simultaneous updates from overwiting each other.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels to represent user provided metadata. Labels currently defined: 1. migrate_from_go= If set to true, the MS is created in migration ready mode.
     - name: networks
       description: |
         Optional. VPC networks to which the ManagementServer instance is connected. For this version, only a single network is supported. This field is optional if MS is created without PSA
@@ -490,14 +494,10 @@ response
       description: |
         Optional. The type of the ManagementServer resource.
       valid_values: ['INSTANCE_TYPE_UNSPECIFIED', 'BACKUP_RESTORE']
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. Server specified ETag for the ManagementServer resource to prevent simultaneous updates from overwiting each other.
-    - name: requestId
-      value: "{{ requestId }}"
     - name: managementServerId
       value: "{{ managementServerId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>

@@ -179,9 +179,9 @@ Update a single GoogleChannelConfig
 ```sql
 UPDATE google.eventarc.google_channel_config
 SET 
+data__cryptoKeyName = '{{ cryptoKeyName }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}',
-data__cryptoKeyName = '{{ cryptoKeyName }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

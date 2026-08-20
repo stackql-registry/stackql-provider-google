@@ -253,15 +253,15 @@ Creates a backup schedule on a database. At most two backup schedules can be con
 ```sql
 INSERT INTO google.firestore.backup_schedules (
 data__dailyRecurrence,
-data__weeklyRecurrence,
 data__retention,
+data__weeklyRecurrence,
 projectsId,
 databasesId
 )
 SELECT 
 '{{ dailyRecurrence }}',
-'{{ weeklyRecurrence }}',
 '{{ retention }}',
+'{{ weeklyRecurrence }}',
 '{{ projectsId }}',
 '{{ databasesId }}'
 RETURNING
@@ -289,15 +289,15 @@ weeklyRecurrence
       value: "{{ dailyRecurrence }}"
       description: |
         For a schedule that runs daily.
+    - name: retention
+      value: "{{ retention }}"
+      description: |
+        At what relative time in the future, compared to its creation time, the backup should be deleted, e.g. keep backups for 7 days. The maximum supported retention period is 14 weeks.
     - name: weeklyRecurrence
       description: |
         For a schedule that runs weekly on a specific day.
       value:
         day: "{{ day }}"
-    - name: retention
-      value: "{{ retention }}"
-      description: |
-        At what relative time in the future, compared to its creation time, the backup should be deleted, e.g. keep backups for 7 days. The maximum supported retention period is 14 weeks.
 `}</CodeBlock>
 
 </TabItem>
@@ -320,8 +320,8 @@ Updates a backup schedule.
 UPDATE google.firestore.backup_schedules
 SET 
 data__dailyRecurrence = '{{ dailyRecurrence }}',
-data__weeklyRecurrence = '{{ weeklyRecurrence }}',
-data__retention = '{{ retention }}'
+data__retention = '{{ retention }}',
+data__weeklyRecurrence = '{{ weeklyRecurrence }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND databasesId = '{{ databasesId }}' --required

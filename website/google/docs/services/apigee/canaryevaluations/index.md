@@ -211,19 +211,19 @@ Creates a new canary evaluation for an organization.
 ```sql
 INSERT INTO google.apigee.canaryevaluations (
 data__control,
-data__metricLabels,
 data__endTime,
-data__treatment,
+data__metricLabels,
 data__startTime,
+data__treatment,
 organizationsId,
 instancesId
 )
 SELECT 
 '{{ control }}',
-'{{ metricLabels }}',
 '{{ endTime }}',
-'{{ treatment }}',
+'{{ metricLabels }}',
 '{{ startTime }}',
+'{{ treatment }}',
 '{{ organizationsId }}',
 '{{ instancesId }}'
 RETURNING
@@ -250,25 +250,25 @@ response
       value: "{{ control }}"
       description: |
         Required. The stable version that is serving requests.
-    - name: metricLabels
-      description: |
-        Required. Labels used to filter the metrics used for a canary evaluation.
-      value:
-        instance_id: "{{ instance_id }}"
-        location: "{{ location }}"
-        env: "{{ env }}"
     - name: endTime
       value: "{{ endTime }}"
       description: |
         Required. End time for the evaluation's analysis.
-    - name: treatment
-      value: "{{ treatment }}"
+    - name: metricLabels
       description: |
-        Required. The newer version that is serving requests.
+        Required. Labels used to filter the metrics used for a canary evaluation.
+      value:
+        env: "{{ env }}"
+        instance_id: "{{ instance_id }}"
+        location: "{{ location }}"
     - name: startTime
       value: "{{ startTime }}"
       description: |
         Required. Start time for the canary evaluation's analysis.
+    - name: treatment
+      value: "{{ treatment }}"
+      description: |
+        Required. The newer version that is serving requests.
 `}</CodeBlock>
 
 </TabItem>

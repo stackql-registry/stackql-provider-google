@@ -336,16 +336,16 @@ Creates a Model.
 
 ```sql
 INSERT INTO google.translate.models (
+data__dataset,
 data__displayName,
 data__name,
-data__dataset,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ dataset }}',
 '{{ displayName }}',
 '{{ name }}',
-'{{ dataset }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -368,6 +368,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the models resource.
+    - name: dataset
+      value: "{{ dataset }}"
+      description: |
+        Required. The dataset from which the model is trained, in form of \`projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id}\`
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -376,10 +380,6 @@ response
       value: "{{ name }}"
       description: |
         The resource name of the model, in form of \`projects/{project-number-or-id}/locations/{location_id}/models/{model_id}\`
-    - name: dataset
-      value: "{{ dataset }}"
-      description: |
-        Required. The dataset from which the model is trained, in form of \`projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id}\`
 `}</CodeBlock>
 
 </TabItem>

@@ -167,6 +167,13 @@ The following methods are available for this resource:
     <td>Pauses the connector and its tasks.</td>
 </tr>
 <tr>
+    <td><a href="#restart"><CopyableCode code="restart" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
+    <td></td>
+    <td>Restarts the connector.</td>
+</tr>
+<tr>
     <td><a href="#resume"><CopyableCode code="resume" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
@@ -179,13 +186,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
     <td></td>
     <td>Stops the connector.</td>
-</tr>
-<tr>
-    <td><a href="#restart"><CopyableCode code="restart" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
-    <td></td>
-    <td>Restarts the connector.</td>
 </tr>
 </tbody>
 </table>
@@ -310,18 +310,18 @@ Creates a new connector in a given Connect cluster.
 
 ```sql
 INSERT INTO google.managedkafka.connectors (
-data__taskRestartPolicy,
 data__configs,
 data__name,
+data__taskRestartPolicy,
 projectsId,
 locationsId,
 connectClustersId,
 connectorId
 )
 SELECT 
-'{{ taskRestartPolicy }}',
 '{{ configs }}',
 '{{ name }}',
+'{{ taskRestartPolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectClustersId }}',
@@ -348,13 +348,6 @@ taskRestartPolicy
     - name: connectClustersId
       value: "{{ connectClustersId }}"
       description: Required parameter for the connectors resource.
-    - name: taskRestartPolicy
-      description: |
-        Optional. Restarts the individual tasks of a Connector.
-      value:
-        maximumBackoff: "{{ maximumBackoff }}"
-        minimumBackoff: "{{ minimumBackoff }}"
-        taskRetryDisabled: {{ taskRetryDisabled }}
     - name: configs
       value: "{{ configs }}"
       description: |
@@ -363,6 +356,13 @@ taskRestartPolicy
       value: "{{ name }}"
       description: |
         Identifier. The name of the connector. Structured like: projects/{project}/locations/{location}/connectClusters/{connect_cluster}/connectors/{connector}
+    - name: taskRestartPolicy
+      description: |
+        Optional. Restarts the individual tasks of a Connector.
+      value:
+        maximumBackoff: "{{ maximumBackoff }}"
+        minimumBackoff: "{{ minimumBackoff }}"
+        taskRetryDisabled: {{ taskRetryDisabled }}
     - name: connectorId
       value: "{{ connectorId }}"
 `}</CodeBlock>
@@ -386,9 +386,9 @@ Updates the properties of a connector.
 ```sql
 UPDATE google.managedkafka.connectors
 SET 
-data__taskRestartPolicy = '{{ taskRestartPolicy }}',
 data__configs = '{{ configs }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__taskRestartPolicy = '{{ taskRestartPolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -435,9 +435,9 @@ AND connectorsId = '{{ connectorsId }}' --required
     defaultValue="pause"
     values={[
         { label: 'pause', value: 'pause' },
+        { label: 'restart', value: 'restart' },
         { label: 'resume', value: 'resume' },
-        { label: 'stop', value: 'stop' },
-        { label: 'restart', value: 'restart' }
+        { label: 'stop', value: 'stop' }
     ]}
 >
 <TabItem value="pause">
@@ -446,6 +446,19 @@ Pauses the connector and its tasks.
 
 ```sql
 EXEC google.managedkafka.connectors.pause 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectClustersId='{{ connectClustersId }}' --required, 
+@connectorsId='{{ connectorsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="restart">
+
+Restarts the connector.
+
+```sql
+EXEC google.managedkafka.connectors.restart 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectClustersId='{{ connectClustersId }}' --required, 
@@ -472,19 +485,6 @@ Stops the connector.
 
 ```sql
 EXEC google.managedkafka.connectors.stop 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@connectClustersId='{{ connectClustersId }}' --required, 
-@connectorsId='{{ connectorsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="restart">
-
-Restarts the connector.
-
-```sql
-EXEC google.managedkafka.connectors.restart 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectClustersId='{{ connectClustersId }}' --required, 

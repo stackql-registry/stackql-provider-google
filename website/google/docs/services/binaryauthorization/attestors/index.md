@@ -282,18 +282,18 @@ Creates an attestor, and returns a copy of the new attestor. Returns `NOT_FOUND`
 
 ```sql
 INSERT INTO google.binaryauthorization.attestors (
-data__etag,
 data__description,
-data__userOwnedGrafeasNote,
+data__etag,
 data__name,
+data__userOwnedGrafeasNote,
 projectsId,
 attestorId
 )
 SELECT 
-'{{ etag }}',
 '{{ description }}',
-'{{ userOwnedGrafeasNote }}',
+'{{ etag }}',
 '{{ name }}',
+'{{ userOwnedGrafeasNote }}',
 '{{ projectsId }}',
 '{{ attestorId }}'
 RETURNING
@@ -313,14 +313,18 @@ userOwnedGrafeasNote
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the attestors resource.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. A checksum, returned by the server, that can be sent on update requests to ensure the attestor has an up-to-date value before attempting to update it. See https://google.aip.dev/154.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A descriptive comment. This field may be updated. The field may be displayed in chooser dialogs.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. A checksum, returned by the server, that can be sent on update requests to ensure the attestor has an up-to-date value before attempting to update it. See https://google.aip.dev/154.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The resource name, in the format: \`projects/*/attestors/*\`. This field may not be updated.
     - name: userOwnedGrafeasNote
       description: |
         This specifies how an attestation will be read, and how it will be used during policy enforcement.
@@ -328,17 +332,13 @@ userOwnedGrafeasNote
         delegationServiceAccountEmail: "{{ delegationServiceAccountEmail }}"
         noteReference: "{{ noteReference }}"
         publicKeys:
-          - id: "{{ id }}"
+          - asciiArmoredPgpPublicKey: "{{ asciiArmoredPgpPublicKey }}"
             comment: "{{ comment }}"
-            asciiArmoredPgpPublicKey: "{{ asciiArmoredPgpPublicKey }}"
+            id: "{{ id }}"
             pkixPublicKey:
-              signatureAlgorithm: "{{ signatureAlgorithm }}"
-              publicKeyPem: "{{ publicKeyPem }}"
               keyId: "{{ keyId }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. The resource name, in the format: \`projects/*/attestors/*\`. This field may not be updated.
+              publicKeyPem: "{{ publicKeyPem }}"
+              signatureAlgorithm: "{{ signatureAlgorithm }}"
     - name: attestorId
       value: "{{ attestorId }}"
 `}</CodeBlock>
@@ -362,10 +362,10 @@ Updates an attestor. Returns `NOT_FOUND` if the attestor does not exist.
 ```sql
 REPLACE google.binaryauthorization.attestors
 SET 
-data__etag = '{{ etag }}',
 data__description = '{{ description }}',
-data__userOwnedGrafeasNote = '{{ userOwnedGrafeasNote }}',
-data__name = '{{ name }}'
+data__etag = '{{ etag }}',
+data__name = '{{ name }}',
+data__userOwnedGrafeasNote = '{{ userOwnedGrafeasNote }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND attestorsId = '{{ attestorsId }}' --required
@@ -420,9 +420,9 @@ EXEC google.binaryauthorization.attestors.validate_attestation_occurrence
 @attestorsId='{{ attestorsId }}' --required 
 @@json=
 '{
+"attestation": "{{ attestation }}", 
 "occurrenceNote": "{{ occurrenceNote }}", 
-"occurrenceResourceUri": "{{ occurrenceResourceUri }}", 
-"attestation": "{{ attestation }}"
+"occurrenceResourceUri": "{{ occurrenceResourceUri }}"
 }'
 ;
 ```

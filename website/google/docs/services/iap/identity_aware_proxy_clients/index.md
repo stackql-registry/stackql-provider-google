@@ -125,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-brandsId"><code>brandsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the existing clients for the brand.</td>
 </tr>
 <tr>
@@ -230,8 +230,8 @@ secret
 FROM google.iap.identity_aware_proxy_clients
 WHERE projectsId = '{{ projectsId }}' -- required
 AND brandsId = '{{ brandsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

@@ -103,7 +103,7 @@ The following methods are available for this resource:
     <td><a href="#list_referrers"><CopyableCode code="list_referrers" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of resources that refer to the VM instance specified in<br />the request. For example, if the VM instance is part of a managed or<br />unmanaged instance group, the referrers list includes the instance group.<br />For more information, readViewing<br />referrers to VM instances.</td>
 </tr>
 </tbody>
@@ -189,10 +189,10 @@ FROM google.compute.instances_referrers
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
 AND instance = '{{ instance }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```

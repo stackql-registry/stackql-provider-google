@@ -282,16 +282,16 @@ Creates a QaQuestionTag.
 ```sql
 INSERT INTO google.contactcenterinsights.qa_question_tags (
 data__displayName,
-data__qaQuestionIds,
 data__name,
+data__qaQuestionIds,
 projectsId,
 locationsId,
 qaQuestionTagId
 )
 SELECT 
 '{{ displayName }}',
-'{{ qaQuestionIds }}',
 '{{ name }}',
+'{{ qaQuestionIds }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ qaQuestionTagId }}'
@@ -319,15 +319,15 @@ updateTime
       value: "{{ displayName }}"
       description: |
         Required. A user-specified display name for the tag.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name for the QaQuestionTag Format projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag} In the above format, the last segment, i.e., qa_question_tag, is a server-generated ID corresponding to the tag resource.
     - name: qaQuestionIds
       value:
         - "{{ qaQuestionIds }}"
       description: |
         Optional. The list of Scorecard Question IDs that the tag applies to. Each QaQuestionId is represented as a full resource name containing the Question ID. Lastly, Since a tag may not necessarily be referenced by any Scorecard Questions, we treat this field as optional.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name for the QaQuestionTag Format projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag} In the above format, the last segment, i.e., qa_question_tag, is a server-generated ID corresponding to the tag resource.
     - name: qaQuestionTagId
       value: "{{ qaQuestionTagId }}"
 `}</CodeBlock>
@@ -352,8 +352,8 @@ Updates a QaQuestionTag.
 UPDATE google.contactcenterinsights.qa_question_tags
 SET 
 data__displayName = '{{ displayName }}',
-data__qaQuestionIds = '{{ qaQuestionIds }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__qaQuestionIds = '{{ qaQuestionIds }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

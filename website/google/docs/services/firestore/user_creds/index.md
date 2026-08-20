@@ -148,18 +148,18 @@ The following methods are available for this resource:
     <td>Deletes a user creds.</td>
 </tr>
 <tr>
-    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-userCredsId"><code>userCredsId</code></a></td>
-    <td></td>
-    <td>Enables a user creds. No-op if the user creds are already enabled.</td>
-</tr>
-<tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-userCredsId"><code>userCredsId</code></a></td>
     <td></td>
     <td>Disables a user creds. No-op if the user creds are already disabled.</td>
+</tr>
+<tr>
+    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-userCredsId"><code>userCredsId</code></a></td>
+    <td></td>
+    <td>Enables a user creds. No-op if the user creds are already enabled.</td>
 </tr>
 <tr>
     <td><a href="#reset_password"><CopyableCode code="reset_password" /></a></td>
@@ -266,15 +266,15 @@ Create a user creds.
 
 ```sql
 INSERT INTO google.firestore.user_creds (
-data__resourceIdentity,
 data__name,
+data__resourceIdentity,
 projectsId,
 databasesId,
 userCredsId
 )
 SELECT 
-'{{ resourceIdentity }}',
 '{{ name }}',
+'{{ resourceIdentity }}',
 '{{ projectsId }}',
 '{{ databasesId }}',
 '{{ userCredsId }}'
@@ -299,15 +299,15 @@ updateTime
     - name: databasesId
       value: "{{ databasesId }}"
       description: Required parameter for the user_creds resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the UserCreds. Format: \`projects/{project}/databases/{database}/userCreds/{user_creds}\`
     - name: resourceIdentity
       description: |
         Resource Identity descriptor.
       value:
         principal: "{{ principal }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the UserCreds. Format: \`projects/{project}/databases/{database}/userCreds/{user_creds}\`
     - name: userCredsId
       value: "{{ userCredsId }}"
 `}</CodeBlock>
@@ -342,31 +342,31 @@ AND userCredsId = '{{ userCredsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="enable"
+    defaultValue="disable"
     values={[
-        { label: 'enable', value: 'enable' },
         { label: 'disable', value: 'disable' },
+        { label: 'enable', value: 'enable' },
         { label: 'reset_password', value: 'reset_password' }
     ]}
 >
-<TabItem value="enable">
-
-Enables a user creds. No-op if the user creds are already enabled.
-
-```sql
-EXEC google.firestore.user_creds.enable 
-@projectsId='{{ projectsId }}' --required, 
-@databasesId='{{ databasesId }}' --required, 
-@userCredsId='{{ userCredsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="disable">
 
 Disables a user creds. No-op if the user creds are already disabled.
 
 ```sql
 EXEC google.firestore.user_creds.disable 
+@projectsId='{{ projectsId }}' --required, 
+@databasesId='{{ databasesId }}' --required, 
+@userCredsId='{{ userCredsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="enable">
+
+Enables a user creds. No-op if the user creds are already enabled.
+
+```sql
+EXEC google.firestore.user_creds.enable 
 @projectsId='{{ projectsId }}' --required, 
 @databasesId='{{ databasesId }}' --required, 
 @userCredsId='{{ userCredsId }}' --required

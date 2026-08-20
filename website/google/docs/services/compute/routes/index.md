@@ -260,7 +260,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of Route resources available to the specified project.</td>
 </tr>
 <tr>
@@ -398,11 +398,11 @@ selfLink,
 warning
 FROM google.compute.routes
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -425,39 +425,39 @@ Creates a Route resource in the specified project using the data included<br />i
 ```sql
 INSERT INTO google.compute.routes (
 data__description,
-data__nextHopIlb,
-data__routeStatus,
-data__name,
-data__priority,
-data__nextHopInstance,
-data__nextHopNetwork,
-data__selfLink,
-data__nextHopIp,
 data__destRange,
-data__params,
-data__nextHopGateway,
-data__tags,
+data__name,
 data__network,
+data__nextHopGateway,
+data__nextHopIlb,
+data__nextHopInstance,
+data__nextHopIp,
+data__nextHopNetwork,
 data__nextHopVpnTunnel,
+data__params,
+data__priority,
+data__routeStatus,
+data__selfLink,
+data__tags,
 project,
 requestId
 )
 SELECT 
 '{{ description }}',
-'{{ nextHopIlb }}',
-'{{ routeStatus }}',
-'{{ name }}',
-{{ priority }},
-'{{ nextHopInstance }}',
-'{{ nextHopNetwork }}',
-'{{ selfLink }}',
-'{{ nextHopIp }}',
 '{{ destRange }}',
-'{{ params }}',
-'{{ nextHopGateway }}',
-'{{ tags }}',
+'{{ name }}',
 '{{ network }}',
+'{{ nextHopGateway }}',
+'{{ nextHopIlb }}',
+'{{ nextHopInstance }}',
+'{{ nextHopIp }}',
+'{{ nextHopNetwork }}',
 '{{ nextHopVpnTunnel }}',
+'{{ params }}',
+{{ priority }},
+'{{ routeStatus }}',
+'{{ selfLink }}',
+'{{ tags }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -504,6 +504,34 @@ zone
       description: |
         An optional description of this resource. Provide this field when you
         create the resource.
+    - name: destRange
+      value: "{{ destRange }}"
+      description: |
+        The destination range of outgoing packets that this route applies to. Both
+        IPv4 and IPv6 are supported.
+        Must specify an IPv4 range (e.g. 192.0.2.0/24) or an IPv6 range in RFC 4291
+        format (e.g. 2001:db8::/32). IPv6 range will be displayed using RFC 5952
+        compressed format.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`. The first character must be a
+        lowercase letter, and all following characters (except for the last
+        character) must be a dash, lowercase letter, or digit. The last character
+        must be a lowercase letter or digit.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Fully-qualified URL of the network that this route applies to.
+    - name: nextHopGateway
+      value: "{{ nextHopGateway }}"
+      description: |
+        The URL to a gateway that should handle matching packets.
+        You can only specify the internet gateway using a full or
+        partial valid URL: projects/project/global/gateways/default-internet-gateway
     - name: nextHopIlb
       value: "{{ nextHopIlb }}"
       description: |
@@ -520,31 +548,6 @@ zone
         - 2001:db8:0:0:2d9:51:0:0
         IPv6 addresses will be displayed using RFC 5952 compressed format (e.g.
         2001:db8::2d9:51:0:0). Should never be an IPv4-mapped IPv6 address.
-    - name: routeStatus
-      value: "{{ routeStatus }}"
-      description: |
-        [Output only] The status of the route. This status applies to
-        dynamic routes learned by Cloud Routers. It is also applicable to routes
-        undergoing migration.
-      valid_values: ['ACTIVE', 'DROPPED', 'INACTIVE', 'PENDING']
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`. The first character must be a
-        lowercase letter, and all following characters (except for the last
-        character) must be a dash, lowercase letter, or digit. The last character
-        must be a lowercase letter or digit.
-    - name: priority
-      value: {{ priority }}
-      description: |
-        The priority of this route. Priority is used to break ties in cases
-        where there is more than one matching route of equal prefix length. In
-        cases where multiple routes have equal prefix length, the one with the
-        lowest-numbered priority value wins. The default value is \`1000\`. The
-        priority value must be from \`0\` to \`65535\`, inclusive.
     - name: nextHopInstance
       value: "{{ nextHopInstance }}"
       description: |
@@ -552,14 +555,6 @@ zone
         this as a full or partial URL.
         For example:
         https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/
-    - name: nextHopNetwork
-      value: "{{ nextHopNetwork }}"
-      description: |
-        The URL of the local network if it should handle matching packets.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined fully-qualified URL for this resource.
     - name: nextHopIp
       value: "{{ nextHopIp }}"
       description: |
@@ -570,39 +565,44 @@ zone
         2001:db8:0:0:2d9:51:0:0). IPv6 addresses will be displayed using RFC 5952
         compressed format (e.g. 2001:db8::2d9:51:0:0). Should never be an
         IPv4-mapped IPv6 address.
-    - name: destRange
-      value: "{{ destRange }}"
+    - name: nextHopNetwork
+      value: "{{ nextHopNetwork }}"
       description: |
-        The destination range of outgoing packets that this route applies to. Both
-        IPv4 and IPv6 are supported.
-        Must specify an IPv4 range (e.g. 192.0.2.0/24) or an IPv6 range in RFC 4291
-        format (e.g. 2001:db8::/32). IPv6 range will be displayed using RFC 5952
-        compressed format.
+        The URL of the local network if it should handle matching packets.
+    - name: nextHopVpnTunnel
+      value: "{{ nextHopVpnTunnel }}"
+      description: |
+        The URL to a VpnTunnel that should handle matching packets.
     - name: params
       description: |
         Input only. [Input Only] Additional params passed with the request, but not persisted
         as part of resource payload.
       value:
         resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: nextHopGateway
-      value: "{{ nextHopGateway }}"
+    - name: priority
+      value: {{ priority }}
       description: |
-        The URL to a gateway that should handle matching packets.
-        You can only specify the internet gateway using a full or
-        partial valid URL: projects/project/global/gateways/default-internet-gateway
+        The priority of this route. Priority is used to break ties in cases
+        where there is more than one matching route of equal prefix length. In
+        cases where multiple routes have equal prefix length, the one with the
+        lowest-numbered priority value wins. The default value is \`1000\`. The
+        priority value must be from \`0\` to \`65535\`, inclusive.
+    - name: routeStatus
+      value: "{{ routeStatus }}"
+      description: |
+        [Output only] The status of the route. This status applies to
+        dynamic routes learned by Cloud Routers. It is also applicable to routes
+        undergoing migration.
+      valid_values: ['ACTIVE', 'DROPPED', 'INACTIVE', 'PENDING']
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined fully-qualified URL for this resource.
     - name: tags
       value:
         - "{{ tags }}"
       description: |
         A list of instance tags to which this route applies.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Fully-qualified URL of the network that this route applies to.
-    - name: nextHopVpnTunnel
-      value: "{{ nextHopVpnTunnel }}"
-      description: |
-        The URL to a VpnTunnel that should handle matching packets.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

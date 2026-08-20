@@ -219,14 +219,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-checkExistingUsage"><code>checkExistingUsage</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Patches the modifiable fields of an API key. The key string of the API key isn't included in the response. NOTE: Key is a global resource; hence the only supported value for location is `global`.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-checkExistingUsage"><code>checkExistingUsage</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes an API key. Deleted key can be retrieved within 30 days of deletion. Afterward, key will be purged from the project. NOTE: Key is a global resource; hence the only supported value for location is `global`.</td>
 </tr>
 <tr>
@@ -271,6 +271,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-projectsId">
     <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-checkExistingUsage">
+    <td><CopyableCode code="checkExistingUsage" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -389,23 +394,23 @@ Creates a new API key. NOTE: Key is a global resource; hence the only supported 
 
 ```sql
 INSERT INTO google.apikeys.keys (
-data__serviceAccountEmail,
-data__name,
-data__displayName,
 data__annotations,
-data__restrictions,
+data__displayName,
 data__etag,
+data__name,
+data__restrictions,
+data__serviceAccountEmail,
 projectsId,
 locationsId,
 keyId
 )
 SELECT 
-'{{ serviceAccountEmail }}',
-'{{ name }}',
-'{{ displayName }}',
 '{{ annotations }}',
-'{{ restrictions }}',
+'{{ displayName }}',
 '{{ etag }}',
+'{{ name }}',
+'{{ restrictions }}',
+'{{ serviceAccountEmail }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyId }}'
@@ -429,46 +434,46 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the keys resource.
-    - name: serviceAccountEmail
-      value: "{{ serviceAccountEmail }}"
-      description: |
-        Optional. The email address of [the service account](https://cloud.google.com/iam/docs/service-accounts) the key is bound to.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the key. The \`name\` has the form: \`projects//locations/global/keys/\`. For example: \`projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2\` NOTE: Key is a global resource; hence the only supported value for location is \`global\`.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Human-readable display name of this key that you can modify. The maximum length is 63 characters.
     - name: annotations
       value: "{{ annotations }}"
       description: |
         Annotations is an unstructured key-value map stored with a policy that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.
-    - name: restrictions
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Key restrictions.
-      value:
-        browserKeyRestrictions:
-          allowedReferrers:
-            - "{{ allowedReferrers }}"
-        apiTargets:
-          - service: "{{ service }}"
-            methods: "{{ methods }}"
-        serverKeyRestrictions:
-          allowedIps:
-            - "{{ allowedIps }}"
-        iosKeyRestrictions:
-          allowedBundleIds:
-            - "{{ allowedBundleIds }}"
-        androidKeyRestrictions:
-          allowedApplications:
-            - packageName: "{{ packageName }}"
-              sha1Fingerprint: "{{ sha1Fingerprint }}"
+        Human-readable display name of this key that you can modify. The maximum length is 63 characters.
     - name: etag
       value: "{{ etag }}"
       description: |
         A checksum computed by the server based on the current value of the Key resource. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. See https://google.aip.dev/154.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the key. The \`name\` has the form: \`projects//locations/global/keys/\`. For example: \`projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2\` NOTE: Key is a global resource; hence the only supported value for location is \`global\`.
+    - name: restrictions
+      description: |
+        Key restrictions.
+      value:
+        androidKeyRestrictions:
+          allowedApplications:
+            - packageName: "{{ packageName }}"
+              sha1Fingerprint: "{{ sha1Fingerprint }}"
+        apiTargets:
+          - methods: "{{ methods }}"
+            service: "{{ service }}"
+        browserKeyRestrictions:
+          allowedReferrers:
+            - "{{ allowedReferrers }}"
+        iosKeyRestrictions:
+          allowedBundleIds:
+            - "{{ allowedBundleIds }}"
+        serverKeyRestrictions:
+          allowedIps:
+            - "{{ allowedIps }}"
+    - name: serviceAccountEmail
+      value: "{{ serviceAccountEmail }}"
+      description: |
+        Optional. The email address of [the service account](https://cloud.google.com/iam/docs/service-accounts) the key is bound to.
     - name: keyId
       value: "{{ keyId }}"
 `}</CodeBlock>
@@ -492,16 +497,17 @@ Patches the modifiable fields of an API key. The key string of the API key isn't
 ```sql
 UPDATE google.apikeys.keys
 SET 
-data__serviceAccountEmail = '{{ serviceAccountEmail }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__annotations = '{{ annotations }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
+data__name = '{{ name }}',
 data__restrictions = '{{ restrictions }}',
-data__etag = '{{ etag }}'
+data__serviceAccountEmail = '{{ serviceAccountEmail }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND keysId = '{{ keysId }}' --required
+AND checkExistingUsage = '{{ checkExistingUsage}}'
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
@@ -531,6 +537,7 @@ DELETE FROM google.apikeys.keys
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND keysId = '{{ keysId }}' --required
+AND checkExistingUsage = '{{ checkExistingUsage }}'
 AND etag = '{{ etag }}'
 ;
 ```

@@ -109,6 +109,51 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Required. Name of the BackendAuthenticationConfig resource. It matches the pattern `projects/*/locations/&#123;location&#125;/backendAuthenticationConfigs/&#123;backend_authentication_config&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clientCertificate" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A reference to a certificatemanager.googleapis.com.Certificate resource. This is a relative resource path following the form "projects/&#123;project&#125;/locations/&#123;location&#125;/certificates/&#123;certificate&#125;". Used by a BackendService to negotiate mTLS when the backend connection uses TLS and the backend requests a client certificate. Must have a CLIENT_AUTH scope.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Free-text description of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Etag of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Set of label tags associated with the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="trustConfig" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A reference to a TrustConfig resource from the certificatemanager.googleapis.com namespace. This is a relative resource path following the form "projects/&#123;project&#125;/locations/&#123;location&#125;/trustConfigs/&#123;trust_config&#125;". A BackendService uses the chain of trust represented by this TrustConfig, if specified, to validate the server certificates presented by the backend. Required unless wellKnownRoots is set to PUBLIC_ROOTS.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="wellKnownRoots" /></td>
+    <td><code>string</code></td>
+    <td>Well known roots to use for server certificate validation. (WELL_KNOWN_ROOTS_UNSPECIFIED, NONE, PUBLIC_ROOTS)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -260,7 +305,15 @@ Lists BackendAuthenticationConfigs in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+clientCertificate,
+createTime,
+description,
+etag,
+labels,
+trustConfig,
+updateTime,
+wellKnownRoots
 FROM google.networksecurity.backend_authentication_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -287,23 +340,23 @@ Creates a new BackendAuthenticationConfig in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.backend_authentication_configs (
-data__name,
 data__clientCertificate,
 data__description,
 data__labels,
-data__wellKnownRoots,
+data__name,
 data__trustConfig,
+data__wellKnownRoots,
 projectsId,
 locationsId,
 backendAuthenticationConfigId
 )
 SELECT 
-'{{ name }}',
 '{{ clientCertificate }}',
 '{{ description }}',
 '{{ labels }}',
-'{{ wellKnownRoots }}',
+'{{ name }}',
 '{{ trustConfig }}',
+'{{ wellKnownRoots }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backendAuthenticationConfigId }}'
@@ -327,10 +380,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the backend_authentication_configs resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Name of the BackendAuthenticationConfig resource. It matches the pattern \`projects/*/locations/{location}/backendAuthenticationConfigs/{backend_authentication_config}\`
     - name: clientCertificate
       value: "{{ clientCertificate }}"
       description: |
@@ -343,15 +392,19 @@ response
       value: "{{ labels }}"
       description: |
         Set of label tags associated with the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Name of the BackendAuthenticationConfig resource. It matches the pattern \`projects/*/locations/{location}/backendAuthenticationConfigs/{backend_authentication_config}\`
+    - name: trustConfig
+      value: "{{ trustConfig }}"
+      description: |
+        Optional. A reference to a TrustConfig resource from the certificatemanager.googleapis.com namespace. This is a relative resource path following the form "projects/{project}/locations/{location}/trustConfigs/{trust_config}". A BackendService uses the chain of trust represented by this TrustConfig, if specified, to validate the server certificates presented by the backend. Required unless wellKnownRoots is set to PUBLIC_ROOTS.
     - name: wellKnownRoots
       value: "{{ wellKnownRoots }}"
       description: |
         Well known roots to use for server certificate validation.
       valid_values: ['WELL_KNOWN_ROOTS_UNSPECIFIED', 'NONE', 'PUBLIC_ROOTS']
-    - name: trustConfig
-      value: "{{ trustConfig }}"
-      description: |
-        Optional. A reference to a TrustConfig resource from the certificatemanager.googleapis.com namespace. This is a relative resource path following the form "projects/{project}/locations/{location}/trustConfigs/{trust_config}". A BackendService uses the chain of trust represented by this TrustConfig, if specified, to validate the server certificates presented by the backend. Required unless wellKnownRoots is set to PUBLIC_ROOTS.
     - name: backendAuthenticationConfigId
       value: "{{ backendAuthenticationConfigId }}"
 `}</CodeBlock>
@@ -375,12 +428,12 @@ Updates the parameters of a single BackendAuthenticationConfig to BackendAuthent
 ```sql
 UPDATE google.networksecurity.backend_authentication_configs
 SET 
-data__name = '{{ name }}',
 data__clientCertificate = '{{ clientCertificate }}',
 data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__wellKnownRoots = '{{ wellKnownRoots }}',
-data__trustConfig = '{{ trustConfig }}'
+data__name = '{{ name }}',
+data__trustConfig = '{{ trustConfig }}',
+data__wellKnownRoots = '{{ wellKnownRoots }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

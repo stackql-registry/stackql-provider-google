@@ -205,21 +205,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List all Jobs for a project within a region.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td><a href="#parameter-jobId"><code>jobId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a Job.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-reason"><code>reason</code></a></td>
+    <td><a href="#parameter-reason"><code>reason</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Delete a Job.</td>
 </tr>
 <tr>
@@ -351,10 +351,10 @@ updateTime
 FROM google.batch.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -376,28 +376,28 @@ Create a Job.
 
 ```sql
 INSERT INTO google.batch.jobs (
-data__taskGroups,
-data__notifications,
-data__labels,
-data__priority,
-data__logsPolicy,
 data__allocationPolicy,
+data__labels,
+data__logsPolicy,
+data__notifications,
+data__priority,
+data__taskGroups,
 projectsId,
 locationsId,
-requestId,
-jobId
+jobId,
+requestId
 )
 SELECT 
-'{{ taskGroups }}',
-'{{ notifications }}',
-'{{ labels }}',
-'{{ priority }}',
-'{{ logsPolicy }}',
 '{{ allocationPolicy }}',
+'{{ labels }}',
+'{{ logsPolicy }}',
+'{{ notifications }}',
+'{{ priority }}',
+'{{ taskGroups }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ jobId }}'
+'{{ jobId }}',
+'{{ requestId }}'
 RETURNING
 name,
 allocationPolicy,
@@ -424,158 +424,159 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the jobs resource.
-    - name: taskGroups
-      description: |
-        Required. TaskGroups in the Job. Only one TaskGroup is supported now.
-      value:
-        - parallelism: "{{ parallelism }}"
-          taskEnvironments: "{{ taskEnvironments }}"
-          taskSpec:
-            runnables:
-              - ignoreExitStatus: {{ ignoreExitStatus }}
-                script:
-                  path: "{{ path }}"
-                  text: "{{ text }}"
-                labels: "{{ labels }}"
-                timeout: "{{ timeout }}"
-                displayName: "{{ displayName }}"
-                alwaysRun: {{ alwaysRun }}
-                container:
-                  enableImageStreaming: {{ enableImageStreaming }}
-                  commands:
-                    - "{{ commands }}"
-                  username: "{{ username }}"
-                  password: "{{ password }}"
-                  volumes:
-                    - "{{ volumes }}"
-                  imageUri: "{{ imageUri }}"
-                  options: "{{ options }}"
-                  entrypoint: "{{ entrypoint }}"
-                  blockExternalNetwork: {{ blockExternalNetwork }}
-                barrier:
-                  name: "{{ name }}"
-                background: {{ background }}
-                environment:
-                  variables: "{{ variables }}"
-                  encryptedVariables:
-                    keyName: "{{ keyName }}"
-                    cipherText: "{{ cipherText }}"
-                  secretVariables: "{{ secretVariables }}"
-            computeResource:
-              cpuMilli: "{{ cpuMilli }}"
-              bootDiskMib: "{{ bootDiskMib }}"
-              memoryMib: "{{ memoryMib }}"
-            maxRetryCount: {{ maxRetryCount }}
-            lifecyclePolicies:
-              - actionCondition:
-                  exitCodes:
-                    - {{ exitCodes }}
-                action: "{{ action }}"
-            environments: "{{ environments }}"
-            environment:
-              variables: "{{ variables }}"
-              encryptedVariables:
-                keyName: "{{ keyName }}"
-                cipherText: "{{ cipherText }}"
-              secretVariables: "{{ secretVariables }}"
-            maxRunDuration: "{{ maxRunDuration }}"
-            volumes:
-              - nfs:
-                  server: "{{ server }}"
-                  remotePath: "{{ remotePath }}"
-                gcs:
-                  remotePath: "{{ remotePath }}"
-                deviceName: "{{ deviceName }}"
-                mountPath: "{{ mountPath }}"
-                mountOptions: "{{ mountOptions }}"
-          permissiveSsh: {{ permissiveSsh }}
-          taskCountPerNode: "{{ taskCountPerNode }}"
-          taskCount: "{{ taskCount }}"
-          schedulingPolicy: "{{ schedulingPolicy }}"
-          requireHostsFile: {{ requireHostsFile }}
-          runAsNonRoot: {{ runAsNonRoot }}
-          name: "{{ name }}"
-    - name: notifications
-      description: |
-        Notification configurations.
-      value:
-        - pubsubTopic: "{{ pubsubTopic }}"
-          message:
-            newJobState: "{{ newJobState }}"
-            newTaskState: "{{ newTaskState }}"
-            type: "{{ type }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Custom labels to apply to the job and any Cloud Logging [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) that it generates. Use labels to group and describe the resources they are applied to. Batch automatically applies predefined labels and supports multiple \`labels\` fields for each job, which each let you apply custom labels to various resources. Label names that start with "goog-" or "google-" are reserved for predefined labels. For more information about labels with Batch, see [Organize resources using labels](https://cloud.google.com/batch/docs/organize-resources-using-labels).
-    - name: priority
-      value: "{{ priority }}"
-      description: |
-        Priority of the Job. The valid value range is [0, 100). Default value is 0. Higher value indicates higher priority. A job with higher priority value is more likely to run earlier if all other requirements are satisfied.
-    - name: logsPolicy
-      description: |
-        Log preservation policy for the Job.
-      value:
-        destination: "{{ destination }}"
-        logsPath: "{{ logsPath }}"
-        cloudLoggingOption:
-          useGenericTaskMonitoredResource: {{ useGenericTaskMonitoredResource }}
     - name: allocationPolicy
       description: |
         Compute resource allocation for all TaskGroups in the Job.
       value:
-        tags:
-          - "{{ tags }}"
         instances:
-          - installGpuDrivers: {{ installGpuDrivers }}
+          - blockProjectSshKeys: {{ blockProjectSshKeys }}
+            installGpuDrivers: {{ installGpuDrivers }}
+            installOpsAgent: {{ installOpsAgent }}
+            instanceTemplate: "{{ instanceTemplate }}"
             policy:
-              machineType: "{{ machineType }}"
-              disks:
-                - existingDisk: "{{ existingDisk }}"
-                  deviceName: "{{ deviceName }}"
-                  newDisk:
-                    image: "{{ image }}"
-                    diskInterface: "{{ diskInterface }}"
-                    snapshot: "{{ snapshot }}"
-                    sizeGb: "{{ sizeGb }}"
-                    type: "{{ type }}"
-              minCpuPlatform: "{{ minCpuPlatform }}"
-              provisioningModel: "{{ provisioningModel }}"
-              bootDisk:
-                image: "{{ image }}"
-                diskInterface: "{{ diskInterface }}"
-                snapshot: "{{ snapshot }}"
-                sizeGb: "{{ sizeGb }}"
-                type: "{{ type }}"
-              reservation: "{{ reservation }}"
               accelerators:
                 - count: "{{ count }}"
-                  type: "{{ type }}"
                   driverVersion: "{{ driverVersion }}"
                   installGpuDrivers: {{ installGpuDrivers }}
-            instanceTemplate: "{{ instanceTemplate }}"
-            installOpsAgent: {{ installOpsAgent }}
-            blockProjectSshKeys: {{ blockProjectSshKeys }}
-        serviceAccount:
-          scopes:
-            - "{{ scopes }}"
-          email: "{{ email }}"
-        network:
-          networkInterfaces:
-            - network: "{{ network }}"
-              subnetwork: "{{ subnetwork }}"
-              noExternalIpAddress: {{ noExternalIpAddress }}
+                  type: "{{ type }}"
+              bootDisk:
+                diskInterface: "{{ diskInterface }}"
+                image: "{{ image }}"
+                sizeGb: "{{ sizeGb }}"
+                snapshot: "{{ snapshot }}"
+                type: "{{ type }}"
+              disks:
+                - deviceName: "{{ deviceName }}"
+                  existingDisk: "{{ existingDisk }}"
+                  newDisk:
+                    diskInterface: "{{ diskInterface }}"
+                    image: "{{ image }}"
+                    sizeGb: "{{ sizeGb }}"
+                    snapshot: "{{ snapshot }}"
+                    type: "{{ type }}"
+              machineType: "{{ machineType }}"
+              minCpuPlatform: "{{ minCpuPlatform }}"
+              provisioningModel: "{{ provisioningModel }}"
+              reservation: "{{ reservation }}"
         labels: "{{ labels }}"
-        placement:
-          collocation: "{{ collocation }}"
-          maxDistance: "{{ maxDistance }}"
         location:
           allowedLocations:
             - "{{ allowedLocations }}"
-    - name: requestId
-      value: "{{ requestId }}"
+        network:
+          networkInterfaces:
+            - network: "{{ network }}"
+              nicType: "{{ nicType }}"
+              noExternalIpAddress: {{ noExternalIpAddress }}
+              subnetwork: "{{ subnetwork }}"
+        placement:
+          collocation: "{{ collocation }}"
+          maxDistance: "{{ maxDistance }}"
+        serviceAccount:
+          email: "{{ email }}"
+          scopes:
+            - "{{ scopes }}"
+        tags:
+          - "{{ tags }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Custom labels to apply to the job and any Cloud Logging [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) that it generates. Use labels to group and describe the resources they are applied to. Batch automatically applies predefined labels and supports multiple \`labels\` fields for each job, which each let you apply custom labels to various resources. Label names that start with "goog-" or "google-" are reserved for predefined labels. For more information about labels with Batch, see [Organize resources using labels](https://cloud.google.com/batch/docs/organize-resources-using-labels).
+    - name: logsPolicy
+      description: |
+        Log preservation policy for the Job.
+      value:
+        cloudLoggingOption:
+          useGenericTaskMonitoredResource: {{ useGenericTaskMonitoredResource }}
+        destination: "{{ destination }}"
+        logsPath: "{{ logsPath }}"
+    - name: notifications
+      description: |
+        Notification configurations.
+      value:
+        - message:
+            newJobState: "{{ newJobState }}"
+            newTaskState: "{{ newTaskState }}"
+            type: "{{ type }}"
+          pubsubTopic: "{{ pubsubTopic }}"
+    - name: priority
+      value: "{{ priority }}"
+      description: |
+        Priority of the Job. The valid value range is [0, 100). Default value is 0. Higher value indicates higher priority. A job with higher priority value is more likely to run earlier if all other requirements are satisfied.
+    - name: taskGroups
+      description: |
+        Required. TaskGroups in the Job. Only one TaskGroup is supported now.
+      value:
+        - name: "{{ name }}"
+          parallelism: "{{ parallelism }}"
+          permissiveSsh: {{ permissiveSsh }}
+          requireHostsFile: {{ requireHostsFile }}
+          runAsNonRoot: {{ runAsNonRoot }}
+          schedulingPolicy: "{{ schedulingPolicy }}"
+          taskCount: "{{ taskCount }}"
+          taskCountPerNode: "{{ taskCountPerNode }}"
+          taskEnvironments: "{{ taskEnvironments }}"
+          taskSpec:
+            computeResource:
+              bootDiskMib: "{{ bootDiskMib }}"
+              cpuMilli: "{{ cpuMilli }}"
+              memoryMib: "{{ memoryMib }}"
+            environment:
+              encryptedVariables:
+                cipherText: "{{ cipherText }}"
+                keyName: "{{ keyName }}"
+              secretVariables: "{{ secretVariables }}"
+              variables: "{{ variables }}"
+            environments: "{{ environments }}"
+            lifecyclePolicies:
+              - action: "{{ action }}"
+                actionCondition:
+                  exitCodes:
+                    - {{ exitCodes }}
+            maxRetryCount: {{ maxRetryCount }}
+            maxRunDuration: "{{ maxRunDuration }}"
+            runnables:
+              - alwaysRun: {{ alwaysRun }}
+                background: {{ background }}
+                barrier:
+                  name: "{{ name }}"
+                container:
+                  blockExternalNetwork: {{ blockExternalNetwork }}
+                  commands:
+                    - "{{ commands }}"
+                  enableImageStreaming: {{ enableImageStreaming }}
+                  entrypoint: "{{ entrypoint }}"
+                  imageUri: "{{ imageUri }}"
+                  options: "{{ options }}"
+                  password: "{{ password }}"
+                  username: "{{ username }}"
+                  volumes:
+                    - "{{ volumes }}"
+                displayName: "{{ displayName }}"
+                environment:
+                  encryptedVariables:
+                    cipherText: "{{ cipherText }}"
+                    keyName: "{{ keyName }}"
+                  secretVariables: "{{ secretVariables }}"
+                  variables: "{{ variables }}"
+                ignoreExitStatus: {{ ignoreExitStatus }}
+                labels: "{{ labels }}"
+                script:
+                  path: "{{ path }}"
+                  text: "{{ text }}"
+                timeout: "{{ timeout }}"
+            volumes:
+              - deviceName: "{{ deviceName }}"
+                gcs:
+                  remotePath: "{{ remotePath }}"
+                mountOptions: "{{ mountOptions }}"
+                mountPath: "{{ mountPath }}"
+                nfs:
+                  remotePath: "{{ remotePath }}"
+                  server: "{{ server }}"
     - name: jobId
       value: "{{ jobId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -599,8 +600,8 @@ DELETE FROM google.batch.jobs
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND jobsId = '{{ jobsId }}' --required
-AND requestId = '{{ requestId }}'
 AND reason = '{{ reason }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

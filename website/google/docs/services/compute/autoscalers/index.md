@@ -280,14 +280,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of autoscalers contained within<br />the specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of autoscalers.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -301,7 +301,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-autoscaler"><code>autoscaler</code></a></td>
+    <td><a href="#parameter-autoscaler"><code>autoscaler</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates an autoscaler in the specified project using<br />the data included in the request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.</td>
 </tr>
 <tr>
@@ -449,9 +449,9 @@ warning
 FROM google.compute.autoscalers
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -479,13 +479,13 @@ target,
 zone
 FROM google.compute.autoscalers
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -507,25 +507,25 @@ Creates an autoscaler in the specified project using<br />the data included in t
 
 ```sql
 INSERT INTO google.compute.autoscalers (
-data__target,
+data__autoscalingPolicy,
+data__description,
+data__name,
+data__selfLink,
 data__status,
 data__statusDetails,
-data__name,
-data__autoscalingPolicy,
-data__selfLink,
-data__description,
+data__target,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ target }}',
+'{{ autoscalingPolicy }}',
+'{{ description }}',
+'{{ name }}',
+'{{ selfLink }}',
 '{{ status }}',
 '{{ statusDetails }}',
-'{{ name }}',
-'{{ autoscalingPolicy }}',
-'{{ selfLink }}',
-'{{ description }}',
+'{{ target }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -571,11 +571,54 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the autoscalers resource.
-    - name: target
-      value: "{{ target }}"
+    - name: autoscalingPolicy
       description: |
-        URL of the managed instance group that this autoscaler will scale. This
-        field is required when creating an autoscaler.
+        The configuration parameters for the autoscaling algorithm. You can define
+        one or more signals for an autoscaler: cpuUtilization,customMetricUtilizations, andloadBalancingUtilization.
+        If none of these are specified, the default will be to autoscale based oncpuUtilization to 0.6 or 60%.
+      value:
+        coolDownPeriodSec: {{ coolDownPeriodSec }}
+        cpuUtilization:
+          predictiveMethod: "{{ predictiveMethod }}"
+          utilizationTarget: {{ utilizationTarget }}
+        customMetricUtilizations:
+          - filter: "{{ filter }}"
+            metric: "{{ metric }}"
+            singleInstanceAssignment: {{ singleInstanceAssignment }}
+            utilizationTarget: {{ utilizationTarget }}
+            utilizationTargetType: "{{ utilizationTargetType }}"
+        loadBalancingUtilization:
+          utilizationTarget: {{ utilizationTarget }}
+        maxNumReplicas: {{ maxNumReplicas }}
+        minNumReplicas: {{ minNumReplicas }}
+        mode: "{{ mode }}"
+        scaleInControl:
+          maxScaledInReplicas:
+            calculated: {{ calculated }}
+            fixed: {{ fixed }}
+            percent: {{ percent }}
+          timeWindowSec: {{ timeWindowSec }}
+        scalingSchedules: "{{ scalingSchedules }}"
+        stabilizationPeriodSec: {{ stabilizationPeriodSec }}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
     - name: status
       value: "{{ status }}"
       description: |
@@ -602,54 +645,11 @@ zone
       value:
         - message: "{{ message }}"
           type: "{{ type }}"
-    - name: name
-      value: "{{ name }}"
+    - name: target
+      value: "{{ target }}"
       description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
-    - name: autoscalingPolicy
-      description: |
-        The configuration parameters for the autoscaling algorithm. You can define
-        one or more signals for an autoscaler: cpuUtilization,customMetricUtilizations, andloadBalancingUtilization.
-        If none of these are specified, the default will be to autoscale based oncpuUtilization to 0.6 or 60%.
-      value:
-        scaleInControl:
-          timeWindowSec: {{ timeWindowSec }}
-          maxScaledInReplicas:
-            calculated: {{ calculated }}
-            fixed: {{ fixed }}
-            percent: {{ percent }}
-        mode: "{{ mode }}"
-        coolDownPeriodSec: {{ coolDownPeriodSec }}
-        loadBalancingUtilization:
-          utilizationTarget: {{ utilizationTarget }}
-        stabilizationPeriodSec: {{ stabilizationPeriodSec }}
-        customMetricUtilizations:
-          - singleInstanceAssignment: {{ singleInstanceAssignment }}
-            metric: "{{ metric }}"
-            utilizationTargetType: "{{ utilizationTargetType }}"
-            utilizationTarget: {{ utilizationTarget }}
-            filter: "{{ filter }}"
-        minNumReplicas: {{ minNumReplicas }}
-        cpuUtilization:
-          utilizationTarget: {{ utilizationTarget }}
-          predictiveMethod: "{{ predictiveMethod }}"
-        scalingSchedules: "{{ scalingSchedules }}"
-        maxNumReplicas: {{ maxNumReplicas }}
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined URL for the resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
+        URL of the managed instance group that this autoscaler will scale. This
+        field is required when creating an autoscaler.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -673,18 +673,18 @@ Updates an autoscaler in the specified project using<br />the data included in t
 ```sql
 UPDATE google.compute.autoscalers
 SET 
-data__target = '{{ target }}',
+data__autoscalingPolicy = '{{ autoscalingPolicy }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__selfLink = '{{ selfLink }}',
 data__status = '{{ status }}',
 data__statusDetails = '{{ statusDetails }}',
-data__name = '{{ name }}',
-data__autoscalingPolicy = '{{ autoscalingPolicy }}',
-data__selfLink = '{{ selfLink }}',
-data__description = '{{ description }}'
+data__target = '{{ target }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
-AND requestId = '{{ requestId}}'
 AND autoscaler = '{{ autoscaler}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 id,
 name,
@@ -733,13 +733,13 @@ Updates an autoscaler in the specified project using<br />the data included in t
 ```sql
 REPLACE google.compute.autoscalers
 SET 
-data__target = '{{ target }}',
+data__autoscalingPolicy = '{{ autoscalingPolicy }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__selfLink = '{{ selfLink }}',
 data__status = '{{ status }}',
 data__statusDetails = '{{ statusDetails }}',
-data__name = '{{ name }}',
-data__autoscalingPolicy = '{{ autoscalingPolicy }}',
-data__selfLink = '{{ selfLink }}',
-data__description = '{{ description }}'
+data__target = '{{ target }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required

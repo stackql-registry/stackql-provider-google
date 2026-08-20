@@ -299,19 +299,19 @@ Create a new ChannelConnection in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.channel_connections (
-data__labels,
-data__name,
 data__activationToken,
 data__channel,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 channelConnectionId
 )
 SELECT 
-'{{ labels }}',
-'{{ name }}',
 '{{ activationToken }}',
 '{{ channel }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ channelConnectionId }}'
@@ -335,14 +335,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the channel_connections resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Resource labels.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. The name of the connection.
     - name: activationToken
       value: "{{ activationToken }}"
       description: |
@@ -351,6 +343,14 @@ response
       value: "{{ channel }}"
       description: |
         Required. The name of the connected subscriber Channel. This is a weak reference to avoid cross project and cross accounts references. This must be in \`projects/{project}/location/{location}/channels/{channel_id}\` format.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The name of the connection.
     - name: channelConnectionId
       value: "{{ channelConnectionId }}"
 `}</CodeBlock>

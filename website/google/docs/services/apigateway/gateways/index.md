@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Gateways in a given project and location.</td>
 </tr>
 <tr>
@@ -310,10 +310,10 @@ updateTime
 FROM google.apigateway.gateways
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -336,16 +336,16 @@ Creates a new Gateway in a given project and location.
 ```sql
 INSERT INTO google.apigateway.gateways (
 data__apiConfig,
-data__labels,
 data__displayName,
+data__labels,
 projectsId,
 locationsId,
 gatewayId
 )
 SELECT 
 '{{ apiConfig }}',
-'{{ labels }}',
 '{{ displayName }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ gatewayId }}'
@@ -373,14 +373,14 @@ response
       value: "{{ apiConfig }}"
       description: |
         Required. Resource name of the API Config for this Gateway. Format: projects/{project}/locations/global/apis/{api}/configs/{apiConfig}
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. Display name.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
     - name: gatewayId
       value: "{{ gatewayId }}"
 `}</CodeBlock>
@@ -405,8 +405,8 @@ Updates the parameters of a single Gateway.
 UPDATE google.apigateway.gateways
 SET 
 data__apiConfig = '{{ apiConfig }}',
-data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

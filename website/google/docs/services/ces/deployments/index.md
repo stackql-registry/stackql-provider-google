@@ -91,6 +91,16 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Input only. Ephemeral Instagram credentials required when configuring a Instagram channel profile. (id: InstagramCredentials)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="modality" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The modality of the deployment. Note: Deployment-level modality override is gated behind an allowlist. Contact the CXAS team to enable this field. (MODALITY_UNSPECIFIED, MODALITY_TEXT, MODALITY_VOICE, MODALITY_VIDEO)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="modelSettings" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Model settings for the deployment. Overrides model settings configured at the app/agent levels. Note: Deployment-level model settings override is gated behind an allowlist. Contact the CXAS team to enable this field. (id: ModelSettings)</td>
+</tr>
+<tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp when this deployment was last updated.</td>
@@ -155,6 +165,16 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Input only. Ephemeral Instagram credentials required when configuring a Instagram channel profile. (id: InstagramCredentials)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="modality" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The modality of the deployment. Note: Deployment-level modality override is gated behind an allowlist. Contact the CXAS team to enable this field. (MODALITY_UNSPECIFIED, MODALITY_TEXT, MODALITY_VOICE, MODALITY_VIDEO)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="modelSettings" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Model settings for the deployment. Overrides model settings configured at the app/agent levels. Note: Deployment-level model settings override is gated behind an allowlist. Contact the CXAS team to enable this field. (id: ModelSettings)</td>
+</tr>
+<tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp when this deployment was last updated.</td>
@@ -195,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists deployments in the given app.</td>
 </tr>
 <tr>
@@ -311,6 +331,8 @@ displayName,
 etag,
 experimentConfig,
 instagramCredentials,
+modality,
+modelSettings,
 updateTime,
 whatsappCredentials
 FROM google.ces.deployments
@@ -335,15 +357,17 @@ displayName,
 etag,
 experimentConfig,
 instagramCredentials,
+modality,
+modelSettings,
 updateTime,
 whatsappCredentials
 FROM google.ces.deployments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND appsId = '{{ appsId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -365,26 +389,30 @@ Creates a new deployment in the given app.
 
 ```sql
 INSERT INTO google.ces.deployments (
-data__experimentConfig,
-data__whatsappCredentials,
-data__instagramCredentials,
-data__channelProfile,
-data__name,
-data__displayName,
 data__appVersion,
+data__channelProfile,
+data__displayName,
+data__experimentConfig,
+data__instagramCredentials,
+data__modality,
+data__modelSettings,
+data__name,
+data__whatsappCredentials,
 projectsId,
 locationsId,
 appsId,
 deploymentId
 )
 SELECT 
-'{{ experimentConfig }}',
-'{{ whatsappCredentials }}',
-'{{ instagramCredentials }}',
-'{{ channelProfile }}',
-'{{ name }}',
-'{{ displayName }}',
 '{{ appVersion }}',
+'{{ channelProfile }}',
+'{{ displayName }}',
+'{{ experimentConfig }}',
+'{{ instagramCredentials }}',
+'{{ modality }}',
+'{{ modelSettings }}',
+'{{ name }}',
+'{{ whatsappCredentials }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ appsId }}',
@@ -398,6 +426,8 @@ displayName,
 etag,
 experimentConfig,
 instagramCredentials,
+modality,
+modelSettings,
 updateTime,
 whatsappCredentials
 ;
@@ -417,6 +447,47 @@ whatsappCredentials
     - name: appsId
       value: "{{ appsId }}"
       description: Required parameter for the deployments resource.
+    - name: appVersion
+      value: "{{ appVersion }}"
+      description: |
+        Optional. The resource name of the app version to deploy. Format: \`projects/{project}/locations/{location}/apps/{app}/versions/{version}\` Use \`projects/{project}/locations/{location}/apps/{app}/versions/-\` to use the draft app.
+    - name: channelProfile
+      description: |
+        Required. The channel profile used in the deployment.
+      value:
+        channelType: "{{ channelType }}"
+        disableBargeInControl: {{ disableBargeInControl }}
+        disableDtmf: {{ disableDtmf }}
+        instagramConfig:
+          description: "{{ description }}"
+          displayName: "{{ displayName }}"
+          instagramAccountId: "{{ instagramAccountId }}"
+          thumbnailUrl: "{{ thumbnailUrl }}"
+        noiseSuppressionLevel: "{{ noiseSuppressionLevel }}"
+        personaProperty:
+          persona: "{{ persona }}"
+        profileId: "{{ profileId }}"
+        webWidgetConfig:
+          modality: "{{ modality }}"
+          securitySettings:
+            allowedOrigins:
+              - "{{ allowedOrigins }}"
+            enableOriginCheck: {{ enableOriginCheck }}
+            enablePublicAccess: {{ enablePublicAccess }}
+            enableRecaptcha: {{ enableRecaptcha }}
+          theme: "{{ theme }}"
+          webWidgetTitle: "{{ webWidgetTitle }}"
+        whatsappConfig:
+          description: "{{ description }}"
+          displayName: "{{ displayName }}"
+          phoneNumber: "{{ phoneNumber }}"
+          phoneNumberId: "{{ phoneNumberId }}"
+          thumbnailUrl: "{{ thumbnailUrl }}"
+          wabaId: "{{ wabaId }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name of the deployment.
     - name: experimentConfig
       description: |
         Optional. Experiment configuration for the deployment.
@@ -424,70 +495,40 @@ whatsappCredentials
         versionRelease:
           state: "{{ state }}"
           trafficAllocations:
-            - id: "{{ id }}"
+            - appVersion: "{{ appVersion }}"
+              id: "{{ id }}"
               trafficPercentage: {{ trafficPercentage }}
-              appVersion: "{{ appVersion }}"
+    - name: instagramCredentials
+      description: |
+        Optional. Input only. Ephemeral Instagram credentials required when configuring a Instagram channel profile.
+      value:
+        authCode: "{{ authCode }}"
+        conversationProfileId: "{{ conversationProfileId }}"
+    - name: modality
+      value: "{{ modality }}"
+      description: |
+        Optional. The modality of the deployment. Note: Deployment-level modality override is gated behind an allowlist. Contact the CXAS team to enable this field.
+      valid_values: ['MODALITY_UNSPECIFIED', 'MODALITY_TEXT', 'MODALITY_VOICE', 'MODALITY_VIDEO']
+    - name: modelSettings
+      description: |
+        Optional. Model settings for the deployment. Overrides model settings configured at the app/agent levels. Note: Deployment-level model settings override is gated behind an allowlist. Contact the CXAS team to enable this field.
+      value:
+        model: "{{ model }}"
+        temperature: {{ temperature }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the deployment. Format: \`projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}\`
     - name: whatsappCredentials
       description: |
         Optional. Input only. Ephemeral WhatsApp credentials required when configuring a WhatsApp channel profile.
       value:
         authCode: "{{ authCode }}"
+        businessAccountId: "{{ businessAccountId }}"
+        conversationProfileId: "{{ conversationProfileId }}"
+        phoneNumber: "{{ phoneNumber }}"
         pin: "{{ pin }}"
         wabaId: "{{ wabaId }}"
-        conversationProfileId: "{{ conversationProfileId }}"
-        businessAccountId: "{{ businessAccountId }}"
-        phoneNumber: "{{ phoneNumber }}"
-    - name: instagramCredentials
-      description: |
-        Optional. Input only. Ephemeral Instagram credentials required when configuring a Instagram channel profile.
-      value:
-        conversationProfileId: "{{ conversationProfileId }}"
-        authCode: "{{ authCode }}"
-    - name: channelProfile
-      description: |
-        Required. The channel profile used in the deployment.
-      value:
-        channelType: "{{ channelType }}"
-        disableBargeInControl: {{ disableBargeInControl }}
-        webWidgetConfig:
-          theme: "{{ theme }}"
-          webWidgetTitle: "{{ webWidgetTitle }}"
-          modality: "{{ modality }}"
-          securitySettings:
-            enableRecaptcha: {{ enableRecaptcha }}
-            allowedOrigins:
-              - "{{ allowedOrigins }}"
-            enablePublicAccess: {{ enablePublicAccess }}
-            enableOriginCheck: {{ enableOriginCheck }}
-        noiseSuppressionLevel: "{{ noiseSuppressionLevel }}"
-        profileId: "{{ profileId }}"
-        whatsappConfig:
-          phoneNumber: "{{ phoneNumber }}"
-          displayName: "{{ displayName }}"
-          wabaId: "{{ wabaId }}"
-          phoneNumberId: "{{ phoneNumberId }}"
-          thumbnailUrl: "{{ thumbnailUrl }}"
-          description: "{{ description }}"
-        instagramConfig:
-          instagramAccountId: "{{ instagramAccountId }}"
-          thumbnailUrl: "{{ thumbnailUrl }}"
-          description: "{{ description }}"
-          displayName: "{{ displayName }}"
-        personaProperty:
-          persona: "{{ persona }}"
-        disableDtmf: {{ disableDtmf }}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the deployment. Format: \`projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Display name of the deployment.
-    - name: appVersion
-      value: "{{ appVersion }}"
-      description: |
-        Optional. The resource name of the app version to deploy. Format: \`projects/{project}/locations/{location}/apps/{app}/versions/{version}\` Use \`projects/{project}/locations/{location}/apps/{app}/versions/-\` to use the draft app.
     - name: deploymentId
       value: "{{ deploymentId }}"
 `}</CodeBlock>
@@ -511,13 +552,15 @@ Updates the specified deployment.
 ```sql
 UPDATE google.ces.deployments
 SET 
-data__experimentConfig = '{{ experimentConfig }}',
-data__whatsappCredentials = '{{ whatsappCredentials }}',
-data__instagramCredentials = '{{ instagramCredentials }}',
+data__appVersion = '{{ appVersion }}',
 data__channelProfile = '{{ channelProfile }}',
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__appVersion = '{{ appVersion }}'
+data__experimentConfig = '{{ experimentConfig }}',
+data__instagramCredentials = '{{ instagramCredentials }}',
+data__modality = '{{ modality }}',
+data__modelSettings = '{{ modelSettings }}',
+data__name = '{{ name }}',
+data__whatsappCredentials = '{{ whatsappCredentials }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -533,6 +576,8 @@ displayName,
 etag,
 experimentConfig,
 instagramCredentials,
+modality,
+modelSettings,
 updateTime,
 whatsappCredentials;
 ```

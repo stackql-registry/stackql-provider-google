@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists Rollouts in a given project and location.</td>
 </tr>
 <tr>
@@ -226,32 +226,32 @@ The following methods are available for this resource:
     <td>Deletes a Rollout.</td>
 </tr>
 <tr>
-    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
+    <td><a href="#advance"><CopyableCode code="advance" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-rollout"><code>rollout</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Resumes a Rollout.</td>
+    <td><a href="#parameter-currentWaveNumber"><code>currentWaveNumber</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Advances a Rollout to the next wave, or completes it if no waves remain.</td>
 </tr>
 <tr>
     <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-rollout"><code>rollout</code></a></td>
-    <td><a href="#parameter-rollback"><code>rollback</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-rollback"><code>rollback</code></a></td>
     <td>Cancels a Rollout.</td>
 </tr>
 <tr>
     <td><a href="#pause"><CopyableCode code="pause" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-rollout"><code>rollout</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Pauses a Rollout.</td>
 </tr>
 <tr>
-    <td><a href="#advance"><CopyableCode code="advance" /></a></td>
+    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-rollout"><code>rollout</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-currentWaveNumber"><code>currentWaveNumber</code></a></td>
-    <td>Advances a Rollout to the next wave, or completes it if no waves remain.</td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Resumes a Rollout.</td>
 </tr>
 </tbody>
 </table>
@@ -380,11 +380,11 @@ unreachables,
 warning
 FROM google.compute.rollouts
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -417,23 +417,23 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="resume"
+    defaultValue="advance"
     values={[
-        { label: 'resume', value: 'resume' },
+        { label: 'advance', value: 'advance' },
         { label: 'cancel', value: 'cancel' },
         { label: 'pause', value: 'pause' },
-        { label: 'advance', value: 'advance' }
+        { label: 'resume', value: 'resume' }
     ]}
 >
-<TabItem value="resume">
+<TabItem value="advance">
 
-Resumes a Rollout.
+Advances a Rollout to the next wave, or completes it if no waves remain.
 
 ```sql
-EXEC google.compute.rollouts.resume 
+EXEC google.compute.rollouts.advance 
 @project='{{ project }}' --required, 
 @rollout='{{ rollout }}' --required, 
-@etag='{{ etag }}', 
+@currentWaveNumber='{{ currentWaveNumber }}', 
 @requestId='{{ requestId }}'
 ;
 ```
@@ -446,8 +446,8 @@ Cancels a Rollout.
 EXEC google.compute.rollouts.cancel 
 @project='{{ project }}' --required, 
 @rollout='{{ rollout }}' --required, 
-@rollback={{ rollback }}, 
-@requestId='{{ requestId }}'
+@requestId='{{ requestId }}', 
+@rollback={{ rollback }}
 ;
 ```
 </TabItem>
@@ -459,21 +459,21 @@ Pauses a Rollout.
 EXEC google.compute.rollouts.pause 
 @project='{{ project }}' --required, 
 @rollout='{{ rollout }}' --required, 
-@requestId='{{ requestId }}', 
-@etag='{{ etag }}'
+@etag='{{ etag }}', 
+@requestId='{{ requestId }}'
 ;
 ```
 </TabItem>
-<TabItem value="advance">
+<TabItem value="resume">
 
-Advances a Rollout to the next wave, or completes it if no waves remain.
+Resumes a Rollout.
 
 ```sql
-EXEC google.compute.rollouts.advance 
+EXEC google.compute.rollouts.resume 
 @project='{{ project }}' --required, 
 @rollout='{{ rollout }}' --required, 
-@requestId='{{ requestId }}', 
-@currentWaveNumber='{{ currentWaveNumber }}'
+@etag='{{ etag }}', 
+@requestId='{{ requestId }}'
 ;
 ```
 </TabItem>

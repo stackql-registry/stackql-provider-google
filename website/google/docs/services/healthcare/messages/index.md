@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-hl7V2StoresId"><code>hl7V2StoresId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists all the messages in the given HL7v2 store with support for filtering. Note: HL7v2 messages are indexed asynchronously, so there might be a slight delay between the time a message is created and when it can be found through a filter.</td>
 </tr>
 <tr>
@@ -356,11 +356,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND hl7V2StoresId = '{{ hl7V2StoresId }}' -- required
-AND view = '{{ view }}'
-AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -429,24 +429,24 @@ sendTime
       description: |
         Required. HL7v2 message.
       value:
+        createTime: "{{ createTime }}"
+        data: "{{ data }}"
+        labels: "{{ labels }}"
+        messageType: "{{ messageType }}"
+        name: "{{ name }}"
+        parsedData:
+          segments:
+            - fields: "{{ fields }}"
+              segmentId: "{{ segmentId }}"
+              setId: "{{ setId }}"
         patientIds:
           - type: "{{ type }}"
             value: "{{ value }}"
-        messageType: "{{ messageType }}"
-        name: "{{ name }}"
-        sendTime: "{{ sendTime }}"
-        data: "{{ data }}"
-        createTime: "{{ createTime }}"
-        sendFacility: "{{ sendFacility }}"
-        parsedData:
-          segments:
-            - segmentId: "{{ segmentId }}"
-              setId: "{{ setId }}"
-              fields: "{{ fields }}"
-        labels: "{{ labels }}"
         schematizedData:
           data: "{{ data }}"
           error: "{{ error }}"
+        sendFacility: "{{ sendFacility }}"
+        sendTime: "{{ sendTime }}"
 `}</CodeBlock>
 
 </TabItem>

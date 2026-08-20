@@ -235,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists CustomJobs in a Location.</td>
 </tr>
 <tr>
@@ -372,10 +372,10 @@ webAccessUris
 FROM google.aiplatform.custom_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -397,18 +397,18 @@ Creates a CustomJob. A created CustomJob right away will be attempted to be run.
 
 ```sql
 INSERT INTO google.aiplatform.custom_jobs (
-data__labels,
-data__encryptionSpec,
 data__displayName,
+data__encryptionSpec,
 data__jobSpec,
+data__labels,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ labels }}',
-'{{ encryptionSpec }}',
 '{{ displayName }}',
+'{{ encryptionSpec }}',
 '{{ jobSpec }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -440,87 +440,87 @@ webAccessUris
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the custom_jobs resource.
-    - name: labels
-      value: "{{ labels }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        The labels with user-defined metadata to organize CustomJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        Required. The display name of the CustomJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
     - name: encryptionSpec
       description: |
         Customer-managed encryption key options for a CustomJob. If this is set, then all resources created by the CustomJob will be encrypted with the provided encryption key.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the CustomJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
     - name: jobSpec
       description: |
         Required. Job spec.
       value:
-        pscInterfaceConfig:
-          networkAttachment: "{{ networkAttachment }}"
-          dnsPeeringConfigs:
-            - targetNetwork: "{{ targetNetwork }}"
-              domain: "{{ domain }}"
-              targetProject: "{{ targetProject }}"
-        persistentResourceId: "{{ persistentResourceId }}"
-        enableWebAccess: {{ enableWebAccess }}
-        tensorboard: "{{ tensorboard }}"
-        enableDashboardAccess: {{ enableDashboardAccess }}
-        reservedIpRanges:
-          - "{{ reservedIpRanges }}"
-        models:
-          - "{{ models }}"
-        protectedArtifactLocationId: "{{ protectedArtifactLocationId }}"
-        experiment: "{{ experiment }}"
         baseOutputDirectory:
           outputUriPrefix: "{{ outputUriPrefix }}"
+        enableDashboardAccess: {{ enableDashboardAccess }}
+        enableWebAccess: {{ enableWebAccess }}
+        experiment: "{{ experiment }}"
+        experimentRun: "{{ experimentRun }}"
+        models:
+          - "{{ models }}"
+        network: "{{ network }}"
+        persistentResourceId: "{{ persistentResourceId }}"
+        protectedArtifactLocationId: "{{ protectedArtifactLocationId }}"
+        pscInterfaceConfig:
+          dnsPeeringConfigs:
+            - domain: "{{ domain }}"
+              targetNetwork: "{{ targetNetwork }}"
+              targetProject: "{{ targetProject }}"
+          networkAttachment: "{{ networkAttachment }}"
+        reservedIpRanges:
+          - "{{ reservedIpRanges }}"
         scheduling:
-          timeout: "{{ timeout }}"
-          restartJobOnWorkerRestart: {{ restartJobOnWorkerRestart }}
           disableRetries: {{ disableRetries }}
           maxWaitDuration: "{{ maxWaitDuration }}"
+          restartJobOnWorkerRestart: {{ restartJobOnWorkerRestart }}
           strategy: "{{ strategy }}"
-        network: "{{ network }}"
+          timeout: "{{ timeout }}"
+        serviceAccount: "{{ serviceAccount }}"
+        tensorboard: "{{ tensorboard }}"
         workerPoolSpecs:
           - containerSpec:
-              imageUri: "{{ imageUri }}"
-              command:
-                - "{{ command }}"
               args:
                 - "{{ args }}"
+              command:
+                - "{{ command }}"
               env:
                 - name: "{{ name }}"
                   value: "{{ value }}"
+              imageUri: "{{ imageUri }}"
+            diskSpec:
+              bootDiskSizeGb: {{ bootDiskSizeGb }}
+              bootDiskType: "{{ bootDiskType }}"
             lustreMounts: "{{ lustreMounts }}"
             machineSpec:
-              machineType: "{{ machineType }}"
-              tpuTopology: "{{ tpuTopology }}"
-              reservationAffinity:
-                reservationAffinityType: "{{ reservationAffinityType }}"
-                key: "{{ key }}"
-                values:
-                  - "{{ values }}"
               acceleratorCount: {{ acceleratorCount }}
               acceleratorType: "{{ acceleratorType }}"
               gpuPartitionSize: "{{ gpuPartitionSize }}"
+              machineType: "{{ machineType }}"
+              reservationAffinity:
+                key: "{{ key }}"
+                reservationAffinityType: "{{ reservationAffinityType }}"
+                values:
+                  - "{{ values }}"
+              tpuTopology: "{{ tpuTopology }}"
             nfsMounts: "{{ nfsMounts }}"
             pythonPackageSpec:
-              executorImageUri: "{{ executorImageUri }}"
               args:
                 - "{{ args }}"
               env:
                 - name: "{{ name }}"
                   value: "{{ value }}"
-              pythonModule: "{{ pythonModule }}"
+              executorImageUri: "{{ executorImageUri }}"
               packageUris:
                 - "{{ packageUris }}"
-            diskSpec:
-              bootDiskType: "{{ bootDiskType }}"
-              bootDiskSizeGb: {{ bootDiskSizeGb }}
+              pythonModule: "{{ pythonModule }}"
             replicaCount: "{{ replicaCount }}"
-        experimentRun: "{{ experimentRun }}"
-        serviceAccount: "{{ serviceAccount }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize CustomJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
 `}</CodeBlock>
 
 </TabItem>

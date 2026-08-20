@@ -179,9 +179,9 @@ Update the styleGuide to be used for liniting in by API hub.
 ```sql
 UPDATE google.apihub.plugins_style_guide
 SET 
-data__name = '{{ name }}',
 data__contents = '{{ contents }}',
-data__linter = '{{ linter }}'
+data__linter = '{{ linter }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

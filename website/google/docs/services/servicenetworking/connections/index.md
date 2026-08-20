@@ -92,7 +92,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the allocated ranges that are assigned to a connection.</td>
 </tr>
 </tbody>
@@ -238,8 +238,8 @@ data__reservedPeeringRanges = '{{ reservedPeeringRanges }}'
 WHERE 
 servicesId = '{{ servicesId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND force = {{ force}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

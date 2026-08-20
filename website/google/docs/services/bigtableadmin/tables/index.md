@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists all tables served from a specified instance.</td>
 </tr>
 <tr>
@@ -219,7 +219,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-ignoreWarnings"><code>ignoreWarnings</code></a></td>
+    <td><a href="#parameter-ignoreWarnings"><code>ignoreWarnings</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a specified table.</td>
 </tr>
 <tr>
@@ -230,18 +230,11 @@ The following methods are available for this resource:
     <td>Permanently deletes a specified table and all of its data.</td>
 </tr>
 <tr>
-    <td><a href="#generate_consistency_token"><CopyableCode code="generate_consistency_token" /></a></td>
+    <td><a href="#check_consistency"><CopyableCode code="check_consistency" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
     <td></td>
-    <td>Generates a consistency token for a Table, which can be used in CheckConsistency to check whether mutations to the table that finished before this call started have been replicated. The tokens will be available for 90 days.</td>
-</tr>
-<tr>
-    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Create a new table by restoring from a completed backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.</td>
+    <td>Checks replication consistency based on a consistency token, that is, if replication has caught up based on the conditions specified in the token and the check request.</td>
 </tr>
 <tr>
     <td><a href="#drop_row_range"><CopyableCode code="drop_row_range" /></a></td>
@@ -251,6 +244,13 @@ The following methods are available for this resource:
     <td>Permanently drop/delete a row range from a specified table. The request can specify whether to delete all rows in a table, or only those that match a particular prefix. Note that row key prefixes used here are treated as service data. For more information about how service data is handled, see the [Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice).</td>
 </tr>
 <tr>
+    <td><a href="#generate_consistency_token"><CopyableCode code="generate_consistency_token" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
+    <td></td>
+    <td>Generates a consistency token for a Table, which can be used in CheckConsistency to check whether mutations to the table that finished before this call started have been replicated. The tokens will be available for 90 days.</td>
+</tr>
+<tr>
     <td><a href="#modify_column_families"><CopyableCode code="modify_column_families" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
@@ -258,11 +258,11 @@ The following methods are available for this resource:
     <td>Performs a series of column family modifications on the specified table. Either all or none of the modifications will occur before this method returns, but data requests received prior to that point may see a table where only some modifications have taken effect.</td>
 </tr>
 <tr>
-    <td><a href="#check_consistency"><CopyableCode code="check_consistency" /></a></td>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
-    <td>Checks replication consistency based on a consistency token, that is, if replication has caught up based on the conditions specified in the token and the check request.</td>
+    <td>Create a new table by restoring from a completed backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.</td>
 </tr>
 <tr>
     <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
@@ -384,9 +384,9 @@ tieredStorageConfig
 FROM google.bigtableadmin.tables
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND view = '{{ view }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -408,16 +408,16 @@ Creates a new table in the specified instance. The table can be created with a f
 
 ```sql
 INSERT INTO google.bigtableadmin.tables (
+data__initialSplits,
 data__table,
 data__tableId,
-data__initialSplits,
 projectsId,
 instancesId
 )
 SELECT 
+'{{ initialSplits }}',
 '{{ table }}',
 '{{ tableId }}',
-'{{ initialSplits }}',
 '{{ projectsId }}',
 '{{ instancesId }}'
 RETURNING
@@ -446,93 +446,93 @@ tieredStorageConfig
     - name: instancesId
       value: "{{ instancesId }}"
       description: Required parameter for the tables resource.
-    - name: table
-      description: |
-        A collection of user data indexed by row, column, and timestamp. Each table is served using the resources of its parent cluster.
-      value:
-        automatedBackupPolicy:
-          locations:
-            - "{{ locations }}"
-          retentionPeriod: "{{ retentionPeriod }}"
-          frequency: "{{ frequency }}"
-        deletionProtection: {{ deletionProtection }}
-        stats:
-          rowCount: "{{ rowCount }}"
-          averageColumnsPerRow: {{ averageColumnsPerRow }}
-          logicalDataBytes: "{{ logicalDataBytes }}"
-          averageCellsPerColumn: {{ averageCellsPerColumn }}
-        columnFamilies: "{{ columnFamilies }}"
-        granularity: "{{ granularity }}"
-        rowKeySchema:
-          fields:
-            - fieldName: "{{ fieldName }}"
-              type:
-                arrayType:
-                  elementType: "{{ elementType }}"
-                float64Type: "{{ float64Type }}"
-                int32Type:
-                  encoding: "{{ encoding }}"
-                boolType:
-                  encoding: "{{ encoding }}"
-                stringType:
-                  encoding: "{{ encoding }}"
-                aggregateType:
-                  inputType: "{{ inputType }}"
-                  max: "{{ max }}"
-                  sum: "{{ sum }}"
-                  hllppUniqueCount: "{{ hllppUniqueCount }}"
-                  stateType: "{{ stateType }}"
-                  min: "{{ min }}"
-                timestampType:
-                  encoding: "{{ encoding }}"
-                bytesType:
-                  encoding: "{{ encoding }}"
-                protoType:
-                  schemaBundleId: "{{ schemaBundleId }}"
-                  messageName: "{{ messageName }}"
-                structType:
-                  fields: "{{ fields }}"
-                  encoding: "{{ encoding }}"
-                enumType:
-                  schemaBundleId: "{{ schemaBundleId }}"
-                  enumName: "{{ enumName }}"
-                int64Type:
-                  encoding: "{{ encoding }}"
-                geographyType: "{{ geographyType }}"
-                float32Type: "{{ float32Type }}"
-                mapType:
-                  keyType: "{{ keyType }}"
-                  valueType: "{{ valueType }}"
-                dateType: "{{ dateType }}"
-          encoding:
-            delimitedBytes:
-              delimiter: "{{ delimiter }}"
-            singleton: "{{ singleton }}"
-            orderedCodeBytes: "{{ orderedCodeBytes }}"
-        restoreInfo:
-          sourceType: "{{ sourceType }}"
-          backupInfo:
-            backup: "{{ backup }}"
-            sourceTable: "{{ sourceTable }}"
-            endTime: "{{ endTime }}"
-            sourceBackup: "{{ sourceBackup }}"
-            startTime: "{{ startTime }}"
-        changeStreamConfig:
-          retentionPeriod: "{{ retentionPeriod }}"
-        tieredStorageConfig:
-          infrequentAccess:
-            includeIfOlderThan: "{{ includeIfOlderThan }}"
-        name: "{{ name }}"
-        clusterStates: "{{ clusterStates }}"
-    - name: tableId
-      value: "{{ tableId }}"
-      description: |
-        Required. The name by which the new table should be referred to within the parent instance, e.g., \`foobar\` rather than \`{parent}/tables/foobar\`. Maximum 50 characters.
     - name: initialSplits
       description: |
         The optional list of row keys that will be used to initially split the table into several tablets (tablets are similar to HBase regions). Given two split keys, \`s1\` and \`s2\`, three tablets will be created, spanning the key ranges: \`[, s1), [s1, s2), [s2, )\`. Example: * Row keys := \`["a", "apple", "custom", "customer_1", "customer_2",\` \`"other", "zz"]\` * initial_split_keys := \`["apple", "customer_1", "customer_2", "other"]\` * Key assignment: - Tablet 1 \`[, apple) => {"a"}.\` - Tablet 2 \`[apple, customer_1) => {"apple", "custom"}.\` - Tablet 3 \`[customer_1, customer_2) => {"customer_1"}.\` - Tablet 4 \`[customer_2, other) => {"customer_2"}.\` - Tablet 5 \`[other, ) => {"other", "zz"}.\`
       value:
         - key: "{{ key }}"
+    - name: table
+      description: |
+        Required. The Table to create.
+      value:
+        automatedBackupPolicy:
+          frequency: "{{ frequency }}"
+          locations:
+            - "{{ locations }}"
+          retentionPeriod: "{{ retentionPeriod }}"
+        changeStreamConfig:
+          retentionPeriod: "{{ retentionPeriod }}"
+        clusterStates: "{{ clusterStates }}"
+        columnFamilies: "{{ columnFamilies }}"
+        deletionProtection: {{ deletionProtection }}
+        granularity: "{{ granularity }}"
+        name: "{{ name }}"
+        restoreInfo:
+          backupInfo:
+            backup: "{{ backup }}"
+            endTime: "{{ endTime }}"
+            sourceBackup: "{{ sourceBackup }}"
+            sourceTable: "{{ sourceTable }}"
+            startTime: "{{ startTime }}"
+          sourceType: "{{ sourceType }}"
+        rowKeySchema:
+          encoding:
+            delimitedBytes:
+              delimiter: "{{ delimiter }}"
+            orderedCodeBytes: "{{ orderedCodeBytes }}"
+            singleton: "{{ singleton }}"
+          fields:
+            - fieldName: "{{ fieldName }}"
+              type:
+                aggregateType:
+                  hllppUniqueCount: "{{ hllppUniqueCount }}"
+                  inputType: "{{ inputType }}"
+                  max: "{{ max }}"
+                  min: "{{ min }}"
+                  stateType: "{{ stateType }}"
+                  sum: "{{ sum }}"
+                arrayType:
+                  elementType: "{{ elementType }}"
+                boolType:
+                  encoding: "{{ encoding }}"
+                bytesType:
+                  encoding: "{{ encoding }}"
+                dateType: "{{ dateType }}"
+                enumType:
+                  enumName: "{{ enumName }}"
+                  schemaBundleId: "{{ schemaBundleId }}"
+                float32Type: "{{ float32Type }}"
+                float64Type: "{{ float64Type }}"
+                geographyType: "{{ geographyType }}"
+                int32Type:
+                  encoding: "{{ encoding }}"
+                int64Type:
+                  encoding: "{{ encoding }}"
+                mapType:
+                  keyType: "{{ keyType }}"
+                  valueType: "{{ valueType }}"
+                protoType:
+                  messageName: "{{ messageName }}"
+                  schemaBundleId: "{{ schemaBundleId }}"
+                stringType:
+                  encoding: "{{ encoding }}"
+                structType:
+                  encoding: "{{ encoding }}"
+                  fields: "{{ fields }}"
+                timestampType:
+                  encoding: "{{ encoding }}"
+        stats:
+          averageCellsPerColumn: {{ averageCellsPerColumn }}
+          averageColumnsPerRow: {{ averageColumnsPerRow }}
+          logicalDataBytes: "{{ logicalDataBytes }}"
+          rowCount: "{{ rowCount }}"
+        tieredStorageConfig:
+          infrequentAccess:
+            includeIfOlderThan: "{{ includeIfOlderThan }}"
+    - name: tableId
+      value: "{{ tableId }}"
+      description: |
+        Required. The name by which the new table should be referred to within the parent instance, e.g., \`foobar\` rather than \`{parent}/tables/foobar\`. Maximum 50 characters.
 `}</CodeBlock>
 
 </TabItem>
@@ -555,19 +555,19 @@ Updates a specified table.
 UPDATE google.bigtableadmin.tables
 SET 
 data__automatedBackupPolicy = '{{ automatedBackupPolicy }}',
-data__deletionProtection = {{ deletionProtection }},
-data__columnFamilies = '{{ columnFamilies }}',
-data__granularity = '{{ granularity }}',
-data__rowKeySchema = '{{ rowKeySchema }}',
 data__changeStreamConfig = '{{ changeStreamConfig }}',
-data__tieredStorageConfig = '{{ tieredStorageConfig }}',
-data__name = '{{ name }}'
+data__columnFamilies = '{{ columnFamilies }}',
+data__deletionProtection = {{ deletionProtection }},
+data__granularity = '{{ granularity }}',
+data__name = '{{ name }}',
+data__rowKeySchema = '{{ rowKeySchema }}',
+data__tieredStorageConfig = '{{ tieredStorageConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
 AND tablesId = '{{ tablesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND ignoreWarnings = {{ ignoreWarnings}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -605,40 +605,30 @@ AND tablesId = '{{ tablesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="generate_consistency_token"
+    defaultValue="check_consistency"
     values={[
-        { label: 'generate_consistency_token', value: 'generate_consistency_token' },
-        { label: 'restore', value: 'restore' },
-        { label: 'drop_row_range', value: 'drop_row_range' },
-        { label: 'modify_column_families', value: 'modify_column_families' },
         { label: 'check_consistency', value: 'check_consistency' },
+        { label: 'drop_row_range', value: 'drop_row_range' },
+        { label: 'generate_consistency_token', value: 'generate_consistency_token' },
+        { label: 'modify_column_families', value: 'modify_column_families' },
+        { label: 'restore', value: 'restore' },
         { label: 'undelete', value: 'undelete' }
     ]}
 >
-<TabItem value="generate_consistency_token">
+<TabItem value="check_consistency">
 
-Generates a consistency token for a Table, which can be used in CheckConsistency to check whether mutations to the table that finished before this call started have been replicated. The tokens will be available for 90 days.
+Checks replication consistency based on a consistency token, that is, if replication has caught up based on the conditions specified in the token and the check request.
 
 ```sql
-EXEC google.bigtableadmin.tables.generate_consistency_token 
+EXEC google.bigtableadmin.tables.check_consistency 
 @projectsId='{{ projectsId }}' --required, 
 @instancesId='{{ instancesId }}' --required, 
-@tablesId='{{ tablesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="restore">
-
-Create a new table by restoring from a completed backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.
-
-```sql
-EXEC google.bigtableadmin.tables.restore 
-@projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
+@tablesId='{{ tablesId }}' --required 
 @@json=
 '{
-"backup": "{{ backup }}", 
-"tableId": "{{ tableId }}"
+"consistencyToken": "{{ consistencyToken }}", 
+"dataBoostReadLocalWrites": "{{ dataBoostReadLocalWrites }}", 
+"standardReadRemoteWrites": "{{ standardReadRemoteWrites }}"
 }'
 ;
 ```
@@ -654,9 +644,21 @@ EXEC google.bigtableadmin.tables.drop_row_range
 @tablesId='{{ tablesId }}' --required 
 @@json=
 '{
-"rowKeyPrefix": "{{ rowKeyPrefix }}", 
-"deleteAllDataFromTable": {{ deleteAllDataFromTable }}
+"deleteAllDataFromTable": {{ deleteAllDataFromTable }}, 
+"rowKeyPrefix": "{{ rowKeyPrefix }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="generate_consistency_token">
+
+Generates a consistency token for a Table, which can be used in CheckConsistency to check whether mutations to the table that finished before this call started have been replicated. The tokens will be available for 90 days.
+
+```sql
+EXEC google.bigtableadmin.tables.generate_consistency_token 
+@projectsId='{{ projectsId }}' --required, 
+@instancesId='{{ instancesId }}' --required, 
+@tablesId='{{ tablesId }}' --required
 ;
 ```
 </TabItem>
@@ -677,20 +679,18 @@ EXEC google.bigtableadmin.tables.modify_column_families
 ;
 ```
 </TabItem>
-<TabItem value="check_consistency">
+<TabItem value="restore">
 
-Checks replication consistency based on a consistency token, that is, if replication has caught up based on the conditions specified in the token and the check request.
+Create a new table by restoring from a completed backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.
 
 ```sql
-EXEC google.bigtableadmin.tables.check_consistency 
+EXEC google.bigtableadmin.tables.restore 
 @projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required, 
-@tablesId='{{ tablesId }}' --required 
+@instancesId='{{ instancesId }}' --required 
 @@json=
 '{
-"consistencyToken": "{{ consistencyToken }}", 
-"standardReadRemoteWrites": "{{ standardReadRemoteWrites }}", 
-"dataBoostReadLocalWrites": "{{ dataBoostReadLocalWrites }}"
+"backup": "{{ backup }}", 
+"tableId": "{{ tableId }}"
 }'
 ;
 ```

@@ -217,25 +217,25 @@ Creates a TargetServer in the specified environment.
 
 ```sql
 INSERT INTO google.apigee.targetservers (
-data__name,
-data__port,
-data__sSLInfo,
-data__isEnabled,
-data__protocol,
 data__description,
 data__host,
+data__isEnabled,
+data__name,
+data__port,
+data__protocol,
+data__sSLInfo,
 organizationsId,
 environmentsId,
 name
 )
 SELECT 
-'{{ name }}',
-{{ port }},
-'{{ sSLInfo }}',
-{{ isEnabled }},
-'{{ protocol }}',
 '{{ description }}',
 '{{ host }}',
+{{ isEnabled }},
+'{{ name }}',
+{{ port }},
+'{{ protocol }}',
+'{{ sSLInfo }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
 '{{ name }}'
@@ -261,41 +261,6 @@ sSLInfo
     - name: environmentsId
       value: "{{ environmentsId }}"
       description: Required parameter for the targetservers resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. The resource id of this target server. Values must match the regular expression
-    - name: port
-      value: {{ port }}
-      description: |
-        Required. The port number this target connects to on the given host. Value must be between 1 and 65535, inclusive.
-    - name: sSLInfo
-      description: |
-        Optional. Specifies TLS configuration info for this TargetServer. The JSON name is \`sSLInfo\` for legacy/backwards compatibility reasons -- Edge originally supported SSL, and the name is still used for TLS configuration.
-      value:
-        keyStore: "{{ keyStore }}"
-        trustStore: "{{ trustStore }}"
-        ignoreValidationErrors: {{ ignoreValidationErrors }}
-        commonName:
-          wildcardMatch: {{ wildcardMatch }}
-          value: "{{ value }}"
-        clientAuthEnabled: {{ clientAuthEnabled }}
-        keyAlias: "{{ keyAlias }}"
-        enabled: {{ enabled }}
-        protocols:
-          - "{{ protocols }}"
-        ciphers:
-          - "{{ ciphers }}"
-        enforce: {{ enforce }}
-    - name: isEnabled
-      value: {{ isEnabled }}
-      description: |
-        Optional. Enabling/disabling a TargetServer is useful when TargetServers are used in load balancing configurations, and one or more TargetServers need to taken out of rotation periodically. Defaults to true.
-    - name: protocol
-      value: "{{ protocol }}"
-      description: |
-        Immutable. The protocol used by this TargetServer.
-      valid_values: ['PROTOCOL_UNSPECIFIED', 'HTTP', 'HTTP2', 'GRPC_TARGET', 'GRPC', 'EXTERNAL_CALLOUT']
     - name: description
       value: "{{ description }}"
       description: |
@@ -304,6 +269,41 @@ sSLInfo
       value: "{{ host }}"
       description: |
         Required. The host name this target connects to. Value must be a valid hostname as described by RFC-1123.
+    - name: isEnabled
+      value: {{ isEnabled }}
+      description: |
+        Optional. Enabling/disabling a TargetServer is useful when TargetServers are used in load balancing configurations, and one or more TargetServers need to taken out of rotation periodically. Defaults to true.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The resource id of this target server. Values must match the regular expression
+    - name: port
+      value: {{ port }}
+      description: |
+        Required. The port number this target connects to on the given host. Value must be between 1 and 65535, inclusive.
+    - name: protocol
+      value: "{{ protocol }}"
+      description: |
+        Immutable. The protocol used by this TargetServer.
+      valid_values: ['PROTOCOL_UNSPECIFIED', 'HTTP', 'HTTP2', 'GRPC_TARGET', 'GRPC', 'EXTERNAL_CALLOUT']
+    - name: sSLInfo
+      description: |
+        Optional. Specifies TLS configuration info for this TargetServer. The JSON name is \`sSLInfo\` for legacy/backwards compatibility reasons -- Edge originally supported SSL, and the name is still used for TLS configuration.
+      value:
+        ciphers:
+          - "{{ ciphers }}"
+        clientAuthEnabled: {{ clientAuthEnabled }}
+        commonName:
+          value: "{{ value }}"
+          wildcardMatch: {{ wildcardMatch }}
+        enabled: {{ enabled }}
+        enforce: {{ enforce }}
+        ignoreValidationErrors: {{ ignoreValidationErrors }}
+        keyAlias: "{{ keyAlias }}"
+        keyStore: "{{ keyStore }}"
+        protocols:
+          - "{{ protocols }}"
+        trustStore: "{{ trustStore }}"
     - name: name
       value: "{{ name }}"
 `}</CodeBlock>
@@ -327,13 +327,13 @@ Updates an existing TargetServer. Note that this operation has PUT semantics; it
 ```sql
 REPLACE google.apigee.targetservers
 SET 
+data__description = '{{ description }}',
+data__host = '{{ host }}',
+data__isEnabled = {{ isEnabled }},
 data__name = '{{ name }}',
 data__port = {{ port }},
-data__sSLInfo = '{{ sSLInfo }}',
-data__isEnabled = {{ isEnabled }},
 data__protocol = '{{ protocol }}',
-data__description = '{{ description }}',
-data__host = '{{ host }}'
+data__sSLInfo = '{{ sSLInfo }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

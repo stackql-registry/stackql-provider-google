@@ -115,10 +115,10 @@ EXEC google.addressvalidation.addressvalidation.validate_address
 @@json=
 '{
 "address": "{{ address }}", 
-"sessionToken": "{{ sessionToken }}", 
-"previousResponseId": "{{ previousResponseId }}", 
+"enableUspsCass": {{ enableUspsCass }}, 
 "languageOptions": "{{ languageOptions }}", 
-"enableUspsCass": {{ enableUspsCass }}
+"previousResponseId": "{{ previousResponseId }}", 
+"sessionToken": "{{ sessionToken }}"
 }'
 ;
 ```

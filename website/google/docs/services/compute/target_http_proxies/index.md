@@ -242,30 +242,30 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpProxy"><code>targetHttpProxy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-targetHttpProxy"><code>targetHttpProxy</code></a></td>
     <td></td>
-    <td>Returns the specified TargetHttpProxy resource.</td>
+    <td>Returns the specified TargetHttpProxy resource in the specified region.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Retrieves the list of TargetHttpProxy resources available<br />to the specified project.</td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of TargetHttpProxy resources available<br />to the specified project in the specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all TargetHttpProxy resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a TargetHttpProxy resource in the specified<br />project using the data included in the request.</td>
+    <td>Creates a TargetHttpProxy resource in the specified project and region<br />using the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
@@ -277,14 +277,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpProxy"><code>targetHttpProxy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-targetHttpProxy"><code>targetHttpProxy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes the specified TargetHttpProxy resource.</td>
 </tr>
 <tr>
     <td><a href="#set_url_map"><CopyableCode code="set_url_map" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpProxy"><code>targetHttpProxy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-targetHttpProxy"><code>targetHttpProxy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Changes the URL map for TargetHttpProxy.</td>
 </tr>
@@ -306,6 +306,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-region">
+    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -369,7 +374,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Returns the specified TargetHttpProxy resource.
+Returns the specified TargetHttpProxy resource in the specified region.
 
 ```sql
 SELECT
@@ -386,13 +391,14 @@ selfLink,
 urlMap
 FROM google.compute.target_http_proxies
 WHERE project = '{{ project }}' -- required
+AND region = '{{ region }}' -- required
 AND targetHttpProxy = '{{ targetHttpProxy }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Retrieves the list of TargetHttpProxy resources available<br />to the specified project.
+Retrieves the list of TargetHttpProxy resources available<br />to the specified project in the specified region.
 
 ```sql
 SELECT
@@ -404,11 +410,12 @@ selfLink,
 warning
 FROM google.compute.target_http_proxies
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
+AND region = '{{ region }}' -- required
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -431,13 +438,13 @@ selfLink,
 urlMap
 FROM google.compute.target_http_proxies
 WHERE project = '{{ project }}' -- required
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -455,31 +462,33 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="insert">
 
-Creates a TargetHttpProxy resource in the specified<br />project using the data included in the request.
+Creates a TargetHttpProxy resource in the specified project and region<br />using the data included in the request.
 
 ```sql
 INSERT INTO google.compute.target_http_proxies (
-data__proxyBind,
-data__name,
+data__description,
 data__fingerprint,
 data__httpKeepAliveTimeoutSec,
-data__description,
-data__urlMap,
-data__selfLink,
 data__id,
+data__name,
+data__proxyBind,
+data__selfLink,
+data__urlMap,
 project,
+region,
 requestId
 )
 SELECT 
-{{ proxyBind }},
-'{{ name }}',
+'{{ description }}',
 '{{ fingerprint }}',
 {{ httpKeepAliveTimeoutSec }},
-'{{ description }}',
-'{{ urlMap }}',
-'{{ selfLink }}',
 '{{ id }}',
+'{{ name }}',
+{{ proxyBind }},
+'{{ selfLink }}',
+'{{ urlMap }}',
 '{{ project }}',
+'{{ region }}',
 '{{ requestId }}'
 RETURNING
 id,
@@ -520,28 +529,14 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the target_http_proxies resource.
-    - name: proxyBind
-      value: {{ proxyBind }}
+    - name: region
+      value: "{{ region }}"
+      description: Required parameter for the target_http_proxies resource.
+    - name: description
+      value: "{{ description }}"
       description: |
-        This field only applies when the forwarding rule that references this
-        target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.
-        When this field is set to true, Envoy proxies set up inbound
-        traffic interception and bind to the IP address and port specified in the
-        forwarding rule. This is generally useful when using Traffic Director to
-        configure Envoy as a gateway or middle proxy (in other words, not a
-        sidecar proxy). The Envoy proxy listens for inbound requests and handles
-        requests when it receives them.
-        The default is false.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -561,25 +556,42 @@ zone
         For global external Application Load Balancers, the minimum allowed value
         is 5 seconds and the maximum allowed value is 1200 seconds.
         For classic Application Load Balancers, this option is not supported.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: urlMap
-      value: "{{ urlMap }}"
-      description: |
-        URL to the UrlMap resource that defines the mapping from URL to
-        the BackendService.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined URL for the resource.
     - name: id
       value: "{{ id }}"
       description: |
         [Output Only] The unique identifier for the resource. This identifier is
         defined by the server.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: proxyBind
+      value: {{ proxyBind }}
+      description: |
+        This field only applies when the forwarding rule that references this
+        target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.
+        When this field is set to true, Envoy proxies set up inbound
+        traffic interception and bind to the IP address and port specified in the
+        forwarding rule. This is generally useful when using Traffic Director to
+        configure Envoy as a gateway or middle proxy (in other words, not a
+        sidecar proxy). The Envoy proxy listens for inbound requests and handles
+        requests when it receives them.
+        The default is false.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: urlMap
+      value: "{{ urlMap }}"
+      description: |
+        URL to the UrlMap resource that defines the mapping from URL to
+        the BackendService.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -603,14 +615,14 @@ Patches the specified TargetHttpProxy resource with the data included in<br />th
 ```sql
 UPDATE google.compute.target_http_proxies
 SET 
-data__proxyBind = {{ proxyBind }},
-data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__fingerprint = '{{ fingerprint }}',
 data__httpKeepAliveTimeoutSec = {{ httpKeepAliveTimeoutSec }},
-data__description = '{{ description }}',
-data__urlMap = '{{ urlMap }}',
+data__id = '{{ id }}',
+data__name = '{{ name }}',
+data__proxyBind = {{ proxyBind }},
 data__selfLink = '{{ selfLink }}',
-data__id = '{{ id }}'
+data__urlMap = '{{ urlMap }}'
 WHERE 
 project = '{{ project }}' --required
 AND targetHttpProxy = '{{ targetHttpProxy }}' --required
@@ -663,6 +675,7 @@ Deletes the specified TargetHttpProxy resource.
 ```sql
 DELETE FROM google.compute.target_http_proxies
 WHERE project = '{{ project }}' --required
+AND region = '{{ region }}' --required
 AND targetHttpProxy = '{{ targetHttpProxy }}' --required
 AND requestId = '{{ requestId }}'
 ;
@@ -686,6 +699,7 @@ Changes the URL map for TargetHttpProxy.
 ```sql
 EXEC google.compute.target_http_proxies.set_url_map 
 @project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
 @targetHttpProxy='{{ targetHttpProxy }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=

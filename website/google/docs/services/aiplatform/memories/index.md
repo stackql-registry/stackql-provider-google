@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-memoryBanksId"><code>memoryBanksId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List Memories.</td>
 </tr>
 <tr>
@@ -270,11 +270,11 @@ The following methods are available for this resource:
     <td>Delete a Memory.</td>
 </tr>
 <tr>
-    <td><a href="#purge"><CopyableCode code="purge" /></a></td>
+    <td><a href="#generate"><CopyableCode code="generate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-memoryBanksId"><code>memoryBanksId</code></a></td>
     <td></td>
-    <td>Purge memories.</td>
+    <td>Generate memories.</td>
 </tr>
 <tr>
     <td><a href="#ingest_events"><CopyableCode code="ingest_events" /></a></td>
@@ -282,6 +282,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td></td>
     <td>Ingests events for a Memory Bank.</td>
+</tr>
+<tr>
+    <td><a href="#purge"><CopyableCode code="purge" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-memoryBanksId"><code>memoryBanksId</code></a></td>
+    <td></td>
+    <td>Purge memories.</td>
 </tr>
 <tr>
     <td><a href="#retrieve"><CopyableCode code="retrieve" /></a></td>
@@ -296,13 +303,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-memoryBanksId"><code>memoryBanksId</code></a>, <a href="#parameter-memoriesId"><code>memoriesId</code></a></td>
     <td></td>
     <td>Rollback Memory to a specific revision.</td>
-</tr>
-<tr>
-    <td><a href="#generate"><CopyableCode code="generate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-memoryBanksId"><code>memoryBanksId</code></a></td>
-    <td></td>
-    <td>Generate memories.</td>
 </tr>
 </tbody>
 </table>
@@ -441,10 +441,10 @@ FROM google.aiplatform.memories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND memoryBanksId = '{{ memoryBanksId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -466,38 +466,38 @@ Create a Memory.
 
 ```sql
 INSERT INTO google.aiplatform.memories (
+data__description,
+data__disableMemoryRevisions,
+data__displayName,
+data__expireTime,
+data__fact,
+data__metadata,
+data__name,
+data__revisionExpireTime,
+data__revisionLabels,
 data__revisionTtl,
 data__scope,
 data__topics,
-data__fact,
-data__name,
-data__expireTime,
-data__metadata,
 data__ttl,
-data__revisionLabels,
-data__revisionExpireTime,
-data__displayName,
-data__description,
-data__disableMemoryRevisions,
 projectsId,
 locationsId,
 memoryBanksId,
 memoryId
 )
 SELECT 
+'{{ description }}',
+{{ disableMemoryRevisions }},
+'{{ displayName }}',
+'{{ expireTime }}',
+'{{ fact }}',
+'{{ metadata }}',
+'{{ name }}',
+'{{ revisionExpireTime }}',
+'{{ revisionLabels }}',
 '{{ revisionTtl }}',
 '{{ scope }}',
 '{{ topics }}',
-'{{ fact }}',
-'{{ name }}',
-'{{ expireTime }}',
-'{{ metadata }}',
 '{{ ttl }}',
-'{{ revisionLabels }}',
-'{{ revisionExpireTime }}',
-'{{ displayName }}',
-'{{ description }}',
-{{ disableMemoryRevisions }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ memoryBanksId }}',
@@ -525,6 +525,42 @@ response
     - name: memoryBanksId
       value: "{{ memoryBanksId }}"
       description: Required parameter for the memories resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Represents the description of the Memory.
+    - name: disableMemoryRevisions
+      value: {{ disableMemoryRevisions }}
+      description: |
+        Optional. Input only. Indicates whether no revision will be created for this request.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Represents the display name of the Memory.
+    - name: expireTime
+      value: "{{ expireTime }}"
+      description: |
+        Optional. Represents the timestamp of when this resource is considered expired. This is *always* provided on output when \`expiration\` is set on input, regardless of whether \`expire_time\` or \`ttl\` was provided.
+    - name: fact
+      value: "{{ fact }}"
+      description: |
+        Optional. Represents semantic knowledge extracted from the source content.
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Optional. Represents user-provided metadata for the Memory. This information was provided when creating, updating, or generating the Memory. It was not generated by Memory Bank.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Represents the resource name of the Memory. Format: \`projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}\`
+    - name: revisionExpireTime
+      value: "{{ revisionExpireTime }}"
+      description: |
+        Optional. Input only. Represents the timestamp of when the revision is considered expired. If not set, the memory revision will be kept until manually deleted.
+    - name: revisionLabels
+      value: "{{ revisionLabels }}"
+      description: |
+        Optional. Input only. Represents the labels to apply to the Memory Revision created as a result of this request.
     - name: revisionTtl
       value: "{{ revisionTtl }}"
       description: |
@@ -537,48 +573,12 @@ response
       description: |
         Optional. Represents the Topics of the Memory.
       value:
-        - managedMemoryTopic: "{{ managedMemoryTopic }}"
-          customMemoryTopicLabel: "{{ customMemoryTopicLabel }}"
-    - name: fact
-      value: "{{ fact }}"
-      description: |
-        Optional. Represents semantic knowledge extracted from the source content.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Represents the resource name of the Memory. Format: \`projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}\`
-    - name: expireTime
-      value: "{{ expireTime }}"
-      description: |
-        Optional. Represents the timestamp of when this resource is considered expired. This is *always* provided on output when \`expiration\` is set on input, regardless of whether \`expire_time\` or \`ttl\` was provided.
-    - name: metadata
-      value: "{{ metadata }}"
-      description: |
-        Optional. Represents user-provided metadata for the Memory. This information was provided when creating, updating, or generating the Memory. It was not generated by Memory Bank.
+        - customMemoryTopicLabel: "{{ customMemoryTopicLabel }}"
+          managedMemoryTopic: "{{ managedMemoryTopic }}"
     - name: ttl
       value: "{{ ttl }}"
       description: |
         Optional. Input only. Represents the TTL for this resource. The expiration time is computed: now + TTL.
-    - name: revisionLabels
-      value: "{{ revisionLabels }}"
-      description: |
-        Optional. Input only. Represents the labels to apply to the Memory Revision created as a result of this request.
-    - name: revisionExpireTime
-      value: "{{ revisionExpireTime }}"
-      description: |
-        Optional. Input only. Represents the timestamp of when the revision is considered expired. If not set, the memory revision will be kept until manually deleted.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. Represents the display name of the Memory.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Represents the description of the Memory.
-    - name: disableMemoryRevisions
-      value: {{ disableMemoryRevisions }}
-      description: |
-        Optional. Input only. Indicates whether no revision will be created for this request.
     - name: memoryId
       value: "{{ memoryId }}"
 `}</CodeBlock>
@@ -602,19 +602,19 @@ Update a Memory.
 ```sql
 UPDATE google.aiplatform.memories
 SET 
+data__description = '{{ description }}',
+data__disableMemoryRevisions = {{ disableMemoryRevisions }},
+data__displayName = '{{ displayName }}',
+data__expireTime = '{{ expireTime }}',
+data__fact = '{{ fact }}',
+data__metadata = '{{ metadata }}',
+data__name = '{{ name }}',
+data__revisionExpireTime = '{{ revisionExpireTime }}',
+data__revisionLabels = '{{ revisionLabels }}',
 data__revisionTtl = '{{ revisionTtl }}',
 data__scope = '{{ scope }}',
 data__topics = '{{ topics }}',
-data__fact = '{{ fact }}',
-data__name = '{{ name }}',
-data__expireTime = '{{ expireTime }}',
-data__metadata = '{{ metadata }}',
-data__ttl = '{{ ttl }}',
-data__revisionLabels = '{{ revisionLabels }}',
-data__revisionExpireTime = '{{ revisionExpireTime }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__disableMemoryRevisions = {{ disableMemoryRevisions }}
+data__ttl = '{{ ttl }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -659,29 +659,38 @@ AND memoriesId = '{{ memoriesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="purge"
+    defaultValue="generate"
     values={[
-        { label: 'purge', value: 'purge' },
+        { label: 'generate', value: 'generate' },
         { label: 'ingest_events', value: 'ingest_events' },
+        { label: 'purge', value: 'purge' },
         { label: 'retrieve', value: 'retrieve' },
-        { label: 'rollback', value: 'rollback' },
-        { label: 'generate', value: 'generate' }
+        { label: 'rollback', value: 'rollback' }
     ]}
 >
-<TabItem value="purge">
+<TabItem value="generate">
 
-Purge memories.
+Generate memories.
 
 ```sql
-EXEC google.aiplatform.memories.purge 
+EXEC google.aiplatform.memories.generate 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @memoryBanksId='{{ memoryBanksId }}' --required 
 @@json=
 '{
-"filter": "{{ filter }}", 
-"force": {{ force }}, 
-"filterGroups": "{{ filterGroups }}"
+"allowedTopics": "{{ allowedTopics }}", 
+"directContentsSource": "{{ directContentsSource }}", 
+"directMemoriesSource": "{{ directMemoriesSource }}", 
+"disableConsolidation": {{ disableConsolidation }}, 
+"disableMemoryRevisions": {{ disableMemoryRevisions }}, 
+"metadata": "{{ metadata }}", 
+"metadataMergeStrategy": "{{ metadataMergeStrategy }}", 
+"revisionExpireTime": "{{ revisionExpireTime }}", 
+"revisionLabels": "{{ revisionLabels }}", 
+"revisionTtl": "{{ revisionTtl }}", 
+"scope": "{{ scope }}", 
+"vertexSessionSource": "{{ vertexSessionSource }}"
 }'
 ;
 ```
@@ -697,17 +706,35 @@ EXEC google.aiplatform.memories.ingest_events
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required 
 @@json=
 '{
-"streamId": "{{ streamId }}", 
-"generationTriggerConfig": "{{ generationTriggerConfig }}", 
-"disableMemoryRevisions": {{ disableMemoryRevisions }}, 
-"metadata": "{{ metadata }}", 
-"revisionLabels": "{{ revisionLabels }}", 
-"forceFlush": {{ forceFlush }}, 
 "directContentsSource": "{{ directContentsSource }}", 
+"disableMemoryRevisions": {{ disableMemoryRevisions }}, 
+"forceFlush": {{ forceFlush }}, 
+"generationTriggerConfig": "{{ generationTriggerConfig }}", 
+"metadata": "{{ metadata }}", 
 "metadataMergeStrategy": "{{ metadataMergeStrategy }}", 
 "revisionExpireTime": "{{ revisionExpireTime }}", 
+"revisionLabels": "{{ revisionLabels }}", 
 "revisionTtl": "{{ revisionTtl }}", 
-"scope": "{{ scope }}"
+"scope": "{{ scope }}", 
+"streamId": "{{ streamId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="purge">
+
+Purge memories.
+
+```sql
+EXEC google.aiplatform.memories.purge 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@memoryBanksId='{{ memoryBanksId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"filterGroups": "{{ filterGroups }}", 
+"force": {{ force }}
 }'
 ;
 ```
@@ -723,12 +750,12 @@ EXEC google.aiplatform.memories.retrieve
 @memoryBanksId='{{ memoryBanksId }}' --required 
 @@json=
 '{
-"simpleRetrievalParams": "{{ simpleRetrievalParams }}", 
 "filter": "{{ filter }}", 
+"filterGroups": "{{ filterGroups }}", 
 "memoryTypes": "{{ memoryTypes }}", 
 "scope": "{{ scope }}", 
 "similaritySearchParams": "{{ similaritySearchParams }}", 
-"filterGroups": "{{ filterGroups }}"
+"simpleRetrievalParams": "{{ simpleRetrievalParams }}"
 }'
 ;
 ```
@@ -746,33 +773,6 @@ EXEC google.aiplatform.memories.rollback
 @@json=
 '{
 "targetRevisionId": "{{ targetRevisionId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="generate">
-
-Generate memories.
-
-```sql
-EXEC google.aiplatform.memories.generate 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@memoryBanksId='{{ memoryBanksId }}' --required 
-@@json=
-'{
-"metadata": "{{ metadata }}", 
-"disableMemoryRevisions": {{ disableMemoryRevisions }}, 
-"vertexSessionSource": "{{ vertexSessionSource }}", 
-"revisionLabels": "{{ revisionLabels }}", 
-"allowedTopics": "{{ allowedTopics }}", 
-"revisionExpireTime": "{{ revisionExpireTime }}", 
-"revisionTtl": "{{ revisionTtl }}", 
-"disableConsolidation": {{ disableConsolidation }}, 
-"scope": "{{ scope }}", 
-"directContentsSource": "{{ directContentsSource }}", 
-"metadataMergeStrategy": "{{ metadataMergeStrategy }}", 
-"directMemoriesSource": "{{ directMemoriesSource }}"
 }'
 ;
 ```

@@ -235,19 +235,19 @@ Provisions instance resources for the API Hub.
 
 ```sql
 INSERT INTO google.apihub.api_hub_instances (
-data__description,
-data__name,
-data__labels,
 data__config,
+data__description,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 apiHubInstanceId
 )
 SELECT 
-'{{ description }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ config }}',
+'{{ description }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apiHubInstanceId }}'
@@ -271,28 +271,28 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the api_hub_instances resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the ApiHub instance.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Format: \`projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Instance labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
     - name: config
       description: |
         Required. Config of the ApiHub instance.
       value:
-        vertexLocation: "{{ vertexLocation }}"
-        disableSearch: {{ disableSearch }}
-        cmekKeyName: "{{ cmekKeyName }}"
-        encryptionType: "{{ encryptionType }}"
         agentRegistrySyncConfig:
           disabled: {{ disabled }}
+        cmekKeyName: "{{ cmekKeyName }}"
+        disableSearch: {{ disableSearch }}
+        encryptionType: "{{ encryptionType }}"
+        vertexLocation: "{{ vertexLocation }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the ApiHub instance.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Instance labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Format: \`projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}\`.
     - name: apiHubInstanceId
       value: "{{ apiHubInstanceId }}"
 `}</CodeBlock>
@@ -316,10 +316,10 @@ Update an Api Hub instance. The following fields in the ApiHubInstance can be up
 ```sql
 UPDATE google.apihub.api_hub_instances
 SET 
+data__config = '{{ config }}',
 data__description = '{{ description }}',
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__config = '{{ config }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

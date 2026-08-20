@@ -298,18 +298,18 @@ Creates an entry group. An entry group contains logically related entries togeth
 
 ```sql
 INSERT INTO google.datacatalog.entry_groups (
-data__name,
-data__displayName,
 data__description,
+data__displayName,
+data__name,
 data__transferredToDataplex,
 projectsId,
 locationsId,
 entryGroupId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
 {{ transferredToDataplex }},
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -334,18 +334,18 @@ transferredToDataplex
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the entry_groups resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        A short name to identify the entry group, for example, "analytics data - jan 2011". Default value is an empty string.
     - name: description
       value: "{{ description }}"
       description: |
         Entry group description. Can consist of several sentences or paragraphs that describe the entry group contents. Default value is an empty string.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        A short name to identify the entry group, for example, "analytics data - jan 2011". Default value is an empty string.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name.
     - name: transferredToDataplex
       value: {{ transferredToDataplex }}
       description: |
@@ -373,9 +373,9 @@ Updates an entry group. You must enable the Data Catalog API in the project iden
 ```sql
 UPDATE google.datacatalog.entry_groups
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__transferredToDataplex = {{ transferredToDataplex }}
 WHERE 
 projectsId = '{{ projectsId }}' --required

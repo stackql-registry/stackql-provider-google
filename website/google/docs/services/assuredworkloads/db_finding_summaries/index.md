@@ -70,9 +70,19 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The count of the finding.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="organizationPolicyFindingCount" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Number of active organization policy findings for this category.</td>
+</tr>
+<tr>
     <td><CopyableCode code="relatedFrameworks" /></td>
     <td><code>array</code></td>
     <td>Optional. The list of compliance frameworks that the finding belongs to.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceFindingCount" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Number of active resource findings for this category.</td>
 </tr>
 <tr>
     <td><CopyableCode code="severity" /></td>
@@ -107,7 +117,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the finding summary by category for a given scope.</td>
 </tr>
@@ -127,13 +137,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-locationsId">
-    <td><CopyableCode code="locationsId" /></td>
+<tr id="parameter-foldersId">
+    <td><CopyableCode code="foldersId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-projectsId">
-    <td><CopyableCode code="projectsId" /></td>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -173,11 +183,13 @@ name,
 findingCategory,
 findingClass,
 findingCount,
+organizationPolicyFindingCount,
 relatedFrameworks,
+resourceFindingCount,
 severity,
 updateTime
 FROM google.assuredworkloads.db_finding_summaries
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'

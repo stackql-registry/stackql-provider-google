@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists pull request comments.</td>
 </tr>
 <tr>
@@ -187,18 +187,18 @@ The following methods are available for this resource:
     <td>Deletes a pull request comment.</td>
 </tr>
 <tr>
-    <td><a href="#unresolve"><CopyableCode code="unresolve" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
-    <td></td>
-    <td>Unresolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be unresolved.</td>
-</tr>
-<tr>
     <td><a href="#resolve"><CopyableCode code="resolve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
     <td></td>
     <td>Resolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be resolved.</td>
+</tr>
+<tr>
+    <td><a href="#unresolve"><CopyableCode code="unresolve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
+    <td></td>
+    <td>Unresolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be unresolved.</td>
 </tr>
 </tbody>
 </table>
@@ -306,8 +306,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND pullRequestsId = '{{ pullRequestsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -357,9 +357,9 @@ Creates a pull request comment. This function is used to create a single PullReq
 
 ```sql
 INSERT INTO google.securesourcemanager.pull_request_comments (
-data__name,
-data__comment,
 data__code,
+data__comment,
+data__name,
 data__review,
 projectsId,
 locationsId,
@@ -367,9 +367,9 @@ repositoriesId,
 pullRequestsId
 )
 SELECT 
-'{{ name }}',
-'{{ comment }}',
 '{{ code }}',
+'{{ comment }}',
+'{{ name }}',
 '{{ review }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -407,52 +407,52 @@ response
       value:
         - parent: "{{ parent }}"
           pullRequestComment:
-            name: "{{ name }}"
-            createTime: "{{ createTime }}"
-            updateTime: "{{ updateTime }}"
-            comment:
-              body: "{{ body }}"
             code:
               body: "{{ body }}"
+              effectiveCommitSha: "{{ effectiveCommitSha }}"
               effectiveRootComment: "{{ effectiveRootComment }}"
-              resolved: {{ resolved }}
-              effectiveCommitSha: "{{ effectiveCommitSha }}"
-              reply: "{{ reply }}"
               position:
-                path: "{{ path }}"
                 line: "{{ line }}"
-            review:
-              effectiveCommitSha: "{{ effectiveCommitSha }}"
+                path: "{{ path }}"
+              reply: "{{ reply }}"
+              resolved: {{ resolved }}
+            comment:
               body: "{{ body }}"
+            createTime: "{{ createTime }}"
+            name: "{{ name }}"
+            review:
               actionType: "{{ actionType }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Unique identifier for the pull request comment. The comment id is generated by the server. Format: \`projects/{project}/locations/{location}/repositories/{repository}/pullRequests/{pull_request}/pullRequestComments/{comment_id}\`
-    - name: comment
-      description: |
-        Optional. The general pull request comment.
-      value:
-        body: "{{ body }}"
+              body: "{{ body }}"
+              effectiveCommitSha: "{{ effectiveCommitSha }}"
+            updateTime: "{{ updateTime }}"
     - name: code
       description: |
         Optional. The comment on a code line.
       value:
         body: "{{ body }}"
-        effectiveRootComment: "{{ effectiveRootComment }}"
-        resolved: {{ resolved }}
         effectiveCommitSha: "{{ effectiveCommitSha }}"
-        reply: "{{ reply }}"
+        effectiveRootComment: "{{ effectiveRootComment }}"
         position:
-          path: "{{ path }}"
           line: "{{ line }}"
+          path: "{{ path }}"
+        reply: "{{ reply }}"
+        resolved: {{ resolved }}
+    - name: comment
+      description: |
+        Optional. The general pull request comment.
+      value:
+        body: "{{ body }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Unique identifier for the pull request comment. The comment id is generated by the server. Format: \`projects/{project}/locations/{location}/repositories/{repository}/pullRequests/{pull_request}/pullRequestComments/{comment_id}\`
     - name: review
       description: |
         Optional. The review summary comment.
       value:
-        effectiveCommitSha: "{{ effectiveCommitSha }}"
-        body: "{{ body }}"
         actionType: "{{ actionType }}"
+        body: "{{ body }}"
+        effectiveCommitSha: "{{ effectiveCommitSha }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -474,9 +474,9 @@ Updates a pull request comment.
 ```sql
 UPDATE google.securesourcemanager.pull_request_comments
 SET 
-data__name = '{{ name }}',
-data__comment = '{{ comment }}',
 data__code = '{{ code }}',
+data__comment = '{{ comment }}',
+data__name = '{{ name }}',
 data__review = '{{ review }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -524,18 +524,18 @@ AND pullRequestCommentsId = '{{ pullRequestCommentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="unresolve"
+    defaultValue="resolve"
     values={[
-        { label: 'unresolve', value: 'unresolve' },
-        { label: 'resolve', value: 'resolve' }
+        { label: 'resolve', value: 'resolve' },
+        { label: 'unresolve', value: 'unresolve' }
     ]}
 >
-<TabItem value="unresolve">
+<TabItem value="resolve">
 
-Unresolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be unresolved.
+Resolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be resolved.
 
 ```sql
-EXEC google.securesourcemanager.pull_request_comments.unresolve 
+EXEC google.securesourcemanager.pull_request_comments.resolve 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @repositoriesId='{{ repositoriesId }}' --required, 
@@ -548,12 +548,12 @@ EXEC google.securesourcemanager.pull_request_comments.unresolve
 ;
 ```
 </TabItem>
-<TabItem value="resolve">
+<TabItem value="unresolve">
 
-Resolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be resolved.
+Unresolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be unresolved.
 
 ```sql
-EXEC google.securesourcemanager.pull_request_comments.resolve 
+EXEC google.securesourcemanager.pull_request_comments.unresolve 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @repositoriesId='{{ repositoriesId }}' --required, 

@@ -122,8 +122,8 @@ EXEC google.aiplatform.invoke.invoke
 @invokeId='{{ invokeId }}' --required 
 @@json=
 '{
-"httpBody": "{{ httpBody }}", 
-"deployedModelId": "{{ deployedModelId }}"
+"deployedModelId": "{{ deployedModelId }}", 
+"httpBody": "{{ httpBody }}"
 }'
 ;
 ```

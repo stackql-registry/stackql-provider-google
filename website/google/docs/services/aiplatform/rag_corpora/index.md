@@ -354,20 +354,20 @@ Creates a RagCorpus.
 
 ```sql
 INSERT INTO google.aiplatform.rag_corpora (
-data__encryptionSpec,
 data__description,
-data__vertexAiSearchConfig,
 data__displayName,
+data__encryptionSpec,
 data__vectorDbConfig,
+data__vertexAiSearchConfig,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ encryptionSpec }}',
 '{{ description }}',
-'{{ vertexAiSearchConfig }}',
 '{{ displayName }}',
+'{{ encryptionSpec }}',
 '{{ vectorDbConfig }}',
+'{{ vertexAiSearchConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -390,47 +390,47 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the rag_corpora resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the RagCorpus.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the RagCorpus. The name can be up to 128 characters long and can consist of any UTF-8 characters.
     - name: encryptionSpec
       description: |
         Optional. Immutable. The CMEK key name used to encrypt at-rest data related to this Corpus. Only applicable to RagManagedDb option for Vector DB. This field can only be set at corpus creation time, and cannot be updated or deleted.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
-    - name: description
-      value: "{{ description }}"
+    - name: vectorDbConfig
       description: |
-        Optional. The description of the RagCorpus.
+        Optional. Immutable. The config for the Vector DBs.
+      value:
+        apiAuth:
+          apiKeyConfig:
+            apiKeySecretVersion: "{{ apiKeySecretVersion }}"
+            apiKeyString: "{{ apiKeyString }}"
+        pinecone:
+          indexName: "{{ indexName }}"
+        ragEmbeddingModelConfig:
+          vertexPredictionEndpoint:
+            endpoint: "{{ endpoint }}"
+            model: "{{ model }}"
+            modelVersionId: "{{ modelVersionId }}"
+        ragManagedDb:
+          ann:
+            leafCount: {{ leafCount }}
+            treeDepth: {{ treeDepth }}
+          knn: "{{ knn }}"
+        vertexVectorSearch:
+          index: "{{ index }}"
+          indexEndpoint: "{{ indexEndpoint }}"
     - name: vertexAiSearchConfig
       description: |
         Optional. Immutable. The config for the Vertex AI Search.
       value:
         servingConfig: "{{ servingConfig }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the RagCorpus. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-    - name: vectorDbConfig
-      description: |
-        Optional. Immutable. The config for the Vector DBs.
-      value:
-        vertexVectorSearch:
-          indexEndpoint: "{{ indexEndpoint }}"
-          index: "{{ index }}"
-        ragManagedDb:
-          knn: "{{ knn }}"
-          ann:
-            treeDepth: {{ treeDepth }}
-            leafCount: {{ leafCount }}
-        ragEmbeddingModelConfig:
-          vertexPredictionEndpoint:
-            model: "{{ model }}"
-            endpoint: "{{ endpoint }}"
-            modelVersionId: "{{ modelVersionId }}"
-        pinecone:
-          indexName: "{{ indexName }}"
-        apiAuth:
-          apiKeyConfig:
-            apiKeySecretVersion: "{{ apiKeySecretVersion }}"
-            apiKeyString: "{{ apiKeyString }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -452,11 +452,11 @@ Updates a RagCorpus.
 ```sql
 UPDATE google.aiplatform.rag_corpora
 SET 
-data__encryptionSpec = '{{ encryptionSpec }}',
 data__description = '{{ description }}',
-data__vertexAiSearchConfig = '{{ vertexAiSearchConfig }}',
 data__displayName = '{{ displayName }}',
-data__vectorDbConfig = '{{ vectorDbConfig }}'
+data__encryptionSpec = '{{ encryptionSpec }}',
+data__vectorDbConfig = '{{ vectorDbConfig }}',
+data__vertexAiSearchConfig = '{{ vertexAiSearchConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

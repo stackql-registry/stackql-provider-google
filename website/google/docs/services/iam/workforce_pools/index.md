@@ -347,24 +347,24 @@ Creates a new WorkforcePool. You cannot reuse the name of a deleted pool until 3
 
 ```sql
 INSERT INTO google.iam.workforce_pools (
-data__name,
-data__displayName,
-data__sessionDuration,
-data__parent,
-data__description,
 data__accessRestrictions,
+data__description,
 data__disabled,
+data__displayName,
+data__name,
+data__parent,
+data__sessionDuration,
 locationsId,
 workforcePoolId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ sessionDuration }}',
-'{{ parent }}',
-'{{ description }}',
 '{{ accessRestrictions }}',
+'{{ description }}',
 {{ disabled }},
+'{{ displayName }}',
+'{{ name }}',
+'{{ parent }}',
+'{{ sessionDuration }}',
 '{{ locationsId }}',
 '{{ workforcePoolId }}'
 RETURNING
@@ -384,37 +384,37 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the workforce_pools resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the pool. Format: \`locations/{location}/workforcePools/{workforce_pool_id}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. A display name for the pool. Cannot exceed 32 characters.
-    - name: sessionDuration
-      value: "{{ sessionDuration }}"
-      description: |
-        Optional. Duration that the Google Cloud access tokens, console sign-in sessions, and \`gcloud\` sign-in sessions from this pool are valid. Must be greater than 15 minutes (900s) and less than 12 hours (43200s). If \`session_duration\` is not configured, minted credentials have a default duration of one hour (3600s). For SAML providers, the lifetime of the token is the minimum of the \`session_duration\` and the \`SessionNotOnOrAfter\` claim in the SAML assertion.
-    - name: parent
-      value: "{{ parent }}"
-      description: |
-        Immutable. The resource name of the parent. Format: \`organizations/{org-id}\`.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. A description of the pool. Cannot exceed 256 characters.
     - name: accessRestrictions
       description: |
         Optional. Configure access restrictions on the workforce pool users. This is an optional field. If specified web sign-in can be restricted to given set of services or programmatic sign-in can be disabled for pool users.
       value:
-        disableProgrammaticSignin: {{ disableProgrammaticSignin }}
         allowedServices:
           - domain: "{{ domain }}"
+        disableProgrammaticSignin: {{ disableProgrammaticSignin }}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of the pool. Cannot exceed 256 characters.
     - name: disabled
       value: {{ disabled }}
       description: |
         Optional. Disables the workforce pool. You cannot use a disabled pool to exchange tokens, or use existing tokens to access resources. If the pool is re-enabled, existing tokens grant access again.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. A display name for the pool. Cannot exceed 32 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the pool. Format: \`locations/{location}/workforcePools/{workforce_pool_id}\`
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Immutable. The resource name of the parent. Format: \`organizations/{org-id}\`.
+    - name: sessionDuration
+      value: "{{ sessionDuration }}"
+      description: |
+        Optional. Duration that the Google Cloud access tokens, console sign-in sessions, and \`gcloud\` sign-in sessions from this pool are valid. Must be greater than 15 minutes (900s) and less than 12 hours (43200s). If \`session_duration\` is not configured, minted credentials have a default duration of one hour (3600s). For SAML providers, the lifetime of the token is the minimum of the \`session_duration\` and the \`SessionNotOnOrAfter\` claim in the SAML assertion.
     - name: workforcePoolId
       value: "{{ workforcePoolId }}"
 `}</CodeBlock>
@@ -438,13 +438,13 @@ Updates an existing WorkforcePool.
 ```sql
 UPDATE google.iam.workforce_pools
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__sessionDuration = '{{ sessionDuration }}',
-data__parent = '{{ parent }}',
-data__description = '{{ description }}',
 data__accessRestrictions = '{{ accessRestrictions }}',
-data__disabled = {{ disabled }}
+data__description = '{{ description }}',
+data__disabled = {{ disabled }},
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__parent = '{{ parent }}',
+data__sessionDuration = '{{ sessionDuration }}'
 WHERE 
 locationsId = '{{ locationsId }}' --required
 AND workforcePoolsId = '{{ workforcePoolsId }}' --required

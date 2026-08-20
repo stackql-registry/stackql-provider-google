@@ -63,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="acceleratorConfig" /></td>
     <td><code>object</code></td>
-    <td>The AccleratorConfig for the TPU Node. (id: AcceleratorConfig)</td>
+    <td>A TPU accelerator configuration. (id: AcceleratorConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="acceleratorType" /></td>
@@ -128,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="networkConfig" /></td>
     <td><code>object</code></td>
-    <td>Network related configurations. (id: NetworkConfig)</td>
+    <td>Network configurations for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned. (id: NetworkConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkConfigs" /></td>
@@ -212,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="acceleratorConfig" /></td>
     <td><code>object</code></td>
-    <td>The AccleratorConfig for the TPU Node. (id: AcceleratorConfig)</td>
+    <td>A TPU accelerator configuration. (id: AcceleratorConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="acceleratorType" /></td>
@@ -277,7 +277,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="networkConfig" /></td>
     <td><code>object</code></td>
-    <td>Network related configurations. (id: NetworkConfig)</td>
+    <td>Network configurations for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned. (id: NetworkConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkConfigs" /></td>
@@ -365,7 +365,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists nodes.</td>
 </tr>
 <tr>
@@ -542,8 +542,8 @@ upcomingMaintenance
 FROM google.tpu.nodes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -565,43 +565,43 @@ Creates a node.
 
 ```sql
 INSERT INTO google.tpu.nodes (
-data__schedulingConfig,
-data__cidrBlock,
-data__health,
-data__runtimeVersion,
-data__metadata,
-data__shieldedInstanceConfig,
-data__networkConfigs,
-data__labels,
-data__tags,
 data__acceleratorConfig,
-data__description,
 data__acceleratorType,
-data__networkConfig,
 data__bootDiskConfig,
+data__cidrBlock,
 data__dataDisks,
+data__description,
+data__health,
+data__labels,
+data__metadata,
+data__networkConfig,
+data__networkConfigs,
+data__runtimeVersion,
+data__schedulingConfig,
 data__serviceAccount,
+data__shieldedInstanceConfig,
+data__tags,
 projectsId,
 locationsId,
 nodeId
 )
 SELECT 
-'{{ schedulingConfig }}',
-'{{ cidrBlock }}',
-'{{ health }}',
-'{{ runtimeVersion }}',
-'{{ metadata }}',
-'{{ shieldedInstanceConfig }}',
-'{{ networkConfigs }}',
-'{{ labels }}',
-'{{ tags }}',
 '{{ acceleratorConfig }}',
-'{{ description }}',
 '{{ acceleratorType }}',
-'{{ networkConfig }}',
 '{{ bootDiskConfig }}',
+'{{ cidrBlock }}',
 '{{ dataDisks }}',
+'{{ description }}',
+'{{ health }}',
+'{{ labels }}',
+'{{ metadata }}',
+'{{ networkConfig }}',
+'{{ networkConfigs }}',
+'{{ runtimeVersion }}',
+'{{ schedulingConfig }}',
 '{{ serviceAccount }}',
+'{{ shieldedInstanceConfig }}',
+'{{ tags }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ nodeId }}'
@@ -625,6 +625,71 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the nodes resource.
+    - name: acceleratorConfig
+      description: |
+        A TPU accelerator configuration.
+      value:
+        topology: "{{ topology }}"
+        type: "{{ type }}"
+    - name: acceleratorType
+      value: "{{ acceleratorType }}"
+      description: |
+        Optional. The type of hardware accelerators associated with this node.
+    - name: bootDiskConfig
+      description: |
+        Optional. Boot disk configuration.
+      value:
+        customerEncryptionKey:
+          kmsKeyName: "{{ kmsKeyName }}"
+    - name: cidrBlock
+      value: "{{ cidrBlock }}"
+      description: |
+        The CIDR block that the TPU node will use when selecting an IP address. This CIDR block must be a /29 block; the Compute Engine networks API forbids a smaller block, and using a larger block would be wasteful (a node can only consume one IP address). Errors will occur if the CIDR block has already been used for a currently existing TPU node, the CIDR block conflicts with any subnetworks in the user's provided network, or the provided network is peered with another network that is using that CIDR block.
+    - name: dataDisks
+      description: |
+        The additional data disks for the Node.
+      value:
+        - mode: "{{ mode }}"
+          sourceDisk: "{{ sourceDisk }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The user-supplied description of the TPU. Maximum of 512 characters.
+    - name: health
+      value: "{{ health }}"
+      description: |
+        The health status of the TPU node.
+      valid_values: ['HEALTH_UNSPECIFIED', 'HEALTHY', 'TIMEOUT', 'UNHEALTHY_TENSORFLOW', 'UNHEALTHY_MAINTENANCE']
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Resource labels to represent user-provided metadata.
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Custom metadata to apply to the TPU Node. Can set startup-script and shutdown-script
+    - name: networkConfig
+      description: |
+        Network configurations for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned.
+      value:
+        canIpForward: {{ canIpForward }}
+        enableExternalIps: {{ enableExternalIps }}
+        network: "{{ network }}"
+        queueCount: {{ queueCount }}
+        subnetwork: "{{ subnetwork }}"
+    - name: networkConfigs
+      description: |
+        Optional. Repeated network configurations for the TPU node. This field is used to specify multiple networks configs for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned.
+      value:
+        - canIpForward: {{ canIpForward }}
+          enableExternalIps: {{ enableExternalIps }}
+          network: "{{ network }}"
+          queueCount: {{ queueCount }}
+          subnetwork: "{{ subnetwork }}"
+    - name: runtimeVersion
+      value: "{{ runtimeVersion }}"
+      description: |
+        Required. The runtime version running in the Node.
     - name: schedulingConfig
       description: |
         The scheduling options for this node.
@@ -632,81 +697,6 @@ response
         preemptible: {{ preemptible }}
         reserved: {{ reserved }}
         spot: {{ spot }}
-    - name: cidrBlock
-      value: "{{ cidrBlock }}"
-      description: |
-        The CIDR block that the TPU node will use when selecting an IP address. This CIDR block must be a /29 block; the Compute Engine networks API forbids a smaller block, and using a larger block would be wasteful (a node can only consume one IP address). Errors will occur if the CIDR block has already been used for a currently existing TPU node, the CIDR block conflicts with any subnetworks in the user's provided network, or the provided network is peered with another network that is using that CIDR block.
-    - name: health
-      value: "{{ health }}"
-      description: |
-        The health status of the TPU node.
-      valid_values: ['HEALTH_UNSPECIFIED', 'HEALTHY', 'TIMEOUT', 'UNHEALTHY_TENSORFLOW', 'UNHEALTHY_MAINTENANCE']
-    - name: runtimeVersion
-      value: "{{ runtimeVersion }}"
-      description: |
-        Required. The runtime version running in the Node.
-    - name: metadata
-      value: "{{ metadata }}"
-      description: |
-        Custom metadata to apply to the TPU Node. Can set startup-script and shutdown-script
-    - name: shieldedInstanceConfig
-      description: |
-        Shielded Instance options.
-      value:
-        enableSecureBoot: {{ enableSecureBoot }}
-    - name: networkConfigs
-      description: |
-        Optional. Repeated network configurations for the TPU node. This field is used to specify multiple networks configs for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned.
-      value:
-        - subnetwork: "{{ subnetwork }}"
-          enableExternalIps: {{ enableExternalIps }}
-          network: "{{ network }}"
-          queueCount: {{ queueCount }}
-          canIpForward: {{ canIpForward }}
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Resource labels to represent user-provided metadata.
-    - name: tags
-      value:
-        - "{{ tags }}"
-      description: |
-        Tags to apply to the TPU Node. Tags are used to identify valid sources or targets for network firewalls.
-    - name: acceleratorConfig
-      description: |
-        The AccleratorConfig for the TPU Node.
-      value:
-        type: "{{ type }}"
-        topology: "{{ topology }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        The user-supplied description of the TPU. Maximum of 512 characters.
-    - name: acceleratorType
-      value: "{{ acceleratorType }}"
-      description: |
-        Optional. The type of hardware accelerators associated with this node.
-    - name: networkConfig
-      description: |
-        Network related configurations.
-      value:
-        subnetwork: "{{ subnetwork }}"
-        enableExternalIps: {{ enableExternalIps }}
-        network: "{{ network }}"
-        queueCount: {{ queueCount }}
-        canIpForward: {{ canIpForward }}
-    - name: bootDiskConfig
-      description: |
-        Optional. Boot disk configuration.
-      value:
-        customerEncryptionKey:
-          kmsKeyName: "{{ kmsKeyName }}"
-    - name: dataDisks
-      description: |
-        The additional data disks for the Node.
-      value:
-        - sourceDisk: "{{ sourceDisk }}"
-          mode: "{{ mode }}"
     - name: serviceAccount
       description: |
         The Google Cloud Platform Service Account to be used by the TPU node VMs. If None is specified, the default compute service account will be used.
@@ -714,6 +704,16 @@ response
         email: "{{ email }}"
         scope:
           - "{{ scope }}"
+    - name: shieldedInstanceConfig
+      description: |
+        Shielded Instance options.
+      value:
+        enableSecureBoot: {{ enableSecureBoot }}
+    - name: tags
+      value:
+        - "{{ tags }}"
+      description: |
+        Tags to apply to the TPU Node. Tags are used to identify valid sources or targets for network firewalls.
     - name: nodeId
       value: "{{ nodeId }}"
 `}</CodeBlock>
@@ -737,22 +737,22 @@ Updates the configurations of a node.
 ```sql
 UPDATE google.tpu.nodes
 SET 
-data__schedulingConfig = '{{ schedulingConfig }}',
-data__cidrBlock = '{{ cidrBlock }}',
-data__health = '{{ health }}',
-data__runtimeVersion = '{{ runtimeVersion }}',
-data__metadata = '{{ metadata }}',
-data__shieldedInstanceConfig = '{{ shieldedInstanceConfig }}',
-data__networkConfigs = '{{ networkConfigs }}',
-data__labels = '{{ labels }}',
-data__tags = '{{ tags }}',
 data__acceleratorConfig = '{{ acceleratorConfig }}',
-data__description = '{{ description }}',
 data__acceleratorType = '{{ acceleratorType }}',
-data__networkConfig = '{{ networkConfig }}',
 data__bootDiskConfig = '{{ bootDiskConfig }}',
+data__cidrBlock = '{{ cidrBlock }}',
 data__dataDisks = '{{ dataDisks }}',
-data__serviceAccount = '{{ serviceAccount }}'
+data__description = '{{ description }}',
+data__health = '{{ health }}',
+data__labels = '{{ labels }}',
+data__metadata = '{{ metadata }}',
+data__networkConfig = '{{ networkConfig }}',
+data__networkConfigs = '{{ networkConfigs }}',
+data__runtimeVersion = '{{ runtimeVersion }}',
+data__schedulingConfig = '{{ schedulingConfig }}',
+data__serviceAccount = '{{ serviceAccount }}',
+data__shieldedInstanceConfig = '{{ shieldedInstanceConfig }}',
+data__tags = '{{ tags }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

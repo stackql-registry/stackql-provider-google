@@ -147,24 +147,24 @@ Creates a field in a tag template. You must enable the Data Catalog API in the p
 
 ```sql
 INSERT INTO google.datacatalog.fields (
-data__name,
-data__displayName,
-data__type,
-data__isRequired,
 data__description,
+data__displayName,
+data__isRequired,
+data__name,
 data__order,
+data__type,
 projectsId,
 locationsId,
 tagTemplatesId,
 tagTemplateFieldId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ type }}',
-{{ isRequired }},
 '{{ description }}',
+'{{ displayName }}',
+{{ isRequired }},
+'{{ name }}',
 {{ order }},
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tagTemplatesId }}',
@@ -193,34 +193,34 @@ type
     - name: tagTemplatesId
       value: "{{ tagTemplatesId }}"
       description: Required parameter for the fields resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the tag template field in URL format. Example: \`projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE}/fields/{FIELD}\` Note: The tag template field itself might not be stored in the location specified in its name. The name must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a letter or underscore. The maximum length is 64 characters.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        The display name for this field. Defaults to an empty string. The name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), and can't start or end with spaces. The maximum length is 200 characters.
-    - name: type
-      description: |
-        Required. The type of value this tag field can contain.
-      value:
-        primitiveType: "{{ primitiveType }}"
-        enumType:
-          allowedValues:
-            - displayName: "{{ displayName }}"
-    - name: isRequired
-      value: {{ isRequired }}
-      description: |
-        If true, this field is required. Defaults to false.
     - name: description
       value: "{{ description }}"
       description: |
         The description for this field. Defaults to an empty string.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The display name for this field. Defaults to an empty string. The name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), and can't start or end with spaces. The maximum length is 200 characters.
+    - name: isRequired
+      value: {{ isRequired }}
+      description: |
+        If true, this field is required. Defaults to false.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the tag template field in URL format. Example: \`projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE}/fields/{FIELD}\` Note: The tag template field itself might not be stored in the location specified in its name. The name must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a letter or underscore. The maximum length is 64 characters.
     - name: order
       value: {{ order }}
       description: |
         The order of this field with respect to other fields in this tag template. For example, a higher value can indicate a more important field. The value can be negative. Multiple fields can have the same order and field orders within a tag don't have to be sequential.
+    - name: type
+      description: |
+        Required. The type of value this tag field can contain.
+      value:
+        enumType:
+          allowedValues:
+            - displayName: "{{ displayName }}"
+        primitiveType: "{{ primitiveType }}"
     - name: tagTemplateFieldId
       value: "{{ tagTemplateFieldId }}"
 `}</CodeBlock>
@@ -244,12 +244,12 @@ Updates a field in a tag template. You can't update the field type with this met
 ```sql
 UPDATE google.datacatalog.fields
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__type = '{{ type }}',
-data__isRequired = {{ isRequired }},
 data__description = '{{ description }}',
-data__order = {{ order }}
+data__displayName = '{{ displayName }}',
+data__isRequired = {{ isRequired }},
+data__name = '{{ name }}',
+data__order = {{ order }},
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

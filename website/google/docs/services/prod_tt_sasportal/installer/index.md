@@ -110,9 +110,9 @@ Validates the identity of a Certified Professional Installer (CPI).
 EXEC google.prod_tt_sasportal.installer.installer_validate 
 @@json=
 '{
+"encodedSecret": "{{ encodedSecret }}", 
 "installerId": "{{ installerId }}", 
-"secret": "{{ secret }}", 
-"encodedSecret": "{{ encodedSecret }}"
+"secret": "{{ secret }}"
 }'
 ;
 ```

@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Get a list of configurations that meet the filter criteria.</td>
 </tr>
 <tr>
@@ -297,9 +297,9 @@ version
 FROM google.threatintelligence.configurations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -324,13 +324,13 @@ EXEC google.threatintelligence.configurations.upsert
 @publishTime='{{ publishTime }}' 
 @@json=
 '{
-"provider": "{{ provider }}", 
-"state": "{{ state }}", 
-"version": "{{ version }}", 
 "description": "{{ description }}", 
 "detail": "{{ detail }}", 
 "etag": "{{ etag }}", 
-"name": "{{ name }}"
+"name": "{{ name }}", 
+"provider": "{{ provider }}", 
+"state": "{{ state }}", 
+"version": "{{ version }}"
 }'
 ;
 ```

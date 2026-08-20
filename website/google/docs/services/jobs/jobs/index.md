@@ -395,15 +395,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-jobView"><code>jobView</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-jobView"><code>jobView</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists jobs by filter.</td>
-</tr>
-<tr>
-    <td><a href="#create"><CopyableCode code="create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
-    <td></td>
-    <td>Creates a new job. Typically, the job becomes searchable within 10 seconds, but it may take up to 5 minutes.</td>
 </tr>
 <tr>
     <td><a href="#batch_create"><CopyableCode code="batch_create" /></a></td>
@@ -411,6 +404,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
     <td></td>
     <td>Begins executing a batch create jobs operation.</td>
+</tr>
+<tr>
+    <td><a href="#create"><CopyableCode code="create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
+    <td></td>
+    <td>Creates a new job. Typically, the job becomes searchable within 10 seconds, but it may take up to 5 minutes.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
@@ -441,18 +441,18 @@ The following methods are available for this resource:
     <td>Begins executing a batch delete jobs operation.</td>
 </tr>
 <tr>
-    <td><a href="#search_for_alert"><CopyableCode code="search_for_alert" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
-    <td></td>
-    <td>Searches for jobs using the provided SearchJobsRequest. This API call is intended for the use case of targeting passive job seekers (for example, job seekers who have signed up to receive email alerts about potential job opportunities), it has different algorithmic adjustments that are designed to specifically target passive job seekers. This call constrains the visibility of jobs present in the database, and only returns jobs the caller has permission to search against.</td>
-</tr>
-<tr>
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
     <td></td>
     <td>Searches for jobs using the provided SearchJobsRequest. This call constrains the visibility of jobs present in the database, and only returns jobs that the caller has permission to search against.</td>
+</tr>
+<tr>
+    <td><a href="#search_for_alert"><CopyableCode code="search_for_alert" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
+    <td></td>
+    <td>Searches for jobs using the provided SearchJobsRequest. This API call is intended for the use case of targeting passive job seekers (for example, job seekers who have signed up to receive email alerts about potential job opportunities), it has different algorithmic adjustments that are designed to specifically target passive job seekers. This call constrains the visibility of jobs present in the database, and only returns jobs the caller has permission to search against.</td>
 </tr>
 </tbody>
 </table>
@@ -605,9 +605,9 @@ FROM google.jobs.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND tenantsId = '{{ tenantsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND jobView = '{{ jobView }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -617,75 +617,98 @@ AND jobView = '{{ jobView }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="create"
+    defaultValue="batch_create"
     values={[
-        { label: 'create', value: 'create' },
         { label: 'batch_create', value: 'batch_create' },
+        { label: 'create', value: 'create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
+<TabItem value="batch_create">
+
+Begins executing a batch create jobs operation.
+
+```sql
+INSERT INTO google.jobs.jobs (
+data__jobs,
+projectsId,
+tenantsId
+)
+SELECT 
+'{{ jobs }}',
+'{{ projectsId }}',
+'{{ tenantsId }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
 <TabItem value="create">
 
 Creates a new job. Typically, the job becomes searchable within 10 seconds, but it may take up to 5 minutes.
 
 ```sql
 INSERT INTO google.jobs.jobs (
-data__employmentTypes,
-data__description,
-data__title,
-data__department,
-data__qualifications,
-data__visibility,
-data__postingRegion,
-data__requisitionId,
-data__jobEndTime,
-data__jobBenefits,
-data__compensationInfo,
-data__incentives,
-data__languageCode,
-data__jobStartTime,
-data__postingPublishTime,
-data__company,
-data__promotionValue,
 data__addresses,
-data__postingExpireTime,
-data__processingOptions,
+data__applicationInfo,
+data__company,
+data__compensationInfo,
 data__customAttributes,
 data__degreeTypes,
+data__department,
+data__description,
+data__employmentTypes,
+data__incentives,
+data__jobBenefits,
+data__jobEndTime,
 data__jobLevel,
-data__responsibilities,
+data__jobStartTime,
+data__languageCode,
 data__name,
-data__applicationInfo,
+data__postingExpireTime,
+data__postingPublishTime,
+data__postingRegion,
+data__processingOptions,
+data__promotionValue,
+data__qualifications,
+data__requisitionId,
+data__responsibilities,
+data__title,
+data__visibility,
 projectsId,
 tenantsId
 )
 SELECT 
-'{{ employmentTypes }}',
-'{{ description }}',
-'{{ title }}',
-'{{ department }}',
-'{{ qualifications }}',
-'{{ visibility }}',
-'{{ postingRegion }}',
-'{{ requisitionId }}',
-'{{ jobEndTime }}',
-'{{ jobBenefits }}',
-'{{ compensationInfo }}',
-'{{ incentives }}',
-'{{ languageCode }}',
-'{{ jobStartTime }}',
-'{{ postingPublishTime }}',
-'{{ company }}',
-{{ promotionValue }},
 '{{ addresses }}',
-'{{ postingExpireTime }}',
-'{{ processingOptions }}',
+'{{ applicationInfo }}',
+'{{ company }}',
+'{{ compensationInfo }}',
 '{{ customAttributes }}',
 '{{ degreeTypes }}',
+'{{ department }}',
+'{{ description }}',
+'{{ employmentTypes }}',
+'{{ incentives }}',
+'{{ jobBenefits }}',
+'{{ jobEndTime }}',
 '{{ jobLevel }}',
-'{{ responsibilities }}',
+'{{ jobStartTime }}',
+'{{ languageCode }}',
 '{{ name }}',
-'{{ applicationInfo }}',
+'{{ postingExpireTime }}',
+'{{ postingPublishTime }}',
+'{{ postingRegion }}',
+'{{ processingOptions }}',
+{{ promotionValue }},
+'{{ qualifications }}',
+'{{ requisitionId }}',
+'{{ responsibilities }}',
+'{{ title }}',
+'{{ visibility }}',
 '{{ projectsId }}',
 '{{ tenantsId }}'
 RETURNING
@@ -722,29 +745,6 @@ visibility
 ;
 ```
 </TabItem>
-<TabItem value="batch_create">
-
-Begins executing a batch create jobs operation.
-
-```sql
-INSERT INTO google.jobs.jobs (
-data__jobs,
-projectsId,
-tenantsId
-)
-SELECT 
-'{{ jobs }}',
-'{{ projectsId }}',
-'{{ tenantsId }}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response
-;
-```
-</TabItem>
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
@@ -756,129 +756,163 @@ response
     - name: tenantsId
       value: "{{ tenantsId }}"
       description: Required parameter for the jobs resource.
-    - name: employmentTypes
+    - name: jobs
+      description: |
+        Required. The jobs to be created. A maximum of 200 jobs can be created in a batch.
       value:
-        - "{{ employmentTypes }}"
-      description: |
-        The employment type(s) of a job, for example, full time or part time.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Required. The description of the job, which typically includes a multi-paragraph description of the company and related information. Separate fields are provided on the job object for responsibilities, qualifications, and other job characteristics. Use of these separate job fields is recommended. This field accepts and sanitizes HTML input, and also accepts bold, italic, ordered list, and unordered list markup tags. The maximum number of allowed characters is 100,000.
-    - name: title
-      value: "{{ title }}"
-      description: |
-        Required. The title of the job, such as "Software Engineer" The maximum number of allowed characters is 500.
-    - name: department
-      value: "{{ department }}"
-      description: |
-        The department or functional area within the company with the open position. The maximum number of allowed characters is 255.
-    - name: qualifications
-      value: "{{ qualifications }}"
-      description: |
-        A description of the qualifications required to perform the job. The use of this field is recommended as an alternative to using the more general description field. This field accepts and sanitizes HTML input, and also accepts bold, italic, ordered list, and unordered list markup tags. The maximum number of allowed characters is 10,000.
-    - name: visibility
-      value: "{{ visibility }}"
-      description: |
-        Deprecated. The job is only visible to the owner. The visibility of the job. Defaults to Visibility.ACCOUNT_ONLY if not specified.
-      valid_values: ['VISIBILITY_UNSPECIFIED', 'ACCOUNT_ONLY', 'SHARED_WITH_GOOGLE', 'SHARED_WITH_PUBLIC']
-    - name: postingRegion
-      value: "{{ postingRegion }}"
-      description: |
-        The job PostingRegion (for example, state, country) throughout which the job is available. If this field is set, a LocationFilter in a search query within the job region finds this job posting if an exact location match isn't specified. If this field is set to PostingRegion.NATION or PostingRegion.ADMINISTRATIVE_AREA, setting job Job.addresses to the same location level as this field is strongly recommended.
-      valid_values: ['POSTING_REGION_UNSPECIFIED', 'ADMINISTRATIVE_AREA', 'NATION', 'TELECOMMUTE']
-    - name: requisitionId
-      value: "{{ requisitionId }}"
-      description: |
-        Required. The requisition ID, also referred to as the posting ID, is assigned by the client to identify a job. This field is intended to be used by clients for client identification and tracking of postings. A job isn't allowed to be created if there is another job with the same company, language_code and requisition_id. The maximum number of allowed characters is 255.
-    - name: jobEndTime
-      value: "{{ jobEndTime }}"
-      description: |
-        The end timestamp of the job. Typically this field is used for contracting engagements. Invalid timestamps are ignored.
-    - name: jobBenefits
-      value:
-        - "{{ jobBenefits }}"
-      description: |
-        The benefits included with the job.
-    - name: compensationInfo
-      description: |
-        Job compensation information (a.k.a. "pay rate") i.e., the compensation that will paid to the employee.
-      value:
-        annualizedTotalCompensationRange:
-          maxCompensation:
-            units: "{{ units }}"
-            nanos: {{ nanos }}
-            currencyCode: "{{ currencyCode }}"
-          minCompensation:
-            units: "{{ units }}"
-            nanos: {{ nanos }}
-            currencyCode: "{{ currencyCode }}"
-        entries:
-          - type: "{{ type }}"
-            range:
+        - addresses: "{{ addresses }}"
+          applicationInfo:
+            emails:
+              - "{{ emails }}"
+            instruction: "{{ instruction }}"
+            uris:
+              - "{{ uris }}"
+          company: "{{ company }}"
+          companyDisplayName: "{{ companyDisplayName }}"
+          compensationInfo:
+            annualizedBaseCompensationRange:
               maxCompensation:
-                units: "{{ units }}"
-                nanos: {{ nanos }}
                 currencyCode: "{{ currencyCode }}"
+                nanos: {{ nanos }}
+                units: "{{ units }}"
               minCompensation:
-                units: "{{ units }}"
-                nanos: {{ nanos }}
                 currencyCode: "{{ currencyCode }}"
-            description: "{{ description }}"
-            expectedUnitsPerYear: {{ expectedUnitsPerYear }}
-            unit: "{{ unit }}"
-            amount:
-              units: "{{ units }}"
-              nanos: {{ nanos }}
-              currencyCode: "{{ currencyCode }}"
-        annualizedBaseCompensationRange:
-          maxCompensation:
-            units: "{{ units }}"
-            nanos: {{ nanos }}
-            currencyCode: "{{ currencyCode }}"
-          minCompensation:
-            units: "{{ units }}"
-            nanos: {{ nanos }}
-            currencyCode: "{{ currencyCode }}"
-    - name: incentives
-      value: "{{ incentives }}"
-      description: |
-        A description of bonus, commission, and other compensation incentives associated with the job not including salary or pay. The maximum number of allowed characters is 10,000.
-    - name: languageCode
-      value: "{{ languageCode }}"
-      description: |
-        The language of the posting. This field is distinct from any requirements for fluency that are associated with the job. Language codes must be in BCP-47 format, such as "en-US" or "sr-Latn". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47){: class="external" target="_blank" }. If this field is unspecified and Job.description is present, detected language code based on Job.description is assigned, otherwise defaults to 'en_US'.
-    - name: jobStartTime
-      value: "{{ jobStartTime }}"
-      description: |
-        The start timestamp of the job in UTC time zone. Typically this field is used for contracting engagements. Invalid timestamps are ignored.
-    - name: postingPublishTime
-      value: "{{ postingPublishTime }}"
-      description: |
-        The timestamp this job posting was most recently published. The default value is the time the request arrives at the server. Invalid timestamps are ignored.
-    - name: company
-      value: "{{ company }}"
-      description: |
-        Required. The resource name of the company listing the job. The format is "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}". For example, "projects/foo/tenants/bar/companies/baz".
-    - name: promotionValue
-      value: {{ promotionValue }}
-      description: |
-        A promotion value of the job, as determined by the client. The value determines the sort order of the jobs returned when searching for jobs using the featured jobs search call, with higher promotional values being returned first and ties being resolved by relevance sort. Only the jobs with a promotionValue >0 are returned in a FEATURED_JOB_SEARCH. Default value is 0, and negative values are treated as 0.
+                nanos: {{ nanos }}
+                units: "{{ units }}"
+            annualizedTotalCompensationRange:
+              maxCompensation:
+                currencyCode: "{{ currencyCode }}"
+                nanos: {{ nanos }}
+                units: "{{ units }}"
+              minCompensation:
+                currencyCode: "{{ currencyCode }}"
+                nanos: {{ nanos }}
+                units: "{{ units }}"
+            entries:
+              - amount:
+                  currencyCode: "{{ currencyCode }}"
+                  nanos: {{ nanos }}
+                  units: "{{ units }}"
+                description: "{{ description }}"
+                expectedUnitsPerYear: {{ expectedUnitsPerYear }}
+                range:
+                  maxCompensation:
+                    currencyCode: "{{ currencyCode }}"
+                    nanos: {{ nanos }}
+                    units: "{{ units }}"
+                  minCompensation:
+                    currencyCode: "{{ currencyCode }}"
+                    nanos: {{ nanos }}
+                    units: "{{ units }}"
+                type: "{{ type }}"
+                unit: "{{ unit }}"
+          customAttributes: "{{ customAttributes }}"
+          degreeTypes: "{{ degreeTypes }}"
+          department: "{{ department }}"
+          derivedInfo:
+            jobCategories:
+              - "{{ jobCategories }}"
+            locations:
+              - latLng:
+                  latitude: {{ latitude }}
+                  longitude: {{ longitude }}
+                locationType: "{{ locationType }}"
+                postalAddress:
+                  addressLines:
+                    - "{{ addressLines }}"
+                  administrativeArea: "{{ administrativeArea }}"
+                  languageCode: "{{ languageCode }}"
+                  locality: "{{ locality }}"
+                  organization: "{{ organization }}"
+                  postalCode: "{{ postalCode }}"
+                  recipients:
+                    - "{{ recipients }}"
+                  regionCode: "{{ regionCode }}"
+                  revision: {{ revision }}
+                  sortingCode: "{{ sortingCode }}"
+                  sublocality: "{{ sublocality }}"
+                radiusMiles: {{ radiusMiles }}
+          description: "{{ description }}"
+          employmentTypes: "{{ employmentTypes }}"
+          incentives: "{{ incentives }}"
+          jobBenefits: "{{ jobBenefits }}"
+          jobEndTime: "{{ jobEndTime }}"
+          jobLevel: "{{ jobLevel }}"
+          jobStartTime: "{{ jobStartTime }}"
+          languageCode: "{{ languageCode }}"
+          name: "{{ name }}"
+          postingCreateTime: "{{ postingCreateTime }}"
+          postingExpireTime: "{{ postingExpireTime }}"
+          postingPublishTime: "{{ postingPublishTime }}"
+          postingRegion: "{{ postingRegion }}"
+          postingUpdateTime: "{{ postingUpdateTime }}"
+          processingOptions:
+            disableStreetAddressResolution: {{ disableStreetAddressResolution }}
+            htmlSanitization: "{{ htmlSanitization }}"
+          promotionValue: {{ promotionValue }}
+          qualifications: "{{ qualifications }}"
+          requisitionId: "{{ requisitionId }}"
+          responsibilities: "{{ responsibilities }}"
+          title: "{{ title }}"
+          visibility: "{{ visibility }}"
     - name: addresses
       value:
         - "{{ addresses }}"
       description: |
         Strongly recommended for the best service experience. Location(s) where the employer is looking to hire for this job posting. Specifying the full street address(es) of the hiring location enables better API results, especially job searches by commute time. At most 50 locations are allowed for best search performance. If a job has more locations, it is suggested to split it into multiple jobs with unique requisition_ids (e.g. 'ReqA' becomes 'ReqA-1', 'ReqA-2', and so on.) as multiple jobs with the same company, language_code and requisition_id are not allowed. If the original requisition_id must be preserved, a custom field should be used for storage. It is also suggested to group the locations that close to each other in the same job for better search experience. Jobs with multiple addresses must have their addresses with the same LocationType to allow location filtering to work properly. (For example, a Job with addresses "1600 Amphitheatre Parkway, Mountain View, CA, USA" and "London, UK" may not have location filters applied correctly at search time since the first is a LocationType.STREET_ADDRESS and the second is a LocationType.LOCALITY.) If a job needs to have multiple addresses, it is suggested to split it into multiple jobs with same LocationTypes. The maximum number of allowed characters is 500.
-    - name: postingExpireTime
-      value: "{{ postingExpireTime }}"
+    - name: applicationInfo
       description: |
-        Strongly recommended for the best service experience. The expiration timestamp of the job. After this timestamp, the job is marked as expired, and it no longer appears in search results. The expired job can't be listed by the ListJobs API, but it can be retrieved with the GetJob API or updated with the UpdateJob API or deleted with the DeleteJob API. An expired job can be updated and opened again by using a future expiration timestamp. Updating an expired job fails if there is another existing open job with same company, language_code and requisition_id. The expired jobs are retained in our system for 90 days. However, the overall expired job count cannot exceed 3 times the maximum number of open jobs over previous 7 days. If this threshold is exceeded, expired jobs are cleaned out in order of earliest expire time. Expired jobs are no longer accessible after they are cleaned out. Invalid timestamps are ignored, and treated as expire time not provided. If the timestamp is before the instant request is made, the job is treated as expired immediately on creation. This kind of job can not be updated. And when creating a job with past timestamp, the posting_publish_time must be set before posting_expire_time. The purpose of this feature is to allow other objects, such as ApplicationInfo, to refer a job that didn't exist in the system prior to becoming expired. If you want to modify a job that was expired on creation, delete it and create a new one. If this value isn't provided at the time of job creation or is invalid, the job posting expires after 30 days from the job's creation time. For example, if the job was created on 2017/01/01 13:00AM UTC with an unspecified expiration date, the job expires after 2017/01/31 13:00AM UTC. If this value isn't provided on job update, it depends on the field masks set by UpdateJobRequest.update_mask. If the field masks include job_end_time, or the masks are empty meaning that every field is updated, the job posting expires after 30 days from the job's last update time. Otherwise the expiration date isn't updated.
-    - name: processingOptions
-      description: |
-        Options for job processing.
+        Job application information.
       value:
-        disableStreetAddressResolution: {{ disableStreetAddressResolution }}
-        htmlSanitization: "{{ htmlSanitization }}"
+        emails:
+          - "{{ emails }}"
+        instruction: "{{ instruction }}"
+        uris:
+          - "{{ uris }}"
+    - name: company
+      value: "{{ company }}"
+      description: |
+        Required. The resource name of the company listing the job. The format is "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}". For example, "projects/foo/tenants/bar/companies/baz".
+    - name: compensationInfo
+      description: |
+        Job compensation information (a.k.a. "pay rate") i.e., the compensation that will paid to the employee.
+      value:
+        annualizedBaseCompensationRange:
+          maxCompensation:
+            currencyCode: "{{ currencyCode }}"
+            nanos: {{ nanos }}
+            units: "{{ units }}"
+          minCompensation:
+            currencyCode: "{{ currencyCode }}"
+            nanos: {{ nanos }}
+            units: "{{ units }}"
+        annualizedTotalCompensationRange:
+          maxCompensation:
+            currencyCode: "{{ currencyCode }}"
+            nanos: {{ nanos }}
+            units: "{{ units }}"
+          minCompensation:
+            currencyCode: "{{ currencyCode }}"
+            nanos: {{ nanos }}
+            units: "{{ units }}"
+        entries:
+          - amount:
+              currencyCode: "{{ currencyCode }}"
+              nanos: {{ nanos }}
+              units: "{{ units }}"
+            description: "{{ description }}"
+            expectedUnitsPerYear: {{ expectedUnitsPerYear }}
+            range:
+              maxCompensation:
+                currencyCode: "{{ currencyCode }}"
+                nanos: {{ nanos }}
+                units: "{{ units }}"
+              minCompensation:
+                currencyCode: "{{ currencyCode }}"
+                nanos: {{ nanos }}
+                units: "{{ units }}"
+            type: "{{ type }}"
+            unit: "{{ unit }}"
     - name: customAttributes
       value: "{{ customAttributes }}"
       description: |
@@ -888,127 +922,93 @@ response
         - "{{ degreeTypes }}"
       description: |
         The desired education degrees for the job, such as Bachelors, Masters.
+    - name: department
+      value: "{{ department }}"
+      description: |
+        The department or functional area within the company with the open position. The maximum number of allowed characters is 255.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Required. The description of the job, which typically includes a multi-paragraph description of the company and related information. Separate fields are provided on the job object for responsibilities, qualifications, and other job characteristics. Use of these separate job fields is recommended. This field accepts and sanitizes HTML input, and also accepts bold, italic, ordered list, and unordered list markup tags. The maximum number of allowed characters is 100,000.
+    - name: employmentTypes
+      value:
+        - "{{ employmentTypes }}"
+      description: |
+        The employment type(s) of a job, for example, full time or part time.
+    - name: incentives
+      value: "{{ incentives }}"
+      description: |
+        A description of bonus, commission, and other compensation incentives associated with the job not including salary or pay. The maximum number of allowed characters is 10,000.
+    - name: jobBenefits
+      value:
+        - "{{ jobBenefits }}"
+      description: |
+        The benefits included with the job.
+    - name: jobEndTime
+      value: "{{ jobEndTime }}"
+      description: |
+        The end timestamp of the job. Typically this field is used for contracting engagements. Invalid timestamps are ignored.
     - name: jobLevel
       value: "{{ jobLevel }}"
       description: |
         The experience level associated with the job, such as "Entry Level".
       valid_values: ['JOB_LEVEL_UNSPECIFIED', 'ENTRY_LEVEL', 'EXPERIENCED', 'MANAGER', 'DIRECTOR', 'EXECUTIVE']
-    - name: responsibilities
-      value: "{{ responsibilities }}"
+    - name: jobStartTime
+      value: "{{ jobStartTime }}"
       description: |
-        A description of job responsibilities. The use of this field is recommended as an alternative to using the more general description field. This field accepts and sanitizes HTML input, and also accepts bold, italic, ordered list, and unordered list markup tags. The maximum number of allowed characters is 10,000.
+        The start timestamp of the job in UTC time zone. Typically this field is used for contracting engagements. Invalid timestamps are ignored.
+    - name: languageCode
+      value: "{{ languageCode }}"
+      description: |
+        The language of the posting. This field is distinct from any requirements for fluency that are associated with the job. Language codes must be in BCP-47 format, such as "en-US" or "sr-Latn". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47){: class="external" target="_blank" }. If this field is unspecified and Job.description is present, detected language code based on Job.description is assigned, otherwise defaults to 'en_US'.
     - name: name
       value: "{{ name }}"
       description: |
         Required during job update. The resource name for the job. This is generated by the service when a job is created. The format is "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For example, "projects/foo/tenants/bar/jobs/baz". Use of this field in job queries and API calls is preferred over the use of requisition_id since this value is unique.
-    - name: applicationInfo
+    - name: postingExpireTime
+      value: "{{ postingExpireTime }}"
       description: |
-        Job application information.
-      value:
-        emails:
-          - "{{ emails }}"
-        uris:
-          - "{{ uris }}"
-        instruction: "{{ instruction }}"
-    - name: jobs
+        Strongly recommended for the best service experience. The expiration timestamp of the job. After this timestamp, the job is marked as expired, and it no longer appears in search results. The expired job can't be listed by the ListJobs API, but it can be retrieved with the GetJob API or updated with the UpdateJob API or deleted with the DeleteJob API. An expired job can be updated and opened again by using a future expiration timestamp. Updating an expired job fails if there is another existing open job with same company, language_code and requisition_id. The expired jobs are retained in our system for 90 days. However, the overall expired job count cannot exceed 3 times the maximum number of open jobs over previous 7 days. If this threshold is exceeded, expired jobs are cleaned out in order of earliest expire time. Expired jobs are no longer accessible after they are cleaned out. Invalid timestamps are ignored, and treated as expire time not provided. If the timestamp is before the instant request is made, the job is treated as expired immediately on creation. This kind of job can not be updated. And when creating a job with past timestamp, the posting_publish_time must be set before posting_expire_time. The purpose of this feature is to allow other objects, such as ApplicationInfo, to refer a job that didn't exist in the system prior to becoming expired. If you want to modify a job that was expired on creation, delete it and create a new one. If this value isn't provided at the time of job creation or is invalid, the job posting expires after 30 days from the job's creation time. For example, if the job was created on 2017/01/01 13:00AM UTC with an unspecified expiration date, the job expires after 2017/01/31 13:00AM UTC. If this value isn't provided on job update, it depends on the field masks set by UpdateJobRequest.update_mask. If the field masks include job_end_time, or the masks are empty meaning that every field is updated, the job posting expires after 30 days from the job's last update time. Otherwise the expiration date isn't updated.
+    - name: postingPublishTime
+      value: "{{ postingPublishTime }}"
       description: |
-        Required. The jobs to be created. A maximum of 200 jobs can be created in a batch.
+        The timestamp this job posting was most recently published. The default value is the time the request arrives at the server. Invalid timestamps are ignored.
+    - name: postingRegion
+      value: "{{ postingRegion }}"
+      description: |
+        The job PostingRegion (for example, state, country) throughout which the job is available. If this field is set, a LocationFilter in a search query within the job region finds this job posting if an exact location match isn't specified. If this field is set to PostingRegion.NATION or PostingRegion.ADMINISTRATIVE_AREA, setting job Job.addresses to the same location level as this field is strongly recommended.
+      valid_values: ['POSTING_REGION_UNSPECIFIED', 'ADMINISTRATIVE_AREA', 'NATION', 'TELECOMMUTE']
+    - name: processingOptions
+      description: |
+        Options for job processing.
       value:
-        - employmentTypes: "{{ employmentTypes }}"
-          description: "{{ description }}"
-          title: "{{ title }}"
-          department: "{{ department }}"
-          qualifications: "{{ qualifications }}"
-          visibility: "{{ visibility }}"
-          postingRegion: "{{ postingRegion }}"
-          requisitionId: "{{ requisitionId }}"
-          postingUpdateTime: "{{ postingUpdateTime }}"
-          companyDisplayName: "{{ companyDisplayName }}"
-          jobEndTime: "{{ jobEndTime }}"
-          jobBenefits: "{{ jobBenefits }}"
-          compensationInfo:
-            annualizedTotalCompensationRange:
-              maxCompensation:
-                units: "{{ units }}"
-                nanos: {{ nanos }}
-                currencyCode: "{{ currencyCode }}"
-              minCompensation:
-                units: "{{ units }}"
-                nanos: {{ nanos }}
-                currencyCode: "{{ currencyCode }}"
-            entries:
-              - type: "{{ type }}"
-                range:
-                  maxCompensation:
-                    units: "{{ units }}"
-                    nanos: {{ nanos }}
-                    currencyCode: "{{ currencyCode }}"
-                  minCompensation:
-                    units: "{{ units }}"
-                    nanos: {{ nanos }}
-                    currencyCode: "{{ currencyCode }}"
-                description: "{{ description }}"
-                expectedUnitsPerYear: {{ expectedUnitsPerYear }}
-                unit: "{{ unit }}"
-                amount:
-                  units: "{{ units }}"
-                  nanos: {{ nanos }}
-                  currencyCode: "{{ currencyCode }}"
-            annualizedBaseCompensationRange:
-              maxCompensation:
-                units: "{{ units }}"
-                nanos: {{ nanos }}
-                currencyCode: "{{ currencyCode }}"
-              minCompensation:
-                units: "{{ units }}"
-                nanos: {{ nanos }}
-                currencyCode: "{{ currencyCode }}"
-          incentives: "{{ incentives }}"
-          languageCode: "{{ languageCode }}"
-          jobStartTime: "{{ jobStartTime }}"
-          postingCreateTime: "{{ postingCreateTime }}"
-          postingPublishTime: "{{ postingPublishTime }}"
-          company: "{{ company }}"
-          promotionValue: {{ promotionValue }}
-          addresses: "{{ addresses }}"
-          postingExpireTime: "{{ postingExpireTime }}"
-          processingOptions:
-            disableStreetAddressResolution: {{ disableStreetAddressResolution }}
-            htmlSanitization: "{{ htmlSanitization }}"
-          customAttributes: "{{ customAttributes }}"
-          degreeTypes: "{{ degreeTypes }}"
-          jobLevel: "{{ jobLevel }}"
-          responsibilities: "{{ responsibilities }}"
-          name: "{{ name }}"
-          applicationInfo:
-            emails:
-              - "{{ emails }}"
-            uris:
-              - "{{ uris }}"
-            instruction: "{{ instruction }}"
-          derivedInfo:
-            jobCategories:
-              - "{{ jobCategories }}"
-            locations:
-              - radiusMiles: {{ radiusMiles }}
-                postalAddress:
-                  organization: "{{ organization }}"
-                  regionCode: "{{ regionCode }}"
-                  languageCode: "{{ languageCode }}"
-                  recipients:
-                    - "{{ recipients }}"
-                  sublocality: "{{ sublocality }}"
-                  locality: "{{ locality }}"
-                  postalCode: "{{ postalCode }}"
-                  revision: {{ revision }}
-                  sortingCode: "{{ sortingCode }}"
-                  administrativeArea: "{{ administrativeArea }}"
-                  addressLines:
-                    - "{{ addressLines }}"
-                latLng:
-                  longitude: {{ longitude }}
-                  latitude: {{ latitude }}
-                locationType: "{{ locationType }}"
+        disableStreetAddressResolution: {{ disableStreetAddressResolution }}
+        htmlSanitization: "{{ htmlSanitization }}"
+    - name: promotionValue
+      value: {{ promotionValue }}
+      description: |
+        A promotion value of the job, as determined by the client. The value determines the sort order of the jobs returned when searching for jobs using the featured jobs search call, with higher promotional values being returned first and ties being resolved by relevance sort. Only the jobs with a promotionValue >0 are returned in a FEATURED_JOB_SEARCH. Default value is 0, and negative values are treated as 0.
+    - name: qualifications
+      value: "{{ qualifications }}"
+      description: |
+        A description of the qualifications required to perform the job. The use of this field is recommended as an alternative to using the more general description field. This field accepts and sanitizes HTML input, and also accepts bold, italic, ordered list, and unordered list markup tags. The maximum number of allowed characters is 10,000.
+    - name: requisitionId
+      value: "{{ requisitionId }}"
+      description: |
+        Required. The requisition ID, also referred to as the posting ID, is assigned by the client to identify a job. This field is intended to be used by clients for client identification and tracking of postings. A job isn't allowed to be created if there is another job with the same company, language_code and requisition_id. The maximum number of allowed characters is 255.
+    - name: responsibilities
+      value: "{{ responsibilities }}"
+      description: |
+        A description of job responsibilities. The use of this field is recommended as an alternative to using the more general description field. This field accepts and sanitizes HTML input, and also accepts bold, italic, ordered list, and unordered list markup tags. The maximum number of allowed characters is 10,000.
+    - name: title
+      value: "{{ title }}"
+      description: |
+        Required. The title of the job, such as "Software Engineer" The maximum number of allowed characters is 500.
+    - name: visibility
+      value: "{{ visibility }}"
+      description: |
+        Deprecated. The job is only visible to the owner. The visibility of the job. Defaults to Visibility.ACCOUNT_ONLY if not specified.
+      valid_values: ['VISIBILITY_UNSPECIFIED', 'ACCOUNT_ONLY', 'SHARED_WITH_GOOGLE', 'SHARED_WITH_PUBLIC']
 `}</CodeBlock>
 
 </TabItem>
@@ -1031,32 +1031,32 @@ Updates specified job. Typically, updated contents become visible in search resu
 ```sql
 UPDATE google.jobs.jobs
 SET 
-data__employmentTypes = '{{ employmentTypes }}',
-data__description = '{{ description }}',
-data__title = '{{ title }}',
-data__department = '{{ department }}',
-data__qualifications = '{{ qualifications }}',
-data__visibility = '{{ visibility }}',
-data__postingRegion = '{{ postingRegion }}',
-data__requisitionId = '{{ requisitionId }}',
-data__jobEndTime = '{{ jobEndTime }}',
-data__jobBenefits = '{{ jobBenefits }}',
-data__compensationInfo = '{{ compensationInfo }}',
-data__incentives = '{{ incentives }}',
-data__languageCode = '{{ languageCode }}',
-data__jobStartTime = '{{ jobStartTime }}',
-data__postingPublishTime = '{{ postingPublishTime }}',
-data__company = '{{ company }}',
-data__promotionValue = {{ promotionValue }},
 data__addresses = '{{ addresses }}',
-data__postingExpireTime = '{{ postingExpireTime }}',
-data__processingOptions = '{{ processingOptions }}',
+data__applicationInfo = '{{ applicationInfo }}',
+data__company = '{{ company }}',
+data__compensationInfo = '{{ compensationInfo }}',
 data__customAttributes = '{{ customAttributes }}',
 data__degreeTypes = '{{ degreeTypes }}',
+data__department = '{{ department }}',
+data__description = '{{ description }}',
+data__employmentTypes = '{{ employmentTypes }}',
+data__incentives = '{{ incentives }}',
+data__jobBenefits = '{{ jobBenefits }}',
+data__jobEndTime = '{{ jobEndTime }}',
 data__jobLevel = '{{ jobLevel }}',
-data__responsibilities = '{{ responsibilities }}',
+data__jobStartTime = '{{ jobStartTime }}',
+data__languageCode = '{{ languageCode }}',
 data__name = '{{ name }}',
-data__applicationInfo = '{{ applicationInfo }}'
+data__postingExpireTime = '{{ postingExpireTime }}',
+data__postingPublishTime = '{{ postingPublishTime }}',
+data__postingRegion = '{{ postingRegion }}',
+data__processingOptions = '{{ processingOptions }}',
+data__promotionValue = {{ promotionValue }},
+data__qualifications = '{{ qualifications }}',
+data__requisitionId = '{{ requisitionId }}',
+data__responsibilities = '{{ responsibilities }}',
+data__title = '{{ title }}',
+data__visibility = '{{ visibility }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND tenantsId = '{{ tenantsId }}' --required
@@ -1156,41 +1156,12 @@ AND tenantsId = '{{ tenantsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="search_for_alert"
+    defaultValue="search"
     values={[
-        { label: 'search_for_alert', value: 'search_for_alert' },
-        { label: 'search', value: 'search' }
+        { label: 'search', value: 'search' },
+        { label: 'search_for_alert', value: 'search_for_alert' }
     ]}
 >
-<TabItem value="search_for_alert">
-
-Searches for jobs using the provided SearchJobsRequest. This API call is intended for the use case of targeting passive job seekers (for example, job seekers who have signed up to receive email alerts about potential job opportunities), it has different algorithmic adjustments that are designed to specifically target passive job seekers. This call constrains the visibility of jobs present in the database, and only returns jobs the caller has permission to search against.
-
-```sql
-EXEC google.jobs.jobs.search_for_alert 
-@projectsId='{{ projectsId }}' --required, 
-@tenantsId='{{ tenantsId }}' --required 
-@@json=
-'{
-"keywordMatchMode": "{{ keywordMatchMode }}", 
-"maxPageSize": {{ maxPageSize }}, 
-"disableKeywordMatch": {{ disableKeywordMatch }}, 
-"histogramQueries": "{{ histogramQueries }}", 
-"enableBroadening": {{ enableBroadening }}, 
-"pageToken": "{{ pageToken }}", 
-"offset": {{ offset }}, 
-"orderBy": "{{ orderBy }}", 
-"jobView": "{{ jobView }}", 
-"diversificationLevel": "{{ diversificationLevel }}", 
-"relevanceThreshold": "{{ relevanceThreshold }}", 
-"searchMode": "{{ searchMode }}", 
-"requestMetadata": "{{ requestMetadata }}", 
-"jobQuery": "{{ jobQuery }}", 
-"customRankingInfo": "{{ customRankingInfo }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="search">
 
 Searches for jobs using the provided SearchJobsRequest. This call constrains the visibility of jobs present in the database, and only returns jobs that the caller has permission to search against.
@@ -1201,21 +1172,50 @@ EXEC google.jobs.jobs.search
 @tenantsId='{{ tenantsId }}' --required 
 @@json=
 '{
+"customRankingInfo": "{{ customRankingInfo }}", 
+"disableKeywordMatch": {{ disableKeywordMatch }}, 
+"diversificationLevel": "{{ diversificationLevel }}", 
+"enableBroadening": {{ enableBroadening }}, 
+"histogramQueries": "{{ histogramQueries }}", 
+"jobQuery": "{{ jobQuery }}", 
+"jobView": "{{ jobView }}", 
 "keywordMatchMode": "{{ keywordMatchMode }}", 
 "maxPageSize": {{ maxPageSize }}, 
-"disableKeywordMatch": {{ disableKeywordMatch }}, 
-"histogramQueries": "{{ histogramQueries }}", 
-"enableBroadening": {{ enableBroadening }}, 
-"pageToken": "{{ pageToken }}", 
 "offset": {{ offset }}, 
 "orderBy": "{{ orderBy }}", 
-"jobView": "{{ jobView }}", 
-"diversificationLevel": "{{ diversificationLevel }}", 
+"pageToken": "{{ pageToken }}", 
 "relevanceThreshold": "{{ relevanceThreshold }}", 
-"searchMode": "{{ searchMode }}", 
 "requestMetadata": "{{ requestMetadata }}", 
+"searchMode": "{{ searchMode }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="search_for_alert">
+
+Searches for jobs using the provided SearchJobsRequest. This API call is intended for the use case of targeting passive job seekers (for example, job seekers who have signed up to receive email alerts about potential job opportunities), it has different algorithmic adjustments that are designed to specifically target passive job seekers. This call constrains the visibility of jobs present in the database, and only returns jobs the caller has permission to search against.
+
+```sql
+EXEC google.jobs.jobs.search_for_alert 
+@projectsId='{{ projectsId }}' --required, 
+@tenantsId='{{ tenantsId }}' --required 
+@@json=
+'{
+"customRankingInfo": "{{ customRankingInfo }}", 
+"disableKeywordMatch": {{ disableKeywordMatch }}, 
+"diversificationLevel": "{{ diversificationLevel }}", 
+"enableBroadening": {{ enableBroadening }}, 
+"histogramQueries": "{{ histogramQueries }}", 
 "jobQuery": "{{ jobQuery }}", 
-"customRankingInfo": "{{ customRankingInfo }}"
+"jobView": "{{ jobView }}", 
+"keywordMatchMode": "{{ keywordMatchMode }}", 
+"maxPageSize": {{ maxPageSize }}, 
+"offset": {{ offset }}, 
+"orderBy": "{{ orderBy }}", 
+"pageToken": "{{ pageToken }}", 
+"relevanceThreshold": "{{ relevanceThreshold }}", 
+"requestMetadata": "{{ requestMetadata }}", 
+"searchMode": "{{ searchMode }}"
 }'
 ;
 ```

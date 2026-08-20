@@ -301,8 +301,8 @@ Updates the configuration of an existing subscriber, such as the endpoint URI or
 UPDATE google.health.subscribers
 SET 
 data__endpointAuthorization = '{{ endpointAuthorization }}',
-data__name = '{{ name }}',
 data__endpointUri = '{{ endpointUri }}',
+data__name = '{{ name }}',
 data__subscriberConfigs = '{{ subscriberConfigs }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

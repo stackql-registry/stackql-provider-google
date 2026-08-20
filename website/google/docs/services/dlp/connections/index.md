@@ -33,48 +33,14 @@ Creates, updates, deletes, gets or lists a <code>connections</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_connections_get"
+    defaultValue="organizations_locations_connections_get"
     values={[
-        { label: 'projects_locations_connections_get', value: 'projects_locations_connections_get' },
         { label: 'organizations_locations_connections_get', value: 'organizations_locations_connections_get' },
-        { label: 'projects_locations_connections_list', value: 'projects_locations_connections_list' },
-        { label: 'organizations_locations_connections_list', value: 'organizations_locations_connections_list' }
+        { label: 'projects_locations_connections_get', value: 'projects_locations_connections_get' },
+        { label: 'organizations_locations_connections_list', value: 'organizations_locations_connections_list' },
+        { label: 'projects_locations_connections_list', value: 'projects_locations_connections_list' }
     ]}
 >
-<TabItem value="projects_locations_connections_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Name of the connection: `projects/&#123;project&#125;/locations/&#123;location&#125;/connections/&#123;name&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="cloudSql" /></td>
-    <td><code>object</code></td>
-    <td>Connect to a Cloud SQL instance. (id: GooglePrivacyDlpV2CloudSqlProperties)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errors" /></td>
-    <td><code>array</code></td>
-    <td>Output only. Set if status == ERROR, to provide additional details. Will store the last 10 errors sorted with the most recent first.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Required. The connection's state in its lifecycle. (CONNECTION_STATE_UNSPECIFIED, MISSING_CREDENTIALS, AVAILABLE, ERROR)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_connections_get">
 
 <table>
@@ -109,7 +75,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_connections_list">
+<TabItem value="projects_locations_connections_get">
 
 <table>
 <thead>
@@ -177,6 +143,40 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="projects_locations_connections_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Name of the connection: `projects/&#123;project&#125;/locations/&#123;location&#125;/connections/&#123;name&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudSql" /></td>
+    <td><code>object</code></td>
+    <td>Connect to a Cloud SQL instance. (id: GooglePrivacyDlpV2CloudSqlProperties)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="errors" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Set if status == ERROR, to provide additional details. Will store the last 10 errors sorted with the most recent first.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Required. The connection's state in its lifecycle. (CONNECTION_STATE_UNSPECIFIED, MISSING_CREDENTIALS, AVAILABLE, ERROR)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 </Tabs>
 
 ## Methods
@@ -195,13 +195,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_connections_get"><CopyableCode code="projects_locations_connections_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td></td>
-    <td>Get a Connection by name.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_connections_get"><CopyableCode code="organizations_locations_connections_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
@@ -209,25 +202,25 @@ The following methods are available for this resource:
     <td>Get a Connection by name.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_connections_list"><CopyableCode code="projects_locations_connections_list" /></a></td>
+    <td><a href="#projects_locations_connections_get"><CopyableCode code="projects_locations_connections_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists Connections in a parent. Use SearchConnections to see all connections within an organization.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>Get a Connection by name.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_connections_list"><CopyableCode code="organizations_locations_connections_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Connections in a parent. Use SearchConnections to see all connections within an organization.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_connections_create"><CopyableCode code="projects_locations_connections_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
+    <td><a href="#projects_locations_connections_list"><CopyableCode code="projects_locations_connections_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Create a Connection to an external data source.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists Connections in a parent. Use SearchConnections to see all connections within an organization.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_connections_create"><CopyableCode code="organizations_locations_connections_create" /></a></td>
@@ -237,11 +230,11 @@ The following methods are available for this resource:
     <td>Create a Connection to an external data source.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_connections_patch"><CopyableCode code="projects_locations_connections_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td><a href="#projects_locations_connections_create"><CopyableCode code="projects_locations_connections_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Update a Connection.</td>
+    <td>Create a Connection to an external data source.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_connections_patch"><CopyableCode code="organizations_locations_connections_patch" /></a></td>
@@ -251,11 +244,11 @@ The following methods are available for this resource:
     <td>Update a Connection.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_connections_delete"><CopyableCode code="projects_locations_connections_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#projects_locations_connections_patch"><CopyableCode code="projects_locations_connections_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
     <td></td>
-    <td>Delete a Connection.</td>
+    <td>Update a Connection.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_connections_delete"><CopyableCode code="organizations_locations_connections_delete" /></a></td>
@@ -265,17 +258,24 @@ The following methods are available for this resource:
     <td>Delete a Connection.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_connections_search"><CopyableCode code="projects_locations_connections_search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Searches for Connections in a parent.</td>
+    <td><a href="#projects_locations_connections_delete"><CopyableCode code="projects_locations_connections_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>Delete a Connection.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_connections_search"><CopyableCode code="organizations_locations_connections_search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Searches for Connections in a parent.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_connections_search"><CopyableCode code="projects_locations_connections_search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Searches for Connections in a parent.</td>
 </tr>
 </tbody>
@@ -335,31 +335,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_connections_get"
+    defaultValue="organizations_locations_connections_get"
     values={[
-        { label: 'projects_locations_connections_get', value: 'projects_locations_connections_get' },
         { label: 'organizations_locations_connections_get', value: 'organizations_locations_connections_get' },
-        { label: 'projects_locations_connections_list', value: 'projects_locations_connections_list' },
-        { label: 'organizations_locations_connections_list', value: 'organizations_locations_connections_list' }
+        { label: 'projects_locations_connections_get', value: 'projects_locations_connections_get' },
+        { label: 'organizations_locations_connections_list', value: 'organizations_locations_connections_list' },
+        { label: 'projects_locations_connections_list', value: 'projects_locations_connections_list' }
     ]}
 >
-<TabItem value="projects_locations_connections_get">
-
-Get a Connection by name.
-
-```sql
-SELECT
-name,
-cloudSql,
-errors,
-state
-FROM google.dlp.connections
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND connectionsId = '{{ connectionsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_connections_get">
 
 Get a Connection by name.
@@ -377,9 +360,9 @@ AND connectionsId = '{{ connectionsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_connections_list">
+<TabItem value="projects_locations_connections_get">
 
-Lists Connections in a parent. Use SearchConnections to see all connections within an organization.
+Get a Connection by name.
 
 ```sql
 SELECT
@@ -390,9 +373,7 @@ state
 FROM google.dlp.connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND connectionsId = '{{ connectionsId }}' -- required
 ;
 ```
 </TabItem>
@@ -409,9 +390,28 @@ state
 FROM google.dlp.connections
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_connections_list">
+
+Lists Connections in a parent. Use SearchConnections to see all connections within an organization.
+
+```sql
+SELECT
+name,
+cloudSql,
+errors,
+state
+FROM google.dlp.connections
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -421,35 +421,13 @@ AND pageSize = '{{ pageSize }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_connections_create"
+    defaultValue="organizations_locations_connections_create"
     values={[
-        { label: 'projects_locations_connections_create', value: 'projects_locations_connections_create' },
         { label: 'organizations_locations_connections_create', value: 'organizations_locations_connections_create' },
+        { label: 'projects_locations_connections_create', value: 'projects_locations_connections_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_connections_create">
-
-Create a Connection to an external data source.
-
-```sql
-INSERT INTO google.dlp.connections (
-data__connection,
-projectsId,
-locationsId
-)
-SELECT 
-'{{ connection }}',
-'{{ projectsId }}',
-'{{ locationsId }}'
-RETURNING
-name,
-cloudSql,
-errors,
-state
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_connections_create">
 
 Create a Connection to an external data source.
@@ -472,40 +450,62 @@ state
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_connections_create">
+
+Create a Connection to an external data source.
+
+```sql
+INSERT INTO google.dlp.connections (
+data__connection,
+projectsId,
+locationsId
+)
+SELECT 
+'{{ connection }}',
+'{{ projectsId }}',
+'{{ locationsId }}'
+RETURNING
+name,
+cloudSql,
+errors,
+state
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: connections
   props:
-    - name: projectsId
-      value: "{{ projectsId }}"
+    - name: organizationsId
+      value: "{{ organizationsId }}"
       description: Required parameter for the connections resource.
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the connections resource.
-    - name: organizationsId
-      value: "{{ organizationsId }}"
+    - name: projectsId
+      value: "{{ projectsId }}"
       description: Required parameter for the connections resource.
     - name: connection
       description: |
-        A data connection to allow the DLP API to profile data in locations that require additional configuration.
+        Required. The connection resource.
       value:
-        name: "{{ name }}"
-        errors:
-          - timestamps: "{{ timestamps }}"
-            extraInfo: "{{ extraInfo }}"
-            details:
-              message: "{{ message }}"
-              details: "{{ details }}"
-              code: {{ code }}
         cloudSql:
-          connectionName: "{{ connectionName }}"
-          usernamePassword:
-            username: "{{ username }}"
-            passwordSecretVersionName: "{{ passwordSecretVersionName }}"
-          maxConnections: {{ maxConnections }}
           cloudSqlIam: "{{ cloudSqlIam }}"
+          connectionName: "{{ connectionName }}"
           databaseEngine: "{{ databaseEngine }}"
+          maxConnections: {{ maxConnections }}
+          usernamePassword:
+            passwordSecretVersionName: "{{ passwordSecretVersionName }}"
+            username: "{{ username }}"
+        errors:
+          - details:
+              code: {{ code }}
+              details: "{{ details }}"
+              message: "{{ message }}"
+            extraInfo: "{{ extraInfo }}"
+            timestamps: "{{ timestamps }}"
+        name: "{{ name }}"
         state: "{{ state }}"
 `}</CodeBlock>
 
@@ -516,23 +516,23 @@ state
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_locations_connections_patch"
+    defaultValue="organizations_locations_connections_patch"
     values={[
-        { label: 'projects_locations_connections_patch', value: 'projects_locations_connections_patch' },
-        { label: 'organizations_locations_connections_patch', value: 'organizations_locations_connections_patch' }
+        { label: 'organizations_locations_connections_patch', value: 'organizations_locations_connections_patch' },
+        { label: 'projects_locations_connections_patch', value: 'projects_locations_connections_patch' }
     ]}
 >
-<TabItem value="projects_locations_connections_patch">
+<TabItem value="organizations_locations_connections_patch">
 
 Update a Connection.
 
 ```sql
 UPDATE google.dlp.connections
 SET 
-data__updateMask = '{{ updateMask }}',
-data__connection = '{{ connection }}'
+data__connection = '{{ connection }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
-projectsId = '{{ projectsId }}' --required
+organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
 RETURNING
@@ -542,17 +542,17 @@ errors,
 state;
 ```
 </TabItem>
-<TabItem value="organizations_locations_connections_patch">
+<TabItem value="projects_locations_connections_patch">
 
 Update a Connection.
 
 ```sql
 UPDATE google.dlp.connections
 SET 
-data__updateMask = '{{ updateMask }}',
-data__connection = '{{ connection }}'
+data__connection = '{{ connection }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
-organizationsId = '{{ organizationsId }}' --required
+projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
 RETURNING
@@ -568,24 +568,12 @@ state;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_locations_connections_delete"
+    defaultValue="organizations_locations_connections_delete"
     values={[
-        { label: 'projects_locations_connections_delete', value: 'projects_locations_connections_delete' },
-        { label: 'organizations_locations_connections_delete', value: 'organizations_locations_connections_delete' }
+        { label: 'organizations_locations_connections_delete', value: 'organizations_locations_connections_delete' },
+        { label: 'projects_locations_connections_delete', value: 'projects_locations_connections_delete' }
     ]}
 >
-<TabItem value="projects_locations_connections_delete">
-
-Delete a Connection.
-
-```sql
-DELETE FROM google.dlp.connections
-WHERE projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND connectionsId = '{{ connectionsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_connections_delete">
 
 Delete a Connection.
@@ -598,32 +586,30 @@ AND connectionsId = '{{ connectionsId }}' --required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_connections_delete">
+
+Delete a Connection.
+
+```sql
+DELETE FROM google.dlp.connections
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND connectionsId = '{{ connectionsId }}' --required
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_connections_search"
+    defaultValue="organizations_locations_connections_search"
     values={[
-        { label: 'projects_locations_connections_search', value: 'projects_locations_connections_search' },
-        { label: 'organizations_locations_connections_search', value: 'organizations_locations_connections_search' }
+        { label: 'organizations_locations_connections_search', value: 'organizations_locations_connections_search' },
+        { label: 'projects_locations_connections_search', value: 'projects_locations_connections_search' }
     ]}
 >
-<TabItem value="projects_locations_connections_search">
-
-Searches for Connections in a parent.
-
-```sql
-EXEC google.dlp.connections.projects_locations_connections_search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@pageToken='{{ pageToken }}', 
-@filter='{{ filter }}', 
-@pageSize='{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_connections_search">
 
 Searches for Connections in a parent.
@@ -632,9 +618,23 @@ Searches for Connections in a parent.
 EXEC google.dlp.connections.organizations_locations_connections_search 
 @organizationsId='{{ organizationsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@filter='{{ filter }}', 
 @pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@filter='{{ filter }}'
+@pageToken='{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_connections_search">
+
+Searches for Connections in a parent.
+
+```sql
+EXEC google.dlp.connections.projects_locations_connections_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@filter='{{ filter }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}'
 ;
 ```
 </TabItem>

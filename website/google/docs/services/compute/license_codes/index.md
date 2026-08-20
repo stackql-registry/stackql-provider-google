@@ -97,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="minimumRetention" /></td>
     <td><code>object</code></td>
-    <td>If set, this license will be unable to be removed or replaced once attached to a disk until the minimum_retention period has passed. (id: Duration)</td>
+    <td>A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years. (id: Duration)</td>
 </tr>
 <tr>
     <td><CopyableCode code="multiTenantOnly" /></td>

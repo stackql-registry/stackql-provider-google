@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists RestoreChannels in a given location.</td>
 </tr>
 <tr>
@@ -327,10 +327,10 @@ updateTime
 FROM google.gkebackup.restore_channels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -352,8 +352,8 @@ Creates a new RestoreChannel in a given location.
 
 ```sql
 INSERT INTO google.gkebackup.restore_channels (
-data__destinationProject,
 data__description,
+data__destinationProject,
 data__labels,
 data__name,
 projectsId,
@@ -361,8 +361,8 @@ locationsId,
 restoreChannelId
 )
 SELECT 
-'{{ destinationProject }}',
 '{{ description }}',
+'{{ destinationProject }}',
 '{{ labels }}',
 '{{ name }}',
 '{{ projectsId }}',
@@ -388,14 +388,14 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the restore_channels resource.
-    - name: destinationProject
-      value: "{{ destinationProject }}"
-      description: |
-        Required. Immutable. The project into which the backups will be restored. The format is \`projects/{projectId}\` or \`projects/{projectNumber}\`.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. User specified descriptive string for this RestoreChannel.
+    - name: destinationProject
+      value: "{{ destinationProject }}"
+      description: |
+        Required. Immutable. The project into which the backups will be restored. The format is \`projects/{projectId}\` or \`projects/{projectNumber}\`.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -427,8 +427,8 @@ Update a RestoreChannel.
 ```sql
 UPDATE google.gkebackup.restore_channels
 SET 
-data__destinationProject = '{{ destinationProject }}',
 data__description = '{{ description }}',
+data__destinationProject = '{{ destinationProject }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}'
 WHERE 

@@ -205,21 +205,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Services in an Application.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a></td>
     <td>Creates a Service in an Application.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a Service in an Application.</td>
 </tr>
 <tr>
@@ -358,10 +358,10 @@ FROM google.apphub.services
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND applicationsId = '{{ applicationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -383,28 +383,28 @@ Creates a Service in an Application.
 
 ```sql
 INSERT INTO google.apphub.services (
-data__description,
-data__name,
-data__displayName,
 data__attributes,
+data__description,
 data__discoveredService,
+data__displayName,
+data__name,
 projectsId,
 locationsId,
 applicationsId,
-serviceId,
-requestId
+requestId,
+serviceId
 )
 SELECT 
-'{{ description }}',
-'{{ name }}',
-'{{ displayName }}',
 '{{ attributes }}',
+'{{ description }}',
 '{{ discoveredService }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ applicationsId }}',
-'{{ serviceId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ serviceId }}'
 RETURNING
 name,
 done,
@@ -428,43 +428,43 @@ response
     - name: applicationsId
       value: "{{ applicationsId }}"
       description: Required parameter for the services resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. User-defined description of a Service. Can have a maximum length of 2048 characters.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of a Service. Format: \`"projects/{host-project-id}/locations/{location}/applications/{application-id}/services/{service-id}"\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. User-defined name for the Service. Can have a maximum length of 63 characters.
     - name: attributes
       description: |
         Optional. Consumer provided attributes.
       value:
-        environment:
-          type: "{{ type }}"
-        developerOwners:
-          - email: "{{ email }}"
-            displayName: "{{ displayName }}"
+        businessOwners:
+          - displayName: "{{ displayName }}"
+            email: "{{ email }}"
         criticality:
           type: "{{ type }}"
-        businessOwners:
-          - email: "{{ email }}"
-            displayName: "{{ displayName }}"
+        developerOwners:
+          - displayName: "{{ displayName }}"
+            email: "{{ email }}"
+        environment:
+          type: "{{ type }}"
         operatorOwners:
-          - email: "{{ email }}"
-            displayName: "{{ displayName }}"
+          - displayName: "{{ displayName }}"
+            email: "{{ email }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User-defined description of a Service. Can have a maximum length of 2048 characters.
     - name: discoveredService
       value: "{{ discoveredService }}"
       description: |
         Required. Immutable. The resource name of the original discovered service.
-    - name: serviceId
-      value: "{{ serviceId }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User-defined name for the Service. Can have a maximum length of 63 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of a Service. Format: \`"projects/{host-project-id}/locations/{location}/applications/{application-id}/services/{service-id}"\`
     - name: requestId
       value: "{{ requestId }}"
+    - name: serviceId
+      value: "{{ serviceId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -486,18 +486,18 @@ Updates a Service in an Application.
 ```sql
 UPDATE google.apphub.services
 SET 
-data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__attributes = '{{ attributes }}',
-data__discoveredService = '{{ discoveredService }}'
+data__description = '{{ description }}',
+data__discoveredService = '{{ discoveredService }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND applicationsId = '{{ applicationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

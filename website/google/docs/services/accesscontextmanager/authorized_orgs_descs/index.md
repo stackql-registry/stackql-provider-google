@@ -275,19 +275,19 @@ Creates an authorized orgs desc. The long-running operation from this RPC has a 
 
 ```sql
 INSERT INTO google.accesscontextmanager.authorized_orgs_descs (
-data__authorizationDirection,
 data__assetType,
+data__authorizationDirection,
+data__authorizationType,
 data__name,
 data__orgs,
-data__authorizationType,
 accessPoliciesId
 )
 SELECT 
-'{{ authorizationDirection }}',
 '{{ assetType }}',
+'{{ authorizationDirection }}',
+'{{ authorizationType }}',
 '{{ name }}',
 '{{ orgs }}',
-'{{ authorizationType }}',
 '{{ accessPoliciesId }}'
 RETURNING
 name,
@@ -306,16 +306,21 @@ response
     - name: accessPoliciesId
       value: "{{ accessPoliciesId }}"
       description: Required parameter for the authorized_orgs_descs resource.
-    - name: authorizationDirection
-      value: "{{ authorizationDirection }}"
-      description: |
-        The direction of the authorization relationship between this organization and the organizations listed in the \`orgs\` field. The valid values for this field include the following: \`AUTHORIZATION_DIRECTION_FROM\`: Allows this organization to evaluate traffic in the organizations listed in the \`orgs\` field. \`AUTHORIZATION_DIRECTION_TO\`: Allows the organizations listed in the \`orgs\` field to evaluate the traffic in this organization. For the authorization relationship to take effect, all of the organizations must authorize and specify the appropriate relationship direction. For example, if organization A authorized organization B and C to evaluate its traffic, by specifying \`AUTHORIZATION_DIRECTION_TO\` as the authorization direction, organizations B and C must specify \`AUTHORIZATION_DIRECTION_FROM\` as the authorization direction in their \`AuthorizedOrgsDesc\` resource.
-      valid_values: ['AUTHORIZATION_DIRECTION_UNSPECIFIED', 'AUTHORIZATION_DIRECTION_TO', 'AUTHORIZATION_DIRECTION_FROM']
     - name: assetType
       value: "{{ assetType }}"
       description: |
         The asset type of this authorized orgs desc. Valid values are \`ASSET_TYPE_DEVICE\`, and \`ASSET_TYPE_CREDENTIAL_STRENGTH\`.
       valid_values: ['ASSET_TYPE_UNSPECIFIED', 'ASSET_TYPE_DEVICE', 'ASSET_TYPE_CREDENTIAL_STRENGTH']
+    - name: authorizationDirection
+      value: "{{ authorizationDirection }}"
+      description: |
+        The direction of the authorization relationship between this organization and the organizations listed in the \`orgs\` field. The valid values for this field include the following: \`AUTHORIZATION_DIRECTION_FROM\`: Allows this organization to evaluate traffic in the organizations listed in the \`orgs\` field. \`AUTHORIZATION_DIRECTION_TO\`: Allows the organizations listed in the \`orgs\` field to evaluate the traffic in this organization. For the authorization relationship to take effect, all of the organizations must authorize and specify the appropriate relationship direction. For example, if organization A authorized organization B and C to evaluate its traffic, by specifying \`AUTHORIZATION_DIRECTION_TO\` as the authorization direction, organizations B and C must specify \`AUTHORIZATION_DIRECTION_FROM\` as the authorization direction in their \`AuthorizedOrgsDesc\` resource.
+      valid_values: ['AUTHORIZATION_DIRECTION_UNSPECIFIED', 'AUTHORIZATION_DIRECTION_TO', 'AUTHORIZATION_DIRECTION_FROM']
+    - name: authorizationType
+      value: "{{ authorizationType }}"
+      description: |
+        A granular control type for authorization levels. Valid value is \`AUTHORIZATION_TYPE_TRUST\`.
+      valid_values: ['AUTHORIZATION_TYPE_UNSPECIFIED', 'AUTHORIZATION_TYPE_TRUST']
     - name: name
       value: "{{ name }}"
       description: |
@@ -325,11 +330,6 @@ response
         - "{{ orgs }}"
       description: |
         The list of organization ids in this AuthorizedOrgsDesc. Format: \`organizations/\` Example: \`organizations/123456\`
-    - name: authorizationType
-      value: "{{ authorizationType }}"
-      description: |
-        A granular control type for authorization levels. Valid value is \`AUTHORIZATION_TYPE_TRUST\`.
-      valid_values: ['AUTHORIZATION_TYPE_UNSPECIFIED', 'AUTHORIZATION_TYPE_TRUST']
 `}</CodeBlock>
 
 </TabItem>
@@ -351,11 +351,11 @@ Updates an authorized orgs desc. The long-running operation from this RPC has a 
 ```sql
 UPDATE google.accesscontextmanager.authorized_orgs_descs
 SET 
-data__authorizationDirection = '{{ authorizationDirection }}',
 data__assetType = '{{ assetType }}',
+data__authorizationDirection = '{{ authorizationDirection }}',
+data__authorizationType = '{{ authorizationType }}',
 data__name = '{{ name }}',
-data__orgs = '{{ orgs }}',
-data__authorizationType = '{{ authorizationType }}'
+data__orgs = '{{ orgs }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 AND authorizedOrgsDescsId = '{{ authorizedOrgsDescsId }}' --required

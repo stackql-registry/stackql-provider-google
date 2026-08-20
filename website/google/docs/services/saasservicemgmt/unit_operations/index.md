@@ -305,28 +305,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieve a collection of unit operations.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-unitOperationId"><code>unitOperationId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-unitOperationId"><code>unitOperationId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Create a new unit operation.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitOperationsId"><code>unitOperationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Update a single unit operation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitOperationsId"><code>unitOperationsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Delete a single unit operation.</td>
 </tr>
 </tbody>
@@ -481,10 +481,10 @@ upgrade
 FROM google.saasservicemgmt.unit_operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -507,41 +507,41 @@ Create a new unit operation.
 ```sql
 INSERT INTO google.saasservicemgmt.unit_operations (
 data__annotations,
-data__rollout,
 data__cancel,
-data__parentUnitOperation,
-data__schedule,
 data__deprovision,
+data__flagUpdate,
 data__labels,
 data__name,
+data__parentUnitOperation,
 data__provision,
-data__upgrade,
+data__rollout,
+data__schedule,
 data__unit,
-data__flagUpdate,
+data__upgrade,
 projectsId,
 locationsId,
+requestId,
 unitOperationId,
-validateOnly,
-requestId
+validateOnly
 )
 SELECT 
 '{{ annotations }}',
-'{{ rollout }}',
 {{ cancel }},
-'{{ parentUnitOperation }}',
-'{{ schedule }}',
 '{{ deprovision }}',
+'{{ flagUpdate }}',
 '{{ labels }}',
 '{{ name }}',
+'{{ parentUnitOperation }}',
 '{{ provision }}',
-'{{ upgrade }}',
+'{{ rollout }}',
+'{{ schedule }}',
 '{{ unit }}',
-'{{ flagUpdate }}',
+'{{ upgrade }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ requestId }}',
 '{{ unitOperationId }}',
-'{{ validateOnly }}',
-'{{ requestId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 annotations,
@@ -582,27 +582,19 @@ upgrade
       value: "{{ annotations }}"
       description: |
         Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-    - name: rollout
-      value: "{{ rollout }}"
-      description: |
-        Optional. Specifies which rollout created this Unit Operation. This cannot be modified and is used for filtering purposes only. If a dependent unit and unit operation are created as part of another unit operation, they will use the same rolloutId.
     - name: cancel
       value: {{ cancel }}
       description: |
         Optional. When true, attempt to cancel the operation. Cancellation may fail if the operation is already executing. (Optional)
-    - name: parentUnitOperation
-      value: "{{ parentUnitOperation }}"
-      description: |
-        Optional. Reference to parent resource: UnitOperation. If an operation needs to create other operations as part of its workflow, each of the child operations should have this field set to the parent. This can be used for tracing. (Optional)
-    - name: schedule
-      description: |
-        Optional. When to schedule this operation.
-      value:
-        startTime: "{{ startTime }}"
     - name: deprovision
       value: "{{ deprovision }}"
       description: |
         Optional. Deprovision operation.
+    - name: flagUpdate
+      description: |
+        Optional. Flag update operation.
+      value:
+        flagRelease: "{{ flagRelease }}"
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -611,39 +603,47 @@ upgrade
       value: "{{ name }}"
       description: |
         Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitOperations/{unitOperation}"
+    - name: parentUnitOperation
+      value: "{{ parentUnitOperation }}"
+      description: |
+        Optional. Reference to parent resource: UnitOperation. If an operation needs to create other operations as part of its workflow, each of the child operations should have this field set to the parent. This can be used for tracing. (Optional)
     - name: provision
       description: |
         Optional. Provision operation.
       value:
-        release: "{{ release }}"
         inputVariables:
-          - variable: "{{ variable }}"
-            type: "{{ type }}"
+          - type: "{{ type }}"
             value: "{{ value }}"
+            variable: "{{ variable }}"
+        release: "{{ release }}"
+    - name: rollout
+      value: "{{ rollout }}"
+      description: |
+        Optional. Specifies which rollout created this Unit Operation. This cannot be modified and is used for filtering purposes only. If a dependent unit and unit operation are created as part of another unit operation, they will use the same rolloutId.
+    - name: schedule
+      description: |
+        Optional. When to schedule this operation.
+      value:
+        startTime: "{{ startTime }}"
+    - name: unit
+      value: "{{ unit }}"
+      description: |
+        Required. Immutable. The Unit a given UnitOperation will act upon.
     - name: upgrade
       description: |
         Optional. Upgrade operation.
       value:
         inputVariables:
-          - variable: "{{ variable }}"
-            type: "{{ type }}"
+          - type: "{{ type }}"
             value: "{{ value }}"
+            variable: "{{ variable }}"
         release: "{{ release }}"
-    - name: unit
-      value: "{{ unit }}"
-      description: |
-        Required. Immutable. The Unit a given UnitOperation will act upon.
-    - name: flagUpdate
-      description: |
-        Optional. Flag update operation.
-      value:
-        flagRelease: "{{ flagRelease }}"
+    - name: requestId
+      value: "{{ requestId }}"
     - name: unitOperationId
       value: "{{ unitOperationId }}"
     - name: validateOnly
       value: {{ validateOnly }}
-    - name: requestId
-      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -666,24 +666,24 @@ Update a single unit operation.
 UPDATE google.saasservicemgmt.unit_operations
 SET 
 data__annotations = '{{ annotations }}',
-data__rollout = '{{ rollout }}',
 data__cancel = {{ cancel }},
-data__parentUnitOperation = '{{ parentUnitOperation }}',
-data__schedule = '{{ schedule }}',
 data__deprovision = '{{ deprovision }}',
+data__flagUpdate = '{{ flagUpdate }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
+data__parentUnitOperation = '{{ parentUnitOperation }}',
 data__provision = '{{ provision }}',
-data__upgrade = '{{ upgrade }}',
+data__rollout = '{{ rollout }}',
+data__schedule = '{{ schedule }}',
 data__unit = '{{ unit }}',
-data__flagUpdate = '{{ flagUpdate }}'
+data__upgrade = '{{ upgrade }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitOperationsId = '{{ unitOperationsId }}' --required
+AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
-AND requestId = '{{ requestId}}'
 RETURNING
 name,
 annotations,
@@ -729,8 +729,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitOperationsId = '{{ unitOperationsId }}' --required
 AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

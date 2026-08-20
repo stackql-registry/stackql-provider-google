@@ -378,32 +378,32 @@ Creates a Chart.
 
 ```sql
 INSERT INTO google.contactcenterinsights.charts (
-data__description,
-data__height,
 data__action,
-data__width,
-data__dataSource,
-data__filter,
-data__name,
-data__dateRangeConfig,
-data__displayName,
 data__chartVisualizationType,
+data__dataSource,
+data__dateRangeConfig,
+data__description,
+data__displayName,
+data__filter,
+data__height,
+data__name,
+data__width,
 projectsId,
 locationsId,
 dashboardsId,
 chartId
 )
 SELECT 
-'{{ description }}',
-{{ height }},
 '{{ action }}',
-{{ width }},
-'{{ dataSource }}',
-'{{ filter }}',
-'{{ name }}',
-'{{ dateRangeConfig }}',
-'{{ displayName }}',
 '{{ chartVisualizationType }}',
+'{{ dataSource }}',
+'{{ dateRangeConfig }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ filter }}',
+{{ height }},
+'{{ name }}',
+{{ width }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dashboardsId }}',
@@ -439,72 +439,72 @@ width
     - name: dashboardsId
       value: "{{ dashboardsId }}"
       description: Required parameter for the charts resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Chart description
-    - name: height
-      value: {{ height }}
-      description: |
-        The height of the chart in grid units.
     - name: action
       description: |
         Optional action to be taken when the chart is clicked.
       value:
         conversationFilter: "{{ conversationFilter }}"
         redirectAction:
-          relativePath: "{{ relativePath }}"
           queryParams: "{{ queryParams }}"
-    - name: width
-      value: {{ width }}
-      description: |
-        The width of the chart in grid units.
-    - name: dataSource
-      description: |
-        The request data for visualizing the dataset in the chart.
-      value:
-        generativeInsights:
-          chartSpec: "{{ chartSpec }}"
-          sqlQuery: "{{ sqlQuery }}"
-          chartCheckpoint:
-            sessionId: "{{ sessionId }}"
-            revisionId: "{{ revisionId }}"
-          chartConversations:
-            - messages: "{{ messages }}"
-              updateTime: "{{ updateTime }}"
-              conversationId: "{{ conversationId }}"
-              createTime: "{{ createTime }}"
-          request: "{{ request }}"
-          sqlComparisonKey: "{{ sqlComparisonKey }}"
-        queryMetrics:
-          request: "{{ request }}"
-    - name: filter
-      value: "{{ filter }}"
-      description: |
-        Filter applied to all charts in the container. Should support scope later.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Chart resource name. Format: projects/{project}/locations/{location}/dashboards/{dashboard}/charts/{chart}
-    - name: dateRangeConfig
-      description: |
-        Date range config applied to the chart.
-      value:
-        absoluteDateRange:
-          startTime: "{{ startTime }}"
-          endTime: "{{ endTime }}"
-        relativeDateRange:
-          quantity: "{{ quantity }}"
-          unit: "{{ unit }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        User provided display name of the chart.
+          relativePath: "{{ relativePath }}"
     - name: chartVisualizationType
       value: "{{ chartVisualizationType }}"
       description: |
         Chart visualization type.
       valid_values: ['CHART_VISUALIZATION_TYPE_UNSPECIFIED', 'BAR', 'LINE', 'AREA', 'PIE', 'SCATTER', 'TABLE', 'SCORE_CARD', 'SUNBURST', 'GAUGE', 'SANKEY']
+    - name: dataSource
+      description: |
+        The request data for visualizing the dataset in the chart.
+      value:
+        generativeInsights:
+          chartCheckpoint:
+            revisionId: "{{ revisionId }}"
+            sessionId: "{{ sessionId }}"
+          chartConversations:
+            - conversationId: "{{ conversationId }}"
+              createTime: "{{ createTime }}"
+              messages: "{{ messages }}"
+              updateTime: "{{ updateTime }}"
+          chartSpec: "{{ chartSpec }}"
+          request: "{{ request }}"
+          sqlComparisonKey: "{{ sqlComparisonKey }}"
+          sqlQuery: "{{ sqlQuery }}"
+        queryMetrics:
+          request: "{{ request }}"
+    - name: dateRangeConfig
+      description: |
+        Date range config applied to the chart.
+      value:
+        absoluteDateRange:
+          endTime: "{{ endTime }}"
+          startTime: "{{ startTime }}"
+        relativeDateRange:
+          quantity: "{{ quantity }}"
+          unit: "{{ unit }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Chart description
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User provided display name of the chart.
+    - name: filter
+      value: "{{ filter }}"
+      description: |
+        Filter applied to all charts in the container. Should support scope later.
+    - name: height
+      value: {{ height }}
+      description: |
+        The height of the chart in grid units.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Chart resource name. Format: projects/{project}/locations/{location}/dashboards/{dashboard}/charts/{chart}
+    - name: width
+      value: {{ width }}
+      description: |
+        The width of the chart in grid units.
     - name: chartId
       value: "{{ chartId }}"
 `}</CodeBlock>
@@ -528,16 +528,16 @@ Updates a Chart.
 ```sql
 UPDATE google.contactcenterinsights.charts
 SET 
-data__description = '{{ description }}',
-data__height = {{ height }},
 data__action = '{{ action }}',
-data__width = {{ width }},
+data__chartVisualizationType = '{{ chartVisualizationType }}',
 data__dataSource = '{{ dataSource }}',
-data__filter = '{{ filter }}',
-data__name = '{{ name }}',
 data__dateRangeConfig = '{{ dateRangeConfig }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__chartVisualizationType = '{{ chartVisualizationType }}'
+data__filter = '{{ filter }}',
+data__height = {{ height }},
+data__name = '{{ name }}',
+data__width = {{ width }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

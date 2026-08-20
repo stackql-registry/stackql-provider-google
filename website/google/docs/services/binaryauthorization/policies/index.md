@@ -401,16 +401,16 @@ Creates a platform policy, and returns a copy of it. Returns `NOT_FOUND` if the 
 
 ```sql
 INSERT INTO google.binaryauthorization.policies (
-data__etag,
 data__description,
+data__etag,
 data__gkePolicy,
 projectsId,
 platformsId,
 policyId
 )
 SELECT 
-'{{ etag }}',
 '{{ description }}',
+'{{ etag }}',
 '{{ gkePolicy }}',
 '{{ projectsId }}',
 '{{ platformsId }}',
@@ -435,30 +435,30 @@ updateTime
     - name: platformsId
       value: "{{ platformsId }}"
       description: Required parameter for the policies resource.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. Used to prevent updating the policy when another request has updated it since it was retrieved.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A description comment about the policy.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Used to prevent updating the policy when another request has updated it since it was retrieved.
     - name: gkePolicy
       description: |
         Optional. GKE platform-specific policy.
       value:
-        imageAllowlist:
-          allowPattern:
-            - "{{ allowPattern }}"
         checkSets:
-          - displayName: "{{ displayName }}"
-            scope:
-              kubernetesServiceAccount: "{{ kubernetesServiceAccount }}"
-              kubernetesNamespace: "{{ kubernetesNamespace }}"
+          - checks: "{{ checks }}"
+            displayName: "{{ displayName }}"
             imageAllowlist:
               allowPattern:
                 - "{{ allowPattern }}"
-            checks: "{{ checks }}"
+            scope:
+              kubernetesNamespace: "{{ kubernetesNamespace }}"
+              kubernetesServiceAccount: "{{ kubernetesServiceAccount }}"
+        imageAllowlist:
+          allowPattern:
+            - "{{ allowPattern }}"
     - name: policyId
       value: "{{ policyId }}"
 `}</CodeBlock>
@@ -483,8 +483,8 @@ Replaces a platform policy. Returns `NOT_FOUND` if the policy doesn't exist.
 ```sql
 REPLACE google.binaryauthorization.policies
 SET 
-data__etag = '{{ etag }}',
 data__description = '{{ description }}',
+data__etag = '{{ etag }}',
 data__gkePolicy = '{{ gkePolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -505,14 +505,14 @@ Creates or updates a project's policy, and returns a copy of the new policy. A p
 ```sql
 REPLACE google.binaryauthorization.policies
 SET 
-data__kubernetesNamespaceAdmissionRules = '{{ kubernetesNamespaceAdmissionRules }}',
-data__clusterAdmissionRules = '{{ clusterAdmissionRules }}',
-data__istioServiceIdentityAdmissionRules = '{{ istioServiceIdentityAdmissionRules }}',
-data__globalPolicyEvaluationMode = '{{ globalPolicyEvaluationMode }}',
-data__etag = '{{ etag }}',
-data__description = '{{ description }}',
-data__defaultAdmissionRule = '{{ defaultAdmissionRule }}',
 data__admissionWhitelistPatterns = '{{ admissionWhitelistPatterns }}',
+data__clusterAdmissionRules = '{{ clusterAdmissionRules }}',
+data__defaultAdmissionRule = '{{ defaultAdmissionRule }}',
+data__description = '{{ description }}',
+data__etag = '{{ etag }}',
+data__globalPolicyEvaluationMode = '{{ globalPolicyEvaluationMode }}',
+data__istioServiceIdentityAdmissionRules = '{{ istioServiceIdentityAdmissionRules }}',
+data__kubernetesNamespaceAdmissionRules = '{{ kubernetesNamespaceAdmissionRules }}',
 data__kubernetesServiceAccountAdmissionRules = '{{ kubernetesServiceAccountAdmissionRules }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

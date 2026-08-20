@@ -470,14 +470,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of managed instance groups that are contained<br />within the specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of managed instance groups and groups them by zone.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -509,39 +509,11 @@ The following methods are available for this resource:
     <td>Deletes the specified managed instance group and all of the instances<br />in that group.</td>
 </tr>
 <tr>
-    <td><a href="#set_target_pools"><CopyableCode code="set_target_pools" /></a></td>
+    <td><a href="#abandon_instances"><CopyableCode code="abandon_instances" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Modifies the target pools to which all new instances in this group are<br />assigned. Existing instances in the group are not affected.</td>
-</tr>
-<tr>
-    <td><a href="#set_instance_template"><CopyableCode code="set_instance_template" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the instance template to use when creating new instances or recreating<br />instances in this group. Existing instances are not affected.</td>
-</tr>
-<tr>
-    <td><a href="#recreate_instances"><CopyableCode code="recreate_instances" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
-    <td><a href="#parameter-noGracefulShutdown"><code>noGracefulShutdown</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Flags the specified VM instances in the managed instance group to be<br />immediately recreated. Each instance is recreated using the group's current<br />configuration. This operation is marked as DONE when the flag<br />is set even if the instances have not yet been recreated. You must<br />separately verify the status of each instance by checking itscurrentAction field; for more information, see Checking<br />the status of managed instances.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is removed or deleted.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
-</tr>
-<tr>
-    <td><a href="#stop_instances"><CopyableCode code="stop_instances" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
-    <td><a href="#parameter-noGracefulShutdown"><code>noGracefulShutdown</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Flags the specified instances in the managed instance group to be<br />immediately stopped. You can only specify instances that are running in<br />this request. This method reduces thetargetSize and increases the targetStoppedSize<br />of the managed instance group by the number of instances that you stop.<br />The stopInstances operation is marked DONE if<br />the stopInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theSTOPPING action with thelistmanagedinstances<br />method.<br /><br />If the standbyPolicy.initialDelaySec field is set, the group<br />delays stopping the instances until initialDelaySec have<br />passed from instance.creationTimestamp (that is, when the<br />instance was created). This delay gives your application time to<br />set itself up and initialize on the instance. If more thaninitialDelaySec seconds have passed sinceinstance.creationTimestamp when this method is called, there<br />will be zero delay.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is stopped.<br /><br />Stopped instances can be started using the startInstances<br />method.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
-</tr>
-<tr>
-    <td><a href="#start_instances"><CopyableCode code="start_instances" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Flags the specified instances in the managed instance group to be<br />started. This method increases thetargetSize and decreases the targetStoppedSize<br />of the managed instance group by the number of instances that you start.<br />The startInstances operation is marked DONE if<br />the startInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theSTARTING action with thelistmanagedinstances<br />method.<br /><br />In this request, you can only specify instances that are stopped. For<br />example, if an instance was previously stopped using the stopInstances<br />method, it can be started using the startInstances method.<br /><br />If a health check is attached to the managed instance group, the specified<br />instances will be verified as healthy after they are started.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
+    <td>Flags the specified instances to be immediately removed from the managed<br />instance group. Abandoning an instance does not delete the<br />instance, but it does remove the instance from any target pools that are<br />applied by the managed instance group. This method reduces thetargetSize of the managed instance group by the<br />number of instances that you abandon. This operation is marked asDONE when the action is scheduled even if the instances have<br />not yet been removed from the group. You must separately verify the<br />status of the abandoning action with thelistmanagedinstances<br />method.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is removed or deleted.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
 </tr>
 <tr>
     <td><a href="#apply_updates_to_instances"><CopyableCode code="apply_updates_to_instances" /></a></td>
@@ -551,6 +523,13 @@ The following methods are available for this resource:
     <td>Apply updates to selected instances the managed instance group.</td>
 </tr>
 <tr>
+    <td><a href="#recreate_instances"><CopyableCode code="recreate_instances" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
+    <td><a href="#parameter-noGracefulShutdown"><code>noGracefulShutdown</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Flags the specified VM instances in the managed instance group to be<br />immediately recreated. Each instance is recreated using the group's current<br />configuration. This operation is marked as DONE when the flag<br />is set even if the instances have not yet been recreated. You must<br />separately verify the status of each instance by checking itscurrentAction field; for more information, see Checking<br />the status of managed instances.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is removed or deleted.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
+</tr>
+<tr>
     <td><a href="#resize"><CopyableCode code="resize" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a>, <a href="#parameter-size"><code>size</code></a></td>
@@ -558,11 +537,39 @@ The following methods are available for this resource:
     <td>Changes the intended size of the managed instance group. If you increase<br />the size, the group creates new instances using the current instance<br />template. If you decrease the size, the group deletes one or more<br />instances.<br /><br />The resize operation is marked DONE if theresize request is successful. The underlying actions take<br />additional time. You must separately verify the status of thecreating or deleting actions with thelistmanagedinstances<br />method.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is removed or deleted.</td>
 </tr>
 <tr>
-    <td><a href="#abandon_instances"><CopyableCode code="abandon_instances" /></a></td>
+    <td><a href="#resume_instances"><CopyableCode code="resume_instances" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Flags the specified instances to be immediately removed from the managed<br />instance group. Abandoning an instance does not delete the<br />instance, but it does remove the instance from any target pools that are<br />applied by the managed instance group. This method reduces thetargetSize of the managed instance group by the<br />number of instances that you abandon. This operation is marked asDONE when the action is scheduled even if the instances have<br />not yet been removed from the group. You must separately verify the<br />status of the abandoning action with thelistmanagedinstances<br />method.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is removed or deleted.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
+    <td>Flags the specified instances in the managed instance group to be<br />resumed. This method increases thetargetSize and decreases the targetSuspendedSize<br />of the managed instance group by the number of instances that you resume.<br />The resumeInstances operation is marked DONE if<br />the resumeInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theRESUMING action with thelistmanagedinstances<br />method.<br /><br />In this request, you can only specify instances that are suspended. For<br />example, if an instance was previously suspended using the suspendInstances<br />method, it can be resumed using the resumeInstances method.<br /><br />If a health check is attached to the managed instance group, the specified<br />instances will be verified as healthy after they are resumed.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
+</tr>
+<tr>
+    <td><a href="#set_instance_template"><CopyableCode code="set_instance_template" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the instance template to use when creating new instances or recreating<br />instances in this group. Existing instances are not affected.</td>
+</tr>
+<tr>
+    <td><a href="#set_target_pools"><CopyableCode code="set_target_pools" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Modifies the target pools to which all new instances in this group are<br />assigned. Existing instances in the group are not affected.</td>
+</tr>
+<tr>
+    <td><a href="#start_instances"><CopyableCode code="start_instances" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Flags the specified instances in the managed instance group to be<br />started. This method increases thetargetSize and decreases the targetStoppedSize<br />of the managed instance group by the number of instances that you start.<br />The startInstances operation is marked DONE if<br />the startInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theSTARTING action with thelistmanagedinstances<br />method.<br /><br />In this request, you can only specify instances that are stopped. For<br />example, if an instance was previously stopped using the stopInstances<br />method, it can be started using the startInstances method.<br /><br />If a health check is attached to the managed instance group, the specified<br />instances will be verified as healthy after they are started.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
+</tr>
+<tr>
+    <td><a href="#stop_instances"><CopyableCode code="stop_instances" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
+    <td><a href="#parameter-noGracefulShutdown"><code>noGracefulShutdown</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Flags the specified instances in the managed instance group to be<br />immediately stopped. You can only specify instances that are running in<br />this request. This method reduces thetargetSize and increases the targetStoppedSize<br />of the managed instance group by the number of instances that you stop.<br />The stopInstances operation is marked DONE if<br />the stopInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theSTOPPING action with thelistmanagedinstances<br />method.<br /><br />If the standbyPolicy.initialDelaySec field is set, the group<br />delays stopping the instances until initialDelaySec have<br />passed from instance.creationTimestamp (that is, when the<br />instance was created). This delay gives your application time to<br />set itself up and initialize on the instance. If more thaninitialDelaySec seconds have passed sinceinstance.creationTimestamp when this method is called, there<br />will be zero delay.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is stopped.<br /><br />Stopped instances can be started using the startInstances<br />method.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
 </tr>
 <tr>
     <td><a href="#suspend_instances"><CopyableCode code="suspend_instances" /></a></td>
@@ -570,13 +577,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Flags the specified instances in the managed instance group to be<br />immediately suspended. You can only specify instances that are running in<br />this request. This method reduces thetargetSize and increases the targetSuspendedSize<br />of the managed instance group by the number of instances that you suspend.<br />The suspendInstances operation is marked DONE if<br />the suspendInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theSUSPENDING action with thelistmanagedinstances<br />method.<br /><br />If the standbyPolicy.initialDelaySec field is set, the group<br />delays suspension of the instances until initialDelaySec have<br />passed from instance.creationTimestamp (that is, when the<br />instance was created). This delay gives your application time to<br />set itself up and initialize on the instance. If more thaninitialDelaySec seconds have passed sinceinstance.creationTimestamp when this method is called, there<br />will be zero delay.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is suspended.<br /><br />Suspended instances can be resumed using the resumeInstances<br />method.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
-</tr>
-<tr>
-    <td><a href="#resume_instances"><CopyableCode code="resume_instances" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Flags the specified instances in the managed instance group to be<br />resumed. This method increases thetargetSize and decreases the targetSuspendedSize<br />of the managed instance group by the number of instances that you resume.<br />The resumeInstances operation is marked DONE if<br />the resumeInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theRESUMING action with thelistmanagedinstances<br />method.<br /><br />In this request, you can only specify instances that are suspended. For<br />example, if an instance was previously suspended using the suspendInstances<br />method, it can be resumed using the resumeInstances method.<br /><br />If a health check is attached to the managed instance group, the specified<br />instances will be verified as healthy after they are resumed.<br /><br />You can specify a maximum of 1000 instances with this method per request.</td>
 </tr>
 </tbody>
 </table>
@@ -735,8 +735,8 @@ WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -782,13 +782,13 @@ versions,
 zone
 FROM google.compute.instance_group_managers
 WHERE project = '{{ project }}' -- required
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -810,55 +810,55 @@ Creates a managed instance group using the information that you specify<br />in 
 
 ```sql
 INSERT INTO google.compute.instance_group_managers (
-data__targetStoppedSize,
-data__instanceFlexibilityPolicy,
-data__fingerprint,
 data__allInstancesConfig,
-data__listManagedInstancesResults,
-data__statefulPolicy,
-data__versions,
-data__targetPools,
-data__targetSize,
-data__namedPorts,
-data__instanceTemplate,
-data__instanceLifecyclePolicy,
-data__standbyPolicy,
 data__autoHealingPolicies,
 data__baseInstanceName,
-data__resourcePolicies,
-data__distributionPolicy,
-data__updatePolicy,
-data__name,
 data__description,
+data__distributionPolicy,
+data__fingerprint,
+data__instanceFlexibilityPolicy,
+data__instanceLifecyclePolicy,
+data__instanceTemplate,
+data__listManagedInstancesResults,
+data__name,
+data__namedPorts,
+data__resourcePolicies,
+data__standbyPolicy,
+data__statefulPolicy,
+data__targetPools,
+data__targetSize,
 data__targetSizePolicy,
+data__targetStoppedSize,
 data__targetSuspendedSize,
+data__updatePolicy,
+data__versions,
 project,
 region,
 requestId
 )
 SELECT 
-{{ targetStoppedSize }},
-'{{ instanceFlexibilityPolicy }}',
-'{{ fingerprint }}',
 '{{ allInstancesConfig }}',
-'{{ listManagedInstancesResults }}',
-'{{ statefulPolicy }}',
-'{{ versions }}',
-'{{ targetPools }}',
-{{ targetSize }},
-'{{ namedPorts }}',
-'{{ instanceTemplate }}',
-'{{ instanceLifecyclePolicy }}',
-'{{ standbyPolicy }}',
 '{{ autoHealingPolicies }}',
 '{{ baseInstanceName }}',
-'{{ resourcePolicies }}',
-'{{ distributionPolicy }}',
-'{{ updatePolicy }}',
-'{{ name }}',
 '{{ description }}',
+'{{ distributionPolicy }}',
+'{{ fingerprint }}',
+'{{ instanceFlexibilityPolicy }}',
+'{{ instanceLifecyclePolicy }}',
+'{{ instanceTemplate }}',
+'{{ listManagedInstancesResults }}',
+'{{ name }}',
+'{{ namedPorts }}',
+'{{ resourcePolicies }}',
+'{{ standbyPolicy }}',
+'{{ statefulPolicy }}',
+'{{ targetPools }}',
+{{ targetSize }},
 '{{ targetSizePolicy }}',
+{{ targetStoppedSize }},
 {{ targetSuspendedSize }},
+'{{ updatePolicy }}',
+'{{ versions }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -904,114 +904,14 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the instance_group_managers resource.
-    - name: targetStoppedSize
-      value: {{ targetStoppedSize }}
-      description: |
-        The target number of stopped instances for this managed instance group.
-        This number changes when you:
-        - Stop instance using the stopInstances
-        method or start instances using the startInstances
-        method.
-        - Manually change the targetStoppedSize using the update
-        method.
-    - name: instanceFlexibilityPolicy
-      description: |
-        Instance flexibility allowing MIG to create VMs from multiple
-        types of machines.
-        Instance flexibility configuration on MIG overrides instance
-        template configuration.
-      value:
-        instanceSelections: "{{ instanceSelections }}"
-    - name: fingerprint
-      value: "{{ fingerprint }}"
-      description: |
-        Fingerprint of this resource. This field may be used in optimistic locking.
-        It will be ignored when inserting an InstanceGroupManager. An up-to-date
-        fingerprint must be provided in order to update the InstanceGroupManager,
-        otherwise the request will fail with error412 conditionNotMet.
-        To see the latest fingerprint, make a get() request to
-        retrieve an InstanceGroupManager.
     - name: allInstancesConfig
       description: |
         Specifies configuration that overrides the instance template configuration
         for the group.
       value:
         properties:
-          metadata: "{{ metadata }}"
           labels: "{{ labels }}"
-    - name: listManagedInstancesResults
-      value: "{{ listManagedInstancesResults }}"
-      description: |
-        Pagination behavior of the listManagedInstances API method for
-        this managed instance group.
-      valid_values: ['PAGELESS', 'PAGINATED']
-    - name: statefulPolicy
-      description: |
-        Stateful configuration for this Instanced Group Manager
-      value:
-        preservedState:
-          disks: "{{ disks }}"
-          internalIPs: "{{ internalIPs }}"
-          externalIPs: "{{ externalIPs }}"
-    - name: versions
-      description: |
-        Specifies the instance templates used by this managed instance group to
-        create instances.
-        Each version is defined by an instanceTemplate and aname. Every version can appear at most once per instance
-        group. This field overrides the top-level instanceTemplate
-        field. Read more about therelationships
-        between these fields. Exactly one version must leave thetargetSize field unset. That version will be applied to all
-        remaining instances. For more information, read aboutcanary
-        updates.
-      value:
-        - name: "{{ name }}"
-          instanceTemplate: "{{ instanceTemplate }}"
-          targetSize:
-            calculated: {{ calculated }}
-            fixed: {{ fixed }}
-            percent: {{ percent }}
-    - name: targetPools
-      value:
-        - "{{ targetPools }}"
-      description: |
-        The URLs for all TargetPool resources to which instances in theinstanceGroup field are added. The target pools automatically
-        apply to all of the instances in the managed instance group.
-    - name: targetSize
-      value: {{ targetSize }}
-      description: |
-        The target number of running instances for this managed instance group.
-        You can reduce this number by using the instanceGroupManager
-        deleteInstances or abandonInstances methods. Resizing the group also
-        changes this number.
-    - name: namedPorts
-      description: |
-        [Output Only] Named ports configured on the Instance Groups complementary
-        to this Instance Group Manager.
-      value:
-        - port: {{ port }}
-          name: "{{ name }}"
-    - name: instanceTemplate
-      value: "{{ instanceTemplate }}"
-      description: |
-        The URL of the instance template that is specified for this managed
-        instance group. The group uses this template to create all new instances
-        in the managed instance group. The templates for existing instances in the
-        group do not change unless you run recreateInstances, runapplyUpdatesToInstances, or set the group'supdatePolicy.type to PROACTIVE.
-    - name: instanceLifecyclePolicy
-      description: |
-        The repair policy for this managed instance group.
-      value:
-        onFailedHealthCheck: "{{ onFailedHealthCheck }}"
-        defaultActionOnFailure: "{{ defaultActionOnFailure }}"
-        onRepair:
-          allowChangingZone: "{{ allowChangingZone }}"
-        forceUpdateOnRepair: "{{ forceUpdateOnRepair }}"
-    - name: standbyPolicy
-      description: |
-        Standby policy for stopped and suspended instances.
-      value:
-        initialDelaySec: {{ initialDelaySec }}
-        mode: "{{ mode }}"
+          metadata: "{{ metadata }}"
     - name: autoHealingPolicies
       description: |
         The autohealing policy for this managed instance group. You can specify
@@ -1033,51 +933,117 @@ zone
         "vm-###" results in "vm-001" as a VM name.
         @pattern
         &#91;a-z&#93;(([-a-z0-9]{0,57})|([-a-z0-9]{0,51}-#{1,10}(\\[[0-9]{1,10}\\])?))
-    - name: resourcePolicies
+    - name: description
+      value: "{{ description }}"
       description: |
-        Resource policies for this managed instance group.
-      value:
-        workloadPolicy: "{{ workloadPolicy }}"
+        An optional description of this resource.
     - name: distributionPolicy
       description: |
         Policy specifying the intended distribution of managed instances across
         zones in a regional managed instance group.
       value:
+        targetShape: "{{ targetShape }}"
         zones:
           - zone: "{{ zone }}"
-        targetShape: "{{ targetShape }}"
-    - name: updatePolicy
+    - name: fingerprint
+      value: "{{ fingerprint }}"
       description: |
-        The update policy for this managed instance group.
+        Fingerprint of this resource. This field may be used in optimistic locking.
+        It will be ignored when inserting an InstanceGroupManager. An up-to-date
+        fingerprint must be provided in order to update the InstanceGroupManager,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve an InstanceGroupManager.
+    - name: instanceFlexibilityPolicy
+      description: |
+        Instance flexibility allowing MIG to create VMs from multiple
+        types of machines.
+        Instance flexibility configuration on MIG overrides instance
+        template configuration.
       value:
-        replacementMethod: "{{ replacementMethod }}"
-        type: "{{ type }}"
-        maxSurge:
-          calculated: {{ calculated }}
-          fixed: {{ fixed }}
-          percent: {{ percent }}
-        maxUnavailable:
-          calculated: {{ calculated }}
-          fixed: {{ fixed }}
-          percent: {{ percent }}
-        instanceRedistributionType: "{{ instanceRedistributionType }}"
-        mostDisruptiveAllowedAction: "{{ mostDisruptiveAllowedAction }}"
-        minimalAction: "{{ minimalAction }}"
+        instanceSelections: "{{ instanceSelections }}"
+    - name: instanceLifecyclePolicy
+      description: |
+        The repair policy for this managed instance group.
+      value:
+        defaultActionOnFailure: "{{ defaultActionOnFailure }}"
+        forceUpdateOnRepair: "{{ forceUpdateOnRepair }}"
+        onFailedHealthCheck: "{{ onFailedHealthCheck }}"
+        onRepair:
+          allowChangingZone: "{{ allowChangingZone }}"
+    - name: instanceTemplate
+      value: "{{ instanceTemplate }}"
+      description: |
+        The URL of the instance template that is specified for this managed
+        instance group. The group uses this template to create all new instances
+        in the managed instance group. The templates for existing instances in the
+        group do not change unless you run recreateInstances, runapplyUpdatesToInstances, or set the group'supdatePolicy.type to PROACTIVE.
+    - name: listManagedInstancesResults
+      value: "{{ listManagedInstancesResults }}"
+      description: |
+        Pagination behavior of the listManagedInstances API method for
+        this managed instance group.
+      valid_values: ['PAGELESS', 'PAGINATED']
     - name: name
       value: "{{ name }}"
       description: |
         The name of the managed instance group. The name must be 1-63 characters
         long, and comply withRFC1035.
-    - name: description
-      value: "{{ description }}"
+    - name: namedPorts
       description: |
-        An optional description of this resource.
+        [Output Only] Named ports configured on the Instance Groups complementary
+        to this Instance Group Manager.
+      value:
+        - name: "{{ name }}"
+          port: {{ port }}
+    - name: resourcePolicies
+      description: |
+        Resource policies for this managed instance group.
+      value:
+        workloadPolicy: "{{ workloadPolicy }}"
+    - name: standbyPolicy
+      description: |
+        Standby policy for stopped and suspended instances.
+      value:
+        initialDelaySec: {{ initialDelaySec }}
+        mode: "{{ mode }}"
+    - name: statefulPolicy
+      description: |
+        Stateful configuration for this Instanced Group Manager
+      value:
+        preservedState:
+          disks: "{{ disks }}"
+          externalIPs: "{{ externalIPs }}"
+          internalIPs: "{{ internalIPs }}"
+    - name: targetPools
+      value:
+        - "{{ targetPools }}"
+      description: |
+        The URLs for all TargetPool resources to which instances in theinstanceGroup field are added. The target pools automatically
+        apply to all of the instances in the managed instance group.
+    - name: targetSize
+      value: {{ targetSize }}
+      description: |
+        The target number of running instances for this managed instance group.
+        You can reduce this number by using the instanceGroupManager
+        deleteInstances or abandonInstances methods. Resizing the group also
+        changes this number.
     - name: targetSizePolicy
       description: |
         The policy that specifies how the MIG creates its VMs to achieve the target
         size.
       value:
         mode: "{{ mode }}"
+    - name: targetStoppedSize
+      value: {{ targetStoppedSize }}
+      description: |
+        The target number of stopped instances for this managed instance group.
+        This number changes when you:
+        - Stop instance using the stopInstances
+        method or start instances using the startInstances
+        method.
+        - Manually change the targetStoppedSize using the update
+        method.
     - name: targetSuspendedSize
       value: {{ targetSuspendedSize }}
       description: |
@@ -1088,6 +1054,40 @@ zone
         method.
         - Manually change the targetSuspendedSize using the update
         method.
+    - name: updatePolicy
+      description: |
+        The update policy for this managed instance group.
+      value:
+        instanceRedistributionType: "{{ instanceRedistributionType }}"
+        maxSurge:
+          calculated: {{ calculated }}
+          fixed: {{ fixed }}
+          percent: {{ percent }}
+        maxUnavailable:
+          calculated: {{ calculated }}
+          fixed: {{ fixed }}
+          percent: {{ percent }}
+        minimalAction: "{{ minimalAction }}"
+        mostDisruptiveAllowedAction: "{{ mostDisruptiveAllowedAction }}"
+        replacementMethod: "{{ replacementMethod }}"
+        type: "{{ type }}"
+    - name: versions
+      description: |
+        Specifies the instance templates used by this managed instance group to
+        create instances.
+        Each version is defined by an instanceTemplate and aname. Every version can appear at most once per instance
+        group. This field overrides the top-level instanceTemplate
+        field. Read more about therelationships
+        between these fields. Exactly one version must leave thetargetSize field unset. That version will be applied to all
+        remaining instances. For more information, read aboutcanary
+        updates.
+      value:
+        - instanceTemplate: "{{ instanceTemplate }}"
+          name: "{{ name }}"
+          targetSize:
+            calculated: {{ calculated }}
+            fixed: {{ fixed }}
+            percent: {{ percent }}
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -1112,28 +1112,28 @@ Updates a managed instance group using the information that you specify<br />in 
 ```sql
 UPDATE google.compute.instance_group_managers
 SET 
-data__targetStoppedSize = {{ targetStoppedSize }},
-data__instanceFlexibilityPolicy = '{{ instanceFlexibilityPolicy }}',
-data__fingerprint = '{{ fingerprint }}',
 data__allInstancesConfig = '{{ allInstancesConfig }}',
-data__listManagedInstancesResults = '{{ listManagedInstancesResults }}',
-data__statefulPolicy = '{{ statefulPolicy }}',
-data__versions = '{{ versions }}',
-data__targetPools = '{{ targetPools }}',
-data__targetSize = {{ targetSize }},
-data__namedPorts = '{{ namedPorts }}',
-data__instanceTemplate = '{{ instanceTemplate }}',
-data__instanceLifecyclePolicy = '{{ instanceLifecyclePolicy }}',
-data__standbyPolicy = '{{ standbyPolicy }}',
 data__autoHealingPolicies = '{{ autoHealingPolicies }}',
 data__baseInstanceName = '{{ baseInstanceName }}',
-data__resourcePolicies = '{{ resourcePolicies }}',
-data__distributionPolicy = '{{ distributionPolicy }}',
-data__updatePolicy = '{{ updatePolicy }}',
-data__name = '{{ name }}',
 data__description = '{{ description }}',
+data__distributionPolicy = '{{ distributionPolicy }}',
+data__fingerprint = '{{ fingerprint }}',
+data__instanceFlexibilityPolicy = '{{ instanceFlexibilityPolicy }}',
+data__instanceLifecyclePolicy = '{{ instanceLifecyclePolicy }}',
+data__instanceTemplate = '{{ instanceTemplate }}',
+data__listManagedInstancesResults = '{{ listManagedInstancesResults }}',
+data__name = '{{ name }}',
+data__namedPorts = '{{ namedPorts }}',
+data__resourcePolicies = '{{ resourcePolicies }}',
+data__standbyPolicy = '{{ standbyPolicy }}',
+data__statefulPolicy = '{{ statefulPolicy }}',
+data__targetPools = '{{ targetPools }}',
+data__targetSize = {{ targetSize }},
 data__targetSizePolicy = '{{ targetSizePolicy }}',
-data__targetSuspendedSize = {{ targetSuspendedSize }}
+data__targetStoppedSize = {{ targetStoppedSize }},
+data__targetSuspendedSize = {{ targetSuspendedSize }},
+data__updatePolicy = '{{ updatePolicy }}',
+data__versions = '{{ versions }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -1243,98 +1243,26 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_target_pools"
+    defaultValue="abandon_instances"
     values={[
-        { label: 'set_target_pools', value: 'set_target_pools' },
-        { label: 'set_instance_template', value: 'set_instance_template' },
-        { label: 'recreate_instances', value: 'recreate_instances' },
-        { label: 'stop_instances', value: 'stop_instances' },
-        { label: 'start_instances', value: 'start_instances' },
-        { label: 'apply_updates_to_instances', value: 'apply_updates_to_instances' },
-        { label: 'resize', value: 'resize' },
         { label: 'abandon_instances', value: 'abandon_instances' },
-        { label: 'suspend_instances', value: 'suspend_instances' },
-        { label: 'resume_instances', value: 'resume_instances' }
+        { label: 'apply_updates_to_instances', value: 'apply_updates_to_instances' },
+        { label: 'recreate_instances', value: 'recreate_instances' },
+        { label: 'resize', value: 'resize' },
+        { label: 'resume_instances', value: 'resume_instances' },
+        { label: 'set_instance_template', value: 'set_instance_template' },
+        { label: 'set_target_pools', value: 'set_target_pools' },
+        { label: 'start_instances', value: 'start_instances' },
+        { label: 'stop_instances', value: 'stop_instances' },
+        { label: 'suspend_instances', value: 'suspend_instances' }
     ]}
 >
-<TabItem value="set_target_pools">
+<TabItem value="abandon_instances">
 
-Modifies the target pools to which all new instances in this group are<br />assigned. Existing instances in the group are not affected.
-
-```sql
-EXEC google.compute.instance_group_managers.set_target_pools 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@instanceGroupManager='{{ instanceGroupManager }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"fingerprint": "{{ fingerprint }}", 
-"targetPools": "{{ targetPools }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_instance_template">
-
-Sets the instance template to use when creating new instances or recreating<br />instances in this group. Existing instances are not affected.
+Flags the specified instances to be immediately removed from the managed<br />instance group. Abandoning an instance does not delete the<br />instance, but it does remove the instance from any target pools that are<br />applied by the managed instance group. This method reduces thetargetSize of the managed instance group by the<br />number of instances that you abandon. This operation is marked asDONE when the action is scheduled even if the instances have<br />not yet been removed from the group. You must separately verify the<br />status of the abandoning action with thelistmanagedinstances<br />method.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is removed or deleted.<br /><br />You can specify a maximum of 1000 instances with this method per request.
 
 ```sql
-EXEC google.compute.instance_group_managers.set_instance_template 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@instanceGroupManager='{{ instanceGroupManager }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"instanceTemplate": "{{ instanceTemplate }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="recreate_instances">
-
-Flags the specified VM instances in the managed instance group to be<br />immediately recreated. Each instance is recreated using the group's current<br />configuration. This operation is marked as DONE when the flag<br />is set even if the instances have not yet been recreated. You must<br />separately verify the status of each instance by checking itscurrentAction field; for more information, see Checking<br />the status of managed instances.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is removed or deleted.<br /><br />You can specify a maximum of 1000 instances with this method per request.
-
-```sql
-EXEC google.compute.instance_group_managers.recreate_instances 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@instanceGroupManager='{{ instanceGroupManager }}' --required, 
-@noGracefulShutdown={{ noGracefulShutdown }}, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"instances": "{{ instances }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="stop_instances">
-
-Flags the specified instances in the managed instance group to be<br />immediately stopped. You can only specify instances that are running in<br />this request. This method reduces thetargetSize and increases the targetStoppedSize<br />of the managed instance group by the number of instances that you stop.<br />The stopInstances operation is marked DONE if<br />the stopInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theSTOPPING action with thelistmanagedinstances<br />method.<br /><br />If the standbyPolicy.initialDelaySec field is set, the group<br />delays stopping the instances until initialDelaySec have<br />passed from instance.creationTimestamp (that is, when the<br />instance was created). This delay gives your application time to<br />set itself up and initialize on the instance. If more thaninitialDelaySec seconds have passed sinceinstance.creationTimestamp when this method is called, there<br />will be zero delay.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is stopped.<br /><br />Stopped instances can be started using the startInstances<br />method.<br /><br />You can specify a maximum of 1000 instances with this method per request.
-
-```sql
-EXEC google.compute.instance_group_managers.stop_instances 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@instanceGroupManager='{{ instanceGroupManager }}' --required, 
-@noGracefulShutdown={{ noGracefulShutdown }}, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"instances": "{{ instances }}", 
-"forceStop": {{ forceStop }}
-}'
-;
-```
-</TabItem>
-<TabItem value="start_instances">
-
-Flags the specified instances in the managed instance group to be<br />started. This method increases thetargetSize and decreases the targetStoppedSize<br />of the managed instance group by the number of instances that you start.<br />The startInstances operation is marked DONE if<br />the startInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theSTARTING action with thelistmanagedinstances<br />method.<br /><br />In this request, you can only specify instances that are stopped. For<br />example, if an instance was previously stopped using the stopInstances<br />method, it can be started using the startInstances method.<br /><br />If a health check is attached to the managed instance group, the specified<br />instances will be verified as healthy after they are started.<br /><br />You can specify a maximum of 1000 instances with this method per request.
-
-```sql
-EXEC google.compute.instance_group_managers.start_instances 
+EXEC google.compute.instance_group_managers.abandon_instances 
 @project='{{ project }}' --required, 
 @region='{{ region }}' --required, 
 @instanceGroupManager='{{ instanceGroupManager }}' --required, 
@@ -1357,9 +1285,27 @@ EXEC google.compute.instance_group_managers.apply_updates_to_instances
 @instanceGroupManager='{{ instanceGroupManager }}' --required 
 @@json=
 '{
-"mostDisruptiveAllowedAction": "{{ mostDisruptiveAllowedAction }}", 
-"minimalAction": "{{ minimalAction }}", 
 "allInstances": {{ allInstances }}, 
+"instances": "{{ instances }}", 
+"minimalAction": "{{ minimalAction }}", 
+"mostDisruptiveAllowedAction": "{{ mostDisruptiveAllowedAction }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="recreate_instances">
+
+Flags the specified VM instances in the managed instance group to be<br />immediately recreated. Each instance is recreated using the group's current<br />configuration. This operation is marked as DONE when the flag<br />is set even if the instances have not yet been recreated. You must<br />separately verify the status of each instance by checking itscurrentAction field; for more information, see Checking<br />the status of managed instances.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is removed or deleted.<br /><br />You can specify a maximum of 1000 instances with this method per request.
+
+```sql
+EXEC google.compute.instance_group_managers.recreate_instances 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
+@instanceGroupManager='{{ instanceGroupManager }}' --required, 
+@noGracefulShutdown={{ noGracefulShutdown }}, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
 "instances": "{{ instances }}"
 }'
 ;
@@ -1379,18 +1325,89 @@ EXEC google.compute.instance_group_managers.resize
 ;
 ```
 </TabItem>
-<TabItem value="abandon_instances">
+<TabItem value="resume_instances">
 
-Flags the specified instances to be immediately removed from the managed<br />instance group. Abandoning an instance does not delete the<br />instance, but it does remove the instance from any target pools that are<br />applied by the managed instance group. This method reduces thetargetSize of the managed instance group by the<br />number of instances that you abandon. This operation is marked asDONE when the action is scheduled even if the instances have<br />not yet been removed from the group. You must separately verify the<br />status of the abandoning action with thelistmanagedinstances<br />method.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is removed or deleted.<br /><br />You can specify a maximum of 1000 instances with this method per request.
+Flags the specified instances in the managed instance group to be<br />resumed. This method increases thetargetSize and decreases the targetSuspendedSize<br />of the managed instance group by the number of instances that you resume.<br />The resumeInstances operation is marked DONE if<br />the resumeInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theRESUMING action with thelistmanagedinstances<br />method.<br /><br />In this request, you can only specify instances that are suspended. For<br />example, if an instance was previously suspended using the suspendInstances<br />method, it can be resumed using the resumeInstances method.<br /><br />If a health check is attached to the managed instance group, the specified<br />instances will be verified as healthy after they are resumed.<br /><br />You can specify a maximum of 1000 instances with this method per request.
 
 ```sql
-EXEC google.compute.instance_group_managers.abandon_instances 
+EXEC google.compute.instance_group_managers.resume_instances 
 @project='{{ project }}' --required, 
 @region='{{ region }}' --required, 
 @instanceGroupManager='{{ instanceGroupManager }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
 '{
+"instances": "{{ instances }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_instance_template">
+
+Sets the instance template to use when creating new instances or recreating<br />instances in this group. Existing instances are not affected.
+
+```sql
+EXEC google.compute.instance_group_managers.set_instance_template 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
+@instanceGroupManager='{{ instanceGroupManager }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"instanceTemplate": "{{ instanceTemplate }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_target_pools">
+
+Modifies the target pools to which all new instances in this group are<br />assigned. Existing instances in the group are not affected.
+
+```sql
+EXEC google.compute.instance_group_managers.set_target_pools 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
+@instanceGroupManager='{{ instanceGroupManager }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"fingerprint": "{{ fingerprint }}", 
+"targetPools": "{{ targetPools }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="start_instances">
+
+Flags the specified instances in the managed instance group to be<br />started. This method increases thetargetSize and decreases the targetStoppedSize<br />of the managed instance group by the number of instances that you start.<br />The startInstances operation is marked DONE if<br />the startInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theSTARTING action with thelistmanagedinstances<br />method.<br /><br />In this request, you can only specify instances that are stopped. For<br />example, if an instance was previously stopped using the stopInstances<br />method, it can be started using the startInstances method.<br /><br />If a health check is attached to the managed instance group, the specified<br />instances will be verified as healthy after they are started.<br /><br />You can specify a maximum of 1000 instances with this method per request.
+
+```sql
+EXEC google.compute.instance_group_managers.start_instances 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
+@instanceGroupManager='{{ instanceGroupManager }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"instances": "{{ instances }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="stop_instances">
+
+Flags the specified instances in the managed instance group to be<br />immediately stopped. You can only specify instances that are running in<br />this request. This method reduces thetargetSize and increases the targetStoppedSize<br />of the managed instance group by the number of instances that you stop.<br />The stopInstances operation is marked DONE if<br />the stopInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theSTOPPING action with thelistmanagedinstances<br />method.<br /><br />If the standbyPolicy.initialDelaySec field is set, the group<br />delays stopping the instances until initialDelaySec have<br />passed from instance.creationTimestamp (that is, when the<br />instance was created). This delay gives your application time to<br />set itself up and initialize on the instance. If more thaninitialDelaySec seconds have passed sinceinstance.creationTimestamp when this method is called, there<br />will be zero delay.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration has elapsed before the VM instance is stopped.<br /><br />Stopped instances can be started using the startInstances<br />method.<br /><br />You can specify a maximum of 1000 instances with this method per request.
+
+```sql
+EXEC google.compute.instance_group_managers.stop_instances 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
+@instanceGroupManager='{{ instanceGroupManager }}' --required, 
+@noGracefulShutdown={{ noGracefulShutdown }}, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"forceStop": {{ forceStop }}, 
 "instances": "{{ instances }}"
 }'
 ;
@@ -1408,24 +1425,7 @@ EXEC google.compute.instance_group_managers.suspend_instances
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"instances": "{{ instances }}", 
-"forceSuspend": {{ forceSuspend }}
-}'
-;
-```
-</TabItem>
-<TabItem value="resume_instances">
-
-Flags the specified instances in the managed instance group to be<br />resumed. This method increases thetargetSize and decreases the targetSuspendedSize<br />of the managed instance group by the number of instances that you resume.<br />The resumeInstances operation is marked DONE if<br />the resumeInstances request is successful. The underlying<br />actions take additional time. You must separately verify the status of theRESUMING action with thelistmanagedinstances<br />method.<br /><br />In this request, you can only specify instances that are suspended. For<br />example, if an instance was previously suspended using the suspendInstances<br />method, it can be resumed using the resumeInstances method.<br /><br />If a health check is attached to the managed instance group, the specified<br />instances will be verified as healthy after they are resumed.<br /><br />You can specify a maximum of 1000 instances with this method per request.
-
-```sql
-EXEC google.compute.instance_group_managers.resume_instances 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@instanceGroupManager='{{ instanceGroupManager }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
+"forceSuspend": {{ forceSuspend }}, 
 "instances": "{{ instances }}"
 }'
 ;

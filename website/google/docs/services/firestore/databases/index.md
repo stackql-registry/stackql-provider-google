@@ -103,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="firestoreDataAccessMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The Firestore API data access mode to use for this database. If not set on write: - the default value is DATA_ACCESS_MODE_DISABLED for Enterprise Edition. - the default value is DATA_ACCESS_MODE_ENABLED for Standard Edition. (DATA_ACCESS_MODE_UNSPECIFIED, DATA_ACCESS_MODE_ENABLED, DATA_ACCESS_MODE_DISABLED)</td>
+    <td>Optional. The Firestore API data access mode to use for this database. If not set on write: - the default value is DATA_ACCESS_MODE_DISABLED for Enterprise edition. - the default value is DATA_ACCESS_MODE_ENABLED for Standard edition. (DATA_ACCESS_MODE_UNSPECIFIED, DATA_ACCESS_MODE_ENABLED, DATA_ACCESS_MODE_DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="freeTier" /></td>
@@ -123,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mongodbCompatibleDataAccessMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The MongoDB compatible API data access mode to use for this database. If not set on write, the default value is DATA_ACCESS_MODE_ENABLED for Enterprise Edition. The value is always DATA_ACCESS_MODE_DISABLED for Standard Edition. (DATA_ACCESS_MODE_UNSPECIFIED, DATA_ACCESS_MODE_ENABLED, DATA_ACCESS_MODE_DISABLED)</td>
+    <td>Optional. The MongoDB compatible API data access mode to use for this database. If not set on write, the default value is DATA_ACCESS_MODE_ENABLED for Enterprise edition. The value is always DATA_ACCESS_MODE_DISABLED for Standard edition. (DATA_ACCESS_MODE_UNSPECIFIED, DATA_ACCESS_MODE_ENABLED, DATA_ACCESS_MODE_DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pointInTimeRecoveryEnablement" /></td>
@@ -243,6 +243,13 @@ The following methods are available for this resource:
     <td>Updates a database.</td>
 </tr>
 <tr>
+    <td><a href="#bulk_delete_documents"><CopyableCode code="bulk_delete_documents" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
+    <td></td>
+    <td>Bulk deletes a subset of documents from Google Cloud Firestore. Documents created or updated after the underlying system starts to process the request will not be deleted. The bulk delete occurs in the background and its progress can be monitored and managed via the Operation resource that is created. For more details on bulk delete behavior, refer to: https://cloud.google.com/firestore/docs/manage-data/bulk-delete</td>
+</tr>
+<tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
@@ -250,11 +257,11 @@ The following methods are available for this resource:
     <td>Deletes a database.</td>
 </tr>
 <tr>
-    <td><a href="#bulk_delete_documents"><CopyableCode code="bulk_delete_documents" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
+    <td><a href="#clone"><CopyableCode code="clone" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Bulk deletes a subset of documents from Google Cloud Firestore. Documents created or updated after the underlying system starts to process the request will not be deleted. The bulk delete occurs in the background and its progress can be monitored and managed via the Operation resource that is created. For more details on bulk delete behavior, refer to: https://cloud.google.com/firestore/docs/manage-data/bulk-delete</td>
+    <td>Creates a new database by cloning an existing one. The new database must be in the same cloud region or multi-region location as the existing database. This behaves similar to FirestoreAdmin.CreateDatabase except instead of creating a new empty database, a new database is created with the database type, index configuration, and documents from an existing database. The long-running operation can be used to track the progress of the clone, with the Operation's metadata field type being the CloneDatabaseMetadata. The response type is the Database if the clone was successful. The new database is not readable or writeable until the LRO has completed.</td>
 </tr>
 <tr>
     <td><a href="#export_documents"><CopyableCode code="export_documents" /></a></td>
@@ -276,13 +283,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Creates a new database by restoring from an existing backup. The new database must be in the same cloud region or multi-region location as the existing backup. This behaves similar to FirestoreAdmin.CreateDatabase except instead of creating a new empty database, a new database is created with the database type, index configuration, and documents from an existing backup. The long-running operation can be used to track the progress of the restore, with the Operation's metadata field type being the RestoreDatabaseMetadata. The response type is the Database if the restore was successful. The new database is not readable or writeable until the LRO has completed.</td>
-</tr>
-<tr>
-    <td><a href="#clone"><CopyableCode code="clone" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Creates a new database by cloning an existing one. The new database must be in the same cloud region or multi-region location as the existing database. This behaves similar to FirestoreAdmin.CreateDatabase except instead of creating a new empty database, a new database is created with the database type, index configuration, and documents from an existing database. The long-running operation can be used to track the progress of the clone, with the Operation's metadata field type being the CloneDatabaseMetadata. The response type is the Database if the clone was successful. The new database is not readable or writeable until the LRO has completed.</td>
 </tr>
 </tbody>
 </table>
@@ -410,38 +410,38 @@ Create a database.
 
 ```sql
 INSERT INTO google.firestore.databases (
-data__tags,
-data__type,
-data__pointInTimeRecoveryEnablement,
+data__appEngineIntegrationMode,
+data__cmekConfig,
 data__concurrencyMode,
 data__databaseEdition,
-data__cmekConfig,
-data__firestoreDataAccessMode,
-data__mongodbCompatibleDataAccessMode,
-data__locationId,
-data__etag,
 data__deleteProtectionState,
-data__realtimeUpdatesMode,
+data__etag,
+data__firestoreDataAccessMode,
+data__locationId,
+data__mongodbCompatibleDataAccessMode,
 data__name,
-data__appEngineIntegrationMode,
+data__pointInTimeRecoveryEnablement,
+data__realtimeUpdatesMode,
+data__tags,
+data__type,
 projectsId,
 databaseId
 )
 SELECT 
-'{{ tags }}',
-'{{ type }}',
-'{{ pointInTimeRecoveryEnablement }}',
+'{{ appEngineIntegrationMode }}',
+'{{ cmekConfig }}',
 '{{ concurrencyMode }}',
 '{{ databaseEdition }}',
-'{{ cmekConfig }}',
-'{{ firestoreDataAccessMode }}',
-'{{ mongodbCompatibleDataAccessMode }}',
-'{{ locationId }}',
-'{{ etag }}',
 '{{ deleteProtectionState }}',
-'{{ realtimeUpdatesMode }}',
+'{{ etag }}',
+'{{ firestoreDataAccessMode }}',
+'{{ locationId }}',
+'{{ mongodbCompatibleDataAccessMode }}',
 '{{ name }}',
-'{{ appEngineIntegrationMode }}',
+'{{ pointInTimeRecoveryEnablement }}',
+'{{ realtimeUpdatesMode }}',
+'{{ tags }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ databaseId }}'
 RETURNING
@@ -461,20 +461,18 @@ response
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the databases resource.
-    - name: tags
-      value: "{{ tags }}"
+    - name: appEngineIntegrationMode
+      value: "{{ appEngineIntegrationMode }}"
       description: |
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
-    - name: type
-      value: "{{ type }}"
+        The App Engine integration mode to use for this database.
+      valid_values: ['APP_ENGINE_INTEGRATION_MODE_UNSPECIFIED', 'ENABLED', 'DISABLED']
+    - name: cmekConfig
       description: |
-        Required. The type of the database. See https://cloud.google.com/datastore/docs/firestore-or-datastore for information about how to choose.
-      valid_values: ['DATABASE_TYPE_UNSPECIFIED', 'FIRESTORE_NATIVE', 'DATASTORE_MODE']
-    - name: pointInTimeRecoveryEnablement
-      value: "{{ pointInTimeRecoveryEnablement }}"
-      description: |
-        Whether to enable the PITR feature on this database.
-      valid_values: ['POINT_IN_TIME_RECOVERY_ENABLEMENT_UNSPECIFIED', 'POINT_IN_TIME_RECOVERY_ENABLED', 'POINT_IN_TIME_RECOVERY_DISABLED']
+        Optional. Presence indicates CMEK is enabled for this database.
+      value:
+        activeKeyVersion:
+          - "{{ activeKeyVersion }}"
+        kmsKeyName: "{{ kmsKeyName }}"
     - name: concurrencyMode
       value: "{{ concurrencyMode }}"
       description: |
@@ -485,50 +483,52 @@ response
       description: |
         Immutable. The edition of the database.
       valid_values: ['DATABASE_EDITION_UNSPECIFIED', 'STANDARD', 'ENTERPRISE']
-    - name: cmekConfig
-      description: |
-        Optional. Presence indicates CMEK is enabled for this database.
-      value:
-        activeKeyVersion:
-          - "{{ activeKeyVersion }}"
-        kmsKeyName: "{{ kmsKeyName }}"
-    - name: firestoreDataAccessMode
-      value: "{{ firestoreDataAccessMode }}"
-      description: |
-        Optional. The Firestore API data access mode to use for this database. If not set on write: - the default value is DATA_ACCESS_MODE_DISABLED for Enterprise Edition. - the default value is DATA_ACCESS_MODE_ENABLED for Standard Edition.
-      valid_values: ['DATA_ACCESS_MODE_UNSPECIFIED', 'DATA_ACCESS_MODE_ENABLED', 'DATA_ACCESS_MODE_DISABLED']
-    - name: mongodbCompatibleDataAccessMode
-      value: "{{ mongodbCompatibleDataAccessMode }}"
-      description: |
-        Optional. The MongoDB compatible API data access mode to use for this database. If not set on write, the default value is DATA_ACCESS_MODE_ENABLED for Enterprise Edition. The value is always DATA_ACCESS_MODE_DISABLED for Standard Edition.
-      valid_values: ['DATA_ACCESS_MODE_UNSPECIFIED', 'DATA_ACCESS_MODE_ENABLED', 'DATA_ACCESS_MODE_DISABLED']
-    - name: locationId
-      value: "{{ locationId }}"
-      description: |
-        Required. The location of the database. Available locations are listed at https://cloud.google.com/firestore/docs/locations.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: deleteProtectionState
       value: "{{ deleteProtectionState }}"
       description: |
         State of delete protection for the database.
       valid_values: ['DELETE_PROTECTION_STATE_UNSPECIFIED', 'DELETE_PROTECTION_DISABLED', 'DELETE_PROTECTION_ENABLED']
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: firestoreDataAccessMode
+      value: "{{ firestoreDataAccessMode }}"
+      description: |
+        Optional. The Firestore API data access mode to use for this database. If not set on write: - the default value is DATA_ACCESS_MODE_DISABLED for Enterprise edition. - the default value is DATA_ACCESS_MODE_ENABLED for Standard edition.
+      valid_values: ['DATA_ACCESS_MODE_UNSPECIFIED', 'DATA_ACCESS_MODE_ENABLED', 'DATA_ACCESS_MODE_DISABLED']
+    - name: locationId
+      value: "{{ locationId }}"
+      description: |
+        Required. The location of the database. Available locations are listed at https://cloud.google.com/firestore/docs/locations.
+    - name: mongodbCompatibleDataAccessMode
+      value: "{{ mongodbCompatibleDataAccessMode }}"
+      description: |
+        Optional. The MongoDB compatible API data access mode to use for this database. If not set on write, the default value is DATA_ACCESS_MODE_ENABLED for Enterprise edition. The value is always DATA_ACCESS_MODE_DISABLED for Standard edition.
+      valid_values: ['DATA_ACCESS_MODE_UNSPECIFIED', 'DATA_ACCESS_MODE_ENABLED', 'DATA_ACCESS_MODE_DISABLED']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the Database. Format: \`projects/{project}/databases/{database}\`
+    - name: pointInTimeRecoveryEnablement
+      value: "{{ pointInTimeRecoveryEnablement }}"
+      description: |
+        Whether to enable the PITR feature on this database.
+      valid_values: ['POINT_IN_TIME_RECOVERY_ENABLEMENT_UNSPECIFIED', 'POINT_IN_TIME_RECOVERY_ENABLED', 'POINT_IN_TIME_RECOVERY_DISABLED']
     - name: realtimeUpdatesMode
       value: "{{ realtimeUpdatesMode }}"
       description: |
         Immutable. The default Realtime Updates mode to use for this database.
       valid_values: ['REALTIME_UPDATES_MODE_UNSPECIFIED', 'REALTIME_UPDATES_MODE_ENABLED', 'REALTIME_UPDATES_MODE_DISABLED']
-    - name: name
-      value: "{{ name }}"
+    - name: tags
+      value: "{{ tags }}"
       description: |
-        The resource name of the Database. Format: \`projects/{project}/databases/{database}\`
-    - name: appEngineIntegrationMode
-      value: "{{ appEngineIntegrationMode }}"
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
+    - name: type
+      value: "{{ type }}"
       description: |
-        The App Engine integration mode to use for this database.
-      valid_values: ['APP_ENGINE_INTEGRATION_MODE_UNSPECIFIED', 'ENABLED', 'DISABLED']
+        Required. The type of the database. See https://cloud.google.com/datastore/docs/firestore-or-datastore for information about how to choose.
+      valid_values: ['DATABASE_TYPE_UNSPECIFIED', 'FIRESTORE_NATIVE', 'DATASTORE_MODE']
     - name: databaseId
       value: "{{ databaseId }}"
 `}</CodeBlock>
@@ -552,20 +552,20 @@ Updates a database.
 ```sql
 UPDATE google.firestore.databases
 SET 
-data__tags = '{{ tags }}',
-data__type = '{{ type }}',
-data__pointInTimeRecoveryEnablement = '{{ pointInTimeRecoveryEnablement }}',
+data__appEngineIntegrationMode = '{{ appEngineIntegrationMode }}',
+data__cmekConfig = '{{ cmekConfig }}',
 data__concurrencyMode = '{{ concurrencyMode }}',
 data__databaseEdition = '{{ databaseEdition }}',
-data__cmekConfig = '{{ cmekConfig }}',
-data__firestoreDataAccessMode = '{{ firestoreDataAccessMode }}',
-data__mongodbCompatibleDataAccessMode = '{{ mongodbCompatibleDataAccessMode }}',
-data__locationId = '{{ locationId }}',
-data__etag = '{{ etag }}',
 data__deleteProtectionState = '{{ deleteProtectionState }}',
-data__realtimeUpdatesMode = '{{ realtimeUpdatesMode }}',
+data__etag = '{{ etag }}',
+data__firestoreDataAccessMode = '{{ firestoreDataAccessMode }}',
+data__locationId = '{{ locationId }}',
+data__mongodbCompatibleDataAccessMode = '{{ mongodbCompatibleDataAccessMode }}',
 data__name = '{{ name }}',
-data__appEngineIntegrationMode = '{{ appEngineIntegrationMode }}'
+data__pointInTimeRecoveryEnablement = '{{ pointInTimeRecoveryEnablement }}',
+data__realtimeUpdatesMode = '{{ realtimeUpdatesMode }}',
+data__tags = '{{ tags }}',
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND databasesId = '{{ databasesId }}' --required
@@ -584,12 +584,23 @@ response;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="delete"
+    defaultValue="bulk_delete_documents"
     values={[
-        { label: 'delete', value: 'delete' },
-        { label: 'bulk_delete_documents', value: 'bulk_delete_documents' }
+        { label: 'bulk_delete_documents', value: 'bulk_delete_documents' },
+        { label: 'delete', value: 'delete' }
     ]}
 >
+<TabItem value="bulk_delete_documents">
+
+Bulk deletes a subset of documents from Google Cloud Firestore. Documents created or updated after the underlying system starts to process the request will not be deleted. The bulk delete occurs in the background and its progress can be monitored and managed via the Operation resource that is created. For more details on bulk delete behavior, refer to: https://cloud.google.com/firestore/docs/manage-data/bulk-delete
+
+```sql
+DELETE FROM google.firestore.databases
+WHERE projectsId = '{{ projectsId }}' --required
+AND databasesId = '{{ databasesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="delete">
 
 Deletes a database.
@@ -602,31 +613,37 @@ AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>
-<TabItem value="bulk_delete_documents">
-
-Bulk deletes a subset of documents from Google Cloud Firestore. Documents created or updated after the underlying system starts to process the request will not be deleted. The bulk delete occurs in the background and its progress can be monitored and managed via the Operation resource that is created. For more details on bulk delete behavior, refer to: https://cloud.google.com/firestore/docs/manage-data/bulk-delete
-
-```sql
-DELETE FROM google.firestore.databases
-WHERE projectsId = '{{ projectsId }}' --required
-AND databasesId = '{{ databasesId }}' --required
-;
-```
-</TabItem>
 </Tabs>
 
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="export_documents"
+    defaultValue="clone"
     values={[
+        { label: 'clone', value: 'clone' },
         { label: 'export_documents', value: 'export_documents' },
         { label: 'import_documents', value: 'import_documents' },
-        { label: 'restore', value: 'restore' },
-        { label: 'clone', value: 'clone' }
+        { label: 'restore', value: 'restore' }
     ]}
 >
+<TabItem value="clone">
+
+Creates a new database by cloning an existing one. The new database must be in the same cloud region or multi-region location as the existing database. This behaves similar to FirestoreAdmin.CreateDatabase except instead of creating a new empty database, a new database is created with the database type, index configuration, and documents from an existing database. The long-running operation can be used to track the progress of the clone, with the Operation's metadata field type being the CloneDatabaseMetadata. The response type is the Database if the clone was successful. The new database is not readable or writeable until the LRO has completed.
+
+```sql
+EXEC google.firestore.databases.clone 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"databaseId": "{{ databaseId }}", 
+"encryptionConfig": "{{ encryptionConfig }}", 
+"pitrSnapshot": "{{ pitrSnapshot }}", 
+"tags": "{{ tags }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="export_documents">
 
 Exports a copy of all or a subset of documents from Google Cloud Firestore to another storage system, such as Google Cloud Storage. Recent updates to documents may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage. For more details on export behavior and output format, refer to: https://cloud.google.com/firestore/docs/manage-data/export-import
@@ -638,9 +655,9 @@ EXEC google.firestore.databases.export_documents
 @@json=
 '{
 "collectionIds": "{{ collectionIds }}", 
+"namespaceIds": "{{ namespaceIds }}", 
 "outputUriPrefix": "{{ outputUriPrefix }}", 
-"snapshotTime": "{{ snapshotTime }}", 
-"namespaceIds": "{{ namespaceIds }}"
+"snapshotTime": "{{ snapshotTime }}"
 }'
 ;
 ```
@@ -655,9 +672,9 @@ EXEC google.firestore.databases.import_documents
 @databasesId='{{ databasesId }}' --required 
 @@json=
 '{
-"namespaceIds": "{{ namespaceIds }}", 
+"collectionIds": "{{ collectionIds }}", 
 "inputUriPrefix": "{{ inputUriPrefix }}", 
-"collectionIds": "{{ collectionIds }}"
+"namespaceIds": "{{ namespaceIds }}"
 }'
 ;
 ```
@@ -671,27 +688,10 @@ EXEC google.firestore.databases.restore
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"databaseId": "{{ databaseId }}", 
 "backup": "{{ backup }}", 
+"databaseId": "{{ databaseId }}", 
 "encryptionConfig": "{{ encryptionConfig }}", 
 "tags": "{{ tags }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="clone">
-
-Creates a new database by cloning an existing one. The new database must be in the same cloud region or multi-region location as the existing database. This behaves similar to FirestoreAdmin.CreateDatabase except instead of creating a new empty database, a new database is created with the database type, index configuration, and documents from an existing database. The long-running operation can be used to track the progress of the clone, with the Operation's metadata field type being the CloneDatabaseMetadata. The response type is the Database if the clone was successful. The new database is not readable or writeable until the LRO has completed.
-
-```sql
-EXEC google.firestore.databases.clone 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"databaseId": "{{ databaseId }}", 
-"encryptionConfig": "{{ encryptionConfig }}", 
-"tags": "{{ tags }}", 
-"pitrSnapshot": "{{ pitrSnapshot }}"
 }'
 ;
 ```

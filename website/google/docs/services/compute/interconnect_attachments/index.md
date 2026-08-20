@@ -610,14 +610,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of interconnect attachments contained within<br />the specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of interconnect attachments.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -817,11 +817,11 @@ warning
 FROM google.compute.interconnect_attachments
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -880,13 +880,13 @@ type,
 vlanTag8021q
 FROM google.compute.interconnect_attachments
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -908,70 +908,70 @@ Creates an InterconnectAttachment in the specified project using the data<br />i
 
 ```sql
 INSERT INTO google.compute.interconnect_attachments (
-data__params,
-data__type,
-data__labelFingerprint,
-data__l2Forwarding,
-data__subnetLength,
-data__interconnect,
-data__labels,
-data__mtu,
+data__adminEnabled,
+data__bandwidth,
+data__candidateCloudRouterIpAddress,
+data__candidateCloudRouterIpv6Address,
+data__candidateCustomerRouterIpAddress,
+data__candidateCustomerRouterIpv6Address,
+data__candidateIpv6Subnets,
 data__candidateSubnets,
 data__cloudRouterIpv6InterfaceId,
-data__vlanTag8021q,
-data__pairingKey,
-data__bandwidth,
-data__adminEnabled,
-data__candidateCloudRouterIpv6Address,
-data__candidateCloudRouterIpAddress,
-data__stackType,
-data__candidateCustomerRouterIpv6Address,
-data__encryption,
-data__name,
-data__router,
-data__candidateCustomerRouterIpAddress,
-data__description,
-data__partnerMetadata,
-data__edgeAvailabilityDomain,
 data__customerRouterIpv6InterfaceId,
-data__candidateIpv6Subnets,
-data__partnerAsn,
+data__description,
+data__edgeAvailabilityDomain,
+data__encryption,
+data__interconnect,
 data__ipsecInternalAddresses,
+data__l2Forwarding,
+data__labelFingerprint,
+data__labels,
+data__mtu,
+data__name,
+data__pairingKey,
+data__params,
+data__partnerAsn,
+data__partnerMetadata,
+data__router,
+data__stackType,
+data__subnetLength,
+data__type,
+data__vlanTag8021q,
 project,
 region,
 requestId,
 validateOnly
 )
 SELECT 
-'{{ params }}',
-'{{ type }}',
-'{{ labelFingerprint }}',
-'{{ l2Forwarding }}',
-{{ subnetLength }},
-'{{ interconnect }}',
-'{{ labels }}',
-{{ mtu }},
+{{ adminEnabled }},
+'{{ bandwidth }}',
+'{{ candidateCloudRouterIpAddress }}',
+'{{ candidateCloudRouterIpv6Address }}',
+'{{ candidateCustomerRouterIpAddress }}',
+'{{ candidateCustomerRouterIpv6Address }}',
+'{{ candidateIpv6Subnets }}',
 '{{ candidateSubnets }}',
 '{{ cloudRouterIpv6InterfaceId }}',
-{{ vlanTag8021q }},
-'{{ pairingKey }}',
-'{{ bandwidth }}',
-{{ adminEnabled }},
-'{{ candidateCloudRouterIpv6Address }}',
-'{{ candidateCloudRouterIpAddress }}',
-'{{ stackType }}',
-'{{ candidateCustomerRouterIpv6Address }}',
-'{{ encryption }}',
-'{{ name }}',
-'{{ router }}',
-'{{ candidateCustomerRouterIpAddress }}',
-'{{ description }}',
-'{{ partnerMetadata }}',
-'{{ edgeAvailabilityDomain }}',
 '{{ customerRouterIpv6InterfaceId }}',
-'{{ candidateIpv6Subnets }}',
-'{{ partnerAsn }}',
+'{{ description }}',
+'{{ edgeAvailabilityDomain }}',
+'{{ encryption }}',
+'{{ interconnect }}',
 '{{ ipsecInternalAddresses }}',
+'{{ l2Forwarding }}',
+'{{ labelFingerprint }}',
+'{{ labels }}',
+{{ mtu }},
+'{{ name }}',
+'{{ pairingKey }}',
+'{{ params }}',
+'{{ partnerAsn }}',
+'{{ partnerMetadata }}',
+'{{ router }}',
+'{{ stackType }}',
+{{ subnetLength }},
+'{{ type }}',
+{{ vlanTag8021q }},
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}',
@@ -1018,110 +1018,11 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the interconnect_attachments resource.
-    - name: params
+    - name: adminEnabled
+      value: {{ adminEnabled }}
       description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: type
-      value: "{{ type }}"
-      description: |
-        The type of interconnect attachment this is, which can take one of the
-        following values:
-        - DEDICATED: an attachment to a Dedicated Interconnect.
-        - PARTNER: an attachment to a Partner Interconnect, created by the
-        customer.
-        - PARTNER_PROVIDER: an attachment to a Partner Interconnect, created by
-        the partner.
-        - L2_DEDICATED: a L2 attachment to a Dedicated Interconnect.
-      valid_values: ['DEDICATED', 'L2_DEDICATED', 'PARTNER', 'PARTNER_PROVIDER']
-    - name: labelFingerprint
-      value: "{{ labelFingerprint }}"
-      description: |
-        A fingerprint for the labels being applied to this InterconnectAttachment,
-        which is essentially a hash of the labels set used for optimistic locking.
-        The fingerprint is initially generated by Compute Engine and changes after
-        every request to modify or update labels. You must always provide an
-        up-to-date fingerprint hash in order to update or change labels,
-        otherwise the request will fail with error412 conditionNotMet.
-        To see the latest fingerprint, make a get() request to
-        retrieve an InterconnectAttachment.
-    - name: l2Forwarding
-      description: |
-        L2 Interconnect Attachment related config. This field is required if the
-        type is L2_DEDICATED.
-        The configuration specifies how VLAN tags (like dot1q, qinq, or dot1ad)
-        within L2 packets are mapped to the destination appliances IP addresses.
-        The packet is then encapsulated with the appliance IP address and sent to
-        the edge appliance.
-      value:
-        network: "{{ network }}"
-        tunnelEndpointIpAddress: "{{ tunnelEndpointIpAddress }}"
-        geneveHeader:
-          vni: {{ vni }}
-        defaultApplianceIpAddress: "{{ defaultApplianceIpAddress }}"
-        applianceMappings: "{{ applianceMappings }}"
-    - name: subnetLength
-      value: {{ subnetLength }}
-      description: |
-        Input only. Length of the IPv4 subnet mask.
-        Allowed values:
-        - 29 (default)
-        - 30
-        The default value is 29, except for Cross-Cloud Interconnect
-        connections that use an InterconnectRemoteLocation with a
-        constraints.subnetLengthRange.min equal to 30. For example,
-        connections that use an Azure remote location fall into this
-        category. In these cases, the default value is 30, and requesting
-        29 returns an error.
-        Where both 29 and 30 are allowed, 29 is preferred, because it gives
-        Google Cloud Support more debugging visibility.
-    - name: interconnect
-      value: "{{ interconnect }}"
-      description: |
-        URL of the underlying Interconnect object that this attachment's traffic
-        will traverse through.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
-        Label values may be empty.
-    - name: mtu
-      value: {{ mtu }}
-      description: |
-        Maximum Transmission Unit (MTU), in bytes, of packets passing through this
-        interconnect attachment.
-        Valid values are 1440, 1460, 1500, and 8896. If not specified,
-        the value will default to 1440.
-    - name: candidateSubnets
-      value:
-        - "{{ candidateSubnets }}"
-      description: |
-        Input only. Up to 16 candidate prefixes that can be used to restrict the allocation
-        of cloudRouterIpAddress and customerRouterIpAddress for this attachment.
-        All prefixes must be within link-local address space (169.254.0.0/16) and
-        must be /29 or shorter (/28, /27, etc). Google will attempt to select an
-        unused /29 from the supplied candidate prefix(es). The request will fail if
-        all possible /29s are in use on Google's edge. If not supplied, Google will
-        randomly select an unused /29 from all of link-local space.
-    - name: cloudRouterIpv6InterfaceId
-      value: "{{ cloudRouterIpv6InterfaceId }}"
-      description: |
-        This field is not available.
-    - name: vlanTag8021q
-      value: {{ vlanTag8021q }}
-      description: |
-        The IEEE 802.1Q VLAN tag for this attachment, in the range 2-4093.
-        Only specified at creation time.
-    - name: pairingKey
-      value: "{{ pairingKey }}"
-      description: |
-        [Output only for type PARTNER. Input only for PARTNER_PROVIDER. Not
-        present for DEDICATED].
-        The opaque identifier of a PARTNER attachment used to initiate
-        provisioning with a selected partner.
-        Of the form "XXXXX/region/domain"
+        Determines whether this Attachment will carry packets.
+        Not present for PARTNER_PROVIDER.
     - name: bandwidth
       value: "{{ bandwidth }}"
       description: |
@@ -1146,22 +1047,6 @@ zone
         - BPS_100G: 100 Gbit/s
         - BPS_400G: 400 Gbit/s
       valid_values: ['BPS_100G', 'BPS_100M', 'BPS_10G', 'BPS_1G', 'BPS_200M', 'BPS_20G', 'BPS_2G', 'BPS_300M', 'BPS_400G', 'BPS_400M', 'BPS_500M', 'BPS_50G', 'BPS_50M', 'BPS_5G']
-    - name: adminEnabled
-      value: {{ adminEnabled }}
-      description: |
-        Determines whether this Attachment will carry packets.
-        Not present for PARTNER_PROVIDER.
-    - name: candidateCloudRouterIpv6Address
-      value: "{{ candidateCloudRouterIpv6Address }}"
-      description: |
-        Single IPv6 address + prefix length to be configured on the cloud router
-        interface for this interconnect attachment.
-        - Both candidate_cloud_router_ipv6_address and
-        candidate_customer_router_ipv6_address fields must be set or both must be
-        unset.
-        - Prefix length of both candidate_cloud_router_ipv6_address and
-        candidate_customer_router_ipv6_address must be the same.
-        - Max prefix length is 126.
     - name: candidateCloudRouterIpAddress
       value: "{{ candidateCloudRouterIpAddress }}"
       description: |
@@ -1173,20 +1058,69 @@ zone
         - Prefix length of both candidate_cloud_router_ip_address and
         candidate_customer_router_ip_address must be the same.
         - Max prefix length is 31.
-    - name: stackType
-      value: "{{ stackType }}"
+    - name: candidateCloudRouterIpv6Address
+      value: "{{ candidateCloudRouterIpv6Address }}"
       description: |
-        The stack type for this interconnect attachment to identify whether the
-        IPv6 feature is enabled or not. If not specified, IPV4_ONLY
-        will be used.
-        This field can be both set at interconnect attachments creation and
-        update interconnect attachment operations.
-      valid_values: ['IPV4_IPV6', 'IPV4_ONLY']
+        Single IPv6 address + prefix length to be configured on the cloud router
+        interface for this interconnect attachment.
+        - Both candidate_cloud_router_ipv6_address and
+        candidate_customer_router_ipv6_address fields must be set or both must be
+        unset.
+        - Prefix length of both candidate_cloud_router_ipv6_address and
+        candidate_customer_router_ipv6_address must be the same.
+        - Max prefix length is 126.
+    - name: candidateCustomerRouterIpAddress
+      value: "{{ candidateCustomerRouterIpAddress }}"
+      description: |
+        Single IPv4 address + prefix length to be configured on the customer router
+        interface for this interconnect attachment.
     - name: candidateCustomerRouterIpv6Address
       value: "{{ candidateCustomerRouterIpv6Address }}"
       description: |
         Single IPv6 address + prefix length to be configured on the customer router
         interface for this interconnect attachment.
+    - name: candidateIpv6Subnets
+      value:
+        - "{{ candidateIpv6Subnets }}"
+      description: |
+        This field is not available.
+    - name: candidateSubnets
+      value:
+        - "{{ candidateSubnets }}"
+      description: |
+        Input only. Up to 16 candidate prefixes that can be used to restrict the allocation
+        of cloudRouterIpAddress and customerRouterIpAddress for this attachment.
+        All prefixes must be within link-local address space (169.254.0.0/16) and
+        must be /29 or shorter (/28, /27, etc). Google will attempt to select an
+        unused /29 from the supplied candidate prefix(es). The request will fail if
+        all possible /29s are in use on Google's edge. If not supplied, Google will
+        randomly select an unused /29 from all of link-local space.
+    - name: cloudRouterIpv6InterfaceId
+      value: "{{ cloudRouterIpv6InterfaceId }}"
+      description: |
+        This field is not available.
+    - name: customerRouterIpv6InterfaceId
+      value: "{{ customerRouterIpv6InterfaceId }}"
+      description: |
+        This field is not available.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource.
+    - name: edgeAvailabilityDomain
+      value: "{{ edgeAvailabilityDomain }}"
+      description: |
+        Input only. Desired availability domain for the attachment. Only available for type
+        PARTNER, at creation time, and can take one of the following values:
+        - AVAILABILITY_DOMAIN_ANY
+        - AVAILABILITY_DOMAIN_1
+        - AVAILABILITY_DOMAIN_2
+        For improved reliability, customers should configure a pair of attachments,
+        one per availability domain. The selected availability domain will be
+        provided to the Partner via the pairing key, so that the provisioned
+        circuit will lie in the specified domain. If not specified, the value will
+        default to AVAILABILITY_DOMAIN_ANY.
+      valid_values: ['AVAILABILITY_DOMAIN_1', 'AVAILABILITY_DOMAIN_2', 'AVAILABILITY_DOMAIN_ANY']
     - name: encryption
       value: "{{ encryption }}"
       description: |
@@ -1204,72 +1138,11 @@ zone
         Interconnect*, the VLAN attachment must be created with this
         option.
       valid_values: ['IPSEC', 'NONE']
-    - name: name
-      value: "{{ name }}"
+    - name: interconnect
+      value: "{{ interconnect }}"
       description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
-    - name: router
-      value: "{{ router }}"
-      description: |
-        URL of the Cloud Router to be used for dynamic routing. This router must be
-        in the same region as this InterconnectAttachment. The
-        InterconnectAttachment will automatically connect the Interconnect to the
-        network & region within which the Cloud Router is configured.
-    - name: candidateCustomerRouterIpAddress
-      value: "{{ candidateCustomerRouterIpAddress }}"
-      description: |
-        Single IPv4 address + prefix length to be configured on the customer router
-        interface for this interconnect attachment.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource.
-    - name: partnerMetadata
-      description: |
-        Informational metadata about Partner attachments from Partners to display
-        to customers.
-        Output only for PARTNER type, mutable for PARTNER_PROVIDER, not
-        available for DEDICATED.
-      value:
-        interconnectName: "{{ interconnectName }}"
-        portalUrl: "{{ portalUrl }}"
-        partnerName: "{{ partnerName }}"
-    - name: edgeAvailabilityDomain
-      value: "{{ edgeAvailabilityDomain }}"
-      description: |
-        Input only. Desired availability domain for the attachment. Only available for type
-        PARTNER, at creation time, and can take one of the following values:
-        - AVAILABILITY_DOMAIN_ANY
-        - AVAILABILITY_DOMAIN_1
-        - AVAILABILITY_DOMAIN_2
-        For improved reliability, customers should configure a pair of attachments,
-        one per availability domain. The selected availability domain will be
-        provided to the Partner via the pairing key, so that the provisioned
-        circuit will lie in the specified domain. If not specified, the value will
-        default to AVAILABILITY_DOMAIN_ANY.
-      valid_values: ['AVAILABILITY_DOMAIN_1', 'AVAILABILITY_DOMAIN_2', 'AVAILABILITY_DOMAIN_ANY']
-    - name: customerRouterIpv6InterfaceId
-      value: "{{ customerRouterIpv6InterfaceId }}"
-      description: |
-        This field is not available.
-    - name: candidateIpv6Subnets
-      value:
-        - "{{ candidateIpv6Subnets }}"
-      description: |
-        This field is not available.
-    - name: partnerAsn
-      value: "{{ partnerAsn }}"
-      description: |
-        Optional BGP ASN for the router supplied by a Layer 3 Partner if they
-        configured BGP on behalf of the customer.
-        Output only for PARTNER type, input only for PARTNER_PROVIDER, not
-        available for DEDICATED.
+        URL of the underlying Interconnect object that this attachment's traffic
+        will traverse through.
     - name: ipsecInternalAddresses
       value:
         - "{{ ipsecInternalAddresses }}"
@@ -1288,6 +1161,133 @@ zone
         later on when creating an HA VPN gateway on this VLAN attachment, the HA
         VPN gateway's IP address is allocated from the regional external IP address
         pool.
+    - name: l2Forwarding
+      description: |
+        L2 Interconnect Attachment related config. This field is required if the
+        type is L2_DEDICATED.
+        The configuration specifies how VLAN tags (like dot1q, qinq, or dot1ad)
+        within L2 packets are mapped to the destination appliances IP addresses.
+        The packet is then encapsulated with the appliance IP address and sent to
+        the edge appliance.
+      value:
+        applianceMappings: "{{ applianceMappings }}"
+        defaultApplianceIpAddress: "{{ defaultApplianceIpAddress }}"
+        geneveHeader:
+          vni: {{ vni }}
+        network: "{{ network }}"
+        tunnelEndpointIpAddress: "{{ tunnelEndpointIpAddress }}"
+    - name: labelFingerprint
+      value: "{{ labelFingerprint }}"
+      description: |
+        A fingerprint for the labels being applied to this InterconnectAttachment,
+        which is essentially a hash of the labels set used for optimistic locking.
+        The fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update labels. You must always provide an
+        up-to-date fingerprint hash in order to update or change labels,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve an InterconnectAttachment.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
+        Label values may be empty.
+    - name: mtu
+      value: {{ mtu }}
+      description: |
+        Maximum Transmission Unit (MTU), in bytes, of packets passing through this
+        interconnect attachment.
+        Valid values are 1440, 1460, 1500, and 8896. If not specified,
+        the value will default to 1440.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: pairingKey
+      value: "{{ pairingKey }}"
+      description: |
+        [Output only for type PARTNER. Input only for PARTNER_PROVIDER. Not
+        present for DEDICATED].
+        The opaque identifier of a PARTNER attachment used to initiate
+        provisioning with a selected partner.
+        Of the form "XXXXX/region/domain"
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: partnerAsn
+      value: "{{ partnerAsn }}"
+      description: |
+        Optional BGP ASN for the router supplied by a Layer 3 Partner if they
+        configured BGP on behalf of the customer.
+        Output only for PARTNER type, input only for PARTNER_PROVIDER, not
+        available for DEDICATED.
+    - name: partnerMetadata
+      description: |
+        Informational metadata about Partner attachments from Partners to display
+        to customers.
+        Output only for PARTNER type, mutable for PARTNER_PROVIDER, not
+        available for DEDICATED.
+      value:
+        interconnectName: "{{ interconnectName }}"
+        partnerName: "{{ partnerName }}"
+        portalUrl: "{{ portalUrl }}"
+    - name: router
+      value: "{{ router }}"
+      description: |
+        URL of the Cloud Router to be used for dynamic routing. This router must be
+        in the same region as this InterconnectAttachment. The
+        InterconnectAttachment will automatically connect the Interconnect to the
+        network & region within which the Cloud Router is configured.
+    - name: stackType
+      value: "{{ stackType }}"
+      description: |
+        The stack type for this interconnect attachment to identify whether the
+        IPv6 feature is enabled or not. If not specified, IPV4_ONLY
+        will be used.
+        This field can be both set at interconnect attachments creation and
+        update interconnect attachment operations.
+      valid_values: ['IPV4_IPV6', 'IPV4_ONLY']
+    - name: subnetLength
+      value: {{ subnetLength }}
+      description: |
+        Input only. Length of the IPv4 subnet mask.
+        Allowed values:
+        - 29 (default)
+        - 30
+        The default value is 29, except for Cross-Cloud Interconnect
+        connections that use an InterconnectRemoteLocation with a
+        constraints.subnetLengthRange.min equal to 30. For example,
+        connections that use an Azure remote location fall into this
+        category. In these cases, the default value is 30, and requesting
+        29 returns an error.
+        Where both 29 and 30 are allowed, 29 is preferred, because it gives
+        Google Cloud Support more debugging visibility.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        The type of interconnect attachment this is, which can take one of the
+        following values:
+        - DEDICATED: an attachment to a Dedicated Interconnect.
+        - PARTNER: an attachment to a Partner Interconnect, created by the
+        customer.
+        - PARTNER_PROVIDER: an attachment to a Partner Interconnect, created by
+        the partner.
+        - L2_DEDICATED: a L2 attachment to a Dedicated Interconnect.
+      valid_values: ['DEDICATED', 'L2_DEDICATED', 'PARTNER', 'PARTNER_PROVIDER']
+    - name: vlanTag8021q
+      value: {{ vlanTag8021q }}
+      description: |
+        The IEEE 802.1Q VLAN tag for this attachment, in the range 2-4093.
+        Only specified at creation time.
     - name: requestId
       value: "{{ requestId }}"
     - name: validateOnly
@@ -1313,35 +1313,35 @@ Updates the specified interconnect attachment with the data included in the<br /
 ```sql
 UPDATE google.compute.interconnect_attachments
 SET 
-data__params = '{{ params }}',
-data__type = '{{ type }}',
-data__labelFingerprint = '{{ labelFingerprint }}',
-data__l2Forwarding = '{{ l2Forwarding }}',
-data__subnetLength = {{ subnetLength }},
-data__interconnect = '{{ interconnect }}',
-data__labels = '{{ labels }}',
-data__mtu = {{ mtu }},
+data__adminEnabled = {{ adminEnabled }},
+data__bandwidth = '{{ bandwidth }}',
+data__candidateCloudRouterIpAddress = '{{ candidateCloudRouterIpAddress }}',
+data__candidateCloudRouterIpv6Address = '{{ candidateCloudRouterIpv6Address }}',
+data__candidateCustomerRouterIpAddress = '{{ candidateCustomerRouterIpAddress }}',
+data__candidateCustomerRouterIpv6Address = '{{ candidateCustomerRouterIpv6Address }}',
+data__candidateIpv6Subnets = '{{ candidateIpv6Subnets }}',
 data__candidateSubnets = '{{ candidateSubnets }}',
 data__cloudRouterIpv6InterfaceId = '{{ cloudRouterIpv6InterfaceId }}',
-data__vlanTag8021q = {{ vlanTag8021q }},
-data__pairingKey = '{{ pairingKey }}',
-data__bandwidth = '{{ bandwidth }}',
-data__adminEnabled = {{ adminEnabled }},
-data__candidateCloudRouterIpv6Address = '{{ candidateCloudRouterIpv6Address }}',
-data__candidateCloudRouterIpAddress = '{{ candidateCloudRouterIpAddress }}',
-data__stackType = '{{ stackType }}',
-data__candidateCustomerRouterIpv6Address = '{{ candidateCustomerRouterIpv6Address }}',
-data__encryption = '{{ encryption }}',
-data__name = '{{ name }}',
-data__router = '{{ router }}',
-data__candidateCustomerRouterIpAddress = '{{ candidateCustomerRouterIpAddress }}',
-data__description = '{{ description }}',
-data__partnerMetadata = '{{ partnerMetadata }}',
-data__edgeAvailabilityDomain = '{{ edgeAvailabilityDomain }}',
 data__customerRouterIpv6InterfaceId = '{{ customerRouterIpv6InterfaceId }}',
-data__candidateIpv6Subnets = '{{ candidateIpv6Subnets }}',
+data__description = '{{ description }}',
+data__edgeAvailabilityDomain = '{{ edgeAvailabilityDomain }}',
+data__encryption = '{{ encryption }}',
+data__interconnect = '{{ interconnect }}',
+data__ipsecInternalAddresses = '{{ ipsecInternalAddresses }}',
+data__l2Forwarding = '{{ l2Forwarding }}',
+data__labelFingerprint = '{{ labelFingerprint }}',
+data__labels = '{{ labels }}',
+data__mtu = {{ mtu }},
+data__name = '{{ name }}',
+data__pairingKey = '{{ pairingKey }}',
+data__params = '{{ params }}',
 data__partnerAsn = '{{ partnerAsn }}',
-data__ipsecInternalAddresses = '{{ ipsecInternalAddresses }}'
+data__partnerMetadata = '{{ partnerMetadata }}',
+data__router = '{{ router }}',
+data__stackType = '{{ stackType }}',
+data__subnetLength = {{ subnetLength }},
+data__type = '{{ type }}',
+data__vlanTag8021q = {{ vlanTag8021q }}
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -1424,8 +1424,8 @@ EXEC google.compute.interconnect_attachments.set_labels
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

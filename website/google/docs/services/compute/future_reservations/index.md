@@ -74,7 +74,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="autoCreatedReservationsDuration" /></td>
     <td><code>object</code></td>
-    <td>A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years. (id: Duration)</td>
+    <td>Specifies the duration of auto-created reservations. It represents relative time to future reservation start_time when auto-created reservations will be automatically deleted by Compute Engine. Duration time unit is represented as a count of seconds and fractions of seconds at nanosecond resolution. (id: Duration)</td>
 </tr>
 <tr>
     <td><CopyableCode code="autoDeleteAutoCreatedReservations" /></td>
@@ -142,6 +142,16 @@ The following fields are returned by `SELECT` queries:
     <td>Name of reservations where the capacity is provisioned at the time of delivery of  future reservations. If the reservation with the given name does not exist already, it is created automatically at the time of Approval with INACTIVE state till specified start-time. Either provide the reservation_name or a name_prefix.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="resourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Contains standard resource metadata for an FutureReservation resource. It is populated for each instance of the FutureReservation resource, and includes the api_version the instance was retrieved through, and its canonical resource_type name. (id: ResourceMetadata)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceName" /></td>
+    <td><code>string</code></td>
+    <td>Name of the resource intended to be delivered. Name should conform to RFC1035. This will be the name of storage pool or Exapool for persistent disk FRs.</td>
+</tr>
+<tr>
     <td><CopyableCode code="schedulingType" /></td>
     <td><code>string</code></td>
     <td>Maintenance information for this reservation (GROUPED, GROUP_MAINTENANCE_TYPE_UNSPECIFIED, INDEPENDENT)</td>
@@ -175,6 +185,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="status" /></td>
     <td><code>object</code></td>
     <td>Output only. [Output only] Status of the Future Reservation (id: FutureReservationStatus)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="storagePoolProperties" /></td>
+    <td><code>object</code></td>
+    <td>Storage pool details for the future reservation. (id: FutureReservationStoragePoolProperties)</td>
 </tr>
 <tr>
     <td><CopyableCode code="timeWindow" /></td>
@@ -277,7 +292,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="autoCreatedReservationsDuration" /></td>
     <td><code>object</code></td>
-    <td>A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years. (id: Duration)</td>
+    <td>Specifies the duration of auto-created reservations. It represents relative time to future reservation start_time when auto-created reservations will be automatically deleted by Compute Engine. Duration time unit is represented as a count of seconds and fractions of seconds at nanosecond resolution. (id: Duration)</td>
 </tr>
 <tr>
     <td><CopyableCode code="autoDeleteAutoCreatedReservations" /></td>
@@ -345,6 +360,16 @@ The following fields are returned by `SELECT` queries:
     <td>Name of reservations where the capacity is provisioned at the time of delivery of  future reservations. If the reservation with the given name does not exist already, it is created automatically at the time of Approval with INACTIVE state till specified start-time. Either provide the reservation_name or a name_prefix.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="resourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Contains standard resource metadata for an FutureReservation resource. It is populated for each instance of the FutureReservation resource, and includes the api_version the instance was retrieved through, and its canonical resource_type name. (id: ResourceMetadata)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceName" /></td>
+    <td><code>string</code></td>
+    <td>Name of the resource intended to be delivered. Name should conform to RFC1035. This will be the name of storage pool or Exapool for persistent disk FRs.</td>
+</tr>
+<tr>
     <td><CopyableCode code="schedulingType" /></td>
     <td><code>string</code></td>
     <td>Maintenance information for this reservation (GROUPED, GROUP_MAINTENANCE_TYPE_UNSPECIFIED, INDEPENDENT)</td>
@@ -378,6 +403,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="status" /></td>
     <td><code>object</code></td>
     <td>Output only. [Output only] Status of the Future Reservation (id: FutureReservationStatus)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="storagePoolProperties" /></td>
+    <td><code>object</code></td>
+    <td>Storage pool details for the future reservation. (id: FutureReservationStoragePoolProperties)</td>
 </tr>
 <tr>
     <td><CopyableCode code="timeWindow" /></td>
@@ -420,14 +450,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>A list of all the future reservations that have been configured for the<br />specified project in specified zone.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of future reservations.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -441,7 +471,7 @@ The following methods are available for this resource:
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-futureReservation"><code>futureReservation</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the specified future reservation.</td>
 </tr>
 <tr>
@@ -571,6 +601,8 @@ params,
 planningStatus,
 reservationMode,
 reservationName,
+resourceMetadata,
+resourceName,
 schedulingType,
 selfLink,
 selfLinkWithId,
@@ -578,6 +610,7 @@ shareSettings,
 specificReservationRequired,
 specificSkuProperties,
 status,
+storagePoolProperties,
 timeWindow,
 zone
 FROM google.compute.future_reservations
@@ -604,9 +637,9 @@ warning
 FROM google.compute.future_reservations
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -636,6 +669,8 @@ params,
 planningStatus,
 reservationMode,
 reservationName,
+resourceMetadata,
+resourceName,
 schedulingType,
 selfLink,
 selfLinkWithId,
@@ -643,17 +678,18 @@ shareSettings,
 specificReservationRequired,
 specificSkuProperties,
 status,
+storagePoolProperties,
 timeWindow,
 zone
 FROM google.compute.future_reservations
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -675,51 +711,55 @@ Creates a new Future Reservation.
 
 ```sql
 INSERT INTO google.compute.future_reservations (
-data__deploymentType,
-data__commitmentInfo,
-data__schedulingType,
-data__namePrefix,
-data__description,
-data__specificSkuProperties,
-data__autoCreatedReservationsDuration,
-data__name,
-data__autoDeleteAutoCreatedReservations,
-data__confidentialComputeType,
-data__reservationName,
-data__specificReservationRequired,
-data__planningStatus,
-data__enableEmergentMaintenance,
-data__timeWindow,
 data__aggregateReservation,
-data__reservationMode,
-data__shareSettings,
-data__params,
 data__autoCreatedReservationsDeleteTime,
+data__autoCreatedReservationsDuration,
+data__autoDeleteAutoCreatedReservations,
+data__commitmentInfo,
+data__confidentialComputeType,
+data__deploymentType,
+data__description,
+data__enableEmergentMaintenance,
+data__name,
+data__namePrefix,
+data__params,
+data__planningStatus,
+data__reservationMode,
+data__reservationName,
+data__resourceName,
+data__schedulingType,
+data__shareSettings,
+data__specificReservationRequired,
+data__specificSkuProperties,
+data__storagePoolProperties,
+data__timeWindow,
 project,
 zone,
 requestId
 )
 SELECT 
-'{{ deploymentType }}',
-'{{ commitmentInfo }}',
-'{{ schedulingType }}',
-'{{ namePrefix }}',
-'{{ description }}',
-'{{ specificSkuProperties }}',
-'{{ autoCreatedReservationsDuration }}',
-'{{ name }}',
-{{ autoDeleteAutoCreatedReservations }},
-'{{ confidentialComputeType }}',
-'{{ reservationName }}',
-{{ specificReservationRequired }},
-'{{ planningStatus }}',
-{{ enableEmergentMaintenance }},
-'{{ timeWindow }}',
 '{{ aggregateReservation }}',
-'{{ reservationMode }}',
-'{{ shareSettings }}',
-'{{ params }}',
 '{{ autoCreatedReservationsDeleteTime }}',
+'{{ autoCreatedReservationsDuration }}',
+{{ autoDeleteAutoCreatedReservations }},
+'{{ commitmentInfo }}',
+'{{ confidentialComputeType }}',
+'{{ deploymentType }}',
+'{{ description }}',
+{{ enableEmergentMaintenance }},
+'{{ name }}',
+'{{ namePrefix }}',
+'{{ params }}',
+'{{ planningStatus }}',
+'{{ reservationMode }}',
+'{{ reservationName }}',
+'{{ resourceName }}',
+'{{ schedulingType }}',
+'{{ shareSettings }}',
+{{ specificReservationRequired }},
+'{{ specificSkuProperties }}',
+'{{ storagePoolProperties }}',
+'{{ timeWindow }}',
 '{{ project }}',
 '{{ zone }}',
 '{{ requestId }}'
@@ -765,73 +805,36 @@ zone
     - name: zone
       value: "{{ zone }}"
       description: Required parameter for the future_reservations resource.
-    - name: deploymentType
-      value: "{{ deploymentType }}"
+    - name: aggregateReservation
       description: |
-        Type of the deployment requested as part of future reservation.
-      valid_values: ['DENSE', 'DEPLOYMENT_TYPE_UNSPECIFIED']
-    - name: commitmentInfo
-      description: |
-        If not present, then FR will not deliver a new commitment or update an
-        existing commitment.
+        Aggregate reservation details for the future reservation.
       value:
-        commitmentPlan: "{{ commitmentPlan }}"
-        commitmentName: "{{ commitmentName }}"
-        previousCommitmentTerms: "{{ previousCommitmentTerms }}"
-    - name: schedulingType
-      value: "{{ schedulingType }}"
-      description: |
-        Maintenance information for this reservation
-      valid_values: ['GROUPED', 'GROUP_MAINTENANCE_TYPE_UNSPECIFIED', 'INDEPENDENT']
-    - name: namePrefix
-      value: "{{ namePrefix }}"
-      description: |
-        Name prefix for the reservations to be created at the time of
-        delivery. The name prefix must comply with RFC1035.
-        Maximum allowed length for name prefix is 20. Automatically created
-        reservations name format will be -date-####.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the future reservation.
-    - name: specificSkuProperties
-      description: |
-        Future Reservation configuration to indicate instance properties and
-        total count.
-      value:
-        totalCount: "{{ totalCount }}"
-        instanceProperties:
-          minCpuPlatform: "{{ minCpuPlatform }}"
-          guestAccelerators:
-            - acceleratorType: "{{ acceleratorType }}"
+        inUseResources:
+          - accelerator:
               acceleratorCount: {{ acceleratorCount }}
-          localSsds:
-            - diskSizeGb: "{{ diskSizeGb }}"
-              interface: "{{ interface }}"
-          machineType: "{{ machineType }}"
-          locationHint: "{{ locationHint }}"
-        sourceInstanceTemplate: "{{ sourceInstanceTemplate }}"
+              acceleratorType: "{{ acceleratorType }}"
+        reservedResources:
+          - accelerator:
+              acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
+        vmFamily: "{{ vmFamily }}"
+        workloadType: "{{ workloadType }}"
+    - name: autoCreatedReservationsDeleteTime
+      value: "{{ autoCreatedReservationsDeleteTime }}"
+      description: |
+        Future timestamp when the FR auto-created reservations will be deleted by
+        Compute Engine. Format of this field must be a valid
+        href="https://www.ietf.org/rfc/rfc3339.txt">RFC3339 value.
     - name: autoCreatedReservationsDuration
       description: |
-        A Duration represents a fixed-length span of time represented
-        as a count of seconds and fractions of seconds at nanosecond
-        resolution. It is independent of any calendar and concepts like "day"
-        or "month". Range is approximately 10,000 years.
+        Specifies the duration of auto-created reservations.
+        It represents relative time to future reservation start_time when
+        auto-created reservations will be automatically deleted by Compute
+        Engine. Duration time unit is represented as a count of seconds
+        and fractions of seconds at nanosecond resolution.
       value:
         nanos: {{ nanos }}
         seconds: "{{ seconds }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of the resource, provided by the client when initially creating
-        the resource. The resource name must be 1-63 characters long, and comply
-        withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must be
-        a dash, lowercase letter, or digit, except the last character, which cannot
-        be a dash.
     - name: autoDeleteAutoCreatedReservations
       value: {{ autoDeleteAutoCreatedReservations }}
       description: |
@@ -843,9 +846,66 @@ zone
         values is specified.
         For keeping auto-created reservation indefinitely, this value should be set
         to false.
+    - name: commitmentInfo
+      description: |
+        If not present, then FR will not deliver a new commitment or update an
+        existing commitment.
+      value:
+        commitmentName: "{{ commitmentName }}"
+        commitmentPlan: "{{ commitmentPlan }}"
+        previousCommitmentTerms: "{{ previousCommitmentTerms }}"
     - name: confidentialComputeType
       value: "{{ confidentialComputeType }}"
       valid_values: ['CONFIDENTIAL_COMPUTE_TYPE_TDX', 'CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED']
+    - name: deploymentType
+      value: "{{ deploymentType }}"
+      description: |
+        Type of the deployment requested as part of future reservation.
+      valid_values: ['DENSE', 'DEPLOYMENT_TYPE_UNSPECIFIED']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the future reservation.
+    - name: enableEmergentMaintenance
+      value: {{ enableEmergentMaintenance }}
+      description: |
+        Indicates if this group of VMs have emergent maintenance enabled.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the resource, provided by the client when initially creating
+        the resource. The resource name must be 1-63 characters long, and comply
+        withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
+    - name: namePrefix
+      value: "{{ namePrefix }}"
+      description: |
+        Name prefix for the reservations to be created at the time of
+        delivery. The name prefix must comply with RFC1035.
+        Maximum allowed length for name prefix is 20. Automatically created
+        reservations name format will be -date-####.
+    - name: params
+      description: |
+        Input only. Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: planningStatus
+      value: "{{ planningStatus }}"
+      description: |
+        Planning state before being submitted for evaluation
+      valid_values: ['DRAFT', 'PLANNING_STATUS_UNSPECIFIED', 'SUBMITTED']
+    - name: reservationMode
+      value: "{{ reservationMode }}"
+      description: |
+        The reservation mode which determines reservation-termination behavior and
+        expected pricing.
+      valid_values: ['CALENDAR', 'DEFAULT', 'RESERVATION_MODE_UNSPECIFIED']
     - name: reservationName
       value: "{{ reservationName }}"
       description: |
@@ -854,68 +914,68 @@ zone
         does not exist already, it is created automatically at the time of Approval
         with INACTIVE state till specified start-time. Either provide the
         reservation_name or a name_prefix.
+    - name: resourceName
+      value: "{{ resourceName }}"
+      description: |
+        Name of the resource intended to be delivered. Name should conform to
+        RFC1035. This will be the name of storage pool or Exapool for persistent
+        disk FRs.
+    - name: schedulingType
+      value: "{{ schedulingType }}"
+      description: |
+        Maintenance information for this reservation
+      valid_values: ['GROUPED', 'GROUP_MAINTENANCE_TYPE_UNSPECIFIED', 'INDEPENDENT']
+    - name: shareSettings
+      description: |
+        List of Projects/Folders to share with.
+      value:
+        projectMap: "{{ projectMap }}"
+        shareType: "{{ shareType }}"
     - name: specificReservationRequired
       value: {{ specificReservationRequired }}
       description: |
         Indicates whether the auto-created reservation can be consumed by VMs with
         affinity for "any" reservation. If the field is set, then only VMs that
         target the reservation by name can consume from the delivered reservation.
-    - name: planningStatus
-      value: "{{ planningStatus }}"
+    - name: specificSkuProperties
       description: |
-        Planning state before being submitted for evaluation
-      valid_values: ['DRAFT', 'PLANNING_STATUS_UNSPECIFIED', 'SUBMITTED']
-    - name: enableEmergentMaintenance
-      value: {{ enableEmergentMaintenance }}
+        Future Reservation configuration to indicate instance properties and
+        total count.
+      value:
+        instanceProperties:
+          guestAccelerators:
+            - acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
+          localSsds:
+            - diskSizeGb: "{{ diskSizeGb }}"
+              interface: "{{ interface }}"
+          locationHint: "{{ locationHint }}"
+          machineType: "{{ machineType }}"
+          minCpuPlatform: "{{ minCpuPlatform }}"
+        sourceInstanceTemplate: "{{ sourceInstanceTemplate }}"
+        totalCount: "{{ totalCount }}"
+    - name: storagePoolProperties
       description: |
-        Indicates if this group of VMs have emergent maintenance enabled.
+        Storage pool details for the future reservation.
+      value:
+        requestedExapoolProvisionedCapacityGb:
+          capacityOptimized: "{{ capacityOptimized }}"
+          readOptimized: "{{ readOptimized }}"
+          writeOptimized: "{{ writeOptimized }}"
+        requestedStoragePoolProvisionedCapacity:
+          poolProvisionedCapacityGb: "{{ poolProvisionedCapacityGb }}"
+          poolProvisionedIops: "{{ poolProvisionedIops }}"
+          poolProvisionedThroughput: "{{ poolProvisionedThroughput }}"
+        storagePoolType: "{{ storagePoolType }}"
     - name: timeWindow
       description: |
         Time window for this Future Reservation.
       value:
-        endTime: "{{ endTime }}"
-        startTime: "{{ startTime }}"
         duration:
           nanos: {{ nanos }}
           seconds: "{{ seconds }}"
-    - name: aggregateReservation
-      description: |
-        Aggregate reservation details for the future reservation.
-      value:
-        inUseResources:
-          - accelerator:
-              acceleratorCount: {{ acceleratorCount }}
-              acceleratorType: "{{ acceleratorType }}"
-        workloadType: "{{ workloadType }}"
-        vmFamily: "{{ vmFamily }}"
-        reservedResources:
-          - accelerator:
-              acceleratorCount: {{ acceleratorCount }}
-              acceleratorType: "{{ acceleratorType }}"
-    - name: reservationMode
-      value: "{{ reservationMode }}"
-      description: |
-        The reservation mode which determines reservation-termination behavior and
-        expected pricing.
-      valid_values: ['CALENDAR', 'DEFAULT', 'RESERVATION_MODE_UNSPECIFIED']
-    - name: shareSettings
-      description: |
-        List of Projects/Folders to share with.
-      value:
-        shareType: "{{ shareType }}"
-        projectMap: "{{ projectMap }}"
-    - name: params
-      description: |
-        Input only. Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: autoCreatedReservationsDeleteTime
-      value: "{{ autoCreatedReservationsDeleteTime }}"
-      description: |
-        Future timestamp when the FR auto-created reservations will be deleted by
-        Compute Engine. Format of this field must be a valid
-        href="https://www.ietf.org/rfc/rfc3339.txt">RFC3339 value.
+        endTime: "{{ endTime }}"
+        startTime: "{{ startTime }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -939,32 +999,34 @@ Updates the specified future reservation.
 ```sql
 UPDATE google.compute.future_reservations
 SET 
-data__deploymentType = '{{ deploymentType }}',
-data__commitmentInfo = '{{ commitmentInfo }}',
-data__schedulingType = '{{ schedulingType }}',
-data__namePrefix = '{{ namePrefix }}',
-data__description = '{{ description }}',
-data__specificSkuProperties = '{{ specificSkuProperties }}',
-data__autoCreatedReservationsDuration = '{{ autoCreatedReservationsDuration }}',
-data__name = '{{ name }}',
-data__autoDeleteAutoCreatedReservations = {{ autoDeleteAutoCreatedReservations }},
-data__confidentialComputeType = '{{ confidentialComputeType }}',
-data__reservationName = '{{ reservationName }}',
-data__specificReservationRequired = {{ specificReservationRequired }},
-data__planningStatus = '{{ planningStatus }}',
-data__enableEmergentMaintenance = {{ enableEmergentMaintenance }},
-data__timeWindow = '{{ timeWindow }}',
 data__aggregateReservation = '{{ aggregateReservation }}',
-data__reservationMode = '{{ reservationMode }}',
-data__shareSettings = '{{ shareSettings }}',
+data__autoCreatedReservationsDeleteTime = '{{ autoCreatedReservationsDeleteTime }}',
+data__autoCreatedReservationsDuration = '{{ autoCreatedReservationsDuration }}',
+data__autoDeleteAutoCreatedReservations = {{ autoDeleteAutoCreatedReservations }},
+data__commitmentInfo = '{{ commitmentInfo }}',
+data__confidentialComputeType = '{{ confidentialComputeType }}',
+data__deploymentType = '{{ deploymentType }}',
+data__description = '{{ description }}',
+data__enableEmergentMaintenance = {{ enableEmergentMaintenance }},
+data__name = '{{ name }}',
+data__namePrefix = '{{ namePrefix }}',
 data__params = '{{ params }}',
-data__autoCreatedReservationsDeleteTime = '{{ autoCreatedReservationsDeleteTime }}'
+data__planningStatus = '{{ planningStatus }}',
+data__reservationMode = '{{ reservationMode }}',
+data__reservationName = '{{ reservationName }}',
+data__resourceName = '{{ resourceName }}',
+data__schedulingType = '{{ schedulingType }}',
+data__shareSettings = '{{ shareSettings }}',
+data__specificReservationRequired = {{ specificReservationRequired }},
+data__specificSkuProperties = '{{ specificSkuProperties }}',
+data__storagePoolProperties = '{{ storagePoolProperties }}',
+data__timeWindow = '{{ timeWindow }}'
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required
 AND futureReservation = '{{ futureReservation }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 id,
 name,

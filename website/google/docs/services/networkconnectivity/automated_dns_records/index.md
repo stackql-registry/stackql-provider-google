@@ -275,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists AutomatedDnsRecords in a given project and location.</td>
 </tr>
 <tr>
@@ -438,10 +438,10 @@ updateTime
 FROM google.networkconnectivity.automated_dns_records
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -463,17 +463,17 @@ Creates a new AutomatedDnsRecord in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.automated_dns_records (
+data__consumerNetwork,
 data__creationMode,
-data__etag,
-data__dnsSuffix,
-data__name,
-data__recordType,
-data__originalConfig,
 data__description,
+data__dnsSuffix,
+data__etag,
 data__hostname,
 data__labels,
+data__name,
+data__originalConfig,
+data__recordType,
 data__serviceClass,
-data__consumerNetwork,
 projectsId,
 locationsId,
 automatedDnsRecordId,
@@ -481,17 +481,17 @@ insertMode,
 requestId
 )
 SELECT 
+'{{ consumerNetwork }}',
 '{{ creationMode }}',
-'{{ etag }}',
-'{{ dnsSuffix }}',
-'{{ name }}',
-'{{ recordType }}',
-'{{ originalConfig }}',
 '{{ description }}',
+'{{ dnsSuffix }}',
+'{{ etag }}',
 '{{ hostname }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ originalConfig }}',
+'{{ recordType }}',
 '{{ serviceClass }}',
-'{{ consumerNetwork }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ automatedDnsRecordId }}',
@@ -517,39 +517,27 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the automated_dns_records resource.
+    - name: consumerNetwork
+      value: "{{ consumerNetwork }}"
+      description: |
+        Required. Immutable. The full resource path of the consumer network this AutomatedDnsRecord is visible to. Example: "projects/{projectNumOrId}/global/networks/{networkName}".
     - name: creationMode
       value: "{{ creationMode }}"
       description: |
         Required. Immutable. The creation mode of the AutomatedDnsRecord. This field is immutable.
       valid_values: ['CREATION_MODE_UNSPECIFIED', 'CONSUMER_API', 'SERVICE_CONNECTION_MAP']
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: dnsSuffix
-      value: "{{ dnsSuffix }}"
-      description: |
-        Required. Immutable. The dns suffix for this record to use in longest-suffix matching. Requires a trailing dot. Example: "example.com."
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Identifier. The name of an AutomatedDnsRecord. Format: projects/{project}/locations/{location}/automatedDnsRecords/{automated_dns_record} See: https://google.aip.dev/122#fields-representing-resource-names
-    - name: recordType
-      value: "{{ recordType }}"
-      description: |
-        Required. Immutable. The identifier of a supported record type.
-      valid_values: ['RECORD_TYPE_UNSPECIFIED', 'A', 'AAAA', 'TXT', 'CNAME']
-    - name: originalConfig
-      description: |
-        Required. Immutable. The configuration settings used to create this DNS record. These settings define the desired state of the record as specified by the producer.
-      value:
-        ttl: "{{ ttl }}"
-        rrdatas:
-          - "{{ rrdatas }}"
     - name: description
       value: "{{ description }}"
       description: |
         A human-readable description of the record.
+    - name: dnsSuffix
+      value: "{{ dnsSuffix }}"
+      description: |
+        Required. Immutable. The dns suffix for this record to use in longest-suffix matching. Requires a trailing dot. Example: "example.com."
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: hostname
       value: "{{ hostname }}"
       description: |
@@ -558,14 +546,26 @@ response
       value: "{{ labels }}"
       description: |
         Optional. User-defined labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The name of an AutomatedDnsRecord. Format: projects/{project}/locations/{location}/automatedDnsRecords/{automated_dns_record} See: https://google.aip.dev/122#fields-representing-resource-names
+    - name: originalConfig
+      description: |
+        Required. Immutable. The configuration settings used to create this DNS record. These settings define the desired state of the record as specified by the producer.
+      value:
+        rrdatas:
+          - "{{ rrdatas }}"
+        ttl: "{{ ttl }}"
+    - name: recordType
+      value: "{{ recordType }}"
+      description: |
+        Required. Immutable. The identifier of a supported record type.
+      valid_values: ['RECORD_TYPE_UNSPECIFIED', 'A', 'AAAA', 'TXT', 'CNAME']
     - name: serviceClass
       value: "{{ serviceClass }}"
       description: |
         Required. Immutable. The service class identifier which authorizes this AutomatedDnsRecord. Any API calls targeting this AutomatedDnsRecord must have \`networkconnectivity.serviceClasses.use\` IAM permission for the provided service class.
-    - name: consumerNetwork
-      value: "{{ consumerNetwork }}"
-      description: |
-        Required. Immutable. The full resource path of the consumer network this AutomatedDnsRecord is visible to. Example: "projects/{projectNumOrId}/global/networks/{networkName}".
     - name: automatedDnsRecordId
       value: "{{ automatedDnsRecordId }}"
     - name: insertMode

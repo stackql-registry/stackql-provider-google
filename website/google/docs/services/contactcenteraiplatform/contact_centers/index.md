@@ -345,7 +345,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ContactCenters in a given project and location.</td>
 </tr>
 <tr>
@@ -519,10 +519,10 @@ userEmail
 FROM google.contactcenteraiplatform.contact_centers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -545,21 +545,21 @@ Creates a new ContactCenter in a given project and location.
 ```sql
 INSERT INTO google.contactcenteraiplatform.contact_centers (
 data__adminUser,
-data__kmsKey,
-data__samlParams,
-data__userEmail,
-data__featureConfig,
-data__instanceConfig,
-data__name,
-data__labels,
-data__displayName,
-data__critical,
-data__early,
-data__customerDomainPrefix,
 data__advancedReportingEnabled,
 data__ccaipManagedUsers,
-data__privateAccess,
+data__critical,
+data__customerDomainPrefix,
+data__displayName,
+data__early,
+data__featureConfig,
+data__instanceConfig,
+data__kmsKey,
+data__labels,
+data__name,
 data__normal,
+data__privateAccess,
+data__samlParams,
+data__userEmail,
 projectsId,
 locationsId,
 contactCenterId,
@@ -567,21 +567,21 @@ requestId
 )
 SELECT 
 '{{ adminUser }}',
-'{{ kmsKey }}',
-'{{ samlParams }}',
-'{{ userEmail }}',
-'{{ featureConfig }}',
-'{{ instanceConfig }}',
-'{{ name }}',
-'{{ labels }}',
-'{{ displayName }}',
-'{{ critical }}',
-'{{ early }}',
-'{{ customerDomainPrefix }}',
 {{ advancedReportingEnabled }},
 {{ ccaipManagedUsers }},
-'{{ privateAccess }}',
+'{{ critical }}',
+'{{ customerDomainPrefix }}',
+'{{ displayName }}',
+'{{ early }}',
+'{{ featureConfig }}',
+'{{ instanceConfig }}',
+'{{ kmsKey }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ normal }}',
+'{{ privateAccess }}',
+'{{ samlParams }}',
+'{{ userEmail }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ contactCenterId }}',
@@ -610,27 +610,45 @@ response
       description: |
         Optional. Info about the first admin user, such as given name and family name.
       value:
-        givenName: "{{ givenName }}"
         familyName: "{{ familyName }}"
-    - name: kmsKey
-      value: "{{ kmsKey }}"
+        givenName: "{{ givenName }}"
+    - name: advancedReportingEnabled
+      value: {{ advancedReportingEnabled }}
       description: |
-        Immutable. The KMS key name to encrypt the user input (\`ContactCenter\`).
-    - name: samlParams
+        Optional. Whether the advanced reporting feature is enabled.
+    - name: ccaipManagedUsers
+      value: {{ ccaipManagedUsers }}
       description: |
-        Optional. Params that sets up Google as IdP.
+        Optional. Whether to enable users to be created in the CCAIP-instance concurrently to having users in Cloud identity
+    - name: critical
+      description: |
+        Optional. Critical release channel.
       value:
-        authenticationContexts:
-          - "{{ authenticationContexts }}"
-        certificate: "{{ certificate }}"
-        userEmail: "{{ userEmail }}"
-        emailMapping: "{{ emailMapping }}"
-        ssoUri: "{{ ssoUri }}"
-        entityId: "{{ entityId }}"
-    - name: userEmail
-      value: "{{ userEmail }}"
+        peakHours:
+          - days: "{{ days }}"
+            duration: "{{ duration }}"
+            endTime:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+            startTime:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+    - name: customerDomainPrefix
+      value: "{{ customerDomainPrefix }}"
       description: |
-        Optional. Email address of the first admin user.
+        Required. Immutable. At least 2 and max 16 char long, must conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. A user friendly name for the ContactCenter.
+    - name: early
+      value: "{{ early }}"
+      description: |
+        Optional. Early release channel.
     - name: featureConfig
       description: |
         Optional. Feature configuration to populate the feature flags.
@@ -641,55 +659,29 @@ response
         The configuration of this instance, it is currently immutable once created.
       value:
         instanceSize: "{{ instanceSize }}"
-    - name: name
-      value: "{{ name }}"
+    - name: kmsKey
+      value: "{{ kmsKey }}"
       description: |
-        name of resource
+        Immutable. The KMS key name to encrypt the user input (\`ContactCenter\`).
     - name: labels
       value: "{{ labels }}"
       description: |
         Labels as key value pairs
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Required. A user friendly name for the ContactCenter.
-    - name: critical
+        name of resource
+    - name: normal
+      value: "{{ normal }}"
       description: |
-        Optional. Critical release channel.
-      value:
-        peakHours:
-          - startTime:
-              hours: {{ hours }}
-              minutes: {{ minutes }}
-              seconds: {{ seconds }}
-              nanos: {{ nanos }}
-            endTime:
-              hours: {{ hours }}
-              minutes: {{ minutes }}
-              seconds: {{ seconds }}
-              nanos: {{ nanos }}
-            days: "{{ days }}"
-            duration: "{{ duration }}"
-    - name: early
-      value: "{{ early }}"
-      description: |
-        Optional. Early release channel.
-    - name: customerDomainPrefix
-      value: "{{ customerDomainPrefix }}"
-      description: |
-        Required. Immutable. At least 2 and max 16 char long, must conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).
-    - name: advancedReportingEnabled
-      value: {{ advancedReportingEnabled }}
-      description: |
-        Optional. Whether the advanced reporting feature is enabled.
-    - name: ccaipManagedUsers
-      value: {{ ccaipManagedUsers }}
-      description: |
-        Optional. Whether to enable users to be created in the CCAIP-instance concurrently to having users in Cloud identity
+        Optional. Normal release channel.
     - name: privateAccess
       description: |
         Optional. VPC-SC related networking configuration.
       value:
+        egressSettings:
+          - name: "{{ name }}"
+            serviceAttachmentNames: "{{ serviceAttachmentNames }}"
         ingressSettings:
           - name: "{{ name }}"
             serviceAttachmentNames: "{{ serviceAttachmentNames }}"
@@ -698,13 +690,21 @@ response
             - "{{ allowedConsumerProjectIds }}"
           producerProjectIds:
             - "{{ producerProjectIds }}"
-        egressSettings:
-          - name: "{{ name }}"
-            serviceAttachmentNames: "{{ serviceAttachmentNames }}"
-    - name: normal
-      value: "{{ normal }}"
+    - name: samlParams
       description: |
-        Optional. Normal release channel.
+        Optional. Params that sets up Google as IdP.
+      value:
+        authenticationContexts:
+          - "{{ authenticationContexts }}"
+        certificate: "{{ certificate }}"
+        emailMapping: "{{ emailMapping }}"
+        entityId: "{{ entityId }}"
+        ssoUri: "{{ ssoUri }}"
+        userEmail: "{{ userEmail }}"
+    - name: userEmail
+      value: "{{ userEmail }}"
+      description: |
+        Optional. Email address of the first admin user.
     - name: contactCenterId
       value: "{{ contactCenterId }}"
     - name: requestId
@@ -731,21 +731,21 @@ Updates the parameters of a single ContactCenter.
 UPDATE google.contactcenteraiplatform.contact_centers
 SET 
 data__adminUser = '{{ adminUser }}',
-data__kmsKey = '{{ kmsKey }}',
-data__samlParams = '{{ samlParams }}',
-data__userEmail = '{{ userEmail }}',
-data__featureConfig = '{{ featureConfig }}',
-data__instanceConfig = '{{ instanceConfig }}',
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}',
-data__critical = '{{ critical }}',
-data__early = '{{ early }}',
-data__customerDomainPrefix = '{{ customerDomainPrefix }}',
 data__advancedReportingEnabled = {{ advancedReportingEnabled }},
 data__ccaipManagedUsers = {{ ccaipManagedUsers }},
+data__critical = '{{ critical }}',
+data__customerDomainPrefix = '{{ customerDomainPrefix }}',
+data__displayName = '{{ displayName }}',
+data__early = '{{ early }}',
+data__featureConfig = '{{ featureConfig }}',
+data__instanceConfig = '{{ instanceConfig }}',
+data__kmsKey = '{{ kmsKey }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__normal = '{{ normal }}',
 data__privateAccess = '{{ privateAccess }}',
-data__normal = '{{ normal }}'
+data__samlParams = '{{ samlParams }}',
+data__userEmail = '{{ userEmail }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -255,22 +255,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Get a list of alerts that meet the filter criteria.</td>
-</tr>
-<tr>
-    <td><a href="#enumerate_facets"><CopyableCode code="enumerate_facets" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a></td>
-    <td>EnumerateAlertFacets returns the facets and the number of alerts that meet the filter criteria and have that value for each facet.</td>
-</tr>
-<tr>
-    <td><a href="#resolve"><CopyableCode code="resolve" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-alertsId"><code>alertsId</code></a></td>
-    <td></td>
-    <td>Marks an alert to closed state - RESOLVED.</td>
 </tr>
 <tr>
     <td><a href="#benign"><CopyableCode code="benign" /></a></td>
@@ -280,18 +266,25 @@ The following methods are available for this resource:
     <td>Marks an alert as benign - BENIGN.</td>
 </tr>
 <tr>
+    <td><a href="#duplicate"><CopyableCode code="duplicate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-alertsId"><code>alertsId</code></a></td>
+    <td></td>
+    <td>Marks an alert as a duplicate of another alert. - DUPLICATE.</td>
+</tr>
+<tr>
+    <td><a href="#enumerate_facets"><CopyableCode code="enumerate_facets" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a></td>
+    <td>EnumerateAlertFacets returns the facets and the number of alerts that meet the filter criteria and have that value for each facet.</td>
+</tr>
+<tr>
     <td><a href="#escalate"><CopyableCode code="escalate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-alertsId"><code>alertsId</code></a></td>
     <td></td>
     <td>Marks an alert as escalated - ESCALATED.</td>
-</tr>
-<tr>
-    <td><a href="#not_actionable"><CopyableCode code="not_actionable" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-alertsId"><code>alertsId</code></a></td>
-    <td></td>
-    <td>Marks an alert as not actionable - NOT_ACTIONABLE.</td>
 </tr>
 <tr>
     <td><a href="#false_positive"><CopyableCode code="false_positive" /></a></td>
@@ -301,18 +294,25 @@ The following methods are available for this resource:
     <td>Marks an alert as a false positive - FALSE_POSITIVE.</td>
 </tr>
 <tr>
-    <td><a href="#duplicate"><CopyableCode code="duplicate" /></a></td>
+    <td><a href="#not_actionable"><CopyableCode code="not_actionable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-alertsId"><code>alertsId</code></a></td>
     <td></td>
-    <td>Marks an alert as a duplicate of another alert. - DUPLICATE.</td>
+    <td>Marks an alert as not actionable - NOT_ACTIONABLE.</td>
 </tr>
 <tr>
-    <td><a href="#triage"><CopyableCode code="triage" /></a></td>
+    <td><a href="#read"><CopyableCode code="read" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-alertsId"><code>alertsId</code></a></td>
     <td></td>
-    <td>Marks an alert as triaged - TRIAGED.</td>
+    <td>Marks an alert as read - READ.</td>
+</tr>
+<tr>
+    <td><a href="#resolve"><CopyableCode code="resolve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-alertsId"><code>alertsId</code></a></td>
+    <td></td>
+    <td>Marks an alert to closed state - RESOLVED.</td>
 </tr>
 <tr>
     <td><a href="#track_externally"><CopyableCode code="track_externally" /></a></td>
@@ -322,11 +322,11 @@ The following methods are available for this resource:
     <td>Marks an alert as tracked externally - TRACKED_EXTERNALLY.</td>
 </tr>
 <tr>
-    <td><a href="#read"><CopyableCode code="read" /></a></td>
+    <td><a href="#triage"><CopyableCode code="triage" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-alertsId"><code>alertsId</code></a></td>
     <td></td>
-    <td>Marks an alert as read - READ.</td>
+    <td>Marks an alert as triaged - TRIAGED.</td>
 </tr>
 </tbody>
 </table>
@@ -439,9 +439,9 @@ state
 FROM google.threatintelligence.alerts
 WHERE projectsId = '{{ projectsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -451,81 +451,26 @@ AND orderBy = '{{ orderBy }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="enumerate_facets"
+    defaultValue="benign"
     values={[
-        { label: 'enumerate_facets', value: 'enumerate_facets' },
-        { label: 'resolve', value: 'resolve' },
         { label: 'benign', value: 'benign' },
-        { label: 'escalate', value: 'escalate' },
-        { label: 'not_actionable', value: 'not_actionable' },
-        { label: 'false_positive', value: 'false_positive' },
         { label: 'duplicate', value: 'duplicate' },
-        { label: 'triage', value: 'triage' },
+        { label: 'enumerate_facets', value: 'enumerate_facets' },
+        { label: 'escalate', value: 'escalate' },
+        { label: 'false_positive', value: 'false_positive' },
+        { label: 'not_actionable', value: 'not_actionable' },
+        { label: 'read', value: 'read' },
+        { label: 'resolve', value: 'resolve' },
         { label: 'track_externally', value: 'track_externally' },
-        { label: 'read', value: 'read' }
+        { label: 'triage', value: 'triage' }
     ]}
 >
-<TabItem value="enumerate_facets">
-
-EnumerateAlertFacets returns the facets and the number of alerts that meet the filter criteria and have that value for each facet.
-
-```sql
-EXEC google.threatintelligence.alerts.enumerate_facets 
-@projectsId='{{ projectsId }}' --required, 
-@filter='{{ filter }}'
-;
-```
-</TabItem>
-<TabItem value="resolve">
-
-Marks an alert to closed state - RESOLVED.
-
-```sql
-EXEC google.threatintelligence.alerts.resolve 
-@projectsId='{{ projectsId }}' --required, 
-@alertsId='{{ alertsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="benign">
 
 Marks an alert as benign - BENIGN.
 
 ```sql
 EXEC google.threatintelligence.alerts.benign 
-@projectsId='{{ projectsId }}' --required, 
-@alertsId='{{ alertsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="escalate">
-
-Marks an alert as escalated - ESCALATED.
-
-```sql
-EXEC google.threatintelligence.alerts.escalate 
-@projectsId='{{ projectsId }}' --required, 
-@alertsId='{{ alertsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="not_actionable">
-
-Marks an alert as not actionable - NOT_ACTIONABLE.
-
-```sql
-EXEC google.threatintelligence.alerts.not_actionable 
-@projectsId='{{ projectsId }}' --required, 
-@alertsId='{{ alertsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="false_positive">
-
-Marks an alert as a false positive - FALSE_POSITIVE.
-
-```sql
-EXEC google.threatintelligence.alerts.false_positive 
 @projectsId='{{ projectsId }}' --required, 
 @alertsId='{{ alertsId }}' --required
 ;
@@ -546,12 +491,67 @@ EXEC google.threatintelligence.alerts.duplicate
 ;
 ```
 </TabItem>
-<TabItem value="triage">
+<TabItem value="enumerate_facets">
 
-Marks an alert as triaged - TRIAGED.
+EnumerateAlertFacets returns the facets and the number of alerts that meet the filter criteria and have that value for each facet.
 
 ```sql
-EXEC google.threatintelligence.alerts.triage 
+EXEC google.threatintelligence.alerts.enumerate_facets 
+@projectsId='{{ projectsId }}' --required, 
+@filter='{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="escalate">
+
+Marks an alert as escalated - ESCALATED.
+
+```sql
+EXEC google.threatintelligence.alerts.escalate 
+@projectsId='{{ projectsId }}' --required, 
+@alertsId='{{ alertsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="false_positive">
+
+Marks an alert as a false positive - FALSE_POSITIVE.
+
+```sql
+EXEC google.threatintelligence.alerts.false_positive 
+@projectsId='{{ projectsId }}' --required, 
+@alertsId='{{ alertsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="not_actionable">
+
+Marks an alert as not actionable - NOT_ACTIONABLE.
+
+```sql
+EXEC google.threatintelligence.alerts.not_actionable 
+@projectsId='{{ projectsId }}' --required, 
+@alertsId='{{ alertsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="read">
+
+Marks an alert as read - READ.
+
+```sql
+EXEC google.threatintelligence.alerts.read 
+@projectsId='{{ projectsId }}' --required, 
+@alertsId='{{ alertsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="resolve">
+
+Marks an alert to closed state - RESOLVED.
+
+```sql
+EXEC google.threatintelligence.alerts.resolve 
 @projectsId='{{ projectsId }}' --required, 
 @alertsId='{{ alertsId }}' --required
 ;
@@ -568,12 +568,12 @@ EXEC google.threatintelligence.alerts.track_externally
 ;
 ```
 </TabItem>
-<TabItem value="read">
+<TabItem value="triage">
 
-Marks an alert as read - READ.
+Marks an alert as triaged - TRIAGED.
 
 ```sql
-EXEC google.threatintelligence.alerts.read 
+EXEC google.threatintelligence.alerts.triage 
 @projectsId='{{ projectsId }}' --required, 
 @alertsId='{{ alertsId }}' --required
 ;

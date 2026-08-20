@@ -325,28 +325,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieve a collection of rollouts.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-rolloutId"><code>rolloutId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-rolloutId"><code>rolloutId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Create a new rollout.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Update a single rollout.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Delete a single rollout.</td>
 </tr>
 </tbody>
@@ -506,8 +506,8 @@ FROM google.saasservicemgmt.rollouts
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -530,36 +530,36 @@ Create a new rollout.
 
 ```sql
 INSERT INTO google.saasservicemgmt.rollouts (
-data__release,
 data__annotations,
-data__rolloutOrchestrationStrategy,
-data__name,
-data__flagRelease,
-data__unitFilter,
-data__rolloutKind,
 data__control,
+data__flagRelease,
 data__labels,
+data__name,
+data__release,
+data__rolloutKind,
+data__rolloutOrchestrationStrategy,
+data__unitFilter,
 projectsId,
 locationsId,
+requestId,
 rolloutId,
-validateOnly,
-requestId
+validateOnly
 )
 SELECT 
-'{{ release }}',
 '{{ annotations }}',
-'{{ rolloutOrchestrationStrategy }}',
-'{{ name }}',
-'{{ flagRelease }}',
-'{{ unitFilter }}',
-'{{ rolloutKind }}',
 '{{ control }}',
+'{{ flagRelease }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ release }}',
+'{{ rolloutKind }}',
+'{{ rolloutOrchestrationStrategy }}',
+'{{ unitFilter }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ requestId }}',
 '{{ rolloutId }}',
-'{{ validateOnly }}',
-'{{ requestId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 annotations,
@@ -598,51 +598,51 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the rollouts resource.
-    - name: release
-      value: "{{ release }}"
-      description: |
-        Optional. Immutable. Name of the Release that gets rolled out to target Units. Required if no other type of release is specified.
     - name: annotations
       value: "{{ annotations }}"
       description: |
         Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-    - name: rolloutOrchestrationStrategy
-      value: "{{ rolloutOrchestrationStrategy }}"
-      description: |
-        Optional. The strategy used for executing this Rollout. This strategy will override whatever strategy is specified in the RolloutKind. If not specified on creation, the strategy from RolloutKind will be used. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the targeted UnitKind's Saas Locations.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/rollout/{rollout_id}"
-    - name: flagRelease
-      value: "{{ flagRelease }}"
-      description: |
-        Optional. Immutable. Name of the FlagRelease to be rolled out to the target Units. Release and FlagRelease are mutually exclusive. Note: \`release\` comment needs to be adjusted to mention that "Release and FlagRelease are mutually exclusive" when visibility restriction will be lifted.
-    - name: unitFilter
-      value: "{{ unitFilter }}"
-      description: |
-        Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout. If not provided, the unit_filter from the RolloutKind will be used.
-    - name: rolloutKind
-      value: "{{ rolloutKind }}"
-      description: |
-        Required. Immutable. Name of the RolloutKind this rollout is stemming from and adhering to.
     - name: control
       description: |
         Optional. Requested change to the execution of this rollout. Default RolloutControl.action is ROLLOUT_ACTION_RUN meaning the rollout will be executed to completion while progressing through all natural Rollout States (such as RUNNING -> SUCCEEDED or RUNNING -> FAILED). Requests can only be made when the Rollout is in a non-terminal state.
       value:
+        action: "{{ action }}"
         runParams:
           retryFailedOperations: {{ retryFailedOperations }}
-        action: "{{ action }}"
+    - name: flagRelease
+      value: "{{ flagRelease }}"
+      description: |
+        Optional. Immutable. Name of the FlagRelease to be rolled out to the target Units. Release and FlagRelease are mutually exclusive. Note: \`release\` comment needs to be adjusted to mention that "Release and FlagRelease are mutually exclusive" when visibility restriction will be lifted.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/rollout/{rollout_id}"
+    - name: release
+      value: "{{ release }}"
+      description: |
+        Optional. Immutable. Name of the Release that gets rolled out to target Units. Required if no other type of release is specified.
+    - name: rolloutKind
+      value: "{{ rolloutKind }}"
+      description: |
+        Required. Immutable. Name of the RolloutKind this rollout is stemming from and adhering to.
+    - name: rolloutOrchestrationStrategy
+      value: "{{ rolloutOrchestrationStrategy }}"
+      description: |
+        Optional. The strategy used for executing this Rollout. This strategy will override whatever strategy is specified in the RolloutKind. If not specified on creation, the strategy from RolloutKind will be used. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the targeted UnitKind's Saas Locations.
+    - name: unitFilter
+      value: "{{ unitFilter }}"
+      description: |
+        Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout. If not provided, the unit_filter from the RolloutKind will be used.
+    - name: requestId
+      value: "{{ requestId }}"
     - name: rolloutId
       value: "{{ rolloutId }}"
     - name: validateOnly
       value: {{ validateOnly }}
-    - name: requestId
-      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -664,22 +664,22 @@ Update a single rollout.
 ```sql
 UPDATE google.saasservicemgmt.rollouts
 SET 
-data__release = '{{ release }}',
 data__annotations = '{{ annotations }}',
-data__rolloutOrchestrationStrategy = '{{ rolloutOrchestrationStrategy }}',
-data__name = '{{ name }}',
-data__flagRelease = '{{ flagRelease }}',
-data__unitFilter = '{{ unitFilter }}',
-data__rolloutKind = '{{ rolloutKind }}',
 data__control = '{{ control }}',
-data__labels = '{{ labels }}'
+data__flagRelease = '{{ flagRelease }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__release = '{{ release }}',
+data__rolloutKind = '{{ rolloutKind }}',
+data__rolloutOrchestrationStrategy = '{{ rolloutOrchestrationStrategy }}',
+data__unitFilter = '{{ unitFilter }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND rolloutsId = '{{ rolloutsId }}' --required
+AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
-AND requestId = '{{ requestId}}'
 RETURNING
 name,
 annotations,
@@ -727,8 +727,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND rolloutsId = '{{ rolloutsId }}' --required
 AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

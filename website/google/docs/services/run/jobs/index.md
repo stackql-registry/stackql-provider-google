@@ -355,7 +355,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists Jobs. Results are sorted by creation time, descending.</td>
 </tr>
 <tr>
@@ -369,14 +369,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates a Job.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a Job.</td>
 </tr>
 <tr>
@@ -538,9 +538,9 @@ updateTime
 FROM google.run.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -563,16 +563,16 @@ Creates a Job.
 ```sql
 INSERT INTO google.run.jobs (
 data__annotations,
-data__launchStage,
+data__binaryAuthorization,
+data__client,
+data__clientVersion,
 data__etag,
+data__labels,
+data__launchStage,
 data__name,
 data__runExecutionToken,
-data__labels,
-data__clientVersion,
-data__template,
-data__client,
 data__startExecutionToken,
-data__binaryAuthorization,
+data__template,
 projectsId,
 locationsId,
 jobId,
@@ -580,16 +580,16 @@ validateOnly
 )
 SELECT 
 '{{ annotations }}',
-'{{ launchStage }}',
+'{{ binaryAuthorization }}',
+'{{ client }}',
+'{{ clientVersion }}',
 '{{ etag }}',
+'{{ labels }}',
+'{{ launchStage }}',
 '{{ name }}',
 '{{ runExecutionToken }}',
-'{{ labels }}',
-'{{ clientVersion }}',
-'{{ template }}',
-'{{ client }}',
 '{{ startExecutionToken }}',
-'{{ binaryAuthorization }}',
+'{{ template }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ jobId }}',
@@ -618,15 +618,34 @@ response
       value: "{{ annotations }}"
       description: |
         Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with \`run.googleapis.com\`, \`cloud.googleapis.com\`, \`serving.knative.dev\`, or \`autoscaling.knative.dev\` namespaces, and they will be rejected on new resources. All system annotations in v1 now have a corresponding field in v2 Job. This field follows Kubernetes annotations' namespacing, limits, and rules.
+    - name: binaryAuthorization
+      description: |
+        Settings for the Binary Authorization feature.
+      value:
+        breakglassJustification: "{{ breakglassJustification }}"
+        policy: "{{ policy }}"
+        useDefault: {{ useDefault }}
+    - name: client
+      value: "{{ client }}"
+      description: |
+        Arbitrary identifier for the API client.
+    - name: clientVersion
+      value: "{{ clientVersion }}"
+      description: |
+        Arbitrary version identifier for the API client.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with \`run.googleapis.com\`, \`cloud.googleapis.com\`, \`serving.knative.dev\`, or \`autoscaling.knative.dev\` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Job.
     - name: launchStage
       value: "{{ launchStage }}"
       description: |
         The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports \`ALPHA\`, \`BETA\`, and \`GA\`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.
       valid_values: ['LAUNCH_STAGE_UNSPECIFIED', 'UNIMPLEMENTED', 'PRELAUNCH', 'EARLY_ACCESS', 'ALPHA', 'BETA', 'GA', 'DEPRECATED']
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
     - name: name
       value: "{{ name }}"
       description: |
@@ -635,147 +654,129 @@ response
       value: "{{ runExecutionToken }}"
       description: |
         A unique string used as a suffix for creating a new execution. The Job will become ready when the execution is successfully completed. The sum of job name and token length must be fewer than 63 characters.
-    - name: labels
-      value: "{{ labels }}"
+    - name: startExecutionToken
+      value: "{{ startExecutionToken }}"
       description: |
-        Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with \`run.googleapis.com\`, \`cloud.googleapis.com\`, \`serving.knative.dev\`, or \`autoscaling.knative.dev\` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Job.
-    - name: clientVersion
-      value: "{{ clientVersion }}"
-      description: |
-        Arbitrary version identifier for the API client.
+        A unique string used as a suffix creating a new execution. The Job will become ready when the execution is successfully started. The sum of job name and token length must be fewer than 63 characters.
     - name: template
       description: |
         Required. The template used to create executions for this Job.
       value:
         annotations: "{{ annotations }}"
-        clientVersion: "{{ clientVersion }}"
         client: "{{ client }}"
+        clientVersion: "{{ clientVersion }}"
+        delayExecution: {{ delayExecution }}
+        labels: "{{ labels }}"
         parallelism: {{ parallelism }}
+        taskCount: {{ taskCount }}
         template:
-          maxRetries: {{ maxRetries }}
-          timeout: "{{ timeout }}"
-          encryptionKey: "{{ encryptionKey }}"
           containers:
-            - readinessProbe:
-                timeoutSeconds: {{ timeoutSeconds }}
-                grpc:
-                  port: {{ port }}
-                  service: "{{ service }}"
-                periodSeconds: {{ periodSeconds }}
-                initialDelaySeconds: {{ initialDelaySeconds }}
-                failureThreshold: {{ failureThreshold }}
-                httpGet:
-                  port: {{ port }}
-                  path: "{{ path }}"
-                  httpHeaders: "{{ httpHeaders }}"
-                tcpSocket:
-                  port: {{ port }}
-              ports: "{{ ports }}"
-              command: "{{ command }}"
-              env: "{{ env }}"
-              resources:
-                startupCpuBoost: {{ startupCpuBoost }}
-                limits: "{{ limits }}"
-                cpuIdle: {{ cpuIdle }}
-              livenessProbe:
-                timeoutSeconds: {{ timeoutSeconds }}
-                grpc:
-                  port: {{ port }}
-                  service: "{{ service }}"
-                periodSeconds: {{ periodSeconds }}
-                initialDelaySeconds: {{ initialDelaySeconds }}
-                failureThreshold: {{ failureThreshold }}
-                httpGet:
-                  port: {{ port }}
-                  path: "{{ path }}"
-                  httpHeaders: "{{ httpHeaders }}"
-                tcpSocket:
-                  port: {{ port }}
-              image: "{{ image }}"
-              args: "{{ args }}"
-              sourceCode:
-                inlinedSource:
-                  sources: "{{ sources }}"
-                cloudStorageSource:
-                  generation: "{{ generation }}"
-                  bucket: "{{ bucket }}"
-                  object: "{{ object }}"
-              name: "{{ name }}"
-              workingDir: "{{ workingDir }}"
-              startupProbe:
-                timeoutSeconds: {{ timeoutSeconds }}
-                grpc:
-                  port: {{ port }}
-                  service: "{{ service }}"
-                periodSeconds: {{ periodSeconds }}
-                initialDelaySeconds: {{ initialDelaySeconds }}
-                failureThreshold: {{ failureThreshold }}
-                httpGet:
-                  port: {{ port }}
-                  path: "{{ path }}"
-                  httpHeaders: "{{ httpHeaders }}"
-                tcpSocket:
-                  port: {{ port }}
-              dependsOn: "{{ dependsOn }}"
-              sandboxLauncher: {{ sandboxLauncher }}
-              volumeMounts: "{{ volumeMounts }}"
+            - args: "{{ args }}"
               baseImageUri: "{{ baseImageUri }}"
               buildInfo:
-                sourceLocation: "{{ sourceLocation }}"
                 functionTarget: "{{ functionTarget }}"
+                sourceLocation: "{{ sourceLocation }}"
+              command: "{{ command }}"
+              dependsOn: "{{ dependsOn }}"
+              env: "{{ env }}"
+              image: "{{ image }}"
+              livenessProbe:
+                failureThreshold: {{ failureThreshold }}
+                grpc:
+                  port: {{ port }}
+                  service: "{{ service }}"
+                httpGet:
+                  httpHeaders: "{{ httpHeaders }}"
+                  path: "{{ path }}"
+                  port: {{ port }}
+                initialDelaySeconds: {{ initialDelaySeconds }}
+                periodSeconds: {{ periodSeconds }}
+                tcpSocket:
+                  port: {{ port }}
+                timeoutSeconds: {{ timeoutSeconds }}
+              name: "{{ name }}"
+              ports: "{{ ports }}"
+              readinessProbe:
+                failureThreshold: {{ failureThreshold }}
+                grpc:
+                  port: {{ port }}
+                  service: "{{ service }}"
+                httpGet:
+                  httpHeaders: "{{ httpHeaders }}"
+                  path: "{{ path }}"
+                  port: {{ port }}
+                initialDelaySeconds: {{ initialDelaySeconds }}
+                periodSeconds: {{ periodSeconds }}
+                tcpSocket:
+                  port: {{ port }}
+                timeoutSeconds: {{ timeoutSeconds }}
+              resources:
+                cpuIdle: {{ cpuIdle }}
+                limits: "{{ limits }}"
+                startupCpuBoost: {{ startupCpuBoost }}
+              sandboxLauncher: {{ sandboxLauncher }}
+              sourceCode:
+                cloudStorageSource:
+                  bucket: "{{ bucket }}"
+                  generation: "{{ generation }}"
+                  object: "{{ object }}"
+                inlinedSource:
+                  sources: "{{ sources }}"
+              startupProbe:
+                failureThreshold: {{ failureThreshold }}
+                grpc:
+                  port: {{ port }}
+                  service: "{{ service }}"
+                httpGet:
+                  httpHeaders: "{{ httpHeaders }}"
+                  path: "{{ path }}"
+                  port: {{ port }}
+                initialDelaySeconds: {{ initialDelaySeconds }}
+                periodSeconds: {{ periodSeconds }}
+                tcpSocket:
+                  port: {{ port }}
+                timeoutSeconds: {{ timeoutSeconds }}
+              volumeMounts: "{{ volumeMounts }}"
+              workingDir: "{{ workingDir }}"
+          encryptionKey: "{{ encryptionKey }}"
+          executionEnvironment: "{{ executionEnvironment }}"
+          gpuZonalRedundancyDisabled: {{ gpuZonalRedundancyDisabled }}
+          maxRetries: {{ maxRetries }}
+          nodeSelector:
+            accelerator: "{{ accelerator }}"
           serviceAccount: "{{ serviceAccount }}"
+          timeout: "{{ timeout }}"
           volumes:
-            - gcs:
-                mountOptions:
-                  - "{{ mountOptions }}"
-                readOnly: {{ readOnly }}
-                bucket: "{{ bucket }}"
-              nfs:
-                server: "{{ server }}"
-                path: "{{ path }}"
-                readOnly: {{ readOnly }}
-              cloudSqlInstance:
+            - cloudSqlInstance:
                 instances:
                   - "{{ instances }}"
               emptyDir:
-                sizeLimit: "{{ sizeLimit }}"
                 medium: "{{ medium }}"
-              secret:
-                secret: "{{ secret }}"
-                items:
-                  - version: "{{ version }}"
-                    mode: {{ mode }}
-                    path: "{{ path }}"
-                defaultMode: {{ defaultMode }}
+                sizeLimit: "{{ sizeLimit }}"
+              gcs:
+                bucket: "{{ bucket }}"
+                mountOptions:
+                  - "{{ mountOptions }}"
+                readOnly: {{ readOnly }}
               name: "{{ name }}"
-          nodeSelector:
-            accelerator: "{{ accelerator }}"
+              nfs:
+                path: "{{ path }}"
+                readOnly: {{ readOnly }}
+                server: "{{ server }}"
+              secret:
+                defaultMode: {{ defaultMode }}
+                items:
+                  - mode: {{ mode }}
+                    path: "{{ path }}"
+                    version: "{{ version }}"
+                secret: "{{ secret }}"
           vpcAccess:
+            connector: "{{ connector }}"
             egress: "{{ egress }}"
             networkInterfaces:
-              - tags: "{{ tags }}"
-                network: "{{ network }}"
+              - network: "{{ network }}"
                 subnetwork: "{{ subnetwork }}"
-            connector: "{{ connector }}"
-          gpuZonalRedundancyDisabled: {{ gpuZonalRedundancyDisabled }}
-          executionEnvironment: "{{ executionEnvironment }}"
-        taskCount: {{ taskCount }}
-        labels: "{{ labels }}"
-    - name: client
-      value: "{{ client }}"
-      description: |
-        Arbitrary identifier for the API client.
-    - name: startExecutionToken
-      value: "{{ startExecutionToken }}"
-      description: |
-        A unique string used as a suffix creating a new execution. The Job will become ready when the execution is successfully started. The sum of job name and token length must be fewer than 63 characters.
-    - name: binaryAuthorization
-      description: |
-        Settings for the Binary Authorization feature.
-      value:
-        useDefault: {{ useDefault }}
-        breakglassJustification: "{{ breakglassJustification }}"
-        policy: "{{ policy }}"
+                tags: "{{ tags }}"
     - name: jobId
       value: "{{ jobId }}"
     - name: validateOnly
@@ -802,22 +803,22 @@ Updates a Job.
 UPDATE google.run.jobs
 SET 
 data__annotations = '{{ annotations }}',
-data__launchStage = '{{ launchStage }}',
+data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__client = '{{ client }}',
+data__clientVersion = '{{ clientVersion }}',
 data__etag = '{{ etag }}',
+data__labels = '{{ labels }}',
+data__launchStage = '{{ launchStage }}',
 data__name = '{{ name }}',
 data__runExecutionToken = '{{ runExecutionToken }}',
-data__labels = '{{ labels }}',
-data__clientVersion = '{{ clientVersion }}',
-data__template = '{{ template }}',
-data__client = '{{ client }}',
 data__startExecutionToken = '{{ startExecutionToken }}',
-data__binaryAuthorization = '{{ binaryAuthorization }}'
+data__template = '{{ template }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND jobsId = '{{ jobsId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -846,8 +847,8 @@ DELETE FROM google.run.jobs
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND jobsId = '{{ jobsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -873,9 +874,9 @@ EXEC google.run.jobs.run
 @jobsId='{{ jobsId }}' --required 
 @@json=
 '{
-"validateOnly": {{ validateOnly }}, 
+"etag": "{{ etag }}", 
 "overrides": "{{ overrides }}", 
-"etag": "{{ etag }}"
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```

@@ -87,14 +87,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_settings"><CopyableCode code="get_settings" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Get notification settings.</td>
 </tr>
 <tr>
     <td><a href="#update_settings"><CopyableCode code="update_settings" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Update notification settings.</td>
 </tr>
@@ -119,8 +119,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-organizationsId">
-    <td><CopyableCode code="organizationsId" /></td>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -145,7 +145,7 @@ name,
 etag,
 notificationSettings
 FROM google.advisorynotifications.settings
-WHERE organizationsId = '{{ organizationsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 ;
 ```
@@ -172,7 +172,7 @@ data__etag = '{{ etag }}',
 data__name = '{{ name }}',
 data__notificationSettings = '{{ notificationSettings }}'
 WHERE 
-organizationsId = '{{ organizationsId }}' --required
+projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 RETURNING
 name,

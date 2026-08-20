@@ -347,23 +347,23 @@ Creates a policy.
 
 ```sql
 INSERT INTO google.iamv2.policies (
-data__rules,
 data__annotations,
 data__displayName,
-data__uid,
 data__etag,
 data__name,
+data__rules,
+data__uid,
 policiesId,
 policiesId1,
 policyId
 )
 SELECT 
-'{{ rules }}',
 '{{ annotations }}',
 '{{ displayName }}',
-'{{ uid }}',
 '{{ etag }}',
 '{{ name }}',
+'{{ rules }}',
+'{{ uid }}',
 '{{ policiesId }}',
 '{{ policiesId1 }}',
 '{{ policyId }}'
@@ -387,25 +387,6 @@ response
     - name: policiesId1
       value: "{{ policiesId1 }}"
       description: Required parameter for the policies resource.
-    - name: rules
-      description: |
-        A list of rules that specify the behavior of the \`Policy\`. All of the rules should be of the \`kind\` specified in the \`Policy\`.
-      value:
-        - denyRule:
-            exceptionPrincipals:
-              - "{{ exceptionPrincipals }}"
-            deniedPrincipals:
-              - "{{ deniedPrincipals }}"
-            exceptionPermissions:
-              - "{{ exceptionPermissions }}"
-            deniedPermissions:
-              - "{{ deniedPermissions }}"
-            denialCondition:
-              title: "{{ title }}"
-              expression: "{{ expression }}"
-              description: "{{ description }}"
-              location: "{{ location }}"
-          description: "{{ description }}"
     - name: annotations
       value: "{{ annotations }}"
       description: |
@@ -414,10 +395,6 @@ response
       value: "{{ displayName }}"
       description: |
         A user-specified description of the \`Policy\`. This value can be up to 63 characters.
-    - name: uid
-      value: "{{ uid }}"
-      description: |
-        Immutable. The globally unique ID of the \`Policy\`. Assigned automatically when the \`Policy\` is created.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -426,6 +403,29 @@ response
       value: "{{ name }}"
       description: |
         Immutable. The resource name of the \`Policy\`, which must be unique. Format: \`policies/{attachment_point}/denypolicies/{policy_id}\` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, \`/\`, must be written as \`%2F\`. For example, \`policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy\`. For organizations and folders, use the numeric ID in the full resource name. For projects, requests can use the alphanumeric or the numeric ID. Responses always contain the numeric ID.
+    - name: rules
+      description: |
+        A list of rules that specify the behavior of the \`Policy\`. All of the rules should be of the \`kind\` specified in the \`Policy\`.
+      value:
+        - denyRule:
+            denialCondition:
+              description: "{{ description }}"
+              expression: "{{ expression }}"
+              location: "{{ location }}"
+              title: "{{ title }}"
+            deniedPermissions:
+              - "{{ deniedPermissions }}"
+            deniedPrincipals:
+              - "{{ deniedPrincipals }}"
+            exceptionPermissions:
+              - "{{ exceptionPermissions }}"
+            exceptionPrincipals:
+              - "{{ exceptionPrincipals }}"
+          description: "{{ description }}"
+    - name: uid
+      value: "{{ uid }}"
+      description: |
+        Immutable. The globally unique ID of the \`Policy\`. Assigned automatically when the \`Policy\` is created.
     - name: policyId
       value: "{{ policyId }}"
 `}</CodeBlock>
@@ -449,12 +449,12 @@ Updates the specified policy. You can update only the rules and the display name
 ```sql
 REPLACE google.iamv2.policies
 SET 
-data__rules = '{{ rules }}',
 data__annotations = '{{ annotations }}',
 data__displayName = '{{ displayName }}',
-data__uid = '{{ uid }}',
 data__etag = '{{ etag }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__rules = '{{ rules }}',
+data__uid = '{{ uid }}'
 WHERE 
 policiesId = '{{ policiesId }}' --required
 AND policiesId1 = '{{ policiesId1 }}' --required

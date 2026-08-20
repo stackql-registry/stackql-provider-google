@@ -127,7 +127,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dbFrameworkComplianceReportsId"><code>dbFrameworkComplianceReportsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dbFrameworkComplianceReportsId"><code>dbFrameworkComplianceReportsId</code></a></td>
     <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the control compliance summary for a given scope.</td>
 </tr>
@@ -152,13 +152,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-locationsId">
-    <td><CopyableCode code="locationsId" /></td>
+<tr id="parameter-foldersId">
+    <td><CopyableCode code="foldersId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-projectsId">
-    <td><CopyableCode code="projectsId" /></td>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -206,7 +206,7 @@ overallEvaluationState,
 similarControls,
 totalFindingsCount
 FROM google.assuredworkloads.db_control_compliance_summaries
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dbFrameworkComplianceReportsId = '{{ dbFrameworkComplianceReportsId }}' -- required
 AND filter = '{{ filter }}'

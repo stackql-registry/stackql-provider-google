@@ -255,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>ListBranchRules lists branch rules in a given repository.</td>
 </tr>
 <tr>
@@ -413,8 +413,8 @@ FROM google.securesourcemanager.branch_rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -436,38 +436,38 @@ CreateBranchRule creates a branch rule in a given repository.
 
 ```sql
 INSERT INTO google.securesourcemanager.branch_rules (
-data__name,
+data__allowStaleReviews,
+data__annotations,
+data__disabled,
+data__etag,
 data__includePattern,
-data__requireCodeOwnerApproval,
-data__requireLinearHistory,
 data__minimumApprovalsCount,
 data__minimumReviewsCount,
+data__name,
+data__requireCodeOwnerApproval,
 data__requireCommentsResolved,
-data__allowStaleReviews,
-data__requiredStatusChecks,
-data__etag,
+data__requireLinearHistory,
 data__requirePullRequest,
-data__disabled,
-data__annotations,
+data__requiredStatusChecks,
 projectsId,
 locationsId,
 repositoriesId,
 branchRuleId
 )
 SELECT 
-'{{ name }}',
+{{ allowStaleReviews }},
+'{{ annotations }}',
+{{ disabled }},
+'{{ etag }}',
 '{{ includePattern }}',
-{{ requireCodeOwnerApproval }},
-{{ requireLinearHistory }},
 {{ minimumApprovalsCount }},
 {{ minimumReviewsCount }},
+'{{ name }}',
+{{ requireCodeOwnerApproval }},
 {{ requireCommentsResolved }},
-{{ allowStaleReviews }},
-'{{ requiredStatusChecks }}',
-'{{ etag }}',
+{{ requireLinearHistory }},
 {{ requirePullRequest }},
-{{ disabled }},
-'{{ annotations }}',
+'{{ requiredStatusChecks }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -495,22 +495,26 @@ response
     - name: repositoriesId
       value: "{{ repositoriesId }}"
       description: Required parameter for the branch_rules resource.
-    - name: name
-      value: "{{ name }}"
+    - name: allowStaleReviews
+      value: {{ allowStaleReviews }}
       description: |
-        Identifier. A unique identifier for a BranchRule. The name should be of the format: \`projects/{project}/locations/{location}/repositories/{repository}/branchRules/{branch_rule}\`
+        Optional. Determines if allow stale reviews or approvals before merging to the branch.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. User annotations. These attributes can only be set and used by the user. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. Determines if the branch rule is disabled or not.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: includePattern
       value: "{{ includePattern }}"
       description: |
         Optional. The pattern of the branch that can match to this BranchRule. Specified as regex. .* for all branches. Examples: main, (main|release.*). Current MVP phase only support \`.*\` for wildcard.
-    - name: requireCodeOwnerApproval
-      value: {{ requireCodeOwnerApproval }}
-      description: |
-        Optional. Determines if code owners must approve before merging to the branch.
-    - name: requireLinearHistory
-      value: {{ requireLinearHistory }}
-      description: |
-        Optional. Determines if require linear history before merging to the branch.
     - name: minimumApprovalsCount
       value: {{ minimumApprovalsCount }}
       description: |
@@ -519,35 +523,31 @@ response
       value: {{ minimumReviewsCount }}
       description: |
         Optional. The minimum number of reviews required for the branch rule to be matched.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. A unique identifier for a BranchRule. The name should be of the format: \`projects/{project}/locations/{location}/repositories/{repository}/branchRules/{branch_rule}\`
+    - name: requireCodeOwnerApproval
+      value: {{ requireCodeOwnerApproval }}
+      description: |
+        Optional. Determines if code owners must approve before merging to the branch.
     - name: requireCommentsResolved
       value: {{ requireCommentsResolved }}
       description: |
         Optional. Determines if require comments resolved before merging to the branch.
-    - name: allowStaleReviews
-      value: {{ allowStaleReviews }}
+    - name: requireLinearHistory
+      value: {{ requireLinearHistory }}
       description: |
-        Optional. Determines if allow stale reviews or approvals before merging to the branch.
+        Optional. Determines if require linear history before merging to the branch.
+    - name: requirePullRequest
+      value: {{ requirePullRequest }}
+      description: |
+        Optional. Determines if the branch rule requires a pull request or not.
     - name: requiredStatusChecks
       description: |
         Optional. List of required status checks before merging to the branch.
       value:
         - context: "{{ context }}"
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: requirePullRequest
-      value: {{ requirePullRequest }}
-      description: |
-        Optional. Determines if the branch rule requires a pull request or not.
-    - name: disabled
-      value: {{ disabled }}
-      description: |
-        Optional. Determines if the branch rule is disabled or not.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. User annotations. These attributes can only be set and used by the user. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
     - name: branchRuleId
       value: "{{ branchRuleId }}"
 `}</CodeBlock>
@@ -571,19 +571,19 @@ UpdateBranchRule updates a branch rule.
 ```sql
 UPDATE google.securesourcemanager.branch_rules
 SET 
-data__name = '{{ name }}',
+data__allowStaleReviews = {{ allowStaleReviews }},
+data__annotations = '{{ annotations }}',
+data__disabled = {{ disabled }},
+data__etag = '{{ etag }}',
 data__includePattern = '{{ includePattern }}',
-data__requireCodeOwnerApproval = {{ requireCodeOwnerApproval }},
-data__requireLinearHistory = {{ requireLinearHistory }},
 data__minimumApprovalsCount = {{ minimumApprovalsCount }},
 data__minimumReviewsCount = {{ minimumReviewsCount }},
+data__name = '{{ name }}',
+data__requireCodeOwnerApproval = {{ requireCodeOwnerApproval }},
 data__requireCommentsResolved = {{ requireCommentsResolved }},
-data__allowStaleReviews = {{ allowStaleReviews }},
-data__requiredStatusChecks = '{{ requiredStatusChecks }}',
-data__etag = '{{ etag }}',
+data__requireLinearHistory = {{ requireLinearHistory }},
 data__requirePullRequest = {{ requirePullRequest }},
-data__disabled = {{ disabled }},
-data__annotations = '{{ annotations }}'
+data__requiredStatusChecks = '{{ requiredStatusChecks }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

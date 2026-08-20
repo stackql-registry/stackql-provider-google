@@ -167,9 +167,9 @@ Updates the permissions required to allow Apigee runtime-plane components access
 ```sql
 UPDATE google.apigee.control_plane_access
 SET 
-data__synchronizerIdentities = '{{ synchronizerIdentities }}',
+data__analyticsPublisherIdentities = '{{ analyticsPublisherIdentities }}',
 data__name = '{{ name }}',
-data__analyticsPublisherIdentities = '{{ analyticsPublisherIdentities }}'
+data__synchronizerIdentities = '{{ synchronizerIdentities }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND updateMask = '{{ updateMask}}'

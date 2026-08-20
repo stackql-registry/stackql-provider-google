@@ -95,7 +95,7 @@ The following methods are available for this resource:
     <td><a href="#update_settings"><CopyableCode code="update_settings" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the regional-level project settings.</td>
 </tr>
 </tbody>
@@ -178,13 +178,13 @@ Updates the regional-level project settings.
 ```sql
 UPDATE google.migrationcenter.settings
 SET 
-data__preferenceSet = '{{ preferenceSet }}',
-data__disableCloudLogging = {{ disableCloudLogging }}
+data__disableCloudLogging = {{ disableCloudLogging }},
+data__preferenceSet = '{{ preferenceSet }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

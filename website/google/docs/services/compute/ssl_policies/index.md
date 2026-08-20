@@ -272,42 +272,42 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-sslPolicy"><code>sslPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-sslPolicy"><code>sslPolicy</code></a></td>
     <td></td>
     <td>Lists all of the ordered rules present in a single specified policy.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists all the SSL policies that have been configured for the specified<br />project and region.</td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists all the SSL policies that have been configured for the specified<br />project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all SslPolicy resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a new policy in the specified project and region using the data<br />included in the request.</td>
+    <td>Returns the specified SSL policy resource.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-sslPolicy"><code>sslPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-sslPolicy"><code>sslPolicy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Patches the specified SSL policy with the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-sslPolicy"><code>sslPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-sslPolicy"><code>sslPolicy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes the specified SSL policy. The SSL policy resource can be deleted<br />only if it is not in use by any TargetHttpsProxy or TargetSslProxy<br />resources.</td>
 </tr>
@@ -329,11 +329,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -417,14 +412,13 @@ selfLink,
 warnings
 FROM google.compute.ssl_policies
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
 AND sslPolicy = '{{ sslPolicy }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Lists all the SSL policies that have been configured for the specified<br />project and region.
+Lists all the SSL policies that have been configured for the specified<br />project.
 
 ```sql
 SELECT
@@ -436,12 +430,11 @@ selfLink,
 warning
 FROM google.compute.ssl_policies
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -467,13 +460,13 @@ selfLink,
 warnings
 FROM google.compute.ssl_policies
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -491,31 +484,29 @@ AND orderBy = '{{ orderBy }}'
 >
 <TabItem value="insert">
 
-Creates a new policy in the specified project and region using the data<br />included in the request.
+Returns the specified SSL policy resource.
 
 ```sql
 INSERT INTO google.compute.ssl_policies (
-data__profile,
 data__customFeatures,
-data__postQuantumKeyExchange,
-data__fingerprint,
 data__description,
+data__fingerprint,
 data__minTlsVersion,
 data__name,
+data__postQuantumKeyExchange,
+data__profile,
 project,
-region,
 requestId
 )
 SELECT 
-'{{ profile }}',
 '{{ customFeatures }}',
-'{{ postQuantumKeyExchange }}',
-'{{ fingerprint }}',
 '{{ description }}',
+'{{ fingerprint }}',
 '{{ minTlsVersion }}',
 '{{ name }}',
+'{{ postQuantumKeyExchange }}',
+'{{ profile }}',
 '{{ project }}',
-'{{ region }}',
 '{{ requestId }}'
 RETURNING
 id,
@@ -556,17 +547,6 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the ssl_policies resource.
-    - name: region
-      value: "{{ region }}"
-      description: Required parameter for the ssl_policies resource.
-    - name: profile
-      value: "{{ profile }}"
-      description: |
-        Profile specifies the set of SSL features that can be used by the load
-        balancer when negotiating SSL with clients. This can be one ofCOMPATIBLE, MODERN, RESTRICTED,FIPS_202205, or CUSTOM. If usingCUSTOM, the set of SSL features to enable must be specified in
-        the customFeatures field. If using FIPS_202205,
-        the min_tls_version field must be set to TLS_1_2.
-      valid_values: ['COMPATIBLE', 'CUSTOM', 'FIPS_202205', 'MODERN', 'RESTRICTED']
     - name: customFeatures
       value:
         - "{{ customFeatures }}"
@@ -574,17 +554,11 @@ zone
         A list of features enabled when the selected profile is CUSTOM. The
         method returns the set of features that can be
         specified in this list. This field must be empty if the profile is notCUSTOM.
-    - name: postQuantumKeyExchange
-      value: "{{ postQuantumKeyExchange }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        One of DEFAULT, ENABLED, orDEFERRED. Controls whether the load balancer negotiates
-        X25519MLKEM768 key exchange when clients advertise support for it. When set
-        to DEFAULT, or if no SSL Policy is attached to the target
-        proxy, the load balancer disallows X25519MLKEM768 key exchange before
-        October 2026, and allows it afterward. When set to ENABLED,
-        the load balancer allows X25519MLKEM768 key exchange. When set toDEFERRED, the load balancer disallows X25519MLKEM768 key
-        exchange until October 2027, and allows it afterward.
-      valid_values: ['DEFAULT', 'DEFERRED', 'ENABLED']
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -595,11 +569,6 @@ zone
         request will fail with error 412 conditionNotMet.
         To see the latest fingerprint, make a get() request to
         retrieve an SslPolicy.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
     - name: minTlsVersion
       value: "{{ minTlsVersion }}"
       description: |
@@ -617,6 +586,25 @@ zone
         must be a lowercase letter, and all following characters must be a dash,
         lowercase letter, or digit, except the last character, which cannot be a
         dash.
+    - name: postQuantumKeyExchange
+      value: "{{ postQuantumKeyExchange }}"
+      description: |
+        One of DEFAULT, ENABLED, orDEFERRED. Controls whether the load balancer negotiates
+        X25519MLKEM768 key exchange when clients advertise support for it. When set
+        to DEFAULT, or if no SSL Policy is attached to the target
+        proxy, the load balancer disallows X25519MLKEM768 key exchange before
+        October 2026, and allows it afterward. When set to ENABLED,
+        the load balancer allows X25519MLKEM768 key exchange. When set toDEFERRED, the load balancer disallows X25519MLKEM768 key
+        exchange until October 2027, and allows it afterward.
+      valid_values: ['DEFAULT', 'DEFERRED', 'ENABLED']
+    - name: profile
+      value: "{{ profile }}"
+      description: |
+        Profile specifies the set of SSL features that can be used by the load
+        balancer when negotiating SSL with clients. This can be one ofCOMPATIBLE, MODERN, RESTRICTED,FIPS_202205, or CUSTOM. If usingCUSTOM, the set of SSL features to enable must be specified in
+        the customFeatures field. If using FIPS_202205,
+        the min_tls_version field must be set to TLS_1_2.
+      valid_values: ['COMPATIBLE', 'CUSTOM', 'FIPS_202205', 'MODERN', 'RESTRICTED']
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -640,16 +628,15 @@ Patches the specified SSL policy with the data included in the request.
 ```sql
 UPDATE google.compute.ssl_policies
 SET 
-data__profile = '{{ profile }}',
 data__customFeatures = '{{ customFeatures }}',
-data__postQuantumKeyExchange = '{{ postQuantumKeyExchange }}',
-data__fingerprint = '{{ fingerprint }}',
 data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
 data__minTlsVersion = '{{ minTlsVersion }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__postQuantumKeyExchange = '{{ postQuantumKeyExchange }}',
+data__profile = '{{ profile }}'
 WHERE 
 project = '{{ project }}' --required
-AND region = '{{ region }}' --required
 AND sslPolicy = '{{ sslPolicy }}' --required
 AND requestId = '{{ requestId}}'
 RETURNING
@@ -700,7 +687,6 @@ Deletes the specified SSL policy. The SSL policy resource can be deleted<br />on
 ```sql
 DELETE FROM google.compute.ssl_policies
 WHERE project = '{{ project }}' --required
-AND region = '{{ region }}' --required
 AND sslPolicy = '{{ sslPolicy }}' --required
 AND requestId = '{{ requestId }}'
 ;

@@ -98,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#list_wait"><CopyableCode code="list_wait" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a>, <a href="#parameter-featuresId"><code>featuresId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 </tbody>
@@ -190,10 +190,10 @@ AND locationsId = '{{ locationsId }}' -- required
 AND featureGroupsId = '{{ featureGroupsId }}' -- required
 AND featuresId = '{{ featuresId }}' -- required
 AND operationsId = '{{ operationsId }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

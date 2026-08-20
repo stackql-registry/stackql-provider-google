@@ -240,14 +240,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of instance templates that are contained within the<br />specified project and region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all InstanceTemplates resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -386,11 +386,11 @@ warning
 FROM google.compute.instance_templates
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -412,13 +412,13 @@ sourceInstance,
 sourceInstanceParams
 FROM google.compute.instance_templates
 WHERE project = '{{ project }}' -- required
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -440,21 +440,21 @@ Creates an instance template in the specified project and region using the<br />
 
 ```sql
 INSERT INTO google.compute.instance_templates (
-data__properties,
 data__description,
-data__sourceInstanceParams,
 data__name,
+data__properties,
 data__sourceInstance,
+data__sourceInstanceParams,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ properties }}',
 '{{ description }}',
-'{{ sourceInstanceParams }}',
 '{{ name }}',
+'{{ properties }}',
 '{{ sourceInstance }}',
+'{{ sourceInstanceParams }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -500,198 +500,11 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the instance_templates resource.
-    - name: properties
-      description: |
-        The instance properties for this instance template.
-      value:
-        scheduling:
-          onHostMaintenance: "{{ onHostMaintenance }}"
-          hostErrorTimeoutSeconds: {{ hostErrorTimeoutSeconds }}
-          provisioningModel: "{{ provisioningModel }}"
-          availabilityDomain: {{ availabilityDomain }}
-          onInstanceStopAction:
-            discardLocalSsd: {{ discardLocalSsd }}
-          nodeAffinities:
-            - values: "{{ values }}"
-              key: "{{ key }}"
-              operator: "{{ operator }}"
-          maxRunDuration:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-          instanceTerminationAction: "{{ instanceTerminationAction }}"
-          preemptionNoticeDuration:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-          preemptible: {{ preemptible }}
-          skipGuestOsShutdown: {{ skipGuestOsShutdown }}
-          terminationTime: "{{ terminationTime }}"
-          localSsdRecoveryTimeout:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-          minNodeCpus: {{ minNodeCpus }}
-          gracefulShutdown:
-            enabled: {{ enabled }}
-            maxDuration:
-              nanos: {{ nanos }}
-              seconds: "{{ seconds }}"
-          automaticRestart: {{ automaticRestart }}
-          locationHint: "{{ locationHint }}"
-        guestAccelerators:
-          - acceleratorType: "{{ acceleratorType }}"
-            acceleratorCount: {{ acceleratorCount }}
-        privateIpv6GoogleAccess: "{{ privateIpv6GoogleAccess }}"
-        reservationAffinity:
-          consumeReservationType: "{{ consumeReservationType }}"
-          key: "{{ key }}"
-          values:
-            - "{{ values }}"
-        machineType: "{{ machineType }}"
-        shieldedInstanceConfig:
-          enableSecureBoot: {{ enableSecureBoot }}
-          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-          enableVtpm: {{ enableVtpm }}
-        networkPerformanceConfig:
-          totalEgressBandwidthTier: "{{ totalEgressBandwidthTier }}"
-        resourcePolicies:
-          - "{{ resourcePolicies }}"
-        canIpForward: {{ canIpForward }}
-        localSsdEncryptionMode: "{{ localSsdEncryptionMode }}"
-        tags:
-          items:
-            - "{{ items }}"
-          fingerprint: "{{ fingerprint }}"
-        minCpuPlatform: "{{ minCpuPlatform }}"
-        confidentialInstanceConfig:
-          enableConfidentialCompute: {{ enableConfidentialCompute }}
-          confidentialInstanceType: "{{ confidentialInstanceType }}"
-        workloadIdentityConfig:
-          identityCertificateEnabled: {{ identityCertificateEnabled }}
-          identity: "{{ identity }}"
-        networkInterfaces:
-          - ipv6Address: "{{ ipv6Address }}"
-            parentNicName: "{{ parentNicName }}"
-            fingerprint: "{{ fingerprint }}"
-            igmpQuery: "{{ igmpQuery }}"
-            serviceClassId: "{{ serviceClassId }}"
-            subnetwork: "{{ subnetwork }}"
-            network: "{{ network }}"
-            stackType: "{{ stackType }}"
-            ipv6AccessType: "{{ ipv6AccessType }}"
-            accessConfigs: "{{ accessConfigs }}"
-            networkAttachment: "{{ networkAttachment }}"
-            queueCount: {{ queueCount }}
-            name: "{{ name }}"
-            kind: "{{ kind }}"
-            networkIP: "{{ networkIP }}"
-            vlan: {{ vlan }}
-            internalIpv6PrefixLength: {{ internalIpv6PrefixLength }}
-            nicType: "{{ nicType }}"
-            aliasIpRanges: "{{ aliasIpRanges }}"
-            ipv6AccessConfigs: "{{ ipv6AccessConfigs }}"
-            aliasIpv6Ranges: "{{ aliasIpv6Ranges }}"
-            enableVpcScopedDns: {{ enableVpcScopedDns }}
-        serviceAccounts:
-          - scopes: "{{ scopes }}"
-            email: "{{ email }}"
-        keyRevocationActionType: "{{ keyRevocationActionType }}"
-        metadata:
-          fingerprint: "{{ fingerprint }}"
-          items:
-            - key: "{{ key }}"
-              value: "{{ value }}"
-          kind: "{{ kind }}"
-        description: "{{ description }}"
-        disks:
-          - diskSizeGb: "{{ diskSizeGb }}"
-            boot: {{ boot }}
-            architecture: "{{ architecture }}"
-            deviceName: "{{ deviceName }}"
-            savedState: "{{ savedState }}"
-            diskEncryptionKey:
-              rawKey: "{{ rawKey }}"
-              kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-              rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-              kmsKeyName: "{{ kmsKeyName }}"
-              sha256: "{{ sha256 }}"
-            interface: "{{ interface }}"
-            mode: "{{ mode }}"
-            source: "{{ source }}"
-            kind: "{{ kind }}"
-            licenses: "{{ licenses }}"
-            shieldedInstanceInitialState:
-              pk:
-                content: "{{ content }}"
-                fileType: "{{ fileType }}"
-              keks:
-                - content: "{{ content }}"
-                  fileType: "{{ fileType }}"
-              dbs:
-                - content: "{{ content }}"
-                  fileType: "{{ fileType }}"
-              dbxs:
-                - content: "{{ content }}"
-                  fileType: "{{ fileType }}"
-            type: "{{ type }}"
-            index: {{ index }}
-            autoDelete: {{ autoDelete }}
-            guestOsFeatures: "{{ guestOsFeatures }}"
-            forceAttach: {{ forceAttach }}
-            initializeParams:
-              resourcePolicies:
-                - "{{ resourcePolicies }}"
-              storagePool: "{{ storagePool }}"
-              replicaZones:
-                - "{{ replicaZones }}"
-              diskSizeGb: "{{ diskSizeGb }}"
-              architecture: "{{ architecture }}"
-              sourceImage: "{{ sourceImage }}"
-              enableConfidentialCompute: {{ enableConfidentialCompute }}
-              sourceImageEncryptionKey:
-                rawKey: "{{ rawKey }}"
-                kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-                rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-                kmsKeyName: "{{ kmsKeyName }}"
-                sha256: "{{ sha256 }}"
-              description: "{{ description }}"
-              provisionedIops: "{{ provisionedIops }}"
-              labels: "{{ labels }}"
-              provisionedThroughput: "{{ provisionedThroughput }}"
-              diskName: "{{ diskName }}"
-              sourceSnapshotEncryptionKey:
-                rawKey: "{{ rawKey }}"
-                kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-                rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-                kmsKeyName: "{{ kmsKeyName }}"
-                sha256: "{{ sha256 }}"
-              resourceManagerTags: "{{ resourceManagerTags }}"
-              diskType: "{{ diskType }}"
-              licenses:
-                - "{{ licenses }}"
-              onUpdateAction: "{{ onUpdateAction }}"
-              sourceSnapshot: "{{ sourceSnapshot }}"
-        advancedMachineFeatures:
-          enableUefiNetworking: {{ enableUefiNetworking }}
-          performanceMonitoringUnit: "{{ performanceMonitoringUnit }}"
-          threadsPerCore: {{ threadsPerCore }}
-          visibleCoreCount: {{ visibleCoreCount }}
-          enableNestedVirtualization: {{ enableNestedVirtualization }}
-          turboMode: "{{ turboMode }}"
-        labels: "{{ labels }}"
-        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: description
       value: "{{ description }}"
       description: |
         An optional description of this resource. Provide this property when you
         create the resource.
-    - name: sourceInstanceParams
-      description: |
-        The source instance params to use to create this instance template.
-      value:
-        diskConfigs:
-          - instantiateFrom: "{{ instantiateFrom }}"
-            deviceName: "{{ deviceName }}"
-            autoDelete: {{ autoDelete }}
-            customImage: "{{ customImage }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -702,6 +515,184 @@ zone
         character must be a lowercase letter, and all following characters must be
         a dash, lowercase letter, or digit, except the last character, which cannot
         be a dash.
+    - name: properties
+      description: |
+        The instance properties for this instance template.
+      value:
+        advancedMachineFeatures:
+          enableNestedVirtualization: {{ enableNestedVirtualization }}
+          enableUefiNetworking: {{ enableUefiNetworking }}
+          performanceMonitoringUnit: "{{ performanceMonitoringUnit }}"
+          threadsPerCore: {{ threadsPerCore }}
+          turboMode: "{{ turboMode }}"
+          visibleCoreCount: {{ visibleCoreCount }}
+        canIpForward: {{ canIpForward }}
+        confidentialInstanceConfig:
+          confidentialInstanceType: "{{ confidentialInstanceType }}"
+          enableConfidentialCompute: {{ enableConfidentialCompute }}
+        description: "{{ description }}"
+        disks:
+          - architecture: "{{ architecture }}"
+            autoDelete: {{ autoDelete }}
+            boot: {{ boot }}
+            deviceName: "{{ deviceName }}"
+            diskEncryptionKey:
+              kmsKeyName: "{{ kmsKeyName }}"
+              kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+              rawKey: "{{ rawKey }}"
+              rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+              sha256: "{{ sha256 }}"
+            diskSizeGb: "{{ diskSizeGb }}"
+            forceAttach: {{ forceAttach }}
+            guestOsFeatures: "{{ guestOsFeatures }}"
+            index: {{ index }}
+            initializeParams:
+              architecture: "{{ architecture }}"
+              description: "{{ description }}"
+              diskName: "{{ diskName }}"
+              diskSizeGb: "{{ diskSizeGb }}"
+              diskType: "{{ diskType }}"
+              enableConfidentialCompute: {{ enableConfidentialCompute }}
+              labels: "{{ labels }}"
+              licenses:
+                - "{{ licenses }}"
+              onUpdateAction: "{{ onUpdateAction }}"
+              provisionedIops: "{{ provisionedIops }}"
+              provisionedThroughput: "{{ provisionedThroughput }}"
+              replicaZones:
+                - "{{ replicaZones }}"
+              resourceManagerTags: "{{ resourceManagerTags }}"
+              resourcePolicies:
+                - "{{ resourcePolicies }}"
+              sourceImage: "{{ sourceImage }}"
+              sourceImageEncryptionKey:
+                kmsKeyName: "{{ kmsKeyName }}"
+                kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+                rawKey: "{{ rawKey }}"
+                rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+                sha256: "{{ sha256 }}"
+              sourceSnapshot: "{{ sourceSnapshot }}"
+              sourceSnapshotEncryptionKey:
+                kmsKeyName: "{{ kmsKeyName }}"
+                kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+                rawKey: "{{ rawKey }}"
+                rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+                sha256: "{{ sha256 }}"
+              storagePool: "{{ storagePool }}"
+            interface: "{{ interface }}"
+            kind: "{{ kind }}"
+            licenses: "{{ licenses }}"
+            mode: "{{ mode }}"
+            savedState: "{{ savedState }}"
+            shieldedInstanceInitialState:
+              dbs:
+                - content: "{{ content }}"
+                  fileType: "{{ fileType }}"
+              dbxs:
+                - content: "{{ content }}"
+                  fileType: "{{ fileType }}"
+              keks:
+                - content: "{{ content }}"
+                  fileType: "{{ fileType }}"
+              pk:
+                content: "{{ content }}"
+                fileType: "{{ fileType }}"
+            source: "{{ source }}"
+            type: "{{ type }}"
+        guestAccelerators:
+          - acceleratorCount: {{ acceleratorCount }}
+            acceleratorType: "{{ acceleratorType }}"
+        keyRevocationActionType: "{{ keyRevocationActionType }}"
+        labels: "{{ labels }}"
+        localSsdEncryptionMode: "{{ localSsdEncryptionMode }}"
+        machineType: "{{ machineType }}"
+        metadata:
+          fingerprint: "{{ fingerprint }}"
+          items:
+            - key: "{{ key }}"
+              value: "{{ value }}"
+          kind: "{{ kind }}"
+        minCpuPlatform: "{{ minCpuPlatform }}"
+        networkInterfaces:
+          - accessConfigs: "{{ accessConfigs }}"
+            aliasIpRanges: "{{ aliasIpRanges }}"
+            aliasIpv6Ranges: "{{ aliasIpv6Ranges }}"
+            enableVpcScopedDns: {{ enableVpcScopedDns }}
+            fingerprint: "{{ fingerprint }}"
+            igmpQuery: "{{ igmpQuery }}"
+            internalIpv6PrefixLength: {{ internalIpv6PrefixLength }}
+            ipv6AccessConfigs: "{{ ipv6AccessConfigs }}"
+            ipv6AccessType: "{{ ipv6AccessType }}"
+            ipv6Address: "{{ ipv6Address }}"
+            kind: "{{ kind }}"
+            name: "{{ name }}"
+            network: "{{ network }}"
+            networkAttachment: "{{ networkAttachment }}"
+            networkIP: "{{ networkIP }}"
+            nicType: "{{ nicType }}"
+            parentNicName: "{{ parentNicName }}"
+            queueCount: {{ queueCount }}
+            serviceClassId: "{{ serviceClassId }}"
+            stackType: "{{ stackType }}"
+            subnetwork: "{{ subnetwork }}"
+            vlan: {{ vlan }}
+        networkPerformanceConfig:
+          totalEgressBandwidthTier: "{{ totalEgressBandwidthTier }}"
+        privateIpv6GoogleAccess: "{{ privateIpv6GoogleAccess }}"
+        reservationAffinity:
+          consumeReservationType: "{{ consumeReservationType }}"
+          key: "{{ key }}"
+          values:
+            - "{{ values }}"
+        resourceManagerTags: "{{ resourceManagerTags }}"
+        resourcePolicies:
+          - "{{ resourcePolicies }}"
+        scheduling:
+          automaticRestart: {{ automaticRestart }}
+          availabilityDomain: {{ availabilityDomain }}
+          gracefulShutdown:
+            enabled: {{ enabled }}
+            maxDuration:
+              nanos: {{ nanos }}
+              seconds: "{{ seconds }}"
+          hostErrorTimeoutSeconds: {{ hostErrorTimeoutSeconds }}
+          instanceTerminationAction: "{{ instanceTerminationAction }}"
+          localSsdRecoveryTimeout:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+          locationHint: "{{ locationHint }}"
+          maxRunDuration:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+          minNodeCpus: {{ minNodeCpus }}
+          nodeAffinities:
+            - key: "{{ key }}"
+              operator: "{{ operator }}"
+              values: "{{ values }}"
+          onHostMaintenance: "{{ onHostMaintenance }}"
+          onInstanceStopAction:
+            discardLocalSsd: {{ discardLocalSsd }}
+          preemptible: {{ preemptible }}
+          preemptionNoticeDuration:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+          provisioningModel: "{{ provisioningModel }}"
+          skipGuestOsShutdown: {{ skipGuestOsShutdown }}
+          terminationTime: "{{ terminationTime }}"
+        serviceAccounts:
+          - email: "{{ email }}"
+            scopes: "{{ scopes }}"
+        shieldedInstanceConfig:
+          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+          enableSecureBoot: {{ enableSecureBoot }}
+          enableVtpm: {{ enableVtpm }}
+        tags:
+          fingerprint: "{{ fingerprint }}"
+          items:
+            - "{{ items }}"
+        workloadIdentityConfig:
+          identity: "{{ identity }}"
+          identityCertificateEnabled: {{ identityCertificateEnabled }}
     - name: sourceInstance
       value: "{{ sourceInstance }}"
       description: |
@@ -710,6 +701,15 @@ zone
         values:
         - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance
         - projects/project/zones/zone/instances/instance
+    - name: sourceInstanceParams
+      description: |
+        The source instance params to use to create this instance template.
+      value:
+        diskConfigs:
+          - autoDelete: {{ autoDelete }}
+            customImage: "{{ customImage }}"
+            deviceName: "{{ deviceName }}"
+            instantiateFrom: "{{ instantiateFrom }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

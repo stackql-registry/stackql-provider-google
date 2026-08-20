@@ -120,19 +120,19 @@ Adds a peering to the specified network.
 
 ```sql
 INSERT INTO google.compute.networks_peering (
-data__peerNetwork,
-data__networkPeering,
-data__name,
 data__autoCreateRoutes,
+data__name,
+data__networkPeering,
+data__peerNetwork,
 project,
 network,
 requestId
 )
 SELECT 
-'{{ peerNetwork }}',
-'{{ networkPeering }}',
-'{{ name }}',
 {{ autoCreateRoutes }},
+'{{ name }}',
+'{{ networkPeering }}',
+'{{ peerNetwork }}',
 '{{ project }}',
 '{{ network }}',
 '{{ requestId }}'
@@ -178,47 +178,6 @@ zone
     - name: network
       value: "{{ network }}"
       description: Required parameter for the networks_peering resource.
-    - name: peerNetwork
-      value: "{{ peerNetwork }}"
-      description: |
-        URL of the peer network.  It can be either full URL or partial URL. The
-        peer network may belong to a different project. If the partial URL does not
-        contain project, it is assumed that the peer network is in the same project
-        as the current network.
-    - name: networkPeering
-      description: |
-        A network peering attached to a network resource. The message includes the
-        peering name, peer network, peering state, and a flag indicating whether
-        Google Compute Engine should automatically create routes for the peering.
-      value:
-        exchangeSubnetRoutes: {{ exchangeSubnetRoutes }}
-        exportSubnetRoutesWithPublicIp: {{ exportSubnetRoutesWithPublicIp }}
-        state: "{{ state }}"
-        updateStrategy: "{{ updateStrategy }}"
-        autoCreateRoutes: {{ autoCreateRoutes }}
-        importSubnetRoutesWithPublicIp: {{ importSubnetRoutesWithPublicIp }}
-        name: "{{ name }}"
-        exportCustomRoutes: {{ exportCustomRoutes }}
-        stateDetails: "{{ stateDetails }}"
-        network: "{{ network }}"
-        stackType: "{{ stackType }}"
-        importCustomRoutes: {{ importCustomRoutes }}
-        connectionStatus:
-          trafficConfiguration:
-            exportCustomRoutesToPeer: {{ exportCustomRoutesToPeer }}
-            importSubnetRoutesWithPublicIpFromPeer: {{ importSubnetRoutesWithPublicIpFromPeer }}
-            importCustomRoutesFromPeer: {{ importCustomRoutesFromPeer }}
-            stackType: "{{ stackType }}"
-            exportSubnetRoutesWithPublicIpToPeer: {{ exportSubnetRoutesWithPublicIpToPeer }}
-          consensusState:
-            deleteStatus: "{{ deleteStatus }}"
-            updateStatus: "{{ updateStatus }}"
-          updateStrategy: "{{ updateStrategy }}"
-        peerMtu: {{ peerMtu }}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the peering, which should conform to RFC1035.
     - name: autoCreateRoutes
       value: {{ autoCreateRoutes }}
       description: |
@@ -228,6 +187,47 @@ zone
         automatically between peered networks. Currently this field should always
         be true since Google Compute Engine will automatically create and manage
         subnetwork routes between two networks when peering state isACTIVE.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the peering, which should conform to RFC1035.
+    - name: networkPeering
+      description: |
+        A network peering attached to a network resource. The message includes the
+        peering name, peer network, peering state, and a flag indicating whether
+        Google Compute Engine should automatically create routes for the peering.
+      value:
+        autoCreateRoutes: {{ autoCreateRoutes }}
+        connectionStatus:
+          consensusState:
+            deleteStatus: "{{ deleteStatus }}"
+            updateStatus: "{{ updateStatus }}"
+          trafficConfiguration:
+            exportCustomRoutesToPeer: {{ exportCustomRoutesToPeer }}
+            exportSubnetRoutesWithPublicIpToPeer: {{ exportSubnetRoutesWithPublicIpToPeer }}
+            importCustomRoutesFromPeer: {{ importCustomRoutesFromPeer }}
+            importSubnetRoutesWithPublicIpFromPeer: {{ importSubnetRoutesWithPublicIpFromPeer }}
+            stackType: "{{ stackType }}"
+          updateStrategy: "{{ updateStrategy }}"
+        exchangeSubnetRoutes: {{ exchangeSubnetRoutes }}
+        exportCustomRoutes: {{ exportCustomRoutes }}
+        exportSubnetRoutesWithPublicIp: {{ exportSubnetRoutesWithPublicIp }}
+        importCustomRoutes: {{ importCustomRoutes }}
+        importSubnetRoutesWithPublicIp: {{ importSubnetRoutesWithPublicIp }}
+        name: "{{ name }}"
+        network: "{{ network }}"
+        peerMtu: {{ peerMtu }}
+        stackType: "{{ stackType }}"
+        state: "{{ state }}"
+        stateDetails: "{{ stateDetails }}"
+        updateStrategy: "{{ updateStrategy }}"
+    - name: peerNetwork
+      value: "{{ peerNetwork }}"
+      description: |
+        URL of the peer network.  It can be either full URL or partial URL. The
+        peer network may belong to a different project. If the partial URL does not
+        contain project, it is assumed that the peer network is in the same project
+        as the current network.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

@@ -78,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Encryption information for a Cloud Spanner database or backup. (id: EncryptionInfo)</td>
+    <td>Output only. The encryption information for the backup. (id: EncryptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInformation" /></td>
@@ -192,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Encryption information for a Cloud Spanner database or backup. (id: EncryptionInfo)</td>
+    <td>Output only. The encryption information for the backup. (id: EncryptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInformation" /></td>
@@ -496,9 +496,9 @@ Starts creating a new Cloud Spanner Backup. The returned backup long-running ope
 ```sql
 INSERT INTO google.spanner.backups (
 data__database,
-data__versionTime,
 data__expireTime,
 data__name,
+data__versionTime,
 projectsId,
 instancesId,
 backupId,
@@ -508,9 +508,9 @@ encryptionConfig.kmsKeyNames
 )
 SELECT 
 '{{ database }}',
-'{{ versionTime }}',
 '{{ expireTime }}',
 '{{ name }}',
+'{{ versionTime }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ backupId }}',
@@ -541,10 +541,6 @@ response
       value: "{{ database }}"
       description: |
         Required for the CreateBackup operation. Name of the database from which this backup was created. This needs to be in the same instance as the backup. Values are of the form \`projects/{project}/instances/{instance}/databases/{database}\`.
-    - name: versionTime
-      value: "{{ versionTime }}"
-      description: |
-        The backup will contain an externally consistent copy of the database at the timestamp specified by \`version_time\`. If \`version_time\` is not specified, the system will set \`version_time\` to the \`create_time\` of the backup.
     - name: expireTime
       value: "{{ expireTime }}"
       description: |
@@ -553,6 +549,10 @@ response
       value: "{{ name }}"
       description: |
         Output only for the CreateBackup operation. Required for the UpdateBackup operation. A globally unique identifier for the backup which cannot be changed. Values are of the form \`projects/{project}/instances/{instance}/backups/a-z*[a-z0-9]\` The final segment of the name must be between 2 and 60 characters in length. The backup is stored in the location(s) specified in the instance configuration of the instance containing the backup, identified by the prefix of the backup name of the form \`projects/{project}/instances/{instance}\`.
+    - name: versionTime
+      value: "{{ versionTime }}"
+      description: |
+        The backup will contain an externally consistent copy of the database at the timestamp specified by \`version_time\`. If \`version_time\` is not specified, the system will set \`version_time\` to the \`create_time\` of the backup.
     - name: backupId
       value: "{{ backupId }}"
     - name: encryptionConfig.encryptionType
@@ -583,9 +583,9 @@ Updates a pending or completed Backup.
 UPDATE google.spanner.backups
 SET 
 data__database = '{{ database }}',
-data__versionTime = '{{ versionTime }}',
 data__expireTime = '{{ expireTime }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__versionTime = '{{ versionTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -659,9 +659,9 @@ EXEC google.spanner.backups.projects_instances_backups_copy
 @@json=
 '{
 "backupId": "{{ backupId }}", 
-"sourceBackup": "{{ sourceBackup }}", 
+"encryptionConfig": "{{ encryptionConfig }}", 
 "expireTime": "{{ expireTime }}", 
-"encryptionConfig": "{{ encryptionConfig }}"
+"sourceBackup": "{{ sourceBackup }}"
 }'
 ;
 ```

@@ -104,9 +104,9 @@ EXEC google.ondemandscanning.scans.analyze_packages
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"includeOsvData": {{ includeOsvData }}, 
 "packages": "{{ packages }}", 
-"resourceUri": "{{ resourceUri }}", 
-"includeOsvData": {{ includeOsvData }}
+"resourceUri": "{{ resourceUri }}"
 }'
 ;
 ```

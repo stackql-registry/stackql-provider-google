@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_session_templates_list"><CopyableCode code="projects_locations_session_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists session templates.</td>
 </tr>
 <tr>
@@ -331,9 +331,9 @@ uuid
 FROM google.dataproc.session_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -355,24 +355,24 @@ Create a session template synchronously.
 
 ```sql
 INSERT INTO google.dataproc.session_templates (
-data__name,
-data__runtimeConfig,
+data__description,
 data__environmentConfig,
-data__sparkConnectSession,
 data__jupyterSession,
 data__labels,
-data__description,
+data__name,
+data__runtimeConfig,
+data__sparkConnectSession,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ runtimeConfig }}',
+'{{ description }}',
 '{{ environmentConfig }}',
-'{{ sparkConnectSession }}',
 '{{ jupyterSession }}',
 '{{ labels }}',
-'{{ description }}',
+'{{ name }}',
+'{{ runtimeConfig }}',
+'{{ sparkConnectSession }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -401,49 +401,31 @@ uuid
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the session_templates resource.
-    - name: name
-      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Required. Identifier. The resource name of the session template.
-    - name: runtimeConfig
-      description: |
-        Optional. Runtime configuration for session execution.
-      value:
-        properties: "{{ properties }}"
-        version: "{{ version }}"
-        repositoryConfig:
-          pypiRepositoryConfig:
-            pypiRepository: "{{ pypiRepository }}"
-        autotuningConfig:
-          scenarios:
-            - "{{ scenarios }}"
-        containerImage: "{{ containerImage }}"
-        cohort: "{{ cohort }}"
+        Optional. Brief description of the template.
     - name: environmentConfig
       description: |
         Optional. Environment configuration for session execution.
       value:
+        executionConfig:
+          authenticationConfig:
+            userWorkloadAuthenticationType: "{{ userWorkloadAuthenticationType }}"
+          idleTtl: "{{ idleTtl }}"
+          kmsKey: "{{ kmsKey }}"
+          networkTags:
+            - "{{ networkTags }}"
+          networkUri: "{{ networkUri }}"
+          resourceManagerTags: "{{ resourceManagerTags }}"
+          serviceAccount: "{{ serviceAccount }}"
+          stagingBucket: "{{ stagingBucket }}"
+          subnetworkUri: "{{ subnetworkUri }}"
+          ttl: "{{ ttl }}"
         peripheralsConfig:
           metastoreService: "{{ metastoreService }}"
           sparkHistoryServerConfig:
             dataprocCluster: "{{ dataprocCluster }}"
-        executionConfig:
-          idleTtl: "{{ idleTtl }}"
-          authenticationConfig:
-            userWorkloadAuthenticationType: "{{ userWorkloadAuthenticationType }}"
-          subnetworkUri: "{{ subnetworkUri }}"
-          kmsKey: "{{ kmsKey }}"
-          networkTags:
-            - "{{ networkTags }}"
-          ttl: "{{ ttl }}"
-          serviceAccount: "{{ serviceAccount }}"
-          networkUri: "{{ networkUri }}"
-          resourceManagerTags: "{{ resourceManagerTags }}"
-          stagingBucket: "{{ stagingBucket }}"
-    - name: sparkConnectSession
-      value: "{{ sparkConnectSession }}"
-      description: |
-        Optional. Spark connect session config.
     - name: jupyterSession
       description: |
         Optional. Jupyter session config.
@@ -454,10 +436,28 @@ uuid
       value: "{{ labels }}"
       description: |
         Optional. Labels to associate with sessions created using this template. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty, but, if present, must contain 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
-    - name: description
-      value: "{{ description }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. Brief description of the template.
+        Required. Identifier. The resource name of the session template.
+    - name: runtimeConfig
+      description: |
+        Optional. Runtime configuration for session execution.
+      value:
+        autotuningConfig:
+          scenarios:
+            - "{{ scenarios }}"
+        cohort: "{{ cohort }}"
+        containerImage: "{{ containerImage }}"
+        properties: "{{ properties }}"
+        repositoryConfig:
+          pypiRepositoryConfig:
+            pypiRepository: "{{ pypiRepository }}"
+        version: "{{ version }}"
+    - name: sparkConnectSession
+      value: "{{ sparkConnectSession }}"
+      description: |
+        Optional. Spark connect session config.
 `}</CodeBlock>
 
 </TabItem>
@@ -479,13 +479,13 @@ Updates the session template synchronously.
 ```sql
 UPDATE google.dataproc.session_templates
 SET 
-data__name = '{{ name }}',
-data__runtimeConfig = '{{ runtimeConfig }}',
+data__description = '{{ description }}',
 data__environmentConfig = '{{ environmentConfig }}',
-data__sparkConnectSession = '{{ sparkConnectSession }}',
 data__jupyterSession = '{{ jupyterSession }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}',
+data__runtimeConfig = '{{ runtimeConfig }}',
+data__sparkConnectSession = '{{ sparkConnectSession }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

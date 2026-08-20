@@ -192,9 +192,9 @@ Updates the settings for the given resource. This method applies to all feature 
 UPDATE google.logging.logging_settings
 SET 
 data__defaultSinkConfig = '{{ defaultSinkConfig }}',
+data__disableDefaultSink = {{ disableDefaultSink }},
 data__kmsKeyName = '{{ kmsKeyName }}',
-data__storageLocation = '{{ storageLocation }}',
-data__disableDefaultSink = {{ disableDefaultSink }}
+data__storageLocation = '{{ storageLocation }}'
 WHERE 
 name = '{{ name }}' --required
 AND updateMask = '{{ updateMask}}'

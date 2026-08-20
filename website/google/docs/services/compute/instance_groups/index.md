@@ -143,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource type. (default: compute#regionInstanceGroupList)</td>
+    <td>Output only. [Output Only] The resource type, which is alwayscompute#instanceGroupList for instance group lists. (default: compute#instanceGroupList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
@@ -262,22 +262,22 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroup"><code>instanceGroup</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroup"><code>instanceGroup</code></a></td>
     <td></td>
-    <td>Returns the specified instance group resource.</td>
+    <td>Returns the specified zonal instance group. Get a list of available zonal<br />instance groups by making a list() request.<br /><br />For managed instance groups, use theinstanceGroupManagers<br />or regionInstanceGroupManagers<br />methods instead.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Retrieves the list of instance group resources contained within<br />the specified region.</td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of zonal instance group resources contained within the<br />specified zone.<br /><br />For managed instance groups, use theinstanceGroupManagers<br />or regionInstanceGroupManagers<br />methods instead.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of instance groups and sorts them by zone.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -297,9 +297,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#set_named_ports"><CopyableCode code="set_named_ports" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroup"><code>instanceGroup</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroup"><code>instanceGroup</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the named ports for the specified regional instance group.</td>
+    <td>Sets the named ports for the specified instance group.</td>
 </tr>
 </tbody>
 </table>
@@ -324,11 +324,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -392,7 +387,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Returns the specified instance group resource.
+Returns the specified zonal instance group. Get a list of available zonal<br />instance groups by making a list() request.<br /><br />For managed instance groups, use theinstanceGroupManagers<br />or regionInstanceGroupManagers<br />methods instead.
 
 ```sql
 SELECT
@@ -411,14 +406,14 @@ subnetwork,
 zone
 FROM google.compute.instance_groups
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
+AND zone = '{{ zone }}' -- required
 AND instanceGroup = '{{ instanceGroup }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Retrieves the list of instance group resources contained within<br />the specified region.
+Retrieves the list of zonal instance group resources contained within the<br />specified zone.<br /><br />For managed instance groups, use theinstanceGroupManagers<br />or regionInstanceGroupManagers<br />methods instead.
 
 ```sql
 SELECT
@@ -430,12 +425,12 @@ selfLink,
 warning
 FROM google.compute.instance_groups
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
+AND zone = '{{ zone }}' -- required
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -460,12 +455,12 @@ subnetwork,
 zone
 FROM google.compute.instance_groups
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
@@ -488,19 +483,19 @@ Creates an instance group in the specified project using the<br />parameters tha
 
 ```sql
 INSERT INTO google.compute.instance_groups (
-data__network,
 data__description,
-data__namedPorts,
 data__name,
+data__namedPorts,
+data__network,
 project,
 zone,
 requestId
 )
 SELECT 
-'{{ network }}',
 '{{ description }}',
-'{{ namedPorts }}',
 '{{ name }}',
+'{{ namedPorts }}',
+'{{ network }}',
 '{{ project }}',
 '{{ zone }}',
 '{{ requestId }}'
@@ -546,18 +541,16 @@ zone
     - name: zone
       value: "{{ zone }}"
       description: Required parameter for the instance_groups resource.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        [Output Only] The URL of the network to which all instances in the
-        instance group belong. If your instance has multiple network interfaces,
-        then the network and subnetwork fields only refer to the
-        network and subnet used by your primary interface (nic0).
     - name: description
       value: "{{ description }}"
       description: |
         An optional description of this resource. Provide this property when you
         create the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the instance group. The name must be 1-63 characters
+        long, and comply withRFC1035.
     - name: namedPorts
       description: |
         Optional. Assigns a name to a port number. For example:{name: "http", port: 80}
@@ -568,13 +561,15 @@ zone
         8082}]
         Named ports apply to all instances in this instance group.
       value:
-        - port: {{ port }}
-          name: "{{ name }}"
-    - name: name
-      value: "{{ name }}"
+        - name: "{{ name }}"
+          port: {{ port }}
+    - name: network
+      value: "{{ network }}"
       description: |
-        The name of the instance group. The name must be 1-63 characters
-        long, and comply withRFC1035.
+        [Output Only] The URL of the network to which all instances in the
+        instance group belong. If your instance has multiple network interfaces,
+        then the network and subnetwork fields only refer to the
+        network and subnet used by your primary interface (nic0).
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -617,18 +612,18 @@ AND requestId = '{{ requestId }}'
 >
 <TabItem value="set_named_ports">
 
-Sets the named ports for the specified regional instance group.
+Sets the named ports for the specified instance group.
 
 ```sql
 EXEC google.compute.instance_groups.set_named_ports 
 @project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
+@zone='{{ zone }}' --required, 
 @instanceGroup='{{ instanceGroup }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"namedPorts": "{{ namedPorts }}", 
-"fingerprint": "{{ fingerprint }}"
+"fingerprint": "{{ fingerprint }}", 
+"namedPorts": "{{ namedPorts }}"
 }'
 ;
 ```

@@ -64,7 +64,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupPool" /></td>
     <td><code>string</code></td>
-    <td>The server-defined URL for the resource. This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its failoverRatio field is properly set to a value between [0, 1].backupPool and failoverRatio together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or belowfailoverRatio, traffic arriving at the load-balanced IP will be directed to the backup pool.  In case where failoverRatio and backupPool are not set, or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
+    <td>The server-defined URL for the resource. This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its failoverRatio field is properly set to a value between [0, 1]. backupPool and failoverRatio together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or belowfailoverRatio, traffic arriving at the load-balanced IP will be directed to the backup pool.  In case where failoverRatio and backupPool are not set, or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
@@ -187,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupPool" /></td>
     <td><code>string</code></td>
-    <td>The server-defined URL for the resource. This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its failoverRatio field is properly set to a value between [0, 1].backupPool and failoverRatio together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or belowfailoverRatio, traffic arriving at the load-balanced IP will be directed to the backup pool.  In case where failoverRatio and backupPool are not set, or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
+    <td>The server-defined URL for the resource. This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its failoverRatio field is properly set to a value between [0, 1]. backupPool and failoverRatio together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or belowfailoverRatio, traffic arriving at the load-balanced IP will be directed to the backup pool.  In case where failoverRatio and backupPool are not set, or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
@@ -270,14 +270,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of target pools available to the specified<br />project and region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of target pools.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -438,9 +438,9 @@ warning
 FROM google.compute.target_pools
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -467,13 +467,13 @@ selfLink,
 sessionAffinity
 FROM google.compute.target_pools
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -496,14 +496,14 @@ Creates a target pool in the specified project and region using<br />the data in
 ```sql
 INSERT INTO google.compute.target_pools (
 data__backupPool,
-data__healthChecks,
 data__description,
 data__failoverRatio,
-data__selfLink,
+data__healthChecks,
 data__id,
-data__securityPolicy,
-data__name,
 data__instances,
+data__name,
+data__securityPolicy,
+data__selfLink,
 data__sessionAffinity,
 project,
 region,
@@ -511,14 +511,14 @@ requestId
 )
 SELECT 
 '{{ backupPool }}',
-'{{ healthChecks }}',
 '{{ description }}',
 {{ failoverRatio }},
-'{{ selfLink }}',
+'{{ healthChecks }}',
 '{{ id }}',
-'{{ securityPolicy }}',
-'{{ name }}',
 '{{ instances }}',
+'{{ name }}',
+'{{ securityPolicy }}',
+'{{ selfLink }}',
 '{{ sessionAffinity }}',
 '{{ project }}',
 '{{ region }}',
@@ -571,7 +571,8 @@ zone
         The server-defined URL for the resource. This field is applicable only when
         the containing target pool is serving a forwarding rule as the primary
         pool, and its failoverRatio field is properly set to a value
-        between [0, 1].backupPool and failoverRatio together define
+        between [0, 1].
+        backupPool and failoverRatio together define
         the fallback behavior of the primary target pool: if the ratio of the
         healthy instances in the primary pool is at or belowfailoverRatio, traffic arriving at the load-balanced
         IP will be directed to the backup pool.
@@ -580,14 +581,6 @@ zone
         the traffic will be directed back to the primary pool in the "force"
         mode, where traffic will be spread to the healthy instances with the
         best effort, or to all instances when no instance is healthy.
-    - name: healthChecks
-      value:
-        - "{{ healthChecks }}"
-      description: |
-        The URL of the HttpHealthCheck resource. A member instance in this
-        pool is considered healthy if and only if the health checks pass.
-        Only legacy HttpHealthChecks are supported. Only one health check may be
-        specified.
     - name: description
       value: "{{ description }}"
       description: |
@@ -609,20 +602,25 @@ zone
         directed back to the primary pool in the "force" mode, where traffic
         will be spread to the healthy instances with the
         best effort, or to all instances when no instance is healthy.
-    - name: selfLink
-      value: "{{ selfLink }}"
+    - name: healthChecks
+      value:
+        - "{{ healthChecks }}"
       description: |
-        [Output Only] Server-defined URL for the resource.
+        The URL of the HttpHealthCheck resource. A member instance in this
+        pool is considered healthy if and only if the health checks pass.
+        Only legacy HttpHealthChecks are supported. Only one health check may be
+        specified.
     - name: id
       value: "{{ id }}"
       description: |
         [Output Only] The unique identifier for the resource. This identifier is
         defined by the server.
-    - name: securityPolicy
-      value: "{{ securityPolicy }}"
+    - name: instances
+      value:
+        - "{{ instances }}"
       description: |
-        [Output Only] The resource URL for the security policy associated with this
-        target pool.
+        A list of resource URLs to the virtual machine instances serving this pool.
+        They must live in zones contained in the same region as this pool.
     - name: name
       value: "{{ name }}"
       description: |
@@ -633,12 +631,15 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
-    - name: instances
-      value:
-        - "{{ instances }}"
+    - name: securityPolicy
+      value: "{{ securityPolicy }}"
       description: |
-        A list of resource URLs to the virtual machine instances serving this pool.
-        They must live in zones contained in the same region as this pool.
+        [Output Only] The resource URL for the security policy associated with this
+        target pool.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
     - name: sessionAffinity
       value: "{{ sessionAffinity }}"
       description: |

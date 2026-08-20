@@ -88,7 +88,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_analytics_admin_get_schemav2"><CopyableCode code="organizations_environments_analytics_admin_get_schemav2" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-type"><code>type</code></a>, <a href="#parameter-disableCache"><code>disableCache</code></a></td>
+    <td><a href="#parameter-disableCache"><code>disableCache</code></a>, <a href="#parameter-type"><code>type</code></a></td>
     <td>Gets a list of metrics and dimensions that can be used to create analytics queries and reports. Each schema element contains the name of the field, its associated type, and a flag indicating whether it is a standard or custom field.</td>
 </tr>
 </tbody>
@@ -150,8 +150,8 @@ metrics
 FROM google.apigee.admin_schemav2
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND type = '{{ type }}'
 AND disableCache = '{{ disableCache }}'
+AND type = '{{ type }}'
 ;
 ```
 </TabItem>

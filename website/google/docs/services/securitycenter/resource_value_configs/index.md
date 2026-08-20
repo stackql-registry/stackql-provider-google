@@ -370,20 +370,20 @@ resourceValueConfigs
       value:
         - parent: "{{ parent }}"
           resourceValueConfig:
-            scope: "{{ scope }}"
-            updateTime: "{{ updateTime }}"
-            resourceValue: "{{ resourceValue }}"
-            resourceType: "{{ resourceType }}"
+            cloudProvider: "{{ cloudProvider }}"
+            createTime: "{{ createTime }}"
             description: "{{ description }}"
             name: "{{ name }}"
-            createTime: "{{ createTime }}"
-            cloudProvider: "{{ cloudProvider }}"
             resourceLabelsSelector: "{{ resourceLabelsSelector }}"
-            tagValues:
-              - "{{ tagValues }}"
+            resourceType: "{{ resourceType }}"
+            resourceValue: "{{ resourceValue }}"
+            scope: "{{ scope }}"
             sensitiveDataProtectionMapping:
               highSensitivityMapping: "{{ highSensitivityMapping }}"
               mediumSensitivityMapping: "{{ mediumSensitivityMapping }}"
+            tagValues:
+              - "{{ tagValues }}"
+            updateTime: "{{ updateTime }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -405,15 +405,15 @@ No description available.
 ```sql
 UPDATE google.securitycenter.resource_value_configs
 SET 
-data__scope = '{{ scope }}',
-data__resourceValue = '{{ resourceValue }}',
-data__resourceType = '{{ resourceType }}',
+data__cloudProvider = '{{ cloudProvider }}',
 data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__cloudProvider = '{{ cloudProvider }}',
 data__resourceLabelsSelector = '{{ resourceLabelsSelector }}',
-data__tagValues = '{{ tagValues }}',
-data__sensitiveDataProtectionMapping = '{{ sensitiveDataProtectionMapping }}'
+data__resourceType = '{{ resourceType }}',
+data__resourceValue = '{{ resourceValue }}',
+data__scope = '{{ scope }}',
+data__sensitiveDataProtectionMapping = '{{ sensitiveDataProtectionMapping }}',
+data__tagValues = '{{ tagValues }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND resourceValueConfigsId = '{{ resourceValueConfigsId }}' --required

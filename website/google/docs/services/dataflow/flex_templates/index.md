@@ -55,7 +55,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a></td>
     <td></td>
-    <td>Launch a job with a FlexTemplate.</td>
+    <td>Launch a job with a FlexTemplate. # IAM Permissions Requires the following IAM permission(s) on the resource: - `dataflow.jobs.create` - `resourcemanager.projects.get` - `iam.serviceAccounts.actAs` - `storage.buckets.get` - `storage.buckets.create` (Required if the default staging bucket must be created)</td>
 </tr>
 </tbody>
 </table>
@@ -96,7 +96,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_flex_templates_launch">
 
-Launch a job with a FlexTemplate.
+Launch a job with a FlexTemplate. # IAM Permissions Requires the following IAM permission(s) on the resource: - `dataflow.jobs.create` - `resourcemanager.projects.get` - `iam.serviceAccounts.actAs` - `storage.buckets.get` - `storage.buckets.create` (Required if the default staging bucket must be created)
 
 ```sql
 EXEC google.dataflow.flex_templates.projects_locations_flex_templates_launch 
@@ -104,8 +104,8 @@ EXEC google.dataflow.flex_templates.projects_locations_flex_templates_launch
 @location='{{ location }}' --required 
 @@json=
 '{
-"validateOnly": {{ validateOnly }}, 
-"launchParameter": "{{ launchParameter }}"
+"launchParameter": "{{ launchParameter }}", 
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```

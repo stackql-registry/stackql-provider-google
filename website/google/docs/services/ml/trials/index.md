@@ -68,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="finalMeasurement" /></td>
     <td><code>object</code></td>
-    <td>A message representing a measurement. (id: GoogleCloudMlV1__Measurement)</td>
+    <td>The final measurement containing the objective value. (id: GoogleCloudMlV1__Measurement)</td>
 </tr>
 <tr>
     <td><CopyableCode code="infeasibleReason" /></td>
@@ -168,18 +168,18 @@ The following methods are available for this resource:
     <td>Deletes a trial.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_studies_trials_complete"><CopyableCode code="projects_locations_studies_trials_complete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
-    <td></td>
-    <td>Marks a trial as complete.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_studies_trials_check_early_stopping_state"><CopyableCode code="projects_locations_studies_trials_check_early_stopping_state" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
     <td></td>
     <td>Checks whether a trial should stop or not. Returns a long-running operation. When the operation is successful, it will contain a CheckTrialEarlyStoppingStateResponse.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_studies_trials_complete"><CopyableCode code="projects_locations_studies_trials_complete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
+    <td></td>
+    <td>Marks a trial as complete.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_studies_trials_stop"><CopyableCode code="projects_locations_studies_trials_stop" /></a></td>
@@ -299,8 +299,8 @@ Adds a user provided trial to a study.
 
 ```sql
 INSERT INTO google.ml.trials (
-data__measurements,
 data__finalMeasurement,
+data__measurements,
 data__parameters,
 data__state,
 projectsId,
@@ -308,8 +308,8 @@ locationsId,
 studiesId
 )
 SELECT 
-'{{ measurements }}',
 '{{ finalMeasurement }}',
+'{{ measurements }}',
 '{{ parameters }}',
 '{{ state }}',
 '{{ projectsId }}',
@@ -343,28 +343,28 @@ trialInfeasible
     - name: studiesId
       value: "{{ studiesId }}"
       description: Required parameter for the trials resource.
+    - name: finalMeasurement
+      description: |
+        The final measurement containing the objective value.
+      value:
+        elapsedTime: "{{ elapsedTime }}"
+        metrics:
+          - metric: "{{ metric }}"
+            value: {{ value }}
+        stepCount: "{{ stepCount }}"
     - name: measurements
       description: |
         A list of measurements that are strictly lexicographically ordered by their induced tuples (steps, elapsed_time). These are used for early stopping computations.
       value:
-        - stepCount: "{{ stepCount }}"
-          elapsedTime: "{{ elapsedTime }}"
+        - elapsedTime: "{{ elapsedTime }}"
           metrics: "{{ metrics }}"
-    - name: finalMeasurement
-      description: |
-        A message representing a measurement.
-      value:
-        stepCount: "{{ stepCount }}"
-        elapsedTime: "{{ elapsedTime }}"
-        metrics:
-          - value: {{ value }}
-            metric: "{{ metric }}"
+          stepCount: "{{ stepCount }}"
     - name: parameters
       description: |
         The parameters of the trial.
       value:
-        - intValue: "{{ intValue }}"
-          floatValue: {{ floatValue }}
+        - floatValue: {{ floatValue }}
+          intValue: "{{ intValue }}"
           parameter: "{{ parameter }}"
           stringValue: "{{ stringValue }}"
     - name: state
@@ -405,14 +405,27 @@ AND trialsId = '{{ trialsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_studies_trials_complete"
+    defaultValue="projects_locations_studies_trials_check_early_stopping_state"
     values={[
-        { label: 'projects_locations_studies_trials_complete', value: 'projects_locations_studies_trials_complete' },
         { label: 'projects_locations_studies_trials_check_early_stopping_state', value: 'projects_locations_studies_trials_check_early_stopping_state' },
+        { label: 'projects_locations_studies_trials_complete', value: 'projects_locations_studies_trials_complete' },
         { label: 'projects_locations_studies_trials_stop', value: 'projects_locations_studies_trials_stop' },
         { label: 'projects_locations_studies_trials_suggest', value: 'projects_locations_studies_trials_suggest' }
     ]}
 >
+<TabItem value="projects_locations_studies_trials_check_early_stopping_state">
+
+Checks whether a trial should stop or not. Returns a long-running operation. When the operation is successful, it will contain a CheckTrialEarlyStoppingStateResponse.
+
+```sql
+EXEC google.ml.trials.projects_locations_studies_trials_check_early_stopping_state 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@studiesId='{{ studiesId }}' --required, 
+@trialsId='{{ trialsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="projects_locations_studies_trials_complete">
 
 Marks a trial as complete.
@@ -425,23 +438,10 @@ EXEC google.ml.trials.projects_locations_studies_trials_complete
 @trialsId='{{ trialsId }}' --required 
 @@json=
 '{
-"infeasibleReason": "{{ infeasibleReason }}", 
 "finalMeasurement": "{{ finalMeasurement }}", 
+"infeasibleReason": "{{ infeasibleReason }}", 
 "trialInfeasible": {{ trialInfeasible }}
 }'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_studies_trials_check_early_stopping_state">
-
-Checks whether a trial should stop or not. Returns a long-running operation. When the operation is successful, it will contain a CheckTrialEarlyStoppingStateResponse.
-
-```sql
-EXEC google.ml.trials.projects_locations_studies_trials_check_early_stopping_state 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@studiesId='{{ studiesId }}' --required, 
-@trialsId='{{ trialsId }}' --required
 ;
 ```
 </TabItem>
@@ -469,8 +469,8 @@ EXEC google.ml.trials.projects_locations_studies_trials_suggest
 @studiesId='{{ studiesId }}' --required 
 @@json=
 '{
-"suggestionCount": {{ suggestionCount }}, 
-"clientId": "{{ clientId }}"
+"clientId": "{{ clientId }}", 
+"suggestionCount": {{ suggestionCount }}
 }'
 ;
 ```

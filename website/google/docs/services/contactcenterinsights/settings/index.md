@@ -227,16 +227,16 @@ Updates project-level settings.
 ```sql
 UPDATE google.contactcenterinsights.settings
 SET 
+data__analysisConfig = '{{ analysisConfig }}',
+data__conversationTtl = '{{ conversationTtl }}',
+data__diagnosticMetricConfig = '{{ diagnosticMetricConfig }}',
+data__languageCode = '{{ languageCode }}',
 data__name = '{{ name }}',
 data__pubsubNotificationSettings = '{{ pubsubNotificationSettings }}',
 data__redactionConfig = '{{ redactionConfig }}',
-data__timeZone = '{{ timeZone }}',
-data__speechConfig = '{{ speechConfig }}',
-data__conversationTtl = '{{ conversationTtl }}',
-data__languageCode = '{{ languageCode }}',
-data__diagnosticMetricConfig = '{{ diagnosticMetricConfig }}',
 data__screenRecordingBucketUri = '{{ screenRecordingBucketUri }}',
-data__analysisConfig = '{{ analysisConfig }}'
+data__speechConfig = '{{ speechConfig }}',
+data__timeZone = '{{ timeZone }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

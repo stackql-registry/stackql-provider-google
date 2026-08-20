@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of resize requests that are contained in the<br />managed instance group.</td>
 </tr>
 <tr>
@@ -341,11 +341,11 @@ FROM google.compute.instance_group_manager_resize_requests
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
 AND instanceGroupManager = '{{ instanceGroupManager }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -367,22 +367,22 @@ Creates a new resize request that starts provisioning VMs immediately<br />or qu
 
 ```sql
 INSERT INTO google.compute.instance_group_manager_resize_requests (
-data__requestedRunDuration,
 data__description,
 data__instances,
-data__resizeBy,
 data__name,
+data__requestedRunDuration,
+data__resizeBy,
 project,
 zone,
 instanceGroupManager,
 requestId
 )
 SELECT 
-'{{ requestedRunDuration }}',
 '{{ description }}',
 '{{ instances }}',
-{{ resizeBy }},
 '{{ name }}',
+'{{ requestedRunDuration }}',
+{{ resizeBy }},
 '{{ project }}',
 '{{ zone }}',
 '{{ instanceGroupManager }}',
@@ -432,15 +432,6 @@ zone
     - name: instanceGroupManager
       value: "{{ instanceGroupManager }}"
       description: Required parameter for the instance_group_manager_resize_requests resource.
-    - name: requestedRunDuration
-      description: |
-        A Duration represents a fixed-length span of time represented
-        as a count of seconds and fractions of seconds at nanosecond
-        resolution. It is independent of any calendar and concepts like "day"
-        or "month". Range is approximately 10,000 years.
-      value:
-        nanos: {{ nanos }}
-        seconds: "{{ seconds }}"
     - name: description
       value: "{{ description }}"
       description: |
@@ -452,25 +443,34 @@ zone
         target size will be increased by this number. This field cannot be used
         together with 'resize_by'.
       value:
-        - name: "{{ name }}"
-          status: "{{ status }}"
+        - fingerprint: "{{ fingerprint }}"
+          name: "{{ name }}"
           preservedState:
             disks: "{{ disks }}"
+            externalIPs: "{{ externalIPs }}"
             internalIPs: "{{ internalIPs }}"
             metadata: "{{ metadata }}"
-            externalIPs: "{{ externalIPs }}"
-          fingerprint: "{{ fingerprint }}"
+          status: "{{ status }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of this resize request. The name must be 1-63 characters
+        long, and comply withRFC1035.
+    - name: requestedRunDuration
+      description: |
+        A Duration represents a fixed-length span of time represented
+        as a count of seconds and fractions of seconds at nanosecond
+        resolution. It is independent of any calendar and concepts like "day"
+        or "month". Range is approximately 10,000 years.
+      value:
+        nanos: {{ nanos }}
+        seconds: "{{ seconds }}"
     - name: resizeBy
       value: {{ resizeBy }}
       description: |
         The number of instances to be created by this resize request. The group's
         target size will be increased by this number. This field cannot be used
         together with 'instances'.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of this resize request. The name must be 1-63 characters
-        long, and comply withRFC1035.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

@@ -54,7 +54,7 @@ The following methods are available for this resource:
     <td><a href="#find_closest"><CopyableCode code="find_closest" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-location.longitude"><code>location.longitude</code></a>, <a href="#parameter-experiments"><code>experiments</code></a>, <a href="#parameter-exactQualityRequired"><code>exactQualityRequired</code></a>, <a href="#parameter-additionalInsights"><code>additionalInsights</code></a>, <a href="#parameter-requiredQuality"><code>requiredQuality</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a></td>
+    <td><a href="#parameter-additionalInsights"><code>additionalInsights</code></a>, <a href="#parameter-exactQualityRequired"><code>exactQualityRequired</code></a>, <a href="#parameter-experiments"><code>experiments</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a>, <a href="#parameter-requiredQuality"><code>requiredQuality</code></a></td>
     <td>Locates the building whose centroid is closest to a query point. Returns an error with code `NOT_FOUND` if there are no buildings within approximately 50m of the query point.</td>
 </tr>
 </tbody>
@@ -120,12 +120,12 @@ Locates the building whose centroid is closest to a query point. Returns an erro
 
 ```sql
 EXEC google.solar.building_insights.find_closest 
-@location.longitude='{{ location.longitude }}', 
-@experiments='{{ experiments }}', 
-@exactQualityRequired={{ exactQualityRequired }}, 
 @additionalInsights='{{ additionalInsights }}', 
-@requiredQuality='{{ requiredQuality }}', 
-@location.latitude='{{ location.latitude }}'
+@exactQualityRequired={{ exactQualityRequired }}, 
+@experiments='{{ experiments }}', 
+@location.latitude='{{ location.latitude }}', 
+@location.longitude='{{ location.longitude }}', 
+@requiredQuality='{{ requiredQuality }}'
 ;
 ```
 </TabItem>

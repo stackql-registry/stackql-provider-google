@@ -156,13 +156,13 @@ trialInfeasible
       description: Required parameter for the trials_measurement resource.
     - name: measurement
       description: |
-        A message representing a measurement.
+        Required. The measurement to be added to a trial.
       value:
-        stepCount: "{{ stepCount }}"
         elapsedTime: "{{ elapsedTime }}"
         metrics:
-          - value: {{ value }}
-            metric: "{{ metric }}"
+          - metric: "{{ metric }}"
+            value: {{ value }}
+        stepCount: "{{ stepCount }}"
 `}</CodeBlock>
 
 </TabItem>

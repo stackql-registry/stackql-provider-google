@@ -354,18 +354,18 @@ Create a curation resource in the API hub. Once a curation resource is created, 
 ```sql
 INSERT INTO google.apihub.curations (
 data__description,
-data__name,
 data__displayName,
 data__endpoint,
+data__name,
 projectsId,
 locationsId,
 curationId
 )
 SELECT 
 '{{ description }}',
-'{{ name }}',
 '{{ displayName }}',
 '{{ endpoint }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ curationId }}'
@@ -398,10 +398,6 @@ updateTime
       value: "{{ description }}"
       description: |
         Optional. The description of the curation.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the curation. Format: \`projects/{project}/locations/{location}/curations/{curation}\`
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -411,8 +407,12 @@ updateTime
         Required. The endpoint to be triggered for curation.
       value:
         applicationIntegrationEndpointDetails:
-          uri: "{{ uri }}"
           triggerId: "{{ triggerId }}"
+          uri: "{{ uri }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the curation. Format: \`projects/{project}/locations/{location}/curations/{curation}\`
     - name: curationId
       value: "{{ curationId }}"
 `}</CodeBlock>
@@ -437,9 +437,9 @@ Update a curation resource in the API hub. The following fields in the curation 
 UPDATE google.apihub.curations
 SET 
 data__description = '{{ description }}',
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__endpoint = '{{ endpoint }}'
+data__endpoint = '{{ endpoint }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

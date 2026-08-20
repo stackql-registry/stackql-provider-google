@@ -134,6 +134,76 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The name of the cluster. Structured like: projects/&#123;project_number&#125;/locations/&#123;location&#125;/clusters/&#123;cluster_id&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="brokerDetails" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Only populated when FULL view is requested. Details of each broker in the cluster.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="capacityConfig" /></td>
+    <td><code>object</code></td>
+    <td>Required. Capacity configuration for the Kafka cluster. (id: CapacityConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the cluster was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gcpConfig" /></td>
+    <td><code>object</code></td>
+    <td>Required. Configuration properties for a Kafka cluster deployed to Google Cloud Platform. (id: GcpConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kafkaVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Only populated when FULL view is requested. The Kafka version of the cluster.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels as key value pairs.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="rebalanceConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Rebalance configuration for the Kafka cluster. (id: RebalanceConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The current state of the cluster. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, UPDATING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tlsConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. TLS configuration for the Kafka cluster. (id: TlsConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateOptions" /></td>
+    <td><code>object</code></td>
+    <td>Optional. UpdateOptions represents options that control how updates to the cluster are applied. (id: UpdateOptions)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the cluster was last updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -165,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the clusters in a given project and location.</td>
 </tr>
 <tr>
@@ -306,14 +376,27 @@ Lists the clusters in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+brokerDetails,
+capacityConfig,
+createTime,
+gcpConfig,
+kafkaVersion,
+labels,
+rebalanceConfig,
+satisfiesPzi,
+satisfiesPzs,
+state,
+tlsConfig,
+updateOptions,
+updateTime
 FROM google.managedkafka.clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -336,12 +419,12 @@ Creates a new cluster in a given project and location.
 ```sql
 INSERT INTO google.managedkafka.clusters (
 data__capacityConfig,
-data__rebalanceConfig,
 data__gcpConfig,
-data__name,
-data__updateOptions,
-data__tlsConfig,
 data__labels,
+data__name,
+data__rebalanceConfig,
+data__tlsConfig,
+data__updateOptions,
 projectsId,
 locationsId,
 clusterId,
@@ -349,12 +432,12 @@ requestId
 )
 SELECT 
 '{{ capacityConfig }}',
-'{{ rebalanceConfig }}',
 '{{ gcpConfig }}',
-'{{ name }}',
-'{{ updateOptions }}',
-'{{ tlsConfig }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ rebalanceConfig }}',
+'{{ tlsConfig }}',
+'{{ updateOptions }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clusterId }}',
@@ -383,42 +466,42 @@ response
       description: |
         Required. Capacity configuration for the Kafka cluster.
       value:
-        vcpuCount: "{{ vcpuCount }}"
         memoryBytes: "{{ memoryBytes }}"
+        vcpuCount: "{{ vcpuCount }}"
+    - name: gcpConfig
+      description: |
+        Required. Configuration properties for a Kafka cluster deployed to Google Cloud Platform.
+      value:
+        accessConfig:
+          networkConfigs:
+            - subnet: "{{ subnet }}"
+        kmsKey: "{{ kmsKey }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels as key value pairs.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the cluster. Structured like: projects/{project_number}/locations/{location}/clusters/{cluster_id}
     - name: rebalanceConfig
       description: |
         Optional. Rebalance configuration for the Kafka cluster.
       value:
         mode: "{{ mode }}"
-    - name: gcpConfig
+    - name: tlsConfig
       description: |
-        Required. Configuration properties for a Kafka cluster deployed to Google Cloud Platform.
+        Optional. TLS configuration for the Kafka cluster.
       value:
-        kmsKey: "{{ kmsKey }}"
-        accessConfig:
-          networkConfigs:
-            - subnet: "{{ subnet }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the cluster. Structured like: projects/{project_number}/locations/{location}/clusters/{cluster_id}
+        sslPrincipalMappingRules: "{{ sslPrincipalMappingRules }}"
+        trustConfig:
+          casConfigs:
+            - caPool: "{{ caPool }}"
     - name: updateOptions
       description: |
         Optional. UpdateOptions represents options that control how updates to the cluster are applied.
       value:
         allowBrokerDownscaleOnClusterUpscale: {{ allowBrokerDownscaleOnClusterUpscale }}
-    - name: tlsConfig
-      description: |
-        Optional. TLS configuration for the Kafka cluster.
-      value:
-        trustConfig:
-          casConfigs:
-            - caPool: "{{ caPool }}"
-        sslPrincipalMappingRules: "{{ sslPrincipalMappingRules }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels as key value pairs.
     - name: clusterId
       value: "{{ clusterId }}"
     - name: requestId
@@ -445,12 +528,12 @@ Updates the properties of a single cluster.
 UPDATE google.managedkafka.clusters
 SET 
 data__capacityConfig = '{{ capacityConfig }}',
-data__rebalanceConfig = '{{ rebalanceConfig }}',
 data__gcpConfig = '{{ gcpConfig }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__updateOptions = '{{ updateOptions }}',
+data__rebalanceConfig = '{{ rebalanceConfig }}',
 data__tlsConfig = '{{ tlsConfig }}',
-data__labels = '{{ labels }}'
+data__updateOptions = '{{ updateOptions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

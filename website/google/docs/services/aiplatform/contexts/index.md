@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Contexts on the MetadataStore.</td>
 </tr>
 <tr>
@@ -230,20 +230,6 @@ The following methods are available for this resource:
     <td>Deletes a stored Context.</td>
 </tr>
 <tr>
-    <td><a href="#retrieve_contexts"><CopyableCode code="retrieve_contexts" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Retrieves relevant contexts for a query.</td>
-</tr>
-<tr>
-    <td><a href="#purge"><CopyableCode code="purge" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
-    <td></td>
-    <td>Purges Contexts.</td>
-</tr>
-<tr>
     <td><a href="#add_context_artifacts_and_executions"><CopyableCode code="add_context_artifacts_and_executions" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a></td>
@@ -258,11 +244,25 @@ The following methods are available for this resource:
     <td>Adds a set of Contexts as children to a parent Context. If any of the child Contexts have already been added to the parent Context, they are simply skipped. If this call would create a cycle or cause any Context to have more than 10 parents, the request will fail with an INVALID_ARGUMENT error.</td>
 </tr>
 <tr>
+    <td><a href="#purge"><CopyableCode code="purge" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
+    <td></td>
+    <td>Purges Contexts.</td>
+</tr>
+<tr>
     <td><a href="#remove_context_children"><CopyableCode code="remove_context_children" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a></td>
     <td></td>
     <td>Remove a set of children contexts from a parent Context. If any of the child Contexts were NOT added to the parent Context, they are simply skipped.</td>
+</tr>
+<tr>
+    <td><a href="#retrieve_contexts"><CopyableCode code="retrieve_contexts" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Retrieves relevant contexts for a query.</td>
 </tr>
 </tbody>
 </table>
@@ -403,10 +403,10 @@ FROM google.aiplatform.contexts
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND metadataStoresId = '{{ metadataStoresId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -428,28 +428,28 @@ Creates a Context associated with a MetadataStore.
 
 ```sql
 INSERT INTO google.aiplatform.contexts (
+data__description,
 data__displayName,
 data__etag,
+data__labels,
+data__metadata,
+data__name,
 data__schemaTitle,
 data__schemaVersion,
-data__metadata,
-data__labels,
-data__description,
-data__name,
 projectsId,
 locationsId,
 metadataStoresId,
 contextId
 )
 SELECT 
+'{{ description }}',
 '{{ displayName }}',
 '{{ etag }}',
+'{{ labels }}',
+'{{ metadata }}',
+'{{ name }}',
 '{{ schemaTitle }}',
 '{{ schemaVersion }}',
-'{{ metadata }}',
-'{{ labels }}',
-'{{ description }}',
-'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ metadataStoresId }}',
@@ -483,6 +483,10 @@ updateTime
     - name: metadataStoresId
       value: "{{ metadataStoresId }}"
       description: Required parameter for the contexts resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the Context
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -491,6 +495,18 @@ updateTime
       value: "{{ etag }}"
       description: |
         An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your Contexts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Context (System labels are excluded).
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Properties of the Context. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the Context.
     - name: schemaTitle
       value: "{{ schemaTitle }}"
       description: |
@@ -499,22 +515,6 @@ updateTime
       value: "{{ schemaVersion }}"
       description: |
         The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
-    - name: metadata
-      value: "{{ metadata }}"
-      description: |
-        Properties of the Context. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The labels with user-defined metadata to organize your Contexts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Context (System labels are excluded).
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Description of the Context
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The resource name of the Context.
     - name: contextId
       value: "{{ contextId }}"
 `}</CodeBlock>
@@ -538,14 +538,14 @@ Updates a stored Context.
 ```sql
 UPDATE google.aiplatform.contexts
 SET 
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
 data__etag = '{{ etag }}',
-data__schemaTitle = '{{ schemaTitle }}',
-data__schemaVersion = '{{ schemaVersion }}',
-data__metadata = '{{ metadata }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__name = '{{ name }}'
+data__metadata = '{{ metadata }}',
+data__name = '{{ name }}',
+data__schemaTitle = '{{ schemaTitle }}',
+data__schemaVersion = '{{ schemaVersion }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -599,48 +599,15 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="retrieve_contexts"
+    defaultValue="add_context_artifacts_and_executions"
     values={[
-        { label: 'retrieve_contexts', value: 'retrieve_contexts' },
-        { label: 'purge', value: 'purge' },
         { label: 'add_context_artifacts_and_executions', value: 'add_context_artifacts_and_executions' },
         { label: 'add_context_children', value: 'add_context_children' },
-        { label: 'remove_context_children', value: 'remove_context_children' }
+        { label: 'purge', value: 'purge' },
+        { label: 'remove_context_children', value: 'remove_context_children' },
+        { label: 'retrieve_contexts', value: 'retrieve_contexts' }
     ]}
 >
-<TabItem value="retrieve_contexts">
-
-Retrieves relevant contexts for a query.
-
-```sql
-EXEC google.aiplatform.contexts.retrieve_contexts 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"vertexRagStore": "{{ vertexRagStore }}", 
-"query": "{{ query }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="purge">
-
-Purges Contexts.
-
-```sql
-EXEC google.aiplatform.contexts.purge 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@metadataStoresId='{{ metadataStoresId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"force": {{ force }}
-}'
-;
-```
-</TabItem>
 <TabItem value="add_context_artifacts_and_executions">
 
 Adds a set of Artifacts and Executions to a Context. If any of the Artifacts or Executions have already been added to a Context, they are simply skipped.
@@ -653,8 +620,8 @@ EXEC google.aiplatform.contexts.add_context_artifacts_and_executions
 @contextsId='{{ contextsId }}' --required 
 @@json=
 '{
-"executions": "{{ executions }}", 
-"artifacts": "{{ artifacts }}"
+"artifacts": "{{ artifacts }}", 
+"executions": "{{ executions }}"
 }'
 ;
 ```
@@ -676,6 +643,23 @@ EXEC google.aiplatform.contexts.add_context_children
 ;
 ```
 </TabItem>
+<TabItem value="purge">
+
+Purges Contexts.
+
+```sql
+EXEC google.aiplatform.contexts.purge 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@metadataStoresId='{{ metadataStoresId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"force": {{ force }}
+}'
+;
+```
+</TabItem>
 <TabItem value="remove_context_children">
 
 Remove a set of children contexts from a parent Context. If any of the child Contexts were NOT added to the parent Context, they are simply skipped.
@@ -689,6 +673,22 @@ EXEC google.aiplatform.contexts.remove_context_children
 @@json=
 '{
 "childContexts": "{{ childContexts }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="retrieve_contexts">
+
+Retrieves relevant contexts for a query.
+
+```sql
+EXEC google.aiplatform.contexts.retrieve_contexts 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"query": "{{ query }}", 
+"vertexRagStore": "{{ vertexRagStore }}"
 }'
 ;
 ```

@@ -58,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cmekConfig" /></td>
     <td><code>object</code></td>
-    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+    <td>Output only. CMEK-related information for the Identity Mapping Store. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKeyName" /></td>
@@ -87,7 +87,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cmekConfig" /></td>
     <td><code>object</code></td>
-    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+    <td>Output only. CMEK-related information for the Identity Mapping Store. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKeyName" /></td>
@@ -125,14 +125,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_identity_mapping_stores_list"><CopyableCode code="projects_locations_identity_mapping_stores_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all Identity Mapping Stores.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_identity_mapping_stores_create"><CopyableCode code="projects_locations_identity_mapping_stores_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-identityMappingStoreId"><code>identityMappingStoreId</code></a>, <a href="#parameter-cmekConfigName"><code>cmekConfigName</code></a>, <a href="#parameter-disableCmek"><code>disableCmek</code></a></td>
+    <td><a href="#parameter-cmekConfigName"><code>cmekConfigName</code></a>, <a href="#parameter-disableCmek"><code>disableCmek</code></a>, <a href="#parameter-identityMappingStoreId"><code>identityMappingStoreId</code></a></td>
     <td>Creates a new Identity Mapping Store.</td>
 </tr>
 <tr>
@@ -252,8 +252,8 @@ kmsKeyName
 FROM google.discoveryengine.identity_mapping_stores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -279,18 +279,18 @@ data__kmsKeyName,
 data__name,
 projectsId,
 locationsId,
-identityMappingStoreId,
 cmekConfigName,
-disableCmek
+disableCmek,
+identityMappingStoreId
 )
 SELECT 
 '{{ kmsKeyName }}',
 '{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ identityMappingStoreId }}',
 '{{ cmekConfigName }}',
-'{{ disableCmek }}'
+'{{ disableCmek }}',
+'{{ identityMappingStoreId }}'
 RETURNING
 name,
 cmekConfig,
@@ -317,12 +317,12 @@ kmsKeyName
       value: "{{ name }}"
       description: |
         Immutable. The full resource name of the identity mapping store. Format: \`projects/{project}/locations/{location}/identityMappingStores/{identity_mapping_store}\`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
-    - name: identityMappingStoreId
-      value: "{{ identityMappingStoreId }}"
     - name: cmekConfigName
       value: "{{ cmekConfigName }}"
     - name: disableCmek
       value: {{ disableCmek }}
+    - name: identityMappingStoreId
+      value: "{{ identityMappingStoreId }}"
 `}</CodeBlock>
 
 </TabItem>

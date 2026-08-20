@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-spokesId"><code>spokesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List GatewayAdvertisedRoutes</td>
 </tr>
 <tr>
@@ -209,7 +209,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-spokesId"><code>spokesId</code></a>, <a href="#parameter-gatewayAdvertisedRoutesId"><code>gatewayAdvertisedRoutesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a GatewayAdvertisedRoute</td>
 </tr>
 <tr>
@@ -346,10 +346,10 @@ FROM google.networkconnectivity.gateway_advertised_routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND spokesId = '{{ spokesId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -371,12 +371,12 @@ Create a GatewayAdvertisedRoute
 
 ```sql
 INSERT INTO google.networkconnectivity.gateway_advertised_routes (
-data__labels,
-data__priority,
 data__description,
 data__ipRange,
-data__recipient,
+data__labels,
 data__name,
+data__priority,
+data__recipient,
 projectsId,
 locationsId,
 spokesId,
@@ -384,12 +384,12 @@ gatewayAdvertisedRouteId,
 requestId
 )
 SELECT 
-'{{ labels }}',
-{{ priority }},
 '{{ description }}',
 '{{ ipRange }}',
-'{{ recipient }}',
+'{{ labels }}',
 '{{ name }}',
+{{ priority }},
+'{{ recipient }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ spokesId }}',
@@ -418,14 +418,6 @@ response
     - name: spokesId
       value: "{{ spokesId }}"
       description: Required parameter for the gateway_advertised_routes resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional labels in key-value pair format. For more information about labels, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
-    - name: priority
-      value: {{ priority }}
-      description: |
-        Optional. The priority of this advertised route. You can choose a value from \`0\` to \`65335\`. If you don't provide a value, Google Cloud assigns a priority of \`100\` to the ranges.
     - name: description
       value: "{{ description }}"
       description: |
@@ -434,15 +426,23 @@ response
       value: "{{ ipRange }}"
       description: |
         Immutable. This route's advertised IP address range. Must be a valid CIDR-formatted prefix. If an IP address is provided without a subnet mask, it is interpreted as, for IPv4, a \`/32\` singular IP address range, and, for IPv6, \`/128\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional labels in key-value pair format. For more information about labels, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the gateway advertised route. Route names must be unique and use the following form: \`projects/{project_number}/locations/{region}/spokes/{spoke}/gatewayAdvertisedRoutes/{gateway_advertised_route_id}\`
+    - name: priority
+      value: {{ priority }}
+      description: |
+        Optional. The priority of this advertised route. You can choose a value from \`0\` to \`65335\`. If you don't provide a value, Google Cloud assigns a priority of \`100\` to the ranges.
     - name: recipient
       value: "{{ recipient }}"
       description: |
         Optional. The recipient of this advertised route.
       valid_values: ['RECIPIENT_UNSPECIFIED', 'ADVERTISE_TO_HUB']
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the gateway advertised route. Route names must be unique and use the following form: \`projects/{project_number}/locations/{region}/spokes/{spoke}/gatewayAdvertisedRoutes/{gateway_advertised_route_id}\`
     - name: gatewayAdvertisedRouteId
       value: "{{ gatewayAdvertisedRouteId }}"
     - name: requestId
@@ -468,19 +468,19 @@ Update a GatewayAdvertisedRoute
 ```sql
 UPDATE google.networkconnectivity.gateway_advertised_routes
 SET 
-data__labels = '{{ labels }}',
-data__priority = {{ priority }},
 data__description = '{{ description }}',
 data__ipRange = '{{ ipRange }}',
-data__recipient = '{{ recipient }}',
-data__name = '{{ name }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__priority = {{ priority }},
+data__recipient = '{{ recipient }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND spokesId = '{{ spokesId }}' --required
 AND gatewayAdvertisedRoutesId = '{{ gatewayAdvertisedRoutesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

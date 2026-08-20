@@ -33,52 +33,13 @@ Creates, updates, deletes, gets or lists a <code>policies_effective_policy</code
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_policies_get_effective_policy"
+    defaultValue="folders_policies_get_effective_policy"
     values={[
-        { label: 'projects_policies_get_effective_policy', value: 'projects_policies_get_effective_policy' },
         { label: 'folders_policies_get_effective_policy', value: 'folders_policies_get_effective_policy' },
-        { label: 'organizations_policies_get_effective_policy', value: 'organizations_policies_get_effective_policy' }
+        { label: 'organizations_policies_get_effective_policy', value: 'organizations_policies_get_effective_policy' },
+        { label: 'projects_policies_get_effective_policy', value: 'projects_policies_get_effective_policy' }
     ]}
 >
-<TabItem value="projects_policies_get_effective_policy">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint that this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="alternate" /></td>
-    <td><code>object</code></td>
-    <td>Deprecated. (id: GoogleCloudOrgpolicyV2AlternatePolicySpec)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dryRunSpec" /></td>
-    <td><code>object</code></td>
-    <td>Dry-run policy. Audit-only policy, can be used to monitor how the policy would have impacted the existing and future resources if it's enforced. (id: GoogleCloudOrgpolicyV2PolicySpec)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This entity tag (ETag) is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="spec" /></td>
-    <td><code>object</code></td>
-    <td>Basic information about the organization policy. (id: GoogleCloudOrgpolicyV2PolicySpec)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="folders_policies_get_effective_policy">
 
 <table>
@@ -119,6 +80,45 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="organizations_policies_get_effective_policy">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint that this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="alternate" /></td>
+    <td><code>object</code></td>
+    <td>Deprecated. (id: GoogleCloudOrgpolicyV2AlternatePolicySpec)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dryRunSpec" /></td>
+    <td><code>object</code></td>
+    <td>Dry-run policy. Audit-only policy, can be used to monitor how the policy would have impacted the existing and future resources if it's enforced. (id: GoogleCloudOrgpolicyV2PolicySpec)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This entity tag (ETag) is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="spec" /></td>
+    <td><code>object</code></td>
+    <td>Basic information about the organization policy. (id: GoogleCloudOrgpolicyV2PolicySpec)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_policies_get_effective_policy">
 
 <table>
 <thead>
@@ -175,13 +175,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_policies_get_effective_policy"><CopyableCode code="projects_policies_get_effective_policy" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
-    <td></td>
-    <td>Gets the effective policy on a resource. This is the result of merging policies in the resource hierarchy and evaluating conditions. The returned policy will not have an ETag or `condition` set because it is an evaluated policy across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.</td>
-</tr>
-<tr>
     <td><a href="#folders_policies_get_effective_policy"><CopyableCode code="folders_policies_get_effective_policy" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
@@ -192,6 +185,13 @@ The following methods are available for this resource:
     <td><a href="#organizations_policies_get_effective_policy"><CopyableCode code="organizations_policies_get_effective_policy" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
+    <td></td>
+    <td>Gets the effective policy on a resource. This is the result of merging policies in the resource hierarchy and evaluating conditions. The returned policy will not have an ETag or `condition` set because it is an evaluated policy across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.</td>
+</tr>
+<tr>
+    <td><a href="#projects_policies_get_effective_policy"><CopyableCode code="projects_policies_get_effective_policy" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
     <td></td>
     <td>Gets the effective policy on a resource. This is the result of merging policies in the resource hierarchy and evaluating conditions. The returned policy will not have an ETag or `condition` set because it is an evaluated policy across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.</td>
 </tr>
@@ -237,30 +237,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_policies_get_effective_policy"
+    defaultValue="folders_policies_get_effective_policy"
     values={[
-        { label: 'projects_policies_get_effective_policy', value: 'projects_policies_get_effective_policy' },
         { label: 'folders_policies_get_effective_policy', value: 'folders_policies_get_effective_policy' },
-        { label: 'organizations_policies_get_effective_policy', value: 'organizations_policies_get_effective_policy' }
+        { label: 'organizations_policies_get_effective_policy', value: 'organizations_policies_get_effective_policy' },
+        { label: 'projects_policies_get_effective_policy', value: 'projects_policies_get_effective_policy' }
     ]}
 >
-<TabItem value="projects_policies_get_effective_policy">
-
-Gets the effective policy on a resource. This is the result of merging policies in the resource hierarchy and evaluating conditions. The returned policy will not have an ETag or `condition` set because it is an evaluated policy across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.
-
-```sql
-SELECT
-name,
-alternate,
-dryRunSpec,
-etag,
-spec
-FROM google.orgpolicy.policies_effective_policy
-WHERE projectsId = '{{ projectsId }}' -- required
-AND policiesId = '{{ policiesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="folders_policies_get_effective_policy">
 
 Gets the effective policy on a resource. This is the result of merging policies in the resource hierarchy and evaluating conditions. The returned policy will not have an ETag or `condition` set because it is an evaluated policy across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.
@@ -291,6 +274,23 @@ etag,
 spec
 FROM google.orgpolicy.policies_effective_policy
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND policiesId = '{{ policiesId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_policies_get_effective_policy">
+
+Gets the effective policy on a resource. This is the result of merging policies in the resource hierarchy and evaluating conditions. The returned policy will not have an ETag or `condition` set because it is an evaluated policy across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.
+
+```sql
+SELECT
+name,
+alternate,
+dryRunSpec,
+etag,
+spec
+FROM google.orgpolicy.policies_effective_policy
+WHERE projectsId = '{{ projectsId }}' -- required
 AND policiesId = '{{ policiesId }}' -- required
 ;
 ```

@@ -324,25 +324,25 @@ Creates a cluster within an instance. Note that exactly one of Cluster.serve_nod
 
 ```sql
 INSERT INTO google.bigtableadmin.clusters (
-data__defaultStorageType,
-data__name,
-data__serveNodes,
-data__nodeScalingFactor,
 data__clusterConfig,
+data__defaultStorageType,
 data__encryptionConfig,
 data__location,
+data__name,
+data__nodeScalingFactor,
+data__serveNodes,
 projectsId,
 instancesId,
 clusterId
 )
 SELECT 
-'{{ defaultStorageType }}',
-'{{ name }}',
-{{ serveNodes }},
-'{{ nodeScalingFactor }}',
 '{{ clusterConfig }}',
+'{{ defaultStorageType }}',
 '{{ encryptionConfig }}',
 '{{ location }}',
+'{{ name }}',
+'{{ nodeScalingFactor }}',
+{{ serveNodes }},
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ clusterId }}'
@@ -366,35 +366,22 @@ response
     - name: instancesId
       value: "{{ instancesId }}"
       description: Required parameter for the clusters resource.
-    - name: defaultStorageType
-      value: "{{ defaultStorageType }}"
-      description: |
-        Immutable. The type of storage used by this cluster to serve its parent instance's tables, unless explicitly overridden.
-      valid_values: ['STORAGE_TYPE_UNSPECIFIED', 'SSD', 'HDD']
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The unique name of the cluster. Values are of the form \`projects/{project}/instances/{instance}/clusters/a-z*\`.
-    - name: serveNodes
-      value: {{ serveNodes }}
-      description: |
-        The number of nodes in the cluster. If no value is set, Cloud Bigtable automatically allocates nodes based on your data footprint and optimized for 50% storage utilization.
-    - name: nodeScalingFactor
-      value: "{{ nodeScalingFactor }}"
-      description: |
-        Immutable. The node scaling factor of this cluster.
-      valid_values: ['NODE_SCALING_FACTOR_UNSPECIFIED', 'NODE_SCALING_FACTOR_1X', 'NODE_SCALING_FACTOR_2X']
     - name: clusterConfig
       description: |
         Configuration for this cluster.
       value:
         clusterAutoscalingConfig:
           autoscalingLimits:
-            minServeNodes: {{ minServeNodes }}
             maxServeNodes: {{ maxServeNodes }}
+            minServeNodes: {{ minServeNodes }}
           autoscalingTargets:
             cpuUtilizationPercent: {{ cpuUtilizationPercent }}
             storageUtilizationGibPerNode: {{ storageUtilizationGibPerNode }}
+    - name: defaultStorageType
+      value: "{{ defaultStorageType }}"
+      description: |
+        Immutable. The type of storage used by this cluster to serve its parent instance's tables, unless explicitly overridden.
+      valid_values: ['STORAGE_TYPE_UNSPECIFIED', 'SSD', 'HDD']
     - name: encryptionConfig
       description: |
         Immutable. The encryption configuration for CMEK-protected clusters.
@@ -404,6 +391,19 @@ response
       value: "{{ location }}"
       description: |
         Immutable. The location where this cluster's nodes and storage reside. For best performance, clients should be located as close as possible to this cluster. Currently only zones are supported, so values should be of the form \`projects/{project}/locations/{zone}\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The unique name of the cluster. Values are of the form \`projects/{project}/instances/{instance}/clusters/a-z*\`.
+    - name: nodeScalingFactor
+      value: "{{ nodeScalingFactor }}"
+      description: |
+        Immutable. The node scaling factor of this cluster.
+      valid_values: ['NODE_SCALING_FACTOR_UNSPECIFIED', 'NODE_SCALING_FACTOR_1X', 'NODE_SCALING_FACTOR_2X']
+    - name: serveNodes
+      value: {{ serveNodes }}
+      description: |
+        The number of nodes in the cluster. If no value is set, Cloud Bigtable automatically allocates nodes based on your data footprint and optimized for 50% storage utilization.
     - name: clusterId
       value: "{{ clusterId }}"
 `}</CodeBlock>
@@ -427,13 +427,13 @@ Updates a cluster within an instance. Note that UpdateCluster does not support u
 ```sql
 REPLACE google.bigtableadmin.clusters
 SET 
-data__defaultStorageType = '{{ defaultStorageType }}',
-data__name = '{{ name }}',
-data__serveNodes = {{ serveNodes }},
-data__nodeScalingFactor = '{{ nodeScalingFactor }}',
 data__clusterConfig = '{{ clusterConfig }}',
+data__defaultStorageType = '{{ defaultStorageType }}',
 data__encryptionConfig = '{{ encryptionConfig }}',
-data__location = '{{ location }}'
+data__location = '{{ location }}',
+data__name = '{{ name }}',
+data__nodeScalingFactor = '{{ nodeScalingFactor }}',
+data__serveNodes = {{ serveNodes }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -492,13 +492,13 @@ EXEC google.bigtableadmin.clusters.partial_update_cluster
 @updateMask='{{ updateMask }}' 
 @@json=
 '{
-"defaultStorageType": "{{ defaultStorageType }}", 
-"name": "{{ name }}", 
-"serveNodes": {{ serveNodes }}, 
-"nodeScalingFactor": "{{ nodeScalingFactor }}", 
 "clusterConfig": "{{ clusterConfig }}", 
+"defaultStorageType": "{{ defaultStorageType }}", 
 "encryptionConfig": "{{ encryptionConfig }}", 
-"location": "{{ location }}"
+"location": "{{ location }}", 
+"name": "{{ name }}", 
+"nodeScalingFactor": "{{ nodeScalingFactor }}", 
+"serveNodes": {{ serveNodes }}
 }'
 ;
 ```

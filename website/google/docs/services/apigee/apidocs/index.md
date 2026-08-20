@@ -53,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="data" /></td>
     <td><code>object</code></td>
-    <td>`ApiDoc` represents an API catalog item. Catalog items are used in two ways in a portal: - Users can browse and interact with a visual representation of the API documentation - The `api_product_name` field provides a link to a backing [API product] (/apigee/docs/reference/apis/apigee/rest/v1/organizations.apiproducts). Through this link, portal users can create and manage developer apps linked to one or more API products. (id: GoogleCloudApigeeV1ApiDoc)</td>
+    <td>The catalog item resource. (id: GoogleCloudApigeeV1ApiDoc)</td>
 </tr>
 <tr>
     <td><CopyableCode code="errorCode" /></td>
@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_sites_apidocs_list"><CopyableCode code="organizations_sites_apidocs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sitesId"><code>sitesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns the catalog items associated with a portal.</td>
 </tr>
 <tr>
@@ -326,8 +326,8 @@ visibility
 FROM google.apigee.apidocs
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND sitesId = '{{ sitesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -349,38 +349,38 @@ Creates a new catalog item.
 
 ```sql
 INSERT INTO google.apigee.apidocs (
-data__edgeAPIProductName,
-data__graphqlSchema,
-data__imageUrl,
-data__categoryIds,
-data__graphqlSchemaDisplayName,
-data__visibility,
-data__requireCallbackUrl,
-data__published,
 data__anonAllowed,
 data__apiProductName,
-data__specId,
-data__graphqlEndpointUrl,
+data__categoryIds,
 data__description,
+data__edgeAPIProductName,
+data__graphqlEndpointUrl,
+data__graphqlSchema,
+data__graphqlSchemaDisplayName,
+data__imageUrl,
+data__published,
+data__requireCallbackUrl,
+data__specId,
 data__title,
+data__visibility,
 organizationsId,
 sitesId
 )
 SELECT 
-'{{ edgeAPIProductName }}',
-'{{ graphqlSchema }}',
-'{{ imageUrl }}',
-'{{ categoryIds }}',
-'{{ graphqlSchemaDisplayName }}',
-{{ visibility }},
-{{ requireCallbackUrl }},
-{{ published }},
 {{ anonAllowed }},
 '{{ apiProductName }}',
-'{{ specId }}',
-'{{ graphqlEndpointUrl }}',
+'{{ categoryIds }}',
 '{{ description }}',
+'{{ edgeAPIProductName }}',
+'{{ graphqlEndpointUrl }}',
+'{{ graphqlSchema }}',
+'{{ graphqlSchemaDisplayName }}',
+'{{ imageUrl }}',
+{{ published }},
+{{ requireCallbackUrl }},
+'{{ specId }}',
 '{{ title }}',
+{{ visibility }},
 '{{ organizationsId }}',
 '{{ sitesId }}'
 RETURNING
@@ -403,39 +403,6 @@ status
     - name: sitesId
       value: "{{ sitesId }}"
       description: Required parameter for the apidocs resource.
-    - name: edgeAPIProductName
-      value: "{{ edgeAPIProductName }}"
-      description: |
-        Optional. Immutable. DEPRECATED: use the \`apiProductName\` field instead
-    - name: graphqlSchema
-      value: "{{ graphqlSchema }}"
-      description: |
-        Optional. DEPRECATED: manage documentation through the \`getDocumentation\` and \`updateDocumentation\` methods
-    - name: imageUrl
-      value: "{{ imageUrl }}"
-      description: |
-        Optional. Location of the image used for the catalog item in the catalog. This can be either an image with an external URL or a file path for [image files stored in the portal](https://cloud.google.com/apigee/docs/api-platform/publish/portal/portal-files), for example, \`/files/book-tree.jpg\`. When specifying the URL of an external image, the image won't be uploaded to your assets; additionally, loading the image in the integrated portal will be subject to its availability, which may be blocked or restricted by [content security policies](https://cloud.google.com/apigee/docs/api-platform/publish/portal/csp). Max length of file path is 2,083 characters.
-    - name: categoryIds
-      value:
-        - "{{ categoryIds }}"
-      description: |
-        Optional. The IDs of the API categories to which this catalog item belongs.
-    - name: graphqlSchemaDisplayName
-      value: "{{ graphqlSchemaDisplayName }}"
-      description: |
-        Optional. DEPRECATED: manage documentation through the \`getDocumentation\` and \`updateDocumentation\` methods
-    - name: visibility
-      value: {{ visibility }}
-      description: |
-        Optional. DEPRECATED: use the \`published\` field instead
-    - name: requireCallbackUrl
-      value: {{ requireCallbackUrl }}
-      description: |
-        Optional. Whether a callback URL is required when this catalog item's API product is enabled in a developer app. When true, a portal user will be required to input a URL when managing the app (this is typically used for the app's OAuth flow).
-    - name: published
-      value: {{ published }}
-      description: |
-        Optional. Denotes whether the catalog item is published to the portal or is in a draft state. When the parent portal is enrolled in the [audience management feature](https://cloud.google.com/apigee/docs/api-platform/publish/portal/portal-audience#enrolling_in_the_beta_release_of_the_audience_management_feature), the visibility can be set to public on creation by setting the anonAllowed flag to true or further managed in the management UI (see [Manage the visibility of an API in your portal](https://cloud.google.com/apigee/docs/api-platform/publish/portal/publish-apis#visibility)) before it can be visible to any users. If not enrolled in the audience management feature, the visibility is managed by the \`anonAllowed\` flag.
     - name: anonAllowed
       value: {{ anonAllowed }}
       description: |
@@ -444,22 +411,55 @@ status
       value: "{{ apiProductName }}"
       description: |
         Required. Immutable. The \`name\` field of the associated [API product](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations.apiproducts). A portal may have only one catalog item associated with a given API product.
-    - name: specId
-      value: "{{ specId }}"
+    - name: categoryIds
+      value:
+        - "{{ categoryIds }}"
       description: |
-        Optional. DEPRECATED: DO NOT USE
-    - name: graphqlEndpointUrl
-      value: "{{ graphqlEndpointUrl }}"
-      description: |
-        Optional. DEPRECATED: manage documentation through the \`getDocumentation\` and \`updateDocumentation\` methods
+        Optional. The IDs of the API categories to which this catalog item belongs.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. Description of the catalog item. Max length is 10,000 characters.
+    - name: edgeAPIProductName
+      value: "{{ edgeAPIProductName }}"
+      description: |
+        Optional. Immutable. DEPRECATED: use the \`apiProductName\` field instead
+    - name: graphqlEndpointUrl
+      value: "{{ graphqlEndpointUrl }}"
+      description: |
+        Optional. DEPRECATED: manage documentation through the \`getDocumentation\` and \`updateDocumentation\` methods
+    - name: graphqlSchema
+      value: "{{ graphqlSchema }}"
+      description: |
+        Optional. DEPRECATED: manage documentation through the \`getDocumentation\` and \`updateDocumentation\` methods
+    - name: graphqlSchemaDisplayName
+      value: "{{ graphqlSchemaDisplayName }}"
+      description: |
+        Optional. DEPRECATED: manage documentation through the \`getDocumentation\` and \`updateDocumentation\` methods
+    - name: imageUrl
+      value: "{{ imageUrl }}"
+      description: |
+        Optional. Location of the image used for the catalog item in the catalog. This can be either an image with an external URL or a file path for [image files stored in the portal](https://cloud.google.com/apigee/docs/api-platform/publish/portal/portal-files), for example, \`/files/book-tree.jpg\`. When specifying the URL of an external image, the image won't be uploaded to your assets; additionally, loading the image in the integrated portal will be subject to its availability, which may be blocked or restricted by [content security policies](https://cloud.google.com/apigee/docs/api-platform/publish/portal/csp). Max length of file path is 2,083 characters.
+    - name: published
+      value: {{ published }}
+      description: |
+        Optional. Denotes whether the catalog item is published to the portal or is in a draft state. When the parent portal is enrolled in the [audience management feature](https://cloud.google.com/apigee/docs/api-platform/publish/portal/portal-audience#enrolling_in_the_beta_release_of_the_audience_management_feature), the visibility can be set to public on creation by setting the anonAllowed flag to true or further managed in the management UI (see [Manage the visibility of an API in your portal](https://cloud.google.com/apigee/docs/api-platform/publish/portal/publish-apis#visibility)) before it can be visible to any users. If not enrolled in the audience management feature, the visibility is managed by the \`anonAllowed\` flag.
+    - name: requireCallbackUrl
+      value: {{ requireCallbackUrl }}
+      description: |
+        Optional. Whether a callback URL is required when this catalog item's API product is enabled in a developer app. When true, a portal user will be required to input a URL when managing the app (this is typically used for the app's OAuth flow).
+    - name: specId
+      value: "{{ specId }}"
+      description: |
+        Optional. DEPRECATED: DO NOT USE
     - name: title
       value: "{{ title }}"
       description: |
         Required. The user-facing name of the catalog item. \`title\` must be a non-empty string with a max length of 255 characters.
+    - name: visibility
+      value: {{ visibility }}
+      description: |
+        Optional. DEPRECATED: use the \`published\` field instead
 `}</CodeBlock>
 
 </TabItem>
@@ -481,20 +481,20 @@ Updates a catalog item.
 ```sql
 REPLACE google.apigee.apidocs
 SET 
-data__edgeAPIProductName = '{{ edgeAPIProductName }}',
-data__graphqlSchema = '{{ graphqlSchema }}',
-data__imageUrl = '{{ imageUrl }}',
-data__categoryIds = '{{ categoryIds }}',
-data__graphqlSchemaDisplayName = '{{ graphqlSchemaDisplayName }}',
-data__visibility = {{ visibility }},
-data__requireCallbackUrl = {{ requireCallbackUrl }},
-data__published = {{ published }},
 data__anonAllowed = {{ anonAllowed }},
 data__apiProductName = '{{ apiProductName }}',
-data__specId = '{{ specId }}',
-data__graphqlEndpointUrl = '{{ graphqlEndpointUrl }}',
+data__categoryIds = '{{ categoryIds }}',
 data__description = '{{ description }}',
-data__title = '{{ title }}'
+data__edgeAPIProductName = '{{ edgeAPIProductName }}',
+data__graphqlEndpointUrl = '{{ graphqlEndpointUrl }}',
+data__graphqlSchema = '{{ graphqlSchema }}',
+data__graphqlSchemaDisplayName = '{{ graphqlSchemaDisplayName }}',
+data__imageUrl = '{{ imageUrl }}',
+data__published = {{ published }},
+data__requireCallbackUrl = {{ requireCallbackUrl }},
+data__specId = '{{ specId }}',
+data__title = '{{ title }}',
+data__visibility = {{ visibility }}
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sitesId = '{{ sitesId }}' --required

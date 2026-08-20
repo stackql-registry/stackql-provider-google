@@ -148,33 +148,33 @@ catalogAttributes
       description: |
         Required. The CatalogAttribute to add.
       value:
-        exactSearchableOption: "{{ exactSearchableOption }}"
-        inUse: {{ inUse }}
-        searchableOption: "{{ searchableOption }}"
-        key: "{{ key }}"
-        indexableOption: "{{ indexableOption }}"
-        type: "{{ type }}"
         dynamicFacetableOption: "{{ dynamicFacetableOption }}"
-        retrievableOption: "{{ retrievableOption }}"
+        exactSearchableOption: "{{ exactSearchableOption }}"
         facetConfig:
-          ignoredFacetValues:
-            - startTime: "{{ startTime }}"
-              endTime: "{{ endTime }}"
-              values: "{{ values }}"
-          rerankConfig:
-            rerankFacet: {{ rerankFacet }}
-            facetValues:
-              - "{{ facetValues }}"
           facetIntervals:
-            - minimum: {{ minimum }}
-              maximum: {{ maximum }}
-              exclusiveMaximum: {{ exclusiveMaximum }}
+            - exclusiveMaximum: {{ exclusiveMaximum }}
               exclusiveMinimum: {{ exclusiveMinimum }}
-          mergedFacetValues:
-            - values: "{{ values }}"
-              mergedValue: "{{ mergedValue }}"
+              maximum: {{ maximum }}
+              minimum: {{ minimum }}
+          ignoredFacetValues:
+            - endTime: "{{ endTime }}"
+              startTime: "{{ startTime }}"
+              values: "{{ values }}"
           mergedFacet:
             mergedFacetKey: "{{ mergedFacetKey }}"
+          mergedFacetValues:
+            - mergedValue: "{{ mergedValue }}"
+              values: "{{ values }}"
+          rerankConfig:
+            facetValues:
+              - "{{ facetValues }}"
+            rerankFacet: {{ rerankFacet }}
+        inUse: {{ inUse }}
+        indexableOption: "{{ indexableOption }}"
+        key: "{{ key }}"
+        retrievableOption: "{{ retrievableOption }}"
+        searchableOption: "{{ searchableOption }}"
+        type: "{{ type }}"
 `}</CodeBlock>
 
 </TabItem>

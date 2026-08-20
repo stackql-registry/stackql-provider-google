@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists all non-deleted WorkloadIdentityPoolProviders in a WorkloadIdentityPool. If `show_deleted` is set to `true`, then deleted providers are also listed.</td>
 </tr>
 <tr>
@@ -367,9 +367,9 @@ FROM google.iam.workload_identity_pool_providers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -391,32 +391,32 @@ Creates a new WorkloadIdentityPoolProvider in a WorkloadIdentityPool. You cannot
 
 ```sql
 INSERT INTO google.iam.workload_identity_pool_providers (
+data__attributeCondition,
 data__attributeMapping,
 data__aws,
-data__name,
-data__displayName,
 data__description,
-data__oidc,
 data__disabled,
-data__attributeCondition,
-data__x509,
+data__displayName,
+data__name,
+data__oidc,
 data__saml,
+data__x509,
 projectsId,
 locationsId,
 workloadIdentityPoolsId,
 workloadIdentityPoolProviderId
 )
 SELECT 
+'{{ attributeCondition }}',
 '{{ attributeMapping }}',
 '{{ aws }}',
-'{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
-'{{ oidc }}',
 {{ disabled }},
-'{{ attributeCondition }}',
-'{{ x509 }}',
+'{{ displayName }}',
+'{{ name }}',
+'{{ oidc }}',
 '{{ saml }}',
+'{{ x509 }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workloadIdentityPoolsId }}',
@@ -444,6 +444,10 @@ response
     - name: workloadIdentityPoolsId
       value: "{{ workloadIdentityPoolsId }}"
       description: Required parameter for the workload_identity_pool_providers resource.
+    - name: attributeCondition
+      value: "{{ attributeCondition }}"
+      description: |
+        Optional. [A Common Expression Language](https://opensource.google/projects/cel) expression, in plain text, to restrict what otherwise valid authentication credentials issued by the provider should not be accepted. The expression must output a boolean representing whether to allow the federation. The following keywords may be referenced in the expressions: * \`assertion\`: JSON representing the authentication credential issued by the provider. * \`google\`: The Google attributes mapped from the assertion in the \`attribute_mappings\`. * \`attribute\`: The custom attributes mapped from the assertion in the \`attribute_mappings\`. The maximum length of the attribute condition expression is 4096 characters. If unspecified, all valid authentication credential are accepted. The following example shows how to only allow credentials with a mapped \`google.groups\` value of \`admins\`: \`\`\` "'admins' in google.groups" \`\`\`
     - name: attributeMapping
       value: "{{ attributeMapping }}"
       description: |
@@ -453,18 +457,22 @@ response
         An Amazon Web Services identity provider.
       value:
         accountId: "{{ accountId }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the provider.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. A display name for the provider. Cannot exceed 32 characters.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A description for the provider. Cannot exceed 256 characters.
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. Whether the provider is disabled. You cannot use a disabled provider to exchange tokens. However, existing tokens still grant access.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. A display name for the provider. Cannot exceed 32 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the provider.
     - name: oidc
       description: |
         An OpenId Connect 1.0 identity provider.
@@ -473,29 +481,21 @@ response
           - "{{ allowedAudiences }}"
         issuerUri: "{{ issuerUri }}"
         jwksJson: "{{ jwksJson }}"
-    - name: disabled
-      value: {{ disabled }}
-      description: |
-        Optional. Whether the provider is disabled. You cannot use a disabled provider to exchange tokens. However, existing tokens still grant access.
-    - name: attributeCondition
-      value: "{{ attributeCondition }}"
-      description: |
-        Optional. [A Common Expression Language](https://opensource.google/projects/cel) expression, in plain text, to restrict what otherwise valid authentication credentials issued by the provider should not be accepted. The expression must output a boolean representing whether to allow the federation. The following keywords may be referenced in the expressions: * \`assertion\`: JSON representing the authentication credential issued by the provider. * \`google\`: The Google attributes mapped from the assertion in the \`attribute_mappings\`. * \`attribute\`: The custom attributes mapped from the assertion in the \`attribute_mappings\`. The maximum length of the attribute condition expression is 4096 characters. If unspecified, all valid authentication credential are accepted. The following example shows how to only allow credentials with a mapped \`google.groups\` value of \`admins\`: \`\`\` "'admins' in google.groups" \`\`\`
-    - name: x509
-      description: |
-        An X.509-type identity provider.
-      value:
-        trustStore:
-          trustDefaultSharedCa: {{ trustDefaultSharedCa }}
-          trustAnchors:
-            - pemCertificate: "{{ pemCertificate }}"
-          intermediateCas:
-            - pemCertificate: "{{ pemCertificate }}"
     - name: saml
       description: |
         An SAML 2.0 identity provider.
       value:
         idpMetadataXml: "{{ idpMetadataXml }}"
+    - name: x509
+      description: |
+        An X.509-type identity provider.
+      value:
+        trustStore:
+          intermediateCas:
+            - pemCertificate: "{{ pemCertificate }}"
+          trustAnchors:
+            - pemCertificate: "{{ pemCertificate }}"
+          trustDefaultSharedCa: {{ trustDefaultSharedCa }}
     - name: workloadIdentityPoolProviderId
       value: "{{ workloadIdentityPoolProviderId }}"
 `}</CodeBlock>
@@ -519,16 +519,16 @@ Updates an existing WorkloadIdentityPoolProvider.
 ```sql
 UPDATE google.iam.workload_identity_pool_providers
 SET 
+data__attributeCondition = '{{ attributeCondition }}',
 data__attributeMapping = '{{ attributeMapping }}',
 data__aws = '{{ aws }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__oidc = '{{ oidc }}',
 data__disabled = {{ disabled }},
-data__attributeCondition = '{{ attributeCondition }}',
-data__x509 = '{{ x509 }}',
-data__saml = '{{ saml }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__oidc = '{{ oidc }}',
+data__saml = '{{ saml }}',
+data__x509 = '{{ x509 }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -119,6 +119,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Identifier. The name of the resource that the configuration is applied to, in the format projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/metadataJobs/&#123;metadata_job_id&#125;.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the metadata job was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="exportResult" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Export job result. (id: GoogleCloudDataplexV1MetadataJobExportJobResult)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="exportSpec" /></td>
+    <td><code>object</code></td>
+    <td>Export job specification. (id: GoogleCloudDataplexV1MetadataJobExportJobSpec)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="importResult" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Import job result. (id: GoogleCloudDataplexV1MetadataJobImportJobResult)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="importSpec" /></td>
+    <td><code>object</code></td>
+    <td>Import job specification. (id: GoogleCloudDataplexV1MetadataJobImportJobSpec)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. User-defined labels.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="status" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Metadata job status. (id: GoogleCloudDataplexV1MetadataJobStatus)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td>Required. Metadata job type. (TYPE_UNSPECIFIED, IMPORT, EXPORT)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. A system-generated, globally unique ID for the metadata job. If the metadata job is deleted and then re-created with the same name, this ID is different.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the metadata job was updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -150,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_metadata_jobs_list"><CopyableCode code="projects_locations_metadata_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists metadata jobs.</td>
 </tr>
 <tr>
@@ -270,13 +325,23 @@ Lists metadata jobs.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+exportResult,
+exportSpec,
+importResult,
+importSpec,
+labels,
+status,
+type,
+uid,
+updateTime
 FROM google.dataplex.metadata_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -299,20 +364,20 @@ Creates a metadata job. For example, use a metadata job to import metadata from 
 
 ```sql
 INSERT INTO google.dataplex.metadata_jobs (
-data__importSpec,
-data__type,
 data__exportSpec,
+data__importSpec,
 data__labels,
+data__type,
 projectsId,
 locationsId,
 metadataJobId,
 validateOnly
 )
 SELECT 
-'{{ importSpec }}',
-'{{ type }}',
 '{{ exportSpec }}',
+'{{ importSpec }}',
 '{{ labels }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ metadataJobId }}',
@@ -337,52 +402,52 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the metadata_jobs resource.
-    - name: importSpec
+    - name: exportSpec
       description: |
-        Import job specification.
+        Export job specification.
       value:
+        outputPath: "{{ outputPath }}"
         scope:
-          glossaries:
-            - "{{ glossaries }}"
-          entryLinkTypes:
-            - "{{ entryLinkTypes }}"
+          aspectTypes:
+            - "{{ aspectTypes }}"
           entryGroups:
             - "{{ entryGroups }}"
           entryTypes:
             - "{{ entryTypes }}"
+          organizationLevel: {{ organizationLevel }}
+          projects:
+            - "{{ projects }}"
+    - name: importSpec
+      description: |
+        Import job specification.
+      value:
+        aspectSyncMode: "{{ aspectSyncMode }}"
+        entrySyncMode: "{{ entrySyncMode }}"
+        logLevel: "{{ logLevel }}"
+        scope:
           aspectTypes:
             - "{{ aspectTypes }}"
+          entryGroups:
+            - "{{ entryGroups }}"
+          entryLinkTypes:
+            - "{{ entryLinkTypes }}"
+          entryTypes:
+            - "{{ entryTypes }}"
+          glossaries:
+            - "{{ glossaries }}"
           referencedEntryScopes:
             - "{{ referencedEntryScopes }}"
         sourceCreateTime: "{{ sourceCreateTime }}"
-        logLevel: "{{ logLevel }}"
-        aspectSyncMode: "{{ aspectSyncMode }}"
         sourceStorageUri: "{{ sourceStorageUri }}"
-        entrySyncMode: "{{ entrySyncMode }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels.
     - name: type
       value: "{{ type }}"
       description: |
         Required. Metadata job type.
       valid_values: ['TYPE_UNSPECIFIED', 'IMPORT', 'EXPORT']
-    - name: exportSpec
-      description: |
-        Export job specification.
-      value:
-        scope:
-          organizationLevel: {{ organizationLevel }}
-          entryGroups:
-            - "{{ entryGroups }}"
-          entryTypes:
-            - "{{ entryTypes }}"
-          aspectTypes:
-            - "{{ aspectTypes }}"
-          projects:
-            - "{{ projects }}"
-        outputPath: "{{ outputPath }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels.
     - name: metadataJobId
       value: "{{ metadataJobId }}"
     - name: validateOnly

@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists files.</td>
 </tr>
 <tr>
@@ -319,10 +319,10 @@ FROM google.artifactregistry.files
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -344,11 +344,11 @@ Updates a file.
 ```sql
 UPDATE google.artifactregistry.files
 SET 
-data__owner = '{{ owner }}',
-data__sizeBytes = '{{ sizeBytes }}',
 data__annotations = '{{ annotations }}',
+data__hashes = '{{ hashes }}',
 data__name = '{{ name }}',
-data__hashes = '{{ hashes }}'
+data__owner = '{{ owner }}',
+data__sizeBytes = '{{ sizeBytes }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -135,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_domains_bindings_list"><CopyableCode code="projects_locations_data_domains_bindings_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataDomainsId"><code>dataDomainsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DataDomainBinding resources under a DataDomain.</td>
 </tr>
 <tr>
@@ -263,8 +263,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataDomainsId = '{{ dataDomainsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -287,8 +287,8 @@ Creates a DataDomainBinding resource.
 
 ```sql
 INSERT INTO google.dataplex.bindings (
-data__resource,
 data__name,
+data__resource,
 projectsId,
 locationsId,
 dataDomainsId,
@@ -296,8 +296,8 @@ dataDomainBindingId,
 validateOnly
 )
 SELECT 
-'{{ resource }}',
 '{{ name }}',
+'{{ resource }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataDomainsId }}',
@@ -326,14 +326,14 @@ response
     - name: dataDomainsId
       value: "{{ dataDomainsId }}"
       description: Required parameter for the bindings resource.
-    - name: resource
-      value: "{{ resource }}"
-      description: |
-        Required. Immutable. The full resource name of the Google Cloud resource to be bound (i.e. included together with its contents) to the DataDomain.Format: IAM Full resource name (https://docs.cloud.google.com/iam/docs/full-resource-names) Examples: - GCP Project: //cloudresourcemanager.googleapis.com/projects/{project-id} - BigQuery Dataset: //bigquery.googleapis.com/projects/{project-id}/datasets/{dataset-id} - BigQuery Table: //bigquery.googleapis.com/projects/{project-id}/datasets/{dataset-id}/tables/{table-id} - Dataplex Data Product: //dataplex.googleapis.com/projects/{project-number}/locations/{location}/dataProducts/{data-product-id}Authorization: the resource to be bound must first grant an IAM role with the resource-specific setIamPolicy permission to the DataDomain. Example: - resource: //bigquery.googleapis.com/projects/{project-id}/datasets/{dataset-id} - IAM role: with bigquery.datasets.setIamPolicy permission (e.g. roles/owner) - IAM member: principal://dataplex.googleapis.com/projects/{project-number}/name/locations/{location}/dataDomains/{data-domain-id}
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. The relative resource name of the DataDomainBinding. Format: projects/{project_id_or_number}/locations/{location}/dataDomains/{data_domain_id}/bindings/{binding_id}
+    - name: resource
+      value: "{{ resource }}"
+      description: |
+        Required. Immutable. The full resource name of the Google Cloud resource to be bound (i.e. included together with its contents) to the DataDomain.Format: IAM Full resource name (https://docs.cloud.google.com/iam/docs/full-resource-names) Examples: - GCP Project: //cloudresourcemanager.googleapis.com/projects/{project-id} - BigQuery Dataset: //bigquery.googleapis.com/projects/{project-id}/datasets/{dataset-id} - BigQuery Table: //bigquery.googleapis.com/projects/{project-id}/datasets/{dataset-id}/tables/{table-id} - Dataplex Data Product: //dataplex.googleapis.com/projects/{project-number}/locations/{location}/dataProducts/{data-product-id}Authorization: the resource to be bound must first grant an IAM role with the resource-specific setIamPolicy permission to the DataDomain. Example: - resource: //bigquery.googleapis.com/projects/{project-id}/datasets/{dataset-id} - IAM role: with bigquery.datasets.setIamPolicy permission (e.g. roles/owner) - IAM member: principal://dataplex.googleapis.com/projects/{project-number}/name/locations/{location}/dataDomains/{data-domain-id}
     - name: dataDomainBindingId
       value: "{{ dataDomainBindingId }}"
     - name: validateOnly

@@ -217,58 +217,58 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
     <td></td>
     <td>Gets details of the specific SandboxEnvironment.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists SandboxEnvironments in a given reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td></td>
     <td>Creates a SandboxEnvironment in a given reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
     <td></td>
     <td>Deletes the specific SandboxEnvironment.</td>
 </tr>
 <tr>
     <td><a href="#execute"><CopyableCode code="execute" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
     <td></td>
     <td>Executes using a sandbox environment.</td>
 </tr>
 <tr>
+    <td><a href="#pause"><CopyableCode code="pause" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
+    <td></td>
+    <td>Pauses the specific SandboxEnvironment.</td>
+</tr>
+<tr>
     <td><a href="#resume"><CopyableCode code="resume" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
     <td></td>
     <td>Resumes the specific SandboxEnvironment.</td>
 </tr>
 <tr>
     <td><a href="#snapshot"><CopyableCode code="snapshot" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
     <td></td>
     <td>Snapshots the specific SandboxEnvironment resource and creates a SandboxEnvironmentSnapshot resource.</td>
-</tr>
-<tr>
-    <td><a href="#pause"><CopyableCode code="pause" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentsId"><code>sandboxEnvironmentsId</code></a></td>
-    <td></td>
-    <td>Pauses the specific SandboxEnvironment.</td>
 </tr>
 </tbody>
 </table>
@@ -286,6 +286,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-reasoningEnginesId">
     <td><CopyableCode code="reasoningEnginesId" /></td>
     <td><code>string</code></td>
@@ -343,7 +353,9 @@ state,
 ttl,
 updateTime
 FROM google.aiplatform.sandbox_environments
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
 AND sandboxEnvironmentsId = '{{ sandboxEnvironmentsId }}' -- required
 ;
 ```
@@ -368,10 +380,12 @@ state,
 ttl,
 updateTime
 FROM google.aiplatform.sandbox_environments
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -393,25 +407,29 @@ Creates a SandboxEnvironment in a given reasoning engine.
 
 ```sql
 INSERT INTO google.aiplatform.sandbox_environments (
-data__ttl,
-data__owner,
 data__displayName,
-data__sandboxEnvironmentSnapshot,
-data__spec,
-data__name,
 data__expireTime,
+data__name,
+data__owner,
+data__sandboxEnvironmentSnapshot,
 data__sandboxEnvironmentTemplate,
+data__spec,
+data__ttl,
+projectsId,
+locationsId,
 reasoningEnginesId
 )
 SELECT 
-'{{ ttl }}',
-'{{ owner }}',
 '{{ displayName }}',
-'{{ sandboxEnvironmentSnapshot }}',
-'{{ spec }}',
-'{{ name }}',
 '{{ expireTime }}',
+'{{ name }}',
+'{{ owner }}',
+'{{ sandboxEnvironmentSnapshot }}',
 '{{ sandboxEnvironmentTemplate }}',
+'{{ spec }}',
+'{{ ttl }}',
+'{{ projectsId }}',
+'{{ locationsId }}',
 '{{ reasoningEnginesId }}'
 RETURNING
 name,
@@ -427,25 +445,39 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sandbox_environments
   props:
+    - name: projectsId
+      value: "{{ projectsId }}"
+      description: Required parameter for the sandbox_environments resource.
+    - name: locationsId
+      value: "{{ locationsId }}"
+      description: Required parameter for the sandbox_environments resource.
     - name: reasoningEnginesId
       value: "{{ reasoningEnginesId }}"
       description: Required parameter for the sandbox_environments resource.
-    - name: ttl
-      value: "{{ ttl }}"
-      description: |
-        Optional. Input only. The TTL for the sandbox environment. The expiration time is computed: now + TTL.
-    - name: owner
-      value: "{{ owner }}"
-      description: |
-        Optional. Owner information for this sandbox environment. A Sandbox can only be restored from a snapshot that belongs to the same owner. If not set, sandbox will be created as the default owner.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Required. The display name of the SandboxEnvironment.
+    - name: expireTime
+      value: "{{ expireTime }}"
+      description: |
+        Optional. Timestamp in UTC of when this SandboxEnvironment is considered expired. This is *always* provided on output, regardless of what \`expiration\` was sent on input.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the SandboxEnvironment.
+    - name: owner
+      value: "{{ owner }}"
+      description: |
+        Optional. Owner information for this sandbox environment. A Sandbox can only be restored from a snapshot that belongs to the same owner. If not set, sandbox will be created as the default owner.
     - name: sandboxEnvironmentSnapshot
       value: "{{ sandboxEnvironmentSnapshot }}"
       description: |
         Optional. The resource name of the SandboxEnvironmentSnapshot to use for creating this SandboxEnvironment. Format: \`projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sandboxEnvironmentSnapshots/{sandbox_environment_snapshot}\`
+    - name: sandboxEnvironmentTemplate
+      value: "{{ sandboxEnvironmentTemplate }}"
+      description: |
+        Optional. The name of the SandboxEnvironmentTemplate specified in the parent Agent Engine resource that this SandboxEnvironment is created from.
     - name: spec
       description: |
         Optional. The configuration of the SandboxEnvironment.
@@ -453,18 +485,10 @@ response
         codeExecutionEnvironment:
           codeLanguage: "{{ codeLanguage }}"
           machineConfig: "{{ machineConfig }}"
-    - name: name
-      value: "{{ name }}"
+    - name: ttl
+      value: "{{ ttl }}"
       description: |
-        Identifier. The name of the SandboxEnvironment.
-    - name: expireTime
-      value: "{{ expireTime }}"
-      description: |
-        Optional. Timestamp in UTC of when this SandboxEnvironment is considered expired. This is *always* provided on output, regardless of what \`expiration\` was sent on input.
-    - name: sandboxEnvironmentTemplate
-      value: "{{ sandboxEnvironmentTemplate }}"
-      description: |
-        Optional. The name of the SandboxEnvironmentTemplate specified in the parent Agent Engine resource that this SandboxEnvironment is created from.
+        Optional. Input only. The TTL for the sandbox environment. The expiration time is computed: now + TTL.
 `}</CodeBlock>
 
 </TabItem>
@@ -485,7 +509,9 @@ Deletes the specific SandboxEnvironment.
 
 ```sql
 DELETE FROM google.aiplatform.sandbox_environments
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' --required
 AND sandboxEnvironmentsId = '{{ sandboxEnvironmentsId }}' --required
 ;
 ```
@@ -499,9 +525,9 @@ AND sandboxEnvironmentsId = '{{ sandboxEnvironmentsId }}' --required
     defaultValue="execute"
     values={[
         { label: 'execute', value: 'execute' },
+        { label: 'pause', value: 'pause' },
         { label: 'resume', value: 'resume' },
-        { label: 'snapshot', value: 'snapshot' },
-        { label: 'pause', value: 'pause' }
+        { label: 'snapshot', value: 'snapshot' }
     ]}
 >
 <TabItem value="execute">
@@ -510,6 +536,8 @@ Executes using a sandbox environment.
 
 ```sql
 EXEC google.aiplatform.sandbox_environments.execute 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required, 
 @sandboxEnvironmentsId='{{ sandboxEnvironmentsId }}' --required 
 @@json=
@@ -519,12 +547,27 @@ EXEC google.aiplatform.sandbox_environments.execute
 ;
 ```
 </TabItem>
+<TabItem value="pause">
+
+Pauses the specific SandboxEnvironment.
+
+```sql
+EXEC google.aiplatform.sandbox_environments.pause 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@reasoningEnginesId='{{ reasoningEnginesId }}' --required, 
+@sandboxEnvironmentsId='{{ sandboxEnvironmentsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="resume">
 
 Resumes the specific SandboxEnvironment.
 
 ```sql
 EXEC google.aiplatform.sandbox_environments.resume 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required, 
 @sandboxEnvironmentsId='{{ sandboxEnvironmentsId }}' --required
 ;
@@ -536,29 +579,20 @@ Snapshots the specific SandboxEnvironment resource and creates a SandboxEnvironm
 
 ```sql
 EXEC google.aiplatform.sandbox_environments.snapshot 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required, 
 @sandboxEnvironmentsId='{{ sandboxEnvironmentsId }}' --required 
 @@json=
 '{
+"displayName": "{{ displayName }}", 
 "expireTime": "{{ expireTime }}", 
 "name": "{{ name }}", 
-"sourceSandboxEnvironment": "{{ sourceSandboxEnvironment }}", 
-"displayName": "{{ displayName }}", 
-"postSnapshotAction": "{{ postSnapshotAction }}", 
 "owner": "{{ owner }}", 
+"postSnapshotAction": "{{ postSnapshotAction }}", 
+"sourceSandboxEnvironment": "{{ sourceSandboxEnvironment }}", 
 "ttl": "{{ ttl }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="pause">
-
-Pauses the specific SandboxEnvironment.
-
-```sql
-EXEC google.aiplatform.sandbox_environments.pause 
-@reasoningEnginesId='{{ reasoningEnginesId }}' --required, 
-@sandboxEnvironmentsId='{{ sandboxEnvironmentsId }}' --required
 ;
 ```
 </TabItem>

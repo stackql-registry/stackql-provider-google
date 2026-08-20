@@ -343,11 +343,11 @@ Creates a new hook in a given repository.
 ```sql
 INSERT INTO google.securesourcemanager.hooks (
 data__disabled,
-data__sensitiveQueryString,
-data__pushOption,
-data__targetUri,
 data__events,
 data__name,
+data__pushOption,
+data__sensitiveQueryString,
+data__targetUri,
 projectsId,
 locationsId,
 repositoriesId,
@@ -355,11 +355,11 @@ hookId
 )
 SELECT 
 {{ disabled }},
-'{{ sensitiveQueryString }}',
-'{{ pushOption }}',
-'{{ targetUri }}',
 '{{ events }}',
 '{{ name }}',
+'{{ pushOption }}',
+'{{ sensitiveQueryString }}',
+'{{ targetUri }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -391,19 +391,6 @@ response
       value: {{ disabled }}
       description: |
         Optional. Determines if the hook disabled or not. Set to true to stop sending traffic.
-    - name: sensitiveQueryString
-      value: "{{ sensitiveQueryString }}"
-      description: |
-        Optional. The sensitive query string to be appended to the target URI.
-    - name: pushOption
-      description: |
-        Optional. The trigger option for push events.
-      value:
-        branchFilter: "{{ branchFilter }}"
-    - name: targetUri
-      value: "{{ targetUri }}"
-      description: |
-        Required. The target URI to which the payloads will be delivered.
     - name: events
       value:
         - "{{ events }}"
@@ -413,6 +400,19 @@ response
       value: "{{ name }}"
       description: |
         Identifier. A unique identifier for a Hook. The name should be of the format: \`projects/{project}/locations/{location_id}/repositories/{repository_id}/hooks/{hook_id}\`
+    - name: pushOption
+      description: |
+        Optional. The trigger option for push events.
+      value:
+        branchFilter: "{{ branchFilter }}"
+    - name: sensitiveQueryString
+      value: "{{ sensitiveQueryString }}"
+      description: |
+        Optional. The sensitive query string to be appended to the target URI.
+    - name: targetUri
+      value: "{{ targetUri }}"
+      description: |
+        Required. The target URI to which the payloads will be delivered.
     - name: hookId
       value: "{{ hookId }}"
 `}</CodeBlock>
@@ -437,11 +437,11 @@ Updates the metadata of a hook.
 UPDATE google.securesourcemanager.hooks
 SET 
 data__disabled = {{ disabled }},
-data__sensitiveQueryString = '{{ sensitiveQueryString }}',
-data__pushOption = '{{ pushOption }}',
-data__targetUri = '{{ targetUri }}',
 data__events = '{{ events }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__pushOption = '{{ pushOption }}',
+data__sensitiveQueryString = '{{ sensitiveQueryString }}',
+data__targetUri = '{{ targetUri }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -278,28 +278,28 @@ Inserts a resource containing information about a database inside a Cloud SQL in
 
 ```sql
 INSERT INTO google.sqladmin.databases (
-data__selfLink,
-data__name,
-data__sqlserverDatabaseDetails,
-data__kind,
 data__charset,
-data__instance,
-data__project,
 data__collation,
 data__etag,
+data__instance,
+data__kind,
+data__name,
+data__project,
+data__selfLink,
+data__sqlserverDatabaseDetails,
 project,
 instance
 )
 SELECT 
-'{{ selfLink }}',
-'{{ name }}',
-'{{ sqlserverDatabaseDetails }}',
-'{{ kind }}',
 '{{ charset }}',
-'{{ instance }}',
-'{{ project }}',
 '{{ collation }}',
 '{{ etag }}',
+'{{ instance }}',
+'{{ kind }}',
+'{{ name }}',
+'{{ project }}',
+'{{ selfLink }}',
+'{{ sqlserverDatabaseDetails }}',
 '{{ project }}',
 '{{ instance }}'
 RETURNING
@@ -337,36 +337,10 @@ user
     - name: instance
       value: "{{ instance }}"
       description: Required parameter for the databases resource.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        The URI of this resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of the database in the Cloud SQL instance. This does not include the project ID or instance name.
-    - name: sqlserverDatabaseDetails
-      description: |
-        Represents a Sql Server database on the Cloud SQL instance.
-      value:
-        recoveryModel: "{{ recoveryModel }}"
-        compatibilityLevel: {{ compatibilityLevel }}
-    - name: kind
-      value: "{{ kind }}"
-      description: |
-        This is always \`sql#database\`.
     - name: charset
       value: "{{ charset }}"
       description: |
         The Cloud SQL charset value.
-    - name: instance
-      value: "{{ instance }}"
-      description: |
-        The name of the Cloud SQL instance. This does not include the project ID.
-    - name: project
-      value: "{{ project }}"
-      description: |
-        The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable.
     - name: collation
       value: "{{ collation }}"
       description: |
@@ -375,6 +349,32 @@ user
       value: "{{ etag }}"
       description: |
         This field is deprecated and will be removed from a future version of the API.
+    - name: instance
+      value: "{{ instance }}"
+      description: |
+        The name of the Cloud SQL instance. This does not include the project ID.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        This is always \`sql#database\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the database in the Cloud SQL instance. This does not include the project ID or instance name.
+    - name: project
+      value: "{{ project }}"
+      description: |
+        The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        The URI of this resource.
+    - name: sqlserverDatabaseDetails
+      description: |
+        Represents a Sql Server database on the Cloud SQL instance.
+      value:
+        compatibilityLevel: {{ compatibilityLevel }}
+        recoveryModel: "{{ recoveryModel }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -396,15 +396,15 @@ Partially updates a resource containing information about a database inside a Cl
 ```sql
 UPDATE google.sqladmin.databases
 SET 
-data__selfLink = '{{ selfLink }}',
-data__name = '{{ name }}',
-data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}',
-data__kind = '{{ kind }}',
 data__charset = '{{ charset }}',
-data__instance = '{{ instance }}',
-data__project = '{{ project }}',
 data__collation = '{{ collation }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__instance = '{{ instance }}',
+data__kind = '{{ kind }}',
+data__name = '{{ name }}',
+data__project = '{{ project }}',
+data__selfLink = '{{ selfLink }}',
+data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
@@ -450,15 +450,15 @@ Updates a resource containing information about a database inside a Cloud SQL in
 ```sql
 REPLACE google.sqladmin.databases
 SET 
-data__selfLink = '{{ selfLink }}',
-data__name = '{{ name }}',
-data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}',
-data__kind = '{{ kind }}',
 data__charset = '{{ charset }}',
-data__instance = '{{ instance }}',
-data__project = '{{ project }}',
 data__collation = '{{ collation }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__instance = '{{ instance }}',
+data__kind = '{{ kind }}',
+data__name = '{{ name }}',
+data__project = '{{ project }}',
+data__selfLink = '{{ selfLink }}',
+data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required

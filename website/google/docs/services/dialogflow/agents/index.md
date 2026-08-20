@@ -360,6 +360,13 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_agents_export"><CopyableCode code="projects_locations_agents_export" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#projects_locations_agents_restore"><CopyableCode code="projects_locations_agents_restore" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
@@ -368,13 +375,6 @@ The following methods are available for this resource:
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_validate"><CopyableCode code="projects_locations_agents_validate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_export"><CopyableCode code="projects_locations_agents_export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
@@ -531,54 +531,54 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.agents (
-data__defaultLanguageCode,
-data__speechToTextSettings,
-data__personalizationSettings,
-data__answerFeedbackSettings,
-data__enableMultiLanguageTraining,
-data__securitySettings,
-data__textToSpeechSettings,
-data__description,
-data__clientCertificateSettings,
-data__displayName,
-data__enableSpellCorrection,
-data__supportedLanguageCodes,
-data__genAppBuilderSettings,
-data__avatarUri,
-data__startPlaybook,
-data__enableStackdriverLogging,
-data__timeZone,
-data__name,
-data__locked,
-data__gitIntegrationSettings,
 data__advancedSettings,
+data__answerFeedbackSettings,
+data__avatarUri,
+data__clientCertificateSettings,
+data__defaultLanguageCode,
+data__description,
+data__displayName,
+data__enableMultiLanguageTraining,
+data__enableSpellCorrection,
+data__enableStackdriverLogging,
+data__genAppBuilderSettings,
+data__gitIntegrationSettings,
+data__locked,
+data__name,
+data__personalizationSettings,
+data__securitySettings,
+data__speechToTextSettings,
 data__startFlow,
+data__startPlaybook,
+data__supportedLanguageCodes,
+data__textToSpeechSettings,
+data__timeZone,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ defaultLanguageCode }}',
-'{{ speechToTextSettings }}',
-'{{ personalizationSettings }}',
-'{{ answerFeedbackSettings }}',
-{{ enableMultiLanguageTraining }},
-'{{ securitySettings }}',
-'{{ textToSpeechSettings }}',
-'{{ description }}',
-'{{ clientCertificateSettings }}',
-'{{ displayName }}',
-{{ enableSpellCorrection }},
-'{{ supportedLanguageCodes }}',
-'{{ genAppBuilderSettings }}',
-'{{ avatarUri }}',
-'{{ startPlaybook }}',
-{{ enableStackdriverLogging }},
-'{{ timeZone }}',
-'{{ name }}',
-{{ locked }},
-'{{ gitIntegrationSettings }}',
 '{{ advancedSettings }}',
+'{{ answerFeedbackSettings }}',
+'{{ avatarUri }}',
+'{{ clientCertificateSettings }}',
+'{{ defaultLanguageCode }}',
+'{{ description }}',
+'{{ displayName }}',
+{{ enableMultiLanguageTraining }},
+{{ enableSpellCorrection }},
+{{ enableStackdriverLogging }},
+'{{ genAppBuilderSettings }}',
+'{{ gitIntegrationSettings }}',
+{{ locked }},
+'{{ name }}',
+'{{ personalizationSettings }}',
+'{{ securitySettings }}',
+'{{ speechToTextSettings }}',
 '{{ startFlow }}',
+'{{ startPlaybook }}',
+'{{ supportedLanguageCodes }}',
+'{{ textToSpeechSettings }}',
+'{{ timeZone }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -620,83 +620,83 @@ timeZone
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the agents resource.
-    - name: defaultLanguageCode
-      value: "{{ defaultLanguageCode }}"
-    - name: speechToTextSettings
+    - name: advancedSettings
       value:
-        enableSpeechAdaptation: {{ enableSpeechAdaptation }}
-    - name: personalizationSettings
-      value:
-        defaultEndUserMetadata: "{{ defaultEndUserMetadata }}"
+        audioExportGcsDestination:
+          uri: "{{ uri }}"
+        dtmfSettings:
+          enabled: {{ enabled }}
+          endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+          finishDigit: "{{ finishDigit }}"
+          interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+          maxDigits: {{ maxDigits }}
+        loggingSettings:
+          enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+          enableInteractionLogging: {{ enableInteractionLogging }}
+          enableStackdriverLogging: {{ enableStackdriverLogging }}
+        speechSettings:
+          endpointerSensitivity: {{ endpointerSensitivity }}
+          models: "{{ models }}"
+          noSpeechTimeout: "{{ noSpeechTimeout }}"
+          useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
     - name: answerFeedbackSettings
       value:
         enableAnswerFeedback: {{ enableAnswerFeedback }}
-    - name: enableMultiLanguageTraining
-      value: {{ enableMultiLanguageTraining }}
-    - name: securitySettings
-      value: "{{ securitySettings }}"
-    - name: textToSpeechSettings
-      value:
-        synthesizeSpeechConfigs: "{{ synthesizeSpeechConfigs }}"
-    - name: description
-      value: "{{ description }}"
+    - name: avatarUri
+      value: "{{ avatarUri }}"
     - name: clientCertificateSettings
       value:
-        sslCertificate: "{{ sslCertificate }}"
-        privateKey: "{{ privateKey }}"
         passphrase: "{{ passphrase }}"
+        privateKey: "{{ privateKey }}"
+        sslCertificate: "{{ sslCertificate }}"
+    - name: defaultLanguageCode
+      value: "{{ defaultLanguageCode }}"
+    - name: description
+      value: "{{ description }}"
     - name: displayName
       value: "{{ displayName }}"
+    - name: enableMultiLanguageTraining
+      value: {{ enableMultiLanguageTraining }}
     - name: enableSpellCorrection
       value: {{ enableSpellCorrection }}
-    - name: supportedLanguageCodes
-      value:
-        - "{{ supportedLanguageCodes }}"
+    - name: enableStackdriverLogging
+      value: {{ enableStackdriverLogging }}
     - name: genAppBuilderSettings
       value:
         engine: "{{ engine }}"
-    - name: avatarUri
-      value: "{{ avatarUri }}"
-    - name: startPlaybook
-      value: "{{ startPlaybook }}"
-    - name: enableStackdriverLogging
-      value: {{ enableStackdriverLogging }}
-    - name: timeZone
-      value: "{{ timeZone }}"
-    - name: name
-      value: "{{ name }}"
-    - name: locked
-      value: {{ locked }}
     - name: gitIntegrationSettings
       value:
         githubSettings:
+          accessToken: "{{ accessToken }}"
           branches:
             - "{{ branches }}"
+          displayName: "{{ displayName }}"
           repositoryUri: "{{ repositoryUri }}"
           trackingBranch: "{{ trackingBranch }}"
-          displayName: "{{ displayName }}"
-          accessToken: "{{ accessToken }}"
-    - name: advancedSettings
+    - name: locked
+      value: {{ locked }}
+    - name: name
+      value: "{{ name }}"
+    - name: personalizationSettings
       value:
-        loggingSettings:
-          enableInteractionLogging: {{ enableInteractionLogging }}
-          enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
-          enableStackdriverLogging: {{ enableStackdriverLogging }}
-        audioExportGcsDestination:
-          uri: "{{ uri }}"
-        speechSettings:
-          useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
-          models: "{{ models }}"
-          endpointerSensitivity: {{ endpointerSensitivity }}
-          noSpeechTimeout: "{{ noSpeechTimeout }}"
-        dtmfSettings:
-          maxDigits: {{ maxDigits }}
-          finishDigit: "{{ finishDigit }}"
-          interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
-          enabled: {{ enabled }}
-          endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+        defaultEndUserMetadata: "{{ defaultEndUserMetadata }}"
+    - name: securitySettings
+      value: "{{ securitySettings }}"
+    - name: speechToTextSettings
+      value:
+        enableSpeechAdaptation: {{ enableSpeechAdaptation }}
     - name: startFlow
       value: "{{ startFlow }}"
+    - name: startPlaybook
+      value: "{{ startPlaybook }}"
+    - name: supportedLanguageCodes
+      value:
+        - "{{ supportedLanguageCodes }}"
+    - name: textToSpeechSettings
+      value:
+        synthesizeSpeechConfigs: "{{ synthesizeSpeechConfigs }}"
+    - name: timeZone
+      value: "{{ timeZone }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -718,28 +718,28 @@ No description available.
 ```sql
 UPDATE google.dialogflow.agents
 SET 
-data__defaultLanguageCode = '{{ defaultLanguageCode }}',
-data__speechToTextSettings = '{{ speechToTextSettings }}',
-data__personalizationSettings = '{{ personalizationSettings }}',
-data__answerFeedbackSettings = '{{ answerFeedbackSettings }}',
-data__enableMultiLanguageTraining = {{ enableMultiLanguageTraining }},
-data__securitySettings = '{{ securitySettings }}',
-data__textToSpeechSettings = '{{ textToSpeechSettings }}',
-data__description = '{{ description }}',
-data__clientCertificateSettings = '{{ clientCertificateSettings }}',
-data__displayName = '{{ displayName }}',
-data__enableSpellCorrection = {{ enableSpellCorrection }},
-data__supportedLanguageCodes = '{{ supportedLanguageCodes }}',
-data__genAppBuilderSettings = '{{ genAppBuilderSettings }}',
-data__avatarUri = '{{ avatarUri }}',
-data__startPlaybook = '{{ startPlaybook }}',
-data__enableStackdriverLogging = {{ enableStackdriverLogging }},
-data__timeZone = '{{ timeZone }}',
-data__name = '{{ name }}',
-data__locked = {{ locked }},
-data__gitIntegrationSettings = '{{ gitIntegrationSettings }}',
 data__advancedSettings = '{{ advancedSettings }}',
-data__startFlow = '{{ startFlow }}'
+data__answerFeedbackSettings = '{{ answerFeedbackSettings }}',
+data__avatarUri = '{{ avatarUri }}',
+data__clientCertificateSettings = '{{ clientCertificateSettings }}',
+data__defaultLanguageCode = '{{ defaultLanguageCode }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__enableMultiLanguageTraining = {{ enableMultiLanguageTraining }},
+data__enableSpellCorrection = {{ enableSpellCorrection }},
+data__enableStackdriverLogging = {{ enableStackdriverLogging }},
+data__genAppBuilderSettings = '{{ genAppBuilderSettings }}',
+data__gitIntegrationSettings = '{{ gitIntegrationSettings }}',
+data__locked = {{ locked }},
+data__name = '{{ name }}',
+data__personalizationSettings = '{{ personalizationSettings }}',
+data__securitySettings = '{{ securitySettings }}',
+data__speechToTextSettings = '{{ speechToTextSettings }}',
+data__startFlow = '{{ startFlow }}',
+data__startPlaybook = '{{ startPlaybook }}',
+data__supportedLanguageCodes = '{{ supportedLanguageCodes }}',
+data__textToSpeechSettings = '{{ textToSpeechSettings }}',
+data__timeZone = '{{ timeZone }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -801,13 +801,33 @@ AND agentsId = '{{ agentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_agents_restore"
+    defaultValue="projects_locations_agents_export"
     values={[
+        { label: 'projects_locations_agents_export', value: 'projects_locations_agents_export' },
         { label: 'projects_locations_agents_restore', value: 'projects_locations_agents_restore' },
-        { label: 'projects_locations_agents_validate', value: 'projects_locations_agents_validate' },
-        { label: 'projects_locations_agents_export', value: 'projects_locations_agents_export' }
+        { label: 'projects_locations_agents_validate', value: 'projects_locations_agents_validate' }
     ]}
 >
+<TabItem value="projects_locations_agents_export">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.agents.projects_locations_agents_export 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required 
+@@json=
+'{
+"agentUri": "{{ agentUri }}", 
+"dataFormat": "{{ dataFormat }}", 
+"environment": "{{ environment }}", 
+"gitDestination": "{{ gitDestination }}", 
+"includeBigqueryExportSettings": {{ includeBigqueryExportSettings }}
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_agents_restore">
 
 Successful response
@@ -819,10 +839,10 @@ EXEC google.dialogflow.agents.projects_locations_agents_restore
 @agentsId='{{ agentsId }}' --required 
 @@json=
 '{
-"agentUri": "{{ agentUri }}", 
-"restoreOption": "{{ restoreOption }}", 
 "agentContent": "{{ agentContent }}", 
-"gitSource": "{{ gitSource }}"
+"agentUri": "{{ agentUri }}", 
+"gitSource": "{{ gitSource }}", 
+"restoreOption": "{{ restoreOption }}"
 }'
 ;
 ```
@@ -839,26 +859,6 @@ EXEC google.dialogflow.agents.projects_locations_agents_validate
 @@json=
 '{
 "languageCode": "{{ languageCode }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_agents_export">
-
-Successful response
-
-```sql
-EXEC google.dialogflow.agents.projects_locations_agents_export 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required 
-@@json=
-'{
-"gitDestination": "{{ gitDestination }}", 
-"includeBigqueryExportSettings": {{ includeBigqueryExportSettings }}, 
-"environment": "{{ environment }}", 
-"agentUri": "{{ agentUri }}", 
-"dataFormat": "{{ dataFormat }}"
 }'
 ;
 ```

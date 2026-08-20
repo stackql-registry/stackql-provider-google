@@ -292,18 +292,18 @@ Creates a new DNS zone.
 
 ```sql
 INSERT INTO google.apigee.dns_zones (
+data__description,
+data__domain,
 data__name,
 data__peeringConfig,
-data__domain,
-data__description,
 organizationsId,
 dnsZoneId
 )
 SELECT 
+'{{ description }}',
+'{{ domain }}',
 '{{ name }}',
 '{{ peeringConfig }}',
-'{{ domain }}',
-'{{ description }}',
 '{{ organizationsId }}',
 '{{ dnsZoneId }}'
 RETURNING
@@ -323,6 +323,14 @@ response
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the dns_zones resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Required. Description of the resource. String of at most 1024 characters associated with this resource for the user's convenience.
+    - name: domain
+      value: "{{ domain }}"
+      description: |
+        Required. The domain name for hosts in this private zone, for instance "example.com.".
     - name: name
       value: "{{ name }}"
       description: |
@@ -331,16 +339,8 @@ response
       description: |
         DNS PEERING zone configuration.
       value:
-        targetProjectId: "{{ targetProjectId }}"
         targetNetworkId: "{{ targetNetworkId }}"
-    - name: domain
-      value: "{{ domain }}"
-      description: |
-        Required. The domain name for hosts in this private zone, for instance "example.com.".
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Required. Description of the resource. String of at most 1024 characters associated with this resource for the user's convenience.
+        targetProjectId: "{{ targetProjectId }}"
     - name: dnsZoneId
       value: "{{ dnsZoneId }}"
 `}</CodeBlock>

@@ -53,7 +53,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#send"><CopyableCode code="send" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td></td>
     <td>Sends a message to an agent.</td>
 </tr>
@@ -88,6 +88,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-versionsId">
+    <td><CopyableCode code="versionsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -107,11 +112,12 @@ Sends a message to an agent.
 EXEC google.ces.message.send 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@appsId='{{ appsId }}' --required 
+@appsId='{{ appsId }}' --required, 
+@versionsId='{{ versionsId }}' --required 
 @@json=
 '{
-"message": "{{ message }}", 
 "configuration": "{{ configuration }}", 
+"message": "{{ message }}", 
 "metadata": "{{ metadata }}"
 }'
 ;

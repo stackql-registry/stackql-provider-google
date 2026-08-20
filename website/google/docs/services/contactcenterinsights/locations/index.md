@@ -58,18 +58,11 @@ The following methods are available for this resource:
     <td>Delete feedback labels in bulk using a filter.</td>
 </tr>
 <tr>
-    <td><a href="#query_metrics"><CopyableCode code="query_metrics" /></a></td>
+    <td><a href="#bulk_download_feedback_labels"><CopyableCode code="bulk_download_feedback_labels" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Query metrics.</td>
-</tr>
-<tr>
-    <td><a href="#test_correlation_config"><CopyableCode code="test_correlation_config" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Tests correlation config on a conversation.</td>
+    <td>Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.</td>
 </tr>
 <tr>
     <td><a href="#bulk_upload_feedback_labels"><CopyableCode code="bulk_upload_feedback_labels" /></a></td>
@@ -79,13 +72,6 @@ The following methods are available for this resource:
     <td>Upload feedback labels from an external source in bulk. Currently supports labeling Quality AI example conversations.</td>
 </tr>
 <tr>
-    <td><a href="#query_performance_overview"><CopyableCode code="query_performance_overview" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Generates a summary of predefined performance metrics for a set of conversations. Conversations can be specified by specifying a time window and an agent id, for now. The summary includes a comparison of metrics computed for conversations in the previous time period, and also a comparison with peers in the same time period.</td>
-</tr>
-<tr>
     <td><a href="#generative_insights"><CopyableCode code="generative_insights" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -93,11 +79,25 @@ The following methods are available for this resource:
     <td>Natural language based Insights which powers the next generation of dashboards in Insights. Next generation of QueryMetrics.</td>
 </tr>
 <tr>
-    <td><a href="#bulk_download_feedback_labels"><CopyableCode code="bulk_download_feedback_labels" /></a></td>
+    <td><a href="#query_metrics"><CopyableCode code="query_metrics" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.</td>
+    <td>Query metrics.</td>
+</tr>
+<tr>
+    <td><a href="#query_performance_overview"><CopyableCode code="query_performance_overview" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Generates a summary of predefined performance metrics for a set of conversations. Conversations can be specified by specifying a time window and an agent id, for now. The summary includes a comparison of metrics computed for conversations in the previous time period, and also a comparison with peers in the same time period.</td>
+</tr>
+<tr>
+    <td><a href="#test_correlation_config"><CopyableCode code="test_correlation_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Tests correlation config on a conversation.</td>
 </tr>
 </tbody>
 </table>
@@ -153,48 +153,34 @@ AND locationsId = '{{ locationsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="query_metrics"
+    defaultValue="bulk_download_feedback_labels"
     values={[
-        { label: 'query_metrics', value: 'query_metrics' },
-        { label: 'test_correlation_config', value: 'test_correlation_config' },
+        { label: 'bulk_download_feedback_labels', value: 'bulk_download_feedback_labels' },
         { label: 'bulk_upload_feedback_labels', value: 'bulk_upload_feedback_labels' },
-        { label: 'query_performance_overview', value: 'query_performance_overview' },
         { label: 'generative_insights', value: 'generative_insights' },
-        { label: 'bulk_download_feedback_labels', value: 'bulk_download_feedback_labels' }
+        { label: 'query_metrics', value: 'query_metrics' },
+        { label: 'query_performance_overview', value: 'query_performance_overview' },
+        { label: 'test_correlation_config', value: 'test_correlation_config' }
     ]}
 >
-<TabItem value="query_metrics">
+<TabItem value="bulk_download_feedback_labels">
 
-Query metrics.
+Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.
 
 ```sql
-EXEC google.contactcenterinsights.locations.query_metrics 
+EXEC google.contactcenterinsights.locations.bulk_download_feedback_labels 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"dimensions": "{{ dimensions }}", 
-"timeGranularity": "{{ timeGranularity }}", 
+"conversationFilter": "{{ conversationFilter }}", 
+"feedbackLabelType": "{{ feedbackLabelType }}", 
 "filter": "{{ filter }}", 
-"measureMask": "{{ measureMask }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="test_correlation_config">
-
-Tests correlation config on a conversation.
-
-```sql
-EXEC google.contactcenterinsights.locations.test_correlation_config 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"conversations": "{{ conversations }}", 
-"correlationConfig": "{{ correlationConfig }}", 
-"maxSampleCount": {{ maxSampleCount }}
+"gcsDestination": "{{ gcsDestination }}", 
+"maxDownloadCount": {{ maxDownloadCount }}, 
+"parent": "{{ parent }}", 
+"sheetsDestination": "{{ sheetsDestination }}", 
+"templateQaScorecardId": "{{ templateQaScorecardId }}"
 }'
 ;
 ```
@@ -209,9 +195,50 @@ EXEC google.contactcenterinsights.locations.bulk_upload_feedback_labels
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"sheetsSource": "{{ sheetsSource }}", 
 "gcsSource": "{{ gcsSource }}", 
+"sheetsSource": "{{ sheetsSource }}", 
 "validateOnly": {{ validateOnly }}
+}'
+;
+```
+</TabItem>
+<TabItem value="generative_insights">
+
+Natural language based Insights which powers the next generation of dashboards in Insights. Next generation of QueryMetrics.
+
+```sql
+EXEC google.contactcenterinsights.locations.generative_insights 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"chart": "{{ chart }}", 
+"comparisonFilter": "{{ comparisonFilter }}", 
+"filter": "{{ filter }}", 
+"naturalLanguageQuery": "{{ naturalLanguageQuery }}", 
+"revisionId": "{{ revisionId }}", 
+"sessionId": "{{ sessionId }}", 
+"sqlComparisonKey": "{{ sqlComparisonKey }}", 
+"sqlQuery": "{{ sqlQuery }}", 
+"userProvidedChartSpec": "{{ userProvidedChartSpec }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="query_metrics">
+
+Query metrics.
+
+```sql
+EXEC google.contactcenterinsights.locations.query_metrics 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"dimensions": "{{ dimensions }}", 
+"filter": "{{ filter }}", 
+"measureMask": "{{ measureMask }}", 
+"timeGranularity": "{{ timeGranularity }}"
 }'
 ;
 ```
@@ -227,54 +254,27 @@ EXEC google.contactcenterinsights.locations.query_performance_overview
 @@json=
 '{
 "agentPerformanceSource": "{{ agentPerformanceSource }}", 
-"filter": "{{ filter }}", 
 "comparisonQueryInterval": "{{ comparisonQueryInterval }}", 
+"filter": "{{ filter }}", 
 "queryInterval": "{{ queryInterval }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="generative_insights">
+<TabItem value="test_correlation_config">
 
-Natural language based Insights which powers the next generation of dashboards in Insights. Next generation of QueryMetrics.
+Tests correlation config on a conversation.
 
 ```sql
-EXEC google.contactcenterinsights.locations.generative_insights 
+EXEC google.contactcenterinsights.locations.test_correlation_config 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"conversations": "{{ conversations }}", 
+"correlationConfig": "{{ correlationConfig }}", 
 "filter": "{{ filter }}", 
-"comparisonFilter": "{{ comparisonFilter }}", 
-"chart": "{{ chart }}", 
-"revisionId": "{{ revisionId }}", 
-"userProvidedChartSpec": "{{ userProvidedChartSpec }}", 
-"sqlQuery": "{{ sqlQuery }}", 
-"sessionId": "{{ sessionId }}", 
-"sqlComparisonKey": "{{ sqlComparisonKey }}", 
-"naturalLanguageQuery": "{{ naturalLanguageQuery }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="bulk_download_feedback_labels">
-
-Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.
-
-```sql
-EXEC google.contactcenterinsights.locations.bulk_download_feedback_labels 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"gcsDestination": "{{ gcsDestination }}", 
-"parent": "{{ parent }}", 
-"maxDownloadCount": {{ maxDownloadCount }}, 
-"feedbackLabelType": "{{ feedbackLabelType }}", 
-"filter": "{{ filter }}", 
-"templateQaScorecardId": "{{ templateQaScorecardId }}", 
-"sheetsDestination": "{{ sheetsDestination }}", 
-"conversationFilter": "{{ conversationFilter }}"
+"maxSampleCount": {{ maxSampleCount }}
 }'
 ;
 ```

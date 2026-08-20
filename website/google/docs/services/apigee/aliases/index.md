@@ -95,7 +95,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_keystores_aliases_create"><CopyableCode code="organizations_environments_keystores_aliases_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keystoresId"><code>keystoresId</code></a></td>
-    <td><a href="#parameter-alias"><code>alias</code></a>, <a href="#parameter-_password"><code>_password</code></a>, <a href="#parameter-ignoreExpiryValidation"><code>ignoreExpiryValidation</code></a>, <a href="#parameter-ignoreNewlineValidation"><code>ignoreNewlineValidation</code></a>, <a href="#parameter-format"><code>format</code></a></td>
+    <td><a href="#parameter-_password"><code>_password</code></a>, <a href="#parameter-alias"><code>alias</code></a>, <a href="#parameter-format"><code>format</code></a>, <a href="#parameter-ignoreExpiryValidation"><code>ignoreExpiryValidation</code></a>, <a href="#parameter-ignoreNewlineValidation"><code>ignoreNewlineValidation</code></a></td>
     <td>Creates an alias from a key/certificate pair. The structure of the request is controlled by the `format` query parameter: - `keycertfile` - Separate PEM-encoded key and certificate files are uploaded. Set `Content-Type: multipart/form-data` and include the `keyFile`, `certFile`, and `password` (if keys are encrypted) fields in the request body. If uploading to a truststore, omit `keyFile`. - `pkcs12` - A PKCS12 file is uploaded. Set `Content-Type: multipart/form-data`, provide the file in the `file` field, and include the `password` field if the file is encrypted in the request body. - `selfsignedcert` - A new private key and certificate are generated. Set `Content-Type: application/json` and include CertificateGenerationSpec in the request body.</td>
 </tr>
 <tr>
@@ -227,29 +227,29 @@ Creates an alias from a key/certificate pair. The structure of the request is co
 ```sql
 INSERT INTO google.apigee.aliases (
 data__contentType,
-data__extensions,
 data__data,
+data__extensions,
 organizationsId,
 environmentsId,
 keystoresId,
-alias,
 _password,
+alias,
+format,
 ignoreExpiryValidation,
-ignoreNewlineValidation,
-format
+ignoreNewlineValidation
 )
 SELECT 
 '{{ contentType }}',
-'{{ extensions }}',
 '{{ data }}',
+'{{ extensions }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
 '{{ keystoresId }}',
-'{{ alias }}',
 '{{ _password }}',
+'{{ alias }}',
+'{{ format }}',
 '{{ ignoreExpiryValidation }}',
-'{{ ignoreNewlineValidation }}',
-'{{ format }}'
+'{{ ignoreNewlineValidation }}'
 RETURNING
 alias,
 certsInfo,
@@ -275,24 +275,24 @@ type
       value: "{{ contentType }}"
       description: |
         The HTTP Content-Type header value specifying the content type of the body.
-    - name: extensions
-      value: "{{ extensions }}"
-      description: |
-        Application specific response metadata. Must be set in the first response for streaming APIs.
     - name: data
       value: "{{ data }}"
       description: |
         The HTTP request/response body as raw binary.
-    - name: alias
-      value: "{{ alias }}"
+    - name: extensions
+      value: "{{ extensions }}"
+      description: |
+        Application specific response metadata. Must be set in the first response for streaming APIs.
     - name: _password
       value: "{{ _password }}"
+    - name: alias
+      value: "{{ alias }}"
+    - name: format
+      value: "{{ format }}"
     - name: ignoreExpiryValidation
       value: {{ ignoreExpiryValidation }}
     - name: ignoreNewlineValidation
       value: {{ ignoreNewlineValidation }}
-    - name: format
-      value: "{{ format }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -315,8 +315,8 @@ Updates the certificate in an alias. The updated certificate must be in PEM- or 
 REPLACE google.apigee.aliases
 SET 
 data__contentType = '{{ contentType }}',
-data__extensions = '{{ extensions }}',
-data__data = '{{ data }}'
+data__data = '{{ data }}',
+data__extensions = '{{ extensions }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

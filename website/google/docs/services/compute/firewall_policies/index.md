@@ -197,44 +197,44 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
     <td></td>
-    <td>Returns the specified firewall policy.</td>
+    <td>Returns the specified network firewall policy.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-parentId"><code>parentId</code></a></td>
-    <td>Lists all the policies that have been configured for the specified<br />folder or organization.</td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists all the policies that have been configured for the specified project.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td></td>
-    <td><a href="#parameter-parentId"><code>parentId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new policy in the specified project using the data included in<br />the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Patches the specified policy with the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes the specified policy.</td>
 </tr>
 <tr>
     <td><a href="#clone_rules"><CopyableCode code="clone_rules" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
-    <td><a href="#parameter-sourceFirewallPolicy"><code>sourceFirewallPolicy</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Copies rules to the specified network firewall policy.</td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sourceFirewallPolicy"><code>sourceFirewallPolicy</code></a></td>
+    <td>Copies rules to the specified firewall policy.</td>
 </tr>
 <tr>
     <td><a href="#move"><CopyableCode code="move" /></a></td>
@@ -266,11 +266,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -328,7 +323,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Returns the specified firewall policy.
+Returns the specified network firewall policy.
 
 ```sql
 SELECT
@@ -350,13 +345,14 @@ selfLink,
 selfLinkWithId,
 shortName
 FROM google.compute.firewall_policies
-WHERE firewallPolicy = '{{ firewallPolicy }}' -- required
+WHERE project = '{{ project }}' -- required
+AND firewallPolicy = '{{ firewallPolicy }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Lists all the policies that have been configured for the specified<br />folder or organization.
+Lists all the policies that have been configured for the specified project.
 
 ```sql
 SELECT
@@ -366,12 +362,12 @@ kind,
 nextPageToken,
 warning
 FROM google.compute.firewall_policies
-WHERE returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
+WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
-AND parentId = '{{ parentId }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -393,33 +389,33 @@ Creates a new policy in the specified project using the data included in<br />th
 
 ```sql
 INSERT INTO google.compute.firewall_policies (
-data__rules,
-data__name,
-data__packetMirroringRules,
+data__associations,
 data__description,
-data__policyType,
-data__selfLink,
-data__id,
 data__displayName,
 data__fingerprint,
+data__id,
+data__name,
+data__packetMirroringRules,
+data__policyType,
+data__rules,
+data__selfLink,
 data__shortName,
-data__associations,
-parentId,
+project,
 requestId
 )
 SELECT 
-'{{ rules }}',
-'{{ name }}',
-'{{ packetMirroringRules }}',
+'{{ associations }}',
 '{{ description }}',
-'{{ policyType }}',
-'{{ selfLink }}',
-'{{ id }}',
 '{{ displayName }}',
 '{{ fingerprint }}',
+'{{ id }}',
+'{{ name }}',
+'{{ packetMirroringRules }}',
+'{{ policyType }}',
+'{{ rules }}',
+'{{ selfLink }}',
 '{{ shortName }}',
-'{{ associations }}',
-'{{ parentId }}',
+'{{ project }}',
 '{{ requestId }}'
 RETURNING
 id,
@@ -457,142 +453,23 @@ zone
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: firewall_policies
   props:
-    - name: rules
+    - name: project
+      value: "{{ project }}"
+      description: Required parameter for the firewall_policies resource.
+    - name: associations
       description: |
-        A list of rules that belong to this policy.
-        There must always be a default rule (rule with priority 2147483647 and
-        match "*"). If no rules are provided when creating a firewall policy, a
-        default rule with action "allow" will be added.
+        A list of associations that belong to this firewall policy.
       value:
-        - description: "{{ description }}"
-          match:
-            destIpRanges:
-              - "{{ destIpRanges }}"
-            destRegionCodes:
-              - "{{ destRegionCodes }}"
-            destFqdns:
-              - "{{ destFqdns }}"
-            destNetworkContext: "{{ destNetworkContext }}"
-            layer4Configs:
-              - ipProtocol: "{{ ipProtocol }}"
-                ports: "{{ ports }}"
-            srcNetworkContext: "{{ srcNetworkContext }}"
-            srcAddressGroups:
-              - "{{ srcAddressGroups }}"
-            srcRegionCodes:
-              - "{{ srcRegionCodes }}"
-            destThreatIntelligences:
-              - "{{ destThreatIntelligences }}"
-            srcSecureTags:
-              - name: "{{ name }}"
-                state: "{{ state }}"
-            destNetworkType: "{{ destNetworkType }}"
-            srcFqdns:
-              - "{{ srcFqdns }}"
-            srcNetworkType: "{{ srcNetworkType }}"
-            srcIpRanges:
-              - "{{ srcIpRanges }}"
-            srcThreatIntelligences:
-              - "{{ srcThreatIntelligences }}"
-            srcNetworks:
-              - "{{ srcNetworks }}"
-            destAddressGroups:
-              - "{{ destAddressGroups }}"
-          ruleTupleCount: {{ ruleTupleCount }}
-          priority: {{ priority }}
-          targetServiceAccounts: "{{ targetServiceAccounts }}"
-          kind: "{{ kind }}"
-          targetForwardingRules: "{{ targetForwardingRules }}"
-          targetResources: "{{ targetResources }}"
-          action: "{{ action }}"
-          ruleName: "{{ ruleName }}"
-          targetSecureTags: "{{ targetSecureTags }}"
-          enableLogging: {{ enableLogging }}
-          targetType: "{{ targetType }}"
-          direction: "{{ direction }}"
-          securityProfileGroup: "{{ securityProfileGroup }}"
-          disabled: {{ disabled }}
-          tlsInspect: {{ tlsInspect }}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. For Organization Firewall Policies it's a
-        [Output Only] numeric ID allocated by Google Cloud which uniquely
-        identifies the Organization Firewall Policy.
-    - name: packetMirroringRules
-      description: |
-        A list of packet mirroring rules that belong to this policy.
-      value:
-        - description: "{{ description }}"
-          match:
-            destIpRanges:
-              - "{{ destIpRanges }}"
-            destRegionCodes:
-              - "{{ destRegionCodes }}"
-            destFqdns:
-              - "{{ destFqdns }}"
-            destNetworkContext: "{{ destNetworkContext }}"
-            layer4Configs:
-              - ipProtocol: "{{ ipProtocol }}"
-                ports: "{{ ports }}"
-            srcNetworkContext: "{{ srcNetworkContext }}"
-            srcAddressGroups:
-              - "{{ srcAddressGroups }}"
-            srcRegionCodes:
-              - "{{ srcRegionCodes }}"
-            destThreatIntelligences:
-              - "{{ destThreatIntelligences }}"
-            srcSecureTags:
-              - name: "{{ name }}"
-                state: "{{ state }}"
-            destNetworkType: "{{ destNetworkType }}"
-            srcFqdns:
-              - "{{ srcFqdns }}"
-            srcNetworkType: "{{ srcNetworkType }}"
-            srcIpRanges:
-              - "{{ srcIpRanges }}"
-            srcThreatIntelligences:
-              - "{{ srcThreatIntelligences }}"
-            srcNetworks:
-              - "{{ srcNetworks }}"
-            destAddressGroups:
-              - "{{ destAddressGroups }}"
-          ruleTupleCount: {{ ruleTupleCount }}
-          priority: {{ priority }}
-          targetServiceAccounts: "{{ targetServiceAccounts }}"
-          kind: "{{ kind }}"
-          targetForwardingRules: "{{ targetForwardingRules }}"
-          targetResources: "{{ targetResources }}"
-          action: "{{ action }}"
-          ruleName: "{{ ruleName }}"
-          targetSecureTags: "{{ targetSecureTags }}"
-          enableLogging: {{ enableLogging }}
-          targetType: "{{ targetType }}"
-          direction: "{{ direction }}"
-          securityProfileGroup: "{{ securityProfileGroup }}"
-          disabled: {{ disabled }}
-          tlsInspect: {{ tlsInspect }}
+        - attachmentTarget: "{{ attachmentTarget }}"
+          displayName: "{{ displayName }}"
+          firewallPolicyId: "{{ firewallPolicyId }}"
+          name: "{{ name }}"
+          shortName: "{{ shortName }}"
     - name: description
       value: "{{ description }}"
       description: |
         An optional description of this resource. Provide this property when you
         create the resource.
-    - name: policyType
-      value: "{{ policyType }}"
-      description: |
-        The type of the firewall policy. This field can be one of
-        VPC_POLICY, RDMA_ROCE_POLICY or ULL_POLICY.
-        Note: if not specified then VPC_POLICY will be used.
-      valid_values: ['RDMA_ROCE_POLICY', 'ULL_POLICY', 'VPC_POLICY']
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined URL for the resource.
-    - name: id
-      value: "{{ id }}"
-      description: |
-        [Output Only] The unique identifier for the resource. This identifier is
-        defined by the server.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -618,6 +495,137 @@ zone
         otherwise the request will fail with error412 conditionNotMet.
         To see the latest fingerprint, make get() request to the
         firewall policy.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. For Organization Firewall Policies it's a
+        [Output Only] numeric ID allocated by Google Cloud which uniquely
+        identifies the Organization Firewall Policy.
+    - name: packetMirroringRules
+      description: |
+        A list of packet mirroring rules that belong to this policy.
+      value:
+        - action: "{{ action }}"
+          description: "{{ description }}"
+          direction: "{{ direction }}"
+          disabled: {{ disabled }}
+          enableLogging: {{ enableLogging }}
+          kind: "{{ kind }}"
+          match:
+            destAddressGroups:
+              - "{{ destAddressGroups }}"
+            destFqdns:
+              - "{{ destFqdns }}"
+            destIpRanges:
+              - "{{ destIpRanges }}"
+            destNetworkContext: "{{ destNetworkContext }}"
+            destNetworkType: "{{ destNetworkType }}"
+            destRegionCodes:
+              - "{{ destRegionCodes }}"
+            destThreatIntelligences:
+              - "{{ destThreatIntelligences }}"
+            layer4Configs:
+              - ipProtocol: "{{ ipProtocol }}"
+                ports: "{{ ports }}"
+            srcAddressGroups:
+              - "{{ srcAddressGroups }}"
+            srcFqdns:
+              - "{{ srcFqdns }}"
+            srcIpRanges:
+              - "{{ srcIpRanges }}"
+            srcNetworkContext: "{{ srcNetworkContext }}"
+            srcNetworkType: "{{ srcNetworkType }}"
+            srcNetworks:
+              - "{{ srcNetworks }}"
+            srcRegionCodes:
+              - "{{ srcRegionCodes }}"
+            srcSecureTags:
+              - name: "{{ name }}"
+                state: "{{ state }}"
+            srcThreatIntelligences:
+              - "{{ srcThreatIntelligences }}"
+          priority: {{ priority }}
+          ruleName: "{{ ruleName }}"
+          ruleTupleCount: {{ ruleTupleCount }}
+          securityProfileGroup: "{{ securityProfileGroup }}"
+          targetForwardingRules: "{{ targetForwardingRules }}"
+          targetResources: "{{ targetResources }}"
+          targetSecureTags: "{{ targetSecureTags }}"
+          targetServiceAccounts: "{{ targetServiceAccounts }}"
+          targetType: "{{ targetType }}"
+          tlsInspect: {{ tlsInspect }}
+    - name: policyType
+      value: "{{ policyType }}"
+      description: |
+        The type of the firewall policy. This field can be one of
+        VPC_POLICY, RDMA_ROCE_POLICY or ULL_POLICY.
+        Note: if not specified then VPC_POLICY will be used.
+      valid_values: ['RDMA_ROCE_POLICY', 'ULL_POLICY', 'VPC_POLICY']
+    - name: rules
+      description: |
+        A list of rules that belong to this policy.
+        There must always be a default rule (rule with priority 2147483647 and
+        match "*"). If no rules are provided when creating a firewall policy, a
+        default rule with action "allow" will be added.
+      value:
+        - action: "{{ action }}"
+          description: "{{ description }}"
+          direction: "{{ direction }}"
+          disabled: {{ disabled }}
+          enableLogging: {{ enableLogging }}
+          kind: "{{ kind }}"
+          match:
+            destAddressGroups:
+              - "{{ destAddressGroups }}"
+            destFqdns:
+              - "{{ destFqdns }}"
+            destIpRanges:
+              - "{{ destIpRanges }}"
+            destNetworkContext: "{{ destNetworkContext }}"
+            destNetworkType: "{{ destNetworkType }}"
+            destRegionCodes:
+              - "{{ destRegionCodes }}"
+            destThreatIntelligences:
+              - "{{ destThreatIntelligences }}"
+            layer4Configs:
+              - ipProtocol: "{{ ipProtocol }}"
+                ports: "{{ ports }}"
+            srcAddressGroups:
+              - "{{ srcAddressGroups }}"
+            srcFqdns:
+              - "{{ srcFqdns }}"
+            srcIpRanges:
+              - "{{ srcIpRanges }}"
+            srcNetworkContext: "{{ srcNetworkContext }}"
+            srcNetworkType: "{{ srcNetworkType }}"
+            srcNetworks:
+              - "{{ srcNetworks }}"
+            srcRegionCodes:
+              - "{{ srcRegionCodes }}"
+            srcSecureTags:
+              - name: "{{ name }}"
+                state: "{{ state }}"
+            srcThreatIntelligences:
+              - "{{ srcThreatIntelligences }}"
+          priority: {{ priority }}
+          ruleName: "{{ ruleName }}"
+          ruleTupleCount: {{ ruleTupleCount }}
+          securityProfileGroup: "{{ securityProfileGroup }}"
+          targetForwardingRules: "{{ targetForwardingRules }}"
+          targetResources: "{{ targetResources }}"
+          targetSecureTags: "{{ targetSecureTags }}"
+          targetServiceAccounts: "{{ targetServiceAccounts }}"
+          targetType: "{{ targetType }}"
+          tlsInspect: {{ tlsInspect }}
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
     - name: shortName
       value: "{{ shortName }}"
       description: |
@@ -631,17 +639,6 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
-    - name: associations
-      description: |
-        A list of associations that belong to this firewall policy.
-      value:
-        - name: "{{ name }}"
-          shortName: "{{ shortName }}"
-          firewallPolicyId: "{{ firewallPolicyId }}"
-          displayName: "{{ displayName }}"
-          attachmentTarget: "{{ attachmentTarget }}"
-    - name: parentId
-      value: "{{ parentId }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -665,19 +662,20 @@ Patches the specified policy with the data included in the request.
 ```sql
 UPDATE google.compute.firewall_policies
 SET 
-data__rules = '{{ rules }}',
-data__name = '{{ name }}',
-data__packetMirroringRules = '{{ packetMirroringRules }}',
+data__associations = '{{ associations }}',
 data__description = '{{ description }}',
-data__policyType = '{{ policyType }}',
-data__selfLink = '{{ selfLink }}',
-data__id = '{{ id }}',
 data__displayName = '{{ displayName }}',
 data__fingerprint = '{{ fingerprint }}',
-data__shortName = '{{ shortName }}',
-data__associations = '{{ associations }}'
+data__id = '{{ id }}',
+data__name = '{{ name }}',
+data__packetMirroringRules = '{{ packetMirroringRules }}',
+data__policyType = '{{ policyType }}',
+data__rules = '{{ rules }}',
+data__selfLink = '{{ selfLink }}',
+data__shortName = '{{ shortName }}'
 WHERE 
-firewallPolicy = '{{ firewallPolicy }}' --required
+project = '{{ project }}' --required
+AND firewallPolicy = '{{ firewallPolicy }}' --required
 AND requestId = '{{ requestId}}'
 RETURNING
 id,
@@ -726,7 +724,8 @@ Deletes the specified policy.
 
 ```sql
 DELETE FROM google.compute.firewall_policies
-WHERE firewallPolicy = '{{ firewallPolicy }}' --required
+WHERE project = '{{ project }}' --required
+AND firewallPolicy = '{{ firewallPolicy }}' --required
 AND requestId = '{{ requestId }}'
 ;
 ```
@@ -745,15 +744,14 @@ AND requestId = '{{ requestId }}'
 >
 <TabItem value="clone_rules">
 
-Copies rules to the specified network firewall policy.
+Copies rules to the specified firewall policy.
 
 ```sql
 EXEC google.compute.firewall_policies.clone_rules 
 @project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
 @firewallPolicy='{{ firewallPolicy }}' --required, 
-@sourceFirewallPolicy='{{ sourceFirewallPolicy }}', 
-@requestId='{{ requestId }}'
+@requestId='{{ requestId }}', 
+@sourceFirewallPolicy='{{ sourceFirewallPolicy }}'
 ;
 ```
 </TabItem>

@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_host_security_reports_list"><CopyableCode code="organizations_host_security_reports_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-envgroupHostname"><code>envgroupHostname</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-status"><code>status</code></a>, <a href="#parameter-submittedBy"><code>submittedBy</code></a>, <a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-to"><code>to</code></a></td>
+    <td><a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-envgroupHostname"><code>envgroupHostname</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-status"><code>status</code></a>, <a href="#parameter-submittedBy"><code>submittedBy</code></a>, <a href="#parameter-to"><code>to</code></a></td>
     <td>Return a list of Security Reports at host level.</td>
 </tr>
 <tr>
@@ -359,13 +359,13 @@ state,
 updated
 FROM google.apigee.host_security_reports
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND dataset = '{{ dataset }}'
 AND envgroupHostname = '{{ envgroupHostname }}'
 AND from = '{{ from }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND status = '{{ status }}'
 AND submittedBy = '{{ submittedBy }}'
-AND dataset = '{{ dataset }}'
-AND pageSize = '{{ pageSize }}'
 AND to = '{{ to }}'
 ;
 ```
@@ -388,31 +388,31 @@ Submit a query at host level to be processed in the background. If the submissio
 
 ```sql
 INSERT INTO google.apigee.host_security_reports (
-data__limit,
 data__csvDelimiter,
-data__timeRange,
 data__dimensions,
-data__groupByTimeUnit,
-data__mimeType,
 data__displayName,
 data__envgroupHostname,
-data__metrics,
 data__filter,
+data__groupByTimeUnit,
+data__limit,
+data__metrics,
+data__mimeType,
 data__reportDefinitionId,
+data__timeRange,
 organizationsId
 )
 SELECT 
-{{ limit }},
 '{{ csvDelimiter }}',
-'{{ timeRange }}',
 '{{ dimensions }}',
-'{{ groupByTimeUnit }}',
-'{{ mimeType }}',
 '{{ displayName }}',
 '{{ envgroupHostname }}',
-'{{ metrics }}',
 '{{ filter }}',
+'{{ groupByTimeUnit }}',
+{{ limit }},
+'{{ metrics }}',
+'{{ mimeType }}',
 '{{ reportDefinitionId }}',
+'{{ timeRange }}',
 '{{ organizationsId }}'
 RETURNING
 created,
@@ -439,31 +439,15 @@ updated
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the host_security_reports resource.
-    - name: limit
-      value: {{ limit }}
-      description: |
-        Maximum number of rows that can be returned in the result.
     - name: csvDelimiter
       value: "{{ csvDelimiter }}"
       description: |
         Delimiter used in the CSV file, if \`outputFormat\` is set to \`csv\`. Defaults to the \`,\` (comma) character. Supported delimiter characters include comma (\`,\`), pipe (\`|\`), and tab (\`t\`).
-    - name: timeRange
-      value: "{{ timeRange }}"
-      description: |
-        Required. Time range for the query. Can use the following predefined strings to specify the time range: \`last60minutes\` \`last24hours\` \`last7days\` Or, specify the timeRange as a structure describing start and end timestamps in the ISO format: yyyy-mm-ddThh:mm:ssZ. Example: "timeRange": { "start": "2018-07-29T00:13:00Z", "end": "2018-08-01T00:18:00Z" }
     - name: dimensions
       value:
         - "{{ dimensions }}"
       description: |
         A list of dimensions. https://docs.apigee.com/api-platform/analytics/analytics-reference#dimensions
-    - name: groupByTimeUnit
-      value: "{{ groupByTimeUnit }}"
-      description: |
-        Time unit used to group the result set. Valid values include: second, minute, hour, day, week, or month. If a query includes groupByTimeUnit, then the result is an aggregation based on the specified time unit and the resultant timestamp does not include milliseconds precision. If a query omits groupByTimeUnit, then the resultant timestamp includes milliseconds precision.
-    - name: mimeType
-      value: "{{ mimeType }}"
-      description: |
-        Valid values include: \`csv\` or \`json\`. Defaults to \`json\`. Note: Configure the delimiter for CSV output using the csvDelimiter property.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -472,23 +456,39 @@ updated
       value: "{{ envgroupHostname }}"
       description: |
         Hostname needs to be specified if query intends to run at host level. This field is only allowed when query is submitted by CreateHostSecurityReport where analytics data will be grouped by organization and hostname.
-    - name: metrics
-      description: |
-        A list of Metrics.
-      value:
-        - value: "{{ value }}"
-          operator: "{{ operator }}"
-          name: "{{ name }}"
-          aggregationFunction: "{{ aggregationFunction }}"
-          alias: "{{ alias }}"
     - name: filter
       value: "{{ filter }}"
       description: |
         Boolean expression that can be used to filter data. Filter expressions can be combined using AND/OR terms and should be fully parenthesized to avoid ambiguity. See Analytics metrics, dimensions, and filters reference https://docs.apigee.com/api-platform/analytics/analytics-reference for more information on the fields available to filter on. For more information on the tokens that you use to build filter expressions, see Filter expression syntax. https://docs.apigee.com/api-platform/analytics/asynch-reports-api#filter-expression-syntax
+    - name: groupByTimeUnit
+      value: "{{ groupByTimeUnit }}"
+      description: |
+        Time unit used to group the result set. Valid values include: second, minute, hour, day, week, or month. If a query includes groupByTimeUnit, then the result is an aggregation based on the specified time unit and the resultant timestamp does not include milliseconds precision. If a query omits groupByTimeUnit, then the resultant timestamp includes milliseconds precision.
+    - name: limit
+      value: {{ limit }}
+      description: |
+        Maximum number of rows that can be returned in the result.
+    - name: metrics
+      description: |
+        A list of Metrics.
+      value:
+        - aggregationFunction: "{{ aggregationFunction }}"
+          alias: "{{ alias }}"
+          name: "{{ name }}"
+          operator: "{{ operator }}"
+          value: "{{ value }}"
+    - name: mimeType
+      value: "{{ mimeType }}"
+      description: |
+        Valid values include: \`csv\` or \`json\`. Defaults to \`json\`. Note: Configure the delimiter for CSV output using the csvDelimiter property.
     - name: reportDefinitionId
       value: "{{ reportDefinitionId }}"
       description: |
         Report Definition ID.
+    - name: timeRange
+      value: "{{ timeRange }}"
+      description: |
+        Required. Time range for the query. Can use the following predefined strings to specify the time range: \`last60minutes\` \`last24hours\` \`last7days\` Or, specify the timeRange as a structure describing start and end timestamps in the ISO format: yyyy-mm-ddThh:mm:ssZ. Example: "timeRange": { "start": "2018-07-29T00:13:00Z", "end": "2018-08-01T00:18:00Z" }
 `}</CodeBlock>
 
 </TabItem>

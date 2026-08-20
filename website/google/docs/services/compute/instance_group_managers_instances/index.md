@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#list_managed_instances"><CopyableCode code="list_managed_instances" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the instances in the managed instance group and instances that are<br />scheduled to be created. The list includes any current actions<br />that the group has scheduled for its instances. The orderBy<br />query parameter is not supported.   The `pageToken` query parameter is<br />supported only if the group's `listManagedInstancesResults` field is set<br />to `PAGINATED`.</td>
 </tr>
 <tr>
@@ -189,11 +189,11 @@ FROM google.compute.instance_group_managers_instances
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND instanceGroupManager = '{{ instanceGroupManager }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -276,14 +276,14 @@ zone
       description: |
         [Required] List of specifications of per-instance configs.
       value:
-        - name: "{{ name }}"
-          status: "{{ status }}"
+        - fingerprint: "{{ fingerprint }}"
+          name: "{{ name }}"
           preservedState:
             disks: "{{ disks }}"
+            externalIPs: "{{ externalIPs }}"
             internalIPs: "{{ internalIPs }}"
             metadata: "{{ metadata }}"
-            externalIPs: "{{ externalIPs }}"
-          fingerprint: "{{ fingerprint }}"
+          status: "{{ status }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

@@ -119,6 +119,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Name of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="delegatingServiceAccount" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Service account used for operations that involve resources in consumer projects.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. An arbitrary user-provided name for the SecurityGateway. Cannot exceed 64 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="externalIps" /></td>
+    <td><code>array</code></td>
+    <td>Output only. IP addresses that will be used for establishing connection to the endpoints.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="hubs" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Map of Hubs that represents regional data path deployment with GCP region as a key.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="logging" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for Cloud Logging. If this field is present, the logging will be enabled. (id: GoogleCloudBeyondcorpSecuritygatewaysV1LoggingConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="proxyProtocolConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Shared proxy configuration for all apps. (id: GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceDiscovery" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Settings related to the Service Discovery. (id: GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscovery)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The operational state of the SecurityGateway. (STATE_UNSPECIFIED, CREATING, UPDATING, DELETING, RUNNING, DOWN, ERROR)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp when the resource was last modified.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -150,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_security_gateways_list"><CopyableCode code="projects_locations_security_gateways_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists SecurityGateways in a given project and location.</td>
 </tr>
 <tr>
@@ -287,14 +342,24 @@ Lists SecurityGateways in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+delegatingServiceAccount,
+displayName,
+externalIps,
+hubs,
+logging,
+proxyProtocolConfig,
+serviceDiscovery,
+state,
+updateTime
 FROM google.beyondcorp.security_gateways
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -316,10 +381,10 @@ Creates a new Security Gateway in a given project and location.
 
 ```sql
 INSERT INTO google.beyondcorp.security_gateways (
-data__hubs,
 data__displayName,
-data__name,
+data__hubs,
 data__logging,
+data__name,
 data__proxyProtocolConfig,
 data__serviceDiscovery,
 projectsId,
@@ -328,10 +393,10 @@ requestId,
 securityGatewayId
 )
 SELECT 
-'{{ hubs }}',
 '{{ displayName }}',
-'{{ name }}',
+'{{ hubs }}',
 '{{ logging }}',
+'{{ name }}',
 '{{ proxyProtocolConfig }}',
 '{{ serviceDiscovery }}',
 '{{ projectsId }}',
@@ -358,38 +423,40 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the security_gateways resource.
-    - name: hubs
-      value: "{{ hubs }}"
-      description: |
-        Optional. Map of Hubs that represents regional data path deployment with GCP region as a key.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. An arbitrary user-provided name for the SecurityGateway. Cannot exceed 64 characters.
-    - name: name
-      value: "{{ name }}"
+    - name: hubs
+      value: "{{ hubs }}"
       description: |
-        Identifier. Name of the resource.
+        Optional. Map of Hubs that represents regional data path deployment with GCP region as a key.
     - name: logging
       value: "{{ logging }}"
       description: |
         Optional. Configuration for Cloud Logging. If this field is present, the logging will be enabled.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the resource.
     - name: proxyProtocolConfig
       description: |
         Optional. Shared proxy configuration for all apps.
       value:
-        gatewayIdentity: "{{ gatewayIdentity }}"
-        contextualHeaders:
-          userInfo:
-            outputType: "{{ outputType }}"
-          deviceInfo:
-            outputType: "{{ outputType }}"
-          outputType: "{{ outputType }}"
-          groupInfo:
-            outputType: "{{ outputType }}"
-        clientIp: {{ clientIp }}
         allowedClientHeaders:
           - "{{ allowedClientHeaders }}"
+        clientIp: {{ clientIp }}
+        contextualHeaders:
+          deviceInfo:
+            outputType: "{{ outputType }}"
+          dispatchInfo:
+            outputType: "{{ outputType }}"
+          groupInfo:
+            outputType: "{{ outputType }}"
+          outputType: "{{ outputType }}"
+          userInfo:
+            outputType: "{{ outputType }}"
+        gatewayIdentity: "{{ gatewayIdentity }}"
         metadataHeaders: "{{ metadataHeaders }}"
     - name: serviceDiscovery
       description: |
@@ -423,10 +490,10 @@ Updates the parameters of a single SecurityGateway.
 ```sql
 UPDATE google.beyondcorp.security_gateways
 SET 
-data__hubs = '{{ hubs }}',
 data__displayName = '{{ displayName }}',
-data__name = '{{ name }}',
+data__hubs = '{{ hubs }}',
 data__logging = '{{ logging }}',
+data__name = '{{ name }}',
 data__proxyProtocolConfig = '{{ proxyProtocolConfig }}',
 data__serviceDiscovery = '{{ serviceDiscovery }}'
 WHERE 

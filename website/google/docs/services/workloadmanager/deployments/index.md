@@ -119,6 +119,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>The name of the deployment resource. The format is 'projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/deployments/&#123;deployment_id&#125;'.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Create time stamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Description of the deployment.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sapSystemS4Config" /></td>
+    <td><code>object</code></td>
+    <td>SAP system workload input. (id: SapSystemS4Config)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceAccount" /></td>
+    <td><code>string</code></td>
+    <td>User-specified Service Account (SA) credentials to be used for Cloud Build. Format: `projects/&#123;projectID&#125;/serviceAccounts/&#123;serviceAccount&#125;` The default Cloud Build SA will be used initially if this field is not set during deployment creation.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sqlServerWorkload" /></td>
+    <td><code>object</code></td>
+    <td>MS SQL workload input. (id: SqlServerWorkload)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Current state of the deployment. (STATE_UNSPECIFIED, CREATING, ACTIVE, UPDATING, DELETING, FAILED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="terraformVariables" /></td>
+    <td><code>object</code></td>
+    <td>Optional. terraform_variables represents all the Terraform variables for the deployment workload. The key is the name of the Terraform variable, and the value is the TerraformVariable. For example: &#123; "project_id": &#123; "input_value": &#123; "string_value": "my-project-id" &#125; &#125;, "zone": &#123; "input_value": &#123; "string_value": "us-central1-a" &#125; &#125; &#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Update time stamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workerPool" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The user-specified Cloud Build worker pool resource in which the Cloud Build job will execute. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/workerPools/&#123;workerPoolId&#125;`. If this field is unspecified, the default Cloud Build worker pool will be used.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workloadType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Workload type of the deployment. (WORKLOAD_TYPE_UNSPECIFIED, SAP_S4, SQL_SERVER, ORACLE)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -150,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Deployments in a given project and location.</td>
 </tr>
 <tr>
@@ -275,14 +330,24 @@ Lists Deployments in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+sapSystemS4Config,
+serviceAccount,
+sqlServerWorkload,
+state,
+terraformVariables,
+updateTime,
+workerPool,
+workloadType
 FROM google.workloadmanager.deployments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -304,28 +369,28 @@ Creates a new Deployment in a given project and location.
 
 ```sql
 INSERT INTO google.workloadmanager.deployments (
+data__description,
+data__name,
 data__sapSystemS4Config,
 data__serviceAccount,
-data__description,
 data__sqlServerWorkload,
-data__name,
+data__terraformVariables,
 data__workerPool,
 data__workloadType,
-data__terraformVariables,
 projectsId,
 locationsId,
 deploymentId,
 requestId
 )
 SELECT 
+'{{ description }}',
+'{{ name }}',
 '{{ sapSystemS4Config }}',
 '{{ serviceAccount }}',
-'{{ description }}',
 '{{ sqlServerWorkload }}',
-'{{ name }}',
+'{{ terraformVariables }}',
 '{{ workerPool }}',
 '{{ workloadType }}',
-'{{ terraformVariables }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ deploymentId }}',
@@ -350,126 +415,130 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the deployments resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the deployment.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the deployment resource. The format is 'projects/{project_id}/locations/{location_id}/deployments/{deployment_id}'.
     - name: sapSystemS4Config
       description: |
         SAP system workload input.
       value:
+        allowStoppingForUpdate: {{ allowStoppingForUpdate }}
+        ansibleRunnerServiceAccount: "{{ ansibleRunnerServiceAccount }}"
         app:
-          sid: "{{ sid }}"
-          ascsImage: "{{ ascsImage }}"
-          ersVm: "{{ ersVm }}"
-          secretManagerSecret: "{{ secretManagerSecret }}"
+          appInstanceId: "{{ appInstanceId }}"
+          appServiceAccount: "{{ appServiceAccount }}"
           appVmNames:
             - "{{ appVmNames }}"
-          appInstanceId: "{{ appInstanceId }}"
-          ascsMachineType: "{{ ascsMachineType }}"
-          ersInstanceId: "{{ ersInstanceId }}"
-          ascsServiceAccount: "{{ ascsServiceAccount }}"
-          sharedStorage: "{{ sharedStorage }}"
-          image: "{{ image }}"
-          ascsVm: "{{ ascsVm }}"
+          ascsImage: "{{ ascsImage }}"
           ascsInstanceId: "{{ ascsInstanceId }}"
+          ascsMachineType: "{{ ascsMachineType }}"
+          ascsServiceAccount: "{{ ascsServiceAccount }}"
+          ascsVm: "{{ ascsVm }}"
+          ersInstanceId: "{{ ersInstanceId }}"
+          ersVm: "{{ ersVm }}"
+          image: "{{ image }}"
+          machineType: "{{ machineType }}"
+          secretManagerSecret: "{{ secretManagerSecret }}"
+          sharedStorage: "{{ sharedStorage }}"
+          sid: "{{ sid }}"
           vmsMultiplier: {{ vmsMultiplier }}
-          machineType: "{{ machineType }}"
-          appServiceAccount: "{{ appServiceAccount }}"
-        version: "{{ version }}"
-        gcpProjectId: "{{ gcpProjectId }}"
-        deploymentModel: "{{ deploymentModel }}"
         database:
-          machineType: "{{ machineType }}"
-          instanceId: "{{ instanceId }}"
+          databaseServiceAccount: "{{ databaseServiceAccount }}"
           diskType: "{{ diskType }}"
           image: "{{ image }}"
-          secretManagerSecret: "{{ secretManagerSecret }}"
+          instanceId: "{{ instanceId }}"
+          machineType: "{{ machineType }}"
           primaryDbVm: "{{ primaryDbVm }}"
-          databaseServiceAccount: "{{ databaseServiceAccount }}"
-          sid: "{{ sid }}"
           secondaryDbVm: "{{ secondaryDbVm }}"
-        ansibleRunnerServiceAccount: "{{ ansibleRunnerServiceAccount }}"
-        allowStoppingForUpdate: {{ allowStoppingForUpdate }}
-        sapBootDiskImage: "{{ sapBootDiskImage }}"
+          secretManagerSecret: "{{ secretManagerSecret }}"
+          sid: "{{ sid }}"
+        deploymentModel: "{{ deploymentModel }}"
+        environmentType: "{{ environmentType }}"
+        gcpProjectId: "{{ gcpProjectId }}"
         location:
-          zone2Name: "{{ zone2Name }}"
-          subnetName: "{{ subnetName }}"
-          dnsZone: "{{ dnsZone }}"
-          deploymentDnsEnabled: {{ deploymentDnsEnabled }}
-          vpcName: "{{ vpcName }}"
-          dnsZoneNameSuffix: "{{ dnsZoneNameSuffix }}"
-          zone1Name: "{{ zone1Name }}"
-          regionName: "{{ regionName }}"
-          networkProject: "{{ networkProject }}"
           createCommsFirewall: {{ createCommsFirewall }}
           customTags:
             - "{{ customTags }}"
+          deploymentDnsEnabled: {{ deploymentDnsEnabled }}
+          dnsZone: "{{ dnsZone }}"
+          dnsZoneNameSuffix: "{{ dnsZoneNameSuffix }}"
           internetAccess: "{{ internetAccess }}"
+          networkProject: "{{ networkProject }}"
+          regionName: "{{ regionName }}"
+          subnetName: "{{ subnetName }}"
+          vpcName: "{{ vpcName }}"
+          zone1Name: "{{ zone1Name }}"
+          zone2Name: "{{ zone2Name }}"
         mediaBucketName: "{{ mediaBucketName }}"
+        sapBootDiskImage: "{{ sapBootDiskImage }}"
         scalingMethod: "{{ scalingMethod }}"
-        environmentType: "{{ environmentType }}"
+        version: "{{ version }}"
         vmPrefix: "{{ vmPrefix }}"
     - name: serviceAccount
       value: "{{ serviceAccount }}"
       description: |
         User-specified Service Account (SA) credentials to be used for Cloud Build. Format: \`projects/{projectID}/serviceAccounts/{serviceAccount}\` The default Cloud Build SA will be used initially if this field is not set during deployment creation.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Description of the deployment.
     - name: sqlServerWorkload
       description: |
         MS SQL workload input.
       value:
-        mediaBucket: "{{ mediaBucket }}"
-        isSqlPayg: {{ isSqlPayg }}
-        fciType: "{{ fciType }}"
-        environmentType: "{{ environmentType }}"
-        vmPrefix: "{{ vmPrefix }}"
-        location:
-          gcpProjectId: "{{ gcpProjectId }}"
-          subnetwork: "{{ subnetwork }}"
-          primaryZone: "{{ primaryZone }}"
-          internetAccess: "{{ internetAccess }}"
-          region: "{{ region }}"
-          network: "{{ network }}"
-          secondaryZone: "{{ secondaryZone }}"
-          dnsZone: "{{ dnsZone }}"
-          tertiaryZone: "{{ tertiaryZone }}"
-        haType: "{{ haType }}"
-        operatingSystemType: "{{ operatingSystemType }}"
         activeDirectory:
           dnsAddress: "{{ dnsAddress }}"
-          secretManagerSecret: "{{ secretManagerSecret }}"
-          domainUsername: "{{ domainUsername }}"
-          type: "{{ type }}"
           domain: "{{ domain }}"
+          domainUsername: "{{ domainUsername }}"
+          secretManagerSecret: "{{ secretManagerSecret }}"
+          type: "{{ type }}"
+        computeEngineServiceAccount: "{{ computeEngineServiceAccount }}"
         database:
-          smt: {{ smt }}
+          diskType: "{{ diskType }}"
+          floatingIpAddress: "{{ floatingIpAddress }}"
+          machineType: "{{ machineType }}"
           secondarySoleTenantNode: "{{ secondarySoleTenantNode }}"
           secondarySoleTenantNodeType: "{{ secondarySoleTenantNodeType }}"
           secretManagerSecret: "{{ secretManagerSecret }}"
+          smt: {{ smt }}
           soleTenantNode: "{{ soleTenantNode }}"
-          floatingIpAddress: "{{ floatingIpAddress }}"
-          machineType: "{{ machineType }}"
           soleTenantNodeType: "{{ soleTenantNodeType }}"
           tempdbOnSsd: {{ tempdbOnSsd }}
           tenancyModel: "{{ tenancyModel }}"
-          diskType: "{{ diskType }}"
-        computeEngineServiceAccount: "{{ computeEngineServiceAccount }}"
+        deploymentModel: "{{ deploymentModel }}"
+        environmentType: "{{ environmentType }}"
+        fciType: "{{ fciType }}"
+        haType: "{{ haType }}"
+        isSqlPayg: {{ isSqlPayg }}
+        location:
+          dnsZone: "{{ dnsZone }}"
+          gcpProjectId: "{{ gcpProjectId }}"
+          internetAccess: "{{ internetAccess }}"
+          network: "{{ network }}"
+          primaryZone: "{{ primaryZone }}"
+          region: "{{ region }}"
+          secondaryZone: "{{ secondaryZone }}"
+          subnetwork: "{{ subnetwork }}"
+          tertiaryZone: "{{ tertiaryZone }}"
+        mediaBucket: "{{ mediaBucket }}"
+        operatingSystemType: "{{ operatingSystemType }}"
+        osImage: "{{ osImage }}"
+        osImageType: "{{ osImageType }}"
         pacemaker:
           bucketNameNodeCertificates: "{{ bucketNameNodeCertificates }}"
-          pacemakerClusterSecret: "{{ pacemakerClusterSecret }}"
-          sqlPacemakerUsername: "{{ sqlPacemakerUsername }}"
-          sqlPacemakerSecret: "{{ sqlPacemakerSecret }}"
           pacemakerCluster: "{{ pacemakerCluster }}"
+          pacemakerClusterSecret: "{{ pacemakerClusterSecret }}"
           pacemakerClusterUsername: "{{ pacemakerClusterUsername }}"
-        deploymentModel: "{{ deploymentModel }}"
-        sqlServerVersion: "{{ sqlServerVersion }}"
+          sqlPacemakerSecret: "{{ sqlPacemakerSecret }}"
+          sqlPacemakerUsername: "{{ sqlPacemakerUsername }}"
         sqlServerEdition: "{{ sqlServerEdition }}"
-        osImageType: "{{ osImageType }}"
-        osImage: "{{ osImage }}"
-    - name: name
-      value: "{{ name }}"
+        sqlServerVersion: "{{ sqlServerVersion }}"
+        vmPrefix: "{{ vmPrefix }}"
+    - name: terraformVariables
+      value: "{{ terraformVariables }}"
       description: |
-        The name of the deployment resource. The format is 'projects/{project_id}/locations/{location_id}/deployments/{deployment_id}'.
+        Optional. terraform_variables represents all the Terraform variables for the deployment workload. The key is the name of the Terraform variable, and the value is the TerraformVariable. For example: { "project_id": { "input_value": { "string_value": "my-project-id" } }, "zone": { "input_value": { "string_value": "us-central1-a" } } }
     - name: workerPool
       value: "{{ workerPool }}"
       description: |
@@ -479,10 +548,6 @@ response
       description: |
         Optional. Workload type of the deployment.
       valid_values: ['WORKLOAD_TYPE_UNSPECIFIED', 'SAP_S4', 'SQL_SERVER', 'ORACLE']
-    - name: terraformVariables
-      value: "{{ terraformVariables }}"
-      description: |
-        Optional. terraform_variables represents all the Terraform variables for the deployment workload. The key is the name of the Terraform variable, and the value is the TerraformVariable. For example: { "project_id": { "input_value": { "string_value": "my-project-id" } }, "zone": { "input_value": { "string_value": "us-central1-a" } } }
     - name: deploymentId
       value: "{{ deploymentId }}"
     - name: requestId

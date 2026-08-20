@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of region resources available to the specified project.<br /><br />To decrease latency for this method, you can optionally omit any unneeded<br />information from the response by using a field mask. This practice is<br />especially recommended for unused quota information<br />(the `items.quotas` field).<br />To exclude one or more fields, set your request's `fields` query parameter<br />to only include the fields you need. For example, to only include the `id`<br />and `selfLink` fields, add the query parameter `?fields=id,selfLink` to<br />your request.<br /><br />This method fails if the quota information is unavailable for the region<br />and if the organization policy constraint<br />compute.requireBasicQuotaInResponse is enforced. This<br />constraint, when enforced, disables the fail-open behaviour when quota<br />information (the `items.quotas` field) is unavailable for the region.<br />It is recommended to use the default setting<br />for the constraint unless your application requires the fail-closed<br />behaviour for this method.</td>
 </tr>
 </tbody>
@@ -289,11 +289,11 @@ selfLink,
 warning
 FROM google.compute.regions
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

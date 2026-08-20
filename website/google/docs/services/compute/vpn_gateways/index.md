@@ -280,14 +280,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of VPN gateways available to the specified<br />project and region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of VPN gateways.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -442,11 +442,11 @@ warning
 FROM google.compute.vpn_gateways
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -472,13 +472,13 @@ stackType,
 vpnInterfaces
 FROM google.compute.vpn_gateways
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -500,29 +500,29 @@ Creates a VPN gateway in the specified project and region using<br />the data in
 
 ```sql
 INSERT INTO google.compute.vpn_gateways (
-data__vpnInterfaces,
-data__gatewayIpVersion,
-data__network,
-data__stackType,
-data__labelFingerprint,
-data__name,
-data__params,
-data__labels,
 data__description,
+data__gatewayIpVersion,
+data__labelFingerprint,
+data__labels,
+data__name,
+data__network,
+data__params,
+data__stackType,
+data__vpnInterfaces,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ vpnInterfaces }}',
-'{{ gatewayIpVersion }}',
-'{{ network }}',
-'{{ stackType }}',
-'{{ labelFingerprint }}',
-'{{ name }}',
-'{{ params }}',
-'{{ labels }}',
 '{{ description }}',
+'{{ gatewayIpVersion }}',
+'{{ labelFingerprint }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ network }}',
+'{{ params }}',
+'{{ stackType }}',
+'{{ vpnInterfaces }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -568,31 +568,17 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the vpn_gateways resource.
-    - name: vpnInterfaces
+    - name: description
+      value: "{{ description }}"
       description: |
-        The list of VPN interfaces associated with this VPN gateway.
-      value:
-        - ipv6Address: "{{ ipv6Address }}"
-          id: {{ id }}
-          interconnectAttachment: "{{ interconnectAttachment }}"
-          ipAddress: "{{ ipAddress }}"
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: gatewayIpVersion
       value: "{{ gatewayIpVersion }}"
       description: |
         The IP family of the gateway IPs for the HA-VPN gateway interfaces. If not
         specified, IPV4 will be used.
       valid_values: ['IPV4', 'IPV6']
-    - name: network
-      value: "{{ network }}"
-      description: |
-        URL of the network to which this VPN gateway is attached. Provided by the
-        client when the VPN gateway is created.
-    - name: stackType
-      value: "{{ stackType }}"
-      description: |
-        The stack type for this VPN gateway to identify the IP protocols that are
-        enabled. Possible values are: IPV4_ONLY,IPV4_IPV6, IPV6_ONLY. If not specified,IPV4_ONLY is used if the gateway IP version isIPV4, or IPV4_IPV6 if the gateway IP version isIPV6.
-      valid_values: ['IPV4_IPV6', 'IPV4_ONLY', 'IPV6_ONLY']
     - name: labelFingerprint
       value: "{{ labelFingerprint }}"
       description: |
@@ -604,6 +590,11 @@ zone
         otherwise the request will fail with error412 conditionNotMet.
         To see the latest fingerprint, make a get() request to
         retrieve a VpnGateway.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
+        Label values may be empty.
     - name: name
       value: "{{ name }}"
       description: |
@@ -614,22 +605,31 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        URL of the network to which this VPN gateway is attached. Provided by the
+        client when the VPN gateway is created.
     - name: params
       description: |
         Input only. [Input Only] Additional params passed with the request, but not persisted
         as part of resource payload.
       value:
         resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: labels
-      value: "{{ labels }}"
+    - name: stackType
+      value: "{{ stackType }}"
       description: |
-        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
-        Label values may be empty.
-    - name: description
-      value: "{{ description }}"
+        The stack type for this VPN gateway to identify the IP protocols that are
+        enabled. Possible values are: IPV4_ONLY,IPV4_IPV6, IPV6_ONLY. If not specified,IPV4_ONLY is used if the gateway IP version isIPV4, or IPV4_IPV6 if the gateway IP version isIPV6.
+      valid_values: ['IPV4_IPV6', 'IPV4_ONLY', 'IPV6_ONLY']
+    - name: vpnInterfaces
       description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
+        The list of VPN interfaces associated with this VPN gateway.
+      value:
+        - id: {{ id }}
+          interconnectAttachment: "{{ interconnectAttachment }}"
+          ipAddress: "{{ ipAddress }}"
+          ipv6Address: "{{ ipv6Address }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -682,8 +682,8 @@ EXEC google.compute.vpn_gateways.set_labels
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

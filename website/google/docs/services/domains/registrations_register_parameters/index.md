@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="registerParameters" /></td>
     <td><code>object</code></td>
-    <td>Parameters required to register a new domain. (id: RegisterParameters)</td>
+    <td>Parameters to use when calling the `RegisterDomain` method. (id: RegisterParameters)</td>
 </tr>
 </tbody>
 </table>

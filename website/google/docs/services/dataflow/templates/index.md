@@ -129,42 +129,42 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a></td>
     <td><a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-view"><code>view</code></a></td>
-    <td>Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved.</td>
+    <td>Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved. # IAM Permissions Requires the `resourcemanager.projects.get` permission on the project.</td>
 </tr>
 <tr>
     <td><a href="#projects_templates_get"><CopyableCode code="projects_templates_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td><a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-view"><code>view</code></a></td>
-    <td>Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved.</td>
+    <td>Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved. # IAM Permissions Requires the `resourcemanager.projects.get` permission on the project.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_templates_create"><CopyableCode code="projects_locations_templates_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a></td>
     <td></td>
-    <td>Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`.</td>
+    <td>Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`. # IAM Permissions Requires the following IAM permission(s) on the project: - `dataflow.jobs.create` - `resourcemanager.projects.get`</td>
 </tr>
 <tr>
     <td><a href="#projects_templates_create"><CopyableCode code="projects_templates_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
-    <td>Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`.</td>
+    <td>Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`. # IAM Permissions Requires the following IAM permission(s) on the project: - `dataflow.jobs.create` - `resourcemanager.projects.get`</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_templates_launch"><CopyableCode code="projects_locations_templates_launch" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-dynamicTemplate.gcsPath"><code>dynamicTemplate.gcsPath</code></a>, <a href="#parameter-dynamicTemplate.stagingLocation"><code>dynamicTemplate.stagingLocation</code></a></td>
-    <td>Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.</td>
+    <td><a href="#parameter-dynamicTemplate.gcsPath"><code>dynamicTemplate.gcsPath</code></a>, <a href="#parameter-dynamicTemplate.stagingLocation"><code>dynamicTemplate.stagingLocation</code></a>, <a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td>Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`. # IAM Permissions Requires the following IAM permission(s) on the project: - `dataflow.jobs.create` - `resourcemanager.projects.get`</td>
 </tr>
 <tr>
     <td><a href="#projects_templates_launch"><CopyableCode code="projects_templates_launch" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td><a href="#parameter-dynamicTemplate.stagingLocation"><code>dynamicTemplate.stagingLocation</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-dynamicTemplate.gcsPath"><code>dynamicTemplate.gcsPath</code></a></td>
-    <td>Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.</td>
+    <td><a href="#parameter-dynamicTemplate.gcsPath"><code>dynamicTemplate.gcsPath</code></a>, <a href="#parameter-dynamicTemplate.stagingLocation"><code>dynamicTemplate.stagingLocation</code></a>, <a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td>Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`. # IAM Permissions Requires the following IAM permission(s) on the project: - `dataflow.jobs.create` - `resourcemanager.projects.get`</td>
 </tr>
 </tbody>
 </table>
@@ -236,7 +236,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_templates_get">
 
-Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved.
+Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved. # IAM Permissions Requires the `resourcemanager.projects.get` permission on the project.
 
 ```sql
 SELECT
@@ -254,7 +254,7 @@ AND view = '{{ view }}'
 </TabItem>
 <TabItem value="projects_templates_get">
 
-Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved.
+Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved. # IAM Permissions Requires the `resourcemanager.projects.get` permission on the project.
 
 ```sql
 SELECT
@@ -285,23 +285,23 @@ AND view = '{{ view }}'
 >
 <TabItem value="projects_locations_templates_create">
 
-Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`.
+Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`. # IAM Permissions Requires the following IAM permission(s) on the project: - `dataflow.jobs.create` - `resourcemanager.projects.get`
 
 ```sql
 INSERT INTO google.dataflow.templates (
-data__gcsPath,
 data__environment,
-data__location,
+data__gcsPath,
 data__jobName,
+data__location,
 data__parameters,
 projectId,
 location
 )
 SELECT 
-'{{ gcsPath }}',
 '{{ environment }}',
-'{{ location }}',
+'{{ gcsPath }}',
 '{{ jobName }}',
+'{{ location }}',
 '{{ parameters }}',
 '{{ projectId }}',
 '{{ location }}'
@@ -340,22 +340,22 @@ type
 </TabItem>
 <TabItem value="projects_templates_create">
 
-Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`.
+Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`. # IAM Permissions Requires the following IAM permission(s) on the project: - `dataflow.jobs.create` - `resourcemanager.projects.get`
 
 ```sql
 INSERT INTO google.dataflow.templates (
-data__gcsPath,
 data__environment,
-data__location,
+data__gcsPath,
 data__jobName,
+data__location,
 data__parameters,
 projectId
 )
 SELECT 
-'{{ gcsPath }}',
 '{{ environment }}',
-'{{ location }}',
+'{{ gcsPath }}',
 '{{ jobName }}',
+'{{ location }}',
 '{{ parameters }}',
 '{{ projectId }}'
 RETURNING
@@ -402,43 +402,43 @@ type
     - name: location
       value: "{{ location }}"
       description: Required parameter for the templates resource.
-    - name: gcsPath
-      value: "{{ gcsPath }}"
-      description: |
-        Required. A Cloud Storage path to the template from which to create the job. Must be a valid Cloud Storage URL, beginning with \`gs://\`.
     - name: environment
       description: |
         The runtime environment for the job.
       value:
-        maxWorkers: {{ maxWorkers }}
-        additionalPipelineOptions:
-          - "{{ additionalPipelineOptions }}"
-        serviceAccountEmail: "{{ serviceAccountEmail }}"
-        subnetwork: "{{ subnetwork }}"
-        workerRegion: "{{ workerRegion }}"
-        enableStreamingEngine: {{ enableStreamingEngine }}
-        tempLocation: "{{ tempLocation }}"
-        bypassTempDirValidation: {{ bypassTempDirValidation }}
-        kmsKeyName: "{{ kmsKeyName }}"
         additionalExperiments:
           - "{{ additionalExperiments }}"
-        network: "{{ network }}"
-        zone: "{{ zone }}"
-        machineType: "{{ machineType }}"
-        numWorkers: {{ numWorkers }}
+        additionalPipelineOptions:
+          - "{{ additionalPipelineOptions }}"
         additionalUserLabels: "{{ additionalUserLabels }}"
-        ipConfiguration: "{{ ipConfiguration }}"
+        bypassTempDirValidation: {{ bypassTempDirValidation }}
         diskSizeGb: {{ diskSizeGb }}
-        workerZone: "{{ workerZone }}"
+        enableStreamingEngine: {{ enableStreamingEngine }}
+        ipConfiguration: "{{ ipConfiguration }}"
+        kmsKeyName: "{{ kmsKeyName }}"
+        machineType: "{{ machineType }}"
+        maxWorkers: {{ maxWorkers }}
+        network: "{{ network }}"
+        numWorkers: {{ numWorkers }}
+        serviceAccountEmail: "{{ serviceAccountEmail }}"
         streamingMode: "{{ streamingMode }}"
-    - name: location
-      value: "{{ location }}"
+        subnetwork: "{{ subnetwork }}"
+        tempLocation: "{{ tempLocation }}"
+        workerRegion: "{{ workerRegion }}"
+        workerZone: "{{ workerZone }}"
+        zone: "{{ zone }}"
+    - name: gcsPath
+      value: "{{ gcsPath }}"
       description: |
-        The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.
+        Required. A Cloud Storage path to the template from which to create the job. Must be a valid Cloud Storage URL, beginning with \`gs://\`.
     - name: jobName
       value: "{{ jobName }}"
       description: |
         Required. The job name to use for the created job.
+    - name: location
+      value: "{{ location }}"
+      description: |
+        The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.
     - name: parameters
       value: "{{ parameters }}"
       description: |
@@ -460,46 +460,46 @@ type
 >
 <TabItem value="projects_locations_templates_launch">
 
-Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.
+Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`. # IAM Permissions Requires the following IAM permission(s) on the project: - `dataflow.jobs.create` - `resourcemanager.projects.get`
 
 ```sql
 EXEC google.dataflow.templates.projects_locations_templates_launch 
 @projectId='{{ projectId }}' --required, 
 @location='{{ location }}' --required, 
-@validateOnly={{ validateOnly }}, 
-@gcsPath='{{ gcsPath }}', 
 @dynamicTemplate.gcsPath='{{ dynamicTemplate.gcsPath }}', 
-@dynamicTemplate.stagingLocation='{{ dynamicTemplate.stagingLocation }}' 
+@dynamicTemplate.stagingLocation='{{ dynamicTemplate.stagingLocation }}', 
+@gcsPath='{{ gcsPath }}', 
+@validateOnly={{ validateOnly }} 
 @@json=
 '{
-"transformNameMapping": "{{ transformNameMapping }}", 
-"parameters": "{{ parameters }}", 
+"environment": "{{ environment }}", 
 "jobName": "{{ jobName }}", 
-"update": {{ update }}, 
-"environment": "{{ environment }}"
+"parameters": "{{ parameters }}", 
+"transformNameMapping": "{{ transformNameMapping }}", 
+"update": {{ update }}
 }'
 ;
 ```
 </TabItem>
 <TabItem value="projects_templates_launch">
 
-Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.
+Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`. # IAM Permissions Requires the following IAM permission(s) on the project: - `dataflow.jobs.create` - `resourcemanager.projects.get`
 
 ```sql
 EXEC google.dataflow.templates.projects_templates_launch 
 @projectId='{{ projectId }}' --required, 
+@dynamicTemplate.gcsPath='{{ dynamicTemplate.gcsPath }}', 
 @dynamicTemplate.stagingLocation='{{ dynamicTemplate.stagingLocation }}', 
-@location='{{ location }}', 
-@validateOnly={{ validateOnly }}, 
 @gcsPath='{{ gcsPath }}', 
-@dynamicTemplate.gcsPath='{{ dynamicTemplate.gcsPath }}' 
+@location='{{ location }}', 
+@validateOnly={{ validateOnly }} 
 @@json=
 '{
-"transformNameMapping": "{{ transformNameMapping }}", 
-"parameters": "{{ parameters }}", 
+"environment": "{{ environment }}", 
 "jobName": "{{ jobName }}", 
-"update": {{ update }}, 
-"environment": "{{ environment }}"
+"parameters": "{{ parameters }}", 
+"transformNameMapping": "{{ transformNameMapping }}", 
+"update": {{ update }}
 }'
 ;
 ```

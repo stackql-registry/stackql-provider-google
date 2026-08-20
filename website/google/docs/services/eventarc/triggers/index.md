@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List triggers.</td>
 </tr>
 <tr>
@@ -259,14 +259,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-triggersId"><code>triggersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Update a single trigger.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-triggersId"><code>triggersId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Delete a single trigger.</td>
 </tr>
 </tbody>
@@ -409,9 +409,9 @@ updateTime
 FROM google.eventarc.triggers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -434,30 +434,30 @@ Create a new trigger in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.triggers (
+data__channel,
+data__destination,
 data__eventDataContentType,
 data__eventFilters,
-data__destination,
+data__labels,
+data__name,
 data__retryPolicy,
 data__serviceAccount,
-data__name,
-data__labels,
 data__transport,
-data__channel,
 projectsId,
 locationsId,
 triggerId,
 validateOnly
 )
 SELECT 
+'{{ channel }}',
+'{{ destination }}',
 '{{ eventDataContentType }}',
 '{{ eventFilters }}',
-'{{ destination }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ retryPolicy }}',
 '{{ serviceAccount }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ transport }}',
-'{{ channel }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ triggerId }}',
@@ -482,6 +482,30 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the triggers resource.
+    - name: channel
+      value: "{{ channel }}"
+      description: |
+        Optional. The name of the channel associated with the trigger in \`projects/{project}/locations/{location}/channels/{channel}\` format. You must provide a channel to receive events from Eventarc SaaS partners.
+    - name: destination
+      description: |
+        Required. Destination specifies where the events should be sent to.
+      value:
+        cloudFunction: "{{ cloudFunction }}"
+        cloudRun:
+          path: "{{ path }}"
+          region: "{{ region }}"
+          service: "{{ service }}"
+        gke:
+          cluster: "{{ cluster }}"
+          location: "{{ location }}"
+          namespace: "{{ namespace }}"
+          path: "{{ path }}"
+          service: "{{ service }}"
+        httpEndpoint:
+          uri: "{{ uri }}"
+        networkConfig:
+          networkAttachment: "{{ networkAttachment }}"
+        workflow: "{{ workflow }}"
     - name: eventDataContentType
       value: "{{ eventDataContentType }}"
       description: |
@@ -491,28 +515,16 @@ response
         Required. Unordered list. The list of filters that applies to event attributes. Only events that match all the provided filters are sent to the destination.
       value:
         - attribute: "{{ attribute }}"
-          value: "{{ value }}"
           operator: "{{ operator }}"
-    - name: destination
+          value: "{{ value }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Required. Destination specifies where the events should be sent to.
-      value:
-        cloudFunction: "{{ cloudFunction }}"
-        gke:
-          path: "{{ path }}"
-          service: "{{ service }}"
-          cluster: "{{ cluster }}"
-          location: "{{ location }}"
-          namespace: "{{ namespace }}"
-        networkConfig:
-          networkAttachment: "{{ networkAttachment }}"
-        httpEndpoint:
-          uri: "{{ uri }}"
-        workflow: "{{ workflow }}"
-        cloudRun:
-          service: "{{ service }}"
-          path: "{{ path }}"
-          region: "{{ region }}"
+        Optional. User labels attached to the triggers that can be used to group resources.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The resource name of the trigger. Must be unique within the location of the project and must be in \`projects/{project}/locations/{location}/triggers/{trigger}\` format.
     - name: retryPolicy
       description: |
         Optional. The retry policy to use in the Trigger. If unset, event delivery will be retried for up to 24 hours by default: https://cloud.google.com/eventarc/docs/retry-events
@@ -522,14 +534,6 @@ response
       value: "{{ serviceAccount }}"
       description: |
         Optional. The IAM service account email associated with the trigger. The service account represents the identity of the trigger. The \`iam.serviceAccounts.actAs\` permission must be granted on the service account to allow a principal to impersonate the service account. For more information, see the [Roles and permissions](https://cloud.google.com/eventarc/docs/all-roles-permissions) page specific to the trigger destination.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. The resource name of the trigger. Must be unique within the location of the project and must be in \`projects/{project}/locations/{location}/triggers/{trigger}\` format.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User labels attached to the triggers that can be used to group resources.
     - name: transport
       description: |
         Optional. To deliver messages, Eventarc might use other Google Cloud products as a transport intermediary. This field contains a reference to that transport intermediary. This information can be used for debugging purposes.
@@ -537,10 +541,6 @@ response
         pubsub:
           subscription: "{{ subscription }}"
           topic: "{{ topic }}"
-    - name: channel
-      value: "{{ channel }}"
-      description: |
-        Optional. The name of the channel associated with the trigger in \`projects/{project}/locations/{location}/channels/{channel}\` format. You must provide a channel to receive events from Eventarc SaaS partners.
     - name: triggerId
       value: "{{ triggerId }}"
     - name: validateOnly
@@ -566,21 +566,21 @@ Update a single trigger.
 ```sql
 UPDATE google.eventarc.triggers
 SET 
+data__channel = '{{ channel }}',
+data__destination = '{{ destination }}',
 data__eventDataContentType = '{{ eventDataContentType }}',
 data__eventFilters = '{{ eventFilters }}',
-data__destination = '{{ destination }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__retryPolicy = '{{ retryPolicy }}',
 data__serviceAccount = '{{ serviceAccount }}',
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__transport = '{{ transport }}',
-data__channel = '{{ channel }}'
+data__transport = '{{ transport }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND triggersId = '{{ triggersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
@@ -610,9 +610,9 @@ DELETE FROM google.eventarc.triggers
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND triggersId = '{{ triggersId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND allowMissing = '{{ allowMissing }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

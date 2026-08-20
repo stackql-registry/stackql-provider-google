@@ -343,7 +343,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_zones_assets_actions_list"><CopyableCode code="projects_locations_lakes_zones_assets_actions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-zonesId"><code>zonesId</code></a>, <a href="#parameter-assetsId"><code>assetsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists action resources in an asset.</td>
 </tr>
 <tr>
@@ -357,7 +357,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_actions_list"><CopyableCode code="projects_locations_lakes_actions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists action resources in a lake.</td>
 </tr>
 </tbody>
@@ -452,8 +452,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
 AND zonesId = '{{ zonesId }}' -- required
 AND assetsId = '{{ assetsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -515,8 +515,8 @@ FROM google.dataplex.actions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

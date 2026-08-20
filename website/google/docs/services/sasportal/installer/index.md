@@ -51,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#installer_validate"><CopyableCode code="installer_validate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Validates the identity of a Certified Professional Installer (CPI).</td>
-</tr>
-<tr>
     <td><a href="#installer_generate_secret"><CopyableCode code="installer_generate_secret" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Generates a secret to be used with the ValidateInstaller.</td>
+</tr>
+<tr>
+    <td><a href="#installer_validate"><CopyableCode code="installer_validate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Validates the identity of a Certified Professional Installer (CPI).</td>
 </tr>
 </tbody>
 </table>
@@ -86,12 +86,22 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="installer_validate"
+    defaultValue="installer_generate_secret"
     values={[
-        { label: 'installer_validate', value: 'installer_validate' },
-        { label: 'installer_generate_secret', value: 'installer_generate_secret' }
+        { label: 'installer_generate_secret', value: 'installer_generate_secret' },
+        { label: 'installer_validate', value: 'installer_validate' }
     ]}
 >
+<TabItem value="installer_generate_secret">
+
+Generates a secret to be used with the ValidateInstaller.
+
+```sql
+EXEC google.sasportal.installer.installer_generate_secret 
+
+;
+```
+</TabItem>
 <TabItem value="installer_validate">
 
 Validates the identity of a Certified Professional Installer (CPI).
@@ -100,20 +110,10 @@ Validates the identity of a Certified Professional Installer (CPI).
 EXEC google.sasportal.installer.installer_validate 
 @@json=
 '{
+"encodedSecret": "{{ encodedSecret }}", 
 "installerId": "{{ installerId }}", 
-"secret": "{{ secret }}", 
-"encodedSecret": "{{ encodedSecret }}"
+"secret": "{{ secret }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="installer_generate_secret">
-
-Generates a secret to be used with the ValidateInstaller.
-
-```sql
-EXEC google.sasportal.installer.installer_generate_secret 
-
 ;
 ```
 </TabItem>

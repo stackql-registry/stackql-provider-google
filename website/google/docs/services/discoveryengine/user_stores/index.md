@@ -220,11 +220,11 @@ Updates the User Store.
 ```sql
 UPDATE google.discoveryengine.user_stores
 SET 
-data__enableExpiredLicenseAutoUpdate = {{ enableExpiredLicenseAutoUpdate }},
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__defaultLicenseConfig = '{{ defaultLicenseConfig }}',
-data__enableLicenseAutoRegister = {{ enableLicenseAutoRegister }}
+data__displayName = '{{ displayName }}',
+data__enableExpiredLicenseAutoUpdate = {{ enableExpiredLicenseAutoUpdate }},
+data__enableLicenseAutoRegister = {{ enableLicenseAutoRegister }},
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

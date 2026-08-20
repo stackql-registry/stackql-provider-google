@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists BackupChannels in a given location.</td>
 </tr>
 <tr>
@@ -333,9 +333,9 @@ FROM google.gkebackup.backup_channels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -357,19 +357,19 @@ Creates a new BackupChannel in a given location.
 
 ```sql
 INSERT INTO google.gkebackup.backup_channels (
-data__name,
-data__labels,
-data__destinationProject,
 data__description,
+data__destinationProject,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 backupChannelId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ destinationProject }}',
 '{{ description }}',
+'{{ destinationProject }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupChannelId }}'
@@ -393,22 +393,22 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the backup_channels resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The fully qualified name of the BackupChannel. \`projects/*/locations/*/backupChannels/*\`
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. A set of custom labels supplied by user.
-    - name: destinationProject
-      value: "{{ destinationProject }}"
-      description: |
-        Required. Immutable. The project where Backups are allowed to be stored. The format is \`projects/{projectId}\` or \`projects/{projectNumber}\`.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. User specified descriptive string for this BackupChannel.
+    - name: destinationProject
+      value: "{{ destinationProject }}"
+      description: |
+        Required. Immutable. The project where Backups are allowed to be stored. The format is \`projects/{projectId}\` or \`projects/{projectNumber}\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. A set of custom labels supplied by user.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The fully qualified name of the BackupChannel. \`projects/*/locations/*/backupChannels/*\`
     - name: backupChannelId
       value: "{{ backupChannelId }}"
 `}</CodeBlock>
@@ -432,10 +432,10 @@ Update a BackupChannel.
 ```sql
 UPDATE google.gkebackup.backup_channels
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
+data__description = '{{ description }}',
 data__destinationProject = '{{ destinationProject }}',
-data__description = '{{ description }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

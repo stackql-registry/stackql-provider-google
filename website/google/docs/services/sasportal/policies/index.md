@@ -159,9 +159,9 @@ Sets the access control policy on the specified resource. Replaces any existing 
 EXEC google.sasportal.policies.policies_set 
 @@json=
 '{
+"disableNotification": {{ disableNotification }}, 
 "policy": "{{ policy }}", 
-"resource": "{{ resource }}", 
-"disableNotification": {{ disableNotification }}
+"resource": "{{ resource }}"
 }'
 ;
 ```
@@ -174,8 +174,8 @@ Returns permissions that a caller has on the specified resource.
 EXEC google.sasportal.policies.policies_test 
 @@json=
 '{
-"resource": "{{ resource }}", 
-"permissions": "{{ permissions }}"
+"permissions": "{{ permissions }}", 
+"resource": "{{ resource }}"
 }'
 ;
 ```

@@ -33,42 +33,13 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="query_contact_center_quota"
+    defaultValue="get"
     values={[
-        { label: 'query_contact_center_quota', value: 'query_contact_center_quota' },
         { label: 'get', value: 'get' },
+        { label: 'query_contact_center_quota', value: 'query_contact_center_quota' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_contact_center_quota">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="contactCenterCountLimit" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Deprecated: Use the Quota fields instead. Reflects the count limit of contact centers on a billing account.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="contactCenterCountSum" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Deprecated: Use the Quota fields instead. Reflects the count sum of contact centers on a billing account.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="quotas" /></td>
-    <td><code>array</code></td>
-    <td>Quota details per contact center instance type.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="get">
 
 <table>
@@ -104,6 +75,35 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="metadata" /></td>
     <td><code>object</code></td>
     <td>Service-specific metadata. For example the available capacity at the given location.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="query_contact_center_quota">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="contactCenterCountLimit" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Deprecated: Use the Quota fields instead. Reflects the count limit of contact centers on a billing account.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="contactCenterCountSum" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Deprecated: Use the Quota fields instead. Reflects the count sum of contact centers on a billing account.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="quotas" /></td>
+    <td><code>array</code></td>
+    <td>Quota details per contact center instance type.</td>
 </tr>
 </tbody>
 </table>
@@ -165,13 +165,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#query_contact_center_quota"><CopyableCode code="query_contact_center_quota" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Queries the contact center quota, an aggregation over all the projects, that belongs to the billing account, which the input project belongs to.</td>
-</tr>
-<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -179,10 +172,17 @@ The following methods are available for this resource:
     <td>Gets information about a location.</td>
 </tr>
 <tr>
+    <td><a href="#query_contact_center_quota"><CopyableCode code="query_contact_center_quota" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Queries the contact center quota, an aggregation over all the projects, that belongs to the billing account, which the input project belongs to.</td>
+</tr>
+<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 <tr>
@@ -244,28 +244,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="query_contact_center_quota"
+    defaultValue="get"
     values={[
-        { label: 'query_contact_center_quota', value: 'query_contact_center_quota' },
         { label: 'get', value: 'get' },
+        { label: 'query_contact_center_quota', value: 'query_contact_center_quota' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_contact_center_quota">
-
-Queries the contact center quota, an aggregation over all the projects, that belongs to the billing account, which the input project belongs to.
-
-```sql
-SELECT
-contactCenterCountLimit,
-contactCenterCountSum,
-quotas
-FROM google.contactcenteraiplatform.locations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="get">
 
 Gets information about a location.
@@ -277,6 +262,21 @@ displayName,
 labels,
 locationId,
 metadata
+FROM google.contactcenteraiplatform.locations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="query_contact_center_quota">
+
+Queries the contact center quota, an aggregation over all the projects, that belongs to the billing account, which the input project belongs to.
+
+```sql
+SELECT
+contactCenterCountLimit,
+contactCenterCountSum,
+quotas
 FROM google.contactcenteraiplatform.locations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -296,10 +296,10 @@ locationId,
 metadata
 FROM google.contactcenteraiplatform.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -324,11 +324,11 @@ EXEC google.contactcenteraiplatform.locations.generate_shifts
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"planningHorizon": "{{ planningHorizon }}", 
-"workforceDemands": "{{ workforceDemands }}", 
-"solverConfig": "{{ solverConfig }}", 
 "employeeInfo": "{{ employeeInfo }}", 
-"shiftTemplates": "{{ shiftTemplates }}"
+"planningHorizon": "{{ planningHorizon }}", 
+"shiftTemplates": "{{ shiftTemplates }}", 
+"solverConfig": "{{ solverConfig }}", 
+"workforceDemands": "{{ workforceDemands }}"
 }'
 ;
 ```

@@ -82,6 +82,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. This workflow invocation's timing details. (id: Interval)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="pipelineConfig" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The pipeline options which defines the pipeline type and path within the Git repository. (id: PipelineConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="privateResourceMetadata" /></td>
     <td><code>object</code></td>
     <td>Output only. Metadata indicating whether this resource is user-scoped. `WorkflowInvocation` resource is `user_scoped` only if it is sourced from a compilation result and the compilation result is user-scoped. (id: PrivateResourceMetadata)</td>
@@ -170,6 +175,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. This workflow invocation's timing details. (id: Interval)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="pipelineConfig" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The pipeline options which defines the pipeline type and path within the Git repository. (id: PipelineConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="privateResourceMetadata" /></td>
     <td><code>object</code></td>
     <td>Output only. Metadata indicating whether this resource is user-scoped. `WorkflowInvocation` resource is `user_scoped` only if it is sourced from a compilation result and the compilation result is user-scoped. (id: PrivateResourceMetadata)</td>
@@ -227,7 +237,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists WorkflowInvocations in a given Repository.</td>
 </tr>
 <tr>
@@ -332,6 +342,7 @@ dataEncryptionState,
 internalMetadata,
 invocationConfig,
 invocationTiming,
+pipelineConfig,
 privateResourceMetadata,
 resolvedCompilationResult,
 state,
@@ -374,6 +385,7 @@ dataEncryptionState,
 internalMetadata,
 invocationConfig,
 invocationTiming,
+pipelineConfig,
 privateResourceMetadata,
 resolvedCompilationResult,
 state,
@@ -382,10 +394,10 @@ FROM google.dataform.workflow_invocations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -407,17 +419,17 @@ Creates a new WorkflowInvocation in a given Repository.
 
 ```sql
 INSERT INTO google.dataform.workflow_invocations (
+data__compilationResult,
 data__invocationConfig,
 data__workflowConfig,
-data__compilationResult,
 projectsId,
 locationsId,
 repositoriesId
 )
 SELECT 
+'{{ compilationResult }}',
 '{{ invocationConfig }}',
 '{{ workflowConfig }}',
-'{{ compilationResult }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}'
@@ -428,6 +440,7 @@ dataEncryptionState,
 internalMetadata,
 invocationConfig,
 invocationTiming,
+pipelineConfig,
 privateResourceMetadata,
 resolvedCompilationResult,
 state,
@@ -449,29 +462,29 @@ workflowConfig
     - name: repositoriesId
       value: "{{ repositoriesId }}"
       description: Required parameter for the workflow_invocations resource.
-    - name: invocationConfig
-      description: |
-        Immutable. If left unset, a default InvocationConfig will be used.
-      value:
-        includedTags:
-          - "{{ includedTags }}"
-        transitiveDependentsIncluded: {{ transitiveDependentsIncluded }}
-        queryPriority: "{{ queryPriority }}"
-        includedTargets:
-          - database: "{{ database }}"
-            name: "{{ name }}"
-            schema: "{{ schema }}"
-        fullyRefreshIncrementalTablesEnabled: {{ fullyRefreshIncrementalTablesEnabled }}
-        transitiveDependenciesIncluded: {{ transitiveDependenciesIncluded }}
-        serviceAccount: "{{ serviceAccount }}"
-    - name: workflowConfig
-      value: "{{ workflowConfig }}"
-      description: |
-        Immutable. The name of the workflow config to invoke. Must be in the format \`projects/*/locations/*/repositories/*/workflowConfigs/*\`.
     - name: compilationResult
       value: "{{ compilationResult }}"
       description: |
         Immutable. The name of the compilation result to use for this invocation. Must be in the format \`projects/*/locations/*/repositories/*/compilationResults/*\`.
+    - name: invocationConfig
+      description: |
+        Immutable. If left unset, a default InvocationConfig will be used.
+      value:
+        fullyRefreshIncrementalTablesEnabled: {{ fullyRefreshIncrementalTablesEnabled }}
+        includedTags:
+          - "{{ includedTags }}"
+        includedTargets:
+          - database: "{{ database }}"
+            name: "{{ name }}"
+            schema: "{{ schema }}"
+        queryPriority: "{{ queryPriority }}"
+        serviceAccount: "{{ serviceAccount }}"
+        transitiveDependenciesIncluded: {{ transitiveDependenciesIncluded }}
+        transitiveDependentsIncluded: {{ transitiveDependentsIncluded }}
+    - name: workflowConfig
+      value: "{{ workflowConfig }}"
+      description: |
+        Immutable. The name of the workflow config to invoke. Must be in the format \`projects/*/locations/*/repositories/*/workflowConfigs/*\`.
 `}</CodeBlock>
 
 </TabItem>

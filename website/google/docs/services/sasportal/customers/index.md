@@ -136,13 +136,6 @@ The following methods are available for this resource:
     <td>Updates an existing customer.</td>
 </tr>
 <tr>
-    <td><a href="#customers_setup_sas_analytics"><CopyableCode code="customers_setup_sas_analytics" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Setups the a GCP Project to receive SAS Analytics messages via GCP Pub/Sub with a subscription to BigQuery. All the Pub/Sub topics and BigQuery tables are created automatically as part of this service.</td>
-</tr>
-<tr>
     <td><a href="#customers_migrate_organization"><CopyableCode code="customers_migrate_organization" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
@@ -155,6 +148,13 @@ The following methods are available for this resource:
     <td></td>
     <td></td>
     <td>Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.</td>
+</tr>
+<tr>
+    <td><a href="#customers_setup_sas_analytics"><CopyableCode code="customers_setup_sas_analytics" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Setups the a GCP Project to receive SAS Analytics messages via GCP Pub/Sub with a subscription to BigQuery. All the Pub/Sub topics and BigQuery tables are created automatically as part of this service.</td>
 </tr>
 </tbody>
 </table>
@@ -252,8 +252,8 @@ Updates an existing customer.
 UPDATE google.sasportal.customers
 SET 
 data__displayName = '{{ displayName }}',
-data__sasUserIds = '{{ sasUserIds }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__sasUserIds = '{{ sasUserIds }}'
 WHERE 
 customersId = '{{ customersId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -269,26 +269,13 @@ sasUserIds;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="customers_setup_sas_analytics"
+    defaultValue="customers_migrate_organization"
     values={[
-        { label: 'customers_setup_sas_analytics', value: 'customers_setup_sas_analytics' },
         { label: 'customers_migrate_organization', value: 'customers_migrate_organization' },
-        { label: 'customers_provision_deployment', value: 'customers_provision_deployment' }
+        { label: 'customers_provision_deployment', value: 'customers_provision_deployment' },
+        { label: 'customers_setup_sas_analytics', value: 'customers_setup_sas_analytics' }
     ]}
 >
-<TabItem value="customers_setup_sas_analytics">
-
-Setups the a GCP Project to receive SAS Analytics messages via GCP Pub/Sub with a subscription to BigQuery. All the Pub/Sub topics and BigQuery tables are created automatically as part of this service.
-
-```sql
-EXEC google.sasportal.customers.customers_setup_sas_analytics 
-@@json=
-'{
-"userId": "{{ userId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="customers_migrate_organization">
 
 Migrates a SAS organization to the cloud. This will create GCP projects for each deployment and associate them. The SAS Organization is linked to the gcp project that called the command. go/sas-legacy-customer-migration
@@ -310,9 +297,22 @@ Creates a new SAS deployment through the GCP workflow. Creates a SAS organizatio
 EXEC google.sasportal.customers.customers_provision_deployment 
 @@json=
 '{
-"newOrganizationDisplayName": "{{ newOrganizationDisplayName }}", 
 "newDeploymentDisplayName": "{{ newDeploymentDisplayName }}", 
+"newOrganizationDisplayName": "{{ newOrganizationDisplayName }}", 
 "organizationId": "{{ organizationId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="customers_setup_sas_analytics">
+
+Setups the a GCP Project to receive SAS Analytics messages via GCP Pub/Sub with a subscription to BigQuery. All the Pub/Sub topics and BigQuery tables are created automatically as part of this service.
+
+```sql
+EXEC google.sasportal.customers.customers_setup_sas_analytics 
+@@json=
+'{
+"userId": "{{ userId }}"
 }'
 ;
 ```

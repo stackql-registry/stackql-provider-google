@@ -359,29 +359,29 @@ Creates a Serverless VPC Access connector, returns an operation.
 
 ```sql
 INSERT INTO google.vpcaccess.connectors (
-data__network,
 data__ipCidrRange,
-data__minInstances,
-data__subnet,
 data__machineType,
-data__name,
-data__minThroughput,
 data__maxInstances,
 data__maxThroughput,
+data__minInstances,
+data__minThroughput,
+data__name,
+data__network,
+data__subnet,
 projectsId,
 locationsId,
 connectorId
 )
 SELECT 
-'{{ network }}',
 '{{ ipCidrRange }}',
-{{ minInstances }},
-'{{ subnet }}',
 '{{ machineType }}',
-'{{ name }}',
-{{ minThroughput }},
 {{ maxInstances }},
 {{ maxThroughput }},
+{{ minInstances }},
+{{ minThroughput }},
+'{{ name }}',
+'{{ network }}',
+'{{ subnet }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectorId }}'
@@ -405,36 +405,14 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the connectors resource.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Optional. Name of a VPC network.
     - name: ipCidrRange
       value: "{{ ipCidrRange }}"
       description: |
         Optional. The range of internal addresses that follows RFC 4632 notation. Example: \`10.132.0.0/28\`.
-    - name: minInstances
-      value: {{ minInstances }}
-      description: |
-        Minimum value of instances in autoscaling group underlying the connector.
-    - name: subnet
-      description: |
-        Optional. The subnet in which to house the VPC Access Connector.
-      value:
-        name: "{{ name }}"
-        projectId: "{{ projectId }}"
     - name: machineType
       value: "{{ machineType }}"
       description: |
         Machine type of VM Instance underlying connector. Default is e2-micro
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The resource name in the format \`projects/*/locations/*/connectors/*\`.
-    - name: minThroughput
-      value: {{ minThroughput }}
-      description: |
-        Minimum throughput of the connector in Mbps. Refers to the expected throughput when using an \`e2-micro\` machine type. Value must be a multiple of 100 from 200 through 900. Must be lower than the value specified by --max-throughput. If both min-throughput and min-instances are provided, min-instances takes precedence over min-throughput. The use of \`min-throughput\` is discouraged in favor of \`min-instances\`.
     - name: maxInstances
       value: {{ maxInstances }}
       description: |
@@ -443,6 +421,28 @@ response
       value: {{ maxThroughput }}
       description: |
         Maximum throughput of the connector in Mbps. Refers to the expected throughput when using an \`e2-micro\` machine type. Value must be a multiple of 100 from 300 through 1000. Must be higher than the value specified by --min-throughput. If both max-throughput and max-instances are provided, max-instances takes precedence over max-throughput. The use of \`max-throughput\` is discouraged in favor of \`max-instances\`.
+    - name: minInstances
+      value: {{ minInstances }}
+      description: |
+        Minimum value of instances in autoscaling group underlying the connector.
+    - name: minThroughput
+      value: {{ minThroughput }}
+      description: |
+        Minimum throughput of the connector in Mbps. Refers to the expected throughput when using an \`e2-micro\` machine type. Value must be a multiple of 100 from 200 through 900. Must be lower than the value specified by --max-throughput. If both min-throughput and min-instances are provided, min-instances takes precedence over min-throughput. The use of \`min-throughput\` is discouraged in favor of \`min-instances\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name in the format \`projects/*/locations/*/connectors/*\`.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Optional. Name of a VPC network.
+    - name: subnet
+      description: |
+        Optional. The subnet in which to house the VPC Access Connector.
+      value:
+        name: "{{ name }}"
+        projectId: "{{ projectId }}"
     - name: connectorId
       value: "{{ connectorId }}"
 `}</CodeBlock>
@@ -466,15 +466,15 @@ Updates a Serverless VPC Access connector, returns an operation.
 ```sql
 UPDATE google.vpcaccess.connectors
 SET 
-data__network = '{{ network }}',
 data__ipCidrRange = '{{ ipCidrRange }}',
-data__minInstances = {{ minInstances }},
-data__subnet = '{{ subnet }}',
 data__machineType = '{{ machineType }}',
-data__name = '{{ name }}',
-data__minThroughput = {{ minThroughput }},
 data__maxInstances = {{ maxInstances }},
-data__maxThroughput = {{ maxThroughput }}
+data__maxThroughput = {{ maxThroughput }},
+data__minInstances = {{ minInstances }},
+data__minThroughput = {{ minThroughput }},
+data__name = '{{ name }}',
+data__network = '{{ network }}',
+data__subnet = '{{ subnet }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

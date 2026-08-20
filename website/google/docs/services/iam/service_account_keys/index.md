@@ -233,18 +233,18 @@ The following methods are available for this resource:
     <td>Deletes a ServiceAccountKey. Deleting a service account key does not revoke short-lived credentials that have been issued based on the service account key.</td>
 </tr>
 <tr>
-    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
-    <td></td>
-    <td>Enable a ServiceAccountKey.</td>
-</tr>
-<tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
     <td></td>
     <td>Disable a ServiceAccountKey. A disabled service account key can be re-enabled with EnableServiceAccountKey.</td>
+</tr>
+<tr>
+    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
+    <td></td>
+    <td>Enable a ServiceAccountKey.</td>
 </tr>
 <tr>
     <td><a href="#upload"><CopyableCode code="upload" /></a></td>
@@ -375,14 +375,14 @@ Creates a ServiceAccountKey.
 
 ```sql
 INSERT INTO google.iam.service_account_keys (
-data__privateKeyType,
 data__keyAlgorithm,
+data__privateKeyType,
 projectsId,
 serviceAccountsId
 )
 SELECT 
-'{{ privateKeyType }}',
 '{{ keyAlgorithm }}',
+'{{ privateKeyType }}',
 '{{ projectsId }}',
 '{{ serviceAccountsId }}'
 RETURNING
@@ -412,16 +412,16 @@ validBeforeTime
     - name: serviceAccountsId
       value: "{{ serviceAccountsId }}"
       description: Required parameter for the service_account_keys resource.
-    - name: privateKeyType
-      value: "{{ privateKeyType }}"
-      description: |
-        The output format of the private key. The default value is \`TYPE_GOOGLE_CREDENTIALS_FILE\`, which is the Google Credentials File format.
-      valid_values: ['TYPE_UNSPECIFIED', 'TYPE_PKCS12_FILE', 'TYPE_GOOGLE_CREDENTIALS_FILE']
     - name: keyAlgorithm
       value: "{{ keyAlgorithm }}"
       description: |
         Which type of key and algorithm to use for the key. The default is currently a 2K RSA key. However this may change in the future.
       valid_values: ['KEY_ALG_UNSPECIFIED', 'KEY_ALG_RSA_1024', 'KEY_ALG_RSA_2048']
+    - name: privateKeyType
+      value: "{{ privateKeyType }}"
+      description: |
+        The output format of the private key. The default value is \`TYPE_GOOGLE_CREDENTIALS_FILE\`, which is the Google Credentials File format.
+      valid_values: ['TYPE_UNSPECIFIED', 'TYPE_PKCS12_FILE', 'TYPE_GOOGLE_CREDENTIALS_FILE']
 `}</CodeBlock>
 
 </TabItem>
@@ -454,31 +454,31 @@ AND keysId = '{{ keysId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="enable"
+    defaultValue="disable"
     values={[
-        { label: 'enable', value: 'enable' },
         { label: 'disable', value: 'disable' },
+        { label: 'enable', value: 'enable' },
         { label: 'upload', value: 'upload' }
     ]}
 >
-<TabItem value="enable">
-
-Enable a ServiceAccountKey.
-
-```sql
-EXEC google.iam.service_account_keys.enable 
-@projectsId='{{ projectsId }}' --required, 
-@serviceAccountsId='{{ serviceAccountsId }}' --required, 
-@keysId='{{ keysId }}' --required
-;
-```
-</TabItem>
 <TabItem value="disable">
 
 Disable a ServiceAccountKey. A disabled service account key can be re-enabled with EnableServiceAccountKey.
 
 ```sql
 EXEC google.iam.service_account_keys.disable 
+@projectsId='{{ projectsId }}' --required, 
+@serviceAccountsId='{{ serviceAccountsId }}' --required, 
+@keysId='{{ keysId }}' --required
+;
+```
+</TabItem>
+<TabItem value="enable">
+
+Enable a ServiceAccountKey.
+
+```sql
+EXEC google.iam.service_account_keys.enable 
 @projectsId='{{ projectsId }}' --required, 
 @serviceAccountsId='{{ serviceAccountsId }}' --required, 
 @keysId='{{ keysId }}' --required

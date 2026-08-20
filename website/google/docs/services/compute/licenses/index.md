@@ -230,7 +230,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of licenses<br />available in the specified project. This method does not<br />get any licenses that belong to other projects, including licenses attached<br />to publicly-available images, like Debian 9. If you want to get a list of<br />publicly-available licenses, use this method to make a request to the<br />respective image project, such as debian-cloud orwindows-cloud.<br /> *Caution* This resource is intended<br />for use only by third-party partners who are creatingCloud Marketplace<br />images.</td>
 </tr>
 <tr>
@@ -374,10 +374,10 @@ selfLink,
 warning
 FROM google.compute.licenses
 WHERE project = '{{ project }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -400,44 +400,44 @@ Create a License resource in the specified project.<br /> *Caution* This resourc
 
 ```sql
 INSERT INTO google.compute.licenses (
-data__incompatibleLicenses,
-data__soleTenantOnly,
-data__appendableToDisk,
-data__description,
-data__resourceRequirements,
-data__requiredCoattachedLicenses,
 data__allowedReplacementLicenses,
-data__id,
+data__appendableToDisk,
 data__chargesUseFee,
+data__description,
+data__id,
+data__incompatibleLicenses,
 data__licenseCode,
-data__osLicense,
-data__multiTenantOnly,
-data__params,
-data__transferable,
-data__name,
-data__removableFromDisk,
 data__minimumRetention,
+data__multiTenantOnly,
+data__name,
+data__osLicense,
+data__params,
+data__removableFromDisk,
+data__requiredCoattachedLicenses,
+data__resourceRequirements,
+data__soleTenantOnly,
+data__transferable,
 project,
 requestId
 )
 SELECT 
-'{{ incompatibleLicenses }}',
-{{ soleTenantOnly }},
-{{ appendableToDisk }},
-'{{ description }}',
-'{{ resourceRequirements }}',
-'{{ requiredCoattachedLicenses }}',
 '{{ allowedReplacementLicenses }}',
-'{{ id }}',
+{{ appendableToDisk }},
 {{ chargesUseFee }},
+'{{ description }}',
+'{{ id }}',
+'{{ incompatibleLicenses }}',
 '{{ licenseCode }}',
-{{ osLicense }},
-{{ multiTenantOnly }},
-'{{ params }}',
-{{ transferable }},
-'{{ name }}',
-{{ removableFromDisk }},
 '{{ minimumRetention }}',
+{{ multiTenantOnly }},
+'{{ name }}',
+{{ osLicense }},
+'{{ params }}',
+{{ removableFromDisk }},
+'{{ requiredCoattachedLicenses }}',
+'{{ resourceRequirements }}',
+{{ soleTenantOnly }},
+{{ transferable }},
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -479,6 +479,32 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the licenses resource.
+    - name: allowedReplacementLicenses
+      value:
+        - "{{ allowedReplacementLicenses }}"
+      description: |
+        Specifies licenseCodes of licenses that can replace this license. Note:
+        such replacements are allowed even if removable_from_disk is false.
+    - name: appendableToDisk
+      value: {{ appendableToDisk }}
+      description: |
+        If true, this license can be appended to an existing disk's set of
+        licenses.
+    - name: chargesUseFee
+      value: {{ chargesUseFee }}
+      description: |
+        [Output Only] Deprecated. This field no longer reflects whether a license
+        charges a usage fee.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional textual description of the resource; provided by the client
+        when the resource is created.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
     - name: incompatibleLicenses
       value:
         - "{{ incompatibleLicenses }}"
@@ -486,84 +512,11 @@ zone
         Specifies licenseCodes of licenses that are incompatible with this license.
         If a license is incompatible with this license, it cannot be attached to
         the same disk or image.
-    - name: soleTenantOnly
-      value: {{ soleTenantOnly }}
-      description: |
-        If true, this license can only be used on VMs on sole tenant nodes.
-    - name: appendableToDisk
-      value: {{ appendableToDisk }}
-      description: |
-        If true, this license can be appended to an existing disk's set of
-        licenses.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional textual description of the resource; provided by the client
-        when the resource is created.
-    - name: resourceRequirements
-      description: |
-        [Input Only] Deprecated.
-      value:
-        minMemoryMb: {{ minMemoryMb }}
-        minGuestCpuCount: {{ minGuestCpuCount }}
-    - name: requiredCoattachedLicenses
-      value:
-        - "{{ requiredCoattachedLicenses }}"
-      description: |
-        Specifies the set of permissible coattached licenseCodes of licenses that
-        satisfy the coattachment requirement of this license. At least one license
-        from the set must be attached to the same disk or image as this license.
-    - name: allowedReplacementLicenses
-      value:
-        - "{{ allowedReplacementLicenses }}"
-      description: |
-        Specifies licenseCodes of licenses that can replace this license. Note:
-        such replacements are allowed even if removable_from_disk is false.
-    - name: id
-      value: "{{ id }}"
-      description: |
-        [Output Only] The unique identifier for the resource. This identifier is
-        defined by the server.
-    - name: chargesUseFee
-      value: {{ chargesUseFee }}
-      description: |
-        [Output Only] Deprecated. This field no longer reflects whether a license
-        charges a usage fee.
     - name: licenseCode
       value: "{{ licenseCode }}"
       description: |
         [Output Only] The unique code used to attach this license to images,
         snapshots, and disks.
-    - name: osLicense
-      value: {{ osLicense }}
-      description: |
-        If true, indicates this is an OS license. Only one OS license can be
-        attached to a disk or image at a time.
-    - name: multiTenantOnly
-      value: {{ multiTenantOnly }}
-      description: |
-        If true, this license can only be used on VMs on multi tenant nodes.
-    - name: params
-      description: |
-        Input only. Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: transferable
-      value: {{ transferable }}
-      description: |
-        If false, licenses will not be copied from the source resource when
-        creating an image from a disk, disk from snapshot, or snapshot from disk.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. The name must be 1-63 characters long and
-        comply withRFC1035.
-    - name: removableFromDisk
-      value: {{ removableFromDisk }}
-      description: |
-        If true, this license can be removed from a disk's set of licenses, with no
-        replacement license needed.
     - name: minimumRetention
       description: |
         A Duration represents a fixed-length span of time represented
@@ -573,6 +526,53 @@ zone
       value:
         nanos: {{ nanos }}
         seconds: "{{ seconds }}"
+    - name: multiTenantOnly
+      value: {{ multiTenantOnly }}
+      description: |
+        If true, this license can only be used on VMs on multi tenant nodes.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. The name must be 1-63 characters long and
+        comply withRFC1035.
+    - name: osLicense
+      value: {{ osLicense }}
+      description: |
+        If true, indicates this is an OS license. Only one OS license can be
+        attached to a disk or image at a time.
+    - name: params
+      description: |
+        Input only. Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: removableFromDisk
+      value: {{ removableFromDisk }}
+      description: |
+        If true, this license can be removed from a disk's set of licenses, with no
+        replacement license needed.
+    - name: requiredCoattachedLicenses
+      value:
+        - "{{ requiredCoattachedLicenses }}"
+      description: |
+        Specifies the set of permissible coattached licenseCodes of licenses that
+        satisfy the coattachment requirement of this license. At least one license
+        from the set must be attached to the same disk or image as this license.
+    - name: resourceRequirements
+      description: |
+        [Input Only] Deprecated.
+      value:
+        minGuestCpuCount: {{ minGuestCpuCount }}
+        minMemoryMb: {{ minMemoryMb }}
+    - name: soleTenantOnly
+      value: {{ soleTenantOnly }}
+      description: |
+        If true, this license can only be used on VMs on sole tenant nodes.
+    - name: transferable
+      value: {{ transferable }}
+      description: |
+        If false, licenses will not be copied from the source resource when
+        creating an image from a disk, disk from snapshot, or snapshot from disk.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -596,23 +596,23 @@ Updates a License resource in the specified project.<br /> *Caution* This resour
 ```sql
 UPDATE google.compute.licenses
 SET 
-data__incompatibleLicenses = '{{ incompatibleLicenses }}',
-data__soleTenantOnly = {{ soleTenantOnly }},
-data__appendableToDisk = {{ appendableToDisk }},
-data__description = '{{ description }}',
-data__resourceRequirements = '{{ resourceRequirements }}',
-data__requiredCoattachedLicenses = '{{ requiredCoattachedLicenses }}',
 data__allowedReplacementLicenses = '{{ allowedReplacementLicenses }}',
-data__id = '{{ id }}',
+data__appendableToDisk = {{ appendableToDisk }},
 data__chargesUseFee = {{ chargesUseFee }},
+data__description = '{{ description }}',
+data__id = '{{ id }}',
+data__incompatibleLicenses = '{{ incompatibleLicenses }}',
 data__licenseCode = '{{ licenseCode }}',
-data__osLicense = {{ osLicense }},
+data__minimumRetention = '{{ minimumRetention }}',
 data__multiTenantOnly = {{ multiTenantOnly }},
-data__params = '{{ params }}',
-data__transferable = {{ transferable }},
 data__name = '{{ name }}',
+data__osLicense = {{ osLicense }},
+data__params = '{{ params }}',
 data__removableFromDisk = {{ removableFromDisk }},
-data__minimumRetention = '{{ minimumRetention }}'
+data__requiredCoattachedLicenses = '{{ requiredCoattachedLicenses }}',
+data__resourceRequirements = '{{ resourceRequirements }}',
+data__soleTenantOnly = {{ soleTenantOnly }},
+data__transferable = {{ transferable }}
 WHERE 
 project = '{{ project }}' --required
 AND license = '{{ license }}' --required

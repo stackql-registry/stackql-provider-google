@@ -450,29 +450,29 @@ Creates an Apigee runtime instance. The instance is accessible from the authoriz
 
 ```sql
 INSERT INTO google.apigee.instances (
-data__maintenanceUpdatePolicy,
-data__ipRange,
 data__accessLoggingConfig,
-data__displayName,
-data__peeringCidrRange,
-data__diskEncryptionKeyName,
-data__name,
 data__consumerAcceptList,
-data__location,
 data__description,
+data__diskEncryptionKeyName,
+data__displayName,
+data__ipRange,
+data__location,
+data__maintenanceUpdatePolicy,
+data__name,
+data__peeringCidrRange,
 organizationsId
 )
 SELECT 
-'{{ maintenanceUpdatePolicy }}',
-'{{ ipRange }}',
 '{{ accessLoggingConfig }}',
-'{{ displayName }}',
-'{{ peeringCidrRange }}',
-'{{ diskEncryptionKeyName }}',
-'{{ name }}',
 '{{ consumerAcceptList }}',
-'{{ location }}',
 '{{ description }}',
+'{{ diskEncryptionKeyName }}',
+'{{ displayName }}',
+'{{ ipRange }}',
+'{{ location }}',
+'{{ maintenanceUpdatePolicy }}',
+'{{ name }}',
+'{{ peeringCidrRange }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -491,58 +491,58 @@ response
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the instances resource.
-    - name: maintenanceUpdatePolicy
-      description: |
-        Optional. Apigee customers can set the preferred window to perform maintenance on the instance (day of the week and time of day).
-      value:
-        maintenanceWindows:
-          - day: "{{ day }}"
-            startTime:
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-              minutes: {{ minutes }}
-              seconds: {{ seconds }}
-        maintenanceChannel: "{{ maintenanceChannel }}"
-    - name: ipRange
-      value: "{{ ipRange }}"
-      description: |
-        Optional. Comma-separated list of CIDR blocks of length 22 and/or 28 used to create the Apigee instance. Providing CIDR ranges is optional. You can provide just /22 or /28 or both (or neither). Ranges you provide should be freely available as part of a larger named range you have allocated to the Service Networking peering. If this parameter is not provided, Apigee automatically requests an available /22 and /28 CIDR block from Service Networking. Use the /22 CIDR block for configuring your firewall needs to allow traffic from Apigee. Input formats: \`a.b.c.d/22\` or \`e.f.g.h/28\` or \`a.b.c.d/22,e.f.g.h/28\`
     - name: accessLoggingConfig
       description: |
         Optional. Access logging configuration enables the access logging feature at the instance. Apigee customers can enable access logging to ship the access logs to their own project's cloud logging.
       value:
         enabled: {{ enabled }}
         filter: "{{ filter }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. Display name for the instance.
-    - name: peeringCidrRange
-      value: "{{ peeringCidrRange }}"
-      description: |
-        Optional. Size of the CIDR block range that will be reserved by the instance. PAID organizations support \`SLASH_16\` to \`SLASH_20\` and defaults to \`SLASH_16\`. Evaluation organizations support only \`SLASH_23\`.
-      valid_values: ['CIDR_RANGE_UNSPECIFIED', 'SLASH_16', 'SLASH_17', 'SLASH_18', 'SLASH_19', 'SLASH_20', 'SLASH_22', 'SLASH_23']
-    - name: diskEncryptionKeyName
-      value: "{{ diskEncryptionKeyName }}"
-      description: |
-        Optional. Customer Managed Encryption Key (CMEK) used for disk and volume encryption. If not specified, a Google-Managed encryption key will be used. Use the following format: \`projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)\`
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Resource ID of the instance. Values must match the regular expression \`^a-z{0,30}[a-zd]$\`.
     - name: consumerAcceptList
       value:
         - "{{ consumerAcceptList }}"
       description: |
         Optional. Customer accept list represents the list of projects (id/number) on customer side that can privately connect to the service attachment. It is an optional field which the customers can provide during the instance creation. By default, the customer project associated with the Apigee organization will be included to the list.
-    - name: location
-      value: "{{ location }}"
-      description: |
-        Required. Compute Engine location where the instance resides.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. Description of the instance.
+    - name: diskEncryptionKeyName
+      value: "{{ diskEncryptionKeyName }}"
+      description: |
+        Optional. Customer Managed Encryption Key (CMEK) used for disk and volume encryption. If not specified, a Google-Managed encryption key will be used. Use the following format: \`projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)\`
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Display name for the instance.
+    - name: ipRange
+      value: "{{ ipRange }}"
+      description: |
+        Optional. Comma-separated list of CIDR blocks of length 22 and/or 28 used to create the Apigee instance. Providing CIDR ranges is optional. You can provide just /22 or /28 or both (or neither). Ranges you provide should be freely available as part of a larger named range you have allocated to the Service Networking peering. If this parameter is not provided, Apigee automatically requests an available /22 and /28 CIDR block from Service Networking. Use the /22 CIDR block for configuring your firewall needs to allow traffic from Apigee. Input formats: \`a.b.c.d/22\` or \`e.f.g.h/28\` or \`a.b.c.d/22,e.f.g.h/28\`
+    - name: location
+      value: "{{ location }}"
+      description: |
+        Required. Compute Engine location where the instance resides.
+    - name: maintenanceUpdatePolicy
+      description: |
+        Optional. Apigee customers can set the preferred window to perform maintenance on the instance (day of the week and time of day).
+      value:
+        maintenanceChannel: "{{ maintenanceChannel }}"
+        maintenanceWindows:
+          - day: "{{ day }}"
+            startTime:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Resource ID of the instance. Values must match the regular expression \`^a-z{0,30}[a-zd]$\`.
+    - name: peeringCidrRange
+      value: "{{ peeringCidrRange }}"
+      description: |
+        Optional. Size of the CIDR block range that will be reserved by the instance. PAID organizations support \`SLASH_16\` to \`SLASH_20\` and defaults to \`SLASH_16\`. Evaluation organizations support only \`SLASH_23\`.
+      valid_values: ['CIDR_RANGE_UNSPECIFIED', 'SLASH_16', 'SLASH_17', 'SLASH_18', 'SLASH_19', 'SLASH_20', 'SLASH_22', 'SLASH_23']
 `}</CodeBlock>
 
 </TabItem>
@@ -564,16 +564,16 @@ Updates an Apigee runtime instance. You can update the fields described in NodeC
 ```sql
 UPDATE google.apigee.instances
 SET 
-data__maintenanceUpdatePolicy = '{{ maintenanceUpdatePolicy }}',
-data__ipRange = '{{ ipRange }}',
 data__accessLoggingConfig = '{{ accessLoggingConfig }}',
-data__displayName = '{{ displayName }}',
-data__peeringCidrRange = '{{ peeringCidrRange }}',
-data__diskEncryptionKeyName = '{{ diskEncryptionKeyName }}',
-data__name = '{{ name }}',
 data__consumerAcceptList = '{{ consumerAcceptList }}',
+data__description = '{{ description }}',
+data__diskEncryptionKeyName = '{{ diskEncryptionKeyName }}',
+data__displayName = '{{ displayName }}',
+data__ipRange = '{{ ipRange }}',
 data__location = '{{ location }}',
-data__description = '{{ description }}'
+data__maintenanceUpdatePolicy = '{{ maintenanceUpdatePolicy }}',
+data__name = '{{ name }}',
+data__peeringCidrRange = '{{ peeringCidrRange }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -629,9 +629,9 @@ EXEC google.apigee.instances.organizations_instances_report_status
 @instancesId='{{ instancesId }}' --required 
 @@json=
 '{
-"resources": "{{ resources }}", 
 "instanceUid": "{{ instanceUid }}", 
-"reportTime": "{{ reportTime }}"
+"reportTime": "{{ reportTime }}", 
+"resources": "{{ resources }}"
 }'
 ;
 ```

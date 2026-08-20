@@ -99,6 +99,41 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The name of the Exadata Infrastructure resource with the format: projects/&#123;project&#125;/locations/&#123;region&#125;/cloudExadataInfrastructures/&#123;cloud_exadata_infrastructure&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The date and time that the Exadata Infrastructure was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. User friendly name for this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="entitlementId" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Entitlement ID of the private offer against which this infrastructure resource is provisioned.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gcpOracleZone" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The GCP Oracle zone where Oracle Exadata Infrastructure is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels or tags associated with the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="properties" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Various properties of the infra. (id: CloudExadataInfrastructureProperties)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -130,21 +165,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Exadata Infrastructures in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-cloudExadataInfrastructureId"><code>cloudExadataInfrastructureId</code></a></td>
+    <td><a href="#parameter-cloudExadataInfrastructureId"><code>cloudExadataInfrastructureId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Exadata Infrastructure in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-cloudExadataInfrastructuresId"><code>cloudExadataInfrastructuresId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single Exadata Infrastructure.</td>
 </tr>
 <tr>
@@ -258,14 +293,20 @@ Lists Exadata Infrastructures in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+displayName,
+entitlementId,
+gcpOracleZone,
+labels,
+properties
 FROM google.oracledatabase.cloud_exadata_infrastructures
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -287,26 +328,26 @@ Creates a new Exadata Infrastructure in a given project and location.
 
 ```sql
 INSERT INTO google.oracledatabase.cloud_exadata_infrastructures (
-data__properties,
-data__name,
+data__displayName,
 data__gcpOracleZone,
 data__labels,
-data__displayName,
+data__name,
+data__properties,
 projectsId,
 locationsId,
-requestId,
-cloudExadataInfrastructureId
+cloudExadataInfrastructureId,
+requestId
 )
 SELECT 
-'{{ properties }}',
-'{{ name }}',
+'{{ displayName }}',
 '{{ gcpOracleZone }}',
 '{{ labels }}',
-'{{ displayName }}',
+'{{ name }}',
+'{{ properties }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ cloudExadataInfrastructureId }}'
+'{{ cloudExadataInfrastructureId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -327,61 +368,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the cloud_exadata_infrastructures resource.
-    - name: properties
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Optional. Various properties of the infra.
-      value:
-        monthlyStorageServerVersion: "{{ monthlyStorageServerVersion }}"
-        ocid: "{{ ocid }}"
-        availableStorageSizeGb: {{ availableStorageSizeGb }}
-        exascaleConfig:
-          totalStorageSizeGb: {{ totalStorageSizeGb }}
-          availableStorageSizeGb: {{ availableStorageSizeGb }}
-        additionalStorageCount: {{ additionalStorageCount }}
-        computeModel: "{{ computeModel }}"
-        totalStorageSizeGb: {{ totalStorageSizeGb }}
-        maintenanceWindow:
-          weeksOfMonth:
-            - {{ weeksOfMonth }}
-          hoursOfDay:
-            - {{ hoursOfDay }}
-          months:
-            - "{{ months }}"
-          customActionTimeoutMins: {{ customActionTimeoutMins }}
-          leadTimeWeek: {{ leadTimeWeek }}
-          daysOfWeek:
-            - "{{ daysOfWeek }}"
-          patchingMode: "{{ patchingMode }}"
-          isCustomActionTimeoutEnabled: {{ isCustomActionTimeoutEnabled }}
-          preference: "{{ preference }}"
-        dbServerVersion: "{{ dbServerVersion }}"
-        memorySizeGb: {{ memorySizeGb }}
-        maxDbNodeStorageSizeGb: {{ maxDbNodeStorageSizeGb }}
-        storageServerVersion: "{{ storageServerVersion }}"
-        cpuCount: {{ cpuCount }}
-        nextMaintenanceRunTime: "{{ nextMaintenanceRunTime }}"
-        storageServerType: "{{ storageServerType }}"
-        maxDataStorageTb: {{ maxDataStorageTb }}
-        nextMaintenanceRunId: "{{ nextMaintenanceRunId }}"
-        shape: "{{ shape }}"
-        activatedStorageCount: {{ activatedStorageCount }}
-        computeCount: {{ computeCount }}
-        databaseServerType: "{{ databaseServerType }}"
-        maxCpuCount: {{ maxCpuCount }}
-        storageCount: {{ storageCount }}
-        dbNodeStorageSizeGb: {{ dbNodeStorageSizeGb }}
-        monthlyDbServerVersion: "{{ monthlyDbServerVersion }}"
-        maxMemoryGb: {{ maxMemoryGb }}
-        dataStorageSizeTb: {{ dataStorageSizeTb }}
-        state: "{{ state }}"
-        ociUrl: "{{ ociUrl }}"
-        customerContacts:
-          - email: "{{ email }}"
-        nextSecurityMaintenanceRunTime: "{{ nextSecurityMaintenanceRunTime }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the Exadata Infrastructure resource with the format: projects/{project}/locations/{region}/cloudExadataInfrastructures/{cloud_exadata_infrastructure}
+        Optional. User friendly name for this resource.
     - name: gcpOracleZone
       value: "{{ gcpOracleZone }}"
       description: |
@@ -390,14 +380,67 @@ response
       value: "{{ labels }}"
       description: |
         Optional. Labels or tags associated with the resource.
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. User friendly name for this resource.
-    - name: requestId
-      value: "{{ requestId }}"
+        Identifier. The name of the Exadata Infrastructure resource with the format: projects/{project}/locations/{region}/cloudExadataInfrastructures/{cloud_exadata_infrastructure}
+    - name: properties
+      description: |
+        Optional. Various properties of the infra.
+      value:
+        activatedStorageCount: {{ activatedStorageCount }}
+        additionalStorageCount: {{ additionalStorageCount }}
+        availableStorageSizeGb: {{ availableStorageSizeGb }}
+        computeCount: {{ computeCount }}
+        computeModel: "{{ computeModel }}"
+        cpuCount: {{ cpuCount }}
+        customerContacts:
+          - email: "{{ email }}"
+        dataStorageSizeTb: {{ dataStorageSizeTb }}
+        databaseServerType: "{{ databaseServerType }}"
+        dbNodeStorageSizeGb: {{ dbNodeStorageSizeGb }}
+        dbServerVersion: "{{ dbServerVersion }}"
+        exascaleConfig:
+          availableStorageSizeGb: {{ availableStorageSizeGb }}
+          availableVmStorageSizeGb: {{ availableVmStorageSizeGb }}
+          totalStorageSizeGb: {{ totalStorageSizeGb }}
+          totalVmStorageSizeGb: {{ totalVmStorageSizeGb }}
+        maintenanceWindow:
+          customActionTimeoutMins: {{ customActionTimeoutMins }}
+          daysOfWeek:
+            - "{{ daysOfWeek }}"
+          hoursOfDay:
+            - {{ hoursOfDay }}
+          isCustomActionTimeoutEnabled: {{ isCustomActionTimeoutEnabled }}
+          leadTimeWeek: {{ leadTimeWeek }}
+          months:
+            - "{{ months }}"
+          patchingMode: "{{ patchingMode }}"
+          preference: "{{ preference }}"
+          weeksOfMonth:
+            - {{ weeksOfMonth }}
+        maxCpuCount: {{ maxCpuCount }}
+        maxDataStorageTb: {{ maxDataStorageTb }}
+        maxDbNodeStorageSizeGb: {{ maxDbNodeStorageSizeGb }}
+        maxMemoryGb: {{ maxMemoryGb }}
+        memorySizeGb: {{ memorySizeGb }}
+        monthlyDbServerVersion: "{{ monthlyDbServerVersion }}"
+        monthlyStorageServerVersion: "{{ monthlyStorageServerVersion }}"
+        nextMaintenanceRunId: "{{ nextMaintenanceRunId }}"
+        nextMaintenanceRunTime: "{{ nextMaintenanceRunTime }}"
+        nextSecurityMaintenanceRunTime: "{{ nextSecurityMaintenanceRunTime }}"
+        ociUrl: "{{ ociUrl }}"
+        ocid: "{{ ocid }}"
+        shape: "{{ shape }}"
+        state: "{{ state }}"
+        storageCount: {{ storageCount }}
+        storageServerType: "{{ storageServerType }}"
+        storageServerVersion: "{{ storageServerVersion }}"
+        totalStorageSizeGb: {{ totalStorageSizeGb }}
     - name: cloudExadataInfrastructureId
       value: "{{ cloudExadataInfrastructureId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -421,8 +464,8 @@ DELETE FROM google.oracledatabase.cloud_exadata_infrastructures
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND cloudExadataInfrastructuresId = '{{ cloudExadataInfrastructuresId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -448,8 +491,9 @@ EXEC google.oracledatabase.cloud_exadata_infrastructures.configure_exascale
 @cloudExadataInfrastructuresId='{{ cloudExadataInfrastructuresId }}' --required 
 @@json=
 '{
+"requestId": "{{ requestId }}", 
 "totalStorageSizeGb": {{ totalStorageSizeGb }}, 
-"requestId": "{{ requestId }}"
+"totalVmStorageSizeGb": {{ totalVmStorageSizeGb }}
 }'
 ;
 ```

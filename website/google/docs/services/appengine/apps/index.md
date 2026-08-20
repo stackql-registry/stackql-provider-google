@@ -287,31 +287,31 @@ Creates an App Engine application for a Google Cloud Platform project. Required 
 ```sql
 INSERT INTO google.appengine.apps (
 data__authDomain,
-data__defaultCookieExpiration,
-data__iap,
-data__generatedCustomerMetadata,
-data__sslPolicy,
-data__dispatchRules,
 data__databaseType,
+data__defaultCookieExpiration,
+data__dispatchRules,
+data__featureSettings,
+data__generatedCustomerMetadata,
+data__iap,
+data__id,
 data__locationId,
 data__serviceAccount,
-data__id,
 data__servingStatus,
-data__featureSettings
+data__sslPolicy
 )
 SELECT 
 '{{ authDomain }}',
-'{{ defaultCookieExpiration }}',
-'{{ iap }}',
-'{{ generatedCustomerMetadata }}',
-'{{ sslPolicy }}',
-'{{ dispatchRules }}',
 '{{ databaseType }}',
+'{{ defaultCookieExpiration }}',
+'{{ dispatchRules }}',
+'{{ featureSettings }}',
+'{{ generatedCustomerMetadata }}',
+'{{ iap }}',
+'{{ id }}',
 '{{ locationId }}',
 '{{ serviceAccount }}',
-'{{ id }}',
 '{{ servingStatus }}',
-'{{ featureSettings }}'
+'{{ sslPolicy }}'
 RETURNING
 name,
 done,
@@ -330,10 +330,32 @@ response
       value: "{{ authDomain }}"
       description: |
         Google Apps authentication domain that controls which users can access this application.Defaults to open access for any Google Account.
+    - name: databaseType
+      value: "{{ databaseType }}"
+      description: |
+        The type of the Cloud Firestore or Cloud Datastore database associated with this application.
+      valid_values: ['DATABASE_TYPE_UNSPECIFIED', 'CLOUD_DATASTORE', 'CLOUD_FIRESTORE', 'CLOUD_DATASTORE_COMPATIBILITY']
     - name: defaultCookieExpiration
       value: "{{ defaultCookieExpiration }}"
       description: |
         Cookie expiration policy for this application.
+    - name: dispatchRules
+      description: |
+        HTTP path dispatch rules for requests to the application that do not explicitly target a service or version. Rules are order-dependent. Up to 20 dispatch rules can be supported.
+      value:
+        - domain: "{{ domain }}"
+          path: "{{ path }}"
+          service: "{{ service }}"
+    - name: featureSettings
+      description: |
+        The feature specific settings to be used in the application.
+      value:
+        splitHealthChecks: {{ splitHealthChecks }}
+        useContainerOptimizedOs: {{ useContainerOptimizedOs }}
+    - name: generatedCustomerMetadata
+      value: "{{ generatedCustomerMetadata }}"
+      description: |
+        Additional Google Generated Customer Metadata, this field won't be provided by default and can be requested by setting the IncludeExtraData field in GetApplicationRequest
     - name: iap
       description: |
         Identity-Aware Proxy
@@ -342,27 +364,10 @@ response
         oauth2ClientId: "{{ oauth2ClientId }}"
         oauth2ClientSecret: "{{ oauth2ClientSecret }}"
         oauth2ClientSecretSha256: "{{ oauth2ClientSecretSha256 }}"
-    - name: generatedCustomerMetadata
-      value: "{{ generatedCustomerMetadata }}"
+    - name: id
+      value: "{{ id }}"
       description: |
-        Additional Google Generated Customer Metadata, this field won't be provided by default and can be requested by setting the IncludeExtraData field in GetApplicationRequest
-    - name: sslPolicy
-      value: "{{ sslPolicy }}"
-      description: |
-        The SSL policy that will be applied to the application. If set to Modern it will restrict traffic with TLS < 1.2 and allow only Modern Ciphers suite
-      valid_values: ['SSL_POLICY_UNSPECIFIED', 'DEFAULT', 'MODERN']
-    - name: dispatchRules
-      description: |
-        HTTP path dispatch rules for requests to the application that do not explicitly target a service or version. Rules are order-dependent. Up to 20 dispatch rules can be supported.
-      value:
-        - service: "{{ service }}"
-          domain: "{{ domain }}"
-          path: "{{ path }}"
-    - name: databaseType
-      value: "{{ databaseType }}"
-      description: |
-        The type of the Cloud Firestore or Cloud Datastore database associated with this application.
-      valid_values: ['DATABASE_TYPE_UNSPECIFIED', 'CLOUD_DATASTORE', 'CLOUD_FIRESTORE', 'CLOUD_DATASTORE_COMPATIBILITY']
+        Identifier of the Application resource. This identifier is equivalent to the project ID of the Google Cloud Platform project where you want to deploy your application. Example: myapp.
     - name: locationId
       value: "{{ locationId }}"
       description: |
@@ -371,21 +376,16 @@ response
       value: "{{ serviceAccount }}"
       description: |
         The service account associated with the application. This is the app-level default identity. If no identity provided during create version, Admin API will fallback to this one.
-    - name: id
-      value: "{{ id }}"
-      description: |
-        Identifier of the Application resource. This identifier is equivalent to the project ID of the Google Cloud Platform project where you want to deploy your application. Example: myapp.
     - name: servingStatus
       value: "{{ servingStatus }}"
       description: |
         Serving status of this application.
       valid_values: ['UNSPECIFIED', 'SERVING', 'USER_DISABLED', 'SYSTEM_DISABLED']
-    - name: featureSettings
+    - name: sslPolicy
+      value: "{{ sslPolicy }}"
       description: |
-        The feature specific settings to be used in the application.
-      value:
-        splitHealthChecks: {{ splitHealthChecks }}
-        useContainerOptimizedOs: {{ useContainerOptimizedOs }}
+        The SSL policy that will be applied to the application. If set to Modern it will restrict traffic with TLS < 1.2 and allow only Modern Ciphers suite
+      valid_values: ['SSL_POLICY_UNSPECIFIED', 'DEFAULT', 'MODERN']
 `}</CodeBlock>
 
 </TabItem>
@@ -408,17 +408,17 @@ Updates the specified Application resource. You can update the following fields:
 UPDATE google.appengine.apps
 SET 
 data__authDomain = '{{ authDomain }}',
-data__defaultCookieExpiration = '{{ defaultCookieExpiration }}',
-data__iap = '{{ iap }}',
-data__generatedCustomerMetadata = '{{ generatedCustomerMetadata }}',
-data__sslPolicy = '{{ sslPolicy }}',
-data__dispatchRules = '{{ dispatchRules }}',
 data__databaseType = '{{ databaseType }}',
+data__defaultCookieExpiration = '{{ defaultCookieExpiration }}',
+data__dispatchRules = '{{ dispatchRules }}',
+data__featureSettings = '{{ featureSettings }}',
+data__generatedCustomerMetadata = '{{ generatedCustomerMetadata }}',
+data__iap = '{{ iap }}',
+data__id = '{{ id }}',
 data__locationId = '{{ locationId }}',
 data__serviceAccount = '{{ serviceAccount }}',
-data__id = '{{ id }}',
 data__servingStatus = '{{ servingStatus }}',
-data__featureSettings = '{{ featureSettings }}'
+data__sslPolicy = '{{ sslPolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

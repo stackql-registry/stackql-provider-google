@@ -305,7 +305,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists PipelineJobs in a Location.</td>
 </tr>
 <tr>
@@ -330,18 +330,18 @@ The following methods are available for this resource:
     <td>Batch deletes PipelineJobs The Operation is atomic. If it fails, none of the PipelineJobs are deleted. If it succeeds, all of the PipelineJobs are deleted.</td>
 </tr>
 <tr>
-    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pipelineJobsId"><code>pipelineJobsId</code></a></td>
-    <td></td>
-    <td>Cancels a PipelineJob. Starts asynchronous cancellation on the PipelineJob. The server makes a best effort to cancel the pipeline, but success is not guaranteed. Clients can use PipelineService.GetPipelineJob or other methods to check whether the cancellation succeeded or whether the pipeline completed despite cancellation. On successful cancellation, the PipelineJob is not deleted; instead it becomes a pipeline with a PipelineJob.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`, and PipelineJob.state is set to `CANCELLED`.</td>
-</tr>
-<tr>
     <td><a href="#batch_cancel"><CopyableCode code="batch_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Batch cancel PipelineJobs. Firstly the server will check if all the jobs are in non-terminal states, and skip the jobs that are already terminated. If the operation failed, none of the pipeline jobs are cancelled. The server will poll the states of all the pipeline jobs periodically to check the cancellation status. This operation will return an LRO.</td>
+</tr>
+<tr>
+    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pipelineJobsId"><code>pipelineJobsId</code></a></td>
+    <td></td>
+    <td>Cancels a PipelineJob. Starts asynchronous cancellation on the PipelineJob. The server makes a best effort to cancel the pipeline, but success is not guaranteed. Clients can use PipelineService.GetPipelineJob or other methods to check whether the cancellation succeeded or whether the pipeline completed despite cancellation. On successful cancellation, the PipelineJob is not deleted; instead it becomes a pipeline with a PipelineJob.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`, and PipelineJob.state is set to `CANCELLED`.</td>
 </tr>
 </tbody>
 </table>
@@ -480,11 +480,11 @@ updateTime
 FROM google.aiplatform.pipeline_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -507,15 +507,15 @@ Creates a PipelineJob. A PipelineJob will run immediately when created.
 ```sql
 INSERT INTO google.aiplatform.pipeline_jobs (
 data__displayName,
-data__pipelineSpec,
-data__reservedIpRanges,
-data__pscInterfaceConfig,
-data__network,
-data__serviceAccount,
-data__labels,
-data__runtimeConfig,
-data__preflightValidations,
 data__encryptionSpec,
+data__labels,
+data__network,
+data__pipelineSpec,
+data__preflightValidations,
+data__pscInterfaceConfig,
+data__reservedIpRanges,
+data__runtimeConfig,
+data__serviceAccount,
 data__templateUri,
 projectsId,
 locationsId,
@@ -523,15 +523,15 @@ pipelineJobId
 )
 SELECT 
 '{{ displayName }}',
-'{{ pipelineSpec }}',
-'{{ reservedIpRanges }}',
-'{{ pscInterfaceConfig }}',
-'{{ network }}',
-'{{ serviceAccount }}',
-'{{ labels }}',
-'{{ runtimeConfig }}',
-{{ preflightValidations }},
 '{{ encryptionSpec }}',
+'{{ labels }}',
+'{{ network }}',
+'{{ pipelineSpec }}',
+{{ preflightValidations }},
+'{{ pscInterfaceConfig }}',
+'{{ reservedIpRanges }}',
+'{{ runtimeConfig }}',
+'{{ serviceAccount }}',
 '{{ templateUri }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -576,54 +576,54 @@ updateTime
       value: "{{ displayName }}"
       description: |
         The display name of the Pipeline. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-    - name: pipelineSpec
-      value: "{{ pipelineSpec }}"
-      description: |
-        A compiled definition of a pipeline, represented as a \`JSON\` object. Defines the structure of the pipeline, including its components, tasks, and parameters. This specification is generated by compiling a pipeline function defined in \`Python\` using the \`Kubeflow Pipelines SDK\`.
-    - name: reservedIpRanges
-      value:
-        - "{{ reservedIpRanges }}"
-      description: |
-        A list of names for the reserved ip ranges under the VPC network that can be used for this Pipeline Job's workload. If set, we will deploy the Pipeline Job's workload within the provided ip ranges. Otherwise, the job will be deployed to any ip ranges under the provided VPC network. Example: ['vertex-ai-ip-range'].
-    - name: pscInterfaceConfig
-      description: |
-        Optional. Configuration for PSC-I for PipelineJob.
-      value:
-        networkAttachment: "{{ networkAttachment }}"
-        dnsPeeringConfigs:
-          - targetNetwork: "{{ targetNetwork }}"
-            domain: "{{ domain }}"
-            targetProject: "{{ targetProject }}"
-    - name: network
-      value: "{{ network }}"
-      description: |
-        The full name of the Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the Pipeline Job's workload should be peered. For example, \`projects/12345/global/networks/myVPC\`. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert) is of the form \`projects/{project}/global/networks/{network}\`. Where {project} is a project number, as in \`12345\`, and {network} is a network name. Private services access must already be configured for the network. Pipeline job will apply the network configuration to the Google Cloud resources being launched, if applied, such as Vertex AI Training or Dataflow job. If left unspecified, the workload is not peered with any network.
-    - name: serviceAccount
-      value: "{{ serviceAccount }}"
-      description: |
-        The service account that the pipeline workload runs as. If not specified, the Compute Engine default service account in the project will be used. See https://cloud.google.com/compute/docs/access/service-accounts#default_service_account Users starting the pipeline must have the \`iam.serviceAccounts.actAs\` permission on this service account.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The labels with user-defined metadata to organize PipelineJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. Note there is some reserved label key for Vertex AI Pipelines. - \`vertex-ai-pipelines-run-billing-id\`, user set value will get overrided.
-    - name: runtimeConfig
-      description: |
-        Runtime config of the pipeline.
-      value:
-        gcsOutputDirectory: "{{ gcsOutputDirectory }}"
-        parameterValues: "{{ parameterValues }}"
-        inputArtifacts: "{{ inputArtifacts }}"
-        failurePolicy: "{{ failurePolicy }}"
-        parameters: "{{ parameters }}"
-    - name: preflightValidations
-      value: {{ preflightValidations }}
-      description: |
-        Optional. Whether to do component level validations before job creation.
     - name: encryptionSpec
       description: |
         Customer-managed encryption key spec for a pipelineJob. If set, this PipelineJob and all of its sub-resources will be secured by this key.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize PipelineJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. Note there is some reserved label key for Vertex AI Pipelines. - \`vertex-ai-pipelines-run-billing-id\`, user set value will get overrided.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        The full name of the Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the Pipeline Job's workload should be peered. For example, \`projects/12345/global/networks/myVPC\`. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert) is of the form \`projects/{project}/global/networks/{network}\`. Where {project} is a project number, as in \`12345\`, and {network} is a network name. Private services access must already be configured for the network. Pipeline job will apply the network configuration to the Google Cloud resources being launched, if applied, such as Vertex AI Training or Dataflow job. If left unspecified, the workload is not peered with any network.
+    - name: pipelineSpec
+      value: "{{ pipelineSpec }}"
+      description: |
+        A compiled definition of a pipeline, represented as a \`JSON\` object. Defines the structure of the pipeline, including its components, tasks, and parameters. This specification is generated by compiling a pipeline function defined in \`Python\` using the \`Kubeflow Pipelines SDK\`.
+    - name: preflightValidations
+      value: {{ preflightValidations }}
+      description: |
+        Optional. Whether to do component level validations before job creation.
+    - name: pscInterfaceConfig
+      description: |
+        Optional. Configuration for PSC-I for PipelineJob.
+      value:
+        dnsPeeringConfigs:
+          - domain: "{{ domain }}"
+            targetNetwork: "{{ targetNetwork }}"
+            targetProject: "{{ targetProject }}"
+        networkAttachment: "{{ networkAttachment }}"
+    - name: reservedIpRanges
+      value:
+        - "{{ reservedIpRanges }}"
+      description: |
+        A list of names for the reserved ip ranges under the VPC network that can be used for this Pipeline Job's workload. If set, we will deploy the Pipeline Job's workload within the provided ip ranges. Otherwise, the job will be deployed to any ip ranges under the provided VPC network. Example: ['vertex-ai-ip-range'].
+    - name: runtimeConfig
+      description: |
+        Runtime config of the pipeline.
+      value:
+        failurePolicy: "{{ failurePolicy }}"
+        gcsOutputDirectory: "{{ gcsOutputDirectory }}"
+        inputArtifacts: "{{ inputArtifacts }}"
+        parameterValues: "{{ parameterValues }}"
+        parameters: "{{ parameters }}"
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        The service account that the pipeline workload runs as. If not specified, the Compute Engine default service account in the project will be used. See https://cloud.google.com/compute/docs/access/service-accounts#default_service_account Users starting the pipeline must have the \`iam.serviceAccounts.actAs\` permission on this service account.
     - name: templateUri
       value: "{{ templateUri }}"
       description: |
@@ -674,24 +674,12 @@ AND locationsId = '{{ locationsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="cancel"
+    defaultValue="batch_cancel"
     values={[
-        { label: 'cancel', value: 'cancel' },
-        { label: 'batch_cancel', value: 'batch_cancel' }
+        { label: 'batch_cancel', value: 'batch_cancel' },
+        { label: 'cancel', value: 'cancel' }
     ]}
 >
-<TabItem value="cancel">
-
-Cancels a PipelineJob. Starts asynchronous cancellation on the PipelineJob. The server makes a best effort to cancel the pipeline, but success is not guaranteed. Clients can use PipelineService.GetPipelineJob or other methods to check whether the cancellation succeeded or whether the pipeline completed despite cancellation. On successful cancellation, the PipelineJob is not deleted; instead it becomes a pipeline with a PipelineJob.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`, and PipelineJob.state is set to `CANCELLED`.
-
-```sql
-EXEC google.aiplatform.pipeline_jobs.cancel 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@pipelineJobsId='{{ pipelineJobsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="batch_cancel">
 
 Batch cancel PipelineJobs. Firstly the server will check if all the jobs are in non-terminal states, and skip the jobs that are already terminated. If the operation failed, none of the pipeline jobs are cancelled. The server will poll the states of all the pipeline jobs periodically to check the cancellation status. This operation will return an LRO.
@@ -704,6 +692,18 @@ EXEC google.aiplatform.pipeline_jobs.batch_cancel
 '{
 "names": "{{ names }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="cancel">
+
+Cancels a PipelineJob. Starts asynchronous cancellation on the PipelineJob. The server makes a best effort to cancel the pipeline, but success is not guaranteed. Clients can use PipelineService.GetPipelineJob or other methods to check whether the cancellation succeeded or whether the pipeline completed despite cancellation. On successful cancellation, the PipelineJob is not deleted; instead it becomes a pipeline with a PipelineJob.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`, and PipelineJob.state is set to `CANCELLED`.
+
+```sql
+EXEC google.aiplatform.pipeline_jobs.cancel 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@pipelineJobsId='{{ pipelineJobsId }}' --required
 ;
 ```
 </TabItem>

@@ -63,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="anthosCluster" /></td>
     <td><code>object</code></td>
-    <td>Optional. Information specifying an Anthos Cluster. (id: AnthosCluster)</td>
+    <td>Information specifying an Anthos Cluster. (id: AnthosCluster)</td>
 </tr>
 <tr>
     <td><CopyableCode code="associatedEntities" /></td>
@@ -103,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gke" /></td>
     <td><code>object</code></td>
-    <td>Optional. Information specifying a GKE Cluster. (id: GkeCluster)</td>
+    <td>Information specifying a GKE Cluster. (id: GkeCluster)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -167,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="anthosCluster" /></td>
     <td><code>object</code></td>
-    <td>Optional. Information specifying an Anthos Cluster. (id: AnthosCluster)</td>
+    <td>Information specifying an Anthos Cluster. (id: AnthosCluster)</td>
 </tr>
 <tr>
     <td><CopyableCode code="associatedEntities" /></td>
@@ -207,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gke" /></td>
     <td><code>object</code></td>
-    <td>Optional. Information specifying a GKE Cluster. (id: GkeCluster)</td>
+    <td>Information specifying a GKE Cluster. (id: GkeCluster)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -275,14 +275,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Targets in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-targetId"><code>targetId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-targetId"><code>targetId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new Target in a given project and location.</td>
 </tr>
 <tr>
@@ -296,7 +296,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-targetsId"><code>targetsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single Target.</td>
 </tr>
 </tbody>
@@ -451,9 +451,9 @@ FROM google.clouddeploy.targets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -475,46 +475,46 @@ Creates a new Target in a given project and location.
 
 ```sql
 INSERT INTO google.clouddeploy.targets (
-data__gke,
-data__anthosCluster,
-data__name,
-data__deployParameters,
-data__labels,
-data__associatedEntities,
-data__description,
-data__run,
-data__multiTarget,
-data__customTarget,
-data__executionConfigs,
 data__annotations,
+data__anthosCluster,
+data__associatedEntities,
+data__customTarget,
+data__deployParameters,
+data__description,
 data__etag,
+data__executionConfigs,
+data__gke,
+data__labels,
+data__multiTarget,
+data__name,
 data__requireApproval,
+data__run,
 projectsId,
 locationsId,
 requestId,
-validateOnly,
-targetId
+targetId,
+validateOnly
 )
 SELECT 
-'{{ gke }}',
-'{{ anthosCluster }}',
-'{{ name }}',
-'{{ deployParameters }}',
-'{{ labels }}',
-'{{ associatedEntities }}',
-'{{ description }}',
-'{{ run }}',
-'{{ multiTarget }}',
-'{{ customTarget }}',
-'{{ executionConfigs }}',
 '{{ annotations }}',
+'{{ anthosCluster }}',
+'{{ associatedEntities }}',
+'{{ customTarget }}',
+'{{ deployParameters }}',
+'{{ description }}',
 '{{ etag }}',
+'{{ executionConfigs }}',
+'{{ gke }}',
+'{{ labels }}',
+'{{ multiTarget }}',
+'{{ name }}',
 {{ requireApproval }},
+'{{ run }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}',
-'{{ validateOnly }}',
-'{{ targetId }}'
+'{{ targetId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -535,90 +535,90 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the targets resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
+    - name: anthosCluster
+      description: |
+        Information specifying an Anthos Cluster.
+      value:
+        membership: "{{ membership }}"
+    - name: associatedEntities
+      value: "{{ associatedEntities }}"
+      description: |
+        Optional. Map of entity IDs to their associated entities. Associated entities allows specifying places other than the deployment target for specific features. For example, the Gateway API canary can be configured to deploy the HTTPRoute to a different cluster(s) than the deployment cluster using associated entities. An entity ID must consist of lower-case letters, numbers, and hyphens, start with a letter and end with a letter or a number, and have a max length of 63 characters. In other words, it must match the following regex: \`^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$\`.
+    - name: customTarget
+      description: |
+        Optional. Information specifying a Custom Target.
+      value:
+        customTargetType: "{{ customTargetType }}"
+    - name: deployParameters
+      value: "{{ deployParameters }}"
+      description: |
+        Optional. The deploy parameters to use for this target.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the \`Target\`. Max length is 255 characters.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: executionConfigs
+      description: |
+        Optional. Configurations for all execution that relates to this \`Target\`. Each \`ExecutionEnvironmentUsage\` value may only be used in a single configuration; using the same value multiple times is an error. When one or more configurations are specified, they must include the \`RENDER\` and \`DEPLOY\` \`ExecutionEnvironmentUsage\` values. When no configurations are specified, execution will use the default specified in \`DefaultPool\`.
+      value:
+        - artifactStorage: "{{ artifactStorage }}"
+          defaultPool:
+            artifactStorage: "{{ artifactStorage }}"
+            serviceAccount: "{{ serviceAccount }}"
+          executionTimeout: "{{ executionTimeout }}"
+          privatePool:
+            artifactStorage: "{{ artifactStorage }}"
+            serviceAccount: "{{ serviceAccount }}"
+            workerPool: "{{ workerPool }}"
+          serviceAccount: "{{ serviceAccount }}"
+          usages: "{{ usages }}"
+          verbose: {{ verbose }}
+          workerPool: "{{ workerPool }}"
     - name: gke
       description: |
-        Optional. Information specifying a GKE Cluster.
+        Information specifying a GKE Cluster.
       value:
         cluster: "{{ cluster }}"
         dnsEndpoint: {{ dnsEndpoint }}
         internalIp: {{ internalIp }}
         proxyUrl: "{{ proxyUrl }}"
-    - name: anthosCluster
-      description: |
-        Optional. Information specifying an Anthos Cluster.
-      value:
-        membership: "{{ membership }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the \`Target\`. Format is \`projects/{project}/locations/{location}/targets/{target}\`. The \`target\` component must match \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`
-    - name: deployParameters
-      value: "{{ deployParameters }}"
-      description: |
-        Optional. The deploy parameters to use for this target.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
-    - name: associatedEntities
-      value: "{{ associatedEntities }}"
-      description: |
-        Optional. Map of entity IDs to their associated entities. Associated entities allows specifying places other than the deployment target for specific features. For example, the Gateway API canary can be configured to deploy the HTTPRoute to a different cluster(s) than the deployment cluster using associated entities. An entity ID must consist of lower-case letters, numbers, and hyphens, start with a letter and end with a letter or a number, and have a max length of 63 characters. In other words, it must match the following regex: \`^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$\`.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the \`Target\`. Max length is 255 characters.
-    - name: run
-      description: |
-        Optional. Information specifying a Cloud Run deployment target.
-      value:
-        location: "{{ location }}"
     - name: multiTarget
       description: |
         Optional. Information specifying a multiTarget.
       value:
         targetIds:
           - "{{ targetIds }}"
-    - name: customTarget
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. Information specifying a Custom Target.
-      value:
-        customTargetType: "{{ customTargetType }}"
-    - name: executionConfigs
-      description: |
-        Optional. Configurations for all execution that relates to this \`Target\`. Each \`ExecutionEnvironmentUsage\` value may only be used in a single configuration; using the same value multiple times is an error. When one or more configurations are specified, they must include the \`RENDER\` and \`DEPLOY\` \`ExecutionEnvironmentUsage\` values. When no configurations are specified, execution will use the default specified in \`DefaultPool\`.
-      value:
-        - usages: "{{ usages }}"
-          serviceAccount: "{{ serviceAccount }}"
-          defaultPool:
-            artifactStorage: "{{ artifactStorage }}"
-            serviceAccount: "{{ serviceAccount }}"
-          workerPool: "{{ workerPool }}"
-          privatePool:
-            workerPool: "{{ workerPool }}"
-            artifactStorage: "{{ artifactStorage }}"
-            serviceAccount: "{{ serviceAccount }}"
-          artifactStorage: "{{ artifactStorage }}"
-          executionTimeout: "{{ executionTimeout }}"
-          verbose: {{ verbose }}
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+        Identifier. Name of the \`Target\`. Format is \`projects/{project}/locations/{location}/targets/{target}\`. The \`target\` component must match \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`
     - name: requireApproval
       value: {{ requireApproval }}
       description: |
         Optional. Whether or not the \`Target\` requires approval.
+    - name: run
+      description: |
+        Optional. Information specifying a Cloud Run deployment target.
+      value:
+        location: "{{ location }}"
     - name: requestId
       value: "{{ requestId }}"
-    - name: validateOnly
-      value: {{ validateOnly }}
     - name: targetId
       value: "{{ targetId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -640,20 +640,20 @@ Updates the parameters of a single Target.
 ```sql
 UPDATE google.clouddeploy.targets
 SET 
-data__gke = '{{ gke }}',
-data__anthosCluster = '{{ anthosCluster }}',
-data__name = '{{ name }}',
-data__deployParameters = '{{ deployParameters }}',
-data__labels = '{{ labels }}',
-data__associatedEntities = '{{ associatedEntities }}',
-data__description = '{{ description }}',
-data__run = '{{ run }}',
-data__multiTarget = '{{ multiTarget }}',
-data__customTarget = '{{ customTarget }}',
-data__executionConfigs = '{{ executionConfigs }}',
 data__annotations = '{{ annotations }}',
+data__anthosCluster = '{{ anthosCluster }}',
+data__associatedEntities = '{{ associatedEntities }}',
+data__customTarget = '{{ customTarget }}',
+data__deployParameters = '{{ deployParameters }}',
+data__description = '{{ description }}',
 data__etag = '{{ etag }}',
-data__requireApproval = {{ requireApproval }}
+data__executionConfigs = '{{ executionConfigs }}',
+data__gke = '{{ gke }}',
+data__labels = '{{ labels }}',
+data__multiTarget = '{{ multiTarget }}',
+data__name = '{{ name }}',
+data__requireApproval = {{ requireApproval }},
+data__run = '{{ run }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -690,9 +690,9 @@ DELETE FROM google.clouddeploy.targets
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND targetsId = '{{ targetsId }}' --required
-AND requestId = '{{ requestId }}'
 AND allowMissing = '{{ allowMissing }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 AND validateOnly = '{{ validateOnly }}'
 ;
 ```

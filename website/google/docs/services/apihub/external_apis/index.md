@@ -335,24 +335,24 @@ Create an External API resource in the API hub.
 
 ```sql
 INSERT INTO google.apihub.external_apis (
-data__displayName,
-data__name,
-data__description,
 data__attributes,
+data__description,
+data__displayName,
 data__documentation,
 data__endpoints,
+data__name,
 data__paths,
 projectsId,
 locationsId,
 externalApiId
 )
 SELECT 
-'{{ displayName }}',
-'{{ name }}',
-'{{ description }}',
 '{{ attributes }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ documentation }}',
 '{{ endpoints }}',
+'{{ name }}',
 '{{ paths }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -381,22 +381,18 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the external_apis resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Display name of the external API. Max length is 63 characters (Unicode Code Points).
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Format: \`projects/{project}/locations/{location}/externalApi/{externalApi}\`.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the external API. Max length is 2000 characters (Unicode Code Points).
     - name: attributes
       value: "{{ attributes }}"
       description: |
         Optional. The list of user defined attributes associated with the Version resource. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the external API. Max length is 2000 characters (Unicode Code Points).
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name of the external API. Max length is 63 characters (Unicode Code Points).
     - name: documentation
       description: |
         Optional. Documentation of the external API.
@@ -407,6 +403,10 @@ updateTime
         - "{{ endpoints }}"
       description: |
         Optional. List of endpoints on which this API is accessible.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Format: \`projects/{project}/locations/{location}/externalApi/{externalApi}\`.
     - name: paths
       value:
         - "{{ paths }}"
@@ -435,12 +435,12 @@ Update an External API resource in the API hub. The following fields can be upda
 ```sql
 UPDATE google.apihub.external_apis
 SET 
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__attributes = '{{ attributes }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__documentation = '{{ documentation }}',
 data__endpoints = '{{ endpoints }}',
+data__name = '{{ name }}',
 data__paths = '{{ paths }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

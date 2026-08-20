@@ -447,21 +447,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workerPoolsId"><code>workerPoolsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
     <td>Gets information about a Revision.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workerPoolsId"><code>workerPoolsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists Revisions from a given Service, or from a given location. Results are sorted by creation time, descending.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workerPoolsId"><code>workerPoolsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a Revision.</td>
 </tr>
@@ -510,6 +510,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-servicesId">
     <td><CopyableCode code="servicesId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-workerPoolsId">
+    <td><CopyableCode code="workerPoolsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -595,7 +600,7 @@ vpcAccess
 FROM google.run.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND servicesId = '{{ servicesId }}' -- required
+AND workerPoolsId = '{{ workerPoolsId }}' -- required
 AND revisionsId = '{{ revisionsId }}' -- required
 ;
 ```
@@ -645,10 +650,10 @@ vpcAccess
 FROM google.run.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND servicesId = '{{ servicesId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
+AND workerPoolsId = '{{ workerPoolsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -671,7 +676,7 @@ Deletes a Revision.
 DELETE FROM google.run.revisions
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND servicesId = '{{ servicesId }}' --required
+AND workerPoolsId = '{{ workerPoolsId }}' --required
 AND revisionsId = '{{ revisionsId }}' --required
 AND etag = '{{ etag }}'
 AND validateOnly = '{{ validateOnly }}'

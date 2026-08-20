@@ -109,6 +109,51 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Format: `organizations/&#123;organization&#125;/locations/&#123;location&#125;/customers/&#123;customer&#125;/workloads/&#123;workload&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Time the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="folder" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The name of container folder of the assured workload</td>
+</tr>
+<tr>
+    <td><CopyableCode code="folderId" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Folder id this workload is associated with</td>
+</tr>
+<tr>
+    <td><CopyableCode code="isOnboarded" /></td>
+    <td><code>boolean</code></td>
+    <td>Indicates whether a workload is fully onboarded.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="keyManagementProjectId" /></td>
+    <td><code>string</code></td>
+    <td>The project id of the key management project for the workload</td>
+</tr>
+<tr>
+    <td><CopyableCode code="location" /></td>
+    <td><code>string</code></td>
+    <td>The Google Cloud location of the workload</td>
+</tr>
+<tr>
+    <td><CopyableCode code="partner" /></td>
+    <td><code>string</code></td>
+    <td>Partner associated with this workload. (PARTNER_UNSPECIFIED, PARTNER_LOCAL_CONTROLS_BY_S3NS, PARTNER_SOVEREIGN_CONTROLS_BY_T_SYSTEMS, PARTNER_SOVEREIGN_CONTROLS_BY_SIA_MINSAIT, PARTNER_SOVEREIGN_CONTROLS_BY_PSN, PARTNER_SOVEREIGN_CONTROLS_BY_CNTXT, PARTNER_SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM, PARTNER_SPAIN_DATA_BOUNDARY_BY_TELEFONICA)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workloadOnboardingState" /></td>
+    <td><code>object</code></td>
+    <td>Container for workload onboarding steps. (id: WorkloadOnboardingState)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -140,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-customersId"><code>customersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists customer workloads for a given customer org id</td>
 </tr>
 </tbody>
@@ -240,15 +285,23 @@ Lists customer workloads for a given customer org id
 
 ```sql
 SELECT
-*
+name,
+createTime,
+folder,
+folderId,
+isOnboarded,
+keyManagementProjectId,
+location,
+partner,
+workloadOnboardingState
 FROM google.cloudcontrolspartner.workloads
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND customersId = '{{ customersId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

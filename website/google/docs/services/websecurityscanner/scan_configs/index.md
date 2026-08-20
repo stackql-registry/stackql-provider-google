@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ScanConfigs under a given project.</td>
 </tr>
 <tr>
@@ -379,8 +379,8 @@ targetPlatforms,
 userAgent
 FROM google.websecurityscanner.scan_configs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -402,39 +402,39 @@ Creates a new ScanConfig.
 
 ```sql
 INSERT INTO google.websecurityscanner.scan_configs (
-data__schedule,
-data__managedScan,
-data__displayName,
-data__latestRun,
-data__riskLevel,
 data__authentication,
-data__maxQps,
-data__userAgent,
-data__targetPlatforms,
-data__staticIpScan,
-data__name,
-data__ignoreHttpStatusErrors,
-data__startingUrls,
 data__blacklistPatterns,
+data__displayName,
 data__exportToSecurityCommandCenter,
+data__ignoreHttpStatusErrors,
+data__latestRun,
+data__managedScan,
+data__maxQps,
+data__name,
+data__riskLevel,
+data__schedule,
+data__startingUrls,
+data__staticIpScan,
+data__targetPlatforms,
+data__userAgent,
 projectsId
 )
 SELECT 
-'{{ schedule }}',
-{{ managedScan }},
-'{{ displayName }}',
-'{{ latestRun }}',
-'{{ riskLevel }}',
 '{{ authentication }}',
-{{ maxQps }},
-'{{ userAgent }}',
-'{{ targetPlatforms }}',
-{{ staticIpScan }},
-'{{ name }}',
-{{ ignoreHttpStatusErrors }},
-'{{ startingUrls }}',
 '{{ blacklistPatterns }}',
+'{{ displayName }}',
 '{{ exportToSecurityCommandCenter }}',
+{{ ignoreHttpStatusErrors }},
+'{{ latestRun }}',
+{{ managedScan }},
+{{ maxQps }},
+'{{ name }}',
+'{{ riskLevel }}',
+'{{ schedule }}',
+'{{ startingUrls }}',
+{{ staticIpScan }},
+'{{ targetPlatforms }}',
+'{{ userAgent }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -463,101 +463,101 @@ userAgent
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the scan_configs resource.
-    - name: schedule
-      description: |
-        The schedule of the ScanConfig.
-      value:
-        scheduleTime: "{{ scheduleTime }}"
-        intervalDurationDays: {{ intervalDurationDays }}
-    - name: managedScan
-      value: {{ managedScan }}
-      description: |
-        Whether the scan config is managed by Web Security Scanner, output only.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The user provided display name of the ScanConfig.
-    - name: latestRun
-      description: |
-        A ScanRun is a output-only resource representing an actual run of the scan. Next id: 12
-      value:
-        warningTraces:
-          - code: "{{ code }}"
-        executionState: "{{ executionState }}"
-        name: "{{ name }}"
-        endTime: "{{ endTime }}"
-        progressPercent: {{ progressPercent }}
-        urlsTestedCount: "{{ urlsTestedCount }}"
-        errorTrace:
-          code: "{{ code }}"
-          scanConfigError:
-            code: "{{ code }}"
-            fieldName: "{{ fieldName }}"
-          mostCommonHttpErrorCode: {{ mostCommonHttpErrorCode }}
-        resultState: "{{ resultState }}"
-        startTime: "{{ startTime }}"
-        urlsCrawledCount: "{{ urlsCrawledCount }}"
-        hasVulnerabilities: {{ hasVulnerabilities }}
-    - name: riskLevel
-      value: "{{ riskLevel }}"
-      description: |
-        The risk level selected for the scan
-      valid_values: ['RISK_LEVEL_UNSPECIFIED', 'NORMAL', 'LOW']
     - name: authentication
       description: |
         The authentication configuration. If specified, service will use the authentication configuration during scanning.
       value:
+        customAccount:
+          loginUrl: "{{ loginUrl }}"
+          password: "{{ password }}"
+          username: "{{ username }}"
+        googleAccount:
+          password: "{{ password }}"
+          username: "{{ username }}"
         iapCredential:
           iapTestServiceAccountInfo:
             targetAudienceClientId: "{{ targetAudienceClientId }}"
-        customAccount:
-          username: "{{ username }}"
-          password: "{{ password }}"
-          loginUrl: "{{ loginUrl }}"
-        googleAccount:
-          username: "{{ username }}"
-          password: "{{ password }}"
-    - name: maxQps
-      value: {{ maxQps }}
-      description: |
-        The maximum QPS during scanning. A valid value ranges from 5 to 20 inclusively. If the field is unspecified or its value is set 0, server will default to 15. Other values outside of [5, 20] range will be rejected with INVALID_ARGUMENT error.
-    - name: userAgent
-      value: "{{ userAgent }}"
-      description: |
-        The user agent used during scanning.
-      valid_values: ['USER_AGENT_UNSPECIFIED', 'CHROME_LINUX', 'CHROME_ANDROID', 'SAFARI_IPHONE']
-    - name: targetPlatforms
-      value:
-        - "{{ targetPlatforms }}"
-      description: |
-        Set of Google Cloud platforms targeted by the scan. If empty, APP_ENGINE will be used as a default.
-    - name: staticIpScan
-      value: {{ staticIpScan }}
-      description: |
-        Whether the scan configuration has enabled static IP address scan feature. If enabled, the scanner will access applications from static IP addresses.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the ScanConfig. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are generated by the system.
-    - name: ignoreHttpStatusErrors
-      value: {{ ignoreHttpStatusErrors }}
-      description: |
-        Whether to keep scanning even if most requests return HTTP error codes.
-    - name: startingUrls
-      value:
-        - "{{ startingUrls }}"
-      description: |
-        Required. The starting URLs from which the scanner finds site pages.
     - name: blacklistPatterns
       value:
         - "{{ blacklistPatterns }}"
       description: |
         The excluded URL patterns as described in https://cloud.google.com/security-command-center/docs/how-to-use-web-security-scanner#excluding_urls
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The user provided display name of the ScanConfig.
     - name: exportToSecurityCommandCenter
       value: "{{ exportToSecurityCommandCenter }}"
       description: |
         Controls export of scan configurations and results to Security Command Center.
       valid_values: ['EXPORT_TO_SECURITY_COMMAND_CENTER_UNSPECIFIED', 'ENABLED', 'DISABLED']
+    - name: ignoreHttpStatusErrors
+      value: {{ ignoreHttpStatusErrors }}
+      description: |
+        Whether to keep scanning even if most requests return HTTP error codes.
+    - name: latestRun
+      description: |
+        A ScanRun is a output-only resource representing an actual run of the scan. Next id: 12
+      value:
+        endTime: "{{ endTime }}"
+        errorTrace:
+          code: "{{ code }}"
+          mostCommonHttpErrorCode: {{ mostCommonHttpErrorCode }}
+          scanConfigError:
+            code: "{{ code }}"
+            fieldName: "{{ fieldName }}"
+        executionState: "{{ executionState }}"
+        hasVulnerabilities: {{ hasVulnerabilities }}
+        name: "{{ name }}"
+        progressPercent: {{ progressPercent }}
+        resultState: "{{ resultState }}"
+        startTime: "{{ startTime }}"
+        urlsCrawledCount: "{{ urlsCrawledCount }}"
+        urlsTestedCount: "{{ urlsTestedCount }}"
+        warningTraces:
+          - code: "{{ code }}"
+    - name: managedScan
+      value: {{ managedScan }}
+      description: |
+        Whether the scan config is managed by Web Security Scanner, output only.
+    - name: maxQps
+      value: {{ maxQps }}
+      description: |
+        The maximum QPS during scanning. A valid value ranges from 5 to 20 inclusively. If the field is unspecified or its value is set 0, server will default to 15. Other values outside of [5, 20] range will be rejected with INVALID_ARGUMENT error.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the ScanConfig. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are generated by the system.
+    - name: riskLevel
+      value: "{{ riskLevel }}"
+      description: |
+        The risk level selected for the scan
+      valid_values: ['RISK_LEVEL_UNSPECIFIED', 'NORMAL', 'LOW']
+    - name: schedule
+      description: |
+        The schedule of the ScanConfig.
+      value:
+        intervalDurationDays: {{ intervalDurationDays }}
+        scheduleTime: "{{ scheduleTime }}"
+    - name: startingUrls
+      value:
+        - "{{ startingUrls }}"
+      description: |
+        Required. The starting URLs from which the scanner finds site pages.
+    - name: staticIpScan
+      value: {{ staticIpScan }}
+      description: |
+        Whether the scan configuration has enabled static IP address scan feature. If enabled, the scanner will access applications from static IP addresses.
+    - name: targetPlatforms
+      value:
+        - "{{ targetPlatforms }}"
+      description: |
+        Set of Google Cloud platforms targeted by the scan. If empty, APP_ENGINE will be used as a default.
+    - name: userAgent
+      value: "{{ userAgent }}"
+      description: |
+        The user agent used during scanning.
+      valid_values: ['USER_AGENT_UNSPECIFIED', 'CHROME_LINUX', 'CHROME_ANDROID', 'SAFARI_IPHONE']
 `}</CodeBlock>
 
 </TabItem>
@@ -579,21 +579,21 @@ Updates a ScanConfig. This method support partial update of a ScanConfig.
 ```sql
 UPDATE google.websecurityscanner.scan_configs
 SET 
-data__schedule = '{{ schedule }}',
-data__managedScan = {{ managedScan }},
-data__displayName = '{{ displayName }}',
-data__latestRun = '{{ latestRun }}',
-data__riskLevel = '{{ riskLevel }}',
 data__authentication = '{{ authentication }}',
-data__maxQps = {{ maxQps }},
-data__userAgent = '{{ userAgent }}',
-data__targetPlatforms = '{{ targetPlatforms }}',
-data__staticIpScan = {{ staticIpScan }},
-data__name = '{{ name }}',
-data__ignoreHttpStatusErrors = {{ ignoreHttpStatusErrors }},
-data__startingUrls = '{{ startingUrls }}',
 data__blacklistPatterns = '{{ blacklistPatterns }}',
-data__exportToSecurityCommandCenter = '{{ exportToSecurityCommandCenter }}'
+data__displayName = '{{ displayName }}',
+data__exportToSecurityCommandCenter = '{{ exportToSecurityCommandCenter }}',
+data__ignoreHttpStatusErrors = {{ ignoreHttpStatusErrors }},
+data__latestRun = '{{ latestRun }}',
+data__managedScan = {{ managedScan }},
+data__maxQps = {{ maxQps }},
+data__name = '{{ name }}',
+data__riskLevel = '{{ riskLevel }}',
+data__schedule = '{{ schedule }}',
+data__startingUrls = '{{ startingUrls }}',
+data__staticIpScan = {{ staticIpScan }},
+data__targetPlatforms = '{{ targetPlatforms }}',
+data__userAgent = '{{ userAgent }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND scanConfigsId = '{{ scanConfigsId }}' --required

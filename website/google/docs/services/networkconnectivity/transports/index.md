@@ -255,21 +255,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Transports in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-transportId"><code>transportId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-transportId"><code>transportId</code></a></td>
     <td>Creates a new Transport in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transportsId"><code>transportsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Transport.</td>
 </tr>
 <tr>
@@ -412,9 +412,9 @@ FROM google.networkconnectivity.transports
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -436,36 +436,36 @@ Creates a new Transport in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.transports (
-data__labels,
 data__advertisedRoutes,
 data__bandwidth,
-data__remoteAccountId,
 data__description,
-data__remoteProfile,
-data__providedActivationKey,
-data__stackType,
+data__labels,
 data__name,
 data__network,
+data__providedActivationKey,
+data__remoteAccountId,
+data__remoteProfile,
+data__stackType,
 projectsId,
 locationsId,
-transportId,
-requestId
+requestId,
+transportId
 )
 SELECT 
-'{{ labels }}',
 '{{ advertisedRoutes }}',
 '{{ bandwidth }}',
-'{{ remoteAccountId }}',
 '{{ description }}',
-'{{ remoteProfile }}',
-'{{ providedActivationKey }}',
-'{{ stackType }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ network }}',
+'{{ providedActivationKey }}',
+'{{ remoteAccountId }}',
+'{{ remoteProfile }}',
+'{{ stackType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ transportId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ transportId }}'
 RETURNING
 name,
 done,
@@ -486,10 +486,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the transports resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels as key value pairs.
     - name: advertisedRoutes
       value:
         - "{{ advertisedRoutes }}"
@@ -500,27 +496,14 @@ response
       description: |
         Optional. Bandwidth of the Transport. This must be one of the supported bandwidths for the remote profile, and must be set when no activation key is being provided.
       valid_values: ['BANDWIDTH_UNSPECIFIED', 'BPS_50M', 'BPS_100M', 'BPS_200M', 'BPS_300M', 'BPS_400M', 'BPS_500M', 'BPS_1G', 'BPS_2G', 'BPS_5G', 'BPS_10G', 'BPS_20G', 'BPS_50G', 'BPS_100G']
-    - name: remoteAccountId
-      value: "{{ remoteAccountId }}"
-      description: |
-        Optional. Immutable. The user supplied account id for the CSP associated with the remote profile.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. Description of the Transport.
-    - name: remoteProfile
-      value: "{{ remoteProfile }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Optional. Immutable. Name of the remoteTransportProfile that this Transport is connecting to.
-    - name: providedActivationKey
-      value: "{{ providedActivationKey }}"
-      description: |
-        Optional. Immutable. Key used for establishing a connection with the remote transport. This key can only be provided if the profile supports an INPUT key flow and the resource is in the PENDING_KEY state.
-    - name: stackType
-      value: "{{ stackType }}"
-      description: |
-        Optional. IP version stack for the established connectivity.
-      valid_values: ['STACK_TYPE_UNSPECIFIED', 'IPV4_ONLY', 'IPV4_IPV6']
+        Optional. Labels as key value pairs.
     - name: name
       value: "{{ name }}"
       description: |
@@ -529,10 +512,27 @@ response
       value: "{{ network }}"
       description: |
         Optional. Immutable. Resource URI of the Network that will be peered with this Transport. This field must be provided during resource creation and cannot be changed.
-    - name: transportId
-      value: "{{ transportId }}"
+    - name: providedActivationKey
+      value: "{{ providedActivationKey }}"
+      description: |
+        Optional. Immutable. Key used for establishing a connection with the remote transport. This key can only be provided if the profile supports an INPUT key flow and the resource is in the PENDING_KEY state.
+    - name: remoteAccountId
+      value: "{{ remoteAccountId }}"
+      description: |
+        Optional. Immutable. The user supplied account id for the CSP associated with the remote profile.
+    - name: remoteProfile
+      value: "{{ remoteProfile }}"
+      description: |
+        Optional. Immutable. Name of the remoteTransportProfile that this Transport is connecting to.
+    - name: stackType
+      value: "{{ stackType }}"
+      description: |
+        Optional. IP version stack for the established connectivity.
+      valid_values: ['STACK_TYPE_UNSPECIFIED', 'IPV4_ONLY', 'IPV4_IPV6']
     - name: requestId
       value: "{{ requestId }}"
+    - name: transportId
+      value: "{{ transportId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -554,22 +554,22 @@ Updates the parameters of a single Transport.
 ```sql
 UPDATE google.networkconnectivity.transports
 SET 
-data__labels = '{{ labels }}',
 data__advertisedRoutes = '{{ advertisedRoutes }}',
 data__bandwidth = '{{ bandwidth }}',
-data__remoteAccountId = '{{ remoteAccountId }}',
 data__description = '{{ description }}',
-data__remoteProfile = '{{ remoteProfile }}',
-data__providedActivationKey = '{{ providedActivationKey }}',
-data__stackType = '{{ stackType }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__network = '{{ network }}'
+data__network = '{{ network }}',
+data__providedActivationKey = '{{ providedActivationKey }}',
+data__remoteAccountId = '{{ remoteAccountId }}',
+data__remoteProfile = '{{ remoteProfile }}',
+data__stackType = '{{ stackType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND transportsId = '{{ transportsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

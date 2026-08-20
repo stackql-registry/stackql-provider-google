@@ -112,8 +112,8 @@ Updates an existing API proxy revision by uploading the API proxy configuration 
 UPDATE google.apigee.revisions_api_proxy_revision
 SET 
 data__contentType = '{{ contentType }}',
-data__extensions = '{{ extensions }}',
-data__data = '{{ data }}'
+data__data = '{{ data }}',
+data__extensions = '{{ extensions }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apisId = '{{ apisId }}' --required

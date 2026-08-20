@@ -112,8 +112,8 @@ Updates a shared flow revision. This operation is only allowed on revisions whic
 UPDATE google.apigee.revisions_shared_flow_revision
 SET 
 data__contentType = '{{ contentType }}',
-data__extensions = '{{ extensions }}',
-data__data = '{{ data }}'
+data__data = '{{ data }}',
+data__extensions = '{{ extensions }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sharedflowsId = '{{ sharedflowsId }}' --required

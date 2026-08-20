@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Applications in a host project and location.</td>
 </tr>
 <tr>
@@ -199,7 +199,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an Application in a host project and location.</td>
 </tr>
 <tr>
@@ -327,10 +327,10 @@ updateTime
 FROM google.apphub.applications
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -353,10 +353,10 @@ Creates an Application in a host project and location.
 ```sql
 INSERT INTO google.apphub.applications (
 data__attributes,
-data__displayName,
-data__scope,
-data__name,
 data__description,
+data__displayName,
+data__name,
+data__scope,
 projectsId,
 locationsId,
 applicationId,
@@ -364,10 +364,10 @@ requestId
 )
 SELECT 
 '{{ attributes }}',
-'{{ displayName }}',
-'{{ scope }}',
-'{{ name }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
+'{{ scope }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ applicationId }}',
@@ -396,36 +396,36 @@ response
       description: |
         Optional. Consumer provided attributes.
       value:
-        environment:
-          type: "{{ type }}"
-        developerOwners:
-          - email: "{{ email }}"
-            displayName: "{{ displayName }}"
+        businessOwners:
+          - displayName: "{{ displayName }}"
+            email: "{{ email }}"
         criticality:
           type: "{{ type }}"
-        businessOwners:
-          - email: "{{ email }}"
-            displayName: "{{ displayName }}"
+        developerOwners:
+          - displayName: "{{ displayName }}"
+            email: "{{ email }}"
+        environment:
+          type: "{{ type }}"
         operatorOwners:
-          - email: "{{ email }}"
-            displayName: "{{ displayName }}"
+          - displayName: "{{ displayName }}"
+            email: "{{ email }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User-defined description of an Application. Can have a maximum length of 2048 characters.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. User-defined name for the Application. Can have a maximum length of 63 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of an Application. Format: \`"projects/{host-project-id}/locations/{location}/applications/{application-id}"\`
     - name: scope
       description: |
         Required. Immutable. Defines what data can be included into this Application. Limits which Services and Workloads can be registered.
       value:
         type: "{{ type }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of an Application. Format: \`"projects/{host-project-id}/locations/{location}/applications/{application-id}"\`
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. User-defined description of an Application. Can have a maximum length of 2048 characters.
     - name: applicationId
       value: "{{ applicationId }}"
     - name: requestId
@@ -452,16 +452,16 @@ Updates an Application in a host project and location.
 UPDATE google.apphub.applications
 SET 
 data__attributes = '{{ attributes }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__scope = '{{ scope }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__scope = '{{ scope }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND applicationsId = '{{ applicationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

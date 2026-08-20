@@ -335,7 +335,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Instances in a given location.</td>
 </tr>
 <tr>
@@ -360,11 +360,11 @@ The following methods are available for this resource:
     <td>Deletes a single Instance.</td>
 </tr>
 <tr>
-    <td><a href="#set_tags"><CopyableCode code="set_tags" /></a></td>
+    <td><a href="#apply_parameters"><CopyableCode code="apply_parameters" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
-    <td>Updates tags directly bound to a GCP resource.</td>
+    <td>`ApplyParameters` restarts the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.</td>
 </tr>
 <tr>
     <td><a href="#reschedule_maintenance"><CopyableCode code="reschedule_maintenance" /></a></td>
@@ -374,18 +374,18 @@ The following methods are available for this resource:
     <td>Reschedules upcoming maintenance event.</td>
 </tr>
 <tr>
+    <td><a href="#set_tags"><CopyableCode code="set_tags" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Updates tags directly bound to a GCP resource.</td>
+</tr>
+<tr>
     <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Upgrades the Memcache instance to a newer memcached engine version specified in the request.</td>
-</tr>
-<tr>
-    <td><a href="#apply_parameters"><CopyableCode code="apply_parameters" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>`ApplyParameters` restarts the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.</td>
 </tr>
 </tbody>
 </table>
@@ -531,8 +531,8 @@ FROM google.memcache.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -555,37 +555,37 @@ Creates a new Instance in a given location.
 
 ```sql
 INSERT INTO google.memcache.instances (
-data__memcacheVersion,
-data__maintenanceVersion,
-data__reservedIpRangeId,
-data__displayName,
-data__nodeCount,
-data__instanceMessages,
-data__parameters,
-data__labels,
-data__nodeConfig,
-data__name,
-data__zones,
-data__maintenancePolicy,
 data__authorizedNetwork,
+data__displayName,
+data__instanceMessages,
+data__labels,
+data__maintenancePolicy,
+data__maintenanceVersion,
+data__memcacheVersion,
+data__name,
+data__nodeConfig,
+data__nodeCount,
+data__parameters,
+data__reservedIpRangeId,
+data__zones,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-'{{ memcacheVersion }}',
-'{{ maintenanceVersion }}',
-'{{ reservedIpRangeId }}',
-'{{ displayName }}',
-{{ nodeCount }},
-'{{ instanceMessages }}',
-'{{ parameters }}',
-'{{ labels }}',
-'{{ nodeConfig }}',
-'{{ name }}',
-'{{ zones }}',
-'{{ maintenancePolicy }}',
 '{{ authorizedNetwork }}',
+'{{ displayName }}',
+'{{ instanceMessages }}',
+'{{ labels }}',
+'{{ maintenancePolicy }}',
+'{{ maintenanceVersion }}',
+'{{ memcacheVersion }}',
+'{{ name }}',
+'{{ nodeConfig }}',
+{{ nodeCount }},
+'{{ parameters }}',
+'{{ reservedIpRangeId }}',
+'{{ zones }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -609,78 +609,78 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: memcacheVersion
-      value: "{{ memcacheVersion }}"
+    - name: authorizedNetwork
+      value: "{{ authorizedNetwork }}"
       description: |
-        The major version of Memcached software. If not provided, latest supported version will be used. Currently the latest supported major version is \`MEMCACHE_1_5\`. The minor version will be automatically determined by our system based on the latest supported minor version.
-      valid_values: ['MEMCACHE_VERSION_UNSPECIFIED', 'MEMCACHE_1_5', 'MEMCACHE_1_6_15']
-    - name: maintenanceVersion
-      value: "{{ maintenanceVersion }}"
-      description: |
-        Optional. Last self service update maintenance version triggered by the customer. If it is empty, it means that the maintenance version is not set by the user.
-    - name: reservedIpRangeId
-      value:
-        - "{{ reservedIpRangeId }}"
-      description: |
-        Optional. Contains the id of allocated IP address ranges associated with the private service access connection for example, "test-default" associated with IP range 10.0.0.0/29.
+        The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the instance is connected. If left unspecified, the \`default\` network will be used.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         User provided name for the instance, which is only used for display purposes. Cannot be more than 80 characters.
-    - name: nodeCount
-      value: {{ nodeCount }}
-      description: |
-        Required. Number of nodes in the Memcached instance.
     - name: instanceMessages
       description: |
         List of messages that describe the current state of the Memcached instance.
       value:
         - code: "{{ code }}"
           message: "{{ message }}"
-    - name: parameters
-      description: |
-        User defined parameters to apply to the memcached process on each node.
-      value:
-        id: "{{ id }}"
-        params: "{{ params }}"
     - name: labels
       value: "{{ labels }}"
       description: |
         Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
+    - name: maintenancePolicy
+      description: |
+        The maintenance policy for the instance. If not provided, the maintenance event will be performed based on Memorystore internal rollout schedule.
+      value:
+        createTime: "{{ createTime }}"
+        description: "{{ description }}"
+        updateTime: "{{ updateTime }}"
+        weeklyMaintenanceWindow:
+          - day: "{{ day }}"
+            duration: "{{ duration }}"
+            startTime:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+    - name: maintenanceVersion
+      value: "{{ maintenanceVersion }}"
+      description: |
+        Optional. Last self service update maintenance version triggered by the customer. If it is empty, it means that the maintenance version is not set by the user.
+    - name: memcacheVersion
+      value: "{{ memcacheVersion }}"
+      description: |
+        The major version of Memcached software. If not provided, latest supported version will be used. Currently the latest supported major version is \`MEMCACHE_1_5\`. The minor version will be automatically determined by our system based on the latest supported minor version.
+      valid_values: ['MEMCACHE_VERSION_UNSPECIFIED', 'MEMCACHE_1_5', 'MEMCACHE_1_6_15']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Unique name of the resource in this scope including project and location using the form: \`projects/{project_id}/locations/{location_id}/instances/{instance_id}\` Note: Memcached instances are managed and addressed at the regional level so \`location_id\` here refers to a Google Cloud region; however, users may choose which zones Memcached nodes should be provisioned in within an instance. Refer to zones field for more details.
     - name: nodeConfig
       description: |
         Required. Configuration for Memcached nodes.
       value:
         cpuCount: {{ cpuCount }}
         memorySizeMb: {{ memorySizeMb }}
-    - name: name
-      value: "{{ name }}"
+    - name: nodeCount
+      value: {{ nodeCount }}
       description: |
-        Required. Unique name of the resource in this scope including project and location using the form: \`projects/{project_id}/locations/{location_id}/instances/{instance_id}\` Note: Memcached instances are managed and addressed at the regional level so \`location_id\` here refers to a Google Cloud region; however, users may choose which zones Memcached nodes should be provisioned in within an instance. Refer to zones field for more details.
+        Required. Number of nodes in the Memcached instance.
+    - name: parameters
+      description: |
+        User defined parameters to apply to the memcached process on each node.
+      value:
+        id: "{{ id }}"
+        params: "{{ params }}"
+    - name: reservedIpRangeId
+      value:
+        - "{{ reservedIpRangeId }}"
+      description: |
+        Optional. Contains the id of allocated IP address ranges associated with the private service access connection for example, "test-default" associated with IP range 10.0.0.0/29.
     - name: zones
       value:
         - "{{ zones }}"
       description: |
         Zones in which Memcached nodes should be provisioned. Memcached nodes will be equally distributed across these zones. If not provided, the service will by default create nodes in all zones in the region for the instance.
-    - name: maintenancePolicy
-      description: |
-        The maintenance policy for the instance. If not provided, the maintenance event will be performed based on Memorystore internal rollout schedule.
-      value:
-        createTime: "{{ createTime }}"
-        updateTime: "{{ updateTime }}"
-        weeklyMaintenanceWindow:
-          - startTime:
-              seconds: {{ seconds }}
-              hours: {{ hours }}
-              nanos: {{ nanos }}
-              minutes: {{ minutes }}
-            duration: "{{ duration }}"
-            day: "{{ day }}"
-        description: "{{ description }}"
-    - name: authorizedNetwork
-      value: "{{ authorizedNetwork }}"
-      description: |
-        The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the instance is connected. If left unspecified, the \`default\` network will be used.
     - name: instanceId
       value: "{{ instanceId }}"
 `}</CodeBlock>
@@ -704,19 +704,19 @@ Updates an existing Instance in a given project and location.
 ```sql
 UPDATE google.memcache.instances
 SET 
-data__memcacheVersion = '{{ memcacheVersion }}',
-data__maintenanceVersion = '{{ maintenanceVersion }}',
-data__reservedIpRangeId = '{{ reservedIpRangeId }}',
+data__authorizedNetwork = '{{ authorizedNetwork }}',
 data__displayName = '{{ displayName }}',
-data__nodeCount = {{ nodeCount }},
 data__instanceMessages = '{{ instanceMessages }}',
-data__parameters = '{{ parameters }}',
 data__labels = '{{ labels }}',
-data__nodeConfig = '{{ nodeConfig }}',
-data__name = '{{ name }}',
-data__zones = '{{ zones }}',
 data__maintenancePolicy = '{{ maintenancePolicy }}',
-data__authorizedNetwork = '{{ authorizedNetwork }}'
+data__maintenanceVersion = '{{ maintenanceVersion }}',
+data__memcacheVersion = '{{ memcacheVersion }}',
+data__name = '{{ name }}',
+data__nodeConfig = '{{ nodeConfig }}',
+data__nodeCount = {{ nodeCount }},
+data__parameters = '{{ parameters }}',
+data__reservedIpRangeId = '{{ reservedIpRangeId }}',
+data__zones = '{{ zones }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -759,29 +759,27 @@ AND instancesId = '{{ instancesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_tags"
+    defaultValue="apply_parameters"
     values={[
-        { label: 'set_tags', value: 'set_tags' },
+        { label: 'apply_parameters', value: 'apply_parameters' },
         { label: 'reschedule_maintenance', value: 'reschedule_maintenance' },
-        { label: 'upgrade', value: 'upgrade' },
-        { label: 'apply_parameters', value: 'apply_parameters' }
+        { label: 'set_tags', value: 'set_tags' },
+        { label: 'upgrade', value: 'upgrade' }
     ]}
 >
-<TabItem value="set_tags">
+<TabItem value="apply_parameters">
 
-Updates tags directly bound to a GCP resource.
+`ApplyParameters` restarts the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.
 
 ```sql
-EXEC google.memcache.instances.set_tags 
+EXEC google.memcache.instances.apply_parameters 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @instancesId='{{ instancesId }}' --required 
 @@json=
 '{
-"name": "{{ name }}", 
-"etag": "{{ etag }}", 
-"tags": "{{ tags }}", 
-"requestId": "{{ requestId }}"
+"applyAll": {{ applyAll }}, 
+"nodeIds": "{{ nodeIds }}"
 }'
 ;
 ```
@@ -803,6 +801,25 @@ EXEC google.memcache.instances.reschedule_maintenance
 ;
 ```
 </TabItem>
+<TabItem value="set_tags">
+
+Updates tags directly bound to a GCP resource.
+
+```sql
+EXEC google.memcache.instances.set_tags 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"etag": "{{ etag }}", 
+"name": "{{ name }}", 
+"requestId": "{{ requestId }}", 
+"tags": "{{ tags }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="upgrade">
 
 Upgrades the Memcache instance to a newer memcached engine version specified in the request.
@@ -815,23 +832,6 @@ EXEC google.memcache.instances.upgrade
 @@json=
 '{
 "memcacheVersion": "{{ memcacheVersion }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="apply_parameters">
-
-`ApplyParameters` restarts the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.
-
-```sql
-EXEC google.memcache.instances.apply_parameters 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"nodeIds": "{{ nodeIds }}", 
-"applyAll": {{ applyAll }}
 }'
 ;
 ```

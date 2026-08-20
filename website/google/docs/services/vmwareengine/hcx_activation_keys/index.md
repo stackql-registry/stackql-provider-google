@@ -145,14 +145,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists `HcxActivationKey` resources in a given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-hcxActivationKeyId"><code>hcxActivationKeyId</code></a></td>
+    <td><a href="#parameter-hcxActivationKeyId"><code>hcxActivationKeyId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new HCX activation key in a given private cloud.</td>
 </tr>
 </tbody>
@@ -257,8 +257,8 @@ FROM google.vmwareengine.hcx_activation_keys
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -283,15 +283,15 @@ INSERT INTO google.vmwareengine.hcx_activation_keys (
 projectsId,
 locationsId,
 privateCloudsId,
-requestId,
-hcxActivationKeyId
+hcxActivationKeyId,
+requestId
 )
 SELECT 
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
-'{{ requestId }}',
-'{{ hcxActivationKeyId }}'
+'{{ hcxActivationKeyId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -315,10 +315,10 @@ response
     - name: privateCloudsId
       value: "{{ privateCloudsId }}"
       description: Required parameter for the hcx_activation_keys resource.
-    - name: requestId
-      value: "{{ requestId }}"
     - name: hcxActivationKeyId
       value: "{{ hcxActivationKeyId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>

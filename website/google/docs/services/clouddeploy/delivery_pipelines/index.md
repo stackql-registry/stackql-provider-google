@@ -205,28 +205,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DeliveryPipelines in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-deliveryPipelineId"><code>deliveryPipelineId</code></a></td>
+    <td><a href="#parameter-deliveryPipelineId"><code>deliveryPipelineId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new DeliveryPipeline in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single DeliveryPipeline.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single DeliveryPipeline.</td>
 </tr>
 <tr>
@@ -379,9 +379,9 @@ FROM google.clouddeploy.delivery_pipelines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -403,32 +403,32 @@ Creates a new DeliveryPipeline in a given project and location.
 
 ```sql
 INSERT INTO google.clouddeploy.delivery_pipelines (
-data__suspended,
+data__annotations,
 data__description,
 data__etag,
-data__annotations,
-data__serialPipeline,
 data__labels,
 data__name,
+data__serialPipeline,
+data__suspended,
 projectsId,
 locationsId,
+deliveryPipelineId,
 requestId,
-validateOnly,
-deliveryPipelineId
+validateOnly
 )
 SELECT 
-{{ suspended }},
+'{{ annotations }}',
 '{{ description }}',
 '{{ etag }}',
-'{{ annotations }}',
-'{{ serialPipeline }}',
 '{{ labels }}',
 '{{ name }}',
+'{{ serialPipeline }}',
+{{ suspended }},
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ deliveryPipelineId }}',
 '{{ requestId }}',
-'{{ validateOnly }}',
-'{{ deliveryPipelineId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -449,10 +449,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the delivery_pipelines resource.
-    - name: suspended
-      value: {{ suspended }}
+    - name: annotations
+      value: "{{ annotations }}"
       description: |
-        Optional. When suspended, no new releases or rollouts can be created, but in-progress ones will complete.
+        Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy.
     - name: description
       value: "{{ description }}"
       description: |
@@ -461,46 +461,6 @@ response
       value: "{{ etag }}"
       description: |
         This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy.
-    - name: serialPipeline
-      description: |
-        Optional. SerialPipeline defines a sequential set of stages for a \`DeliveryPipeline\`.
-      value:
-        stages:
-          - strategy:
-              standard:
-                verify: {{ verify }}
-                predeploy:
-                  actions: "{{ actions }}"
-                  tasks: "{{ tasks }}"
-                analysis:
-                  googleCloud: "{{ googleCloud }}"
-                  customChecks: "{{ customChecks }}"
-                  duration: "{{ duration }}"
-                postdeploy:
-                  actions: "{{ actions }}"
-                  tasks: "{{ tasks }}"
-                verifyConfig:
-                  tasks: "{{ tasks }}"
-              canary:
-                runtimeConfig:
-                  kubernetes: "{{ kubernetes }}"
-                  cloudRun: "{{ cloudRun }}"
-                canaryDeployment:
-                  analysis: "{{ analysis }}"
-                  predeploy: "{{ predeploy }}"
-                  verify: {{ verify }}
-                  verifyConfig: "{{ verifyConfig }}"
-                  percentages: "{{ percentages }}"
-                  postdeploy: "{{ postdeploy }}"
-                customCanaryDeployment:
-                  phaseConfigs: "{{ phaseConfigs }}"
-            profiles: "{{ profiles }}"
-            targetId: "{{ targetId }}"
-            deployParameters: "{{ deployParameters }}"
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -509,12 +469,52 @@ response
       value: "{{ name }}"
       description: |
         Identifier. Name of the \`DeliveryPipeline\`. Format is \`projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}\`. The \`deliveryPipeline\` component must match \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`
+    - name: serialPipeline
+      description: |
+        Optional. SerialPipeline defines a sequential set of stages for a \`DeliveryPipeline\`.
+      value:
+        stages:
+          - deployParameters: "{{ deployParameters }}"
+            profiles: "{{ profiles }}"
+            strategy:
+              canary:
+                canaryDeployment:
+                  analysis: "{{ analysis }}"
+                  percentages: "{{ percentages }}"
+                  postdeploy: "{{ postdeploy }}"
+                  predeploy: "{{ predeploy }}"
+                  verify: {{ verify }}
+                  verifyConfig: "{{ verifyConfig }}"
+                customCanaryDeployment:
+                  phaseConfigs: "{{ phaseConfigs }}"
+                runtimeConfig:
+                  cloudRun: "{{ cloudRun }}"
+                  kubernetes: "{{ kubernetes }}"
+              standard:
+                analysis:
+                  customChecks: "{{ customChecks }}"
+                  duration: "{{ duration }}"
+                  googleCloud: "{{ googleCloud }}"
+                postdeploy:
+                  actions: "{{ actions }}"
+                  tasks: "{{ tasks }}"
+                predeploy:
+                  actions: "{{ actions }}"
+                  tasks: "{{ tasks }}"
+                verify: {{ verify }}
+                verifyConfig:
+                  tasks: "{{ tasks }}"
+            targetId: "{{ targetId }}"
+    - name: suspended
+      value: {{ suspended }}
+      description: |
+        Optional. When suspended, no new releases or rollouts can be created, but in-progress ones will complete.
+    - name: deliveryPipelineId
+      value: "{{ deliveryPipelineId }}"
     - name: requestId
       value: "{{ requestId }}"
     - name: validateOnly
       value: {{ validateOnly }}
-    - name: deliveryPipelineId
-      value: "{{ deliveryPipelineId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -536,21 +536,21 @@ Updates the parameters of a single DeliveryPipeline.
 ```sql
 UPDATE google.clouddeploy.delivery_pipelines
 SET 
-data__suspended = {{ suspended }},
+data__annotations = '{{ annotations }}',
 data__description = '{{ description }}',
 data__etag = '{{ etag }}',
-data__annotations = '{{ annotations }}',
-data__serialPipeline = '{{ serialPipeline }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__serialPipeline = '{{ serialPipeline }}',
+data__suspended = {{ suspended }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' --required
+AND allowMissing = {{ allowMissing}}
+AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
-AND requestId = '{{ requestId}}'
-AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 done,
@@ -579,10 +579,10 @@ DELETE FROM google.clouddeploy.delivery_pipelines
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' --required
-AND requestId = '{{ requestId }}'
-AND force = '{{ force }}'
 AND allowMissing = '{{ allowMissing }}'
 AND etag = '{{ etag }}'
+AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 AND validateOnly = '{{ validateOnly }}'
 ;
 ```
@@ -609,13 +609,13 @@ EXEC google.clouddeploy.delivery_pipelines.rollback_target
 @deliveryPipelinesId='{{ deliveryPipelinesId }}' --required 
 @@json=
 '{
-"rolloutToRollBack": "{{ rolloutToRollBack }}", 
+"overrideDeployPolicy": "{{ overrideDeployPolicy }}", 
 "releaseId": "{{ releaseId }}", 
-"targetId": "{{ targetId }}", 
-"rolloutId": "{{ rolloutId }}", 
 "rollbackConfig": "{{ rollbackConfig }}", 
-"validateOnly": {{ validateOnly }}, 
-"overrideDeployPolicy": "{{ overrideDeployPolicy }}"
+"rolloutId": "{{ rolloutId }}", 
+"rolloutToRollBack": "{{ rolloutToRollBack }}", 
+"targetId": "{{ targetId }}", 
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```

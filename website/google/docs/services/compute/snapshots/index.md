@@ -330,7 +330,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of Snapshot resources contained within<br />the specified project.</td>
 </tr>
 <tr>
@@ -494,11 +494,11 @@ selfLink,
 warning
 FROM google.compute.snapshots
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -520,40 +520,40 @@ Creates a snapshot in the specified project using the data included<br />in the 
 
 ```sql
 INSERT INTO google.compute.snapshots (
-data__labelFingerprint,
-data__params,
+data__chainName,
+data__description,
 data__guestFlush,
-data__sourceDiskForRecoveryCheckpoint,
+data__labelFingerprint,
 data__labels,
 data__locationHint,
-data__sourceDisk,
-data__chainName,
-data__sourceDiskEncryptionKey,
-data__snapshotEncryptionKey,
 data__name,
+data__params,
+data__snapshotEncryptionKey,
 data__snapshotType,
+data__sourceDisk,
+data__sourceDiskEncryptionKey,
+data__sourceDiskForRecoveryCheckpoint,
 data__sourceInstantSnapshot,
-data__description,
 data__sourceInstantSnapshotEncryptionKey,
 data__storageLocations,
 project,
 requestId
 )
 SELECT 
-'{{ labelFingerprint }}',
-'{{ params }}',
+'{{ chainName }}',
+'{{ description }}',
 {{ guestFlush }},
-'{{ sourceDiskForRecoveryCheckpoint }}',
+'{{ labelFingerprint }}',
 '{{ labels }}',
 '{{ locationHint }}',
-'{{ sourceDisk }}',
-'{{ chainName }}',
-'{{ sourceDiskEncryptionKey }}',
-'{{ snapshotEncryptionKey }}',
 '{{ name }}',
+'{{ params }}',
+'{{ snapshotEncryptionKey }}',
 '{{ snapshotType }}',
+'{{ sourceDisk }}',
+'{{ sourceDiskEncryptionKey }}',
+'{{ sourceDiskForRecoveryCheckpoint }}',
 '{{ sourceInstantSnapshot }}',
-'{{ description }}',
 '{{ sourceInstantSnapshotEncryptionKey }}',
 '{{ storageLocations }}',
 '{{ project }}',
@@ -597,6 +597,25 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the snapshots resource.
+    - name: chainName
+      value: "{{ chainName }}"
+      description: |
+        Creates the new snapshot in the snapshot chain labeled with the
+        specified name. The chain name must be 1-63 characters long and comply
+        with RFC1035. This is an uncommon option only for advanced service
+        owners who needs to create separate snapshot chains, for example,
+        for chargeback tracking. When you describe your snapshot resource, this
+        field is visible only if it has a non-empty value.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: guestFlush
+      value: {{ guestFlush }}
+      description: |
+        [Input Only] Whether to attempt an application consistent snapshot by
+        informing the OS to prepare for the snapshot process.
     - name: labelFingerprint
       value: "{{ labelFingerprint }}"
       description: |
@@ -608,22 +627,6 @@ zone
         otherwise the request will fail with error412 conditionNotMet.
         To see the latest fingerprint, make a get() request to
         retrieve a snapshot.
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: guestFlush
-      value: {{ guestFlush }}
-      description: |
-        [Input Only] Whether to attempt an application consistent snapshot by
-        informing the OS to prepare for the snapshot process.
-    - name: sourceDiskForRecoveryCheckpoint
-      value: "{{ sourceDiskForRecoveryCheckpoint }}"
-      description: |
-        The source disk whose recovery checkpoint will be used to create this
-        snapshot.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -636,30 +639,22 @@ zone
         An opaque location hint used to place the snapshot close to other
         resources.
         This field is for use by internal tools that use the public API.
-    - name: sourceDisk
-      value: "{{ sourceDisk }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        The source disk used to create this snapshot.
-    - name: chainName
-      value: "{{ chainName }}"
+        Name of the resource; provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
+    - name: params
       description: |
-        Creates the new snapshot in the snapshot chain labeled with the
-        specified name. The chain name must be 1-63 characters long and comply
-        with RFC1035. This is an uncommon option only for advanced service
-        owners who needs to create separate snapshot chains, for example,
-        for chargeback tracking. When you describe your snapshot resource, this
-        field is visible only if it has a non-empty value.
-    - name: sourceDiskEncryptionKey
-      description: |
-        The customer-supplied
-        encryption key of the source disk. Required if the source disk is
-        protected by a customer-supplied encryption key.
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
       value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-        kmsKeyName: "{{ kmsKeyName }}"
-        sha256: "{{ sha256 }}"
+        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: snapshotEncryptionKey
       description: |
         Encrypts the snapshot using acustomer-supplied
@@ -674,26 +669,36 @@ zone
         the snapshot will be encrypted using an automatically generated key and you
         do not need to provide a key to use the snapshot later.
       value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         sha256: "{{ sha256 }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource; provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must be
-        a dash, lowercase letter, or digit, except the last character, which cannot
-        be a dash.
     - name: snapshotType
       value: "{{ snapshotType }}"
       description: |
         Indicates the type of the snapshot.
       valid_values: ['ARCHIVE', 'STANDARD']
+    - name: sourceDisk
+      value: "{{ sourceDisk }}"
+      description: |
+        The source disk used to create this snapshot.
+    - name: sourceDiskEncryptionKey
+      description: |
+        The customer-supplied
+        encryption key of the source disk. Required if the source disk is
+        protected by a customer-supplied encryption key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+        sha256: "{{ sha256 }}"
+    - name: sourceDiskForRecoveryCheckpoint
+      value: "{{ sourceDiskForRecoveryCheckpoint }}"
+      description: |
+        The source disk whose recovery checkpoint will be used to create this
+        snapshot.
     - name: sourceInstantSnapshot
       value: "{{ sourceInstantSnapshot }}"
       description: |
@@ -703,20 +708,15 @@ zone
         - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instantSnapshots/instantSnapshot
         - projects/project/zones/zone/instantSnapshots/instantSnapshot
         - zones/zone/instantSnapshots/instantSnapshot
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
     - name: sourceInstantSnapshotEncryptionKey
       description: |
         Customer provided encryption key when creating Snapshot from Instant
         Snapshot.
       value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         sha256: "{{ sha256 }}"
     - name: storageLocations
       value:
@@ -773,8 +773,8 @@ EXEC google.compute.snapshots.set_labels
 @resource='{{ resource }}' --required 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

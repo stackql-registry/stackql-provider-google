@@ -33,16 +33,140 @@ Creates, updates, deletes, gets or lists an <code>occurrences</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_occurrences_get"
+    defaultValue="projects_locations_notes_occurrences_list"
     values={[
-        { label: 'projects_locations_occurrences_get', value: 'projects_locations_occurrences_get' },
         { label: 'projects_locations_notes_occurrences_list', value: 'projects_locations_notes_occurrences_list' },
-        { label: 'projects_occurrences_get', value: 'projects_occurrences_get' },
+        { label: 'projects_locations_occurrences_get', value: 'projects_locations_occurrences_get' },
         { label: 'projects_locations_occurrences_list', value: 'projects_locations_occurrences_list' },
         { label: 'projects_notes_occurrences_list', value: 'projects_notes_occurrences_list' },
+        { label: 'projects_occurrences_get', value: 'projects_occurrences_get' },
         { label: 'projects_occurrences_list', value: 'projects_occurrences_list' }
     ]}
 >
+<TabItem value="projects_locations_notes_occurrences_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The name of the occurrence in the form of `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="advisoryPublishTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>The time this advisory was published by the source.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="aiSkillAnalysis" /></td>
+    <td><code>object</code></td>
+    <td>Describes an AI skill analysis. (id: AISkillAnalysisOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="attestation" /></td>
+    <td><code>object</code></td>
+    <td>Describes an attestation of an artifact. (id: AttestationOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="build" /></td>
+    <td><code>object</code></td>
+    <td>Describes a verifiable build. (id: BuildOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="compliance" /></td>
+    <td><code>object</code></td>
+    <td>Describes a compliance violation on a linked resource. (id: ComplianceOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time this occurrence was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deployment" /></td>
+    <td><code>object</code></td>
+    <td>Describes the deployment of an artifact on a runtime. (id: DeploymentOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="discovery" /></td>
+    <td><code>object</code></td>
+    <td>Describes when a resource was discovered. (id: DiscoveryOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dsseAttestation" /></td>
+    <td><code>object</code></td>
+    <td>Describes an attestation of an artifact using dsse. (id: DSSEAttestationOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="envelope" /></td>
+    <td><code>object</code></td>
+    <td>https://github.com/secure-systems-lab/dsse (id: Envelope)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="image" /></td>
+    <td><code>object</code></td>
+    <td>Describes how this resource derives from the basis in the associated note. (id: ImageOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests. (NOTE_KIND_UNSPECIFIED, VULNERABILITY, BUILD, IMAGE, PACKAGE, DEPLOYMENT, DISCOVERY, ATTESTATION, UPGRADE, COMPLIANCE, DSSE_ATTESTATION, VULNERABILITY_ASSESSMENT, SBOM_REFERENCE, SECRET, AI_SKILL_ANALYSIS)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="noteName" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. The analysis note associated with this occurrence, in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`. This field can be used as a filter in list requests.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="package" /></td>
+    <td><code>object</code></td>
+    <td>Describes the installation of a package on the linked resource. (id: PackageOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="remediation" /></td>
+    <td><code>string</code></td>
+    <td>A description of actions that can be taken to remedy the note.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceUri" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. A URI that represents the resource for which the occurrence applies. For example, `https://gcr.io/project/image@sha256:123abc` for a Docker image.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sbomReference" /></td>
+    <td><code>object</code></td>
+    <td>Describes a specific SBOM reference occurrences. (id: SBOMReferenceOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="secret" /></td>
+    <td><code>object</code></td>
+    <td>Describes a secret. (id: SecretOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time this occurrence was last updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="upgrade" /></td>
+    <td><code>object</code></td>
+    <td>Describes an available package upgrade on the linked resource. (id: UpgradeOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="vulnerability" /></td>
+    <td><code>object</code></td>
+    <td>Describes a security vulnerability. (id: VulnerabilityOccurrence)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="projects_locations_occurrences_get">
 
 <table>
@@ -167,7 +291,131 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_notes_occurrences_list">
+<TabItem value="projects_locations_occurrences_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The name of the occurrence in the form of `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="advisoryPublishTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>The time this advisory was published by the source.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="aiSkillAnalysis" /></td>
+    <td><code>object</code></td>
+    <td>Describes an AI skill analysis. (id: AISkillAnalysisOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="attestation" /></td>
+    <td><code>object</code></td>
+    <td>Describes an attestation of an artifact. (id: AttestationOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="build" /></td>
+    <td><code>object</code></td>
+    <td>Describes a verifiable build. (id: BuildOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="compliance" /></td>
+    <td><code>object</code></td>
+    <td>Describes a compliance violation on a linked resource. (id: ComplianceOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time this occurrence was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deployment" /></td>
+    <td><code>object</code></td>
+    <td>Describes the deployment of an artifact on a runtime. (id: DeploymentOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="discovery" /></td>
+    <td><code>object</code></td>
+    <td>Describes when a resource was discovered. (id: DiscoveryOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dsseAttestation" /></td>
+    <td><code>object</code></td>
+    <td>Describes an attestation of an artifact using dsse. (id: DSSEAttestationOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="envelope" /></td>
+    <td><code>object</code></td>
+    <td>https://github.com/secure-systems-lab/dsse (id: Envelope)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="image" /></td>
+    <td><code>object</code></td>
+    <td>Describes how this resource derives from the basis in the associated note. (id: ImageOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests. (NOTE_KIND_UNSPECIFIED, VULNERABILITY, BUILD, IMAGE, PACKAGE, DEPLOYMENT, DISCOVERY, ATTESTATION, UPGRADE, COMPLIANCE, DSSE_ATTESTATION, VULNERABILITY_ASSESSMENT, SBOM_REFERENCE, SECRET, AI_SKILL_ANALYSIS)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="noteName" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. The analysis note associated with this occurrence, in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`. This field can be used as a filter in list requests.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="package" /></td>
+    <td><code>object</code></td>
+    <td>Describes the installation of a package on the linked resource. (id: PackageOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="remediation" /></td>
+    <td><code>string</code></td>
+    <td>A description of actions that can be taken to remedy the note.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceUri" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. A URI that represents the resource for which the occurrence applies. For example, `https://gcr.io/project/image@sha256:123abc` for a Docker image.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sbomReference" /></td>
+    <td><code>object</code></td>
+    <td>Describes a specific SBOM reference occurrences. (id: SBOMReferenceOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="secret" /></td>
+    <td><code>object</code></td>
+    <td>Describes a secret. (id: SecretOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time this occurrence was last updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="upgrade" /></td>
+    <td><code>object</code></td>
+    <td>Describes an available package upgrade on the linked resource. (id: UpgradeOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="vulnerability" /></td>
+    <td><code>object</code></td>
+    <td>Describes a security vulnerability. (id: VulnerabilityOccurrence)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_notes_occurrences_list">
 
 <table>
 <thead>
@@ -415,21 +663,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_occurrences_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_notes_occurrences_list">
+<TabItem value="projects_occurrences_list">
 
 <table>
 <thead>
@@ -553,20 +787,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_occurrences_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</TabItem>
 </Tabs>
 
 ## Methods
@@ -585,6 +805,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#projects_locations_notes_occurrences_list"><CopyableCode code="projects_locations_notes_occurrences_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_occurrences_get"><CopyableCode code="projects_locations_occurrences_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-occurrencesId"><code>occurrencesId</code></a></td>
@@ -592,9 +819,16 @@ The following methods are available for this resource:
     <td>Gets the specified occurrence.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_notes_occurrences_list"><CopyableCode code="projects_locations_notes_occurrences_list" /></a></td>
+    <td><a href="#projects_locations_occurrences_list"><CopyableCode code="projects_locations_occurrences_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists occurrences for the specified project.</td>
+</tr>
+<tr>
+    <td><a href="#projects_notes_occurrences_list"><CopyableCode code="projects_notes_occurrences_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
     <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.</td>
 </tr>
@@ -606,32 +840,11 @@ The following methods are available for this resource:
     <td>Gets the specified occurrence.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_occurrences_list"><CopyableCode code="projects_locations_occurrences_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists occurrences for the specified project.</td>
-</tr>
-<tr>
-    <td><a href="#projects_notes_occurrences_list"><CopyableCode code="projects_notes_occurrences_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.</td>
-</tr>
-<tr>
     <td><a href="#projects_occurrences_list"><CopyableCode code="projects_occurrences_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists occurrences for the specified project.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_occurrences_create"><CopyableCode code="projects_locations_occurrences_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Creates a new occurrence.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_occurrences_batch_create"><CopyableCode code="projects_locations_occurrences_batch_create" /></a></td>
@@ -639,6 +852,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Creates new occurrences in batch.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_occurrences_create"><CopyableCode code="projects_locations_occurrences_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Creates a new occurrence.</td>
 </tr>
 <tr>
     <td><a href="#projects_occurrences_batch_create"><CopyableCode code="projects_occurrences_batch_create" /></a></td>
@@ -749,16 +969,54 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_occurrences_get"
+    defaultValue="projects_locations_notes_occurrences_list"
     values={[
-        { label: 'projects_locations_occurrences_get', value: 'projects_locations_occurrences_get' },
         { label: 'projects_locations_notes_occurrences_list', value: 'projects_locations_notes_occurrences_list' },
-        { label: 'projects_occurrences_get', value: 'projects_occurrences_get' },
+        { label: 'projects_locations_occurrences_get', value: 'projects_locations_occurrences_get' },
         { label: 'projects_locations_occurrences_list', value: 'projects_locations_occurrences_list' },
         { label: 'projects_notes_occurrences_list', value: 'projects_notes_occurrences_list' },
+        { label: 'projects_occurrences_get', value: 'projects_occurrences_get' },
         { label: 'projects_occurrences_list', value: 'projects_occurrences_list' }
     ]}
 >
+<TabItem value="projects_locations_notes_occurrences_list">
+
+Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.
+
+```sql
+SELECT
+name,
+advisoryPublishTime,
+aiSkillAnalysis,
+attestation,
+build,
+compliance,
+createTime,
+deployment,
+discovery,
+dsseAttestation,
+envelope,
+image,
+kind,
+noteName,
+package,
+remediation,
+resourceUri,
+sbomReference,
+secret,
+updateTime,
+upgrade,
+vulnerability
+FROM google.containeranalysis.occurrences
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND notesId = '{{ notesId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_occurrences_get">
 
 Gets the specified occurrence.
@@ -794,7 +1052,45 @@ AND occurrencesId = '{{ occurrencesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_notes_occurrences_list">
+<TabItem value="projects_locations_occurrences_list">
+
+Lists occurrences for the specified project.
+
+```sql
+SELECT
+name,
+advisoryPublishTime,
+aiSkillAnalysis,
+attestation,
+build,
+compliance,
+createTime,
+deployment,
+discovery,
+dsseAttestation,
+envelope,
+image,
+kind,
+noteName,
+package,
+remediation,
+resourceUri,
+sbomReference,
+secret,
+updateTime,
+upgrade,
+vulnerability
+FROM google.containeranalysis.occurrences
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
+<TabItem value="projects_notes_occurrences_list">
 
 Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.
 
@@ -824,7 +1120,6 @@ upgrade,
 vulnerability
 FROM google.containeranalysis.occurrences
 WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
 AND notesId = '{{ notesId }}' -- required
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
@@ -866,26 +1161,9 @@ AND occurrencesId = '{{ occurrencesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_occurrences_list">
+<TabItem value="projects_occurrences_list">
 
 Lists occurrences for the specified project.
-
-```sql
-SELECT
-*
-FROM google.containeranalysis.occurrences
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_notes_occurrences_list">
-
-Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.
 
 ```sql
 SELECT
@@ -913,25 +1191,9 @@ upgrade,
 vulnerability
 FROM google.containeranalysis.occurrences
 WHERE projectsId = '{{ projectsId }}' -- required
-AND notesId = '{{ notesId }}' -- required
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_occurrences_list">
-
-Lists occurrences for the specified project.
-
-```sql
-SELECT
-*
-FROM google.containeranalysis.occurrences
-WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -942,97 +1204,15 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_occurrences_create"
+    defaultValue="projects_locations_occurrences_batch_create"
     values={[
-        { label: 'projects_locations_occurrences_create', value: 'projects_locations_occurrences_create' },
         { label: 'projects_locations_occurrences_batch_create', value: 'projects_locations_occurrences_batch_create' },
+        { label: 'projects_locations_occurrences_create', value: 'projects_locations_occurrences_create' },
         { label: 'projects_occurrences_batch_create', value: 'projects_occurrences_batch_create' },
         { label: 'projects_occurrences_create', value: 'projects_occurrences_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_occurrences_create">
-
-Creates a new occurrence.
-
-```sql
-INSERT INTO google.containeranalysis.occurrences (
-data__build,
-data__deployment,
-data__name,
-data__image,
-data__updateTime,
-data__upgrade,
-data__remediation,
-data__sbomReference,
-data__secret,
-data__createTime,
-data__envelope,
-data__advisoryPublishTime,
-data__noteName,
-data__discovery,
-data__kind,
-data__package,
-data__compliance,
-data__aiSkillAnalysis,
-data__resourceUri,
-data__attestation,
-data__vulnerability,
-data__dsseAttestation,
-projectsId,
-locationsId
-)
-SELECT 
-'{{ build }}',
-'{{ deployment }}',
-'{{ name }}',
-'{{ image }}',
-'{{ updateTime }}',
-'{{ upgrade }}',
-'{{ remediation }}',
-'{{ sbomReference }}',
-'{{ secret }}',
-'{{ createTime }}',
-'{{ envelope }}',
-'{{ advisoryPublishTime }}',
-'{{ noteName }}',
-'{{ discovery }}',
-'{{ kind }}',
-'{{ package }}',
-'{{ compliance }}',
-'{{ aiSkillAnalysis }}',
-'{{ resourceUri }}',
-'{{ attestation }}',
-'{{ vulnerability }}',
-'{{ dsseAttestation }}',
-'{{ projectsId }}',
-'{{ locationsId }}'
-RETURNING
-name,
-advisoryPublishTime,
-aiSkillAnalysis,
-attestation,
-build,
-compliance,
-createTime,
-deployment,
-discovery,
-dsseAttestation,
-envelope,
-image,
-kind,
-noteName,
-package,
-remediation,
-resourceUri,
-sbomReference,
-secret,
-updateTime,
-upgrade,
-vulnerability
-;
-```
-</TabItem>
 <TabItem value="projects_locations_occurrences_batch_create">
 
 Creates new occurrences in batch.
@@ -1049,6 +1229,88 @@ SELECT
 '{{ locationsId }}'
 RETURNING
 occurrences
+;
+```
+</TabItem>
+<TabItem value="projects_locations_occurrences_create">
+
+Creates a new occurrence.
+
+```sql
+INSERT INTO google.containeranalysis.occurrences (
+data__advisoryPublishTime,
+data__aiSkillAnalysis,
+data__attestation,
+data__build,
+data__compliance,
+data__createTime,
+data__deployment,
+data__discovery,
+data__dsseAttestation,
+data__envelope,
+data__image,
+data__kind,
+data__name,
+data__noteName,
+data__package,
+data__remediation,
+data__resourceUri,
+data__sbomReference,
+data__secret,
+data__updateTime,
+data__upgrade,
+data__vulnerability,
+projectsId,
+locationsId
+)
+SELECT 
+'{{ advisoryPublishTime }}',
+'{{ aiSkillAnalysis }}',
+'{{ attestation }}',
+'{{ build }}',
+'{{ compliance }}',
+'{{ createTime }}',
+'{{ deployment }}',
+'{{ discovery }}',
+'{{ dsseAttestation }}',
+'{{ envelope }}',
+'{{ image }}',
+'{{ kind }}',
+'{{ name }}',
+'{{ noteName }}',
+'{{ package }}',
+'{{ remediation }}',
+'{{ resourceUri }}',
+'{{ sbomReference }}',
+'{{ secret }}',
+'{{ updateTime }}',
+'{{ upgrade }}',
+'{{ vulnerability }}',
+'{{ projectsId }}',
+'{{ locationsId }}'
+RETURNING
+name,
+advisoryPublishTime,
+aiSkillAnalysis,
+attestation,
+build,
+compliance,
+createTime,
+deployment,
+discovery,
+dsseAttestation,
+envelope,
+image,
+kind,
+noteName,
+package,
+remediation,
+resourceUri,
+sbomReference,
+secret,
+updateTime,
+upgrade,
+vulnerability
 ;
 ```
 </TabItem>
@@ -1075,53 +1337,53 @@ Creates a new occurrence.
 
 ```sql
 INSERT INTO google.containeranalysis.occurrences (
+data__advisoryPublishTime,
+data__aiSkillAnalysis,
+data__attestation,
 data__build,
+data__compliance,
+data__createTime,
 data__deployment,
-data__name,
+data__discovery,
+data__dsseAttestation,
+data__envelope,
 data__image,
-data__updateTime,
-data__upgrade,
+data__kind,
+data__name,
+data__noteName,
+data__package,
 data__remediation,
+data__resourceUri,
 data__sbomReference,
 data__secret,
-data__createTime,
-data__envelope,
-data__advisoryPublishTime,
-data__noteName,
-data__discovery,
-data__kind,
-data__package,
-data__compliance,
-data__aiSkillAnalysis,
-data__resourceUri,
-data__attestation,
+data__updateTime,
+data__upgrade,
 data__vulnerability,
-data__dsseAttestation,
 projectsId
 )
 SELECT 
+'{{ advisoryPublishTime }}',
+'{{ aiSkillAnalysis }}',
+'{{ attestation }}',
 '{{ build }}',
+'{{ compliance }}',
+'{{ createTime }}',
 '{{ deployment }}',
-'{{ name }}',
+'{{ discovery }}',
+'{{ dsseAttestation }}',
+'{{ envelope }}',
 '{{ image }}',
-'{{ updateTime }}',
-'{{ upgrade }}',
+'{{ kind }}',
+'{{ name }}',
+'{{ noteName }}',
+'{{ package }}',
 '{{ remediation }}',
+'{{ resourceUri }}',
 '{{ sbomReference }}',
 '{{ secret }}',
-'{{ createTime }}',
-'{{ envelope }}',
-'{{ advisoryPublishTime }}',
-'{{ noteName }}',
-'{{ discovery }}',
-'{{ kind }}',
-'{{ package }}',
-'{{ compliance }}',
-'{{ aiSkillAnalysis }}',
-'{{ resourceUri }}',
-'{{ attestation }}',
+'{{ updateTime }}',
+'{{ upgrade }}',
 '{{ vulnerability }}',
-'{{ dsseAttestation }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -1160,644 +1422,64 @@ vulnerability
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the occurrences resource.
-    - name: build
-      description: |
-        Describes a verifiable build.
-      value:
-        intotoProvenance:
-          recipe:
-            environment: "{{ environment }}"
-            entryPoint: "{{ entryPoint }}"
-            definedInMaterial: "{{ definedInMaterial }}"
-            type: "{{ type }}"
-            arguments: "{{ arguments }}"
-          metadata:
-            buildFinishedOn: "{{ buildFinishedOn }}"
-            buildInvocationId: "{{ buildInvocationId }}"
-            buildStartedOn: "{{ buildStartedOn }}"
-            completeness:
-              arguments: {{ arguments }}
-              environment: {{ environment }}
-              materials: {{ materials }}
-            reproducible: {{ reproducible }}
-          materials:
-            - "{{ materials }}"
-          builderConfig:
-            id: "{{ id }}"
-        intotoStatement:
-          provenance:
-            recipe:
-              environment: "{{ environment }}"
-              entryPoint: "{{ entryPoint }}"
-              definedInMaterial: "{{ definedInMaterial }}"
-              type: "{{ type }}"
-              arguments: "{{ arguments }}"
-            metadata:
-              buildFinishedOn: "{{ buildFinishedOn }}"
-              buildInvocationId: "{{ buildInvocationId }}"
-              buildStartedOn: "{{ buildStartedOn }}"
-              completeness:
-                arguments: {{ arguments }}
-                environment: {{ environment }}
-                materials: {{ materials }}
-              reproducible: {{ reproducible }}
-            materials:
-              - "{{ materials }}"
-            builderConfig:
-              id: "{{ id }}"
-          slsaProvenanceZeroTwo:
-            builder:
-              id: "{{ id }}"
-            buildConfig: "{{ buildConfig }}"
-            metadata:
-              buildStartedOn: "{{ buildStartedOn }}"
-              completeness:
-                parameters: {{ parameters }}
-                environment: {{ environment }}
-                materials: {{ materials }}
-              reproducible: {{ reproducible }}
-              buildInvocationId: "{{ buildInvocationId }}"
-              buildFinishedOn: "{{ buildFinishedOn }}"
-            materials:
-              - uri: "{{ uri }}"
-                digest: "{{ digest }}"
-            buildType: "{{ buildType }}"
-            invocation:
-              configSource:
-                entryPoint: "{{ entryPoint }}"
-                uri: "{{ uri }}"
-                digest: "{{ digest }}"
-              parameters: "{{ parameters }}"
-              environment: "{{ environment }}"
-          predicateType: "{{ predicateType }}"
-          _type: "{{ _type }}"
-          slsaProvenance:
-            builder:
-              id: "{{ id }}"
-            recipe:
-              definedInMaterial: "{{ definedInMaterial }}"
-              type: "{{ type }}"
-              arguments: "{{ arguments }}"
-              environment: "{{ environment }}"
-              entryPoint: "{{ entryPoint }}"
-            metadata:
-              buildFinishedOn: "{{ buildFinishedOn }}"
-              buildStartedOn: "{{ buildStartedOn }}"
-              completeness:
-                environment: {{ environment }}
-                materials: {{ materials }}
-                arguments: {{ arguments }}
-              reproducible: {{ reproducible }}
-              buildInvocationId: "{{ buildInvocationId }}"
-            materials:
-              - uri: "{{ uri }}"
-                digest: "{{ digest }}"
-          subject:
-            - name: "{{ name }}"
-              digest: "{{ digest }}"
-        provenanceBytes: "{{ provenanceBytes }}"
-        inTotoSlsaProvenanceV1:
-          subject:
-            - name: "{{ name }}"
-              digest: "{{ digest }}"
-          predicateType: "{{ predicateType }}"
-          predicate:
-            buildDefinition:
-              buildType: "{{ buildType }}"
-              externalParameters: "{{ externalParameters }}"
-              internalParameters: "{{ internalParameters }}"
-              resolvedDependencies:
-                - mediaType: "{{ mediaType }}"
-                  annotations: "{{ annotations }}"
-                  content: "{{ content }}"
-                  name: "{{ name }}"
-                  uri: "{{ uri }}"
-                  digest: "{{ digest }}"
-                  downloadLocation: "{{ downloadLocation }}"
-            runDetails:
-              builder:
-                version: "{{ version }}"
-                builderDependencies: "{{ builderDependencies }}"
-                id: "{{ id }}"
-              metadata:
-                invocationId: "{{ invocationId }}"
-                finishedOn: "{{ finishedOn }}"
-                startedOn: "{{ startedOn }}"
-              byproducts:
-                - mediaType: "{{ mediaType }}"
-                  annotations: "{{ annotations }}"
-                  content: "{{ content }}"
-                  name: "{{ name }}"
-                  uri: "{{ uri }}"
-                  digest: "{{ digest }}"
-                  downloadLocation: "{{ downloadLocation }}"
-          _type: "{{ _type }}"
-        provenance:
-          commands:
-            - waitFor: "{{ waitFor }}"
-              name: "{{ name }}"
-              id: "{{ id }}"
-              args: "{{ args }}"
-              env: "{{ env }}"
-              dir: "{{ dir }}"
-          builtArtifacts:
-            - checksum: "{{ checksum }}"
-              names: "{{ names }}"
-              id: "{{ id }}"
-          createTime: "{{ createTime }}"
-          triggerId: "{{ triggerId }}"
-          creator: "{{ creator }}"
-          sourceProvenance:
-            artifactStorageSourceUri: "{{ artifactStorageSourceUri }}"
-            fileHashes: "{{ fileHashes }}"
-            context:
-              labels: "{{ labels }}"
-              git:
-                revisionId: "{{ revisionId }}"
-                url: "{{ url }}"
-              cloudRepo:
-                repoId: "{{ repoId }}"
-                revisionId: "{{ revisionId }}"
-                aliasContext: "{{ aliasContext }}"
-              gerrit:
-                hostUri: "{{ hostUri }}"
-                revisionId: "{{ revisionId }}"
-                aliasContext: "{{ aliasContext }}"
-                gerritProject: "{{ gerritProject }}"
-            additionalContexts:
-              - labels: "{{ labels }}"
-                git:
-                  revisionId: "{{ revisionId }}"
-                  url: "{{ url }}"
-                cloudRepo:
-                  repoId: "{{ repoId }}"
-                  revisionId: "{{ revisionId }}"
-                  aliasContext: "{{ aliasContext }}"
-                gerrit:
-                  hostUri: "{{ hostUri }}"
-                  revisionId: "{{ revisionId }}"
-                  aliasContext: "{{ aliasContext }}"
-                  gerritProject: "{{ gerritProject }}"
-          builderVersion: "{{ builderVersion }}"
-          buildOptions: "{{ buildOptions }}"
-          logsUri: "{{ logsUri }}"
-          endTime: "{{ endTime }}"
-          projectId: "{{ projectId }}"
-          startTime: "{{ startTime }}"
-          id: "{{ id }}"
-    - name: deployment
-      description: |
-        Describes the deployment of an artifact on a runtime.
-      value:
-        deployTime: "{{ deployTime }}"
-        undeployTime: "{{ undeployTime }}"
-        config: "{{ config }}"
-        platform: "{{ platform }}"
-        resourceUri:
-          - "{{ resourceUri }}"
-        address: "{{ address }}"
-        userEmail: "{{ userEmail }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Output only. The name of the occurrence in the form of \`projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]\`.
-    - name: image
-      description: |
-        Describes how this resource derives from the basis in the associated note.
-      value:
-        distance: {{ distance }}
-        baseResourceUrl: "{{ baseResourceUrl }}"
-        fingerprint:
-          v1Name: "{{ v1Name }}"
-          v2Name: "{{ v2Name }}"
-          v2Blob:
-            - "{{ v2Blob }}"
-        layerInfo:
-          - arguments: "{{ arguments }}"
-            directive: "{{ directive }}"
-    - name: updateTime
-      value: "{{ updateTime }}"
-      description: |
-        Output only. The time this occurrence was last updated.
-    - name: upgrade
-      description: |
-        Describes an available package upgrade on the linked resource.
-      value:
-        windowsUpdate:
-          lastPublishedTimestamp: "{{ lastPublishedTimestamp }}"
-          title: "{{ title }}"
-          description: "{{ description }}"
-          categories:
-            - name: "{{ name }}"
-              categoryId: "{{ categoryId }}"
-          supportUrl: "{{ supportUrl }}"
-          identity:
-            revision: {{ revision }}
-            updateId: "{{ updateId }}"
-          kbArticleIds:
-            - "{{ kbArticleIds }}"
-        package: "{{ package }}"
-        parsedVersion:
-          epoch: {{ epoch }}
-          name: "{{ name }}"
-          inclusive: {{ inclusive }}
-          kind: "{{ kind }}"
-          revision: "{{ revision }}"
-          fullName: "{{ fullName }}"
-        distribution:
-          cve:
-            - "{{ cve }}"
-          cpeUri: "{{ cpeUri }}"
-          classification: "{{ classification }}"
-          severity: "{{ severity }}"
-    - name: remediation
-      value: "{{ remediation }}"
-      description: |
-        A description of actions that can be taken to remedy the note.
-    - name: sbomReference
-      description: |
-        Describes a specific SBOM reference occurrences.
-      value:
-        payload:
-          predicateType: "{{ predicateType }}"
-          subject:
-            - name: "{{ name }}"
-              digest: "{{ digest }}"
-          predicate:
-            location: "{{ location }}"
-            digest: "{{ digest }}"
-            mimeType: "{{ mimeType }}"
-            referrerId: "{{ referrerId }}"
-          _type: "{{ _type }}"
-        payloadType: "{{ payloadType }}"
-        signatures:
-          - sig: "{{ sig }}"
-            keyid: "{{ keyid }}"
-    - name: secret
-      description: |
-        Describes a secret.
-      value:
-        kind: "{{ kind }}"
-        locations:
-          - fileLocation:
-              lineNumber: {{ lineNumber }}
-              filePath: "{{ filePath }}"
-              layerDetails:
-                index: {{ index }}
-                command: "{{ command }}"
-                diffId: "{{ diffId }}"
-                chainId: "{{ chainId }}"
-                baseImages:
-                  - layerCount: {{ layerCount }}
-                    registry: "{{ registry }}"
-                    name: "{{ name }}"
-                    repository: "{{ repository }}"
-        statuses:
-          - message: "{{ message }}"
-            status: "{{ status }}"
-            updateTime: "{{ updateTime }}"
-    - name: createTime
-      value: "{{ createTime }}"
-      description: |
-        Output only. The time this occurrence was created.
-    - name: envelope
-      description: |
-        https://github.com/secure-systems-lab/dsse
-      value:
-        signatures:
-          - sig: "{{ sig }}"
-            keyid: "{{ keyid }}"
-        payload: "{{ payload }}"
-        payloadType: "{{ payloadType }}"
-    - name: advisoryPublishTime
-      value: "{{ advisoryPublishTime }}"
-      description: |
-        The time this advisory was published by the source.
-    - name: noteName
-      value: "{{ noteName }}"
-      description: |
-        Required. Immutable. The analysis note associated with this occurrence, in the form of \`projects/[PROVIDER_ID]/notes/[NOTE_ID]\`. This field can be used as a filter in list requests.
-    - name: discovery
-      description: |
-        Describes when a resource was discovered.
-      value:
-        lastVulnerabilityUpdateTime: "{{ lastVulnerabilityUpdateTime }}"
-        analysisStatus: "{{ analysisStatus }}"
-        cpe: "{{ cpe }}"
-        archiveTime: "{{ archiveTime }}"
-        analysisCompleted:
-          analysisType:
-            - "{{ analysisType }}"
-        continuousAnalysis: "{{ continuousAnalysis }}"
-        files:
-          - name: "{{ name }}"
-            digest: "{{ digest }}"
-        analysisStatusError:
-          message: "{{ message }}"
-          code: {{ code }}
-          details: "{{ details }}"
-        lastScanTime: "{{ lastScanTime }}"
-        sbomStatus:
-          sbomState: "{{ sbomState }}"
-          error: "{{ error }}"
-        analysisError:
-          - message: "{{ message }}"
-            code: {{ code }}
-            details: "{{ details }}"
-    - name: kind
-      value: "{{ kind }}"
-      description: |
-        Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests.
-      valid_values: ['NOTE_KIND_UNSPECIFIED', 'VULNERABILITY', 'BUILD', 'IMAGE', 'PACKAGE', 'DEPLOYMENT', 'DISCOVERY', 'ATTESTATION', 'UPGRADE', 'COMPLIANCE', 'DSSE_ATTESTATION', 'VULNERABILITY_ASSESSMENT', 'SBOM_REFERENCE', 'SECRET', 'AI_SKILL_ANALYSIS']
-    - name: package
-      description: |
-        Describes the installation of a package on the linked resource.
-      value:
-        location:
-          - cpeUri: "{{ cpeUri }}"
-            path: "{{ path }}"
-            version:
-              epoch: {{ epoch }}
-              name: "{{ name }}"
-              inclusive: {{ inclusive }}
-              kind: "{{ kind }}"
-              revision: "{{ revision }}"
-              fullName: "{{ fullName }}"
-        architecture: "{{ architecture }}"
-        packageType: "{{ packageType }}"
-        license:
-          expression: "{{ expression }}"
-          comments: "{{ comments }}"
-        name: "{{ name }}"
-        version:
-          epoch: {{ epoch }}
-          name: "{{ name }}"
-          inclusive: {{ inclusive }}
-          kind: "{{ kind }}"
-          revision: "{{ revision }}"
-          fullName: "{{ fullName }}"
-        cpeUri: "{{ cpeUri }}"
-    - name: compliance
-      description: |
-        Describes a compliance violation on a linked resource.
-      value:
-        nonComplianceReason: "{{ nonComplianceReason }}"
-        nonCompliantFiles:
-          - path: "{{ path }}"
-            reason: "{{ reason }}"
-            displayCommand: "{{ displayCommand }}"
-        version:
-          benchmarkDocument: "{{ benchmarkDocument }}"
-          version: "{{ version }}"
-          cpeUri: "{{ cpeUri }}"
-    - name: aiSkillAnalysis
-      description: |
-        Describes an AI skill analysis.
-      value:
-        maxSeverity: "{{ maxSeverity }}"
-        skillName: "{{ skillName }}"
-        findings:
-          - scanner: "{{ scanner }}"
-            location:
-              filePath: "{{ filePath }}"
-              lineNumber: "{{ lineNumber }}"
-            severity: "{{ severity }}"
-            category: "{{ category }}"
-            details: "{{ details }}"
-    - name: resourceUri
-      value: "{{ resourceUri }}"
-      description: |
-        Required. Immutable. A URI that represents the resource for which the occurrence applies. For example, \`https://gcr.io/project/image@sha256:123abc\` for a Docker image.
-    - name: attestation
-      description: |
-        Describes an attestation of an artifact.
-      value:
-        serializedPayload: "{{ serializedPayload }}"
-        signatures:
-          - publicKeyId: "{{ publicKeyId }}"
-            signature: "{{ signature }}"
-        jwts:
-          - compactJwt: "{{ compactJwt }}"
-    - name: vulnerability
-      description: |
-        Describes a security vulnerability.
-      value:
-        risk:
-          cisaKev:
-            knownRansomwareCampaignUse: "{{ knownRansomwareCampaignUse }}"
-          epss:
-            score: {{ score }}
-            percentile: {{ percentile }}
-        fixAvailable: {{ fixAvailable }}
-        severity: "{{ severity }}"
-        packageIssue:
-          - fixedCpeUri: "{{ fixedCpeUri }}"
-            fixedVersion:
-              epoch: {{ epoch }}
-              name: "{{ name }}"
-              inclusive: {{ inclusive }}
-              kind: "{{ kind }}"
-              revision: "{{ revision }}"
-              fullName: "{{ fullName }}"
-            affectedPackage: "{{ affectedPackage }}"
-            packageType: "{{ packageType }}"
-            affectedCpeUri: "{{ affectedCpeUri }}"
-            fixAvailable: {{ fixAvailable }}
-            fixedPackage: "{{ fixedPackage }}"
-            fileLocation: "{{ fileLocation }}"
-            affectedVersion:
-              epoch: {{ epoch }}
-              name: "{{ name }}"
-              inclusive: {{ inclusive }}
-              kind: "{{ kind }}"
-              revision: "{{ revision }}"
-              fullName: "{{ fullName }}"
-            effectiveSeverity: "{{ effectiveSeverity }}"
-        relatedUrls:
-          - url: "{{ url }}"
-            label: "{{ label }}"
-        vexAssessment:
-          vulnerabilityId: "{{ vulnerabilityId }}"
-          relatedUris:
-            - url: "{{ url }}"
-              label: "{{ label }}"
-          noteName: "{{ noteName }}"
-          remediations:
-            - details: "{{ details }}"
-              remediationType: "{{ remediationType }}"
-              remediationUri:
-                url: "{{ url }}"
-                label: "{{ label }}"
-          impacts:
-            - "{{ impacts }}"
-          justification:
-            justificationType: "{{ justificationType }}"
-            details: "{{ details }}"
-          cve: "{{ cve }}"
-          state: "{{ state }}"
-        cvssV4:
-          vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
-          attackVector: "{{ attackVector }}"
-          impactScore: {{ impactScore }}
-          authentication: "{{ authentication }}"
-          subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
-          subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
-          baseScore: {{ baseScore }}
-          integrityImpact: "{{ integrityImpact }}"
-          availabilityImpact: "{{ availabilityImpact }}"
-          vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
-          subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
-          exploitMaturity: "{{ exploitMaturity }}"
-          scope: "{{ scope }}"
-          attackRequirements: "{{ attackRequirements }}"
-          userInteraction: "{{ userInteraction }}"
-          vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
-          exploitabilityScore: {{ exploitabilityScore }}
-          privilegesRequired: "{{ privilegesRequired }}"
-          attackComplexity: "{{ attackComplexity }}"
-          confidentialityImpact: "{{ confidentialityImpact }}"
-        cvssVersion: "{{ cvssVersion }}"
-        extraDetails: "{{ extraDetails }}"
-        type: "{{ type }}"
-        shortDescription: "{{ shortDescription }}"
-        longDescription: "{{ longDescription }}"
-        cvssV2:
-          vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
-          attackVector: "{{ attackVector }}"
-          impactScore: {{ impactScore }}
-          authentication: "{{ authentication }}"
-          subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
-          subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
-          baseScore: {{ baseScore }}
-          integrityImpact: "{{ integrityImpact }}"
-          availabilityImpact: "{{ availabilityImpact }}"
-          vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
-          subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
-          exploitMaturity: "{{ exploitMaturity }}"
-          scope: "{{ scope }}"
-          attackRequirements: "{{ attackRequirements }}"
-          userInteraction: "{{ userInteraction }}"
-          vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
-          exploitabilityScore: {{ exploitabilityScore }}
-          privilegesRequired: "{{ privilegesRequired }}"
-          attackComplexity: "{{ attackComplexity }}"
-          confidentialityImpact: "{{ confidentialityImpact }}"
-        cvssScore: {{ cvssScore }}
-        cvssv3:
-          vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
-          attackVector: "{{ attackVector }}"
-          impactScore: {{ impactScore }}
-          authentication: "{{ authentication }}"
-          subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
-          subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
-          baseScore: {{ baseScore }}
-          integrityImpact: "{{ integrityImpact }}"
-          availabilityImpact: "{{ availabilityImpact }}"
-          vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
-          subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
-          exploitMaturity: "{{ exploitMaturity }}"
-          scope: "{{ scope }}"
-          attackRequirements: "{{ attackRequirements }}"
-          userInteraction: "{{ userInteraction }}"
-          vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
-          exploitabilityScore: {{ exploitabilityScore }}
-          privilegesRequired: "{{ privilegesRequired }}"
-          attackComplexity: "{{ attackComplexity }}"
-          confidentialityImpact: "{{ confidentialityImpact }}"
-        effectiveSeverity: "{{ effectiveSeverity }}"
-    - name: dsseAttestation
-      description: |
-        Describes an attestation of an artifact using dsse.
-      value:
-        envelope:
-          signatures:
-            - sig: "{{ sig }}"
-              keyid: "{{ keyid }}"
-          payload: "{{ payload }}"
-          payloadType: "{{ payloadType }}"
-        statement:
-          provenance:
-            recipe:
-              environment: "{{ environment }}"
-              entryPoint: "{{ entryPoint }}"
-              definedInMaterial: "{{ definedInMaterial }}"
-              type: "{{ type }}"
-              arguments: "{{ arguments }}"
-            metadata:
-              buildFinishedOn: "{{ buildFinishedOn }}"
-              buildInvocationId: "{{ buildInvocationId }}"
-              buildStartedOn: "{{ buildStartedOn }}"
-              completeness:
-                arguments: {{ arguments }}
-                environment: {{ environment }}
-                materials: {{ materials }}
-              reproducible: {{ reproducible }}
-            materials:
-              - "{{ materials }}"
-            builderConfig:
-              id: "{{ id }}"
-          slsaProvenanceZeroTwo:
-            builder:
-              id: "{{ id }}"
-            buildConfig: "{{ buildConfig }}"
-            metadata:
-              buildStartedOn: "{{ buildStartedOn }}"
-              completeness:
-                parameters: {{ parameters }}
-                environment: {{ environment }}
-                materials: {{ materials }}
-              reproducible: {{ reproducible }}
-              buildInvocationId: "{{ buildInvocationId }}"
-              buildFinishedOn: "{{ buildFinishedOn }}"
-            materials:
-              - uri: "{{ uri }}"
-                digest: "{{ digest }}"
-            buildType: "{{ buildType }}"
-            invocation:
-              configSource:
-                entryPoint: "{{ entryPoint }}"
-                uri: "{{ uri }}"
-                digest: "{{ digest }}"
-              parameters: "{{ parameters }}"
-              environment: "{{ environment }}"
-          predicateType: "{{ predicateType }}"
-          _type: "{{ _type }}"
-          slsaProvenance:
-            builder:
-              id: "{{ id }}"
-            recipe:
-              definedInMaterial: "{{ definedInMaterial }}"
-              type: "{{ type }}"
-              arguments: "{{ arguments }}"
-              environment: "{{ environment }}"
-              entryPoint: "{{ entryPoint }}"
-            metadata:
-              buildFinishedOn: "{{ buildFinishedOn }}"
-              buildStartedOn: "{{ buildStartedOn }}"
-              completeness:
-                environment: {{ environment }}
-                materials: {{ materials }}
-                arguments: {{ arguments }}
-              reproducible: {{ reproducible }}
-              buildInvocationId: "{{ buildInvocationId }}"
-            materials:
-              - uri: "{{ uri }}"
-                digest: "{{ digest }}"
-          subject:
-            - name: "{{ name }}"
-              digest: "{{ digest }}"
     - name: occurrences
       description: |
         Required. The occurrences to create. Max allowed length is 1000.
       value:
-        - build:
+        - advisoryPublishTime: "{{ advisoryPublishTime }}"
+          aiSkillAnalysis:
+            findings:
+              - category: "{{ category }}"
+                details: "{{ details }}"
+                location:
+                  filePath: "{{ filePath }}"
+                  lineNumber: "{{ lineNumber }}"
+                scanner: "{{ scanner }}"
+                severity: "{{ severity }}"
+            maxSeverity: "{{ maxSeverity }}"
+            perScannerVerdict:
+              maliciousContentLlmResult:
+                maxSeverity: "{{ maxSeverity }}"
+                scanStatus: "{{ scanStatus }}"
+              maliciousContentStaticResult:
+                maxSeverity: "{{ maxSeverity }}"
+                scanStatus: "{{ scanStatus }}"
+              malwareScan:
+                scanStatus: "{{ scanStatus }}"
+                verdict: "{{ verdict }}"
+              workspacePolicy:
+                scanStatus: "{{ scanStatus }}"
+                verdict: "{{ verdict }}"
+            skillName: "{{ skillName }}"
+          attestation:
+            jwts:
+              - compactJwt: "{{ compactJwt }}"
+            serializedPayload: "{{ serializedPayload }}"
+            signatures:
+              - publicKeyId: "{{ publicKeyId }}"
+                signature: "{{ signature }}"
+          build:
+            inTotoSlsaProvenanceV1:
+              _type: "{{ _type }}"
+              predicate:
+                buildDefinition:
+                  buildType: "{{ buildType }}"
+                  externalParameters: "{{ externalParameters }}"
+                  internalParameters: "{{ internalParameters }}"
+                  resolvedDependencies: "{{ resolvedDependencies }}"
+                runDetails:
+                  builder: "{{ builder }}"
+                  byproducts: "{{ byproducts }}"
+                  metadata: "{{ metadata }}"
+              predicateType: "{{ predicateType }}"
+              subject:
+                - digest: "{{ digest }}"
+                  name: "{{ name }}"
             intotoProvenance:
-              recipe:
-                environment: "{{ environment }}"
-                entryPoint: "{{ entryPoint }}"
-                definedInMaterial: "{{ definedInMaterial }}"
-                type: "{{ type }}"
-                arguments: "{{ arguments }}"
+              builderConfig:
+                id: "{{ id }}"
+              materials:
+                - "{{ materials }}"
               metadata:
                 buildFinishedOn: "{{ buildFinishedOn }}"
                 buildInvocationId: "{{ buildInvocationId }}"
@@ -1807,491 +1489,1097 @@ vulnerability
                   environment: {{ environment }}
                   materials: {{ materials }}
                 reproducible: {{ reproducible }}
-              materials:
-                - "{{ materials }}"
-              builderConfig:
-                id: "{{ id }}"
+              recipe:
+                arguments: "{{ arguments }}"
+                definedInMaterial: "{{ definedInMaterial }}"
+                entryPoint: "{{ entryPoint }}"
+                environment: "{{ environment }}"
+                type: "{{ type }}"
             intotoStatement:
+              _type: "{{ _type }}"
+              predicateType: "{{ predicateType }}"
               provenance:
-                recipe:
-                  environment: "{{ environment }}"
-                  entryPoint: "{{ entryPoint }}"
-                  definedInMaterial: "{{ definedInMaterial }}"
-                  type: "{{ type }}"
-                  arguments: "{{ arguments }}"
-                metadata:
-                  buildFinishedOn: "{{ buildFinishedOn }}"
-                  buildInvocationId: "{{ buildInvocationId }}"
-                  buildStartedOn: "{{ buildStartedOn }}"
-                  completeness: "{{ completeness }}"
-                  reproducible: {{ reproducible }}
-                materials:
-                  - "{{ materials }}"
                 builderConfig:
                   id: "{{ id }}"
-              slsaProvenanceZeroTwo:
-                builder:
-                  id: "{{ id }}"
-                buildConfig: "{{ buildConfig }}"
+                materials:
+                  - "{{ materials }}"
                 metadata:
+                  buildFinishedOn: "{{ buildFinishedOn }}"
+                  buildInvocationId: "{{ buildInvocationId }}"
                   buildStartedOn: "{{ buildStartedOn }}"
                   completeness: "{{ completeness }}"
                   reproducible: {{ reproducible }}
-                  buildInvocationId: "{{ buildInvocationId }}"
-                  buildFinishedOn: "{{ buildFinishedOn }}"
-                materials:
-                  - uri: "{{ uri }}"
-                    digest: "{{ digest }}"
-                buildType: "{{ buildType }}"
-                invocation:
-                  configSource: "{{ configSource }}"
-                  parameters: "{{ parameters }}"
+                recipe:
+                  arguments: "{{ arguments }}"
+                  definedInMaterial: "{{ definedInMaterial }}"
+                  entryPoint: "{{ entryPoint }}"
                   environment: "{{ environment }}"
-              predicateType: "{{ predicateType }}"
-              _type: "{{ _type }}"
+                  type: "{{ type }}"
               slsaProvenance:
                 builder:
                   id: "{{ id }}"
-                recipe:
-                  definedInMaterial: "{{ definedInMaterial }}"
-                  type: "{{ type }}"
-                  arguments: "{{ arguments }}"
-                  environment: "{{ environment }}"
-                  entryPoint: "{{ entryPoint }}"
+                materials:
+                  - digest: "{{ digest }}"
+                    uri: "{{ uri }}"
                 metadata:
                   buildFinishedOn: "{{ buildFinishedOn }}"
+                  buildInvocationId: "{{ buildInvocationId }}"
                   buildStartedOn: "{{ buildStartedOn }}"
                   completeness: "{{ completeness }}"
                   reproducible: {{ reproducible }}
-                  buildInvocationId: "{{ buildInvocationId }}"
-                materials:
-                  - uri: "{{ uri }}"
-                    digest: "{{ digest }}"
-              subject:
-                - name: "{{ name }}"
-                  digest: "{{ digest }}"
-            provenanceBytes: "{{ provenanceBytes }}"
-            inTotoSlsaProvenanceV1:
-              subject:
-                - name: "{{ name }}"
-                  digest: "{{ digest }}"
-              predicateType: "{{ predicateType }}"
-              predicate:
-                buildDefinition:
-                  buildType: "{{ buildType }}"
-                  externalParameters: "{{ externalParameters }}"
-                  internalParameters: "{{ internalParameters }}"
-                  resolvedDependencies: "{{ resolvedDependencies }}"
-                runDetails:
-                  builder: "{{ builder }}"
-                  metadata: "{{ metadata }}"
-                  byproducts: "{{ byproducts }}"
-              _type: "{{ _type }}"
-            provenance:
-              commands:
-                - waitFor: "{{ waitFor }}"
-                  name: "{{ name }}"
+                recipe:
+                  arguments: "{{ arguments }}"
+                  definedInMaterial: "{{ definedInMaterial }}"
+                  entryPoint: "{{ entryPoint }}"
+                  environment: "{{ environment }}"
+                  type: "{{ type }}"
+              slsaProvenanceZeroTwo:
+                buildConfig: "{{ buildConfig }}"
+                buildType: "{{ buildType }}"
+                builder:
                   id: "{{ id }}"
-                  args: "{{ args }}"
-                  env: "{{ env }}"
-                  dir: "{{ dir }}"
+                invocation:
+                  configSource: "{{ configSource }}"
+                  environment: "{{ environment }}"
+                  parameters: "{{ parameters }}"
+                materials:
+                  - digest: "{{ digest }}"
+                    uri: "{{ uri }}"
+                metadata:
+                  buildFinishedOn: "{{ buildFinishedOn }}"
+                  buildInvocationId: "{{ buildInvocationId }}"
+                  buildStartedOn: "{{ buildStartedOn }}"
+                  completeness: "{{ completeness }}"
+                  reproducible: {{ reproducible }}
+              subject:
+                - digest: "{{ digest }}"
+                  name: "{{ name }}"
+            provenance:
+              buildOptions: "{{ buildOptions }}"
+              builderVersion: "{{ builderVersion }}"
               builtArtifacts:
                 - checksum: "{{ checksum }}"
-                  names: "{{ names }}"
                   id: "{{ id }}"
+                  names: "{{ names }}"
+              commands:
+                - args: "{{ args }}"
+                  dir: "{{ dir }}"
+                  env: "{{ env }}"
+                  id: "{{ id }}"
+                  name: "{{ name }}"
+                  waitFor: "{{ waitFor }}"
               createTime: "{{ createTime }}"
-              triggerId: "{{ triggerId }}"
               creator: "{{ creator }}"
+              endTime: "{{ endTime }}"
+              id: "{{ id }}"
+              logsUri: "{{ logsUri }}"
+              projectId: "{{ projectId }}"
               sourceProvenance:
-                artifactStorageSourceUri: "{{ artifactStorageSourceUri }}"
-                fileHashes: "{{ fileHashes }}"
-                context:
-                  labels: "{{ labels }}"
-                  git: "{{ git }}"
-                  cloudRepo: "{{ cloudRepo }}"
-                  gerrit: "{{ gerrit }}"
                 additionalContexts:
-                  - labels: "{{ labels }}"
+                  - cloudRepo:
+                      aliasContext: "{{ aliasContext }}"
+                      repoId: "{{ repoId }}"
+                      revisionId: "{{ revisionId }}"
+                    gerrit:
+                      aliasContext: "{{ aliasContext }}"
+                      gerritProject: "{{ gerritProject }}"
+                      hostUri: "{{ hostUri }}"
+                      revisionId: "{{ revisionId }}"
                     git:
                       revisionId: "{{ revisionId }}"
                       url: "{{ url }}"
-                    cloudRepo:
-                      repoId: "{{ repoId }}"
-                      revisionId: "{{ revisionId }}"
-                      aliasContext: "{{ aliasContext }}"
-                    gerrit:
-                      hostUri: "{{ hostUri }}"
-                      revisionId: "{{ revisionId }}"
-                      aliasContext: "{{ aliasContext }}"
-                      gerritProject: "{{ gerritProject }}"
-              builderVersion: "{{ builderVersion }}"
-              buildOptions: "{{ buildOptions }}"
-              logsUri: "{{ logsUri }}"
-              endTime: "{{ endTime }}"
-              projectId: "{{ projectId }}"
+                    labels: "{{ labels }}"
+                artifactStorageSourceUri: "{{ artifactStorageSourceUri }}"
+                context:
+                  cloudRepo: "{{ cloudRepo }}"
+                  gerrit: "{{ gerrit }}"
+                  git: "{{ git }}"
+                  labels: "{{ labels }}"
+                fileHashes: "{{ fileHashes }}"
               startTime: "{{ startTime }}"
-              id: "{{ id }}"
+              triggerId: "{{ triggerId }}"
+            provenanceBytes: "{{ provenanceBytes }}"
+          compliance:
+            nonComplianceReason: "{{ nonComplianceReason }}"
+            nonCompliantFiles:
+              - displayCommand: "{{ displayCommand }}"
+                path: "{{ path }}"
+                reason: "{{ reason }}"
+            version:
+              benchmarkDocument: "{{ benchmarkDocument }}"
+              cpeUri: "{{ cpeUri }}"
+              version: "{{ version }}"
+          createTime: "{{ createTime }}"
           deployment:
-            deployTime: "{{ deployTime }}"
-            undeployTime: "{{ undeployTime }}"
+            address: "{{ address }}"
             config: "{{ config }}"
+            deployTime: "{{ deployTime }}"
             platform: "{{ platform }}"
             resourceUri:
               - "{{ resourceUri }}"
-            address: "{{ address }}"
+            undeployTime: "{{ undeployTime }}"
             userEmail: "{{ userEmail }}"
-          name: "{{ name }}"
-          image:
-            distance: {{ distance }}
-            baseResourceUrl: "{{ baseResourceUrl }}"
-            fingerprint:
-              v1Name: "{{ v1Name }}"
-              v2Name: "{{ v2Name }}"
-              v2Blob:
-                - "{{ v2Blob }}"
-            layerInfo:
-              - arguments: "{{ arguments }}"
-                directive: "{{ directive }}"
-          updateTime: "{{ updateTime }}"
-          upgrade:
-            windowsUpdate:
-              lastPublishedTimestamp: "{{ lastPublishedTimestamp }}"
-              title: "{{ title }}"
-              description: "{{ description }}"
-              categories:
-                - name: "{{ name }}"
-                  categoryId: "{{ categoryId }}"
-              supportUrl: "{{ supportUrl }}"
-              identity:
-                revision: {{ revision }}
-                updateId: "{{ updateId }}"
-              kbArticleIds:
-                - "{{ kbArticleIds }}"
-            package: "{{ package }}"
-            parsedVersion:
-              epoch: {{ epoch }}
-              name: "{{ name }}"
-              inclusive: {{ inclusive }}
-              kind: "{{ kind }}"
-              revision: "{{ revision }}"
-              fullName: "{{ fullName }}"
-            distribution:
-              cve:
-                - "{{ cve }}"
-              cpeUri: "{{ cpeUri }}"
-              classification: "{{ classification }}"
-              severity: "{{ severity }}"
-          remediation: "{{ remediation }}"
-          sbomReference:
-            payload:
-              predicateType: "{{ predicateType }}"
-              subject:
-                - name: "{{ name }}"
-                  digest: "{{ digest }}"
-              predicate:
-                location: "{{ location }}"
-                digest: "{{ digest }}"
-                mimeType: "{{ mimeType }}"
-                referrerId: "{{ referrerId }}"
-              _type: "{{ _type }}"
-            payloadType: "{{ payloadType }}"
-            signatures:
-              - sig: "{{ sig }}"
-                keyid: "{{ keyid }}"
-          secret:
-            kind: "{{ kind }}"
-            locations:
-              - fileLocation:
-                  lineNumber: {{ lineNumber }}
-                  filePath: "{{ filePath }}"
-                  layerDetails:
-                    index: {{ index }}
-                    command: "{{ command }}"
-                    diffId: "{{ diffId }}"
-                    chainId: "{{ chainId }}"
-                    baseImages: "{{ baseImages }}"
-            statuses:
-              - message: "{{ message }}"
-                status: "{{ status }}"
-                updateTime: "{{ updateTime }}"
-          createTime: "{{ createTime }}"
-          envelope:
-            signatures:
-              - sig: "{{ sig }}"
-                keyid: "{{ keyid }}"
-            payload: "{{ payload }}"
-            payloadType: "{{ payloadType }}"
-          advisoryPublishTime: "{{ advisoryPublishTime }}"
-          noteName: "{{ noteName }}"
           discovery:
-            lastVulnerabilityUpdateTime: "{{ lastVulnerabilityUpdateTime }}"
-            analysisStatus: "{{ analysisStatus }}"
-            cpe: "{{ cpe }}"
-            archiveTime: "{{ archiveTime }}"
             analysisCompleted:
               analysisType:
                 - "{{ analysisType }}"
-            continuousAnalysis: "{{ continuousAnalysis }}"
-            files:
-              - name: "{{ name }}"
-                digest: "{{ digest }}"
+            analysisError:
+              - code: {{ code }}
+                details: "{{ details }}"
+                message: "{{ message }}"
+            analysisStatus: "{{ analysisStatus }}"
             analysisStatusError:
-              message: "{{ message }}"
               code: {{ code }}
               details: "{{ details }}"
+              message: "{{ message }}"
+            archiveTime: "{{ archiveTime }}"
+            continuousAnalysis: "{{ continuousAnalysis }}"
+            cpe: "{{ cpe }}"
+            files:
+              - digest: "{{ digest }}"
+                name: "{{ name }}"
             lastScanTime: "{{ lastScanTime }}"
+            lastVulnerabilityUpdateTime: "{{ lastVulnerabilityUpdateTime }}"
             sbomStatus:
-              sbomState: "{{ sbomState }}"
               error: "{{ error }}"
-            analysisError:
-              - message: "{{ message }}"
-                code: {{ code }}
-                details: "{{ details }}"
+              sbomState: "{{ sbomState }}"
+          dsseAttestation:
+            envelope:
+              payload: "{{ payload }}"
+              payloadType: "{{ payloadType }}"
+              signatures:
+                - keyid: "{{ keyid }}"
+                  sig: "{{ sig }}"
+            statement:
+              _type: "{{ _type }}"
+              predicateType: "{{ predicateType }}"
+              provenance:
+                builderConfig:
+                  id: "{{ id }}"
+                materials:
+                  - "{{ materials }}"
+                metadata:
+                  buildFinishedOn: "{{ buildFinishedOn }}"
+                  buildInvocationId: "{{ buildInvocationId }}"
+                  buildStartedOn: "{{ buildStartedOn }}"
+                  completeness: "{{ completeness }}"
+                  reproducible: {{ reproducible }}
+                recipe:
+                  arguments: "{{ arguments }}"
+                  definedInMaterial: "{{ definedInMaterial }}"
+                  entryPoint: "{{ entryPoint }}"
+                  environment: "{{ environment }}"
+                  type: "{{ type }}"
+              slsaProvenance:
+                builder:
+                  id: "{{ id }}"
+                materials:
+                  - digest: "{{ digest }}"
+                    uri: "{{ uri }}"
+                metadata:
+                  buildFinishedOn: "{{ buildFinishedOn }}"
+                  buildInvocationId: "{{ buildInvocationId }}"
+                  buildStartedOn: "{{ buildStartedOn }}"
+                  completeness: "{{ completeness }}"
+                  reproducible: {{ reproducible }}
+                recipe:
+                  arguments: "{{ arguments }}"
+                  definedInMaterial: "{{ definedInMaterial }}"
+                  entryPoint: "{{ entryPoint }}"
+                  environment: "{{ environment }}"
+                  type: "{{ type }}"
+              slsaProvenanceZeroTwo:
+                buildConfig: "{{ buildConfig }}"
+                buildType: "{{ buildType }}"
+                builder:
+                  id: "{{ id }}"
+                invocation:
+                  configSource: "{{ configSource }}"
+                  environment: "{{ environment }}"
+                  parameters: "{{ parameters }}"
+                materials:
+                  - digest: "{{ digest }}"
+                    uri: "{{ uri }}"
+                metadata:
+                  buildFinishedOn: "{{ buildFinishedOn }}"
+                  buildInvocationId: "{{ buildInvocationId }}"
+                  buildStartedOn: "{{ buildStartedOn }}"
+                  completeness: "{{ completeness }}"
+                  reproducible: {{ reproducible }}
+              subject:
+                - digest: "{{ digest }}"
+                  name: "{{ name }}"
+          envelope:
+            payload: "{{ payload }}"
+            payloadType: "{{ payloadType }}"
+            signatures:
+              - keyid: "{{ keyid }}"
+                sig: "{{ sig }}"
+          image:
+            baseResourceUrl: "{{ baseResourceUrl }}"
+            distance: {{ distance }}
+            fingerprint:
+              v1Name: "{{ v1Name }}"
+              v2Blob:
+                - "{{ v2Blob }}"
+              v2Name: "{{ v2Name }}"
+            layerInfo:
+              - arguments: "{{ arguments }}"
+                directive: "{{ directive }}"
           kind: "{{ kind }}"
+          name: "{{ name }}"
+          noteName: "{{ noteName }}"
           package:
+            architecture: "{{ architecture }}"
+            cpeUri: "{{ cpeUri }}"
+            license:
+              comments: "{{ comments }}"
+              expression: "{{ expression }}"
             location:
               - cpeUri: "{{ cpeUri }}"
                 path: "{{ path }}"
                 version:
                   epoch: {{ epoch }}
-                  name: "{{ name }}"
+                  fullName: "{{ fullName }}"
                   inclusive: {{ inclusive }}
                   kind: "{{ kind }}"
+                  name: "{{ name }}"
                   revision: "{{ revision }}"
-                  fullName: "{{ fullName }}"
-            architecture: "{{ architecture }}"
-            packageType: "{{ packageType }}"
-            license:
-              expression: "{{ expression }}"
-              comments: "{{ comments }}"
             name: "{{ name }}"
+            packageType: "{{ packageType }}"
             version:
               epoch: {{ epoch }}
-              name: "{{ name }}"
+              fullName: "{{ fullName }}"
               inclusive: {{ inclusive }}
               kind: "{{ kind }}"
+              name: "{{ name }}"
               revision: "{{ revision }}"
-              fullName: "{{ fullName }}"
-            cpeUri: "{{ cpeUri }}"
-          compliance:
-            nonComplianceReason: "{{ nonComplianceReason }}"
-            nonCompliantFiles:
-              - path: "{{ path }}"
-                reason: "{{ reason }}"
-                displayCommand: "{{ displayCommand }}"
-            version:
-              benchmarkDocument: "{{ benchmarkDocument }}"
-              version: "{{ version }}"
-              cpeUri: "{{ cpeUri }}"
-          aiSkillAnalysis:
-            maxSeverity: "{{ maxSeverity }}"
-            skillName: "{{ skillName }}"
-            findings:
-              - scanner: "{{ scanner }}"
-                location:
-                  filePath: "{{ filePath }}"
-                  lineNumber: "{{ lineNumber }}"
-                severity: "{{ severity }}"
-                category: "{{ category }}"
-                details: "{{ details }}"
+          remediation: "{{ remediation }}"
           resourceUri: "{{ resourceUri }}"
-          attestation:
-            serializedPayload: "{{ serializedPayload }}"
+          sbomReference:
+            payload:
+              _type: "{{ _type }}"
+              predicate:
+                digest: "{{ digest }}"
+                location: "{{ location }}"
+                mimeType: "{{ mimeType }}"
+                referrerId: "{{ referrerId }}"
+              predicateType: "{{ predicateType }}"
+              subject:
+                - digest: "{{ digest }}"
+                  name: "{{ name }}"
+            payloadType: "{{ payloadType }}"
             signatures:
-              - publicKeyId: "{{ publicKeyId }}"
-                signature: "{{ signature }}"
-            jwts:
-              - compactJwt: "{{ compactJwt }}"
+              - keyid: "{{ keyid }}"
+                sig: "{{ sig }}"
+          secret:
+            kind: "{{ kind }}"
+            locations:
+              - fileLocation:
+                  filePath: "{{ filePath }}"
+                  layerDetails:
+                    baseImages: "{{ baseImages }}"
+                    chainId: "{{ chainId }}"
+                    command: "{{ command }}"
+                    diffId: "{{ diffId }}"
+                    index: {{ index }}
+                  lineNumber: {{ lineNumber }}
+            statuses:
+              - message: "{{ message }}"
+                status: "{{ status }}"
+                updateTime: "{{ updateTime }}"
+          updateTime: "{{ updateTime }}"
+          upgrade:
+            distribution:
+              classification: "{{ classification }}"
+              cpeUri: "{{ cpeUri }}"
+              cve:
+                - "{{ cve }}"
+              severity: "{{ severity }}"
+            package: "{{ package }}"
+            parsedVersion:
+              epoch: {{ epoch }}
+              fullName: "{{ fullName }}"
+              inclusive: {{ inclusive }}
+              kind: "{{ kind }}"
+              name: "{{ name }}"
+              revision: "{{ revision }}"
+            windowsUpdate:
+              categories:
+                - categoryId: "{{ categoryId }}"
+                  name: "{{ name }}"
+              description: "{{ description }}"
+              identity:
+                revision: {{ revision }}
+                updateId: "{{ updateId }}"
+              kbArticleIds:
+                - "{{ kbArticleIds }}"
+              lastPublishedTimestamp: "{{ lastPublishedTimestamp }}"
+              supportUrl: "{{ supportUrl }}"
+              title: "{{ title }}"
           vulnerability:
+            cvssScore: {{ cvssScore }}
+            cvssV2:
+              attackComplexity: "{{ attackComplexity }}"
+              attackRequirements: "{{ attackRequirements }}"
+              attackVector: "{{ attackVector }}"
+              authentication: "{{ authentication }}"
+              availabilityImpact: "{{ availabilityImpact }}"
+              baseScore: {{ baseScore }}
+              confidentialityImpact: "{{ confidentialityImpact }}"
+              exploitMaturity: "{{ exploitMaturity }}"
+              exploitabilityScore: {{ exploitabilityScore }}
+              impactScore: {{ impactScore }}
+              integrityImpact: "{{ integrityImpact }}"
+              privilegesRequired: "{{ privilegesRequired }}"
+              scope: "{{ scope }}"
+              subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
+              subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
+              subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
+              userInteraction: "{{ userInteraction }}"
+              vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
+              vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
+              vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
+            cvssV4:
+              attackComplexity: "{{ attackComplexity }}"
+              attackRequirements: "{{ attackRequirements }}"
+              attackVector: "{{ attackVector }}"
+              authentication: "{{ authentication }}"
+              availabilityImpact: "{{ availabilityImpact }}"
+              baseScore: {{ baseScore }}
+              confidentialityImpact: "{{ confidentialityImpact }}"
+              exploitMaturity: "{{ exploitMaturity }}"
+              exploitabilityScore: {{ exploitabilityScore }}
+              impactScore: {{ impactScore }}
+              integrityImpact: "{{ integrityImpact }}"
+              privilegesRequired: "{{ privilegesRequired }}"
+              scope: "{{ scope }}"
+              subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
+              subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
+              subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
+              userInteraction: "{{ userInteraction }}"
+              vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
+              vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
+              vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
+            cvssVersion: "{{ cvssVersion }}"
+            cvssv3:
+              attackComplexity: "{{ attackComplexity }}"
+              attackRequirements: "{{ attackRequirements }}"
+              attackVector: "{{ attackVector }}"
+              authentication: "{{ authentication }}"
+              availabilityImpact: "{{ availabilityImpact }}"
+              baseScore: {{ baseScore }}
+              confidentialityImpact: "{{ confidentialityImpact }}"
+              exploitMaturity: "{{ exploitMaturity }}"
+              exploitabilityScore: {{ exploitabilityScore }}
+              impactScore: {{ impactScore }}
+              integrityImpact: "{{ integrityImpact }}"
+              privilegesRequired: "{{ privilegesRequired }}"
+              scope: "{{ scope }}"
+              subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
+              subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
+              subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
+              userInteraction: "{{ userInteraction }}"
+              vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
+              vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
+              vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
+            effectiveSeverity: "{{ effectiveSeverity }}"
+            extraDetails: "{{ extraDetails }}"
+            fixAvailable: {{ fixAvailable }}
+            longDescription: "{{ longDescription }}"
+            packageIssue:
+              - affectedCpeUri: "{{ affectedCpeUri }}"
+                affectedPackage: "{{ affectedPackage }}"
+                affectedVersion:
+                  epoch: {{ epoch }}
+                  fullName: "{{ fullName }}"
+                  inclusive: {{ inclusive }}
+                  kind: "{{ kind }}"
+                  name: "{{ name }}"
+                  revision: "{{ revision }}"
+                effectiveSeverity: "{{ effectiveSeverity }}"
+                fileLocation: "{{ fileLocation }}"
+                fixAvailable: {{ fixAvailable }}
+                fixedCpeUri: "{{ fixedCpeUri }}"
+                fixedPackage: "{{ fixedPackage }}"
+                fixedVersion:
+                  epoch: {{ epoch }}
+                  fullName: "{{ fullName }}"
+                  inclusive: {{ inclusive }}
+                  kind: "{{ kind }}"
+                  name: "{{ name }}"
+                  revision: "{{ revision }}"
+                packageType: "{{ packageType }}"
+            relatedUrls:
+              - label: "{{ label }}"
+                url: "{{ url }}"
             risk:
               cisaKev:
                 knownRansomwareCampaignUse: "{{ knownRansomwareCampaignUse }}"
               epss:
-                score: {{ score }}
                 percentile: {{ percentile }}
-            fixAvailable: {{ fixAvailable }}
+                score: {{ score }}
             severity: "{{ severity }}"
-            packageIssue:
-              - fixedCpeUri: "{{ fixedCpeUri }}"
-                fixedVersion:
-                  epoch: {{ epoch }}
-                  name: "{{ name }}"
-                  inclusive: {{ inclusive }}
-                  kind: "{{ kind }}"
-                  revision: "{{ revision }}"
-                  fullName: "{{ fullName }}"
-                affectedPackage: "{{ affectedPackage }}"
-                packageType: "{{ packageType }}"
-                affectedCpeUri: "{{ affectedCpeUri }}"
-                fixAvailable: {{ fixAvailable }}
-                fixedPackage: "{{ fixedPackage }}"
-                fileLocation: "{{ fileLocation }}"
-                affectedVersion:
-                  epoch: {{ epoch }}
-                  name: "{{ name }}"
-                  inclusive: {{ inclusive }}
-                  kind: "{{ kind }}"
-                  revision: "{{ revision }}"
-                  fullName: "{{ fullName }}"
-                effectiveSeverity: "{{ effectiveSeverity }}"
-            relatedUrls:
-              - url: "{{ url }}"
-                label: "{{ label }}"
+            shortDescription: "{{ shortDescription }}"
+            type: "{{ type }}"
             vexAssessment:
-              vulnerabilityId: "{{ vulnerabilityId }}"
-              relatedUris:
-                - url: "{{ url }}"
-                  label: "{{ label }}"
+              cve: "{{ cve }}"
+              impacts:
+                - "{{ impacts }}"
+              justification:
+                details: "{{ details }}"
+                justificationType: "{{ justificationType }}"
               noteName: "{{ noteName }}"
+              relatedUris:
+                - label: "{{ label }}"
+                  url: "{{ url }}"
               remediations:
                 - details: "{{ details }}"
                   remediationType: "{{ remediationType }}"
                   remediationUri:
-                    url: "{{ url }}"
                     label: "{{ label }}"
-              impacts:
-                - "{{ impacts }}"
-              justification:
-                justificationType: "{{ justificationType }}"
-                details: "{{ details }}"
-              cve: "{{ cve }}"
+                    url: "{{ url }}"
               state: "{{ state }}"
-            cvssV4:
-              vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
-              attackVector: "{{ attackVector }}"
-              impactScore: {{ impactScore }}
-              authentication: "{{ authentication }}"
-              subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
-              subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
-              baseScore: {{ baseScore }}
-              integrityImpact: "{{ integrityImpact }}"
-              availabilityImpact: "{{ availabilityImpact }}"
-              vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
-              subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
-              exploitMaturity: "{{ exploitMaturity }}"
-              scope: "{{ scope }}"
-              attackRequirements: "{{ attackRequirements }}"
-              userInteraction: "{{ userInteraction }}"
-              vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
-              exploitabilityScore: {{ exploitabilityScore }}
-              privilegesRequired: "{{ privilegesRequired }}"
-              attackComplexity: "{{ attackComplexity }}"
-              confidentialityImpact: "{{ confidentialityImpact }}"
-            cvssVersion: "{{ cvssVersion }}"
-            extraDetails: "{{ extraDetails }}"
-            type: "{{ type }}"
-            shortDescription: "{{ shortDescription }}"
-            longDescription: "{{ longDescription }}"
-            cvssV2:
-              vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
-              attackVector: "{{ attackVector }}"
-              impactScore: {{ impactScore }}
-              authentication: "{{ authentication }}"
-              subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
-              subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
-              baseScore: {{ baseScore }}
-              integrityImpact: "{{ integrityImpact }}"
-              availabilityImpact: "{{ availabilityImpact }}"
-              vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
-              subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
-              exploitMaturity: "{{ exploitMaturity }}"
-              scope: "{{ scope }}"
-              attackRequirements: "{{ attackRequirements }}"
-              userInteraction: "{{ userInteraction }}"
-              vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
-              exploitabilityScore: {{ exploitabilityScore }}
-              privilegesRequired: "{{ privilegesRequired }}"
-              attackComplexity: "{{ attackComplexity }}"
-              confidentialityImpact: "{{ confidentialityImpact }}"
-            cvssScore: {{ cvssScore }}
-            cvssv3:
-              vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
-              attackVector: "{{ attackVector }}"
-              impactScore: {{ impactScore }}
-              authentication: "{{ authentication }}"
-              subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
-              subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
-              baseScore: {{ baseScore }}
-              integrityImpact: "{{ integrityImpact }}"
-              availabilityImpact: "{{ availabilityImpact }}"
-              vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
-              subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
-              exploitMaturity: "{{ exploitMaturity }}"
-              scope: "{{ scope }}"
-              attackRequirements: "{{ attackRequirements }}"
-              userInteraction: "{{ userInteraction }}"
-              vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
-              exploitabilityScore: {{ exploitabilityScore }}
-              privilegesRequired: "{{ privilegesRequired }}"
-              attackComplexity: "{{ attackComplexity }}"
-              confidentialityImpact: "{{ confidentialityImpact }}"
-            effectiveSeverity: "{{ effectiveSeverity }}"
-          dsseAttestation:
-            envelope:
-              signatures:
-                - sig: "{{ sig }}"
-                  keyid: "{{ keyid }}"
-              payload: "{{ payload }}"
-              payloadType: "{{ payloadType }}"
-            statement:
-              provenance:
-                recipe:
-                  environment: "{{ environment }}"
-                  entryPoint: "{{ entryPoint }}"
-                  definedInMaterial: "{{ definedInMaterial }}"
-                  type: "{{ type }}"
-                  arguments: "{{ arguments }}"
-                metadata:
-                  buildFinishedOn: "{{ buildFinishedOn }}"
-                  buildInvocationId: "{{ buildInvocationId }}"
-                  buildStartedOn: "{{ buildStartedOn }}"
-                  completeness: "{{ completeness }}"
-                  reproducible: {{ reproducible }}
-                materials:
-                  - "{{ materials }}"
-                builderConfig:
-                  id: "{{ id }}"
-              slsaProvenanceZeroTwo:
-                builder:
-                  id: "{{ id }}"
-                buildConfig: "{{ buildConfig }}"
-                metadata:
-                  buildStartedOn: "{{ buildStartedOn }}"
-                  completeness: "{{ completeness }}"
-                  reproducible: {{ reproducible }}
-                  buildInvocationId: "{{ buildInvocationId }}"
-                  buildFinishedOn: "{{ buildFinishedOn }}"
-                materials:
-                  - uri: "{{ uri }}"
-                    digest: "{{ digest }}"
-                buildType: "{{ buildType }}"
-                invocation:
-                  configSource: "{{ configSource }}"
-                  parameters: "{{ parameters }}"
-                  environment: "{{ environment }}"
-              predicateType: "{{ predicateType }}"
-              _type: "{{ _type }}"
-              slsaProvenance:
-                builder:
-                  id: "{{ id }}"
-                recipe:
-                  definedInMaterial: "{{ definedInMaterial }}"
-                  type: "{{ type }}"
-                  arguments: "{{ arguments }}"
-                  environment: "{{ environment }}"
-                  entryPoint: "{{ entryPoint }}"
-                metadata:
-                  buildFinishedOn: "{{ buildFinishedOn }}"
-                  buildStartedOn: "{{ buildStartedOn }}"
-                  completeness: "{{ completeness }}"
-                  reproducible: {{ reproducible }}
-                  buildInvocationId: "{{ buildInvocationId }}"
-                materials:
-                  - uri: "{{ uri }}"
-                    digest: "{{ digest }}"
-              subject:
-                - name: "{{ name }}"
+              vulnerabilityId: "{{ vulnerabilityId }}"
+    - name: advisoryPublishTime
+      value: "{{ advisoryPublishTime }}"
+      description: |
+        The time this advisory was published by the source.
+    - name: aiSkillAnalysis
+      description: |
+        Describes an AI skill analysis.
+      value:
+        findings:
+          - category: "{{ category }}"
+            details: "{{ details }}"
+            location:
+              filePath: "{{ filePath }}"
+              lineNumber: "{{ lineNumber }}"
+            scanner: "{{ scanner }}"
+            severity: "{{ severity }}"
+        maxSeverity: "{{ maxSeverity }}"
+        perScannerVerdict:
+          maliciousContentLlmResult:
+            maxSeverity: "{{ maxSeverity }}"
+            scanStatus: "{{ scanStatus }}"
+          maliciousContentStaticResult:
+            maxSeverity: "{{ maxSeverity }}"
+            scanStatus: "{{ scanStatus }}"
+          malwareScan:
+            scanStatus: "{{ scanStatus }}"
+            verdict: "{{ verdict }}"
+          workspacePolicy:
+            scanStatus: "{{ scanStatus }}"
+            verdict: "{{ verdict }}"
+        skillName: "{{ skillName }}"
+    - name: attestation
+      description: |
+        Describes an attestation of an artifact.
+      value:
+        jwts:
+          - compactJwt: "{{ compactJwt }}"
+        serializedPayload: "{{ serializedPayload }}"
+        signatures:
+          - publicKeyId: "{{ publicKeyId }}"
+            signature: "{{ signature }}"
+    - name: build
+      description: |
+        Describes a verifiable build.
+      value:
+        inTotoSlsaProvenanceV1:
+          _type: "{{ _type }}"
+          predicate:
+            buildDefinition:
+              buildType: "{{ buildType }}"
+              externalParameters: "{{ externalParameters }}"
+              internalParameters: "{{ internalParameters }}"
+              resolvedDependencies:
+                - annotations: "{{ annotations }}"
+                  content: "{{ content }}"
                   digest: "{{ digest }}"
+                  downloadLocation: "{{ downloadLocation }}"
+                  mediaType: "{{ mediaType }}"
+                  name: "{{ name }}"
+                  uri: "{{ uri }}"
+            runDetails:
+              builder:
+                builderDependencies: "{{ builderDependencies }}"
+                id: "{{ id }}"
+                version: "{{ version }}"
+              byproducts:
+                - annotations: "{{ annotations }}"
+                  content: "{{ content }}"
+                  digest: "{{ digest }}"
+                  downloadLocation: "{{ downloadLocation }}"
+                  mediaType: "{{ mediaType }}"
+                  name: "{{ name }}"
+                  uri: "{{ uri }}"
+              metadata:
+                finishedOn: "{{ finishedOn }}"
+                invocationId: "{{ invocationId }}"
+                startedOn: "{{ startedOn }}"
+          predicateType: "{{ predicateType }}"
+          subject:
+            - digest: "{{ digest }}"
+              name: "{{ name }}"
+        intotoProvenance:
+          builderConfig:
+            id: "{{ id }}"
+          materials:
+            - "{{ materials }}"
+          metadata:
+            buildFinishedOn: "{{ buildFinishedOn }}"
+            buildInvocationId: "{{ buildInvocationId }}"
+            buildStartedOn: "{{ buildStartedOn }}"
+            completeness:
+              arguments: {{ arguments }}
+              environment: {{ environment }}
+              materials: {{ materials }}
+            reproducible: {{ reproducible }}
+          recipe:
+            arguments: "{{ arguments }}"
+            definedInMaterial: "{{ definedInMaterial }}"
+            entryPoint: "{{ entryPoint }}"
+            environment: "{{ environment }}"
+            type: "{{ type }}"
+        intotoStatement:
+          _type: "{{ _type }}"
+          predicateType: "{{ predicateType }}"
+          provenance:
+            builderConfig:
+              id: "{{ id }}"
+            materials:
+              - "{{ materials }}"
+            metadata:
+              buildFinishedOn: "{{ buildFinishedOn }}"
+              buildInvocationId: "{{ buildInvocationId }}"
+              buildStartedOn: "{{ buildStartedOn }}"
+              completeness:
+                arguments: {{ arguments }}
+                environment: {{ environment }}
+                materials: {{ materials }}
+              reproducible: {{ reproducible }}
+            recipe:
+              arguments: "{{ arguments }}"
+              definedInMaterial: "{{ definedInMaterial }}"
+              entryPoint: "{{ entryPoint }}"
+              environment: "{{ environment }}"
+              type: "{{ type }}"
+          slsaProvenance:
+            builder:
+              id: "{{ id }}"
+            materials:
+              - digest: "{{ digest }}"
+                uri: "{{ uri }}"
+            metadata:
+              buildFinishedOn: "{{ buildFinishedOn }}"
+              buildInvocationId: "{{ buildInvocationId }}"
+              buildStartedOn: "{{ buildStartedOn }}"
+              completeness:
+                arguments: {{ arguments }}
+                environment: {{ environment }}
+                materials: {{ materials }}
+              reproducible: {{ reproducible }}
+            recipe:
+              arguments: "{{ arguments }}"
+              definedInMaterial: "{{ definedInMaterial }}"
+              entryPoint: "{{ entryPoint }}"
+              environment: "{{ environment }}"
+              type: "{{ type }}"
+          slsaProvenanceZeroTwo:
+            buildConfig: "{{ buildConfig }}"
+            buildType: "{{ buildType }}"
+            builder:
+              id: "{{ id }}"
+            invocation:
+              configSource:
+                digest: "{{ digest }}"
+                entryPoint: "{{ entryPoint }}"
+                uri: "{{ uri }}"
+              environment: "{{ environment }}"
+              parameters: "{{ parameters }}"
+            materials:
+              - digest: "{{ digest }}"
+                uri: "{{ uri }}"
+            metadata:
+              buildFinishedOn: "{{ buildFinishedOn }}"
+              buildInvocationId: "{{ buildInvocationId }}"
+              buildStartedOn: "{{ buildStartedOn }}"
+              completeness:
+                environment: {{ environment }}
+                materials: {{ materials }}
+                parameters: {{ parameters }}
+              reproducible: {{ reproducible }}
+          subject:
+            - digest: "{{ digest }}"
+              name: "{{ name }}"
+        provenance:
+          buildOptions: "{{ buildOptions }}"
+          builderVersion: "{{ builderVersion }}"
+          builtArtifacts:
+            - checksum: "{{ checksum }}"
+              id: "{{ id }}"
+              names: "{{ names }}"
+          commands:
+            - args: "{{ args }}"
+              dir: "{{ dir }}"
+              env: "{{ env }}"
+              id: "{{ id }}"
+              name: "{{ name }}"
+              waitFor: "{{ waitFor }}"
+          createTime: "{{ createTime }}"
+          creator: "{{ creator }}"
+          endTime: "{{ endTime }}"
+          id: "{{ id }}"
+          logsUri: "{{ logsUri }}"
+          projectId: "{{ projectId }}"
+          sourceProvenance:
+            additionalContexts:
+              - cloudRepo:
+                  aliasContext: "{{ aliasContext }}"
+                  repoId: "{{ repoId }}"
+                  revisionId: "{{ revisionId }}"
+                gerrit:
+                  aliasContext: "{{ aliasContext }}"
+                  gerritProject: "{{ gerritProject }}"
+                  hostUri: "{{ hostUri }}"
+                  revisionId: "{{ revisionId }}"
+                git:
+                  revisionId: "{{ revisionId }}"
+                  url: "{{ url }}"
+                labels: "{{ labels }}"
+            artifactStorageSourceUri: "{{ artifactStorageSourceUri }}"
+            context:
+              cloudRepo:
+                aliasContext: "{{ aliasContext }}"
+                repoId: "{{ repoId }}"
+                revisionId: "{{ revisionId }}"
+              gerrit:
+                aliasContext: "{{ aliasContext }}"
+                gerritProject: "{{ gerritProject }}"
+                hostUri: "{{ hostUri }}"
+                revisionId: "{{ revisionId }}"
+              git:
+                revisionId: "{{ revisionId }}"
+                url: "{{ url }}"
+              labels: "{{ labels }}"
+            fileHashes: "{{ fileHashes }}"
+          startTime: "{{ startTime }}"
+          triggerId: "{{ triggerId }}"
+        provenanceBytes: "{{ provenanceBytes }}"
+    - name: compliance
+      description: |
+        Describes a compliance violation on a linked resource.
+      value:
+        nonComplianceReason: "{{ nonComplianceReason }}"
+        nonCompliantFiles:
+          - displayCommand: "{{ displayCommand }}"
+            path: "{{ path }}"
+            reason: "{{ reason }}"
+        version:
+          benchmarkDocument: "{{ benchmarkDocument }}"
+          cpeUri: "{{ cpeUri }}"
+          version: "{{ version }}"
+    - name: createTime
+      value: "{{ createTime }}"
+      description: |
+        Output only. The time this occurrence was created.
+    - name: deployment
+      description: |
+        Describes the deployment of an artifact on a runtime.
+      value:
+        address: "{{ address }}"
+        config: "{{ config }}"
+        deployTime: "{{ deployTime }}"
+        platform: "{{ platform }}"
+        resourceUri:
+          - "{{ resourceUri }}"
+        undeployTime: "{{ undeployTime }}"
+        userEmail: "{{ userEmail }}"
+    - name: discovery
+      description: |
+        Describes when a resource was discovered.
+      value:
+        analysisCompleted:
+          analysisType:
+            - "{{ analysisType }}"
+        analysisError:
+          - code: {{ code }}
+            details: "{{ details }}"
+            message: "{{ message }}"
+        analysisStatus: "{{ analysisStatus }}"
+        analysisStatusError:
+          code: {{ code }}
+          details: "{{ details }}"
+          message: "{{ message }}"
+        archiveTime: "{{ archiveTime }}"
+        continuousAnalysis: "{{ continuousAnalysis }}"
+        cpe: "{{ cpe }}"
+        files:
+          - digest: "{{ digest }}"
+            name: "{{ name }}"
+        lastScanTime: "{{ lastScanTime }}"
+        lastVulnerabilityUpdateTime: "{{ lastVulnerabilityUpdateTime }}"
+        sbomStatus:
+          error: "{{ error }}"
+          sbomState: "{{ sbomState }}"
+    - name: dsseAttestation
+      description: |
+        Describes an attestation of an artifact using dsse.
+      value:
+        envelope:
+          payload: "{{ payload }}"
+          payloadType: "{{ payloadType }}"
+          signatures:
+            - keyid: "{{ keyid }}"
+              sig: "{{ sig }}"
+        statement:
+          _type: "{{ _type }}"
+          predicateType: "{{ predicateType }}"
+          provenance:
+            builderConfig:
+              id: "{{ id }}"
+            materials:
+              - "{{ materials }}"
+            metadata:
+              buildFinishedOn: "{{ buildFinishedOn }}"
+              buildInvocationId: "{{ buildInvocationId }}"
+              buildStartedOn: "{{ buildStartedOn }}"
+              completeness:
+                arguments: {{ arguments }}
+                environment: {{ environment }}
+                materials: {{ materials }}
+              reproducible: {{ reproducible }}
+            recipe:
+              arguments: "{{ arguments }}"
+              definedInMaterial: "{{ definedInMaterial }}"
+              entryPoint: "{{ entryPoint }}"
+              environment: "{{ environment }}"
+              type: "{{ type }}"
+          slsaProvenance:
+            builder:
+              id: "{{ id }}"
+            materials:
+              - digest: "{{ digest }}"
+                uri: "{{ uri }}"
+            metadata:
+              buildFinishedOn: "{{ buildFinishedOn }}"
+              buildInvocationId: "{{ buildInvocationId }}"
+              buildStartedOn: "{{ buildStartedOn }}"
+              completeness:
+                arguments: {{ arguments }}
+                environment: {{ environment }}
+                materials: {{ materials }}
+              reproducible: {{ reproducible }}
+            recipe:
+              arguments: "{{ arguments }}"
+              definedInMaterial: "{{ definedInMaterial }}"
+              entryPoint: "{{ entryPoint }}"
+              environment: "{{ environment }}"
+              type: "{{ type }}"
+          slsaProvenanceZeroTwo:
+            buildConfig: "{{ buildConfig }}"
+            buildType: "{{ buildType }}"
+            builder:
+              id: "{{ id }}"
+            invocation:
+              configSource:
+                digest: "{{ digest }}"
+                entryPoint: "{{ entryPoint }}"
+                uri: "{{ uri }}"
+              environment: "{{ environment }}"
+              parameters: "{{ parameters }}"
+            materials:
+              - digest: "{{ digest }}"
+                uri: "{{ uri }}"
+            metadata:
+              buildFinishedOn: "{{ buildFinishedOn }}"
+              buildInvocationId: "{{ buildInvocationId }}"
+              buildStartedOn: "{{ buildStartedOn }}"
+              completeness:
+                environment: {{ environment }}
+                materials: {{ materials }}
+                parameters: {{ parameters }}
+              reproducible: {{ reproducible }}
+          subject:
+            - digest: "{{ digest }}"
+              name: "{{ name }}"
+    - name: envelope
+      description: |
+        https://github.com/secure-systems-lab/dsse
+      value:
+        payload: "{{ payload }}"
+        payloadType: "{{ payloadType }}"
+        signatures:
+          - keyid: "{{ keyid }}"
+            sig: "{{ sig }}"
+    - name: image
+      description: |
+        Describes how this resource derives from the basis in the associated note.
+      value:
+        baseResourceUrl: "{{ baseResourceUrl }}"
+        distance: {{ distance }}
+        fingerprint:
+          v1Name: "{{ v1Name }}"
+          v2Blob:
+            - "{{ v2Blob }}"
+          v2Name: "{{ v2Name }}"
+        layerInfo:
+          - arguments: "{{ arguments }}"
+            directive: "{{ directive }}"
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests.
+      valid_values: ['NOTE_KIND_UNSPECIFIED', 'VULNERABILITY', 'BUILD', 'IMAGE', 'PACKAGE', 'DEPLOYMENT', 'DISCOVERY', 'ATTESTATION', 'UPGRADE', 'COMPLIANCE', 'DSSE_ATTESTATION', 'VULNERABILITY_ASSESSMENT', 'SBOM_REFERENCE', 'SECRET', 'AI_SKILL_ANALYSIS']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Output only. The name of the occurrence in the form of \`projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]\`.
+    - name: noteName
+      value: "{{ noteName }}"
+      description: |
+        Required. Immutable. The analysis note associated with this occurrence, in the form of \`projects/[PROVIDER_ID]/notes/[NOTE_ID]\`. This field can be used as a filter in list requests.
+    - name: package
+      description: |
+        Describes the installation of a package on the linked resource.
+      value:
+        architecture: "{{ architecture }}"
+        cpeUri: "{{ cpeUri }}"
+        license:
+          comments: "{{ comments }}"
+          expression: "{{ expression }}"
+        location:
+          - cpeUri: "{{ cpeUri }}"
+            path: "{{ path }}"
+            version:
+              epoch: {{ epoch }}
+              fullName: "{{ fullName }}"
+              inclusive: {{ inclusive }}
+              kind: "{{ kind }}"
+              name: "{{ name }}"
+              revision: "{{ revision }}"
+        name: "{{ name }}"
+        packageType: "{{ packageType }}"
+        version:
+          epoch: {{ epoch }}
+          fullName: "{{ fullName }}"
+          inclusive: {{ inclusive }}
+          kind: "{{ kind }}"
+          name: "{{ name }}"
+          revision: "{{ revision }}"
+    - name: remediation
+      value: "{{ remediation }}"
+      description: |
+        A description of actions that can be taken to remedy the note.
+    - name: resourceUri
+      value: "{{ resourceUri }}"
+      description: |
+        Required. Immutable. A URI that represents the resource for which the occurrence applies. For example, \`https://gcr.io/project/image@sha256:123abc\` for a Docker image.
+    - name: sbomReference
+      description: |
+        Describes a specific SBOM reference occurrences.
+      value:
+        payload:
+          _type: "{{ _type }}"
+          predicate:
+            digest: "{{ digest }}"
+            location: "{{ location }}"
+            mimeType: "{{ mimeType }}"
+            referrerId: "{{ referrerId }}"
+          predicateType: "{{ predicateType }}"
+          subject:
+            - digest: "{{ digest }}"
+              name: "{{ name }}"
+        payloadType: "{{ payloadType }}"
+        signatures:
+          - keyid: "{{ keyid }}"
+            sig: "{{ sig }}"
+    - name: secret
+      description: |
+        Describes a secret.
+      value:
+        kind: "{{ kind }}"
+        locations:
+          - fileLocation:
+              filePath: "{{ filePath }}"
+              layerDetails:
+                baseImages:
+                  - layerCount: {{ layerCount }}
+                    name: "{{ name }}"
+                    registry: "{{ registry }}"
+                    repository: "{{ repository }}"
+                chainId: "{{ chainId }}"
+                command: "{{ command }}"
+                diffId: "{{ diffId }}"
+                index: {{ index }}
+              lineNumber: {{ lineNumber }}
+        statuses:
+          - message: "{{ message }}"
+            status: "{{ status }}"
+            updateTime: "{{ updateTime }}"
+    - name: updateTime
+      value: "{{ updateTime }}"
+      description: |
+        Output only. The time this occurrence was last updated.
+    - name: upgrade
+      description: |
+        Describes an available package upgrade on the linked resource.
+      value:
+        distribution:
+          classification: "{{ classification }}"
+          cpeUri: "{{ cpeUri }}"
+          cve:
+            - "{{ cve }}"
+          severity: "{{ severity }}"
+        package: "{{ package }}"
+        parsedVersion:
+          epoch: {{ epoch }}
+          fullName: "{{ fullName }}"
+          inclusive: {{ inclusive }}
+          kind: "{{ kind }}"
+          name: "{{ name }}"
+          revision: "{{ revision }}"
+        windowsUpdate:
+          categories:
+            - categoryId: "{{ categoryId }}"
+              name: "{{ name }}"
+          description: "{{ description }}"
+          identity:
+            revision: {{ revision }}
+            updateId: "{{ updateId }}"
+          kbArticleIds:
+            - "{{ kbArticleIds }}"
+          lastPublishedTimestamp: "{{ lastPublishedTimestamp }}"
+          supportUrl: "{{ supportUrl }}"
+          title: "{{ title }}"
+    - name: vulnerability
+      description: |
+        Describes a security vulnerability.
+      value:
+        cvssScore: {{ cvssScore }}
+        cvssV2:
+          attackComplexity: "{{ attackComplexity }}"
+          attackRequirements: "{{ attackRequirements }}"
+          attackVector: "{{ attackVector }}"
+          authentication: "{{ authentication }}"
+          availabilityImpact: "{{ availabilityImpact }}"
+          baseScore: {{ baseScore }}
+          confidentialityImpact: "{{ confidentialityImpact }}"
+          exploitMaturity: "{{ exploitMaturity }}"
+          exploitabilityScore: {{ exploitabilityScore }}
+          impactScore: {{ impactScore }}
+          integrityImpact: "{{ integrityImpact }}"
+          privilegesRequired: "{{ privilegesRequired }}"
+          scope: "{{ scope }}"
+          subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
+          subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
+          subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
+          userInteraction: "{{ userInteraction }}"
+          vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
+          vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
+          vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
+        cvssV4:
+          attackComplexity: "{{ attackComplexity }}"
+          attackRequirements: "{{ attackRequirements }}"
+          attackVector: "{{ attackVector }}"
+          authentication: "{{ authentication }}"
+          availabilityImpact: "{{ availabilityImpact }}"
+          baseScore: {{ baseScore }}
+          confidentialityImpact: "{{ confidentialityImpact }}"
+          exploitMaturity: "{{ exploitMaturity }}"
+          exploitabilityScore: {{ exploitabilityScore }}
+          impactScore: {{ impactScore }}
+          integrityImpact: "{{ integrityImpact }}"
+          privilegesRequired: "{{ privilegesRequired }}"
+          scope: "{{ scope }}"
+          subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
+          subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
+          subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
+          userInteraction: "{{ userInteraction }}"
+          vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
+          vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
+          vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
+        cvssVersion: "{{ cvssVersion }}"
+        cvssv3:
+          attackComplexity: "{{ attackComplexity }}"
+          attackRequirements: "{{ attackRequirements }}"
+          attackVector: "{{ attackVector }}"
+          authentication: "{{ authentication }}"
+          availabilityImpact: "{{ availabilityImpact }}"
+          baseScore: {{ baseScore }}
+          confidentialityImpact: "{{ confidentialityImpact }}"
+          exploitMaturity: "{{ exploitMaturity }}"
+          exploitabilityScore: {{ exploitabilityScore }}
+          impactScore: {{ impactScore }}
+          integrityImpact: "{{ integrityImpact }}"
+          privilegesRequired: "{{ privilegesRequired }}"
+          scope: "{{ scope }}"
+          subsequentSystemAvailabilityImpact: "{{ subsequentSystemAvailabilityImpact }}"
+          subsequentSystemConfidentialityImpact: "{{ subsequentSystemConfidentialityImpact }}"
+          subsequentSystemIntegrityImpact: "{{ subsequentSystemIntegrityImpact }}"
+          userInteraction: "{{ userInteraction }}"
+          vulnerableSystemAvailabilityImpact: "{{ vulnerableSystemAvailabilityImpact }}"
+          vulnerableSystemConfidentialityImpact: "{{ vulnerableSystemConfidentialityImpact }}"
+          vulnerableSystemIntegrityImpact: "{{ vulnerableSystemIntegrityImpact }}"
+        effectiveSeverity: "{{ effectiveSeverity }}"
+        extraDetails: "{{ extraDetails }}"
+        fixAvailable: {{ fixAvailable }}
+        longDescription: "{{ longDescription }}"
+        packageIssue:
+          - affectedCpeUri: "{{ affectedCpeUri }}"
+            affectedPackage: "{{ affectedPackage }}"
+            affectedVersion:
+              epoch: {{ epoch }}
+              fullName: "{{ fullName }}"
+              inclusive: {{ inclusive }}
+              kind: "{{ kind }}"
+              name: "{{ name }}"
+              revision: "{{ revision }}"
+            effectiveSeverity: "{{ effectiveSeverity }}"
+            fileLocation: "{{ fileLocation }}"
+            fixAvailable: {{ fixAvailable }}
+            fixedCpeUri: "{{ fixedCpeUri }}"
+            fixedPackage: "{{ fixedPackage }}"
+            fixedVersion:
+              epoch: {{ epoch }}
+              fullName: "{{ fullName }}"
+              inclusive: {{ inclusive }}
+              kind: "{{ kind }}"
+              name: "{{ name }}"
+              revision: "{{ revision }}"
+            packageType: "{{ packageType }}"
+        relatedUrls:
+          - label: "{{ label }}"
+            url: "{{ url }}"
+        risk:
+          cisaKev:
+            knownRansomwareCampaignUse: "{{ knownRansomwareCampaignUse }}"
+          epss:
+            percentile: {{ percentile }}
+            score: {{ score }}
+        severity: "{{ severity }}"
+        shortDescription: "{{ shortDescription }}"
+        type: "{{ type }}"
+        vexAssessment:
+          cve: "{{ cve }}"
+          impacts:
+            - "{{ impacts }}"
+          justification:
+            details: "{{ details }}"
+            justificationType: "{{ justificationType }}"
+          noteName: "{{ noteName }}"
+          relatedUris:
+            - label: "{{ label }}"
+              url: "{{ url }}"
+          remediations:
+            - details: "{{ details }}"
+              remediationType: "{{ remediationType }}"
+              remediationUri:
+                label: "{{ label }}"
+                url: "{{ url }}"
+          state: "{{ state }}"
+          vulnerabilityId: "{{ vulnerabilityId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -2314,28 +2602,28 @@ Updates the specified occurrence.
 ```sql
 UPDATE google.containeranalysis.occurrences
 SET 
+data__advisoryPublishTime = '{{ advisoryPublishTime }}',
+data__aiSkillAnalysis = '{{ aiSkillAnalysis }}',
+data__attestation = '{{ attestation }}',
 data__build = '{{ build }}',
+data__compliance = '{{ compliance }}',
+data__createTime = '{{ createTime }}',
 data__deployment = '{{ deployment }}',
-data__name = '{{ name }}',
+data__discovery = '{{ discovery }}',
+data__dsseAttestation = '{{ dsseAttestation }}',
+data__envelope = '{{ envelope }}',
 data__image = '{{ image }}',
-data__updateTime = '{{ updateTime }}',
-data__upgrade = '{{ upgrade }}',
+data__kind = '{{ kind }}',
+data__name = '{{ name }}',
+data__noteName = '{{ noteName }}',
+data__package = '{{ package }}',
 data__remediation = '{{ remediation }}',
+data__resourceUri = '{{ resourceUri }}',
 data__sbomReference = '{{ sbomReference }}',
 data__secret = '{{ secret }}',
-data__createTime = '{{ createTime }}',
-data__envelope = '{{ envelope }}',
-data__advisoryPublishTime = '{{ advisoryPublishTime }}',
-data__noteName = '{{ noteName }}',
-data__discovery = '{{ discovery }}',
-data__kind = '{{ kind }}',
-data__package = '{{ package }}',
-data__compliance = '{{ compliance }}',
-data__aiSkillAnalysis = '{{ aiSkillAnalysis }}',
-data__resourceUri = '{{ resourceUri }}',
-data__attestation = '{{ attestation }}',
-data__vulnerability = '{{ vulnerability }}',
-data__dsseAttestation = '{{ dsseAttestation }}'
+data__updateTime = '{{ updateTime }}',
+data__upgrade = '{{ upgrade }}',
+data__vulnerability = '{{ vulnerability }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -2373,28 +2661,28 @@ Updates the specified occurrence.
 ```sql
 UPDATE google.containeranalysis.occurrences
 SET 
+data__advisoryPublishTime = '{{ advisoryPublishTime }}',
+data__aiSkillAnalysis = '{{ aiSkillAnalysis }}',
+data__attestation = '{{ attestation }}',
 data__build = '{{ build }}',
+data__compliance = '{{ compliance }}',
+data__createTime = '{{ createTime }}',
 data__deployment = '{{ deployment }}',
-data__name = '{{ name }}',
+data__discovery = '{{ discovery }}',
+data__dsseAttestation = '{{ dsseAttestation }}',
+data__envelope = '{{ envelope }}',
 data__image = '{{ image }}',
-data__updateTime = '{{ updateTime }}',
-data__upgrade = '{{ upgrade }}',
+data__kind = '{{ kind }}',
+data__name = '{{ name }}',
+data__noteName = '{{ noteName }}',
+data__package = '{{ package }}',
 data__remediation = '{{ remediation }}',
+data__resourceUri = '{{ resourceUri }}',
 data__sbomReference = '{{ sbomReference }}',
 data__secret = '{{ secret }}',
-data__createTime = '{{ createTime }}',
-data__envelope = '{{ envelope }}',
-data__advisoryPublishTime = '{{ advisoryPublishTime }}',
-data__noteName = '{{ noteName }}',
-data__discovery = '{{ discovery }}',
-data__kind = '{{ kind }}',
-data__package = '{{ package }}',
-data__compliance = '{{ compliance }}',
-data__aiSkillAnalysis = '{{ aiSkillAnalysis }}',
-data__resourceUri = '{{ resourceUri }}',
-data__attestation = '{{ attestation }}',
-data__vulnerability = '{{ vulnerability }}',
-data__dsseAttestation = '{{ dsseAttestation }}'
+data__updateTime = '{{ updateTime }}',
+data__upgrade = '{{ upgrade }}',
+data__vulnerability = '{{ vulnerability }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND occurrencesId = '{{ occurrencesId }}' --required

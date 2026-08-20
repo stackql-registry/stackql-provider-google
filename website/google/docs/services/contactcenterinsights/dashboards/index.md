@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Dashboards.</td>
 </tr>
 <tr>
@@ -322,10 +322,10 @@ updateTime
 FROM google.contactcenterinsights.dashboards
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -348,22 +348,22 @@ Creates a Dashboard.
 ```sql
 INSERT INTO google.contactcenterinsights.dashboards (
 data__dateRangeConfig,
-data__name,
-data__filter,
-data__displayName,
-data__rootContainer,
 data__description,
+data__displayName,
+data__filter,
+data__name,
+data__rootContainer,
 projectsId,
 locationsId,
 dashboardId
 )
 SELECT 
 '{{ dateRangeConfig }}',
-'{{ name }}',
-'{{ filter }}',
-'{{ displayName }}',
-'{{ rootContainer }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ filter }}',
+'{{ name }}',
+'{{ rootContainer }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dashboardId }}'
@@ -396,120 +396,120 @@ updateTime
         Date range config applied to all charts in the dashboard.
       value:
         absoluteDateRange:
-          startTime: "{{ startTime }}"
           endTime: "{{ endTime }}"
+          startTime: "{{ startTime }}"
         relativeDateRange:
           quantity: "{{ quantity }}"
           unit: "{{ unit }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Dashboard resource name. Format: projects/{project}/locations/{location}/dashboards/{dashboard}
-    - name: filter
-      value: "{{ filter }}"
-      description: |
-        Filter applied to all charts in the dashboard. Should support scope later.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        User provided display name of the dashboard.
-    - name: rootContainer
-      description: |
-        The dashboard's root widget container. We want to display the dashboard layout in a tree-like structure, where the root container contains other widgets (containers or charts) as children.
-      value:
-        displayName: "{{ displayName }}"
-        height: {{ height }}
-        filter: "{{ filter }}"
-        widgets:
-          - container:
-              displayName: "{{ displayName }}"
-              height: {{ height }}
-              filter: "{{ filter }}"
-              widgets:
-                - container:
-                    displayName: "{{ displayName }}"
-                    height: {{ height }}
-                    filter: "{{ filter }}"
-                    widgets: "{{ widgets }}"
-                    description: "{{ description }}"
-                    width: {{ width }}
-                    containerId: "{{ containerId }}"
-                    dateRangeConfig: "{{ dateRangeConfig }}"
-                  filter: "{{ filter }}"
-                  chart:
-                    description: "{{ description }}"
-                    height: {{ height }}
-                    chartType: "{{ chartType }}"
-                    createTime: "{{ createTime }}"
-                    updateTime: "{{ updateTime }}"
-                    action: "{{ action }}"
-                    width: {{ width }}
-                    dataSource: "{{ dataSource }}"
-                    filter: "{{ filter }}"
-                    name: "{{ name }}"
-                    dateRangeConfig: "{{ dateRangeConfig }}"
-                    displayName: "{{ displayName }}"
-                    chartVisualizationType: "{{ chartVisualizationType }}"
-                  chartReference: "{{ chartReference }}"
-              description: "{{ description }}"
-              width: {{ width }}
-              containerId: "{{ containerId }}"
-              dateRangeConfig:
-                absoluteDateRange:
-                  startTime: "{{ startTime }}"
-                  endTime: "{{ endTime }}"
-                relativeDateRange:
-                  quantity: "{{ quantity }}"
-                  unit: "{{ unit }}"
-            filter: "{{ filter }}"
-            chart:
-              description: "{{ description }}"
-              height: {{ height }}
-              chartType: "{{ chartType }}"
-              createTime: "{{ createTime }}"
-              updateTime: "{{ updateTime }}"
-              action:
-                conversationFilter: "{{ conversationFilter }}"
-                redirectAction:
-                  relativePath: "{{ relativePath }}"
-                  queryParams: "{{ queryParams }}"
-              width: {{ width }}
-              dataSource:
-                generativeInsights:
-                  chartSpec: "{{ chartSpec }}"
-                  sqlQuery: "{{ sqlQuery }}"
-                  chartCheckpoint: "{{ chartCheckpoint }}"
-                  chartConversations: "{{ chartConversations }}"
-                  request: "{{ request }}"
-                  sqlComparisonKey: "{{ sqlComparisonKey }}"
-                queryMetrics:
-                  request: "{{ request }}"
-              filter: "{{ filter }}"
-              name: "{{ name }}"
-              dateRangeConfig:
-                absoluteDateRange:
-                  startTime: "{{ startTime }}"
-                  endTime: "{{ endTime }}"
-                relativeDateRange:
-                  quantity: "{{ quantity }}"
-                  unit: "{{ unit }}"
-              displayName: "{{ displayName }}"
-              chartVisualizationType: "{{ chartVisualizationType }}"
-            chartReference: "{{ chartReference }}"
-        description: "{{ description }}"
-        width: {{ width }}
-        containerId: "{{ containerId }}"
-        dateRangeConfig:
-          absoluteDateRange:
-            startTime: "{{ startTime }}"
-            endTime: "{{ endTime }}"
-          relativeDateRange:
-            quantity: "{{ quantity }}"
-            unit: "{{ unit }}"
     - name: description
       value: "{{ description }}"
       description: |
         Dashboard description
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User provided display name of the dashboard.
+    - name: filter
+      value: "{{ filter }}"
+      description: |
+        Filter applied to all charts in the dashboard. Should support scope later.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Dashboard resource name. Format: projects/{project}/locations/{location}/dashboards/{dashboard}
+    - name: rootContainer
+      description: |
+        The dashboard's root widget container. We want to display the dashboard layout in a tree-like structure, where the root container contains other widgets (containers or charts) as children.
+      value:
+        containerId: "{{ containerId }}"
+        dateRangeConfig:
+          absoluteDateRange:
+            endTime: "{{ endTime }}"
+            startTime: "{{ startTime }}"
+          relativeDateRange:
+            quantity: "{{ quantity }}"
+            unit: "{{ unit }}"
+        description: "{{ description }}"
+        displayName: "{{ displayName }}"
+        filter: "{{ filter }}"
+        height: {{ height }}
+        widgets:
+          - chart:
+              action:
+                conversationFilter: "{{ conversationFilter }}"
+                redirectAction:
+                  queryParams: "{{ queryParams }}"
+                  relativePath: "{{ relativePath }}"
+              chartType: "{{ chartType }}"
+              chartVisualizationType: "{{ chartVisualizationType }}"
+              createTime: "{{ createTime }}"
+              dataSource:
+                generativeInsights:
+                  chartCheckpoint: "{{ chartCheckpoint }}"
+                  chartConversations: "{{ chartConversations }}"
+                  chartSpec: "{{ chartSpec }}"
+                  request: "{{ request }}"
+                  sqlComparisonKey: "{{ sqlComparisonKey }}"
+                  sqlQuery: "{{ sqlQuery }}"
+                queryMetrics:
+                  request: "{{ request }}"
+              dateRangeConfig:
+                absoluteDateRange:
+                  endTime: "{{ endTime }}"
+                  startTime: "{{ startTime }}"
+                relativeDateRange:
+                  quantity: "{{ quantity }}"
+                  unit: "{{ unit }}"
+              description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              filter: "{{ filter }}"
+              height: {{ height }}
+              name: "{{ name }}"
+              updateTime: "{{ updateTime }}"
+              width: {{ width }}
+            chartReference: "{{ chartReference }}"
+            container:
+              containerId: "{{ containerId }}"
+              dateRangeConfig:
+                absoluteDateRange:
+                  endTime: "{{ endTime }}"
+                  startTime: "{{ startTime }}"
+                relativeDateRange:
+                  quantity: "{{ quantity }}"
+                  unit: "{{ unit }}"
+              description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              filter: "{{ filter }}"
+              height: {{ height }}
+              widgets:
+                - chart:
+                    action: "{{ action }}"
+                    chartType: "{{ chartType }}"
+                    chartVisualizationType: "{{ chartVisualizationType }}"
+                    createTime: "{{ createTime }}"
+                    dataSource: "{{ dataSource }}"
+                    dateRangeConfig: "{{ dateRangeConfig }}"
+                    description: "{{ description }}"
+                    displayName: "{{ displayName }}"
+                    filter: "{{ filter }}"
+                    height: {{ height }}
+                    name: "{{ name }}"
+                    updateTime: "{{ updateTime }}"
+                    width: {{ width }}
+                  chartReference: "{{ chartReference }}"
+                  container:
+                    containerId: "{{ containerId }}"
+                    dateRangeConfig: "{{ dateRangeConfig }}"
+                    description: "{{ description }}"
+                    displayName: "{{ displayName }}"
+                    filter: "{{ filter }}"
+                    height: {{ height }}
+                    widgets: "{{ widgets }}"
+                    width: {{ width }}
+                  filter: "{{ filter }}"
+              width: {{ width }}
+            filter: "{{ filter }}"
+        width: {{ width }}
     - name: dashboardId
       value: "{{ dashboardId }}"
 `}</CodeBlock>
@@ -534,11 +534,11 @@ Updates a Dashboard.
 UPDATE google.contactcenterinsights.dashboards
 SET 
 data__dateRangeConfig = '{{ dateRangeConfig }}',
-data__name = '{{ name }}',
-data__filter = '{{ filter }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__rootContainer = '{{ rootContainer }}',
-data__description = '{{ description }}'
+data__filter = '{{ filter }}',
+data__name = '{{ name }}',
+data__rootContainer = '{{ rootContainer }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -275,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List deployment resources in the API hub.</td>
 </tr>
 <tr>
@@ -425,9 +425,9 @@ updateTime
 FROM google.apihub.deployments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -449,39 +449,39 @@ Create a deployment resource in the API hub. Once a deployment resource is creat
 
 ```sql
 INSERT INTO google.apihub.deployments (
-data__sourceUri,
-data__environment,
-data__resourceUri,
-data__managementUrl,
-data__name,
+data__attributes,
+data__deploymentType,
 data__description,
+data__displayName,
 data__documentation,
 data__endpoints,
-data__sourceEnvironment,
+data__environment,
+data__managementUrl,
+data__name,
+data__resourceUri,
 data__slo,
-data__displayName,
-data__deploymentType,
+data__sourceEnvironment,
 data__sourceProject,
-data__attributes,
+data__sourceUri,
 projectsId,
 locationsId,
 deploymentId
 )
 SELECT 
-'{{ sourceUri }}',
-'{{ environment }}',
-'{{ resourceUri }}',
-'{{ managementUrl }}',
-'{{ name }}',
+'{{ attributes }}',
+'{{ deploymentType }}',
 '{{ description }}',
+'{{ displayName }}',
 '{{ documentation }}',
 '{{ endpoints }}',
-'{{ sourceEnvironment }}',
+'{{ environment }}',
+'{{ managementUrl }}',
+'{{ name }}',
+'{{ resourceUri }}',
 '{{ slo }}',
-'{{ displayName }}',
-'{{ deploymentType }}',
+'{{ sourceEnvironment }}',
 '{{ sourceProject }}',
-'{{ attributes }}',
+'{{ sourceUri }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ deploymentId }}'
@@ -518,7 +518,11 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the deployments resource.
-    - name: sourceUri
+    - name: attributes
+      value: "{{ attributes }}"
+      description: |
+        Optional. The list of user defined attributes associated with the deployment resource. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
+    - name: deploymentType
       description: |
         The attribute values associated with resource.
       value:
@@ -526,70 +530,26 @@ updateTime
         enumValues:
           values:
             - description: "{{ description }}"
-              id: "{{ id }}"
               displayName: "{{ displayName }}"
+              id: "{{ id }}"
               immutable: {{ immutable }}
-        stringValues:
+        jsonValues:
           values:
             - "{{ values }}"
-        jsonValues:
+        stringValues:
           values:
             - "{{ values }}"
         uriValues:
           values:
             - "{{ values }}"
-    - name: environment
-      description: |
-        The attribute values associated with resource.
-      value:
-        attribute: "{{ attribute }}"
-        enumValues:
-          values:
-            - description: "{{ description }}"
-              id: "{{ id }}"
-              displayName: "{{ displayName }}"
-              immutable: {{ immutable }}
-        stringValues:
-          values:
-            - "{{ values }}"
-        jsonValues:
-          values:
-            - "{{ values }}"
-        uriValues:
-          values:
-            - "{{ values }}"
-    - name: resourceUri
-      value: "{{ resourceUri }}"
-      description: |
-        Required. The resource URI identifies the deployment within its gateway. For Apigee gateways, its recommended to use the format: organizations/{org}/environments/{env}/apis/{api}. For ex: if a proxy with name \`orders\` is deployed in \`staging\` environment of \`cymbal\` organization, the resource URI would be: \`organizations/cymbal/environments/staging/apis/orders\`.
-    - name: managementUrl
-      description: |
-        The attribute values associated with resource.
-      value:
-        attribute: "{{ attribute }}"
-        enumValues:
-          values:
-            - description: "{{ description }}"
-              id: "{{ id }}"
-              displayName: "{{ displayName }}"
-              immutable: {{ immutable }}
-        stringValues:
-          values:
-            - "{{ values }}"
-        jsonValues:
-          values:
-            - "{{ values }}"
-        uriValues:
-          values:
-            - "{{ values }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the deployment. Format: \`projects/{project}/locations/{location}/deployments/{deployment}\`
     - name: description
       value: "{{ description }}"
       description: |
         Optional. The description of the deployment.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the deployment.
     - name: documentation
       description: |
         Optional. The documentation of the deployment.
@@ -600,10 +560,54 @@ updateTime
         - "{{ endpoints }}"
       description: |
         Required. The endpoints at which this deployment resource is listening for API requests. This could be a list of complete URIs, hostnames or an IP addresses.
-    - name: sourceEnvironment
-      value: "{{ sourceEnvironment }}"
+    - name: environment
       description: |
-        Optional. The environment at source for the deployment. For example: prod, dev, staging, etc.
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              id: "{{ id }}"
+              immutable: {{ immutable }}
+        jsonValues:
+          values:
+            - "{{ values }}"
+        stringValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: managementUrl
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              id: "{{ id }}"
+              immutable: {{ immutable }}
+        jsonValues:
+          values:
+            - "{{ values }}"
+        stringValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the deployment. Format: \`projects/{project}/locations/{location}/deployments/{deployment}\`
+    - name: resourceUri
+      value: "{{ resourceUri }}"
+      description: |
+        Required. The resource URI identifies the deployment within its gateway. For Apigee gateways, its recommended to use the format: organizations/{org}/environments/{env}/apis/{api}. For ex: if a proxy with name \`orders\` is deployed in \`staging\` environment of \`cymbal\` organization, the resource URI would be: \`organizations/cymbal/environments/staging/apis/orders\`.
     - name: slo
       description: |
         The attribute values associated with resource.
@@ -612,23 +616,27 @@ updateTime
         enumValues:
           values:
             - description: "{{ description }}"
-              id: "{{ id }}"
               displayName: "{{ displayName }}"
+              id: "{{ id }}"
               immutable: {{ immutable }}
-        stringValues:
+        jsonValues:
           values:
             - "{{ values }}"
-        jsonValues:
+        stringValues:
           values:
             - "{{ values }}"
         uriValues:
           values:
             - "{{ values }}"
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: sourceEnvironment
+      value: "{{ sourceEnvironment }}"
       description: |
-        Required. The display name of the deployment.
-    - name: deploymentType
+        Optional. The environment at source for the deployment. For example: prod, dev, staging, etc.
+    - name: sourceProject
+      value: "{{ sourceProject }}"
+      description: |
+        Optional. The project to which the deployment belongs. For Google Cloud gateways, this will refer to the project identifier. For others like Edge/OPDK, this will refer to the org identifier.
+    - name: sourceUri
       description: |
         The attribute values associated with resource.
       value:
@@ -636,26 +644,18 @@ updateTime
         enumValues:
           values:
             - description: "{{ description }}"
-              id: "{{ id }}"
               displayName: "{{ displayName }}"
+              id: "{{ id }}"
               immutable: {{ immutable }}
-        stringValues:
+        jsonValues:
           values:
             - "{{ values }}"
-        jsonValues:
+        stringValues:
           values:
             - "{{ values }}"
         uriValues:
           values:
             - "{{ values }}"
-    - name: sourceProject
-      value: "{{ sourceProject }}"
-      description: |
-        Optional. The project to which the deployment belongs. For Google Cloud gateways, this will refer to the project identifier. For others like Edge/OPDK, this will refer to the org identifier.
-    - name: attributes
-      value: "{{ attributes }}"
-      description: |
-        Optional. The list of user defined attributes associated with the deployment resource. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
     - name: deploymentId
       value: "{{ deploymentId }}"
 `}</CodeBlock>
@@ -679,20 +679,20 @@ Update a deployment resource in the API hub. The following fields in the deploym
 ```sql
 UPDATE google.apihub.deployments
 SET 
-data__sourceUri = '{{ sourceUri }}',
-data__environment = '{{ environment }}',
-data__resourceUri = '{{ resourceUri }}',
-data__managementUrl = '{{ managementUrl }}',
-data__name = '{{ name }}',
+data__attributes = '{{ attributes }}',
+data__deploymentType = '{{ deploymentType }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__documentation = '{{ documentation }}',
 data__endpoints = '{{ endpoints }}',
-data__sourceEnvironment = '{{ sourceEnvironment }}',
+data__environment = '{{ environment }}',
+data__managementUrl = '{{ managementUrl }}',
+data__name = '{{ name }}',
+data__resourceUri = '{{ resourceUri }}',
 data__slo = '{{ slo }}',
-data__displayName = '{{ displayName }}',
-data__deploymentType = '{{ deploymentType }}',
+data__sourceEnvironment = '{{ sourceEnvironment }}',
 data__sourceProject = '{{ sourceProject }}',
-data__attributes = '{{ attributes }}'
+data__sourceUri = '{{ sourceUri }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

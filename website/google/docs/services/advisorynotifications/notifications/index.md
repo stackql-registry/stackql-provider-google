@@ -137,15 +137,15 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notificationsId"><code>notificationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notificationsId"><code>notificationsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
     <td>Gets a notification.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists notifications under a given parent.</td>
 </tr>
 </tbody>
@@ -174,8 +174,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-organizationsId">
-    <td><CopyableCode code="organizationsId" /></td>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -223,7 +223,7 @@ messages,
 notificationType,
 subject
 FROM google.advisorynotifications.notifications
-WHERE organizationsId = '{{ organizationsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND notificationsId = '{{ notificationsId }}' -- required
 AND languageCode = '{{ languageCode }}'
@@ -242,11 +242,11 @@ messages,
 notificationType,
 subject
 FROM google.advisorynotifications.notifications
-WHERE organizationsId = '{{ organizationsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND languageCode = '{{ languageCode }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND languageCode = '{{ languageCode }}'
 AND view = '{{ view }}'
 ;
 ```

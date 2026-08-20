@@ -51,13 +51,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_address_groups_add_items"><CopyableCode code="projects_locations_address_groups_add_items" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
-    <td></td>
-    <td>Adds items to an address group.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_address_groups_add_items"><CopyableCode code="organizations_locations_address_groups_add_items" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
@@ -65,16 +58,23 @@ The following methods are available for this resource:
     <td>Adds items to an address group.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_address_groups_remove_items"><CopyableCode code="projects_locations_address_groups_remove_items" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#projects_locations_address_groups_add_items"><CopyableCode code="projects_locations_address_groups_add_items" /></a></td>
+    <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
     <td></td>
-    <td>Removes items from an address group.</td>
+    <td>Adds items to an address group.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_address_groups_remove_items"><CopyableCode code="organizations_locations_address_groups_remove_items" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
+    <td></td>
+    <td>Removes items from an address group.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_address_groups_remove_items"><CopyableCode code="projects_locations_address_groups_remove_items" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
     <td></td>
     <td>Removes items from an address group.</td>
 </tr>
@@ -120,29 +120,29 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_address_groups_add_items"
+    defaultValue="organizations_locations_address_groups_add_items"
     values={[
-        { label: 'projects_locations_address_groups_add_items', value: 'projects_locations_address_groups_add_items' },
         { label: 'organizations_locations_address_groups_add_items', value: 'organizations_locations_address_groups_add_items' },
+        { label: 'projects_locations_address_groups_add_items', value: 'projects_locations_address_groups_add_items' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_add_items">
+<TabItem value="organizations_locations_address_groups_add_items">
 
 Adds items to an address group.
 
 ```sql
 INSERT INTO google.networksecurity.address_groups_items (
-data__requestId,
 data__items,
-projectsId,
+data__requestId,
+organizationsId,
 locationsId,
 addressGroupsId
 )
 SELECT 
-'{{ requestId }}',
 '{{ items }}',
-'{{ projectsId }}',
+'{{ requestId }}',
+'{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ addressGroupsId }}'
 RETURNING
@@ -154,22 +154,22 @@ response
 ;
 ```
 </TabItem>
-<TabItem value="organizations_locations_address_groups_add_items">
+<TabItem value="projects_locations_address_groups_add_items">
 
 Adds items to an address group.
 
 ```sql
 INSERT INTO google.networksecurity.address_groups_items (
-data__requestId,
 data__items,
-organizationsId,
+data__requestId,
+projectsId,
 locationsId,
 addressGroupsId
 )
 SELECT 
-'{{ requestId }}',
 '{{ items }}',
-'{{ organizationsId }}',
+'{{ requestId }}',
+'{{ projectsId }}',
 '{{ locationsId }}',
 '{{ addressGroupsId }}'
 RETURNING
@@ -186,8 +186,8 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: address_groups_items
   props:
-    - name: projectsId
-      value: "{{ projectsId }}"
+    - name: organizationsId
+      value: "{{ organizationsId }}"
       description: Required parameter for the address_groups_items resource.
     - name: locationsId
       value: "{{ locationsId }}"
@@ -195,18 +195,18 @@ response
     - name: addressGroupsId
       value: "{{ addressGroupsId }}"
       description: Required parameter for the address_groups_items resource.
-    - name: organizationsId
-      value: "{{ organizationsId }}"
+    - name: projectsId
+      value: "{{ projectsId }}"
       description: Required parameter for the address_groups_items resource.
-    - name: requestId
-      value: "{{ requestId }}"
-      description: |
-        Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
     - name: items
       value:
         - "{{ items }}"
       description: |
         Required. List of items to add.
+    - name: requestId
+      value: "{{ requestId }}"
+      description: |
+        Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
 `}</CodeBlock>
 
 </TabItem>
@@ -216,24 +216,12 @@ response
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_locations_address_groups_remove_items"
+    defaultValue="organizations_locations_address_groups_remove_items"
     values={[
-        { label: 'projects_locations_address_groups_remove_items', value: 'projects_locations_address_groups_remove_items' },
-        { label: 'organizations_locations_address_groups_remove_items', value: 'organizations_locations_address_groups_remove_items' }
+        { label: 'organizations_locations_address_groups_remove_items', value: 'organizations_locations_address_groups_remove_items' },
+        { label: 'projects_locations_address_groups_remove_items', value: 'projects_locations_address_groups_remove_items' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_remove_items">
-
-Removes items from an address group.
-
-```sql
-DELETE FROM google.networksecurity.address_groups_items
-WHERE projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND addressGroupsId = '{{ addressGroupsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_address_groups_remove_items">
 
 Removes items from an address group.
@@ -241,6 +229,18 @@ Removes items from an address group.
 ```sql
 DELETE FROM google.networksecurity.address_groups_items
 WHERE organizationsId = '{{ organizationsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND addressGroupsId = '{{ addressGroupsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_address_groups_remove_items">
+
+Removes items from an address group.
+
+```sql
+DELETE FROM google.networksecurity.address_groups_items
+WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND addressGroupsId = '{{ addressGroupsId }}' --required
 ;

@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_security_settings_list"><CopyableCode code="projects_locations_security_settings_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -331,8 +331,8 @@ retentionWindowDays
 FROM google.dialogflow.security_settings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -354,31 +354,31 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.security_settings (
+data__audioExportSettings,
 data__deidentifyTemplate,
-data__retentionStrategy,
+data__displayName,
+data__insightsExportSettings,
+data__inspectTemplate,
+data__name,
+data__purgeDataTypes,
 data__redactionScope,
 data__redactionStrategy,
-data__purgeDataTypes,
-data__name,
-data__inspectTemplate,
-data__audioExportSettings,
-data__insightsExportSettings,
-data__displayName,
+data__retentionStrategy,
 data__retentionWindowDays,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ audioExportSettings }}',
 '{{ deidentifyTemplate }}',
-'{{ retentionStrategy }}',
+'{{ displayName }}',
+'{{ insightsExportSettings }}',
+'{{ inspectTemplate }}',
+'{{ name }}',
+'{{ purgeDataTypes }}',
 '{{ redactionScope }}',
 '{{ redactionStrategy }}',
-'{{ purgeDataTypes }}',
-'{{ name }}',
-'{{ inspectTemplate }}',
-'{{ audioExportSettings }}',
-'{{ insightsExportSettings }}',
-'{{ displayName }}',
+'{{ retentionStrategy }}',
 {{ retentionWindowDays }},
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -408,36 +408,36 @@ retentionWindowDays
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the security_settings resource.
+    - name: audioExportSettings
+      value:
+        audioExportPattern: "{{ audioExportPattern }}"
+        audioFormat: "{{ audioFormat }}"
+        enableAudioRedaction: {{ enableAudioRedaction }}
+        gcsBucket: "{{ gcsBucket }}"
+        storeTtsAudio: {{ storeTtsAudio }}
     - name: deidentifyTemplate
       value: "{{ deidentifyTemplate }}"
-    - name: retentionStrategy
-      value: "{{ retentionStrategy }}"
-      valid_values: ['RETENTION_STRATEGY_UNSPECIFIED', 'REMOVE_AFTER_CONVERSATION']
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: insightsExportSettings
+      value:
+        enableInsightsExport: {{ enableInsightsExport }}
+    - name: inspectTemplate
+      value: "{{ inspectTemplate }}"
+    - name: name
+      value: "{{ name }}"
+    - name: purgeDataTypes
+      value:
+        - "{{ purgeDataTypes }}"
     - name: redactionScope
       value: "{{ redactionScope }}"
       valid_values: ['REDACTION_SCOPE_UNSPECIFIED', 'REDACT_DISK_STORAGE']
     - name: redactionStrategy
       value: "{{ redactionStrategy }}"
       valid_values: ['REDACTION_STRATEGY_UNSPECIFIED', 'REDACT_WITH_SERVICE']
-    - name: purgeDataTypes
-      value:
-        - "{{ purgeDataTypes }}"
-    - name: name
-      value: "{{ name }}"
-    - name: inspectTemplate
-      value: "{{ inspectTemplate }}"
-    - name: audioExportSettings
-      value:
-        gcsBucket: "{{ gcsBucket }}"
-        audioExportPattern: "{{ audioExportPattern }}"
-        enableAudioRedaction: {{ enableAudioRedaction }}
-        audioFormat: "{{ audioFormat }}"
-        storeTtsAudio: {{ storeTtsAudio }}
-    - name: insightsExportSettings
-      value:
-        enableInsightsExport: {{ enableInsightsExport }}
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: retentionStrategy
+      value: "{{ retentionStrategy }}"
+      valid_values: ['RETENTION_STRATEGY_UNSPECIFIED', 'REMOVE_AFTER_CONVERSATION']
     - name: retentionWindowDays
       value: {{ retentionWindowDays }}
 `}</CodeBlock>
@@ -461,16 +461,16 @@ No description available.
 ```sql
 UPDATE google.dialogflow.security_settings
 SET 
+data__audioExportSettings = '{{ audioExportSettings }}',
 data__deidentifyTemplate = '{{ deidentifyTemplate }}',
-data__retentionStrategy = '{{ retentionStrategy }}',
+data__displayName = '{{ displayName }}',
+data__insightsExportSettings = '{{ insightsExportSettings }}',
+data__inspectTemplate = '{{ inspectTemplate }}',
+data__name = '{{ name }}',
+data__purgeDataTypes = '{{ purgeDataTypes }}',
 data__redactionScope = '{{ redactionScope }}',
 data__redactionStrategy = '{{ redactionStrategy }}',
-data__purgeDataTypes = '{{ purgeDataTypes }}',
-data__name = '{{ name }}',
-data__inspectTemplate = '{{ inspectTemplate }}',
-data__audioExportSettings = '{{ audioExportSettings }}',
-data__insightsExportSettings = '{{ insightsExportSettings }}',
-data__displayName = '{{ displayName }}',
+data__retentionStrategy = '{{ retentionStrategy }}',
 data__retentionWindowDays = {{ retentionWindowDays }}
 WHERE 
 projectsId = '{{ projectsId }}' --required

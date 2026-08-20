@@ -152,39 +152,11 @@ The following methods are available for this resource:
     <td>Returns the specified Project resource.<br /><br />To decrease latency for this method, you can optionally omit any unneeded<br />information from the response by using a field mask. This practice is<br />especially recommended for unused quota information (the `quotas` field).<br />To exclude one or more fields, set your request's `fields` query parameter<br />to only include the fields you need. For example, to only include the `id`<br />and `selfLink` fields, add the query parameter `?fields=id,selfLink` to<br />your request.</td>
 </tr>
 <tr>
-    <td><a href="#move_disk"><CopyableCode code="move_disk" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Moves a persistent disk from one zone to another.<br />*Note*: The moveDisk API will be deprecated on September 29, 2026.<br /><br />Starting September 29, 2025, you can't use the moveDisk API on new<br />projects. To move a disk to a different region or zone, follow the steps in<br />[Change the location of a<br />disk](https://cloud.google.com/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).<br /><br />Projects that already use the moveDisk API can continue usage until<br />September 29, 2026.<br /><br />Starting November 1, 2025, API responses will include a warning message in<br />the response body about the upcoming deprecation. You can skip the message<br />to continue using the service without interruption.</td>
-</tr>
-<tr>
     <td><a href="#disable_xpn_host"><CopyableCode code="disable_xpn_host" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Disable this project as a shared VPC host project.</td>
-</tr>
-<tr>
-    <td><a href="#set_default_network_tier"><CopyableCode code="set_default_network_tier" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the default network tier of the project. The default network tier is<br />used when an address/forwardingRule/instance is created without specifying<br />the network tier field.</td>
-</tr>
-<tr>
-    <td><a href="#set_cloud_armor_tier"><CopyableCode code="set_cloud_armor_tier" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the Cloud Armor tier of the project. To set ENTERPRISE or above the<br />billing account of the project must be subscribed to Cloud Armor<br />Enterprise. See Subscribing<br />to Cloud Armor Enterprise for more information.</td>
-</tr>
-<tr>
-    <td><a href="#move_instance"><CopyableCode code="move_instance" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Moves an instance and its attached persistent disks from one zone to<br />another.<br />*Note*: Moving VMs or disks by using this method might<br /> cause unexpected behavior. For more information, see the [known<br /> issue](https://cloud.google.com/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).<br />[Deprecated] This method is deprecated. See [moving instance across<br />zones](https://cloud.google.com/compute/docs/instances/moving-instance-across-zones) instead.</td>
 </tr>
 <tr>
     <td><a href="#disable_xpn_resource"><CopyableCode code="disable_xpn_resource" /></a></td>
@@ -208,11 +180,39 @@ The following methods are available for this resource:
     <td>Enable service resource (a.k.a service project) for a host project, so that<br />subnets in the host project can be used by instances in the service<br />project.</td>
 </tr>
 <tr>
+    <td><a href="#move_disk"><CopyableCode code="move_disk" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Moves a persistent disk from one zone to another.<br />*Note*: The moveDisk API will be deprecated on September 29, 2026.<br /><br />Starting September 29, 2025, you can't use the moveDisk API on new<br />projects. To move a disk to a different region or zone, follow the steps in<br />[Change the location of a<br />disk](https://cloud.google.com/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).<br /><br />Projects that already use the moveDisk API can continue usage until<br />September 29, 2026.<br /><br />Starting November 1, 2025, API responses will include a warning message in<br />the response body about the upcoming deprecation. You can skip the message<br />to continue using the service without interruption.</td>
+</tr>
+<tr>
+    <td><a href="#move_instance"><CopyableCode code="move_instance" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Moves an instance and its attached persistent disks from one zone to<br />another.<br />*Note*: Moving VMs or disks by using this method might<br /> cause unexpected behavior. For more information, see the [known<br /> issue](https://cloud.google.com/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).<br />[Deprecated] This method is deprecated. See [moving instance across<br />zones](https://cloud.google.com/compute/docs/instances/moving-instance-across-zones) instead.</td>
+</tr>
+<tr>
+    <td><a href="#set_cloud_armor_tier"><CopyableCode code="set_cloud_armor_tier" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the Cloud Armor tier of the project. To set ENTERPRISE or above the<br />billing account of the project must be subscribed to Cloud Armor<br />Enterprise. See Subscribing<br />to Cloud Armor Enterprise for more information.</td>
+</tr>
+<tr>
     <td><a href="#set_common_instance_metadata"><CopyableCode code="set_common_instance_metadata" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Sets metadata common to all instances within the specified project using<br />the data included in the request.</td>
+</tr>
+<tr>
+    <td><a href="#set_default_network_tier"><CopyableCode code="set_default_network_tier" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the default network tier of the project. The default network tier is<br />used when an address/forwardingRule/instance is created without specifying<br />the network tier field.</td>
 </tr>
 <tr>
     <td><a href="#set_usage_export_bucket"><CopyableCode code="set_usage_export_bucket" /></a></td>
@@ -290,36 +290,20 @@ WHERE project = '{{ project }}' -- required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="move_disk"
+    defaultValue="disable_xpn_host"
     values={[
-        { label: 'move_disk', value: 'move_disk' },
         { label: 'disable_xpn_host', value: 'disable_xpn_host' },
-        { label: 'set_default_network_tier', value: 'set_default_network_tier' },
-        { label: 'set_cloud_armor_tier', value: 'set_cloud_armor_tier' },
-        { label: 'move_instance', value: 'move_instance' },
         { label: 'disable_xpn_resource', value: 'disable_xpn_resource' },
         { label: 'enable_xpn_host', value: 'enable_xpn_host' },
         { label: 'enable_xpn_resource', value: 'enable_xpn_resource' },
+        { label: 'move_disk', value: 'move_disk' },
+        { label: 'move_instance', value: 'move_instance' },
+        { label: 'set_cloud_armor_tier', value: 'set_cloud_armor_tier' },
         { label: 'set_common_instance_metadata', value: 'set_common_instance_metadata' },
+        { label: 'set_default_network_tier', value: 'set_default_network_tier' },
         { label: 'set_usage_export_bucket', value: 'set_usage_export_bucket' }
     ]}
 >
-<TabItem value="move_disk">
-
-Moves a persistent disk from one zone to another.<br />*Note*: The moveDisk API will be deprecated on September 29, 2026.<br /><br />Starting September 29, 2025, you can't use the moveDisk API on new<br />projects. To move a disk to a different region or zone, follow the steps in<br />[Change the location of a<br />disk](https://cloud.google.com/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).<br /><br />Projects that already use the moveDisk API can continue usage until<br />September 29, 2026.<br /><br />Starting November 1, 2025, API responses will include a warning message in<br />the response body about the upcoming deprecation. You can skip the message<br />to continue using the service without interruption.
-
-```sql
-EXEC google.compute.projects.move_disk 
-@project='{{ project }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"targetDisk": "{{ targetDisk }}", 
-"destinationZone": "{{ destinationZone }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="disable_xpn_host">
 
 Disable this project as a shared VPC host project.
@@ -328,52 +312,6 @@ Disable this project as a shared VPC host project.
 EXEC google.compute.projects.disable_xpn_host 
 @project='{{ project }}' --required, 
 @requestId='{{ requestId }}'
-;
-```
-</TabItem>
-<TabItem value="set_default_network_tier">
-
-Sets the default network tier of the project. The default network tier is<br />used when an address/forwardingRule/instance is created without specifying<br />the network tier field.
-
-```sql
-EXEC google.compute.projects.set_default_network_tier 
-@project='{{ project }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"networkTier": "{{ networkTier }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_cloud_armor_tier">
-
-Sets the Cloud Armor tier of the project. To set ENTERPRISE or above the<br />billing account of the project must be subscribed to Cloud Armor<br />Enterprise. See Subscribing<br />to Cloud Armor Enterprise for more information.
-
-```sql
-EXEC google.compute.projects.set_cloud_armor_tier 
-@project='{{ project }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"cloudArmorTier": "{{ cloudArmorTier }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="move_instance">
-
-Moves an instance and its attached persistent disks from one zone to<br />another.<br />*Note*: Moving VMs or disks by using this method might<br /> cause unexpected behavior. For more information, see the [known<br /> issue](https://cloud.google.com/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).<br />[Deprecated] This method is deprecated. See [moving instance across<br />zones](https://cloud.google.com/compute/docs/instances/moving-instance-across-zones) instead.
-
-```sql
-EXEC google.compute.projects.move_instance 
-@project='{{ project }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"destinationZone": "{{ destinationZone }}", 
-"targetInstance": "{{ targetInstance }}"
-}'
 ;
 ```
 </TabItem>
@@ -418,6 +356,53 @@ EXEC google.compute.projects.enable_xpn_resource
 ;
 ```
 </TabItem>
+<TabItem value="move_disk">
+
+Moves a persistent disk from one zone to another.<br />*Note*: The moveDisk API will be deprecated on September 29, 2026.<br /><br />Starting September 29, 2025, you can't use the moveDisk API on new<br />projects. To move a disk to a different region or zone, follow the steps in<br />[Change the location of a<br />disk](https://cloud.google.com/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).<br /><br />Projects that already use the moveDisk API can continue usage until<br />September 29, 2026.<br /><br />Starting November 1, 2025, API responses will include a warning message in<br />the response body about the upcoming deprecation. You can skip the message<br />to continue using the service without interruption.
+
+```sql
+EXEC google.compute.projects.move_disk 
+@project='{{ project }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"destinationZone": "{{ destinationZone }}", 
+"targetDisk": "{{ targetDisk }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="move_instance">
+
+Moves an instance and its attached persistent disks from one zone to<br />another.<br />*Note*: Moving VMs or disks by using this method might<br /> cause unexpected behavior. For more information, see the [known<br /> issue](https://cloud.google.com/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).<br />[Deprecated] This method is deprecated. See [moving instance across<br />zones](https://cloud.google.com/compute/docs/instances/moving-instance-across-zones) instead.
+
+```sql
+EXEC google.compute.projects.move_instance 
+@project='{{ project }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"destinationZone": "{{ destinationZone }}", 
+"targetInstance": "{{ targetInstance }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_cloud_armor_tier">
+
+Sets the Cloud Armor tier of the project. To set ENTERPRISE or above the<br />billing account of the project must be subscribed to Cloud Armor<br />Enterprise. See Subscribing<br />to Cloud Armor Enterprise for more information.
+
+```sql
+EXEC google.compute.projects.set_cloud_armor_tier 
+@project='{{ project }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"cloudArmorTier": "{{ cloudArmorTier }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="set_common_instance_metadata">
 
 Sets metadata common to all instances within the specified project using<br />the data included in the request.
@@ -430,6 +415,21 @@ EXEC google.compute.projects.set_common_instance_metadata
 '{
 "fingerprint": "{{ fingerprint }}", 
 "items": "{{ items }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_default_network_tier">
+
+Sets the default network tier of the project. The default network tier is<br />used when an address/forwardingRule/instance is created without specifying<br />the network tier field.
+
+```sql
+EXEC google.compute.projects.set_default_network_tier 
+@project='{{ project }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"networkTier": "{{ networkTier }}"
 }'
 ;
 ```

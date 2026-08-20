@@ -37,9 +37,9 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'projects_locations_collections_data_stores_sessions_get', value: 'projects_locations_collections_data_stores_sessions_get' },
         { label: 'projects_locations_collections_engines_sessions_get', value: 'projects_locations_collections_engines_sessions_get' },
-        { label: 'projects_locations_data_stores_sessions_get', value: 'projects_locations_data_stores_sessions_get' },
         { label: 'projects_locations_collections_data_stores_sessions_list', value: 'projects_locations_collections_data_stores_sessions_list' },
         { label: 'projects_locations_collections_engines_sessions_list', value: 'projects_locations_collections_engines_sessions_list' },
+        { label: 'projects_locations_data_stores_sessions_get', value: 'projects_locations_data_stores_sessions_get' },
         { label: 'projects_locations_data_stores_sessions_list', value: 'projects_locations_data_stores_sessions_list' }
     ]}
 >
@@ -171,70 +171,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_data_stores_sessions_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. Fully qualified name `projects/&#123;project&#125;/locations/global/collections/&#123;collection&#125;/engines/&#123;engine&#125;/sessions/*`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The display name of the session. This field is used to identify the session in the UI. By default, the display name is the first turn query text in the session.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="endTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time the session finished.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="isPinned" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. Whether the session is pinned, pinned session will be displayed on the top of the session list.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>array</code></td>
-    <td>Optional. The labels for the session. Can be set as filter in ListSessionsRequest.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="pendingAsyncAssistOperationId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Full resource name of an in-progress AsyncAssist operation for this session, e.g. `projects/*/locations/*/collections/*/engines/*/sessions/*/operations/*`. Set when the operation starts and cleared when it finishes.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="startTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time the session started.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>The state of the session. (STATE_UNSPECIFIED, IN_PROGRESS)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="turns" /></td>
-    <td><code>array</code></td>
-    <td>Turns.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="userPseudoId" /></td>
-    <td><code>string</code></td>
-    <td>A unique identifier for tracking users.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_sessions_list">
 
 <table>
@@ -300,6 +236,70 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_locations_collections_engines_sessions_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Fully qualified name `projects/&#123;project&#125;/locations/global/collections/&#123;collection&#125;/engines/&#123;engine&#125;/sessions/*`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The display name of the session. This field is used to identify the session in the UI. By default, the display name is the first turn query text in the session.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time the session finished.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="isPinned" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Whether the session is pinned, pinned session will be displayed on the top of the session list.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>array</code></td>
+    <td>Optional. The labels for the session. Can be set as filter in ListSessionsRequest.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="pendingAsyncAssistOperationId" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Full resource name of an in-progress AsyncAssist operation for this session, e.g. `projects/*/locations/*/collections/*/engines/*/sessions/*/operations/*`. Set when the operation starts and cleared when it finishes.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="startTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time the session started.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>The state of the session. (STATE_UNSPECIFIED, IN_PROGRESS)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="turns" /></td>
+    <td><code>array</code></td>
+    <td>Turns.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="userPseudoId" /></td>
+    <td><code>string</code></td>
+    <td>A unique identifier for tracking users.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_data_stores_sessions_get">
 
 <table>
 <thead>
@@ -459,6 +459,20 @@ The following methods are available for this resource:
     <td>Gets a Session.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_collections_data_stores_sessions_list"><CopyableCode code="projects_locations_collections_data_stores_sessions_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all Sessions by their parent DataStore.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_engines_sessions_list"><CopyableCode code="projects_locations_collections_engines_sessions_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all Sessions by their parent DataStore.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_data_stores_sessions_get"><CopyableCode code="projects_locations_data_stores_sessions_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
@@ -466,24 +480,10 @@ The following methods are available for this resource:
     <td>Gets a Session.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_sessions_list"><CopyableCode code="projects_locations_collections_data_stores_sessions_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists all Sessions by their parent DataStore.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_engines_sessions_list"><CopyableCode code="projects_locations_collections_engines_sessions_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists all Sessions by their parent DataStore.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_stores_sessions_list"><CopyableCode code="projects_locations_data_stores_sessions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all Sessions by their parent DataStore.</td>
 </tr>
 <tr>
@@ -640,9 +640,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_collections_data_stores_sessions_get', value: 'projects_locations_collections_data_stores_sessions_get' },
         { label: 'projects_locations_collections_engines_sessions_get', value: 'projects_locations_collections_engines_sessions_get' },
-        { label: 'projects_locations_data_stores_sessions_get', value: 'projects_locations_data_stores_sessions_get' },
         { label: 'projects_locations_collections_data_stores_sessions_list', value: 'projects_locations_collections_data_stores_sessions_list' },
         { label: 'projects_locations_collections_engines_sessions_list', value: 'projects_locations_collections_engines_sessions_list' },
+        { label: 'projects_locations_data_stores_sessions_get', value: 'projects_locations_data_stores_sessions_get' },
         { label: 'projects_locations_data_stores_sessions_list', value: 'projects_locations_data_stores_sessions_list' }
     ]}
 >
@@ -698,6 +698,62 @@ AND includeAnswerDetails = '{{ includeAnswerDetails }}'
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_collections_data_stores_sessions_list">
+
+Lists all Sessions by their parent DataStore.
+
+```sql
+SELECT
+name,
+displayName,
+endTime,
+isPinned,
+labels,
+pendingAsyncAssistOperationId,
+startTime,
+state,
+turns,
+userPseudoId
+FROM google.discoveryengine.sessions
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND collectionsId = '{{ collectionsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_engines_sessions_list">
+
+Lists all Sessions by their parent DataStore.
+
+```sql
+SELECT
+name,
+displayName,
+endTime,
+isPinned,
+labels,
+pendingAsyncAssistOperationId,
+startTime,
+state,
+turns,
+userPseudoId
+FROM google.discoveryengine.sessions
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND collectionsId = '{{ collectionsId }}' -- required
+AND enginesId = '{{ enginesId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_data_stores_sessions_get">
 
 Gets a Session.
@@ -723,62 +779,6 @@ AND includeAnswerDetails = '{{ includeAnswerDetails }}'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_data_stores_sessions_list">
-
-Lists all Sessions by their parent DataStore.
-
-```sql
-SELECT
-name,
-displayName,
-endTime,
-isPinned,
-labels,
-pendingAsyncAssistOperationId,
-startTime,
-state,
-turns,
-userPseudoId
-FROM google.discoveryengine.sessions
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND collectionsId = '{{ collectionsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_engines_sessions_list">
-
-Lists all Sessions by their parent DataStore.
-
-```sql
-SELECT
-name,
-displayName,
-endTime,
-isPinned,
-labels,
-pendingAsyncAssistOperationId,
-startTime,
-state,
-turns,
-userPseudoId
-FROM google.discoveryengine.sessions
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND collectionsId = '{{ collectionsId }}' -- required
-AND enginesId = '{{ enginesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_data_stores_sessions_list">
 
 Lists all Sessions by their parent DataStore.
@@ -799,10 +799,10 @@ FROM google.discoveryengine.sessions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -826,13 +826,13 @@ Creates a Session. If the Session to create already exists, an ALREADY_EXISTS er
 
 ```sql
 INSERT INTO google.discoveryengine.sessions (
+data__displayName,
 data__isPinned,
-data__userPseudoId,
 data__labels,
+data__name,
 data__state,
 data__turns,
-data__name,
-data__displayName,
+data__userPseudoId,
 projectsId,
 locationsId,
 collectionsId,
@@ -840,13 +840,13 @@ dataStoresId,
 sessionId
 )
 SELECT 
+'{{ displayName }}',
 {{ isPinned }},
-'{{ userPseudoId }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ state }}',
 '{{ turns }}',
-'{{ name }}',
-'{{ displayName }}',
+'{{ userPseudoId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -872,13 +872,13 @@ Creates a Session. If the Session to create already exists, an ALREADY_EXISTS er
 
 ```sql
 INSERT INTO google.discoveryengine.sessions (
+data__displayName,
 data__isPinned,
-data__userPseudoId,
 data__labels,
+data__name,
 data__state,
 data__turns,
-data__name,
-data__displayName,
+data__userPseudoId,
 projectsId,
 locationsId,
 collectionsId,
@@ -886,13 +886,13 @@ enginesId,
 sessionId
 )
 SELECT 
+'{{ displayName }}',
 {{ isPinned }},
-'{{ userPseudoId }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ state }}',
 '{{ turns }}',
-'{{ name }}',
-'{{ displayName }}',
+'{{ userPseudoId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -918,26 +918,26 @@ Creates a Session. If the Session to create already exists, an ALREADY_EXISTS er
 
 ```sql
 INSERT INTO google.discoveryengine.sessions (
+data__displayName,
 data__isPinned,
-data__userPseudoId,
 data__labels,
+data__name,
 data__state,
 data__turns,
-data__name,
-data__displayName,
+data__userPseudoId,
 projectsId,
 locationsId,
 dataStoresId,
 sessionId
 )
 SELECT 
+'{{ displayName }}',
 {{ isPinned }},
-'{{ userPseudoId }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ state }}',
 '{{ turns }}',
-'{{ name }}',
-'{{ displayName }}',
+'{{ userPseudoId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataStoresId }}',
@@ -976,19 +976,23 @@ userPseudoId
     - name: enginesId
       value: "{{ enginesId }}"
       description: Required parameter for the sessions resource.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The display name of the session. This field is used to identify the session in the UI. By default, the display name is the first turn query text in the session.
     - name: isPinned
       value: {{ isPinned }}
       description: |
         Optional. Whether the session is pinned, pinned session will be displayed on the top of the session list.
-    - name: userPseudoId
-      value: "{{ userPseudoId }}"
-      description: |
-        A unique identifier for tracking users.
     - name: labels
       value:
         - "{{ labels }}"
       description: |
         Optional. The labels for the session. Can be set as filter in ListSessionsRequest.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Fully qualified name \`projects/{project}/locations/global/collections/{collection}/engines/{engine}/sessions/*\`
     - name: state
       value: "{{ state }}"
       description: |
@@ -998,112 +1002,109 @@ userPseudoId
       description: |
         Turns.
       value:
-        - detailedAssistAnswer:
+        - answer: "{{ answer }}"
+          detailedAnswer:
+            answerSkippedReasons:
+              - "{{ answerSkippedReasons }}"
+            answerText: "{{ answerText }}"
+            citations:
+              - endIndex: "{{ endIndex }}"
+                sources: "{{ sources }}"
+                startIndex: "{{ startIndex }}"
+            completeTime: "{{ completeTime }}"
+            createTime: "{{ createTime }}"
+            groundingScore: {{ groundingScore }}
+            groundingSupports:
+              - endIndex: "{{ endIndex }}"
+                groundingCheckRequired: {{ groundingCheckRequired }}
+                groundingScore: {{ groundingScore }}
+                sources: "{{ sources }}"
+                startIndex: "{{ startIndex }}"
+            name: "{{ name }}"
+            queryUnderstandingInfo:
+              queryClassificationInfo:
+                - positive: {{ positive }}
+                  type: "{{ type }}"
+            references:
+              - chunkInfo:
+                  chunk: "{{ chunk }}"
+                  content: "{{ content }}"
+                  documentMetadata:
+                    document: "{{ document }}"
+                    pageIdentifier: "{{ pageIdentifier }}"
+                    structData: "{{ structData }}"
+                    title: "{{ title }}"
+                    uri: "{{ uri }}"
+                  relevanceScore: {{ relevanceScore }}
+                structuredDocumentInfo:
+                  document: "{{ document }}"
+                  structData: "{{ structData }}"
+                  title: "{{ title }}"
+                  uri: "{{ uri }}"
+                unstructuredDocumentInfo:
+                  chunkContents:
+                    - content: "{{ content }}"
+                      pageIdentifier: "{{ pageIdentifier }}"
+                      relevanceScore: {{ relevanceScore }}
+                  document: "{{ document }}"
+                  structData: "{{ structData }}"
+                  title: "{{ title }}"
+                  uri: "{{ uri }}"
+            relatedQuestions:
+              - "{{ relatedQuestions }}"
+            safetyRatings:
+              - blocked: {{ blocked }}
+                category: "{{ category }}"
+                probability: "{{ probability }}"
+                probabilityScore: {{ probabilityScore }}
+                severity: "{{ severity }}"
+                severityScore: {{ severityScore }}
+            state: "{{ state }}"
+            steps:
+              - actions: "{{ actions }}"
+                description: "{{ description }}"
+                state: "{{ state }}"
+                thought: "{{ thought }}"
+          detailedAssistAnswer:
             assistSkippedReasons:
               - "{{ assistSkippedReasons }}"
-            replies:
-              - createTime: "{{ createTime }}"
-                groundedContent:
-                  textGroundingMetadata:
-                    visualSegments: "{{ visualSegments }}"
-                    segments: "{{ segments }}"
-                    references: "{{ references }}"
-                  content:
-                    text: "{{ text }}"
-                    codeExecutionResult: "{{ codeExecutionResult }}"
-                    executableCode: "{{ executableCode }}"
-                    file: "{{ file }}"
-                    thought: {{ thought }}
-                    inlineData: "{{ inlineData }}"
-                    role: "{{ role }}"
-                  citationMetadata:
-                    citations: "{{ citations }}"
             customerPolicyEnforcementResult:
-              verdict: "{{ verdict }}"
               policyResults:
                 - bannedPhraseEnforcementResult:
                     bannedPhrases: "{{ bannedPhrases }}"
                   modelArmorEnforcementResult:
-                    modelArmorViolation: "{{ modelArmorViolation }}"
                     error: "{{ error }}"
-            state: "{{ state }}"
+                    modelArmorViolation: "{{ modelArmorViolation }}"
+              verdict: "{{ verdict }}"
+              violationSource: "{{ violationSource }}"
             name: "{{ name }}"
+            replies:
+              - createTime: "{{ createTime }}"
+                groundedContent:
+                  citationMetadata:
+                    citations: "{{ citations }}"
+                  content:
+                    codeExecutionResult: "{{ codeExecutionResult }}"
+                    executableCode: "{{ executableCode }}"
+                    file: "{{ file }}"
+                    inlineData: "{{ inlineData }}"
+                    role: "{{ role }}"
+                    text: "{{ text }}"
+                    thought: {{ thought }}
+                  textGroundingMetadata:
+                    references: "{{ references }}"
+                    segments: "{{ segments }}"
+                    visualSegments: "{{ visualSegments }}"
+            state: "{{ state }}"
           live: {{ live }}
           query:
-            text: "{{ text }}"
             queryId: "{{ queryId }}"
+            text: "{{ text }}"
           queryConfig: "{{ queryConfig }}"
-          answer: "{{ answer }}"
-          detailedAnswer:
-            name: "{{ name }}"
-            createTime: "{{ createTime }}"
-            safetyRatings:
-              - probability: "{{ probability }}"
-                severityScore: {{ severityScore }}
-                severity: "{{ severity }}"
-                blocked: {{ blocked }}
-                category: "{{ category }}"
-                probabilityScore: {{ probabilityScore }}
-            citations:
-              - endIndex: "{{ endIndex }}"
-                startIndex: "{{ startIndex }}"
-                sources: "{{ sources }}"
-            answerText: "{{ answerText }}"
-            groundingSupports:
-              - endIndex: "{{ endIndex }}"
-                groundingScore: {{ groundingScore }}
-                groundingCheckRequired: {{ groundingCheckRequired }}
-                startIndex: "{{ startIndex }}"
-                sources: "{{ sources }}"
-            references:
-              - unstructuredDocumentInfo:
-                  chunkContents:
-                    - pageIdentifier: "{{ pageIdentifier }}"
-                      relevanceScore: {{ relevanceScore }}
-                      content: "{{ content }}"
-                  document: "{{ document }}"
-                  uri: "{{ uri }}"
-                  title: "{{ title }}"
-                  structData: "{{ structData }}"
-                chunkInfo:
-                  relevanceScore: {{ relevanceScore }}
-                  chunk: "{{ chunk }}"
-                  content: "{{ content }}"
-                  documentMetadata:
-                    pageIdentifier: "{{ pageIdentifier }}"
-                    document: "{{ document }}"
-                    uri: "{{ uri }}"
-                    title: "{{ title }}"
-                    structData: "{{ structData }}"
-                structuredDocumentInfo:
-                  structData: "{{ structData }}"
-                  document: "{{ document }}"
-                  title: "{{ title }}"
-                  uri: "{{ uri }}"
-            completeTime: "{{ completeTime }}"
-            queryUnderstandingInfo:
-              queryClassificationInfo:
-                - type: "{{ type }}"
-                  positive: {{ positive }}
-            state: "{{ state }}"
-            steps:
-              - description: "{{ description }}"
-                actions: "{{ actions }}"
-                thought: "{{ thought }}"
-                state: "{{ state }}"
-            groundingScore: {{ groundingScore }}
-            answerSkippedReasons:
-              - "{{ answerSkippedReasons }}"
-            relatedQuestions:
-              - "{{ relatedQuestions }}"
-    - name: name
-      value: "{{ name }}"
+    - name: userPseudoId
+      value: "{{ userPseudoId }}"
       description: |
-        Immutable. Fully qualified name \`projects/{project}/locations/global/collections/{collection}/engines/{engine}/sessions/*\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. The display name of the session. This field is used to identify the session in the UI. By default, the display name is the first turn query text in the session.
+        A unique identifier for tracking users.
     - name: sessionId
       value: "{{ sessionId }}"
 `}</CodeBlock>
@@ -1129,13 +1130,13 @@ Updates a Session. Session action type cannot be changed. If the Session to upda
 ```sql
 UPDATE google.discoveryengine.sessions
 SET 
+data__displayName = '{{ displayName }}',
 data__isPinned = {{ isPinned }},
-data__userPseudoId = '{{ userPseudoId }}',
 data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__state = '{{ state }}',
 data__turns = '{{ turns }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__userPseudoId = '{{ userPseudoId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1163,13 +1164,13 @@ Updates a Session. Session action type cannot be changed. If the Session to upda
 ```sql
 UPDATE google.discoveryengine.sessions
 SET 
+data__displayName = '{{ displayName }}',
 data__isPinned = {{ isPinned }},
-data__userPseudoId = '{{ userPseudoId }}',
 data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__state = '{{ state }}',
 data__turns = '{{ turns }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__userPseudoId = '{{ userPseudoId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1197,13 +1198,13 @@ Updates a Session. Session action type cannot be changed. If the Session to upda
 ```sql
 UPDATE google.discoveryengine.sessions
 SET 
+data__displayName = '{{ displayName }}',
 data__isPinned = {{ isPinned }},
-data__userPseudoId = '{{ userPseudoId }}',
 data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__state = '{{ state }}',
 data__turns = '{{ turns }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__userPseudoId = '{{ userPseudoId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

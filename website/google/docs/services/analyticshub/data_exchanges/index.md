@@ -260,7 +260,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_data_exchanges_list"><CopyableCode code="organizations_locations_data_exchanges_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all data exchanges from projects in a given organization and location.</td>
 </tr>
 <tr>
@@ -409,8 +409,8 @@ sharingEnvironmentConfig
 FROM google.analyticshub.data_exchanges
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -456,27 +456,27 @@ Creates a new data exchange.
 
 ```sql
 INSERT INTO google.analyticshub.data_exchanges (
+data__description,
+data__discoveryType,
+data__displayName,
+data__documentation,
+data__icon,
 data__logLinkedDatasetQueryUserEmail,
 data__primaryContact,
-data__discoveryType,
 data__sharingEnvironmentConfig,
-data__displayName,
-data__icon,
-data__documentation,
-data__description,
 projectsId,
 locationsId,
 dataExchangeId
 )
 SELECT 
+'{{ description }}',
+'{{ discoveryType }}',
+'{{ displayName }}',
+'{{ documentation }}',
+'{{ icon }}',
 {{ logLinkedDatasetQueryUserEmail }},
 '{{ primaryContact }}',
-'{{ discoveryType }}',
 '{{ sharingEnvironmentConfig }}',
-'{{ displayName }}',
-'{{ icon }}',
-'{{ documentation }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataExchangeId }}'
@@ -505,6 +505,27 @@ sharingEnvironmentConfig
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the data_exchanges resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the data exchange. The description must not contain Unicode non-characters as well as C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
+    - name: discoveryType
+      value: "{{ discoveryType }}"
+      description: |
+        Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange.
+      valid_values: ['DISCOVERY_TYPE_UNSPECIFIED', 'DISCOVERY_TYPE_PRIVATE', 'DISCOVERY_TYPE_PUBLIC']
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Human-readable display name of the data exchange. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and must not start or end with spaces. Default value is an empty string. Max length: 63 bytes.
+    - name: documentation
+      value: "{{ documentation }}"
+      description: |
+        Optional. Documentation describing the data exchange.
+    - name: icon
+      value: "{{ icon }}"
+      description: |
+        Optional. Base64 encoded image representing the data exchange. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the content of the fields are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.
     - name: logLinkedDatasetQueryUserEmail
       value: {{ logLinkedDatasetQueryUserEmail }}
       description: |
@@ -513,35 +534,14 @@ sharingEnvironmentConfig
       value: "{{ primaryContact }}"
       description: |
         Optional. Email or URL of the primary point of contact of the data exchange. Max Length: 1000 bytes.
-    - name: discoveryType
-      value: "{{ discoveryType }}"
-      description: |
-        Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange.
-      valid_values: ['DISCOVERY_TYPE_UNSPECIFIED', 'DISCOVERY_TYPE_PRIVATE', 'DISCOVERY_TYPE_PUBLIC']
     - name: sharingEnvironmentConfig
       description: |
         Optional. Configurable data sharing environment option for a data exchange.
       value:
-        defaultExchangeConfig: "{{ defaultExchangeConfig }}"
         dcrExchangeConfig:
-          singleSelectedResourceSharingRestriction: {{ singleSelectedResourceSharingRestriction }}
           singleLinkedDatasetPerCleanroom: {{ singleLinkedDatasetPerCleanroom }}
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Human-readable display name of the data exchange. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and must not start or end with spaces. Default value is an empty string. Max length: 63 bytes.
-    - name: icon
-      value: "{{ icon }}"
-      description: |
-        Optional. Base64 encoded image representing the data exchange. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the content of the fields are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.
-    - name: documentation
-      value: "{{ documentation }}"
-      description: |
-        Optional. Documentation describing the data exchange.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the data exchange. The description must not contain Unicode non-characters as well as C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
+          singleSelectedResourceSharingRestriction: {{ singleSelectedResourceSharingRestriction }}
+        defaultExchangeConfig: "{{ defaultExchangeConfig }}"
     - name: dataExchangeId
       value: "{{ dataExchangeId }}"
 `}</CodeBlock>
@@ -565,14 +565,14 @@ Updates an existing data exchange.
 ```sql
 UPDATE google.analyticshub.data_exchanges
 SET 
+data__description = '{{ description }}',
+data__discoveryType = '{{ discoveryType }}',
+data__displayName = '{{ displayName }}',
+data__documentation = '{{ documentation }}',
+data__icon = '{{ icon }}',
 data__logLinkedDatasetQueryUserEmail = {{ logLinkedDatasetQueryUserEmail }},
 data__primaryContact = '{{ primaryContact }}',
-data__discoveryType = '{{ discoveryType }}',
-data__sharingEnvironmentConfig = '{{ sharingEnvironmentConfig }}',
-data__displayName = '{{ displayName }}',
-data__icon = '{{ icon }}',
-data__documentation = '{{ documentation }}',
-data__description = '{{ description }}'
+data__sharingEnvironmentConfig = '{{ sharingEnvironmentConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -636,10 +636,10 @@ EXEC google.analyticshub.data_exchanges.projects_locations_data_exchanges_subscr
 @dataExchangesId='{{ dataExchangesId }}' --required 
 @@json=
 '{
-"subscription": "{{ subscription }}", 
+"destination": "{{ destination }}", 
 "destinationDataset": "{{ destinationDataset }}", 
 "subscriberContact": "{{ subscriberContact }}", 
-"destination": "{{ destination }}"
+"subscription": "{{ subscription }}"
 }'
 ;
 ```

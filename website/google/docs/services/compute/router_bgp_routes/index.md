@@ -113,7 +113,7 @@ The following methods are available for this resource:
     <td><a href="#list_bgp_routes"><CopyableCode code="list_bgp_routes" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
-    <td><a href="#parameter-peer"><code>peer</code></a>, <a href="#parameter-addressFamily"><code>addressFamily</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-routeType"><code>routeType</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-destinationPrefix"><code>destinationPrefix</code></a>, <a href="#parameter-policyApplied"><code>policyApplied</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-addressFamily"><code>addressFamily</code></a>, <a href="#parameter-destinationPrefix"><code>destinationPrefix</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-peer"><code>peer</code></a>, <a href="#parameter-policyApplied"><code>policyApplied</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-routeType"><code>routeType</code></a></td>
     <td>Retrieves a list of router bgp routes available to the specified project.</td>
 </tr>
 </tbody>
@@ -226,16 +226,16 @@ FROM google.compute.router_bgp_routes
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND router = '{{ router }}' -- required
-AND peer = '{{ peer }}'
 AND addressFamily = '{{ addressFamily }}'
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND routeType = '{{ routeType }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
 AND destinationPrefix = '{{ destinationPrefix }}'
-AND policyApplied = '{{ policyApplied }}'
+AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND peer = '{{ peer }}'
+AND policyApplied = '{{ policyApplied }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND routeType = '{{ routeType }}'
 ;
 ```
 </TabItem>

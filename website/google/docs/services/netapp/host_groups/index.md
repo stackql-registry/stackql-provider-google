@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns a list of host groups in a `location`. Use `-` as location to list host groups across all locations.</td>
 </tr>
 <tr>
@@ -311,9 +311,9 @@ FROM google.netapp.host_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -335,23 +335,23 @@ Creates a new host group.
 
 ```sql
 INSERT INTO google.netapp.host_groups (
+data__description,
 data__hosts,
 data__labels,
 data__name,
-data__type,
 data__osType,
-data__description,
+data__type,
 projectsId,
 locationsId,
 hostGroupId
 )
 SELECT 
+'{{ description }}',
 '{{ hosts }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ type }}',
 '{{ osType }}',
-'{{ description }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ hostGroupId }}'
@@ -375,6 +375,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the host_groups resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the host group.
     - name: hosts
       value:
         - "{{ hosts }}"
@@ -388,20 +392,16 @@ response
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the host group. Format: \`projects/{project_number}/locations/{location_id}/hostGroups/{host_group_id}\`.
-    - name: type
-      value: "{{ type }}"
-      description: |
-        Required. Type of the host group.
-      valid_values: ['TYPE_UNSPECIFIED', 'ISCSI_INITIATOR']
     - name: osType
       value: "{{ osType }}"
       description: |
         Required. The OS type of the host group. It indicates the type of operating system used by all of the hosts in the HostGroup. All hosts in a HostGroup must be of the same OS type. This can be set only when creating a HostGroup.
       valid_values: ['OS_TYPE_UNSPECIFIED', 'LINUX', 'WINDOWS', 'ESXI']
-    - name: description
-      value: "{{ description }}"
+    - name: type
+      value: "{{ type }}"
       description: |
-        Optional. Description of the host group.
+        Required. Type of the host group.
+      valid_values: ['TYPE_UNSPECIFIED', 'ISCSI_INITIATOR']
     - name: hostGroupId
       value: "{{ hostGroupId }}"
 `}</CodeBlock>
@@ -425,12 +425,12 @@ Updates an existing host group.
 ```sql
 UPDATE google.netapp.host_groups
 SET 
+data__description = '{{ description }}',
 data__hosts = '{{ hosts }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__type = '{{ type }}',
 data__osType = '{{ osType }}',
-data__description = '{{ description }}'
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

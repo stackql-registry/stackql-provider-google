@@ -123,7 +123,7 @@ The following methods are available for this resource:
     <td><a href="#list_revisions"><CopyableCode code="list_revisions" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a>, <a href="#parameter-consentsId"><code>consentsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the revisions of the specified Consent in reverse chronological order.</td>
 </tr>
 <tr>
@@ -222,9 +222,9 @@ AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND consentStoresId = '{{ consentStoresId }}' -- required
 AND consentsId = '{{ consentsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

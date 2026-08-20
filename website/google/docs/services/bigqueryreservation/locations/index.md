@@ -54,14 +54,14 @@ The following methods are available for this resource:
     <td><a href="#search_all_assignments"><CopyableCode code="search_all_assignments" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
     <td>Looks up assignments for a specified resource for a particular region. If the request is about a project: 1. Assignments created on the project will be returned if they exist. 2. Otherwise assignments created on the closest ancestor will be returned. 3. Assignments for different JobTypes will all be returned. The same logic applies if the request is about a folder. If the request is about an organization, then assignments created on the organization will be returned (organization doesn't have ancestors). Comparing to ListAssignments, there are some behavior differences: 1. permission on the assignee will be verified in this API. 2. Hierarchy lookup (project-&gt;folder-&gt;organization) happens in this API. 3. Parent here is `projects/*/locations/*`, instead of `projects/*/locations/*reservations/*`.</td>
 </tr>
 <tr>
     <td><a href="#search_assignments"><CopyableCode code="search_assignments" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
     <td>Deprecated: Looks up assignments for a specified resource for a particular region. If the request is about a project: 1. Assignments created on the project will be returned if they exist. 2. Otherwise assignments created on the closest ancestor will be returned. 3. Assignments for different JobTypes will all be returned. The same logic applies if the request is about a folder. If the request is about an organization, then assignments created on the organization will be returned (organization doesn't have ancestors). Comparing to ListAssignments, there are some behavior differences: 1. permission on the assignee will be verified in this API. 2. Hierarchy lookup (project-&gt;folder-&gt;organization) happens in this API. 3. Parent here is `projects/*/locations/*`, instead of `projects/*/locations/*reservations/*`. **Note** "-" cannot be used for projects nor locations.</td>
 </tr>
 </tbody>
@@ -125,9 +125,9 @@ Looks up assignments for a specified resource for a particular region. If the re
 EXEC google.bigqueryreservation.locations.search_all_assignments 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@query='{{ query }}', 
-@pageSize='{{ pageSize }}'
+@query='{{ query }}'
 ;
 ```
 </TabItem>
@@ -139,9 +139,9 @@ Deprecated: Looks up assignments for a specified resource for a particular regio
 EXEC google.bigqueryreservation.locations.search_assignments 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@query='{{ query }}', 
-@pageSize='{{ pageSize }}'
+@query='{{ query }}'
 ;
 ```
 </TabItem>

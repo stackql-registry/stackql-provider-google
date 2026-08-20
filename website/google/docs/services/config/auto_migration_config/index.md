@@ -173,8 +173,8 @@ Updates the AutoMigrationConfig for a given project and location.
 ```sql
 UPDATE google.config.auto_migration_config
 SET 
-data__name = '{{ name }}',
-data__autoMigrationEnabled = {{ autoMigrationEnabled }}
+data__autoMigrationEnabled = {{ autoMigrationEnabled }},
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

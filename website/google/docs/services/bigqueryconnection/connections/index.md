@@ -408,32 +408,32 @@ Creates a new connection.
 ```sql
 INSERT INTO google.bigqueryconnection.connections (
 data__aws,
-data__description,
-data__spark,
-data__kmsKeyName,
-data__configuration,
-data__cloudResource,
-data__cloudSql,
-data__salesforceDataCloud,
-data__cloudSpanner,
 data__azure,
+data__cloudResource,
+data__cloudSpanner,
+data__cloudSql,
+data__configuration,
+data__description,
 data__friendlyName,
+data__kmsKeyName,
+data__salesforceDataCloud,
+data__spark,
 projectsId,
 locationsId,
 connectionId
 )
 SELECT 
 '{{ aws }}',
-'{{ description }}',
-'{{ spark }}',
-'{{ kmsKeyName }}',
-'{{ configuration }}',
-'{{ cloudResource }}',
-'{{ cloudSql }}',
-'{{ salesforceDataCloud }}',
-'{{ cloudSpanner }}',
 '{{ azure }}',
+'{{ cloudResource }}',
+'{{ cloudSpanner }}',
+'{{ cloudSql }}',
+'{{ configuration }}',
+'{{ description }}',
 '{{ friendlyName }}',
+'{{ kmsKeyName }}',
+'{{ salesforceDataCloud }}',
+'{{ spark }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectionId }}'
@@ -472,95 +472,100 @@ spark
         Amazon Web Services (AWS) properties.
       value:
         accessRole:
-          identity: "{{ identity }}"
           iamRoleId: "{{ iamRoleId }}"
-    - name: description
-      value: "{{ description }}"
+          identity: "{{ identity }}"
+    - name: azure
       description: |
-        User provided description.
-    - name: spark
-      description: |
-        Spark properties.
+        Azure properties.
       value:
-        serviceAccountId: "{{ serviceAccountId }}"
-        sparkHistoryServerConfig:
-          dataprocCluster: "{{ dataprocCluster }}"
-        metastoreServiceConfig:
-          metastoreService: "{{ metastoreService }}"
-    - name: kmsKeyName
-      value: "{{ kmsKeyName }}"
-      description: |
-        Optional. The Cloud KMS key that is used for credentials encryption. If omitted, internal Google owned encryption keys are used. Example: \`projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKeys/[key]\`
-    - name: configuration
-      description: |
-        Optional. Connector configuration.
-      value:
-        connectorId: "{{ connectorId }}"
-        asset:
-          database: "{{ database }}"
-          googleCloudResource: "{{ googleCloudResource }}"
-        endpoint:
-          hostPort: "{{ hostPort }}"
-        authentication:
-          parameters: "{{ parameters }}"
-          usernamePassword:
-            password:
-              plaintext: "{{ plaintext }}"
-              secretType: "{{ secretType }}"
-            username: "{{ username }}"
-          serviceAccount: "{{ serviceAccount }}"
-        network:
-          privateServiceConnect:
-            networkAttachment: "{{ networkAttachment }}"
-        parameters: "{{ parameters }}"
+        application: "{{ application }}"
+        clientId: "{{ clientId }}"
+        customerTenantId: "{{ customerTenantId }}"
+        federatedApplicationClientId: "{{ federatedApplicationClientId }}"
+        identity: "{{ identity }}"
+        objectId: "{{ objectId }}"
+        redirectUri: "{{ redirectUri }}"
     - name: cloudResource
       description: |
         Cloud Resource properties.
       value:
         serviceAccountId: "{{ serviceAccountId }}"
-    - name: cloudSql
-      description: |
-        Cloud SQL properties.
-      value:
-        instanceId: "{{ instanceId }}"
-        database: "{{ database }}"
-        serviceAccountId: "{{ serviceAccountId }}"
-        type: "{{ type }}"
-        credential:
-          username: "{{ username }}"
-          password: "{{ password }}"
-    - name: salesforceDataCloud
-      description: |
-        Optional. Salesforce DataCloud properties. This field is intended for use only by Salesforce partner projects. This field contains properties for your Salesforce DataCloud connection.
-      value:
-        instanceUri: "{{ instanceUri }}"
-        identity: "{{ identity }}"
-        tenantId: "{{ tenantId }}"
     - name: cloudSpanner
       description: |
         Cloud Spanner properties.
       value:
-        databaseRole: "{{ databaseRole }}"
         database: "{{ database }}"
-        useServerlessAnalytics: {{ useServerlessAnalytics }}
-        useParallelism: {{ useParallelism }}
+        databaseRole: "{{ databaseRole }}"
         maxParallelism: {{ maxParallelism }}
         useDataBoost: {{ useDataBoost }}
-    - name: azure
+        useParallelism: {{ useParallelism }}
+        useServerlessAnalytics: {{ useServerlessAnalytics }}
+    - name: cloudSql
       description: |
-        Azure properties.
+        Cloud SQL properties.
       value:
-        federatedApplicationClientId: "{{ federatedApplicationClientId }}"
-        identity: "{{ identity }}"
-        clientId: "{{ clientId }}"
-        objectId: "{{ objectId }}"
-        application: "{{ application }}"
-        redirectUri: "{{ redirectUri }}"
-        customerTenantId: "{{ customerTenantId }}"
+        credential:
+          password: "{{ password }}"
+          username: "{{ username }}"
+        database: "{{ database }}"
+        instanceId: "{{ instanceId }}"
+        serviceAccountId: "{{ serviceAccountId }}"
+        type: "{{ type }}"
+    - name: configuration
+      description: |
+        Optional. Connector configuration.
+      value:
+        asset:
+          database: "{{ database }}"
+          googleCloudResource: "{{ googleCloudResource }}"
+        authentication:
+          parameters: "{{ parameters }}"
+          serviceAccount: "{{ serviceAccount }}"
+          usernamePassword:
+            password:
+              plaintext: "{{ plaintext }}"
+              secretType: "{{ secretType }}"
+            username: "{{ username }}"
+        connectorId: "{{ connectorId }}"
+        endpoint:
+          hostPort: "{{ hostPort }}"
+        network:
+          privateServiceConnect:
+            networkAttachment: "{{ networkAttachment }}"
+        parameters: "{{ parameters }}"
+        tls:
+          mode: "{{ mode }}"
+          privatePki:
+            trustedCertificatesPem: "{{ trustedCertificatesPem }}"
+          webPki: "{{ webPki }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User provided description.
     - name: friendlyName
       value: "{{ friendlyName }}"
       description: |
         User provided display name for the connection.
+    - name: kmsKeyName
+      value: "{{ kmsKeyName }}"
+      description: |
+        Optional. The Cloud KMS key that is used for credentials encryption. If omitted, internal Google owned encryption keys are used. Example: \`projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKeys/[key]\`
+    - name: salesforceDataCloud
+      description: |
+        Optional. Salesforce DataCloud properties. This field is intended for use only by Salesforce partner projects. This field contains properties for your Salesforce DataCloud connection.
+      value:
+        identity: "{{ identity }}"
+        instanceUri: "{{ instanceUri }}"
+        tenantId: "{{ tenantId }}"
+    - name: spark
+      description: |
+        Spark properties.
+      value:
+        metastoreServiceConfig:
+          metastoreService: "{{ metastoreService }}"
+        serviceAccountId: "{{ serviceAccountId }}"
+        sparkHistoryServerConfig:
+          dataprocCluster: "{{ dataprocCluster }}"
     - name: connectionId
       value: "{{ connectionId }}"
 `}</CodeBlock>
@@ -585,16 +590,16 @@ Updates the specified connection. For security reasons, also resets credential i
 UPDATE google.bigqueryconnection.connections
 SET 
 data__aws = '{{ aws }}',
-data__description = '{{ description }}',
-data__spark = '{{ spark }}',
-data__kmsKeyName = '{{ kmsKeyName }}',
-data__configuration = '{{ configuration }}',
-data__cloudResource = '{{ cloudResource }}',
-data__cloudSql = '{{ cloudSql }}',
-data__salesforceDataCloud = '{{ salesforceDataCloud }}',
-data__cloudSpanner = '{{ cloudSpanner }}',
 data__azure = '{{ azure }}',
-data__friendlyName = '{{ friendlyName }}'
+data__cloudResource = '{{ cloudResource }}',
+data__cloudSpanner = '{{ cloudSpanner }}',
+data__cloudSql = '{{ cloudSql }}',
+data__configuration = '{{ configuration }}',
+data__description = '{{ description }}',
+data__friendlyName = '{{ friendlyName }}',
+data__kmsKeyName = '{{ kmsKeyName }}',
+data__salesforceDataCloud = '{{ salesforceDataCloud }}',
+data__spark = '{{ spark }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

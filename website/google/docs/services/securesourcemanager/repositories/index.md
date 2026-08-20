@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Repositories in a given project and location. The instance field is required in the query parameter for requests using the securesourcemanager.googleapis.com endpoint.</td>
 </tr>
 <tr>
@@ -357,9 +357,9 @@ FROM google.securesourcemanager.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND instance = '{{ instance }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -381,24 +381,24 @@ Creates a new repository in a given project and location. The Repository.Instanc
 
 ```sql
 INSERT INTO google.securesourcemanager.repositories (
+data__description,
 data__etag,
 data__initialConfig,
-data__description,
 data__instance,
-data__scanConfig,
 data__name,
+data__scanConfig,
 data__serviceAccount,
 projectsId,
 locationsId,
 repositoryId
 )
 SELECT 
+'{{ description }}',
 '{{ etag }}',
 '{{ initialConfig }}',
-'{{ description }}',
 '{{ instance }}',
-'{{ scanConfig }}',
 '{{ name }}',
+'{{ scanConfig }}',
 '{{ serviceAccount }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -423,6 +423,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the repositories resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the repository, which cannot exceed 500 characters.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -431,19 +435,19 @@ response
       description: |
         Input only. Initial configurations for the repository.
       value:
-        license: "{{ license }}"
         defaultBranch: "{{ defaultBranch }}"
         gitignores:
           - "{{ gitignores }}"
+        license: "{{ license }}"
         readme: "{{ readme }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the repository, which cannot exceed 500 characters.
     - name: instance
       value: "{{ instance }}"
       description: |
         Optional. The name of the instance in which the repository is hosted, formatted as \`projects/{project_number}/locations/{location_id}/instances/{instance_id}\` When creating repository via securesourcemanager.googleapis.com, this field is used as input. When creating repository via *.sourcemanager.dev, this field is output only.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. A unique identifier for a repository. The name should be of the format: \`projects/{project}/locations/{location_id}/repositories/{repository_id}\`
     - name: scanConfig
       description: |
         Optional. Provides configuration for scanning.
@@ -451,10 +455,6 @@ response
         secretScanConfig:
           enabled: {{ enabled }}
           inspectTemplate: "{{ inspectTemplate }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. A unique identifier for a repository. The name should be of the format: \`projects/{project}/locations/{location_id}/repositories/{repository_id}\`
     - name: serviceAccount
       value: "{{ serviceAccount }}"
       description: |
@@ -482,12 +482,12 @@ Updates the metadata of a repository.
 ```sql
 UPDATE google.securesourcemanager.repositories
 SET 
+data__description = '{{ description }}',
 data__etag = '{{ etag }}',
 data__initialConfig = '{{ initialConfig }}',
-data__description = '{{ description }}',
 data__instance = '{{ instance }}',
-data__scanConfig = '{{ scanConfig }}',
 data__name = '{{ name }}',
+data__scanConfig = '{{ scanConfig }}',
 data__serviceAccount = '{{ serviceAccount }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

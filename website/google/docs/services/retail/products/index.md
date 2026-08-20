@@ -435,7 +435,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_catalogs_branches_products_list"><CopyableCode code="projects_locations_catalogs_branches_products_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Gets a list of Products.</td>
 </tr>
 <tr>
@@ -467,18 +467,18 @@ The following methods are available for this resource:
     <td>Bulk import of multiple Products. Request processing may be synchronous. Non-existing items are created. Note that it is possible for a subset of the Products to be successfully updated.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_branches_products_set_inventory"><CopyableCode code="projects_locations_catalogs_branches_products_set_inventory" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a></td>
-    <td></td>
-    <td>Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update is enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. When inventory is updated with ProductService.CreateProduct and ProductService.UpdateProduct, the specified inventory field value(s) overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update times for the specified inventory fields are overwritten by the times of the ProductService.CreateProduct or ProductService.UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product is used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information is preserved. Pre-existing inventory information can only be updated with ProductService.SetInventory, ProductService.AddFulfillmentPlaces, and ProductService.RemoveFulfillmentPlaces. The returned Operations is obsolete after one day, and the GetOperation API returns `NOT_FOUND` afterwards. If conflicting updates are issued, the Operations associated with the stale updates are not marked as done until they are obsolete.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_catalogs_branches_products_purge"><CopyableCode code="projects_locations_catalogs_branches_products_purge" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
     <td></td>
     <td>Permanently deletes all selected Products under a branch. This process is asynchronous. If the request is valid, the removal will be enqueued and processed offline. Depending on the number of Products, this operation could take hours to complete. Before the operation completes, some Products may still be returned by ProductService.GetProduct or ProductService.ListProducts. Depending on the number of Products, this operation could take hours to complete. To get a sample of Products that would be deleted, set PurgeProductsRequest.force to false.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_catalogs_branches_products_set_inventory"><CopyableCode code="projects_locations_catalogs_branches_products_set_inventory" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a></td>
+    <td></td>
+    <td>Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update is enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. When inventory is updated with ProductService.CreateProduct and ProductService.UpdateProduct, the specified inventory field value(s) overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update times for the specified inventory fields are overwritten by the times of the ProductService.CreateProduct or ProductService.UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product is used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information is preserved. Pre-existing inventory information can only be updated with ProductService.SetInventory, ProductService.AddFulfillmentPlaces, and ProductService.RemoveFulfillmentPlaces. The returned Operations is obsolete after one day, and the GetOperation API returns `NOT_FOUND` afterwards. If conflicting updates are issued, the Operations associated with the stale updates are not marked as done until they are obsolete.</td>
 </tr>
 </tbody>
 </table>
@@ -662,9 +662,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND catalogsId = '{{ catalogsId }}' -- required
 AND branchesId = '{{ branchesId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -687,38 +687,38 @@ Creates a Product.
 
 ```sql
 INSERT INTO google.retail.products (
-data__id,
-data__audience,
-data__patterns,
-data__gtin,
-data__description,
-data__conditions,
-data__primaryProductId,
-data__availability,
-data__priceInfo,
-data__uri,
-data__ttl,
-data__fulfillmentInfo,
-data__materials,
-data__retrievableFields,
-data__categories,
-data__images,
-data__colorInfo,
-data__collectionMemberIds,
-data__languageCode,
-data__name,
-data__brands,
-data__type,
-data__title,
-data__expireTime,
-data__availableTime,
-data__sizes,
-data__rating,
-data__promotions,
 data__attributes,
+data__audience,
+data__availability,
 data__availableQuantity,
+data__availableTime,
+data__brands,
+data__categories,
+data__collectionMemberIds,
+data__colorInfo,
+data__conditions,
+data__description,
+data__expireTime,
+data__fulfillmentInfo,
+data__gtin,
+data__id,
+data__images,
+data__languageCode,
+data__materials,
+data__name,
+data__patterns,
+data__priceInfo,
+data__primaryProductId,
+data__promotions,
 data__publishTime,
+data__rating,
+data__retrievableFields,
+data__sizes,
 data__tags,
+data__title,
+data__ttl,
+data__type,
+data__uri,
 projectsId,
 locationsId,
 catalogsId,
@@ -726,38 +726,38 @@ branchesId,
 productId
 )
 SELECT 
-'{{ id }}',
-'{{ audience }}',
-'{{ patterns }}',
-'{{ gtin }}',
-'{{ description }}',
-'{{ conditions }}',
-'{{ primaryProductId }}',
-'{{ availability }}',
-'{{ priceInfo }}',
-'{{ uri }}',
-'{{ ttl }}',
-'{{ fulfillmentInfo }}',
-'{{ materials }}',
-'{{ retrievableFields }}',
-'{{ categories }}',
-'{{ images }}',
-'{{ colorInfo }}',
-'{{ collectionMemberIds }}',
-'{{ languageCode }}',
-'{{ name }}',
-'{{ brands }}',
-'{{ type }}',
-'{{ title }}',
-'{{ expireTime }}',
-'{{ availableTime }}',
-'{{ sizes }}',
-'{{ rating }}',
-'{{ promotions }}',
 '{{ attributes }}',
+'{{ audience }}',
+'{{ availability }}',
 {{ availableQuantity }},
+'{{ availableTime }}',
+'{{ brands }}',
+'{{ categories }}',
+'{{ collectionMemberIds }}',
+'{{ colorInfo }}',
+'{{ conditions }}',
+'{{ description }}',
+'{{ expireTime }}',
+'{{ fulfillmentInfo }}',
+'{{ gtin }}',
+'{{ id }}',
+'{{ images }}',
+'{{ languageCode }}',
+'{{ materials }}',
+'{{ name }}',
+'{{ patterns }}',
+'{{ priceInfo }}',
+'{{ primaryProductId }}',
+'{{ promotions }}',
 '{{ publishTime }}',
+'{{ rating }}',
+'{{ retrievableFields }}',
+'{{ sizes }}',
 '{{ tags }}',
+'{{ title }}',
+'{{ ttl }}',
+'{{ type }}',
+'{{ uri }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -818,101 +818,46 @@ variants
     - name: branchesId
       value: "{{ branchesId }}"
       description: Required parameter for the products resource.
-    - name: id
-      value: "{{ id }}"
+    - name: attributes
+      value: "{{ attributes }}"
       description: |
-        Immutable. Product identifier, which is the final component of name. For example, this field is "id_1", if name is \`projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/id_1\`. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [id](https://support.google.com/merchants/answer/6324405). Schema.org property [Product.sku](https://schema.org/sku).
+        Highly encouraged. Extra product attributes to be included. For example, for products, this could include the store name, vendor, style, color, etc. These are very strong signals for recommendation model, thus we highly recommend providing the attributes here. Features that can take on one of a limited number of possible values. Two types of features can be set are: Textual features. some examples would be the brand/maker of a product, or country of a customer. Numerical features. Some examples would be the height/weight of a product, or age of a customer. For example: \`{ "vendor": {"text": ["vendor123", "vendor456"]}, "lengths_cm": {"numbers":[2.3, 15.4]}, "heights_cm": {"numbers":[8.1, 6.4]} }\`. This field needs to pass all below criteria, otherwise an INVALID_ARGUMENT error is returned: * Max entries count: 200. * The key must be a UTF-8 encoded string with a length limit of 128 characters. * For indexable attribute, the key must match the pattern: \`a-zA-Z0-9*\`. For example, \`key0LikeThis\` or \`KEY_1_LIKE_THIS\`. * For text attributes, at most 400 values are allowed. Empty values are not allowed. Each value must be a non-empty UTF-8 encoded string with a length limit of 256 characters. * For number attributes, at most 400 values are allowed.
     - name: audience
       description: |
         The target group associated with a given audience (e.g. male, veterans, car owners, musicians, etc.) of the product.
       value:
-        genders:
-          - "{{ genders }}"
         ageGroups:
           - "{{ ageGroups }}"
-    - name: patterns
-      value:
-        - "{{ patterns }}"
-      description: |
-        The pattern or graphic print of the product. For example, "striped", "polka dot", "paisley". A maximum of 20 values are allowed per Product. Each value must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [pattern](https://support.google.com/merchants/answer/6324483). Schema.org property [Product.pattern](https://schema.org/pattern).
-    - name: gtin
-      value: "{{ gtin }}"
-      description: |
-        The Global Trade Item Number (GTIN) of the product. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. This field must be a Unigram. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [gtin](https://support.google.com/merchants/answer/6324461). Schema.org property [Product.isbn](https://schema.org/isbn), [Product.gtin8](https://schema.org/gtin8), [Product.gtin12](https://schema.org/gtin12), [Product.gtin13](https://schema.org/gtin13), or [Product.gtin14](https://schema.org/gtin14). If the value is not a valid GTIN, an INVALID_ARGUMENT error is returned.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Product description. This field must be a UTF-8 encoded string with a length limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [description](https://support.google.com/merchants/answer/6324468). Schema.org property [Product.description](https://schema.org/description).
-    - name: conditions
-      value:
-        - "{{ conditions }}"
-      description: |
-        The condition of the product. Strongly encouraged to use the standard values: "new", "refurbished", "used". A maximum of 1 value is allowed per Product. Each value must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [condition](https://support.google.com/merchants/answer/6324469). Schema.org property [Offer.itemCondition](https://schema.org/itemCondition).
-    - name: primaryProductId
-      value: "{{ primaryProductId }}"
-      description: |
-        Variant group identifier. Must be an id, with the same parent branch with this product. Otherwise, an error is thrown. For Type.PRIMARY Products, this field can only be empty or set to the same value as id. For VARIANT Products, this field cannot be empty. A maximum of 2,000 products are allowed to share the same Type.PRIMARY Product. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [item_group_id](https://support.google.com/merchants/answer/6324507). Schema.org property [Product.inProductGroupWithID](https://schema.org/inProductGroupWithID).
+        genders:
+          - "{{ genders }}"
     - name: availability
       value: "{{ availability }}"
       description: |
         The online availability of the Product. Default to Availability.IN_STOCK. For primary products with variants set the availability of the primary as Availability.OUT_OF_STOCK and set the true availability at the variant level. This way the primary product will be considered "in stock" as long as it has at least one variant in stock. For primary products with no variants set the true availability at the primary level. Corresponding properties: Google Merchant Center property [availability](https://support.google.com/merchants/answer/6324448). Schema.org property [Offer.availability](https://schema.org/availability).
       valid_values: ['AVAILABILITY_UNSPECIFIED', 'IN_STOCK', 'OUT_OF_STOCK', 'PREORDER', 'BACKORDER']
-    - name: priceInfo
+    - name: availableQuantity
+      value: {{ availableQuantity }}
       description: |
-        Product price and cost information. Corresponding properties: Google Merchant Center property [price](https://support.google.com/merchants/answer/6324371).
+        The available quantity of the item.
+    - name: availableTime
+      value: "{{ availableTime }}"
+      description: |
+        The timestamp when this Product becomes available for SearchService.Search. Note that this is only applicable to Type.PRIMARY and Type.COLLECTION, and ignored for Type.VARIANT.
+    - name: brands
       value:
-        price: {{ price }}
-        originalPrice: {{ originalPrice }}
-        priceEffectiveTime: "{{ priceEffectiveTime }}"
-        cost: {{ cost }}
-        priceRange:
-          price:
-            minimum: {{ minimum }}
-            maximum: {{ maximum }}
-            exclusiveMaximum: {{ exclusiveMaximum }}
-            exclusiveMinimum: {{ exclusiveMinimum }}
-          originalPrice:
-            minimum: {{ minimum }}
-            maximum: {{ maximum }}
-            exclusiveMaximum: {{ exclusiveMaximum }}
-            exclusiveMinimum: {{ exclusiveMinimum }}
-        currencyCode: "{{ currencyCode }}"
-        priceExpireTime: "{{ priceExpireTime }}"
-    - name: uri
-      value: "{{ uri }}"
+        - "{{ brands }}"
       description: |
-        Canonical URL directly linking to the product detail page. It is strongly recommended to provide a valid uri for the product, otherwise the service performance could be significantly degraded. This field must be a UTF-8 encoded string with a length limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [link](https://support.google.com/merchants/answer/6324416). Schema.org property [Offer.url](https://schema.org/url).
-    - name: ttl
-      value: "{{ ttl }}"
-      description: |
-        Input only. The TTL (time to live) of the product. Note that this is only applicable to Type.PRIMARY and Type.COLLECTION, and ignored for Type.VARIANT. In general, we suggest the users to delete the stale products explicitly, instead of using this field to determine staleness. If it is set, it must be a non-negative value, and expire_time is set as current timestamp plus ttl. The derived expire_time is returned in the output and ttl is left blank when retrieving the Product. If it is set, the product is not available for SearchService.Search after current timestamp plus ttl. However, the product can still be retrieved by ProductService.GetProduct and ProductService.ListProducts.
-    - name: fulfillmentInfo
-      description: |
-        Fulfillment information, such as the store IDs for in-store pickup or region IDs for different shipping methods. All the elements must have distinct FulfillmentInfo.type. Otherwise, an INVALID_ARGUMENT error is returned.
-      value:
-        - type: "{{ type }}"
-          placeIds: "{{ placeIds }}"
-    - name: materials
-      value:
-        - "{{ materials }}"
-      description: |
-        The material of the product. For example, "leather", "wooden". A maximum of 20 values are allowed. Each value must be a UTF-8 encoded string with a length limit of 200 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [material](https://support.google.com/merchants/answer/6324410). Schema.org property [Product.material](https://schema.org/material).
-    - name: retrievableFields
-      value: "{{ retrievableFields }}"
-      description: |
-        Indicates which fields in the Products are returned in SearchResponse. Supported fields for all types: * audience * availability * brands * color_info * conditions * gtin * materials * name * patterns * price_info * rating * sizes * title * uri Supported fields only for Type.PRIMARY and Type.COLLECTION: * categories * description * images Supported fields only for Type.VARIANT: * Only the first image in images To mark attributes as retrievable, include paths of the form "attributes.key" where "key" is the key of a custom attribute, as specified in attributes. For Type.PRIMARY and Type.COLLECTION, the following fields are always returned in SearchResponse by default: * name For Type.VARIANT, the following fields are always returned in by default: * name * color_info Note: Returning more fields in SearchResponse can increase response payload size and serving latency. This field is deprecated. Use the retrievable site-wide control instead.
+        The brands of the product. A maximum of 30 brands are allowed unless overridden through the Google Cloud console. Each brand must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [brand](https://support.google.com/merchants/answer/6324351). Schema.org property [Product.brand](https://schema.org/brand).
     - name: categories
       value:
         - "{{ categories }}"
       description: |
         Optional. Product categories. This field is repeated for supporting one product belonging to several parallel categories. Strongly recommended using the full path for better search / recommendation quality. To represent the full path of category, use the '>' sign, with one space on each side, to separate different hierarchies. If '>' is part of the category name, replace it with other character(s). For example, if a shoes product belongs to both ["Shoes & Accessories" -> "Shoes"] and ["Sports & Fitness" -> "Athletic Clothing" -> "Shoes"], it could be represented as: "categories": [ "Shoes & Accessories > Shoes", "Sports & Fitness > Athletic Clothing > Shoes" ] Must be set for Type.PRIMARY Product otherwise an INVALID_ARGUMENT error is returned. At most 250 values are allowed per Product unless overridden through the Google Cloud console. Empty values are not allowed. Each value must be a UTF-8 encoded string with a length limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property google_product_category. Schema.org property [Product.category] (https://schema.org/category). [mc_google_product_category]: https://support.google.com/merchants/answer/6324436
-    - name: images
-      description: |
-        Product images for the product. We highly recommend putting the main image first. A maximum of 300 images are allowed. Corresponding properties: Google Merchant Center property [image_link](https://support.google.com/merchants/answer/6324350). Schema.org property [Product.image](https://schema.org/image).
+    - name: collectionMemberIds
       value:
-        - height: {{ height }}
-          width: {{ width }}
-          uri: "{{ uri }}"
+        - "{{ collectionMemberIds }}"
+      description: |
+        The id of the collection members when type is Type.COLLECTION. Non-existent product ids are allowed. The type of the members must be either Type.PRIMARY or Type.VARIANT otherwise an INVALID_ARGUMENT error is thrown. Should not set it for other types. A maximum of 1000 values are allowed. Otherwise, an INVALID_ARGUMENT error is return.
     - name: colorInfo
       description: |
         The color of the product. Corresponding properties: Google Merchant Center property [color](https://support.google.com/merchants/answer/6324487). Schema.org property [Product.color](https://schema.org/color).
@@ -921,76 +866,131 @@ variants
           - "{{ colorFamilies }}"
         colors:
           - "{{ colors }}"
-    - name: collectionMemberIds
+    - name: conditions
       value:
-        - "{{ collectionMemberIds }}"
+        - "{{ conditions }}"
       description: |
-        The id of the collection members when type is Type.COLLECTION. Non-existent product ids are allowed. The type of the members must be either Type.PRIMARY or Type.VARIANT otherwise an INVALID_ARGUMENT error is thrown. Should not set it for other types. A maximum of 1000 values are allowed. Otherwise, an INVALID_ARGUMENT error is return.
-    - name: languageCode
-      value: "{{ languageCode }}"
+        The condition of the product. Strongly encouraged to use the standard values: "new", "refurbished", "used". A maximum of 1 value is allowed per Product. Each value must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [condition](https://support.google.com/merchants/answer/6324469). Schema.org property [Offer.itemCondition](https://schema.org/itemCondition).
+    - name: description
+      value: "{{ description }}"
       description: |
-        Language of the title/description and other string attributes. Use language tags defined by [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). For product prediction, this field is ignored and the model automatically detects the text language. The Product can include text in different languages, but duplicating Products to provide text in multiple languages can result in degraded model performance. For product search this field is in use. It defaults to "en-US" if unset.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Full resource name of the product, such as \`projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/product_id\`.
-    - name: brands
-      value:
-        - "{{ brands }}"
-      description: |
-        The brands of the product. A maximum of 30 brands are allowed unless overridden through the Google Cloud console. Each brand must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [brand](https://support.google.com/merchants/answer/6324351). Schema.org property [Product.brand](https://schema.org/brand).
-    - name: type
-      value: "{{ type }}"
-      description: |
-        Immutable. The type of the product. Default to Catalog.product_level_config.ingestion_product_type if unset.
-      valid_values: ['TYPE_UNSPECIFIED', 'PRIMARY', 'VARIANT', 'COLLECTION']
-    - name: title
-      value: "{{ title }}"
-      description: |
-        Required. Product title. This field must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [title](https://support.google.com/merchants/answer/6324415). Schema.org property [Product.name](https://schema.org/name).
+        Product description. This field must be a UTF-8 encoded string with a length limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [description](https://support.google.com/merchants/answer/6324468). Schema.org property [Product.description](https://schema.org/description).
     - name: expireTime
       value: "{{ expireTime }}"
       description: |
         Note that this field is applied in the following ways: * If the Product is already expired when it is uploaded, this product is not indexed for search. * If the Product is not expired when it is uploaded, only the Type.PRIMARY's and Type.COLLECTION's expireTime is respected, and Type.VARIANT's expireTime is not used. In general, we suggest the users to delete the stale products explicitly, instead of using this field to determine staleness. expire_time must be later than available_time and publish_time, otherwise an INVALID_ARGUMENT error is thrown. Corresponding properties: Google Merchant Center property [expiration_date](https://support.google.com/merchants/answer/6324499).
-    - name: availableTime
-      value: "{{ availableTime }}"
+    - name: fulfillmentInfo
       description: |
-        The timestamp when this Product becomes available for SearchService.Search. Note that this is only applicable to Type.PRIMARY and Type.COLLECTION, and ignored for Type.VARIANT.
-    - name: sizes
+        Fulfillment information, such as the store IDs for in-store pickup or region IDs for different shipping methods. All the elements must have distinct FulfillmentInfo.type. Otherwise, an INVALID_ARGUMENT error is returned.
       value:
-        - "{{ sizes }}"
+        - placeIds: "{{ placeIds }}"
+          type: "{{ type }}"
+    - name: gtin
+      value: "{{ gtin }}"
       description: |
-        The size of the product. To represent different size systems or size types, consider using this format: [[[size_system:]size_type:]size_value]. For example, in "US:MENS:M", "US" represents size system; "MENS" represents size type; "M" represents size value. In "GIRLS:27", size system is empty; "GIRLS" represents size type; "27" represents size value. In "32 inches", both size system and size type are empty, while size value is "32 inches". A maximum of 20 values are allowed per Product by default. This limit can be increased using dynamic override configurations. Each value must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [size](https://support.google.com/merchants/answer/6324492), [size_type](https://support.google.com/merchants/answer/6324497), and [size_system](https://support.google.com/merchants/answer/6324502). Schema.org property [Product.size](https://schema.org/size).
-    - name: rating
+        The Global Trade Item Number (GTIN) of the product. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. This field must be a Unigram. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [gtin](https://support.google.com/merchants/answer/6324461). Schema.org property [Product.isbn](https://schema.org/isbn), [Product.gtin8](https://schema.org/gtin8), [Product.gtin12](https://schema.org/gtin12), [Product.gtin13](https://schema.org/gtin13), or [Product.gtin14](https://schema.org/gtin14). If the value is not a valid GTIN, an INVALID_ARGUMENT error is returned.
+    - name: id
+      value: "{{ id }}"
       description: |
-        The rating of this product.
+        Immutable. Product identifier, which is the final component of name. For example, this field is "id_1", if name is \`projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/id_1\`. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [id](https://support.google.com/merchants/answer/6324405). Schema.org property [Product.sku](https://schema.org/sku).
+    - name: images
+      description: |
+        Product images for the product. We highly recommend putting the main image first. A maximum of 300 images are allowed. Corresponding properties: Google Merchant Center property [image_link](https://support.google.com/merchants/answer/6324350). Schema.org property [Product.image](https://schema.org/image).
       value:
-        ratingCount: {{ ratingCount }}
-        averageRating: {{ averageRating }}
-        ratingHistogram:
-          - {{ ratingHistogram }}
+        - height: {{ height }}
+          uri: "{{ uri }}"
+          width: {{ width }}
+    - name: languageCode
+      value: "{{ languageCode }}"
+      description: |
+        Language of the title/description and other string attributes. Use language tags defined by [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). For product prediction, this field is ignored and the model automatically detects the text language. The Product can include text in different languages, but duplicating Products to provide text in multiple languages can result in degraded model performance. For product search this field is in use. It defaults to "en-US" if unset.
+    - name: materials
+      value:
+        - "{{ materials }}"
+      description: |
+        The material of the product. For example, "leather", "wooden". A maximum of 20 values are allowed. Each value must be a UTF-8 encoded string with a length limit of 200 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [material](https://support.google.com/merchants/answer/6324410). Schema.org property [Product.material](https://schema.org/material).
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Full resource name of the product, such as \`projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/product_id\`.
+    - name: patterns
+      value:
+        - "{{ patterns }}"
+      description: |
+        The pattern or graphic print of the product. For example, "striped", "polka dot", "paisley". A maximum of 20 values are allowed per Product. Each value must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [pattern](https://support.google.com/merchants/answer/6324483). Schema.org property [Product.pattern](https://schema.org/pattern).
+    - name: priceInfo
+      description: |
+        Product price and cost information. Corresponding properties: Google Merchant Center property [price](https://support.google.com/merchants/answer/6324371).
+      value:
+        cost: {{ cost }}
+        currencyCode: "{{ currencyCode }}"
+        originalPrice: {{ originalPrice }}
+        price: {{ price }}
+        priceEffectiveTime: "{{ priceEffectiveTime }}"
+        priceExpireTime: "{{ priceExpireTime }}"
+        priceRange:
+          originalPrice:
+            exclusiveMaximum: {{ exclusiveMaximum }}
+            exclusiveMinimum: {{ exclusiveMinimum }}
+            maximum: {{ maximum }}
+            minimum: {{ minimum }}
+          price:
+            exclusiveMaximum: {{ exclusiveMaximum }}
+            exclusiveMinimum: {{ exclusiveMinimum }}
+            maximum: {{ maximum }}
+            minimum: {{ minimum }}
+    - name: primaryProductId
+      value: "{{ primaryProductId }}"
+      description: |
+        Variant group identifier. Must be an id, with the same parent branch with this product. Otherwise, an error is thrown. For Type.PRIMARY Products, this field can only be empty or set to the same value as id. For VARIANT Products, this field cannot be empty. A maximum of 2,000 products are allowed to share the same Type.PRIMARY Product. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [item_group_id](https://support.google.com/merchants/answer/6324507). Schema.org property [Product.inProductGroupWithID](https://schema.org/inProductGroupWithID).
     - name: promotions
       description: |
         The promotions applied to the product. A maximum of 10 values are allowed per Product. Only Promotion.promotion_id will be used, other fields will be ignored if set.
       value:
         - promotionId: "{{ promotionId }}"
-    - name: attributes
-      value: "{{ attributes }}"
-      description: |
-        Highly encouraged. Extra product attributes to be included. For example, for products, this could include the store name, vendor, style, color, etc. These are very strong signals for recommendation model, thus we highly recommend providing the attributes here. Features that can take on one of a limited number of possible values. Two types of features can be set are: Textual features. some examples would be the brand/maker of a product, or country of a customer. Numerical features. Some examples would be the height/weight of a product, or age of a customer. For example: \`{ "vendor": {"text": ["vendor123", "vendor456"]}, "lengths_cm": {"numbers":[2.3, 15.4]}, "heights_cm": {"numbers":[8.1, 6.4]} }\`. This field needs to pass all below criteria, otherwise an INVALID_ARGUMENT error is returned: * Max entries count: 200. * The key must be a UTF-8 encoded string with a length limit of 128 characters. * For indexable attribute, the key must match the pattern: \`a-zA-Z0-9*\`. For example, \`key0LikeThis\` or \`KEY_1_LIKE_THIS\`. * For text attributes, at most 400 values are allowed. Empty values are not allowed. Each value must be a non-empty UTF-8 encoded string with a length limit of 256 characters. * For number attributes, at most 400 values are allowed.
-    - name: availableQuantity
-      value: {{ availableQuantity }}
-      description: |
-        The available quantity of the item.
     - name: publishTime
       value: "{{ publishTime }}"
       description: |
         The timestamp when the product is published by the retailer for the first time, which indicates the freshness of the products. Note that this field is different from available_time, given it purely describes product freshness regardless of when it is available on search and recommendation.
+    - name: rating
+      description: |
+        The rating of this product.
+      value:
+        averageRating: {{ averageRating }}
+        ratingCount: {{ ratingCount }}
+        ratingHistogram:
+          - {{ ratingHistogram }}
+    - name: retrievableFields
+      value: "{{ retrievableFields }}"
+      description: |
+        Indicates which fields in the Products are returned in SearchResponse. Supported fields for all types: * audience * availability * brands * color_info * conditions * gtin * materials * name * patterns * price_info * rating * sizes * title * uri Supported fields only for Type.PRIMARY and Type.COLLECTION: * categories * description * images Supported fields only for Type.VARIANT: * Only the first image in images To mark attributes as retrievable, include paths of the form "attributes.key" where "key" is the key of a custom attribute, as specified in attributes. For Type.PRIMARY and Type.COLLECTION, the following fields are always returned in SearchResponse by default: * name For Type.VARIANT, the following fields are always returned in by default: * name * color_info Note: Returning more fields in SearchResponse can increase response payload size and serving latency. This field is deprecated. Use the retrievable site-wide control instead.
+    - name: sizes
+      value:
+        - "{{ sizes }}"
+      description: |
+        The size of the product. To represent different size systems or size types, consider using this format: [[[size_system:]size_type:]size_value]. For example, in "US:MENS:M", "US" represents size system; "MENS" represents size type; "M" represents size value. In "GIRLS:27", size system is empty; "GIRLS" represents size type; "27" represents size value. In "32 inches", both size system and size type are empty, while size value is "32 inches". A maximum of 20 values are allowed per Product by default. This limit can be increased using dynamic override configurations. Each value must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [size](https://support.google.com/merchants/answer/6324492), [size_type](https://support.google.com/merchants/answer/6324497), and [size_system](https://support.google.com/merchants/answer/6324502). Schema.org property [Product.size](https://schema.org/size).
     - name: tags
       value:
         - "{{ tags }}"
       description: |
         Custom tags associated with the product. At most 250 values are allowed per Product. This value must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. This tag can be used for filtering recommendation results by passing the tag as part of the PredictRequest.filter. Corresponding properties: Google Merchant Center property [custom_label_0–4](https://support.google.com/merchants/answer/6324473).
+    - name: title
+      value: "{{ title }}"
+      description: |
+        Required. Product title. This field must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [title](https://support.google.com/merchants/answer/6324415). Schema.org property [Product.name](https://schema.org/name).
+    - name: ttl
+      value: "{{ ttl }}"
+      description: |
+        Input only. The TTL (time to live) of the product. Note that this is only applicable to Type.PRIMARY and Type.COLLECTION, and ignored for Type.VARIANT. In general, we suggest the users to delete the stale products explicitly, instead of using this field to determine staleness. If it is set, it must be a non-negative value, and expire_time is set as current timestamp plus ttl. The derived expire_time is returned in the output and ttl is left blank when retrieving the Product. If it is set, the product is not available for SearchService.Search after current timestamp plus ttl. However, the product can still be retrieved by ProductService.GetProduct and ProductService.ListProducts.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Immutable. The type of the product. Default to Catalog.product_level_config.ingestion_product_type if unset.
+      valid_values: ['TYPE_UNSPECIFIED', 'PRIMARY', 'VARIANT', 'COLLECTION']
+    - name: uri
+      value: "{{ uri }}"
+      description: |
+        Canonical URL directly linking to the product detail page. It is strongly recommended to provide a valid uri for the product, otherwise the service performance could be significantly degraded. This field must be a UTF-8 encoded string with a length limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [link](https://support.google.com/merchants/answer/6324416). Schema.org property [Offer.url](https://schema.org/url).
     - name: productId
       value: "{{ productId }}"
 `}</CodeBlock>
@@ -1014,38 +1014,38 @@ Updates a Product.
 ```sql
 UPDATE google.retail.products
 SET 
-data__id = '{{ id }}',
-data__audience = '{{ audience }}',
-data__patterns = '{{ patterns }}',
-data__gtin = '{{ gtin }}',
-data__description = '{{ description }}',
-data__conditions = '{{ conditions }}',
-data__primaryProductId = '{{ primaryProductId }}',
-data__availability = '{{ availability }}',
-data__priceInfo = '{{ priceInfo }}',
-data__uri = '{{ uri }}',
-data__ttl = '{{ ttl }}',
-data__fulfillmentInfo = '{{ fulfillmentInfo }}',
-data__materials = '{{ materials }}',
-data__retrievableFields = '{{ retrievableFields }}',
-data__categories = '{{ categories }}',
-data__images = '{{ images }}',
-data__colorInfo = '{{ colorInfo }}',
-data__collectionMemberIds = '{{ collectionMemberIds }}',
-data__languageCode = '{{ languageCode }}',
-data__name = '{{ name }}',
-data__brands = '{{ brands }}',
-data__type = '{{ type }}',
-data__title = '{{ title }}',
-data__expireTime = '{{ expireTime }}',
-data__availableTime = '{{ availableTime }}',
-data__sizes = '{{ sizes }}',
-data__rating = '{{ rating }}',
-data__promotions = '{{ promotions }}',
 data__attributes = '{{ attributes }}',
+data__audience = '{{ audience }}',
+data__availability = '{{ availability }}',
 data__availableQuantity = {{ availableQuantity }},
+data__availableTime = '{{ availableTime }}',
+data__brands = '{{ brands }}',
+data__categories = '{{ categories }}',
+data__collectionMemberIds = '{{ collectionMemberIds }}',
+data__colorInfo = '{{ colorInfo }}',
+data__conditions = '{{ conditions }}',
+data__description = '{{ description }}',
+data__expireTime = '{{ expireTime }}',
+data__fulfillmentInfo = '{{ fulfillmentInfo }}',
+data__gtin = '{{ gtin }}',
+data__id = '{{ id }}',
+data__images = '{{ images }}',
+data__languageCode = '{{ languageCode }}',
+data__materials = '{{ materials }}',
+data__name = '{{ name }}',
+data__patterns = '{{ patterns }}',
+data__priceInfo = '{{ priceInfo }}',
+data__primaryProductId = '{{ primaryProductId }}',
+data__promotions = '{{ promotions }}',
 data__publishTime = '{{ publishTime }}',
-data__tags = '{{ tags }}'
+data__rating = '{{ rating }}',
+data__retrievableFields = '{{ retrievableFields }}',
+data__sizes = '{{ sizes }}',
+data__tags = '{{ tags }}',
+data__title = '{{ title }}',
+data__ttl = '{{ ttl }}',
+data__type = '{{ type }}',
+data__uri = '{{ uri }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1125,8 +1125,8 @@ AND productsId = '{{ productsId }}' --required
     defaultValue="projects_locations_catalogs_branches_products_import"
     values={[
         { label: 'projects_locations_catalogs_branches_products_import', value: 'projects_locations_catalogs_branches_products_import' },
-        { label: 'projects_locations_catalogs_branches_products_set_inventory', value: 'projects_locations_catalogs_branches_products_set_inventory' },
-        { label: 'projects_locations_catalogs_branches_products_purge', value: 'projects_locations_catalogs_branches_products_purge' }
+        { label: 'projects_locations_catalogs_branches_products_purge', value: 'projects_locations_catalogs_branches_products_purge' },
+        { label: 'projects_locations_catalogs_branches_products_set_inventory', value: 'projects_locations_catalogs_branches_products_set_inventory' }
     ]}
 >
 <TabItem value="projects_locations_catalogs_branches_products_import">
@@ -1141,33 +1141,12 @@ EXEC google.retail.products.projects_locations_catalogs_branches_products_import
 @branchesId='{{ branchesId }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
-"updateMask": "{{ updateMask }}", 
+"errorsConfig": "{{ errorsConfig }}", 
 "inputConfig": "{{ inputConfig }}", 
 "notificationPubsubTopic": "{{ notificationPubsubTopic }}", 
-"errorsConfig": "{{ errorsConfig }}", 
-"reconciliationMode": "{{ reconciliationMode }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_catalogs_branches_products_set_inventory">
-
-Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update is enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. When inventory is updated with ProductService.CreateProduct and ProductService.UpdateProduct, the specified inventory field value(s) overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update times for the specified inventory fields are overwritten by the times of the ProductService.CreateProduct or ProductService.UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product is used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information is preserved. Pre-existing inventory information can only be updated with ProductService.SetInventory, ProductService.AddFulfillmentPlaces, and ProductService.RemoveFulfillmentPlaces. The returned Operations is obsolete after one day, and the GetOperation API returns `NOT_FOUND` afterwards. If conflicting updates are issued, the Operations associated with the stale updates are not marked as done until they are obsolete.
-
-```sql
-EXEC google.retail.products.projects_locations_catalogs_branches_products_set_inventory 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required, 
-@branchesId='{{ branchesId }}' --required, 
-@productsId='{{ productsId }}' --required 
-@@json=
-'{
-"inventory": "{{ inventory }}", 
-"setTime": "{{ setTime }}", 
-"setMask": "{{ setMask }}", 
-"allowMissing": {{ allowMissing }}
+"reconciliationMode": "{{ reconciliationMode }}", 
+"requestId": "{{ requestId }}", 
+"updateMask": "{{ updateMask }}"
 }'
 ;
 ```
@@ -1186,6 +1165,27 @@ EXEC google.retail.products.projects_locations_catalogs_branches_products_purge
 '{
 "filter": "{{ filter }}", 
 "force": {{ force }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_branches_products_set_inventory">
+
+Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update is enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. When inventory is updated with ProductService.CreateProduct and ProductService.UpdateProduct, the specified inventory field value(s) overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update times for the specified inventory fields are overwritten by the times of the ProductService.CreateProduct or ProductService.UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product is used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information is preserved. Pre-existing inventory information can only be updated with ProductService.SetInventory, ProductService.AddFulfillmentPlaces, and ProductService.RemoveFulfillmentPlaces. The returned Operations is obsolete after one day, and the GetOperation API returns `NOT_FOUND` afterwards. If conflicting updates are issued, the Operations associated with the stale updates are not marked as done until they are obsolete.
+
+```sql
+EXEC google.retail.products.projects_locations_catalogs_branches_products_set_inventory 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required, 
+@branchesId='{{ branchesId }}' --required, 
+@productsId='{{ productsId }}' --required 
+@@json=
+'{
+"allowMissing": {{ allowMissing }}, 
+"inventory": "{{ inventory }}", 
+"setMask": "{{ setMask }}", 
+"setTime": "{{ setTime }}"
 }'
 ;
 ```

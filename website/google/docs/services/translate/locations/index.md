@@ -145,36 +145,8 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_list"><CopyableCode code="projects_locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
-    <td>Lists information about the supported locations for this service. This method can be called in two ways: * **List all public locations:** Use the path `GET /v1/locations`. * **List project-visible locations:** Use the path `GET /v1/projects/&#123;project_id&#125;/locations`. This may include public locations as well as private or other locations specifically visible to the project.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_translate_text"><CopyableCode code="projects_locations_translate_text" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Translates input text and returns translated text.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_romanize_text"><CopyableCode code="projects_locations_romanize_text" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Romanize input text written in non-Latin scripts to Latin text.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_detect_language"><CopyableCode code="projects_locations_detect_language" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Detects the language of text within a request.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_batch_translate_document"><CopyableCode code="projects_locations_batch_translate_document" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Translates a large volume of document in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.</td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_adaptive_mt_translate"><CopyableCode code="projects_locations_adaptive_mt_translate" /></a></td>
@@ -184,11 +156,25 @@ The following methods are available for this resource:
     <td>Translate text using Adaptive MT.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_batch_translate_document"><CopyableCode code="projects_locations_batch_translate_document" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Translates a large volume of document in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_batch_translate_text"><CopyableCode code="projects_locations_batch_translate_text" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Translates a large volume of text in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_detect_language"><CopyableCode code="projects_locations_detect_language" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Detects the language of text within a request.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_refine_text"><CopyableCode code="projects_locations_refine_text" /></a></td>
@@ -198,11 +184,25 @@ The following methods are available for this resource:
     <td>Refines the input translated text to improve the quality.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_romanize_text"><CopyableCode code="projects_locations_romanize_text" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Romanize input text written in non-Latin scripts to Latin text.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_translate_document"><CopyableCode code="projects_locations_translate_document" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Translates documents in synchronous mode.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_translate_text"><CopyableCode code="projects_locations_translate_text" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Translates input text and returns translated text.</td>
 </tr>
 </tbody>
 </table>
@@ -281,7 +281,7 @@ AND locationsId = '{{ locationsId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_list">
 
-Lists information about the supported locations for this service. This method can be called in two ways: * **List all public locations:** Use the path `GET /v1/locations`. * **List project-visible locations:** Use the path `GET /v1/projects/&#123;project_id&#125;/locations`. This may include public locations as well as private or other locations specifically visible to the project.
+Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
 
 ```sql
 SELECT
@@ -292,10 +292,10 @@ locationId,
 metadata
 FROM google.translate.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -305,71 +305,33 @@ AND extraLocationTypes = '{{ extraLocationTypes }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_translate_text"
+    defaultValue="projects_locations_adaptive_mt_translate"
     values={[
-        { label: 'projects_locations_translate_text', value: 'projects_locations_translate_text' },
-        { label: 'projects_locations_romanize_text', value: 'projects_locations_romanize_text' },
-        { label: 'projects_locations_detect_language', value: 'projects_locations_detect_language' },
-        { label: 'projects_locations_batch_translate_document', value: 'projects_locations_batch_translate_document' },
         { label: 'projects_locations_adaptive_mt_translate', value: 'projects_locations_adaptive_mt_translate' },
+        { label: 'projects_locations_batch_translate_document', value: 'projects_locations_batch_translate_document' },
         { label: 'projects_locations_batch_translate_text', value: 'projects_locations_batch_translate_text' },
+        { label: 'projects_locations_detect_language', value: 'projects_locations_detect_language' },
         { label: 'projects_locations_refine_text', value: 'projects_locations_refine_text' },
-        { label: 'projects_locations_translate_document', value: 'projects_locations_translate_document' }
+        { label: 'projects_locations_romanize_text', value: 'projects_locations_romanize_text' },
+        { label: 'projects_locations_translate_document', value: 'projects_locations_translate_document' },
+        { label: 'projects_locations_translate_text', value: 'projects_locations_translate_text' }
     ]}
 >
-<TabItem value="projects_locations_translate_text">
+<TabItem value="projects_locations_adaptive_mt_translate">
 
-Translates input text and returns translated text.
+Translate text using Adaptive MT.
 
 ```sql
-EXEC google.translate.locations.projects_locations_translate_text 
+EXEC google.translate.locations.projects_locations_adaptive_mt_translate 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"model": "{{ model }}", 
-"transliterationConfig": "{{ transliterationConfig }}", 
+"content": "{{ content }}", 
+"dataset": "{{ dataset }}", 
 "glossaryConfig": "{{ glossaryConfig }}", 
 "mimeType": "{{ mimeType }}", 
-"labels": "{{ labels }}", 
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"contents": "{{ contents }}", 
-"targetLanguageCode": "{{ targetLanguageCode }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_romanize_text">
-
-Romanize input text written in non-Latin scripts to Latin text.
-
-```sql
-EXEC google.translate.locations.projects_locations_romanize_text 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"contents": "{{ contents }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_detect_language">
-
-Detects the language of text within a request.
-
-```sql
-EXEC google.translate.locations.projects_locations_detect_language 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"mimeType": "{{ mimeType }}", 
-"labels": "{{ labels }}", 
-"model": "{{ model }}", 
-"content": "{{ content }}", 
-"documentInputConfig": "{{ documentInputConfig }}"
+"referenceSentenceConfig": "{{ referenceSentenceConfig }}"
 }'
 ;
 ```
@@ -384,35 +346,17 @@ EXEC google.translate.locations.projects_locations_batch_translate_document
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"inputConfigs": "{{ inputConfigs }}", 
+"customizedAttribution": "{{ customizedAttribution }}", 
 "enableRotationCorrection": {{ enableRotationCorrection }}, 
 "enableShadowRemovalNativePdf": {{ enableShadowRemovalNativePdf }}, 
 "formatConversions": "{{ formatConversions }}", 
-"pdfNativeOnly": {{ pdfNativeOnly }}, 
-"customizedAttribution": "{{ customizedAttribution }}", 
-"outputConfig": "{{ outputConfig }}", 
-"models": "{{ models }}", 
-"targetLanguageCodes": "{{ targetLanguageCodes }}", 
 "glossaries": "{{ glossaries }}", 
-"sourceLanguageCode": "{{ sourceLanguageCode }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_adaptive_mt_translate">
-
-Translate text using Adaptive MT.
-
-```sql
-EXEC google.translate.locations.projects_locations_adaptive_mt_translate 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"referenceSentenceConfig": "{{ referenceSentenceConfig }}", 
-"glossaryConfig": "{{ glossaryConfig }}", 
-"dataset": "{{ dataset }}", 
-"content": "{{ content }}"
+"inputConfigs": "{{ inputConfigs }}", 
+"models": "{{ models }}", 
+"outputConfig": "{{ outputConfig }}", 
+"pdfNativeOnly": {{ pdfNativeOnly }}, 
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"targetLanguageCodes": "{{ targetLanguageCodes }}"
 }'
 ;
 ```
@@ -427,13 +371,32 @@ EXEC google.translate.locations.projects_locations_batch_translate_text
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"models": "{{ models }}", 
-"targetLanguageCodes": "{{ targetLanguageCodes }}", 
 "glossaries": "{{ glossaries }}", 
-"labels": "{{ labels }}", 
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
 "inputConfigs": "{{ inputConfigs }}", 
-"outputConfig": "{{ outputConfig }}"
+"labels": "{{ labels }}", 
+"models": "{{ models }}", 
+"outputConfig": "{{ outputConfig }}", 
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"targetLanguageCodes": "{{ targetLanguageCodes }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_detect_language">
+
+Detects the language of text within a request.
+
+```sql
+EXEC google.translate.locations.projects_locations_detect_language 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"content": "{{ content }}", 
+"documentInputConfig": "{{ documentInputConfig }}", 
+"labels": "{{ labels }}", 
+"mimeType": "{{ mimeType }}", 
+"model": "{{ model }}"
 }'
 ;
 ```
@@ -455,6 +418,22 @@ EXEC google.translate.locations.projects_locations_refine_text
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_romanize_text">
+
+Romanize input text written in non-Latin scripts to Latin text.
+
+```sql
+EXEC google.translate.locations.projects_locations_romanize_text 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"contents": "{{ contents }}", 
+"sourceLanguageCode": "{{ sourceLanguageCode }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_translate_document">
 
 Translates documents in synchronous mode.
@@ -465,17 +444,39 @@ EXEC google.translate.locations.projects_locations_translate_document
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"enableShadowRemovalNativePdf": {{ enableShadowRemovalNativePdf }}, 
-"isTranslateNativePdfOnly": {{ isTranslateNativePdfOnly }}, 
-"enableRotationCorrection": {{ enableRotationCorrection }}, 
-"labels": "{{ labels }}", 
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"documentOutputConfig": "{{ documentOutputConfig }}", 
-"targetLanguageCode": "{{ targetLanguageCode }}", 
 "customizedAttribution": "{{ customizedAttribution }}", 
 "documentInputConfig": "{{ documentInputConfig }}", 
+"documentOutputConfig": "{{ documentOutputConfig }}", 
+"enableRotationCorrection": {{ enableRotationCorrection }}, 
+"enableShadowRemovalNativePdf": {{ enableShadowRemovalNativePdf }}, 
+"glossaryConfig": "{{ glossaryConfig }}", 
+"isTranslateNativePdfOnly": {{ isTranslateNativePdfOnly }}, 
+"labels": "{{ labels }}", 
 "model": "{{ model }}", 
-"glossaryConfig": "{{ glossaryConfig }}"
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"targetLanguageCode": "{{ targetLanguageCode }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_translate_text">
+
+Translates input text and returns translated text.
+
+```sql
+EXEC google.translate.locations.projects_locations_translate_text 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"contents": "{{ contents }}", 
+"glossaryConfig": "{{ glossaryConfig }}", 
+"labels": "{{ labels }}", 
+"mimeType": "{{ mimeType }}", 
+"model": "{{ model }}", 
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"targetLanguageCode": "{{ targetLanguageCode }}", 
+"transliterationConfig": "{{ transliterationConfig }}"
 }'
 ;
 ```

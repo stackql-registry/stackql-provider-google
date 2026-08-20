@@ -78,7 +78,7 @@ The following methods are available for this resource:
     <td><a href="#list_attestation_rules"><CopyableCode code="list_attestation_rules" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List all AttestationRule on a WorkloadIdentityPoolManagedIdentity.</td>
 </tr>
 </tbody>
@@ -149,8 +149,8 @@ FROM google.iam.workload_identity_pools_attestation_rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```

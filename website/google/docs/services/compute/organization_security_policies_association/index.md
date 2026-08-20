@@ -115,14 +115,14 @@ The following methods are available for this resource:
     <td><a href="#add_association"><CopyableCode code="add_association" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-replaceExistingAssociation"><code>replaceExistingAssociation</code></a></td>
+    <td><a href="#parameter-replaceExistingAssociation"><code>replaceExistingAssociation</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Inserts an association for the specified security policy.<br /><br />This has billing implications.  Projects in the hierarchy with effective<br />hierarchical security policies will be automatically enrolled into Cloud<br />Armor Enterprise if not already enrolled.<br /><br />Use this API to modify Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to modify firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.addAssociation<br />instead.</td>
 </tr>
 <tr>
     <td><a href="#remove_association"><CopyableCode code="remove_association" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-name"><code>name</code></a></td>
+    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Removes an association for the specified security policy.<br /><br />Use this API to modify Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to modify firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.removeAssociation<br />instead.</td>
 </tr>
 </tbody>
@@ -209,22 +209,22 @@ Inserts an association for the specified security policy.<br /><br />This has bi
 
 ```sql
 INSERT INTO google.compute.organization_security_policies_association (
-data__excludedProjects,
-data__name,
 data__attachmentId,
 data__excludedFolders,
+data__excludedProjects,
+data__name,
 securityPolicy,
-requestId,
-replaceExistingAssociation
+replaceExistingAssociation,
+requestId
 )
 SELECT 
-'{{ excludedProjects }}',
-'{{ name }}',
 '{{ attachmentId }}',
 '{{ excludedFolders }}',
+'{{ excludedProjects }}',
+'{{ name }}',
 '{{ securityPolicy }}',
-'{{ requestId }}',
-'{{ replaceExistingAssociation }}'
+'{{ replaceExistingAssociation }}',
+'{{ requestId }}'
 RETURNING
 id,
 name,
@@ -264,15 +264,6 @@ zone
     - name: securityPolicy
       value: "{{ securityPolicy }}"
       description: Required parameter for the organization_security_policies_association resource.
-    - name: excludedProjects
-      value:
-        - "{{ excludedProjects }}"
-      description: |
-        A list of projects to exclude from the security policy.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name for an association.
     - name: attachmentId
       value: "{{ attachmentId }}"
       description: |
@@ -282,10 +273,19 @@ zone
         - "{{ excludedFolders }}"
       description: |
         A list of folders to exclude from the security policy.
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: excludedProjects
+      value:
+        - "{{ excludedProjects }}"
+      description: |
+        A list of projects to exclude from the security policy.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name for an association.
     - name: replaceExistingAssociation
       value: {{ replaceExistingAssociation }}
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -307,8 +307,8 @@ Removes an association for the specified security policy.<br /><br />Use this AP
 ```sql
 DELETE FROM google.compute.organization_security_policies_association
 WHERE securityPolicy = '{{ securityPolicy }}' --required
-AND requestId = '{{ requestId }}'
 AND name = '{{ name }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

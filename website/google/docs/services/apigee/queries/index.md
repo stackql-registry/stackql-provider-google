@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_queries_list"><CopyableCode code="organizations_environments_queries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-from"><code>from</code></a>, <a href="#parameter-status"><code>status</code></a>, <a href="#parameter-to"><code>to</code></a>, <a href="#parameter-inclQueriesWithoutReport"><code>inclQueriesWithoutReport</code></a>, <a href="#parameter-submittedBy"><code>submittedBy</code></a>, <a href="#parameter-dataset"><code>dataset</code></a></td>
+    <td><a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-inclQueriesWithoutReport"><code>inclQueriesWithoutReport</code></a>, <a href="#parameter-status"><code>status</code></a>, <a href="#parameter-submittedBy"><code>submittedBy</code></a>, <a href="#parameter-to"><code>to</code></a></td>
     <td>Return a list of Asynchronous Queries</td>
 </tr>
 <tr>
@@ -284,12 +284,12 @@ queries
 FROM google.apigee.queries
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND from = '{{ from }}'
-AND status = '{{ status }}'
-AND to = '{{ to }}'
-AND inclQueriesWithoutReport = '{{ inclQueriesWithoutReport }}'
-AND submittedBy = '{{ submittedBy }}'
 AND dataset = '{{ dataset }}'
+AND from = '{{ from }}'
+AND inclQueriesWithoutReport = '{{ inclQueriesWithoutReport }}'
+AND status = '{{ status }}'
+AND submittedBy = '{{ submittedBy }}'
+AND to = '{{ to }}'
 ;
 ```
 </TabItem>
@@ -311,32 +311,32 @@ Submit a query to be processed in the background. If the submission of the query
 
 ```sql
 INSERT INTO google.apigee.queries (
+data__csvDelimiter,
 data__dimensions,
+data__envgroupHostname,
+data__filter,
 data__groupByTimeUnit,
 data__limit,
-data__csvDelimiter,
-data__name,
-data__timeRange,
 data__metrics,
+data__name,
 data__outputFormat,
-data__filter,
 data__reportDefinitionId,
-data__envgroupHostname,
+data__timeRange,
 organizationsId,
 environmentsId
 )
 SELECT 
+'{{ csvDelimiter }}',
 '{{ dimensions }}',
+'{{ envgroupHostname }}',
+'{{ filter }}',
 '{{ groupByTimeUnit }}',
 {{ limit }},
-'{{ csvDelimiter }}',
-'{{ name }}',
-'{{ timeRange }}',
 '{{ metrics }}',
+'{{ name }}',
 '{{ outputFormat }}',
-'{{ filter }}',
 '{{ reportDefinitionId }}',
-'{{ envgroupHostname }}',
+'{{ timeRange }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -367,11 +367,23 @@ updated
     - name: environmentsId
       value: "{{ environmentsId }}"
       description: Required parameter for the queries resource.
+    - name: csvDelimiter
+      value: "{{ csvDelimiter }}"
+      description: |
+        Delimiter used in the CSV file, if \`outputFormat\` is set to \`csv\`. Defaults to the \`,\` (comma) character. Supported delimiter characters include comma (\`,\`), pipe (\`|\`), and tab (\`t\`).
     - name: dimensions
       value:
         - "{{ dimensions }}"
       description: |
         A list of dimensions. https://docs.apigee.com/api-platform/analytics/analytics-reference#dimensions
+    - name: envgroupHostname
+      value: "{{ envgroupHostname }}"
+      description: |
+        Hostname needs to be specified if query intends to run at host level. This field is only allowed when query is submitted by CreateHostAsyncQuery where analytics data will be grouped by organization and hostname.
+    - name: filter
+      value: "{{ filter }}"
+      description: |
+        Boolean expression that can be used to filter data. Filter expressions can be combined using AND/OR terms and should be fully parenthesized to avoid ambiguity. See Analytics metrics, dimensions, and filters reference https://docs.apigee.com/api-platform/analytics/analytics-reference for more information on the fields available to filter on. For more information on the tokens that you use to build filter expressions, see Filter expression syntax. https://docs.apigee.com/api-platform/analytics/asynch-reports-api#filter-expression-syntax
     - name: groupByTimeUnit
       value: "{{ groupByTimeUnit }}"
       description: |
@@ -380,43 +392,31 @@ updated
       value: {{ limit }}
       description: |
         Maximum number of rows that can be returned in the result.
-    - name: csvDelimiter
-      value: "{{ csvDelimiter }}"
-      description: |
-        Delimiter used in the CSV file, if \`outputFormat\` is set to \`csv\`. Defaults to the \`,\` (comma) character. Supported delimiter characters include comma (\`,\`), pipe (\`|\`), and tab (\`t\`).
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Asynchronous Query Name.
-    - name: timeRange
-      value: "{{ timeRange }}"
-      description: |
-        Required. Time range for the query. Can use the following predefined strings to specify the time range: \`last60minutes\` \`last24hours\` \`last7days\` Or, specify the timeRange as a structure describing start and end timestamps in the ISO format: yyyy-mm-ddThh:mm:ssZ. Example: "timeRange": { "start": "2018-07-29T00:13:00Z", "end": "2018-08-01T00:18:00Z" }
     - name: metrics
       description: |
         A list of Metrics.
       value:
-        - name: "{{ name }}"
-          alias: "{{ alias }}"
-          value: "{{ value }}"
-          operator: "{{ operator }}"
+        - alias: "{{ alias }}"
           function: "{{ function }}"
+          name: "{{ name }}"
+          operator: "{{ operator }}"
+          value: "{{ value }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Asynchronous Query Name.
     - name: outputFormat
       value: "{{ outputFormat }}"
       description: |
         Valid values include: \`csv\` or \`json\`. Defaults to \`json\`. Note: Configure the delimiter for CSV output using the csvDelimiter property.
-    - name: filter
-      value: "{{ filter }}"
-      description: |
-        Boolean expression that can be used to filter data. Filter expressions can be combined using AND/OR terms and should be fully parenthesized to avoid ambiguity. See Analytics metrics, dimensions, and filters reference https://docs.apigee.com/api-platform/analytics/analytics-reference for more information on the fields available to filter on. For more information on the tokens that you use to build filter expressions, see Filter expression syntax. https://docs.apigee.com/api-platform/analytics/asynch-reports-api#filter-expression-syntax
     - name: reportDefinitionId
       value: "{{ reportDefinitionId }}"
       description: |
         Asynchronous Report ID.
-    - name: envgroupHostname
-      value: "{{ envgroupHostname }}"
+    - name: timeRange
+      value: "{{ timeRange }}"
       description: |
-        Hostname needs to be specified if query intends to run at host level. This field is only allowed when query is submitted by CreateHostAsyncQuery where analytics data will be grouped by organization and hostname.
+        Required. Time range for the query. Can use the following predefined strings to specify the time range: \`last60minutes\` \`last24hours\` \`last7days\` Or, specify the timeRange as a structure describing start and end timestamps in the ISO format: yyyy-mm-ddThh:mm:ssZ. Example: "timeRange": { "start": "2018-07-29T00:13:00Z", "end": "2018-08-01T00:18:00Z" }
 `}</CodeBlock>
 
 </TabItem>

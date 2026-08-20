@@ -155,28 +155,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists CaPools.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-caPoolId"><code>caPoolId</code></a></td>
+    <td><a href="#parameter-caPoolId"><code>caPoolId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a CaPool.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a CaPool.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-ignoreDependentResources"><code>ignoreDependentResources</code></a></td>
+    <td><a href="#parameter-ignoreDependentResources"><code>ignoreDependentResources</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Delete a CaPool.</td>
 </tr>
 </tbody>
@@ -296,9 +296,9 @@ tier
 FROM google.privateca.ca_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -321,28 +321,28 @@ Create a CaPool.
 
 ```sql
 INSERT INTO google.privateca.ca_pools (
-data__publishingOptions,
-data__labels,
-data__tier,
-data__issuancePolicy,
 data__encryptionSpec,
+data__issuancePolicy,
+data__labels,
 data__name,
+data__publishingOptions,
+data__tier,
 projectsId,
 locationsId,
-requestId,
-caPoolId
+caPoolId,
+requestId
 )
 SELECT 
-'{{ publishingOptions }}',
-'{{ labels }}',
-'{{ tier }}',
-'{{ issuancePolicy }}',
 '{{ encryptionSpec }}',
+'{{ issuancePolicy }}',
+'{{ labels }}',
 '{{ name }}',
+'{{ publishingOptions }}',
+'{{ tier }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ caPoolId }}'
+'{{ caPoolId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -363,116 +363,116 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the ca_pools resource.
-    - name: publishingOptions
+    - name: encryptionSpec
       description: |
-        Optional. The PublishingOptions to follow when issuing Certificates from any CertificateAuthority in this CaPool.
+        Optional. When EncryptionSpec is provided, the Subject, SubjectAltNames, and the PEM-encoded certificate fields will be encrypted at rest.
       value:
-        publishCrl: {{ publishCrl }}
-        encodingFormat: "{{ encodingFormat }}"
-        publishCaCert: {{ publishCaCert }}
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels with user-defined metadata.
-    - name: tier
-      value: "{{ tier }}"
-      description: |
-        Required. Immutable. The Tier of this CaPool.
-      valid_values: ['TIER_UNSPECIFIED', 'ENTERPRISE', 'DEVOPS']
+        cloudKmsKey: "{{ cloudKmsKey }}"
     - name: issuancePolicy
       description: |
         Optional. The IssuancePolicy to control how Certificates will be issued from this CaPool.
       value:
         allowRequesterSpecifiedNotBeforeTime: {{ allowRequesterSpecifiedNotBeforeTime }}
         allowedIssuanceModes:
-          allowCsrBasedIssuance: {{ allowCsrBasedIssuance }}
           allowConfigBasedIssuance: {{ allowConfigBasedIssuance }}
-        passthroughExtensions:
-          additionalExtensions:
-            - objectIdPath: "{{ objectIdPath }}"
-          knownExtensions:
-            - "{{ knownExtensions }}"
+          allowCsrBasedIssuance: {{ allowCsrBasedIssuance }}
         allowedKeyTypes:
-          - rsa:
-              minModulusSize: "{{ minModulusSize }}"
-              maxModulusSize: "{{ maxModulusSize }}"
-            ellipticCurve:
+          - ellipticCurve:
               signatureAlgorithm: "{{ signatureAlgorithm }}"
-        identityConstraints:
-          allowSubjectPassthrough: {{ allowSubjectPassthrough }}
-          allowSubjectAltNamesPassthrough: {{ allowSubjectAltNamesPassthrough }}
-          celExpression:
-            expression: "{{ expression }}"
-            description: "{{ description }}"
-            location: "{{ location }}"
-            title: "{{ title }}"
+            rsa:
+              maxModulusSize: "{{ maxModulusSize }}"
+              minModulusSize: "{{ minModulusSize }}"
         backdateDuration: "{{ backdateDuration }}"
-        maximumLifetime: "{{ maximumLifetime }}"
         baselineValues:
-          caOptions:
-            isCa: {{ isCa }}
-            maxIssuerPathLength: {{ maxIssuerPathLength }}
-          aiaOcspServers:
-            - "{{ aiaOcspServers }}"
           additionalExtensions:
             - critical: {{ critical }}
               objectId:
                 objectIdPath:
                   - {{ objectIdPath }}
               value: "{{ value }}"
-          policyIds:
-            - objectIdPath: "{{ objectIdPath }}"
-          nameConstraints:
-            critical: {{ critical }}
-            excludedIpRanges:
-              - "{{ excludedIpRanges }}"
-            permittedEmailAddresses:
-              - "{{ permittedEmailAddresses }}"
-            excludedDnsNames:
-              - "{{ excludedDnsNames }}"
-            permittedUris:
-              - "{{ permittedUris }}"
-            excludedEmailAddresses:
-              - "{{ excludedEmailAddresses }}"
-            excludedUris:
-              - "{{ excludedUris }}"
-            permittedIpRanges:
-              - "{{ permittedIpRanges }}"
-            permittedDnsNames:
-              - "{{ permittedDnsNames }}"
+          aiaOcspServers:
+            - "{{ aiaOcspServers }}"
+          caOptions:
+            isCa: {{ isCa }}
+            maxIssuerPathLength: {{ maxIssuerPathLength }}
           keyUsage:
             baseKeyUsage:
-              keyEncipherment: {{ keyEncipherment }}
               certSign: {{ certSign }}
-              digitalSignature: {{ digitalSignature }}
               contentCommitment: {{ contentCommitment }}
-              encipherOnly: {{ encipherOnly }}
-              decipherOnly: {{ decipherOnly }}
-              dataEncipherment: {{ dataEncipherment }}
               crlSign: {{ crlSign }}
+              dataEncipherment: {{ dataEncipherment }}
+              decipherOnly: {{ decipherOnly }}
+              digitalSignature: {{ digitalSignature }}
+              encipherOnly: {{ encipherOnly }}
               keyAgreement: {{ keyAgreement }}
+              keyEncipherment: {{ keyEncipherment }}
             extendedKeyUsage:
-              serverAuth: {{ serverAuth }}
               clientAuth: {{ clientAuth }}
+              codeSigning: {{ codeSigning }}
               emailProtection: {{ emailProtection }}
               ocspSigning: {{ ocspSigning }}
-              codeSigning: {{ codeSigning }}
+              serverAuth: {{ serverAuth }}
               timeStamping: {{ timeStamping }}
             unknownExtendedKeyUsages:
               - objectIdPath: "{{ objectIdPath }}"
-    - name: encryptionSpec
+          nameConstraints:
+            critical: {{ critical }}
+            excludedDnsNames:
+              - "{{ excludedDnsNames }}"
+            excludedEmailAddresses:
+              - "{{ excludedEmailAddresses }}"
+            excludedIpRanges:
+              - "{{ excludedIpRanges }}"
+            excludedUris:
+              - "{{ excludedUris }}"
+            permittedDnsNames:
+              - "{{ permittedDnsNames }}"
+            permittedEmailAddresses:
+              - "{{ permittedEmailAddresses }}"
+            permittedIpRanges:
+              - "{{ permittedIpRanges }}"
+            permittedUris:
+              - "{{ permittedUris }}"
+          policyIds:
+            - objectIdPath: "{{ objectIdPath }}"
+        identityConstraints:
+          allowSubjectAltNamesPassthrough: {{ allowSubjectAltNamesPassthrough }}
+          allowSubjectPassthrough: {{ allowSubjectPassthrough }}
+          celExpression:
+            description: "{{ description }}"
+            expression: "{{ expression }}"
+            location: "{{ location }}"
+            title: "{{ title }}"
+        maximumLifetime: "{{ maximumLifetime }}"
+        passthroughExtensions:
+          additionalExtensions:
+            - objectIdPath: "{{ objectIdPath }}"
+          knownExtensions:
+            - "{{ knownExtensions }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Optional. When EncryptionSpec is provided, the Subject, SubjectAltNames, and the PEM-encoded certificate fields will be encrypted at rest.
-      value:
-        cloudKmsKey: "{{ cloudKmsKey }}"
+        Optional. Labels with user-defined metadata.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. The resource name for this CaPool in the format \`projects/*/locations/*/caPools/*\`.
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: publishingOptions
+      description: |
+        Optional. The PublishingOptions to follow when issuing Certificates from any CertificateAuthority in this CaPool.
+      value:
+        encodingFormat: "{{ encodingFormat }}"
+        publishCaCert: {{ publishCaCert }}
+        publishCrl: {{ publishCrl }}
+    - name: tier
+      value: "{{ tier }}"
+      description: |
+        Required. Immutable. The Tier of this CaPool.
+      valid_values: ['TIER_UNSPECIFIED', 'ENTERPRISE', 'DEVOPS']
     - name: caPoolId
       value: "{{ caPoolId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -494,18 +494,18 @@ Update a CaPool.
 ```sql
 UPDATE google.privateca.ca_pools
 SET 
-data__publishingOptions = '{{ publishingOptions }}',
-data__labels = '{{ labels }}',
-data__tier = '{{ tier }}',
-data__issuancePolicy = '{{ issuancePolicy }}',
 data__encryptionSpec = '{{ encryptionSpec }}',
-data__name = '{{ name }}'
+data__issuancePolicy = '{{ issuancePolicy }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__publishingOptions = '{{ publishingOptions }}',
+data__tier = '{{ tier }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND caPoolsId = '{{ caPoolsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -534,8 +534,8 @@ DELETE FROM google.privateca.ca_pools
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND caPoolsId = '{{ caPoolsId }}' --required
-AND requestId = '{{ requestId }}'
 AND ignoreDependentResources = '{{ ignoreDependentResources }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

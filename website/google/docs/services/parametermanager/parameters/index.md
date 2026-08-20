@@ -99,6 +99,41 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. [Output only] The resource name of the Parameter in the format `projects/*/locations/*/parameters/*`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. [Output only] Create time stamp</td>
+</tr>
+<tr>
+    <td><CopyableCode code="format" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Specifies the format of a Parameter. (PARAMETER_FORMAT_UNSPECIFIED, UNFORMATTED, YAML, JSON)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kmsKey" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Customer managed encryption key (CMEK) to use for encrypting the Parameter Versions. If not set, the default Google-managed encryption key will be used. Cloud KMS CryptoKeys must reside in the same location as the Parameter. The expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels as key value pairs</td>
+</tr>
+<tr>
+    <td><CopyableCode code="policyMember" /></td>
+    <td><code>object</code></td>
+    <td>Output only. [Output-only] policy member strings of a Google Cloud resource. (id: ResourcePolicyMember)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. [Output only] Update time stamp</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -130,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Parameters in a given project and location.</td>
 </tr>
 <tr>
@@ -144,7 +179,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-parametersId"><code>parametersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a single Parameter.</td>
 </tr>
 <tr>
@@ -258,14 +293,20 @@ Lists Parameters in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+format,
+kmsKey,
+labels,
+policyMember,
+updateTime
 FROM google.parametermanager.parameters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -377,8 +418,8 @@ WHERE
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND parametersId = '{{ parametersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 createTime,

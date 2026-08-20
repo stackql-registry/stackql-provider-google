@@ -104,6 +104,46 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of this logging server. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Creation time of this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="hostname" /></td>
+    <td><code>string</code></td>
+    <td>Required. Fully-qualified domain name (FQDN) or IP Address of the logging server.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="port" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Required. Port number at which the logging server receives logs.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="protocol" /></td>
+    <td><code>string</code></td>
+    <td>Required. Protocol used by vCenter to send logs to a logging server. (PROTOCOL_UNSPECIFIED, UDP, TCP, TLS, SSL, RELP)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sourceType" /></td>
+    <td><code>string</code></td>
+    <td>Required. The type of component that produces logs that will be forwarded to this logging server. (SOURCE_TYPE_UNSPECIFIED, ESXI, VCSA)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. System-generated unique identifier for the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Last update time of this resource.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -135,21 +175,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists logging servers configured for a given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-loggingServerId"><code>loggingServerId</code></a></td>
+    <td><a href="#parameter-loggingServerId"><code>loggingServerId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a new logging server for a given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-loggingServersId"><code>loggingServersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single logging server. Only fields specified in `update_mask` are applied.</td>
 </tr>
 <tr>
@@ -270,15 +310,22 @@ Lists logging servers configured for a given private cloud.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+hostname,
+port,
+protocol,
+sourceType,
+uid,
+updateTime
 FROM google.vmwareengine.logging_servers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -307,8 +354,8 @@ data__sourceType,
 projectsId,
 locationsId,
 privateCloudsId,
-requestId,
-loggingServerId
+loggingServerId,
+requestId
 )
 SELECT 
 '{{ hostname }}',
@@ -318,8 +365,8 @@ SELECT
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
-'{{ requestId }}',
-'{{ loggingServerId }}'
+'{{ loggingServerId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -361,10 +408,10 @@ response
       description: |
         Required. The type of component that produces logs that will be forwarded to this logging server.
       valid_values: ['SOURCE_TYPE_UNSPECIFIED', 'ESXI', 'VCSA']
-    - name: requestId
-      value: "{{ requestId }}"
     - name: loggingServerId
       value: "{{ loggingServerId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -395,8 +442,8 @@ projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
 AND loggingServersId = '{{ loggingServersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

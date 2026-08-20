@@ -342,42 +342,42 @@ Creates a Custom Report for an Organization. A Custom Report provides Apigee Cus
 
 ```sql
 INSERT INTO google.apigee.reports (
-data__comments,
-data__metrics,
-data__filter,
-data__displayName,
-data__fromTime,
-data__dimensions,
-data__toTime,
-data__offset,
-data__timeUnit,
 data__chartType,
-data__properties,
-data__tags,
-data__sortOrder,
-data__sortByCols,
-data__name,
+data__comments,
+data__dimensions,
+data__displayName,
+data__filter,
+data__fromTime,
 data__limit,
+data__metrics,
+data__name,
+data__offset,
+data__properties,
+data__sortByCols,
+data__sortOrder,
+data__tags,
+data__timeUnit,
+data__toTime,
 data__topk,
 organizationsId
 )
 SELECT 
-'{{ comments }}',
-'{{ metrics }}',
-'{{ filter }}',
-'{{ displayName }}',
-'{{ fromTime }}',
-'{{ dimensions }}',
-'{{ toTime }}',
-'{{ offset }}',
-'{{ timeUnit }}',
 '{{ chartType }}',
-'{{ properties }}',
-'{{ tags }}',
-'{{ sortOrder }}',
-'{{ sortByCols }}',
-'{{ name }}',
+'{{ comments }}',
+'{{ dimensions }}',
+'{{ displayName }}',
+'{{ filter }}',
+'{{ fromTime }}',
 '{{ limit }}',
+'{{ metrics }}',
+'{{ name }}',
+'{{ offset }}',
+'{{ properties }}',
+'{{ sortByCols }}',
+'{{ sortOrder }}',
+'{{ tags }}',
+'{{ timeUnit }}',
+'{{ toTime }}',
 '{{ topk }}',
 '{{ organizationsId }}'
 RETURNING
@@ -414,78 +414,78 @@ topk
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the reports resource.
+    - name: chartType
+      value: "{{ chartType }}"
+      description: |
+        This field contains the chart type for the report
     - name: comments
       value:
         - "{{ comments }}"
       description: |
         Legacy field: not used. This field contains a list of comments associated with custom report
-    - name: metrics
-      description: |
-        Required. This contains the list of metrics
-      value:
-        - name: "{{ name }}"
-          function: "{{ function }}"
-    - name: filter
-      value: "{{ filter }}"
-      description: |
-        This field contains the filter expression
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        This is the display name for the report
-    - name: fromTime
-      value: "{{ fromTime }}"
-      description: |
-        Legacy field: not used. Contains the from time for the report
     - name: dimensions
       value:
         - "{{ dimensions }}"
       description: |
         This contains the list of dimensions for the report
-    - name: toTime
-      value: "{{ toTime }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Legacy field: not used. Contains the end time for the report
+        This is the display name for the report
+    - name: filter
+      value: "{{ filter }}"
+      description: |
+        This field contains the filter expression
+    - name: fromTime
+      value: "{{ fromTime }}"
+      description: |
+        Legacy field: not used. Contains the from time for the report
+    - name: limit
+      value: "{{ limit }}"
+      description: |
+        Legacy field: not used This field contains the limit for the result retrieved
+    - name: metrics
+      description: |
+        Required. This contains the list of metrics
+      value:
+        - function: "{{ function }}"
+          name: "{{ name }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Unique identifier for the report T his is a legacy field used to encode custom report unique id
     - name: offset
       value: "{{ offset }}"
       description: |
         Legacy field: not used. This field contains the offset for the data
-    - name: timeUnit
-      value: "{{ timeUnit }}"
-      description: |
-        This field contains the time unit of aggregation for the report
-    - name: chartType
-      value: "{{ chartType }}"
-      description: |
-        This field contains the chart type for the report
     - name: properties
       description: |
         This field contains report properties such as ui metadata etc.
       value:
         - property: "{{ property }}"
           value: "{{ value }}"
-    - name: tags
-      value:
-        - "{{ tags }}"
-      description: |
-        Legacy field: not used. This field contains a list of tags associated with custom report
-    - name: sortOrder
-      value: "{{ sortOrder }}"
-      description: |
-        Legacy field: not used much. Contains the sort order for the sort columns
     - name: sortByCols
       value:
         - "{{ sortByCols }}"
       description: |
         Legacy field: not used much. Contains the list of sort by columns
-    - name: name
-      value: "{{ name }}"
+    - name: sortOrder
+      value: "{{ sortOrder }}"
       description: |
-        Required. Unique identifier for the report T his is a legacy field used to encode custom report unique id
-    - name: limit
-      value: "{{ limit }}"
+        Legacy field: not used much. Contains the sort order for the sort columns
+    - name: tags
+      value:
+        - "{{ tags }}"
       description: |
-        Legacy field: not used This field contains the limit for the result retrieved
+        Legacy field: not used. This field contains a list of tags associated with custom report
+    - name: timeUnit
+      value: "{{ timeUnit }}"
+      description: |
+        This field contains the time unit of aggregation for the report
+    - name: toTime
+      value: "{{ toTime }}"
+      description: |
+        Legacy field: not used. Contains the end time for the report
     - name: topk
       value: "{{ topk }}"
       description: |
@@ -511,22 +511,22 @@ Update an existing custom report definition
 ```sql
 REPLACE google.apigee.reports
 SET 
-data__comments = '{{ comments }}',
-data__metrics = '{{ metrics }}',
-data__filter = '{{ filter }}',
-data__displayName = '{{ displayName }}',
-data__fromTime = '{{ fromTime }}',
-data__dimensions = '{{ dimensions }}',
-data__toTime = '{{ toTime }}',
-data__offset = '{{ offset }}',
-data__timeUnit = '{{ timeUnit }}',
 data__chartType = '{{ chartType }}',
-data__properties = '{{ properties }}',
-data__tags = '{{ tags }}',
-data__sortOrder = '{{ sortOrder }}',
-data__sortByCols = '{{ sortByCols }}',
-data__name = '{{ name }}',
+data__comments = '{{ comments }}',
+data__dimensions = '{{ dimensions }}',
+data__displayName = '{{ displayName }}',
+data__filter = '{{ filter }}',
+data__fromTime = '{{ fromTime }}',
 data__limit = '{{ limit }}',
+data__metrics = '{{ metrics }}',
+data__name = '{{ name }}',
+data__offset = '{{ offset }}',
+data__properties = '{{ properties }}',
+data__sortByCols = '{{ sortByCols }}',
+data__sortOrder = '{{ sortOrder }}',
+data__tags = '{{ tags }}',
+data__timeUnit = '{{ timeUnit }}',
+data__toTime = '{{ toTime }}',
 data__topk = '{{ topk }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

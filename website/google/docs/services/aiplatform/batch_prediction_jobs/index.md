@@ -385,7 +385,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists BatchPredictionJobs in a Location.</td>
 </tr>
 <tr>
@@ -552,10 +552,10 @@ updateTime
 FROM google.aiplatform.batch_prediction_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -577,40 +577,40 @@ Creates a BatchPredictionJob. A BatchPredictionJob once created will right away 
 
 ```sql
 INSERT INTO google.aiplatform.batch_prediction_jobs (
-data__explanationSpec,
-data__inputConfig,
-data__displayName,
 data__dedicatedResources,
-data__generateExplanation,
-data__model,
-data__unmanagedContainerModel,
-data__modelParameters,
-data__serviceAccount,
 data__disableContainerLogging,
-data__instanceConfig,
+data__displayName,
 data__encryptionSpec,
+data__explanationSpec,
+data__generateExplanation,
+data__inputConfig,
+data__instanceConfig,
 data__labels,
-data__outputConfig,
 data__manualBatchTuningParameters,
+data__model,
+data__modelParameters,
+data__outputConfig,
+data__serviceAccount,
+data__unmanagedContainerModel,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ explanationSpec }}',
-'{{ inputConfig }}',
-'{{ displayName }}',
 '{{ dedicatedResources }}',
-{{ generateExplanation }},
-'{{ model }}',
-'{{ unmanagedContainerModel }}',
-'{{ modelParameters }}',
-'{{ serviceAccount }}',
 {{ disableContainerLogging }},
-'{{ instanceConfig }}',
+'{{ displayName }}',
 '{{ encryptionSpec }}',
+'{{ explanationSpec }}',
+{{ generateExplanation }},
+'{{ inputConfig }}',
+'{{ instanceConfig }}',
 '{{ labels }}',
-'{{ outputConfig }}',
 '{{ manualBatchTuningParameters }}',
+'{{ model }}',
+'{{ modelParameters }}',
+'{{ outputConfig }}',
+'{{ serviceAccount }}',
+'{{ unmanagedContainerModel }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -657,235 +657,235 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the batch_prediction_jobs resource.
+    - name: dedicatedResources
+      description: |
+        The config of resources used by the Model during the batch prediction. If the Model supports DEDICATED_RESOURCES this config may be provided (and the job will use these resources), if the Model doesn't support AUTOMATIC_RESOURCES, this config must be provided.
+      value:
+        machineSpec:
+          acceleratorCount: {{ acceleratorCount }}
+          acceleratorType: "{{ acceleratorType }}"
+          gpuPartitionSize: "{{ gpuPartitionSize }}"
+          machineType: "{{ machineType }}"
+          reservationAffinity:
+            key: "{{ key }}"
+            reservationAffinityType: "{{ reservationAffinityType }}"
+            values:
+              - "{{ values }}"
+          tpuTopology: "{{ tpuTopology }}"
+        maxReplicaCount: {{ maxReplicaCount }}
+        startingReplicaCount: {{ startingReplicaCount }}
+    - name: disableContainerLogging
+      value: {{ disableContainerLogging }}
+      description: |
+        For custom-trained Models and AutoML Tabular Models, the container of the DeployedModel instances will send \`stderr\` and \`stdout\` streams to Cloud Logging by default. Please note that the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging/pricing). User can disable container logging by setting this flag to true.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The user-defined name of this BatchPredictionJob.
+    - name: encryptionSpec
+      description: |
+        Customer-managed encryption key options for a BatchPredictionJob. If this is set, then all resources created by the BatchPredictionJob will be encrypted with the provided encryption key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
     - name: explanationSpec
       description: |
         Explanation configuration for this BatchPredictionJob. Can be specified only if generate_explanation is set to \`true\`. This value overrides the value of Model.explanation_spec. All fields of explanation_spec are optional in the request. If a field of the explanation_spec object is not populated, the corresponding field of the Model.explanation_spec object is inherited.
       value:
         metadata:
           featureAttributionsSchemaUri: "{{ featureAttributionsSchemaUri }}"
-          outputs: "{{ outputs }}"
           inputs: "{{ inputs }}"
           latentSpaceSource: "{{ latentSpaceSource }}"
+          outputs: "{{ outputs }}"
         parameters:
-          integratedGradientsAttribution:
-            smoothGradConfig:
-              noiseSigma: {{ noiseSigma }}
-              noisySampleCount: {{ noisySampleCount }}
-              featureNoiseSigma:
-                noiseSigma: "{{ noiseSigma }}"
-            stepCount: {{ stepCount }}
-            blurBaselineConfig:
-              maxBlurSigma: {{ maxBlurSigma }}
-          topK: {{ topK }}
           examples:
-            neighborCount: {{ neighborCount }}
             exampleGcsSource:
               dataFormat: "{{ dataFormat }}"
               gcsSource:
                 uris: "{{ uris }}"
             nearestNeighborSearchConfig: "{{ nearestNeighborSearchConfig }}"
+            neighborCount: {{ neighborCount }}
             presets:
-              query: "{{ query }}"
               modality: "{{ modality }}"
+              query: "{{ query }}"
+          integratedGradientsAttribution:
+            blurBaselineConfig:
+              maxBlurSigma: {{ maxBlurSigma }}
+            smoothGradConfig:
+              featureNoiseSigma:
+                noiseSigma: "{{ noiseSigma }}"
+              noiseSigma: {{ noiseSigma }}
+              noisySampleCount: {{ noisySampleCount }}
+            stepCount: {{ stepCount }}
           outputIndices:
             - "{{ outputIndices }}"
           sampledShapleyAttribution:
             pathCount: {{ pathCount }}
+          topK: {{ topK }}
           xraiAttribution:
-            stepCount: {{ stepCount }}
             blurBaselineConfig:
               maxBlurSigma: {{ maxBlurSigma }}
             smoothGradConfig:
-              noiseSigma: {{ noiseSigma }}
-              noisySampleCount: {{ noisySampleCount }}
               featureNoiseSigma:
                 noiseSigma: "{{ noiseSigma }}"
-    - name: inputConfig
-      description: |
-        Required. Input configuration of the instances on which predictions are performed. The schema of any single instance may be specified via the Model's PredictSchemata's instance_schema_uri.
-      value:
-        vertexMultimodalDatasetSource:
-          datasetName: "{{ datasetName }}"
-        bigquerySource:
-          inputUri: "{{ inputUri }}"
-        instancesFormat: "{{ instancesFormat }}"
-        gcsSource:
-          uris:
-            - "{{ uris }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The user-defined name of this BatchPredictionJob.
-    - name: dedicatedResources
-      description: |
-        The config of resources used by the Model during the batch prediction. If the Model supports DEDICATED_RESOURCES this config may be provided (and the job will use these resources), if the Model doesn't support AUTOMATIC_RESOURCES, this config must be provided.
-      value:
-        maxReplicaCount: {{ maxReplicaCount }}
-        machineSpec:
-          machineType: "{{ machineType }}"
-          tpuTopology: "{{ tpuTopology }}"
-          reservationAffinity:
-            reservationAffinityType: "{{ reservationAffinityType }}"
-            key: "{{ key }}"
-            values:
-              - "{{ values }}"
-          acceleratorCount: {{ acceleratorCount }}
-          acceleratorType: "{{ acceleratorType }}"
-          gpuPartitionSize: "{{ gpuPartitionSize }}"
-        startingReplicaCount: {{ startingReplicaCount }}
+              noiseSigma: {{ noiseSigma }}
+              noisySampleCount: {{ noisySampleCount }}
+            stepCount: {{ stepCount }}
     - name: generateExplanation
       value: {{ generateExplanation }}
       description: |
         Generate explanation with the batch prediction results. When set to \`true\`, the batch prediction output changes based on the \`predictions_format\` field of the BatchPredictionJob.output_config object: * \`bigquery\`: output includes a column named \`explanation\`. The value is a struct that conforms to the Explanation object. * \`jsonl\`: The JSON objects on each line include an additional entry keyed \`explanation\`. The value of the entry is a JSON object that conforms to the Explanation object. * \`csv\`: Generating explanations for CSV format is not supported. If this field is set to true, either the Model.explanation_spec or explanation_spec must be populated.
-    - name: model
-      value: "{{ model }}"
+    - name: inputConfig
       description: |
-        The name of the Model resource that produces the predictions via this job, must share the same ancestor Location. Starting this job has no impact on any existing deployments of the Model and their resources. Exactly one of model, unmanaged_container_model, or endpoint must be set. The model resource name may contain version id or version alias to specify the version. Example: \`projects/{project}/locations/{location}/models/{model}@2\` or \`projects/{project}/locations/{location}/models/{model}@golden\` if no version is specified, the default version will be deployed. The model resource could also be a publisher model. Example: \`publishers/{publisher}/models/{model}\` or \`projects/{project}/locations/{location}/publishers/{publisher}/models/{model}\`
-    - name: unmanagedContainerModel
-      description: |
-        Contains model information necessary to perform batch prediction without requiring uploading to model registry. Exactly one of model, unmanaged_container_model, or endpoint must be set.
+        Required. Input configuration of the instances on which predictions are performed. The schema of any single instance may be specified via the Model's PredictSchemata's instance_schema_uri.
       value:
-        containerSpec:
-          grpcPorts:
-            - containerPort: {{ containerPort }}
-          predictRoute: "{{ predictRoute }}"
-          livenessProbe:
-            failureThreshold: {{ failureThreshold }}
-            periodSeconds: {{ periodSeconds }}
-            successThreshold: {{ successThreshold }}
-            grpc:
-              service: "{{ service }}"
-              port: {{ port }}
-            tcpSocket:
-              port: {{ port }}
-              host: "{{ host }}"
-            exec:
-              command:
-                - "{{ command }}"
-            initialDelaySeconds: {{ initialDelaySeconds }}
-            httpGet:
-              host: "{{ host }}"
-              scheme: "{{ scheme }}"
-              path: "{{ path }}"
-              httpHeaders:
-                - name: "{{ name }}"
-                  value: "{{ value }}"
-              port: {{ port }}
-            timeoutSeconds: {{ timeoutSeconds }}
-          deploymentTimeout: "{{ deploymentTimeout }}"
-          imageUri: "{{ imageUri }}"
-          sharedMemorySizeMb: "{{ sharedMemorySizeMb }}"
-          ports:
-            - containerPort: {{ containerPort }}
-          invokeRoutePrefix: "{{ invokeRoutePrefix }}"
-          startupProbe:
-            failureThreshold: {{ failureThreshold }}
-            periodSeconds: {{ periodSeconds }}
-            successThreshold: {{ successThreshold }}
-            grpc:
-              service: "{{ service }}"
-              port: {{ port }}
-            tcpSocket:
-              port: {{ port }}
-              host: "{{ host }}"
-            exec:
-              command:
-                - "{{ command }}"
-            initialDelaySeconds: {{ initialDelaySeconds }}
-            httpGet:
-              host: "{{ host }}"
-              scheme: "{{ scheme }}"
-              path: "{{ path }}"
-              httpHeaders:
-                - name: "{{ name }}"
-                  value: "{{ value }}"
-              port: {{ port }}
-            timeoutSeconds: {{ timeoutSeconds }}
-          healthProbe:
-            failureThreshold: {{ failureThreshold }}
-            periodSeconds: {{ periodSeconds }}
-            successThreshold: {{ successThreshold }}
-            grpc:
-              service: "{{ service }}"
-              port: {{ port }}
-            tcpSocket:
-              port: {{ port }}
-              host: "{{ host }}"
-            exec:
-              command:
-                - "{{ command }}"
-            initialDelaySeconds: {{ initialDelaySeconds }}
-            httpGet:
-              host: "{{ host }}"
-              scheme: "{{ scheme }}"
-              path: "{{ path }}"
-              httpHeaders:
-                - name: "{{ name }}"
-                  value: "{{ value }}"
-              port: {{ port }}
-            timeoutSeconds: {{ timeoutSeconds }}
-          command:
-            - "{{ command }}"
-          healthRoute: "{{ healthRoute }}"
-          args:
-            - "{{ args }}"
-          env:
-            - name: "{{ name }}"
-              value: "{{ value }}"
-        artifactUri: "{{ artifactUri }}"
-        predictSchemata:
-          parametersSchemaUri: "{{ parametersSchemaUri }}"
-          predictionSchemaUri: "{{ predictionSchemaUri }}"
-          instanceSchemaUri: "{{ instanceSchemaUri }}"
-    - name: modelParameters
-      value: "{{ modelParameters }}"
-      description: |
-        The parameters that govern the predictions. The schema of the parameters may be specified via the Model's PredictSchemata's parameters_schema_uri.
-    - name: serviceAccount
-      value: "{{ serviceAccount }}"
-      description: |
-        The service account that the DeployedModel's container runs as. If not specified, a system generated one will be used, which has minimal permissions and the custom container, if used, may not have enough permission to access other Google Cloud resources. Users deploying the Model must have the \`iam.serviceAccounts.actAs\` permission on this service account.
-    - name: disableContainerLogging
-      value: {{ disableContainerLogging }}
-      description: |
-        For custom-trained Models and AutoML Tabular Models, the container of the DeployedModel instances will send \`stderr\` and \`stdout\` streams to Cloud Logging by default. Please note that the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging/pricing). User can disable container logging by setting this flag to true.
+        bigquerySource:
+          inputUri: "{{ inputUri }}"
+        gcsSource:
+          uris:
+            - "{{ uris }}"
+        instancesFormat: "{{ instancesFormat }}"
+        vertexMultimodalDatasetSource:
+          datasetName: "{{ datasetName }}"
     - name: instanceConfig
       description: |
         Configuration for how to convert batch prediction input instances to the prediction instances that are sent to the Model.
       value:
-        keyField: "{{ keyField }}"
-        includedFields:
-          - "{{ includedFields }}"
         excludedFields:
           - "{{ excludedFields }}"
+        includedFields:
+          - "{{ includedFields }}"
         instanceType: "{{ instanceType }}"
-    - name: encryptionSpec
-      description: |
-        Customer-managed encryption key options for a BatchPredictionJob. If this is set, then all resources created by the BatchPredictionJob will be encrypted with the provided encryption key.
-      value:
-        kmsKeyName: "{{ kmsKeyName }}"
+        keyField: "{{ keyField }}"
     - name: labels
       value: "{{ labels }}"
       description: |
         The labels with user-defined metadata to organize BatchPredictionJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+    - name: manualBatchTuningParameters
+      description: |
+        Immutable. Parameters configuring the batch behavior. Currently only applicable when dedicated_resources are used (in other cases Vertex AI does the tuning itself).
+      value:
+        batchSize: {{ batchSize }}
+    - name: model
+      value: "{{ model }}"
+      description: |
+        The name of the Model resource that produces the predictions via this job, must share the same ancestor Location. Starting this job has no impact on any existing deployments of the Model and their resources. Exactly one of model, unmanaged_container_model, or endpoint must be set. The model resource name may contain version id or version alias to specify the version. Example: \`projects/{project}/locations/{location}/models/{model}@2\` or \`projects/{project}/locations/{location}/models/{model}@golden\` if no version is specified, the default version will be deployed. The model resource could also be a publisher model. Example: \`publishers/{publisher}/models/{model}\` or \`projects/{project}/locations/{location}/publishers/{publisher}/models/{model}\`
+    - name: modelParameters
+      value: "{{ modelParameters }}"
+      description: |
+        The parameters that govern the predictions. The schema of the parameters may be specified via the Model's PredictSchemata's parameters_schema_uri.
     - name: outputConfig
       description: |
         Required. The Configuration specifying where output predictions should be written. The schema of any single prediction may be specified as a concatenation of Model's PredictSchemata's instance_schema_uri and prediction_schema_uri.
       value:
         bigqueryDestination:
           outputUri: "{{ outputUri }}"
+        gcsDestination:
+          outputUriPrefix: "{{ outputUriPrefix }}"
+        predictionsFormat: "{{ predictionsFormat }}"
         vertexMultimodalDatasetDestination:
           bigqueryDestination:
             outputUri: "{{ outputUri }}"
           displayName: "{{ displayName }}"
-        gcsDestination:
-          outputUriPrefix: "{{ outputUriPrefix }}"
-        predictionsFormat: "{{ predictionsFormat }}"
-    - name: manualBatchTuningParameters
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
       description: |
-        Immutable. Parameters configuring the batch behavior. Currently only applicable when dedicated_resources are used (in other cases Vertex AI does the tuning itself).
+        The service account that the DeployedModel's container runs as. If not specified, a system generated one will be used, which has minimal permissions and the custom container, if used, may not have enough permission to access other Google Cloud resources. Users deploying the Model must have the \`iam.serviceAccounts.actAs\` permission on this service account.
+    - name: unmanagedContainerModel
+      description: |
+        Contains model information necessary to perform batch prediction without requiring uploading to model registry. Exactly one of model, unmanaged_container_model, or endpoint must be set.
       value:
-        batchSize: {{ batchSize }}
+        artifactUri: "{{ artifactUri }}"
+        containerSpec:
+          args:
+            - "{{ args }}"
+          command:
+            - "{{ command }}"
+          deploymentTimeout: "{{ deploymentTimeout }}"
+          env:
+            - name: "{{ name }}"
+              value: "{{ value }}"
+          grpcPorts:
+            - containerPort: {{ containerPort }}
+          healthProbe:
+            exec:
+              command:
+                - "{{ command }}"
+            failureThreshold: {{ failureThreshold }}
+            grpc:
+              port: {{ port }}
+              service: "{{ service }}"
+            httpGet:
+              host: "{{ host }}"
+              httpHeaders:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              path: "{{ path }}"
+              port: {{ port }}
+              scheme: "{{ scheme }}"
+            initialDelaySeconds: {{ initialDelaySeconds }}
+            periodSeconds: {{ periodSeconds }}
+            successThreshold: {{ successThreshold }}
+            tcpSocket:
+              host: "{{ host }}"
+              port: {{ port }}
+            timeoutSeconds: {{ timeoutSeconds }}
+          healthRoute: "{{ healthRoute }}"
+          imageUri: "{{ imageUri }}"
+          invokeRoutePrefix: "{{ invokeRoutePrefix }}"
+          livenessProbe:
+            exec:
+              command:
+                - "{{ command }}"
+            failureThreshold: {{ failureThreshold }}
+            grpc:
+              port: {{ port }}
+              service: "{{ service }}"
+            httpGet:
+              host: "{{ host }}"
+              httpHeaders:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              path: "{{ path }}"
+              port: {{ port }}
+              scheme: "{{ scheme }}"
+            initialDelaySeconds: {{ initialDelaySeconds }}
+            periodSeconds: {{ periodSeconds }}
+            successThreshold: {{ successThreshold }}
+            tcpSocket:
+              host: "{{ host }}"
+              port: {{ port }}
+            timeoutSeconds: {{ timeoutSeconds }}
+          ports:
+            - containerPort: {{ containerPort }}
+          predictRoute: "{{ predictRoute }}"
+          sharedMemorySizeMb: "{{ sharedMemorySizeMb }}"
+          startupProbe:
+            exec:
+              command:
+                - "{{ command }}"
+            failureThreshold: {{ failureThreshold }}
+            grpc:
+              port: {{ port }}
+              service: "{{ service }}"
+            httpGet:
+              host: "{{ host }}"
+              httpHeaders:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              path: "{{ path }}"
+              port: {{ port }}
+              scheme: "{{ scheme }}"
+            initialDelaySeconds: {{ initialDelaySeconds }}
+            periodSeconds: {{ periodSeconds }}
+            successThreshold: {{ successThreshold }}
+            tcpSocket:
+              host: "{{ host }}"
+              port: {{ port }}
+            timeoutSeconds: {{ timeoutSeconds }}
+        predictSchemata:
+          instanceSchemaUri: "{{ instanceSchemaUri }}"
+          parametersSchemaUri: "{{ parametersSchemaUri }}"
+          predictionSchemaUri: "{{ predictionSchemaUri }}"
 `}</CodeBlock>
 
 </TabItem>

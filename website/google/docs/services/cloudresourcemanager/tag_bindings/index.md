@@ -93,7 +93,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>Lists the TagBindings for the given Google Cloud resource, as specified with `parent`. NOTE: The `parent` field is expected to be a full resource name: https://cloud.google.com/apis/design/resource_names#full_resource_name</td>
 </tr>
 <tr>
@@ -173,9 +173,9 @@ parent,
 tagValue,
 tagValueNamespacedName
 FROM google.cloudresourcemanager.tag_bindings
-WHERE parent = '{{ parent }}'
-AND pageSize = '{{ pageSize }}'
+WHERE pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>

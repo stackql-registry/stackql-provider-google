@@ -205,21 +205,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists federations in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-federationId"><code>federationId</code></a></td>
+    <td><a href="#parameter-federationId"><code>federationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a metastore federation in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-federationsId"><code>federationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the fields of a federation.</td>
 </tr>
 <tr>
@@ -351,10 +351,10 @@ version
 FROM google.metastore.federations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -376,26 +376,26 @@ Creates a metastore federation in a project and location.
 
 ```sql
 INSERT INTO google.metastore.federations (
-data__tags,
-data__labels,
-data__version,
-data__name,
 data__backendMetastores,
+data__labels,
+data__name,
+data__tags,
+data__version,
 projectsId,
 locationsId,
-requestId,
-federationId
+federationId,
+requestId
 )
 SELECT 
-'{{ tags }}',
-'{{ labels }}',
-'{{ version }}',
-'{{ name }}',
 '{{ backendMetastores }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ tags }}',
+'{{ version }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ federationId }}'
+'{{ federationId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -416,30 +416,30 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the federations resource.
-    - name: tags
-      value: "{{ tags }}"
-      description: |
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        User-defined labels for the metastore federation.
-    - name: version
-      value: "{{ version }}"
-      description: |
-        Immutable. The Apache Hive metastore version of the federation. All backend metastore versions must be compatible with the federation version.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The relative resource name of the federation, of the form: projects/{project_number}/locations/{location_id}/federations/{federation_id}\`.
     - name: backendMetastores
       value: "{{ backendMetastores }}"
       description: |
         A map from BackendMetastore rank to BackendMetastores from which the federation service serves metadata at query time. The map key represents the order in which BackendMetastores should be evaluated to resolve database names at query time and should be greater than or equal to zero. A BackendMetastore with a lower number will be evaluated before a BackendMetastore with a higher number.
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels for the metastore federation.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The relative resource name of the federation, of the form: projects/{project_number}/locations/{location_id}/federations/{federation_id}\`.
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
+    - name: version
+      value: "{{ version }}"
+      description: |
+        Immutable. The Apache Hive metastore version of the federation. All backend metastore versions must be compatible with the federation version.
     - name: federationId
       value: "{{ federationId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -461,17 +461,17 @@ Updates the fields of a federation.
 ```sql
 UPDATE google.metastore.federations
 SET 
-data__tags = '{{ tags }}',
+data__backendMetastores = '{{ backendMetastores }}',
 data__labels = '{{ labels }}',
-data__version = '{{ version }}',
 data__name = '{{ name }}',
-data__backendMetastores = '{{ backendMetastores }}'
+data__tags = '{{ tags }}',
+data__version = '{{ version }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND federationsId = '{{ federationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

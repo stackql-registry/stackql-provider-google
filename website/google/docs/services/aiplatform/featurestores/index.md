@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists Featurestores in a given project and location.</td>
 </tr>
 <tr>
@@ -230,18 +230,18 @@ The following methods are available for this resource:
     <td>Deletes a single Featurestore. The Featurestore must not contain any EntityTypes or `force` must be set to true for the request to succeed.</td>
 </tr>
 <tr>
-    <td><a href="#search_features"><CopyableCode code="search_features" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Searches Features matching a query in a given project.</td>
-</tr>
-<tr>
     <td><a href="#batch_read_feature_values"><CopyableCode code="batch_read_feature_values" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a></td>
     <td></td>
     <td>Batch reads Feature values from a Featurestore. This API enables batch reading Feature values, where each read instance in the batch may read Feature values of entities from one or more EntityTypes. Point-in-time correctness is guaranteed for Feature values of each read instance as of each instance's read timestamp.</td>
+</tr>
+<tr>
+    <td><a href="#search_features"><CopyableCode code="search_features" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td>Searches Features matching a query in a given project.</td>
 </tr>
 </tbody>
 </table>
@@ -376,9 +376,9 @@ FROM google.aiplatform.featurestores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -402,20 +402,20 @@ Creates a new Featurestore in a given project and location.
 ```sql
 INSERT INTO google.aiplatform.featurestores (
 data__encryptionSpec,
+data__etag,
 data__labels,
 data__onlineServingConfig,
 data__onlineStorageTtlDays,
-data__etag,
 projectsId,
 locationsId,
 featurestoreId
 )
 SELECT 
 '{{ encryptionSpec }}',
+'{{ etag }}',
 '{{ labels }}',
 '{{ onlineServingConfig }}',
 {{ onlineStorageTtlDays }},
-'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ featurestoreId }}'
@@ -444,6 +444,10 @@ response
         Optional. Customer-managed encryption key spec for data storage. If set, both of the online and offline data storage will be secured by this key.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -452,19 +456,15 @@ response
       description: |
         Optional. Config for online storage resources. The field should not co-exist with the field of \`OnlineStoreReplicationConfig\`. If both of it and OnlineStoreReplicationConfig are unset, the feature store will not have an online store and cannot be used for online serving.
       value:
+        fixedNodeCount: {{ fixedNodeCount }}
         scaling:
-          minNodeCount: {{ minNodeCount }}
           cpuUtilizationTarget: {{ cpuUtilizationTarget }}
           maxNodeCount: {{ maxNodeCount }}
-        fixedNodeCount: {{ fixedNodeCount }}
+          minNodeCount: {{ minNodeCount }}
     - name: onlineStorageTtlDays
       value: {{ onlineStorageTtlDays }}
       description: |
         Optional. TTL in days for feature values that will be stored in online serving storage. The Feature Store online storage periodically removes obsolete feature values older than \`online_storage_ttl_days\` since the feature generation time. Note that \`online_storage_ttl_days\` should be less than or equal to \`offline_storage_ttl_days\` for each EntityType under a featurestore. If not set, default to 4000 days
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: featurestoreId
       value: "{{ featurestoreId }}"
 `}</CodeBlock>
@@ -489,10 +489,10 @@ Updates the parameters of a single Featurestore.
 UPDATE google.aiplatform.featurestores
 SET 
 data__encryptionSpec = '{{ encryptionSpec }}',
+data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
 data__onlineServingConfig = '{{ onlineServingConfig }}',
-data__onlineStorageTtlDays = {{ onlineStorageTtlDays }},
-data__etag = '{{ etag }}'
+data__onlineStorageTtlDays = {{ onlineStorageTtlDays }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -536,26 +536,12 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="search_features"
+    defaultValue="batch_read_feature_values"
     values={[
-        { label: 'search_features', value: 'search_features' },
-        { label: 'batch_read_feature_values', value: 'batch_read_feature_values' }
+        { label: 'batch_read_feature_values', value: 'batch_read_feature_values' },
+        { label: 'search_features', value: 'search_features' }
     ]}
 >
-<TabItem value="search_features">
-
-Searches Features matching a query in a given project.
-
-```sql
-EXEC google.aiplatform.featurestores.search_features 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@query='{{ query }}', 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="batch_read_feature_values">
 
 Batch reads Feature values from a Featurestore. This API enables batch reading Feature values, where each read instance in the batch may read Feature values of entities from one or more EntityTypes. Point-in-time correctness is guaranteed for Feature values of each read instance as of each instance's read timestamp.
@@ -567,13 +553,27 @@ EXEC google.aiplatform.featurestores.batch_read_feature_values
 @featurestoresId='{{ featurestoresId }}' --required 
 @@json=
 '{
-"destination": "{{ destination }}", 
-"csvReadInstances": "{{ csvReadInstances }}", 
 "bigqueryReadInstances": "{{ bigqueryReadInstances }}", 
-"passThroughFields": "{{ passThroughFields }}", 
+"csvReadInstances": "{{ csvReadInstances }}", 
+"destination": "{{ destination }}", 
 "entityTypeSpecs": "{{ entityTypeSpecs }}", 
+"passThroughFields": "{{ passThroughFields }}", 
 "startTime": "{{ startTime }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="search_features">
+
+Searches Features matching a query in a given project.
+
+```sql
+EXEC google.aiplatform.featurestores.search_features 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@query='{{ query }}'
 ;
 ```
 </TabItem>

@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the assets export jobs in a given project and location.</td>
 </tr>
 <tr>
@@ -336,8 +336,8 @@ updateTime
 FROM google.migrationcenter.assets_export_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -359,26 +359,26 @@ Creates a new assets export job.
 
 ```sql
 INSERT INTO google.migrationcenter.assets_export_jobs (
-data__networkDependencies,
-data__inventory,
-data__showHidden,
 data__condition,
-data__signedUriDestination,
+data__inventory,
 data__labels,
+data__networkDependencies,
 data__performanceData,
+data__showHidden,
+data__signedUriDestination,
 projectsId,
 locationsId,
 assetsExportJobId,
 requestId
 )
 SELECT 
-'{{ networkDependencies }}',
-'{{ inventory }}',
-{{ showHidden }},
 '{{ condition }}',
-'{{ signedUriDestination }}',
+'{{ inventory }}',
 '{{ labels }}',
+'{{ networkDependencies }}',
 '{{ performanceData }}',
+{{ showHidden }},
+'{{ signedUriDestination }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ assetsExportJobId }}',
@@ -403,37 +403,37 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the assets_export_jobs resource.
-    - name: networkDependencies
-      value: "{{ networkDependencies }}"
-      description: |
-        Export data regarding asset network dependencies.
-    - name: inventory
-      value: "{{ inventory }}"
-      description: |
-        Export asset inventory details.
-    - name: showHidden
-      value: {{ showHidden }}
-      description: |
-        Optional. When this value is set to 'true' the response will include all assets, including those that are hidden.
     - name: condition
       description: |
         Optional. Conditions for selecting assets to export.
       value:
         filter: "{{ filter }}"
-    - name: signedUriDestination
+    - name: inventory
+      value: "{{ inventory }}"
       description: |
-        Export to Cloud Storage files downloadable using signed URIs.
-      value:
-        fileFormat: "{{ fileFormat }}"
+        Export asset inventory details.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Labels as key value pairs. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
+    - name: networkDependencies
+      value: "{{ networkDependencies }}"
+      description: |
+        Export data regarding asset network dependencies.
     - name: performanceData
       description: |
         Export asset with performance data.
       value:
         maxDays: {{ maxDays }}
+    - name: showHidden
+      value: {{ showHidden }}
+      description: |
+        Optional. When this value is set to 'true' the response will include all assets, including those that are hidden.
+    - name: signedUriDestination
+      description: |
+        Export to Cloud Storage files downloadable using signed URIs.
+      value:
+        fileFormat: "{{ fileFormat }}"
     - name: assetsExportJobId
       value: "{{ assetsExportJobId }}"
     - name: requestId

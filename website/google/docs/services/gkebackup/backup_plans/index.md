@@ -295,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists BackupPlans in a given location.</td>
 </tr>
 <tr>
@@ -466,10 +466,10 @@ updateTime
 FROM google.gkebackup.backup_plans
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -491,25 +491,25 @@ Creates a new BackupPlan in a given location.
 
 ```sql
 INSERT INTO google.gkebackup.backup_plans (
-data__labels,
-data__backupSchedule,
-data__retentionPolicy,
 data__backupConfig,
-data__description,
-data__deactivated,
+data__backupSchedule,
 data__cluster,
+data__deactivated,
+data__description,
+data__labels,
+data__retentionPolicy,
 projectsId,
 locationsId,
 backupPlanId
 )
 SELECT 
-'{{ labels }}',
-'{{ backupSchedule }}',
-'{{ retentionPolicy }}',
 '{{ backupConfig }}',
-'{{ description }}',
-{{ deactivated }},
+'{{ backupSchedule }}',
 '{{ cluster }}',
+{{ deactivated }},
+'{{ description }}',
+'{{ labels }}',
+'{{ retentionPolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupPlanId }}'
@@ -533,74 +533,74 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the backup_plans resource.
-    - name: labels
-      value: "{{ labels }}"
+    - name: backupConfig
       description: |
-        Optional. A set of custom labels supplied by user.
+        Optional. Defines the configuration of Backups created via this BackupPlan.
+      value:
+        allNamespaces: {{ allNamespaces }}
+        encryptionKey:
+          gcpKmsEncryptionKey: "{{ gcpKmsEncryptionKey }}"
+        includeSecrets: {{ includeSecrets }}
+        includeVolumeData: {{ includeVolumeData }}
+        permissiveMode: {{ permissiveMode }}
+        selectedApplications:
+          namespacedNames:
+            - name: "{{ name }}"
+              namespace: "{{ namespace }}"
+        selectedNamespaceLabels:
+          resourceLabels:
+            - key: "{{ key }}"
+              value: "{{ value }}"
+        selectedNamespaces:
+          namespaces:
+            - "{{ namespaces }}"
     - name: backupSchedule
       description: |
         Optional. Defines a schedule for automatic Backup creation via this BackupPlan.
       value:
+        cronSchedule: "{{ cronSchedule }}"
+        nextScheduledBackupTime: "{{ nextScheduledBackupTime }}"
+        paused: {{ paused }}
         rpoConfig:
-          targetRpoMinutes: {{ targetRpoMinutes }}
           exclusionWindows:
-            - duration: "{{ duration }}"
+            - daily: {{ daily }}
+              daysOfWeek:
+                daysOfWeek:
+                  - "{{ daysOfWeek }}"
+              duration: "{{ duration }}"
+              singleOccurrenceDate:
+                day: {{ day }}
+                month: {{ month }}
+                year: {{ year }}
               startTime:
                 hours: {{ hours }}
                 minutes: {{ minutes }}
                 nanos: {{ nanos }}
                 seconds: {{ seconds }}
-              daily: {{ daily }}
-              singleOccurrenceDate:
-                year: {{ year }}
-                day: {{ day }}
-                month: {{ month }}
-              daysOfWeek:
-                daysOfWeek:
-                  - "{{ daysOfWeek }}"
-        nextScheduledBackupTime: "{{ nextScheduledBackupTime }}"
-        cronSchedule: "{{ cronSchedule }}"
-        paused: {{ paused }}
-    - name: retentionPolicy
-      description: |
-        Optional. RetentionPolicy governs lifecycle of Backups created under this plan.
-      value:
-        backupRetainDays: {{ backupRetainDays }}
-        backupDeleteLockDays: {{ backupDeleteLockDays }}
-        locked: {{ locked }}
-    - name: backupConfig
-      description: |
-        Optional. Defines the configuration of Backups created via this BackupPlan.
-      value:
-        selectedApplications:
-          namespacedNames:
-            - name: "{{ name }}"
-              namespace: "{{ namespace }}"
-        encryptionKey:
-          gcpKmsEncryptionKey: "{{ gcpKmsEncryptionKey }}"
-        selectedNamespaces:
-          namespaces:
-            - "{{ namespaces }}"
-        includeSecrets: {{ includeSecrets }}
-        allNamespaces: {{ allNamespaces }}
-        includeVolumeData: {{ includeVolumeData }}
-        selectedNamespaceLabels:
-          resourceLabels:
-            - value: "{{ value }}"
-              key: "{{ key }}"
-        permissiveMode: {{ permissiveMode }}
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. User specified descriptive string for this BackupPlan.
-    - name: deactivated
-      value: {{ deactivated }}
-      description: |
-        Optional. This flag indicates whether this BackupPlan has been deactivated. Setting this field to True locks the BackupPlan such that no further updates will be allowed (except deletes), including the deactivated field itself. It also prevents any new Backups from being created via this BackupPlan (including scheduled Backups). Default: False
+          targetRpoMinutes: {{ targetRpoMinutes }}
     - name: cluster
       value: "{{ cluster }}"
       description: |
         Required. Immutable. The source cluster from which Backups will be created via this BackupPlan. Valid formats: - \`projects/*/locations/*/clusters/*\` - \`projects/*/zones/*/clusters/*\`
+    - name: deactivated
+      value: {{ deactivated }}
+      description: |
+        Optional. This flag indicates whether this BackupPlan has been deactivated. Setting this field to True locks the BackupPlan such that no further updates will be allowed (except deletes), including the deactivated field itself. It also prevents any new Backups from being created via this BackupPlan (including scheduled Backups). Default: False
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User specified descriptive string for this BackupPlan.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. A set of custom labels supplied by user.
+    - name: retentionPolicy
+      description: |
+        Optional. RetentionPolicy governs lifecycle of Backups created under this plan.
+      value:
+        backupDeleteLockDays: {{ backupDeleteLockDays }}
+        backupRetainDays: {{ backupRetainDays }}
+        locked: {{ locked }}
     - name: backupPlanId
       value: "{{ backupPlanId }}"
 `}</CodeBlock>
@@ -624,13 +624,13 @@ Update a BackupPlan.
 ```sql
 UPDATE google.gkebackup.backup_plans
 SET 
-data__labels = '{{ labels }}',
-data__backupSchedule = '{{ backupSchedule }}',
-data__retentionPolicy = '{{ retentionPolicy }}',
 data__backupConfig = '{{ backupConfig }}',
-data__description = '{{ description }}',
+data__backupSchedule = '{{ backupSchedule }}',
+data__cluster = '{{ cluster }}',
 data__deactivated = {{ deactivated }},
-data__cluster = '{{ cluster }}'
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__retentionPolicy = '{{ retentionPolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -690,10 +690,10 @@ EXEC google.gkebackup.backup_plans.set_tags
 @backupPlansId='{{ backupPlansId }}' --required 
 @@json=
 '{
-"tags": "{{ tags }}", 
 "etag": "{{ etag }}", 
 "name": "{{ name }}", 
-"requestId": "{{ requestId }}"
+"requestId": "{{ requestId }}", 
+"tags": "{{ tags }}"
 }'
 ;
 ```

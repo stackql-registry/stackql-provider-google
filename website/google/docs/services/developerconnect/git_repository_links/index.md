@@ -215,29 +215,22 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists GitRepositoryLinks in a given project, location, and connection.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-gitRepositoryLinkId"><code>gitRepositoryLinkId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-gitRepositoryLinkId"><code>gitRepositoryLinkId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a GitRepositoryLink. Upon linking a Git Repository, Developer Connect will configure the Git Repository to send webhook events to Developer Connect. Connections that use Firebase GitHub Application will have events forwarded to the Firebase service. Connections that use Gemini Code Assist will have events forwarded to Gemini Code Assist service. All other Connections will have events forwarded to Cloud Build.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-gitRepositoryLinksId"><code>gitRepositoryLinksId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single GitRepositoryLink.</td>
-</tr>
-<tr>
-    <td><a href="#processgitlab_enterprise_webhook"><CopyableCode code="processgitlab_enterprise_webhook" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-gitRepositoryLinksId"><code>gitRepositoryLinksId</code></a></td>
-    <td></td>
-    <td>ProcessGitLabEnterpriseWebhook is called by the external GitLab Enterprise instances for notifying events.</td>
 </tr>
 <tr>
     <td><a href="#process_bitbucket_cloud_webhook"><CopyableCode code="process_bitbucket_cloud_webhook" /></a></td>
@@ -252,6 +245,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-gitRepositoryLinksId"><code>gitRepositoryLinksId</code></a></td>
     <td></td>
     <td>ProcessBitbucketDataCenterWebhook is called by the external Bitbucket Data Center instances for notifying events.</td>
+</tr>
+<tr>
+    <td><a href="#processgitlab_enterprise_webhook"><CopyableCode code="processgitlab_enterprise_webhook" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-gitRepositoryLinksId"><code>gitRepositoryLinksId</code></a></td>
+    <td></td>
+    <td>ProcessGitLabEnterpriseWebhook is called by the external GitLab Enterprise instances for notifying events.</td>
 </tr>
 <tr>
     <td><a href="#processgitlab_webhook"><CopyableCode code="processgitlab_webhook" /></a></td>
@@ -396,10 +396,10 @@ FROM google.developerconnect.git_repository_links
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -423,28 +423,28 @@ Creates a GitRepositoryLink. Upon linking a Git Repository, Developer Connect wi
 INSERT INTO google.developerconnect.git_repository_links (
 data__annotations,
 data__cloneUri,
-data__name,
-data__labels,
 data__etag,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 connectionsId,
-validateOnly,
 gitRepositoryLinkId,
-requestId
+requestId,
+validateOnly
 )
 SELECT 
 '{{ annotations }}',
 '{{ cloneUri }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ etag }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectionsId }}',
-'{{ validateOnly }}',
 '{{ gitRepositoryLinkId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -476,24 +476,24 @@ response
       value: "{{ cloneUri }}"
       description: |
         Required. Git Clone URI.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name of the repository, in the format \`projects/*/locations/*/connections/*/gitRepositoryLinks/*\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels as key value pairs
     - name: etag
       value: "{{ etag }}"
       description: |
         Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels as key value pairs
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the repository, in the format \`projects/*/locations/*/connections/*/gitRepositoryLinks/*\`.
     - name: gitRepositoryLinkId
       value: "{{ gitRepositoryLinkId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -518,9 +518,9 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
 AND gitRepositoryLinksId = '{{ gitRepositoryLinksId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -530,31 +530,14 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="processgitlab_enterprise_webhook"
+    defaultValue="process_bitbucket_cloud_webhook"
     values={[
-        { label: 'processgitlab_enterprise_webhook', value: 'processgitlab_enterprise_webhook' },
         { label: 'process_bitbucket_cloud_webhook', value: 'process_bitbucket_cloud_webhook' },
         { label: 'process_bitbucket_data_center_webhook', value: 'process_bitbucket_data_center_webhook' },
+        { label: 'processgitlab_enterprise_webhook', value: 'processgitlab_enterprise_webhook' },
         { label: 'processgitlab_webhook', value: 'processgitlab_webhook' }
     ]}
 >
-<TabItem value="processgitlab_enterprise_webhook">
-
-ProcessGitLabEnterpriseWebhook is called by the external GitLab Enterprise instances for notifying events.
-
-```sql
-EXEC google.developerconnect.git_repository_links.processgitlab_enterprise_webhook 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@connectionsId='{{ connectionsId }}' --required, 
-@gitRepositoryLinksId='{{ gitRepositoryLinksId }}' --required 
-@@json=
-'{
-"body": "{{ body }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="process_bitbucket_cloud_webhook">
 
 ProcessBitbucketCloudWebhook is called by the external Bitbucket Cloud instances for notifying events.
@@ -578,6 +561,23 @@ ProcessBitbucketDataCenterWebhook is called by the external Bitbucket Data Cente
 
 ```sql
 EXEC google.developerconnect.git_repository_links.process_bitbucket_data_center_webhook 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectionsId='{{ connectionsId }}' --required, 
+@gitRepositoryLinksId='{{ gitRepositoryLinksId }}' --required 
+@@json=
+'{
+"body": "{{ body }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="processgitlab_enterprise_webhook">
+
+ProcessGitLabEnterpriseWebhook is called by the external GitLab Enterprise instances for notifying events.
+
+```sql
+EXEC google.developerconnect.git_repository_links.processgitlab_enterprise_webhook 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectionsId='{{ connectionsId }}' --required, 

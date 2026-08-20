@@ -264,16 +264,16 @@ Creates a new TunnelDestGroup.
 ```sql
 INSERT INTO google.iap.dest_groups (
 data__cidrs,
-data__name,
 data__fqdns,
+data__name,
 projectsId,
 locationsId,
 tunnelDestGroupId
 )
 SELECT 
 '{{ cidrs }}',
-'{{ name }}',
 '{{ fqdns }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tunnelDestGroupId }}'
@@ -300,15 +300,15 @@ fqdns
         - "{{ cidrs }}"
       description: |
         Optional. Unordered list. List of CIDRs that this group applies to.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Identifier for the TunnelDestGroup. Must be unique within the project and contain only lower case letters (a-z) and dashes (-).
     - name: fqdns
       value:
         - "{{ fqdns }}"
       description: |
         Optional. Unordered list. List of FQDNs that this group applies to.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Identifier for the TunnelDestGroup. Must be unique within the project and contain only lower case letters (a-z) and dashes (-).
     - name: tunnelDestGroupId
       value: "{{ tunnelDestGroupId }}"
 `}</CodeBlock>
@@ -333,8 +333,8 @@ Updates a TunnelDestGroup.
 UPDATE google.iap.dest_groups
 SET 
 data__cidrs = '{{ cidrs }}',
-data__name = '{{ name }}',
-data__fqdns = '{{ fqdns }}'
+data__fqdns = '{{ fqdns }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

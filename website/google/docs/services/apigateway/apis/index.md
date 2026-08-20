@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Apis in a given project and location.</td>
 </tr>
 <tr>
@@ -298,10 +298,10 @@ updateTime
 FROM google.apigateway.apis
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -323,17 +323,17 @@ Creates a new Api in a given project and location.
 
 ```sql
 INSERT INTO google.apigateway.apis (
-data__managedService,
 data__displayName,
 data__labels,
+data__managedService,
 projectsId,
 locationsId,
 apiId
 )
 SELECT 
-'{{ managedService }}',
 '{{ displayName }}',
 '{{ labels }}',
+'{{ managedService }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apiId }}'
@@ -357,10 +357,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the apis resource.
-    - name: managedService
-      value: "{{ managedService }}"
-      description: |
-        Optional. Immutable. The name of a Google Managed Service ( https://cloud.google.com/service-infrastructure/docs/glossary#managed). If not specified, a new Service will automatically be created in the same project as this API.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -369,6 +365,10 @@ response
       value: "{{ labels }}"
       description: |
         Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
+    - name: managedService
+      value: "{{ managedService }}"
+      description: |
+        Optional. Immutable. The name of a Google Managed Service ( https://cloud.google.com/service-infrastructure/docs/glossary#managed). If not specified, a new Service will automatically be created in the same project as this API.
     - name: apiId
       value: "{{ apiId }}"
 `}</CodeBlock>
@@ -392,9 +392,9 @@ Updates the parameters of a single Api.
 ```sql
 UPDATE google.apigateway.apis
 SET 
-data__managedService = '{{ managedService }}',
 data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__managedService = '{{ managedService }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -291,20 +291,20 @@ Creates a new Response Policy Rule.
 ```sql
 INSERT INTO google.dns.response_policy_rules (
 data__behavior,
-data__kind,
-data__ruleName,
 data__dnsName,
+data__kind,
 data__localData,
+data__ruleName,
 project,
 responsePolicy,
 clientOperationId
 )
 SELECT 
 '{{ behavior }}',
-'{{ kind }}',
-'{{ ruleName }}',
 '{{ dnsName }}',
+'{{ kind }}',
 '{{ localData }}',
+'{{ ruleName }}',
 '{{ project }}',
 '{{ responsePolicy }}',
 '{{ clientOperationId }}'
@@ -333,62 +333,62 @@ ruleName
       description: |
         Answer this query with a behavior rather than DNS data.
       valid_values: ['behaviorUnspecified', 'bypassResponsePolicy']
-    - name: kind
-      value: "{{ kind }}"
-      default: dns#responsePolicyRule
-    - name: ruleName
-      value: "{{ ruleName }}"
-      description: |
-        An identifier for this rule. Must be unique with the ResponsePolicy.
     - name: dnsName
       value: "{{ dnsName }}"
       description: |
         The DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule.
+    - name: kind
+      value: "{{ kind }}"
+      default: dns#responsePolicyRule
     - name: localData
       description: |
         Answer this query directly with DNS data. These ResourceRecordSets override any other DNS behavior for the matched name; in particular they override private zones, the public internet, and GCP internal DNS. No SOA nor NS types are allowed.
       value:
         localDatas:
-          - routingPolicy:
+          - kind: "{{ kind }}"
+            name: "{{ name }}"
+            routingPolicy:
               geo:
                 enableFencing: {{ enableFencing }}
-                kind: "{{ kind }}"
                 items:
-                  - kind: "{{ kind }}"
+                  - healthCheckedTargets:
+                      externalEndpoints: "{{ externalEndpoints }}"
+                      internalLoadBalancers: "{{ internalLoadBalancers }}"
+                    kind: "{{ kind }}"
                     location: "{{ location }}"
                     rrdatas: "{{ rrdatas }}"
                     signatureRrdatas: "{{ signatureRrdatas }}"
-                    healthCheckedTargets:
-                      internalLoadBalancers: "{{ internalLoadBalancers }}"
-                      externalEndpoints: "{{ externalEndpoints }}"
-              primaryBackup:
-                primaryTargets:
-                  internalLoadBalancers: "{{ internalLoadBalancers }}"
-                  externalEndpoints: "{{ externalEndpoints }}"
                 kind: "{{ kind }}"
-                trickleTraffic: {{ trickleTraffic }}
-                backupGeoTargets:
-                  enableFencing: {{ enableFencing }}
-                  kind: "{{ kind }}"
-                  items: "{{ items }}"
               healthCheck: "{{ healthCheck }}"
               kind: "{{ kind }}"
+              primaryBackup:
+                backupGeoTargets:
+                  enableFencing: {{ enableFencing }}
+                  items: "{{ items }}"
+                  kind: "{{ kind }}"
+                kind: "{{ kind }}"
+                primaryTargets:
+                  externalEndpoints: "{{ externalEndpoints }}"
+                  internalLoadBalancers: "{{ internalLoadBalancers }}"
+                trickleTraffic: {{ trickleTraffic }}
               wrr:
                 items:
-                  - weight: {{ weight }}
+                  - healthCheckedTargets:
+                      externalEndpoints: "{{ externalEndpoints }}"
+                      internalLoadBalancers: "{{ internalLoadBalancers }}"
                     kind: "{{ kind }}"
                     rrdatas: "{{ rrdatas }}"
                     signatureRrdatas: "{{ signatureRrdatas }}"
-                    healthCheckedTargets:
-                      internalLoadBalancers: "{{ internalLoadBalancers }}"
-                      externalEndpoints: "{{ externalEndpoints }}"
+                    weight: {{ weight }}
                 kind: "{{ kind }}"
-            kind: "{{ kind }}"
-            ttl: {{ ttl }}
             rrdatas: "{{ rrdatas }}"
             signatureRrdatas: "{{ signatureRrdatas }}"
+            ttl: {{ ttl }}
             type: "{{ type }}"
-            name: "{{ name }}"
+    - name: ruleName
+      value: "{{ ruleName }}"
+      description: |
+        An identifier for this rule. Must be unique with the ResponsePolicy.
     - name: clientOperationId
       value: "{{ clientOperationId }}"
 `}</CodeBlock>
@@ -413,10 +413,10 @@ Applies a partial update to an existing Response Policy Rule.
 UPDATE google.dns.response_policy_rules
 SET 
 data__behavior = '{{ behavior }}',
-data__kind = '{{ kind }}',
-data__ruleName = '{{ ruleName }}',
 data__dnsName = '{{ dnsName }}',
-data__localData = '{{ localData }}'
+data__kind = '{{ kind }}',
+data__localData = '{{ localData }}',
+data__ruleName = '{{ ruleName }}'
 WHERE 
 project = '{{ project }}' --required
 AND responsePolicy = '{{ responsePolicy }}' --required
@@ -445,10 +445,10 @@ Updates an existing Response Policy Rule.
 REPLACE google.dns.response_policy_rules
 SET 
 data__behavior = '{{ behavior }}',
-data__kind = '{{ kind }}',
-data__ruleName = '{{ ruleName }}',
 data__dnsName = '{{ dnsName }}',
-data__localData = '{{ localData }}'
+data__kind = '{{ kind }}',
+data__localData = '{{ localData }}',
+data__ruleName = '{{ ruleName }}'
 WHERE 
 project = '{{ project }}' --required
 AND responsePolicy = '{{ responsePolicy }}' --required

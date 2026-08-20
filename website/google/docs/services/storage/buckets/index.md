@@ -468,21 +468,21 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-bucket"><code>bucket</code></a></td>
-    <td><a href="#parameter-generation"><code>generation</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
+    <td><a href="#parameter-generation"><code>generation</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
     <td>Returns metadata for the specified bucket.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-prefix"><code>prefix</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-prefix"><code>prefix</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
     <td>Retrieves a list of buckets for a given project.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-predefinedAcl"><code>predefinedAcl</code></a>, <a href="#parameter-predefinedDefaultObjectAcl"><code>predefinedDefaultObjectAcl</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a>, <a href="#parameter-enableObjectRetention"><code>enableObjectRetention</code></a></td>
+    <td><a href="#parameter-enableObjectRetention"><code>enableObjectRetention</code></a>, <a href="#parameter-predefinedAcl"><code>predefinedAcl</code></a>, <a href="#parameter-predefinedDefaultObjectAcl"><code>predefinedDefaultObjectAcl</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
     <td>Creates a new bucket.</td>
 </tr>
 <tr>
@@ -507,11 +507,11 @@ The following methods are available for this resource:
     <td>Deletes an empty bucket. Deletions are permanent unless soft delete is enabled on the bucket.</td>
 </tr>
 <tr>
-    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><a href="#lock_retention_policy"><CopyableCode code="lock_retention_policy" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-generation"><code>generation</code></a></td>
-    <td><a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
-    <td>Restores a soft-deleted bucket.</td>
+    <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a></td>
+    <td><a href="#parameter-userProject"><code>userProject</code></a></td>
+    <td>Locks retention policy on a bucket.</td>
 </tr>
 <tr>
     <td><a href="#relocate"><CopyableCode code="relocate" /></a></td>
@@ -521,11 +521,11 @@ The following methods are available for this resource:
     <td>Initiates a long-running Relocate Bucket operation on the specified bucket.</td>
 </tr>
 <tr>
-    <td><a href="#lock_retention_policy"><CopyableCode code="lock_retention_policy" /></a></td>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a></td>
-    <td><a href="#parameter-userProject"><code>userProject</code></a></td>
-    <td>Locks retention policy on a bucket.</td>
+    <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-generation"><code>generation</code></a></td>
+    <td><a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
+    <td>Restores a soft-deleted bucket.</td>
 </tr>
 </tbody>
 </table>
@@ -687,10 +687,10 @@ website
 FROM google.storage.buckets
 WHERE bucket = '{{ bucket }}' -- required
 AND generation = '{{ generation }}'
-AND softDeleted = '{{ softDeleted }}'
 AND ifMetagenerationMatch = '{{ ifMetagenerationMatch }}'
 AND ifMetagenerationNotMatch = '{{ ifMetagenerationNotMatch }}'
 AND projection = '{{ projection }}'
+AND softDeleted = '{{ softDeleted }}'
 AND userProject = '{{ userProject }}'
 ;
 ```
@@ -744,10 +744,10 @@ WHERE project = '{{ project }}' -- required
 AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 AND prefix = '{{ prefix }}'
-AND softDeleted = '{{ softDeleted }}'
 AND projection = '{{ projection }}'
-AND userProject = '{{ userProject }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND softDeleted = '{{ softDeleted }}'
+AND userProject = '{{ userProject }}'
 ;
 ```
 </TabItem>
@@ -770,6 +770,7 @@ Creates a new bucket.
 ```sql
 INSERT INTO google.storage.buckets (
 data__acl,
+data__autoclass,
 data__billing,
 data__cors,
 data__customPlacementConfig,
@@ -777,6 +778,8 @@ data__defaultEventBasedHold,
 data__defaultObjectAcl,
 data__encryption,
 data__etag,
+data__generation,
+data__hardDeleteTime,
 data__hierarchicalNamespace,
 data__iamConfiguration,
 data__id,
@@ -784,38 +787,36 @@ data__ipFilter,
 data__kind,
 data__labels,
 data__lifecycle,
-data__autoclass,
 data__location,
 data__locationType,
 data__logging,
-data__generation,
 data__metageneration,
 data__name,
+data__objectRetention,
 data__owner,
 data__projectNumber,
 data__retentionPolicy,
-data__objectRetention,
 data__rpo,
+data__satisfiesPZI,
+data__satisfiesPZS,
 data__selfLink,
 data__softDeletePolicy,
+data__softDeleteTime,
 data__storageClass,
 data__timeCreated,
 data__updated,
-data__softDeleteTime,
-data__hardDeleteTime,
 data__versioning,
 data__website,
-data__satisfiesPZS,
-data__satisfiesPZI,
 project,
+enableObjectRetention,
 predefinedAcl,
 predefinedDefaultObjectAcl,
 projection,
-userProject,
-enableObjectRetention
+userProject
 )
 SELECT 
 '{{ acl }}',
+'{{ autoclass }}',
 '{{ billing }}',
 '{{ cors }}',
 '{{ customPlacementConfig }}',
@@ -823,6 +824,8 @@ SELECT
 '{{ defaultObjectAcl }}',
 '{{ encryption }}',
 '{{ etag }}',
+'{{ generation }}',
+'{{ hardDeleteTime }}',
 '{{ hierarchicalNamespace }}',
 '{{ iamConfiguration }}',
 '{{ id }}',
@@ -830,35 +833,32 @@ SELECT
 '{{ kind }}',
 '{{ labels }}',
 '{{ lifecycle }}',
-'{{ autoclass }}',
 '{{ location }}',
 '{{ locationType }}',
 '{{ logging }}',
-'{{ generation }}',
 '{{ metageneration }}',
 '{{ name }}',
+'{{ objectRetention }}',
 '{{ owner }}',
 '{{ projectNumber }}',
 '{{ retentionPolicy }}',
-'{{ objectRetention }}',
 '{{ rpo }}',
+{{ satisfiesPZI }},
+{{ satisfiesPZS }},
 '{{ selfLink }}',
 '{{ softDeletePolicy }}',
+'{{ softDeleteTime }}',
 '{{ storageClass }}',
 '{{ timeCreated }}',
 '{{ updated }}',
-'{{ softDeleteTime }}',
-'{{ hardDeleteTime }}',
 '{{ versioning }}',
 '{{ website }}',
-{{ satisfiesPZS }},
-{{ satisfiesPZI }},
 '{{ project }}',
+'{{ enableObjectRetention }}',
 '{{ predefinedAcl }}',
 '{{ predefinedDefaultObjectAcl }}',
 '{{ projection }}',
-'{{ userProject }}',
-'{{ enableObjectRetention }}'
+'{{ userProject }}'
 RETURNING
 id,
 name,
@@ -926,6 +926,14 @@ website
             team: "{{ team }}"
           role: "{{ role }}"
           selfLink: "{{ selfLink }}"
+    - name: autoclass
+      description: |
+        The bucket's Autoclass configuration.
+      value:
+        enabled: {{ enabled }}
+        terminalStorageClass: "{{ terminalStorageClass }}"
+        terminalStorageClassUpdateTime: "{{ terminalStorageClassUpdateTime }}"
+        toggleTime: "{{ toggleTime }}"
     - name: billing
       description: |
         The bucket's billing configuration.
@@ -972,20 +980,28 @@ website
       description: |
         Encryption configuration for a bucket.
       value:
+        customerManagedEncryptionEnforcementConfig:
+          effectiveTime: "{{ effectiveTime }}"
+          restrictionMode: "{{ restrictionMode }}"
+        customerSuppliedEncryptionEnforcementConfig:
+          effectiveTime: "{{ effectiveTime }}"
+          restrictionMode: "{{ restrictionMode }}"
         defaultKmsKeyName: "{{ defaultKmsKeyName }}"
         googleManagedEncryptionEnforcementConfig:
-          restrictionMode: "{{ restrictionMode }}"
           effectiveTime: "{{ effectiveTime }}"
-        customerManagedEncryptionEnforcementConfig:
           restrictionMode: "{{ restrictionMode }}"
-          effectiveTime: "{{ effectiveTime }}"
-        customerSuppliedEncryptionEnforcementConfig:
-          restrictionMode: "{{ restrictionMode }}"
-          effectiveTime: "{{ effectiveTime }}"
     - name: etag
       value: "{{ etag }}"
       description: |
         HTTP 1.1 Entity tag for the bucket.
+    - name: generation
+      value: "{{ generation }}"
+      description: |
+        The generation of this bucket.
+    - name: hardDeleteTime
+      value: "{{ hardDeleteTime }}"
+      description: |
+        The hard delete time of the bucket in RFC 3339 format.
     - name: hierarchicalNamespace
       description: |
         The bucket's hierarchical namespace configuration.
@@ -998,10 +1014,10 @@ website
         bucketPolicyOnly:
           enabled: {{ enabled }}
           lockedTime: "{{ lockedTime }}"
+        publicAccessPrevention: "{{ publicAccessPrevention }}"
         uniformBucketLevelAccess:
           enabled: {{ enabled }}
           lockedTime: "{{ lockedTime }}"
-        publicAccessPrevention: "{{ publicAccessPrevention }}"
     - name: id
       value: "{{ id }}"
       description: |
@@ -1010,15 +1026,15 @@ website
       description: |
         The bucket's IP filter configuration. Specifies the network sources that are allowed to access the operations on the bucket, as well as its underlying objects. Only enforced when the mode is set to 'Enabled'.
       value:
+        allowAllServiceAgentAccess: {{ allowAllServiceAgentAccess }}
+        allowCrossOrgVpcs: {{ allowCrossOrgVpcs }}
         mode: "{{ mode }}"
         publicNetworkSource:
           allowedIpCidrRanges:
             - "{{ allowedIpCidrRanges }}"
         vpcNetworkSources:
-          - network: "{{ network }}"
-            allowedIpCidrRanges: "{{ allowedIpCidrRanges }}"
-        allowCrossOrgVpcs: {{ allowCrossOrgVpcs }}
-        allowAllServiceAgentAccess: {{ allowAllServiceAgentAccess }}
+          - allowedIpCidrRanges: "{{ allowedIpCidrRanges }}"
+            network: "{{ network }}"
     - name: kind
       value: "{{ kind }}"
       description: |
@@ -1046,22 +1062,14 @@ website
               matchesPattern: "{{ matchesPattern }}"
               matchesPrefix:
                 - "{{ matchesPrefix }}"
-              matchesSuffix:
-                - "{{ matchesSuffix }}"
               matchesStorageClass:
                 - "{{ matchesStorageClass }}"
+              matchesSuffix:
+                - "{{ matchesSuffix }}"
               noncurrentTimeBefore: "{{ noncurrentTimeBefore }}"
+              numNewerVersions: {{ numNewerVersions }}
               sizeAboveBytes: "{{ sizeAboveBytes }}"
               sizeBelowBytes: "{{ sizeBelowBytes }}"
-              numNewerVersions: {{ numNewerVersions }}
-    - name: autoclass
-      description: |
-        The bucket's Autoclass configuration.
-      value:
-        enabled: {{ enabled }}
-        toggleTime: "{{ toggleTime }}"
-        terminalStorageClass: "{{ terminalStorageClass }}"
-        terminalStorageClassUpdateTime: "{{ terminalStorageClassUpdateTime }}"
     - name: location
       value: "{{ location }}"
       description: |
@@ -1076,10 +1084,6 @@ website
       value:
         logBucket: "{{ logBucket }}"
         logObjectPrefix: "{{ logObjectPrefix }}"
-    - name: generation
-      value: "{{ generation }}"
-      description: |
-        The generation of this bucket.
     - name: metageneration
       value: "{{ metageneration }}"
       description: |
@@ -1088,6 +1092,11 @@ website
       value: "{{ name }}"
       description: |
         The name of the bucket.
+    - name: objectRetention
+      description: |
+        The bucket's object retention config.
+      value:
+        mode: "{{ mode }}"
     - name: owner
       description: |
         The owner of the bucket. This is always the project team's owner group.
@@ -1105,15 +1114,18 @@ website
         effectiveTime: "{{ effectiveTime }}"
         isLocked: {{ isLocked }}
         retentionPeriod: "{{ retentionPeriod }}"
-    - name: objectRetention
-      description: |
-        The bucket's object retention config.
-      value:
-        mode: "{{ mode }}"
     - name: rpo
       value: "{{ rpo }}"
       description: |
         The Recovery Point Objective (RPO) of this bucket. Set to ASYNC_TURBO to turn on Turbo Replication on a bucket.
+    - name: satisfiesPZI
+      value: {{ satisfiesPZI }}
+      description: |
+        Reserved for future use.
+    - name: satisfiesPZS
+      value: {{ satisfiesPZS }}
+      description: |
+        Reserved for future use.
     - name: selfLink
       value: "{{ selfLink }}"
       description: |
@@ -1122,8 +1134,12 @@ website
       description: |
         The bucket's soft delete policy, which defines the period of time that soft-deleted objects will be retained, and cannot be permanently deleted.
       value:
-        retentionDurationSeconds: "{{ retentionDurationSeconds }}"
         effectiveTime: "{{ effectiveTime }}"
+        retentionDurationSeconds: "{{ retentionDurationSeconds }}"
+    - name: softDeleteTime
+      value: "{{ softDeleteTime }}"
+      description: |
+        The soft delete time of the bucket in RFC 3339 format.
     - name: storageClass
       value: "{{ storageClass }}"
       description: |
@@ -1136,14 +1152,6 @@ website
       value: "{{ updated }}"
       description: |
         The modification time of the bucket in RFC 3339 format.
-    - name: softDeleteTime
-      value: "{{ softDeleteTime }}"
-      description: |
-        The soft delete time of the bucket in RFC 3339 format.
-    - name: hardDeleteTime
-      value: "{{ hardDeleteTime }}"
-      description: |
-        The hard delete time of the bucket in RFC 3339 format.
     - name: versioning
       description: |
         The bucket's versioning configuration.
@@ -1155,14 +1163,8 @@ website
       value:
         mainPageSuffix: "{{ mainPageSuffix }}"
         notFoundPage: "{{ notFoundPage }}"
-    - name: satisfiesPZS
-      value: {{ satisfiesPZS }}
-      description: |
-        Reserved for future use.
-    - name: satisfiesPZI
-      value: {{ satisfiesPZI }}
-      description: |
-        Reserved for future use.
+    - name: enableObjectRetention
+      value: {{ enableObjectRetention }}
     - name: predefinedAcl
       value: "{{ predefinedAcl }}"
     - name: predefinedDefaultObjectAcl
@@ -1171,8 +1173,6 @@ website
       value: "{{ projection }}"
     - name: userProject
       value: "{{ userProject }}"
-    - name: enableObjectRetention
-      value: {{ enableObjectRetention }}
 `}</CodeBlock>
 
 </TabItem>
@@ -1195,6 +1195,7 @@ Patches a bucket. Changes to the bucket will be readable immediately after writi
 UPDATE google.storage.buckets
 SET 
 data__acl = '{{ acl }}',
+data__autoclass = '{{ autoclass }}',
 data__billing = '{{ billing }}',
 data__cors = '{{ cors }}',
 data__customPlacementConfig = '{{ customPlacementConfig }}',
@@ -1202,6 +1203,8 @@ data__defaultEventBasedHold = {{ defaultEventBasedHold }},
 data__defaultObjectAcl = '{{ defaultObjectAcl }}',
 data__encryption = '{{ encryption }}',
 data__etag = '{{ etag }}',
+data__generation = '{{ generation }}',
+data__hardDeleteTime = '{{ hardDeleteTime }}',
 data__hierarchicalNamespace = '{{ hierarchicalNamespace }}',
 data__iamConfiguration = '{{ iamConfiguration }}',
 data__id = '{{ id }}',
@@ -1209,29 +1212,26 @@ data__ipFilter = '{{ ipFilter }}',
 data__kind = '{{ kind }}',
 data__labels = '{{ labels }}',
 data__lifecycle = '{{ lifecycle }}',
-data__autoclass = '{{ autoclass }}',
 data__location = '{{ location }}',
 data__locationType = '{{ locationType }}',
 data__logging = '{{ logging }}',
-data__generation = '{{ generation }}',
 data__metageneration = '{{ metageneration }}',
 data__name = '{{ name }}',
+data__objectRetention = '{{ objectRetention }}',
 data__owner = '{{ owner }}',
 data__projectNumber = '{{ projectNumber }}',
 data__retentionPolicy = '{{ retentionPolicy }}',
-data__objectRetention = '{{ objectRetention }}',
 data__rpo = '{{ rpo }}',
+data__satisfiesPZI = {{ satisfiesPZI }},
+data__satisfiesPZS = {{ satisfiesPZS }},
 data__selfLink = '{{ selfLink }}',
 data__softDeletePolicy = '{{ softDeletePolicy }}',
+data__softDeleteTime = '{{ softDeleteTime }}',
 data__storageClass = '{{ storageClass }}',
 data__timeCreated = '{{ timeCreated }}',
 data__updated = '{{ updated }}',
-data__softDeleteTime = '{{ softDeleteTime }}',
-data__hardDeleteTime = '{{ hardDeleteTime }}',
 data__versioning = '{{ versioning }}',
-data__website = '{{ website }}',
-data__satisfiesPZS = {{ satisfiesPZS }},
-data__satisfiesPZI = {{ satisfiesPZI }}
+data__website = '{{ website }}'
 WHERE 
 bucket = '{{ bucket }}' --required
 AND ifMetagenerationMatch = '{{ ifMetagenerationMatch}}'
@@ -1300,6 +1300,7 @@ Updates a bucket. Changes to the bucket will be readable immediately after writi
 REPLACE google.storage.buckets
 SET 
 data__acl = '{{ acl }}',
+data__autoclass = '{{ autoclass }}',
 data__billing = '{{ billing }}',
 data__cors = '{{ cors }}',
 data__customPlacementConfig = '{{ customPlacementConfig }}',
@@ -1307,6 +1308,8 @@ data__defaultEventBasedHold = {{ defaultEventBasedHold }},
 data__defaultObjectAcl = '{{ defaultObjectAcl }}',
 data__encryption = '{{ encryption }}',
 data__etag = '{{ etag }}',
+data__generation = '{{ generation }}',
+data__hardDeleteTime = '{{ hardDeleteTime }}',
 data__hierarchicalNamespace = '{{ hierarchicalNamespace }}',
 data__iamConfiguration = '{{ iamConfiguration }}',
 data__id = '{{ id }}',
@@ -1314,29 +1317,26 @@ data__ipFilter = '{{ ipFilter }}',
 data__kind = '{{ kind }}',
 data__labels = '{{ labels }}',
 data__lifecycle = '{{ lifecycle }}',
-data__autoclass = '{{ autoclass }}',
 data__location = '{{ location }}',
 data__locationType = '{{ locationType }}',
 data__logging = '{{ logging }}',
-data__generation = '{{ generation }}',
 data__metageneration = '{{ metageneration }}',
 data__name = '{{ name }}',
+data__objectRetention = '{{ objectRetention }}',
 data__owner = '{{ owner }}',
 data__projectNumber = '{{ projectNumber }}',
 data__retentionPolicy = '{{ retentionPolicy }}',
-data__objectRetention = '{{ objectRetention }}',
 data__rpo = '{{ rpo }}',
+data__satisfiesPZI = {{ satisfiesPZI }},
+data__satisfiesPZS = {{ satisfiesPZS }},
 data__selfLink = '{{ selfLink }}',
 data__softDeletePolicy = '{{ softDeletePolicy }}',
+data__softDeleteTime = '{{ softDeleteTime }}',
 data__storageClass = '{{ storageClass }}',
 data__timeCreated = '{{ timeCreated }}',
 data__updated = '{{ updated }}',
-data__softDeleteTime = '{{ softDeleteTime }}',
-data__hardDeleteTime = '{{ hardDeleteTime }}',
 data__versioning = '{{ versioning }}',
-data__website = '{{ website }}',
-data__satisfiesPZS = {{ satisfiesPZS }},
-data__satisfiesPZI = {{ satisfiesPZI }}
+data__website = '{{ website }}'
 WHERE 
 bucket = '{{ bucket }}' --required
 AND ifMetagenerationMatch = '{{ ifMetagenerationMatch}}'
@@ -1416,22 +1416,21 @@ AND userProject = '{{ userProject }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="restore"
+    defaultValue="lock_retention_policy"
     values={[
-        { label: 'restore', value: 'restore' },
+        { label: 'lock_retention_policy', value: 'lock_retention_policy' },
         { label: 'relocate', value: 'relocate' },
-        { label: 'lock_retention_policy', value: 'lock_retention_policy' }
+        { label: 'restore', value: 'restore' }
     ]}
 >
-<TabItem value="restore">
+<TabItem value="lock_retention_policy">
 
-Restores a soft-deleted bucket.
+Locks retention policy on a bucket.
 
 ```sql
-EXEC google.storage.buckets.restore 
+EXEC google.storage.buckets.lock_retention_policy 
 @bucket='{{ bucket }}' --required, 
-@generation='{{ generation }}' --required, 
-@projection='{{ projection }}', 
+@ifMetagenerationMatch='{{ ifMetagenerationMatch }}' --required, 
 @userProject='{{ userProject }}'
 ;
 ```
@@ -1445,22 +1444,23 @@ EXEC google.storage.buckets.relocate
 @bucket='{{ bucket }}' --required 
 @@json=
 '{
-"destinationLocation": "{{ destinationLocation }}", 
 "destinationCustomPlacementConfig": "{{ destinationCustomPlacementConfig }}", 
-"validateOnly": {{ validateOnly }}, 
-"destinationKmsKeyName": "{{ destinationKmsKeyName }}"
+"destinationKmsKeyName": "{{ destinationKmsKeyName }}", 
+"destinationLocation": "{{ destinationLocation }}", 
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```
 </TabItem>
-<TabItem value="lock_retention_policy">
+<TabItem value="restore">
 
-Locks retention policy on a bucket.
+Restores a soft-deleted bucket.
 
 ```sql
-EXEC google.storage.buckets.lock_retention_policy 
+EXEC google.storage.buckets.restore 
 @bucket='{{ bucket }}' --required, 
-@ifMetagenerationMatch='{{ ifMetagenerationMatch }}' --required, 
+@generation='{{ generation }}' --required, 
+@projection='{{ projection }}', 
 @userProject='{{ userProject }}'
 ;
 ```

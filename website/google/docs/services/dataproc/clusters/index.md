@@ -83,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>object</code></td>
-    <td>The status of a cluster and its instances. (id: ClusterStatus)</td>
+    <td>Output only. Cluster status. (id: ClusterStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusHistory" /></td>
@@ -142,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>object</code></td>
-    <td>The status of a cluster and its instances. (id: ClusterStatus)</td>
+    <td>Output only. Cluster status. (id: ClusterStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusHistory" /></td>
@@ -192,21 +192,21 @@ The following methods are available for this resource:
     <td><a href="#projects_regions_clusters_create"><CopyableCode code="projects_regions_clusters_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-actionOnFailedPrimaryWorkers"><code>actionOnFailedPrimaryWorkers</code></a></td>
+    <td><a href="#parameter-actionOnFailedPrimaryWorkers"><code>actionOnFailedPrimaryWorkers</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_patch"><CopyableCode code="projects_regions_clusters_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-gracefulDecommissionTimeout"><code>gracefulDecommissionTimeout</code></a></td>
+    <td><a href="#parameter-gracefulDecommissionTimeout"><code>gracefulDecommissionTimeout</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). The cluster must be in a RUNNING state or an error is returned.</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_delete"><CopyableCode code="projects_regions_clusters_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-clusterUuid"><code>clusterUuid</code></a>, <a href="#parameter-gracefulTerminationTimeout"><code>gracefulTerminationTimeout</code></a></td>
+    <td><a href="#parameter-clusterUuid"><code>clusterUuid</code></a>, <a href="#parameter-gracefulTerminationTimeout"><code>gracefulTerminationTimeout</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).</td>
 </tr>
 <tr>
@@ -215,6 +215,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
     <td></td>
     <td>Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). After the operation completes, Operation.response contains DiagnoseClusterResults (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).</td>
+</tr>
+<tr>
+    <td><a href="#projects_regions_clusters_inject_credentials"><CopyableCode code="projects_regions_clusters_inject_credentials" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Inject encrypted credentials into all of the VMs in a cluster.The target cluster must be a personal auth cluster assigned to the user who is issuing the RPC.</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_repair"><CopyableCode code="projects_regions_clusters_repair" /></a></td>
@@ -236,13 +243,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
     <td></td>
     <td>Stops a cluster in a project.</td>
-</tr>
-<tr>
-    <td><a href="#projects_regions_clusters_inject_credentials"><CopyableCode code="projects_regions_clusters_inject_credentials" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td></td>
-    <td>Inject encrypted credentials into all of the VMs in a cluster.The target cluster must be a personal auth cluster assigned to the user who is issuing the RPC.</td>
 </tr>
 </tbody>
 </table>
@@ -411,26 +411,26 @@ Creates a cluster in a project. The returned Operation.metadata will be ClusterO
 
 ```sql
 INSERT INTO google.dataproc.clusters (
+data__clusterName,
 data__config,
+data__labels,
 data__projectId,
 data__virtualClusterConfig,
-data__labels,
-data__clusterName,
 projectId,
 region,
-requestId,
-actionOnFailedPrimaryWorkers
+actionOnFailedPrimaryWorkers,
+requestId
 )
 SELECT 
+'{{ clusterName }}',
 '{{ config }}',
+'{{ labels }}',
 '{{ projectId }}',
 '{{ virtualClusterConfig }}',
-'{{ labels }}',
-'{{ clusterName }}',
 '{{ projectId }}',
 '{{ region }}',
-'{{ requestId }}',
-'{{ actionOnFailedPrimaryWorkers }}'
+'{{ actionOnFailedPrimaryWorkers }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -451,327 +451,335 @@ response
     - name: region
       value: "{{ region }}"
       description: Required parameter for the clusters resource.
+    - name: clusterName
+      value: "{{ clusterName }}"
+      description: |
+        Required. The cluster name, which must be unique within a project. The name must start with a lowercase letter, and can contain up to 51 lowercase letters, numbers, and hyphens. It cannot end with a hyphen. The name of a deleted cluster can be reused.
     - name: config
       description: |
         Optional. The cluster config for a cluster of Compute Engine Instances. Note that the service may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified.
       value:
-        clusterType: "{{ clusterType }}"
-        secondaryWorkerConfig:
-          numInstances: {{ numInstances }}
-          minCpuPlatform: "{{ minCpuPlatform }}"
-          instanceNames:
-            - "{{ instanceNames }}"
-          diskConfig:
-            numLocalSsds: {{ numLocalSsds }}
-            bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-            bootDiskType: "{{ bootDiskType }}"
-            bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
-            bootDiskSizeGb: {{ bootDiskSizeGb }}
-            localSsdInterface: "{{ localSsdInterface }}"
-            attachedDiskConfigs:
-              - provisionedIops: "{{ provisionedIops }}"
-                diskType: "{{ diskType }}"
-                diskSizeGb: {{ diskSizeGb }}
-                provisionedThroughput: "{{ provisionedThroughput }}"
-          managedGroupConfig:
-            instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
-            instanceTemplateName: "{{ instanceTemplateName }}"
-            instanceGroupManagerName: "{{ instanceGroupManagerName }}"
-          instanceReferences:
-            - publicKey: "{{ publicKey }}"
-              instanceName: "{{ instanceName }}"
-              instanceId: "{{ instanceId }}"
-              publicEciesKey: "{{ publicEciesKey }}"
-          imageUri: "{{ imageUri }}"
-          preemptibility: "{{ preemptibility }}"
-          isPreemptible: {{ isPreemptible }}
-          startupConfig:
-            requiredRegistrationFraction: {{ requiredRegistrationFraction }}
-          machineTypeUri: "{{ machineTypeUri }}"
-          minNumInstances: {{ minNumInstances }}
-          accelerators:
-            - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
-              acceleratorCount: {{ acceleratorCount }}
-          instanceFlexibilityPolicy:
-            provisioningModelMix:
-              standardCapacityBase: {{ standardCapacityBase }}
-              standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
-            instanceMachineTypes: "{{ instanceMachineTypes }}"
-            instanceSelectionList:
-              - diskConfig:
-                  numLocalSsds: {{ numLocalSsds }}
-                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-                  bootDiskType: "{{ bootDiskType }}"
-                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
-                  bootDiskSizeGb: {{ bootDiskSizeGb }}
-                  localSsdInterface: "{{ localSsdInterface }}"
-                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
-                machineTypes: "{{ machineTypes }}"
-                rank: {{ rank }}
-            instanceSelectionResults:
-              - machineType: "{{ machineType }}"
-                vmCount: {{ vmCount }}
-        engine: "{{ engine }}"
-        diagnosticBucket: "{{ diagnosticBucket }}"
-        softwareConfig:
-          imageVersion: "{{ imageVersion }}"
-          properties: "{{ properties }}"
-          optionalComponents:
-            - "{{ optionalComponents }}"
-        encryptionConfig:
-          gcePdKmsKeyName: "{{ gcePdKmsKeyName }}"
-          kmsKey: "{{ kmsKey }}"
+        autoscalingConfig:
+          policyUri: "{{ policyUri }}"
         auxiliaryNodeGroups:
           - nodeGroup:
+              labels: "{{ labels }}"
+              name: "{{ name }}"
               nodeGroupConfig:
-                numInstances: {{ numInstances }}
-                minCpuPlatform: "{{ minCpuPlatform }}"
-                instanceNames:
-                  - "{{ instanceNames }}"
+                accelerators:
+                  - acceleratorCount: {{ acceleratorCount }}
+                    acceleratorTypeUri: "{{ acceleratorTypeUri }}"
                 diskConfig:
-                  numLocalSsds: {{ numLocalSsds }}
+                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
                   bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-                  bootDiskType: "{{ bootDiskType }}"
                   bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
                   bootDiskSizeGb: {{ bootDiskSizeGb }}
+                  bootDiskType: "{{ bootDiskType }}"
                   localSsdInterface: "{{ localSsdInterface }}"
-                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
-                managedGroupConfig:
-                  instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
-                  instanceTemplateName: "{{ instanceTemplateName }}"
-                  instanceGroupManagerName: "{{ instanceGroupManagerName }}"
-                instanceReferences:
-                  - publicKey: "{{ publicKey }}"
-                    instanceName: "{{ instanceName }}"
-                    instanceId: "{{ instanceId }}"
-                    publicEciesKey: "{{ publicEciesKey }}"
+                  numLocalSsds: {{ numLocalSsds }}
                 imageUri: "{{ imageUri }}"
-                preemptibility: "{{ preemptibility }}"
-                isPreemptible: {{ isPreemptible }}
-                startupConfig:
-                  requiredRegistrationFraction: {{ requiredRegistrationFraction }}
-                machineTypeUri: "{{ machineTypeUri }}"
-                minNumInstances: {{ minNumInstances }}
-                accelerators:
-                  - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
-                    acceleratorCount: {{ acceleratorCount }}
                 instanceFlexibilityPolicy:
-                  provisioningModelMix: "{{ provisioningModelMix }}"
                   instanceMachineTypes: "{{ instanceMachineTypes }}"
                   instanceSelectionList: "{{ instanceSelectionList }}"
                   instanceSelectionResults: "{{ instanceSelectionResults }}"
-              labels: "{{ labels }}"
+                  provisioningModelMix: "{{ provisioningModelMix }}"
+                instanceNames:
+                  - "{{ instanceNames }}"
+                instanceReferences:
+                  - instanceId: "{{ instanceId }}"
+                    instanceName: "{{ instanceName }}"
+                    publicEciesKey: "{{ publicEciesKey }}"
+                    publicKey: "{{ publicKey }}"
+                isPreemptible: {{ isPreemptible }}
+                machineTypeUri: "{{ machineTypeUri }}"
+                managedGroupConfig:
+                  instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+                  instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+                  instanceTemplateName: "{{ instanceTemplateName }}"
+                minCpuPlatform: "{{ minCpuPlatform }}"
+                minNumInstances: {{ minNumInstances }}
+                numInstances: {{ numInstances }}
+                preemptibility: "{{ preemptibility }}"
+                startupConfig:
+                  requiredRegistrationFraction: {{ requiredRegistrationFraction }}
               roles:
                 - "{{ roles }}"
-              name: "{{ name }}"
             nodeGroupId: "{{ nodeGroupId }}"
-        masterConfig:
-          numInstances: {{ numInstances }}
-          minCpuPlatform: "{{ minCpuPlatform }}"
-          instanceNames:
-            - "{{ instanceNames }}"
-          diskConfig:
-            numLocalSsds: {{ numLocalSsds }}
-            bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-            bootDiskType: "{{ bootDiskType }}"
-            bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
-            bootDiskSizeGb: {{ bootDiskSizeGb }}
-            localSsdInterface: "{{ localSsdInterface }}"
-            attachedDiskConfigs:
-              - provisionedIops: "{{ provisionedIops }}"
-                diskType: "{{ diskType }}"
-                diskSizeGb: {{ diskSizeGb }}
-                provisionedThroughput: "{{ provisionedThroughput }}"
-          managedGroupConfig:
-            instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
-            instanceTemplateName: "{{ instanceTemplateName }}"
-            instanceGroupManagerName: "{{ instanceGroupManagerName }}"
-          instanceReferences:
-            - publicKey: "{{ publicKey }}"
-              instanceName: "{{ instanceName }}"
-              instanceId: "{{ instanceId }}"
-              publicEciesKey: "{{ publicEciesKey }}"
-          imageUri: "{{ imageUri }}"
-          preemptibility: "{{ preemptibility }}"
-          isPreemptible: {{ isPreemptible }}
-          startupConfig:
-            requiredRegistrationFraction: {{ requiredRegistrationFraction }}
-          machineTypeUri: "{{ machineTypeUri }}"
-          minNumInstances: {{ minNumInstances }}
-          accelerators:
-            - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
-              acceleratorCount: {{ acceleratorCount }}
-          instanceFlexibilityPolicy:
-            provisioningModelMix:
-              standardCapacityBase: {{ standardCapacityBase }}
-              standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
-            instanceMachineTypes: "{{ instanceMachineTypes }}"
-            instanceSelectionList:
-              - diskConfig:
-                  numLocalSsds: {{ numLocalSsds }}
-                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-                  bootDiskType: "{{ bootDiskType }}"
-                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
-                  bootDiskSizeGb: {{ bootDiskSizeGb }}
-                  localSsdInterface: "{{ localSsdInterface }}"
-                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
-                machineTypes: "{{ machineTypes }}"
-                rank: {{ rank }}
-            instanceSelectionResults:
-              - machineType: "{{ machineType }}"
-                vmCount: {{ vmCount }}
-        securityConfig:
-          kerberosConfig:
-            keystorePasswordUri: "{{ keystorePasswordUri }}"
-            truststorePasswordUri: "{{ truststorePasswordUri }}"
-            realm: "{{ realm }}"
-            keystoreUri: "{{ keystoreUri }}"
-            keyPasswordUri: "{{ keyPasswordUri }}"
-            rootPrincipalPasswordUri: "{{ rootPrincipalPasswordUri }}"
-            tgtLifetimeHours: {{ tgtLifetimeHours }}
-            enableKerberos: {{ enableKerberos }}
-            crossRealmTrustAdminServer: "{{ crossRealmTrustAdminServer }}"
-            crossRealmTrustSharedPasswordUri: "{{ crossRealmTrustSharedPasswordUri }}"
-            kdcDbKeyUri: "{{ kdcDbKeyUri }}"
-            kmsKeyUri: "{{ kmsKeyUri }}"
-            truststoreUri: "{{ truststoreUri }}"
-            crossRealmTrustKdc: "{{ crossRealmTrustKdc }}"
-            crossRealmTrustRealm: "{{ crossRealmTrustRealm }}"
-          identityConfig:
-            userServiceAccountMapping: "{{ userServiceAccountMapping }}"
-            enableSsh: {{ enableSsh }}
-        lifecycleConfig:
-          autoDeleteTtl: "{{ autoDeleteTtl }}"
-          idleStartTime: "{{ idleStartTime }}"
-          autoDeleteTime: "{{ autoDeleteTime }}"
-          idleDeleteTtl: "{{ idleDeleteTtl }}"
-          idleStopTtl: "{{ idleStopTtl }}"
-          autoStopTime: "{{ autoStopTime }}"
-          autoStopTtl: "{{ autoStopTtl }}"
-        metastoreConfig:
-          dataprocMetastoreService: "{{ dataprocMetastoreService }}"
+        clusterTier: "{{ clusterTier }}"
+        clusterType: "{{ clusterType }}"
+        configBucket: "{{ configBucket }}"
         dataprocMetricConfig:
           metrics:
-            - metricSource: "{{ metricSource }}"
-              metricOverrides: "{{ metricOverrides }}"
-        workerConfig:
-          numInstances: {{ numInstances }}
-          minCpuPlatform: "{{ minCpuPlatform }}"
-          instanceNames:
-            - "{{ instanceNames }}"
-          diskConfig:
-            numLocalSsds: {{ numLocalSsds }}
-            bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-            bootDiskType: "{{ bootDiskType }}"
-            bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
-            bootDiskSizeGb: {{ bootDiskSizeGb }}
-            localSsdInterface: "{{ localSsdInterface }}"
-            attachedDiskConfigs:
-              - provisionedIops: "{{ provisionedIops }}"
-                diskType: "{{ diskType }}"
-                diskSizeGb: {{ diskSizeGb }}
-                provisionedThroughput: "{{ provisionedThroughput }}"
-          managedGroupConfig:
-            instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
-            instanceTemplateName: "{{ instanceTemplateName }}"
-            instanceGroupManagerName: "{{ instanceGroupManagerName }}"
-          instanceReferences:
-            - publicKey: "{{ publicKey }}"
-              instanceName: "{{ instanceName }}"
-              instanceId: "{{ instanceId }}"
-              publicEciesKey: "{{ publicEciesKey }}"
-          imageUri: "{{ imageUri }}"
-          preemptibility: "{{ preemptibility }}"
-          isPreemptible: {{ isPreemptible }}
-          startupConfig:
-            requiredRegistrationFraction: {{ requiredRegistrationFraction }}
-          machineTypeUri: "{{ machineTypeUri }}"
-          minNumInstances: {{ minNumInstances }}
-          accelerators:
-            - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
-              acceleratorCount: {{ acceleratorCount }}
-          instanceFlexibilityPolicy:
-            provisioningModelMix:
-              standardCapacityBase: {{ standardCapacityBase }}
-              standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
-            instanceMachineTypes: "{{ instanceMachineTypes }}"
-            instanceSelectionList:
-              - diskConfig:
-                  numLocalSsds: {{ numLocalSsds }}
-                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-                  bootDiskType: "{{ bootDiskType }}"
-                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
-                  bootDiskSizeGb: {{ bootDiskSizeGb }}
-                  localSsdInterface: "{{ localSsdInterface }}"
-                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
-                machineTypes: "{{ machineTypes }}"
-                rank: {{ rank }}
-            instanceSelectionResults:
-              - machineType: "{{ machineType }}"
-                vmCount: {{ vmCount }}
+            - metricOverrides: "{{ metricOverrides }}"
+              metricSource: "{{ metricSource }}"
+        diagnosticBucket: "{{ diagnosticBucket }}"
+        encryptionConfig:
+          gcePdKmsKeyName: "{{ gcePdKmsKeyName }}"
+          kmsKey: "{{ kmsKey }}"
         endpointConfig:
           enableHttpPortAccess: {{ enableHttpPortAccess }}
           httpPorts: "{{ httpPorts }}"
-        configBucket: "{{ configBucket }}"
-        clusterTier: "{{ clusterTier }}"
-        gkeClusterConfig:
-          nodePoolTarget:
-            - roles: "{{ roles }}"
-              nodePool: "{{ nodePool }}"
-              nodePoolConfig:
-                locations:
-                  - "{{ locations }}"
-                autoscaling:
-                  maxNodeCount: {{ maxNodeCount }}
-                  minNodeCount: {{ minNodeCount }}
-                config:
-                  preemptible: {{ preemptible }}
-                  minCpuPlatform: "{{ minCpuPlatform }}"
-                  serviceAccount: "{{ serviceAccount }}"
-                  localSsdCount: {{ localSsdCount }}
-                  accelerators: "{{ accelerators }}"
-                  bootDiskKmsKey: "{{ bootDiskKmsKey }}"
-                  machineType: "{{ machineType }}"
-                  spot: {{ spot }}
-          namespacedGkeDeploymentTarget:
-            targetGkeCluster: "{{ targetGkeCluster }}"
-            clusterNamespace: "{{ clusterNamespace }}"
-          gkeClusterTarget: "{{ gkeClusterTarget }}"
+        engine: "{{ engine }}"
         gceClusterConfig:
-          serviceAccountScopes:
-            - "{{ serviceAccountScopes }}"
+          autoZoneExcludeZoneUris:
+            - "{{ autoZoneExcludeZoneUris }}"
+          confidentialInstanceConfig:
+            confidentialInstanceType: "{{ confidentialInstanceType }}"
+            enableConfidentialCompute: {{ enableConfidentialCompute }}
+          internalIpOnly: {{ internalIpOnly }}
+          metadata: "{{ metadata }}"
+          networkUri: "{{ networkUri }}"
           nodeGroupAffinity:
             nodeGroupUri: "{{ nodeGroupUri }}"
           privateIpv6GoogleAccess: "{{ privateIpv6GoogleAccess }}"
-          networkUri: "{{ networkUri }}"
-          shieldedInstanceConfig:
-            enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-            enableVtpm: {{ enableVtpm }}
-            enableSecureBoot: {{ enableSecureBoot }}
-          serviceAccount: "{{ serviceAccount }}"
-          metadata: "{{ metadata }}"
-          confidentialInstanceConfig:
-            enableConfidentialCompute: {{ enableConfidentialCompute }}
-            confidentialInstanceType: "{{ confidentialInstanceType }}"
-          subnetworkUri: "{{ subnetworkUri }}"
-          autoZoneExcludeZoneUris:
-            - "{{ autoZoneExcludeZoneUris }}"
-          internalIpOnly: {{ internalIpOnly }}
-          zoneUri: "{{ zoneUri }}"
-          tags:
-            - "{{ tags }}"
           reservationAffinity:
             consumeReservationType: "{{ consumeReservationType }}"
             key: "{{ key }}"
             values:
               - "{{ values }}"
           resourceManagerTags: "{{ resourceManagerTags }}"
-        tempBucket: "{{ tempBucket }}"
+          serviceAccount: "{{ serviceAccount }}"
+          serviceAccountScopes:
+            - "{{ serviceAccountScopes }}"
+          shieldedInstanceConfig:
+            enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+            enableSecureBoot: {{ enableSecureBoot }}
+            enableVtpm: {{ enableVtpm }}
+          subnetworkUri: "{{ subnetworkUri }}"
+          tags:
+            - "{{ tags }}"
+          zoneUri: "{{ zoneUri }}"
+        gkeClusterConfig:
+          gkeClusterTarget: "{{ gkeClusterTarget }}"
+          namespacedGkeDeploymentTarget:
+            clusterNamespace: "{{ clusterNamespace }}"
+            targetGkeCluster: "{{ targetGkeCluster }}"
+          nodePoolTarget:
+            - nodePool: "{{ nodePool }}"
+              nodePoolConfig:
+                autoscaling:
+                  maxNodeCount: {{ maxNodeCount }}
+                  minNodeCount: {{ minNodeCount }}
+                config:
+                  accelerators: "{{ accelerators }}"
+                  bootDiskKmsKey: "{{ bootDiskKmsKey }}"
+                  localSsdCount: {{ localSsdCount }}
+                  machineType: "{{ machineType }}"
+                  minCpuPlatform: "{{ minCpuPlatform }}"
+                  preemptible: {{ preemptible }}
+                  serviceAccount: "{{ serviceAccount }}"
+                  spot: {{ spot }}
+                locations:
+                  - "{{ locations }}"
+              roles: "{{ roles }}"
         initializationActions:
           - executableFile: "{{ executableFile }}"
             executionTimeout: "{{ executionTimeout }}"
-        autoscalingConfig:
-          policyUri: "{{ policyUri }}"
+        lifecycleConfig:
+          autoDeleteTime: "{{ autoDeleteTime }}"
+          autoDeleteTtl: "{{ autoDeleteTtl }}"
+          autoStopTime: "{{ autoStopTime }}"
+          autoStopTtl: "{{ autoStopTtl }}"
+          idleDeleteTtl: "{{ idleDeleteTtl }}"
+          idleStartTime: "{{ idleStartTime }}"
+          idleStopTtl: "{{ idleStopTtl }}"
+        masterConfig:
+          accelerators:
+            - acceleratorCount: {{ acceleratorCount }}
+              acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+          diskConfig:
+            attachedDiskConfigs:
+              - diskSizeGb: {{ diskSizeGb }}
+                diskType: "{{ diskType }}"
+                provisionedIops: "{{ provisionedIops }}"
+                provisionedThroughput: "{{ provisionedThroughput }}"
+            bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+            bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            bootDiskType: "{{ bootDiskType }}"
+            localSsdInterface: "{{ localSsdInterface }}"
+            numLocalSsds: {{ numLocalSsds }}
+          imageUri: "{{ imageUri }}"
+          instanceFlexibilityPolicy:
+            instanceMachineTypes: "{{ instanceMachineTypes }}"
+            instanceSelectionList:
+              - diskConfig:
+                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                  bootDiskSizeGb: {{ bootDiskSizeGb }}
+                  bootDiskType: "{{ bootDiskType }}"
+                  localSsdInterface: "{{ localSsdInterface }}"
+                  numLocalSsds: {{ numLocalSsds }}
+                machineTypes: "{{ machineTypes }}"
+                rank: {{ rank }}
+            instanceSelectionResults:
+              - machineType: "{{ machineType }}"
+                vmCount: {{ vmCount }}
+            provisioningModelMix:
+              standardCapacityBase: {{ standardCapacityBase }}
+              standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
+          instanceNames:
+            - "{{ instanceNames }}"
+          instanceReferences:
+            - instanceId: "{{ instanceId }}"
+              instanceName: "{{ instanceName }}"
+              publicEciesKey: "{{ publicEciesKey }}"
+              publicKey: "{{ publicKey }}"
+          isPreemptible: {{ isPreemptible }}
+          machineTypeUri: "{{ machineTypeUri }}"
+          managedGroupConfig:
+            instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+            instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+            instanceTemplateName: "{{ instanceTemplateName }}"
+          minCpuPlatform: "{{ minCpuPlatform }}"
+          minNumInstances: {{ minNumInstances }}
+          numInstances: {{ numInstances }}
+          preemptibility: "{{ preemptibility }}"
+          startupConfig:
+            requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+        metastoreConfig:
+          dataprocMetastoreService: "{{ dataprocMetastoreService }}"
+        secondaryWorkerConfig:
+          accelerators:
+            - acceleratorCount: {{ acceleratorCount }}
+              acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+          diskConfig:
+            attachedDiskConfigs:
+              - diskSizeGb: {{ diskSizeGb }}
+                diskType: "{{ diskType }}"
+                provisionedIops: "{{ provisionedIops }}"
+                provisionedThroughput: "{{ provisionedThroughput }}"
+            bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+            bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            bootDiskType: "{{ bootDiskType }}"
+            localSsdInterface: "{{ localSsdInterface }}"
+            numLocalSsds: {{ numLocalSsds }}
+          imageUri: "{{ imageUri }}"
+          instanceFlexibilityPolicy:
+            instanceMachineTypes: "{{ instanceMachineTypes }}"
+            instanceSelectionList:
+              - diskConfig:
+                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                  bootDiskSizeGb: {{ bootDiskSizeGb }}
+                  bootDiskType: "{{ bootDiskType }}"
+                  localSsdInterface: "{{ localSsdInterface }}"
+                  numLocalSsds: {{ numLocalSsds }}
+                machineTypes: "{{ machineTypes }}"
+                rank: {{ rank }}
+            instanceSelectionResults:
+              - machineType: "{{ machineType }}"
+                vmCount: {{ vmCount }}
+            provisioningModelMix:
+              standardCapacityBase: {{ standardCapacityBase }}
+              standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
+          instanceNames:
+            - "{{ instanceNames }}"
+          instanceReferences:
+            - instanceId: "{{ instanceId }}"
+              instanceName: "{{ instanceName }}"
+              publicEciesKey: "{{ publicEciesKey }}"
+              publicKey: "{{ publicKey }}"
+          isPreemptible: {{ isPreemptible }}
+          machineTypeUri: "{{ machineTypeUri }}"
+          managedGroupConfig:
+            instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+            instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+            instanceTemplateName: "{{ instanceTemplateName }}"
+          minCpuPlatform: "{{ minCpuPlatform }}"
+          minNumInstances: {{ minNumInstances }}
+          numInstances: {{ numInstances }}
+          preemptibility: "{{ preemptibility }}"
+          startupConfig:
+            requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+        securityConfig:
+          identityConfig:
+            enableSsh: {{ enableSsh }}
+            userServiceAccountMapping: "{{ userServiceAccountMapping }}"
+          kerberosConfig:
+            crossRealmTrustAdminServer: "{{ crossRealmTrustAdminServer }}"
+            crossRealmTrustKdc: "{{ crossRealmTrustKdc }}"
+            crossRealmTrustRealm: "{{ crossRealmTrustRealm }}"
+            crossRealmTrustSharedPasswordUri: "{{ crossRealmTrustSharedPasswordUri }}"
+            enableKerberos: {{ enableKerberos }}
+            kdcDbKeyUri: "{{ kdcDbKeyUri }}"
+            keyPasswordUri: "{{ keyPasswordUri }}"
+            keystorePasswordUri: "{{ keystorePasswordUri }}"
+            keystoreUri: "{{ keystoreUri }}"
+            kmsKeyUri: "{{ kmsKeyUri }}"
+            realm: "{{ realm }}"
+            rootPrincipalPasswordUri: "{{ rootPrincipalPasswordUri }}"
+            tgtLifetimeHours: {{ tgtLifetimeHours }}
+            truststorePasswordUri: "{{ truststorePasswordUri }}"
+            truststoreUri: "{{ truststoreUri }}"
+        softwareConfig:
+          imageVersion: "{{ imageVersion }}"
+          optionalComponents:
+            - "{{ optionalComponents }}"
+          properties: "{{ properties }}"
+        tempBucket: "{{ tempBucket }}"
+        workerConfig:
+          accelerators:
+            - acceleratorCount: {{ acceleratorCount }}
+              acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+          diskConfig:
+            attachedDiskConfigs:
+              - diskSizeGb: {{ diskSizeGb }}
+                diskType: "{{ diskType }}"
+                provisionedIops: "{{ provisionedIops }}"
+                provisionedThroughput: "{{ provisionedThroughput }}"
+            bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+            bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            bootDiskType: "{{ bootDiskType }}"
+            localSsdInterface: "{{ localSsdInterface }}"
+            numLocalSsds: {{ numLocalSsds }}
+          imageUri: "{{ imageUri }}"
+          instanceFlexibilityPolicy:
+            instanceMachineTypes: "{{ instanceMachineTypes }}"
+            instanceSelectionList:
+              - diskConfig:
+                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                  bootDiskSizeGb: {{ bootDiskSizeGb }}
+                  bootDiskType: "{{ bootDiskType }}"
+                  localSsdInterface: "{{ localSsdInterface }}"
+                  numLocalSsds: {{ numLocalSsds }}
+                machineTypes: "{{ machineTypes }}"
+                rank: {{ rank }}
+            instanceSelectionResults:
+              - machineType: "{{ machineType }}"
+                vmCount: {{ vmCount }}
+            provisioningModelMix:
+              standardCapacityBase: {{ standardCapacityBase }}
+              standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
+          instanceNames:
+            - "{{ instanceNames }}"
+          instanceReferences:
+            - instanceId: "{{ instanceId }}"
+              instanceName: "{{ instanceName }}"
+              publicEciesKey: "{{ publicEciesKey }}"
+              publicKey: "{{ publicKey }}"
+          isPreemptible: {{ isPreemptible }}
+          machineTypeUri: "{{ machineTypeUri }}"
+          managedGroupConfig:
+            instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+            instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+            instanceTemplateName: "{{ instanceTemplateName }}"
+          minCpuPlatform: "{{ minCpuPlatform }}"
+          minNumInstances: {{ minNumInstances }}
+          numInstances: {{ numInstances }}
+          preemptibility: "{{ preemptibility }}"
+          startupConfig:
+            requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels to associate with this cluster. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a cluster.
     - name: projectId
       value: "{{ projectId }}"
       description: |
@@ -781,40 +789,32 @@ response
         Optional. The virtual cluster config is used when creating a cluster that does not directly control the underlying compute resources, for example, when creating a GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). the service may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified.
       value:
         auxiliaryServicesConfig:
-          sparkHistoryServerConfig:
-            dataprocCluster: "{{ dataprocCluster }}"
           metastoreConfig:
             dataprocMetastoreService: "{{ dataprocMetastoreService }}"
-        stagingBucket: "{{ stagingBucket }}"
+          sparkHistoryServerConfig:
+            dataprocCluster: "{{ dataprocCluster }}"
         kubernetesClusterConfig:
-          kubernetesNamespace: "{{ kubernetesNamespace }}"
           gkeClusterConfig:
+            gkeClusterTarget: "{{ gkeClusterTarget }}"
+            namespacedGkeDeploymentTarget:
+              clusterNamespace: "{{ clusterNamespace }}"
+              targetGkeCluster: "{{ targetGkeCluster }}"
             nodePoolTarget:
-              - roles: "{{ roles }}"
-                nodePool: "{{ nodePool }}"
+              - nodePool: "{{ nodePool }}"
                 nodePoolConfig:
-                  locations: "{{ locations }}"
                   autoscaling: "{{ autoscaling }}"
                   config: "{{ config }}"
-            namespacedGkeDeploymentTarget:
-              targetGkeCluster: "{{ targetGkeCluster }}"
-              clusterNamespace: "{{ clusterNamespace }}"
-            gkeClusterTarget: "{{ gkeClusterTarget }}"
+                  locations: "{{ locations }}"
+                roles: "{{ roles }}"
+          kubernetesNamespace: "{{ kubernetesNamespace }}"
           kubernetesSoftwareConfig:
             componentVersion: "{{ componentVersion }}"
             properties: "{{ properties }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. The labels to associate with this cluster. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a cluster.
-    - name: clusterName
-      value: "{{ clusterName }}"
-      description: |
-        Required. The cluster name, which must be unique within a project. The name must start with a lowercase letter, and can contain up to 51 lowercase letters, numbers, and hyphens. It cannot end with a hyphen. The name of a deleted cluster can be reused.
-    - name: requestId
-      value: "{{ requestId }}"
+        stagingBucket: "{{ stagingBucket }}"
     - name: actionOnFailedPrimaryWorkers
       value: "{{ actionOnFailedPrimaryWorkers }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -836,18 +836,18 @@ Updates a cluster in a project. The returned Operation.metadata will be ClusterO
 ```sql
 UPDATE google.dataproc.clusters
 SET 
+data__clusterName = '{{ clusterName }}',
 data__config = '{{ config }}',
-data__projectId = '{{ projectId }}',
-data__virtualClusterConfig = '{{ virtualClusterConfig }}',
 data__labels = '{{ labels }}',
-data__clusterName = '{{ clusterName }}'
+data__projectId = '{{ projectId }}',
+data__virtualClusterConfig = '{{ virtualClusterConfig }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND region = '{{ region }}' --required
 AND clusterName = '{{ clusterName }}' --required
-AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
 AND gracefulDecommissionTimeout = '{{ gracefulDecommissionTimeout}}'
+AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -876,9 +876,9 @@ DELETE FROM google.dataproc.clusters
 WHERE projectId = '{{ projectId }}' --required
 AND region = '{{ region }}' --required
 AND clusterName = '{{ clusterName }}' --required
-AND requestId = '{{ requestId }}'
 AND clusterUuid = '{{ clusterUuid }}'
 AND gracefulTerminationTimeout = '{{ gracefulTerminationTimeout }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -891,10 +891,10 @@ AND gracefulTerminationTimeout = '{{ gracefulTerminationTimeout }}'
     defaultValue="projects_regions_clusters_diagnose"
     values={[
         { label: 'projects_regions_clusters_diagnose', value: 'projects_regions_clusters_diagnose' },
+        { label: 'projects_regions_clusters_inject_credentials', value: 'projects_regions_clusters_inject_credentials' },
         { label: 'projects_regions_clusters_repair', value: 'projects_regions_clusters_repair' },
         { label: 'projects_regions_clusters_start', value: 'projects_regions_clusters_start' },
-        { label: 'projects_regions_clusters_stop', value: 'projects_regions_clusters_stop' },
-        { label: 'projects_regions_clusters_inject_credentials', value: 'projects_regions_clusters_inject_credentials' }
+        { label: 'projects_regions_clusters_stop', value: 'projects_regions_clusters_stop' }
     ]}
 >
 <TabItem value="projects_regions_clusters_diagnose">
@@ -909,12 +909,29 @@ EXEC google.dataproc.clusters.projects_regions_clusters_diagnose
 @@json=
 '{
 "diagnosisInterval": "{{ diagnosisInterval }}", 
-"jobs": "{{ jobs }}", 
-"yarnApplicationIds": "{{ yarnApplicationIds }}", 
-"tarballGcsDir": "{{ tarballGcsDir }}", 
 "job": "{{ job }}", 
+"jobs": "{{ jobs }}", 
+"tarballAccess": "{{ tarballAccess }}", 
+"tarballGcsDir": "{{ tarballGcsDir }}", 
 "yarnApplicationId": "{{ yarnApplicationId }}", 
-"tarballAccess": "{{ tarballAccess }}"
+"yarnApplicationIds": "{{ yarnApplicationIds }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_regions_clusters_inject_credentials">
+
+Inject encrypted credentials into all of the VMs in a cluster.The target cluster must be a personal auth cluster assigned to the user who is issuing the RPC.
+
+```sql
+EXEC google.dataproc.clusters.projects_regions_clusters_inject_credentials 
+@projectsId='{{ projectsId }}' --required, 
+@regionsId='{{ regionsId }}' --required, 
+@clustersId='{{ clustersId }}' --required 
+@@json=
+'{
+"clusterUuid": "{{ clusterUuid }}", 
+"credentialsCiphertext": "{{ credentialsCiphertext }}"
 }'
 ;
 ```
@@ -930,13 +947,13 @@ EXEC google.dataproc.clusters.projects_regions_clusters_repair
 @clusterName='{{ clusterName }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
-"nodePools": "{{ nodePools }}", 
-"parentOperationId": "{{ parentOperationId }}", 
+"cluster": "{{ cluster }}", 
+"clusterUuid": "{{ clusterUuid }}", 
 "dataprocSuperUser": {{ dataprocSuperUser }}, 
 "gracefulDecommissionTimeout": "{{ gracefulDecommissionTimeout }}", 
-"clusterUuid": "{{ clusterUuid }}", 
-"cluster": "{{ cluster }}"
+"nodePools": "{{ nodePools }}", 
+"parentOperationId": "{{ parentOperationId }}", 
+"requestId": "{{ requestId }}"
 }'
 ;
 ```
@@ -952,8 +969,8 @@ EXEC google.dataproc.clusters.projects_regions_clusters_start
 @clusterName='{{ clusterName }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
-"clusterUuid": "{{ clusterUuid }}"
+"clusterUuid": "{{ clusterUuid }}", 
+"requestId": "{{ requestId }}"
 }'
 ;
 ```
@@ -971,23 +988,6 @@ EXEC google.dataproc.clusters.projects_regions_clusters_stop
 '{
 "clusterUuid": "{{ clusterUuid }}", 
 "requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_regions_clusters_inject_credentials">
-
-Inject encrypted credentials into all of the VMs in a cluster.The target cluster must be a personal auth cluster assigned to the user who is issuing the RPC.
-
-```sql
-EXEC google.dataproc.clusters.projects_regions_clusters_inject_credentials 
-@projectsId='{{ projectsId }}' --required, 
-@regionsId='{{ regionsId }}' --required, 
-@clustersId='{{ clustersId }}' --required 
-@@json=
-'{
-"credentialsCiphertext": "{{ credentialsCiphertext }}", 
-"clusterUuid": "{{ clusterUuid }}"
 }'
 ;
 ```

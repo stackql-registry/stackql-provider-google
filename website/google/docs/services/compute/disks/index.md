@@ -640,21 +640,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of persistent disks contained within<br />the specified zone.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of persistent disks.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-sourceImage"><code>sourceImage</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sourceImage"><code>sourceImage</code></a></td>
     <td>Creates a persistent disk in the specified project using the data<br />in the request. You can create a disk from a source<br />(sourceImage, sourceSnapshot, orsourceDisk) or create an empty 500 GB data disk by<br />omitting all properties. You can also create a disk that is larger than<br />the default size by specifying the sizeGb property.</td>
 </tr>
 <tr>
@@ -672,41 +672,6 @@ The following methods are available for this resource:
     <td>Deletes the specified persistent disk. Deleting a disk removes its data<br />permanently and is irreversible. However, deleting a disk does not<br />delete any snapshots<br />previously made from the disk. You must separatelydelete<br />snapshots.</td>
 </tr>
 <tr>
-    <td><a href="#start_async_replication"><CopyableCode code="start_async_replication" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Starts asynchronous replication.<br />Must be invoked on the primary disk.</td>
-</tr>
-<tr>
-    <td><a href="#stop_group_async_replication"><CopyableCode code="stop_group_async_replication" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Stops asynchronous replication for a consistency group of disks.<br />Can be invoked either in the primary or secondary scope.</td>
-</tr>
-<tr>
-    <td><a href="#set_labels"><CopyableCode code="set_labels" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the labels on a disk. To learn more about labels, read theLabeling<br />Resources documentation.</td>
-</tr>
-<tr>
-    <td><a href="#resize"><CopyableCode code="resize" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Resizes the specified persistent disk.<br />You can only increase the size of the disk.</td>
-</tr>
-<tr>
-    <td><a href="#stop_async_replication"><CopyableCode code="stop_async_replication" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Stops asynchronous replication.<br />Can be invoked either on the primary or on the secondary disk.</td>
-</tr>
-<tr>
     <td><a href="#bulk_insert"><CopyableCode code="bulk_insert" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
@@ -719,6 +684,41 @@ The following methods are available for this resource:
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
     <td>Sets the labels on many disks at once. To learn more about labels, read theLabeling<br />Resources documentation.</td>
+</tr>
+<tr>
+    <td><a href="#resize"><CopyableCode code="resize" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Resizes the specified persistent disk.<br />You can only increase the size of the disk.</td>
+</tr>
+<tr>
+    <td><a href="#set_labels"><CopyableCode code="set_labels" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the labels on a disk. To learn more about labels, read theLabeling<br />Resources documentation.</td>
+</tr>
+<tr>
+    <td><a href="#start_async_replication"><CopyableCode code="start_async_replication" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Starts asynchronous replication.<br />Must be invoked on the primary disk.</td>
+</tr>
+<tr>
+    <td><a href="#stop_async_replication"><CopyableCode code="stop_async_replication" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Stops asynchronous replication.<br />Can be invoked either on the primary or on the secondary disk.</td>
+</tr>
+<tr>
+    <td><a href="#stop_group_async_replication"><CopyableCode code="stop_group_async_replication" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Stops asynchronous replication for a consistency group of disks.<br />Can be invoked either in the primary or secondary scope.</td>
 </tr>
 </tbody>
 </table>
@@ -907,11 +907,11 @@ warning
 FROM google.compute.disks
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -973,13 +973,13 @@ users,
 zone
 FROM google.compute.disks
 WHERE project = '{{ project }}' -- required
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -1001,76 +1001,76 @@ Creates a persistent disk in the specified project using the data<br />in the re
 
 ```sql
 INSERT INTO google.compute.disks (
-data__guestOsFeatures,
-data__type,
-data__provisionedThroughput,
-data__labels,
-data__architecture,
-data__storagePool,
-data__options,
-data__sourceSnapshotEncryptionKey,
-data__description,
-data__sourceImage,
-data__asyncPrimaryDisk,
-data__replicaZones,
-data__physicalBlockSizeBytes,
-data__licenseCodes,
-data__labelFingerprint,
-data__licenses,
-data__params,
 data__accessMode,
-data__sourceImageEncryptionKey,
-data__locationHint,
+data__architecture,
+data__asyncPrimaryDisk,
+data__description,
 data__diskEncryptionKey,
-data__sourceDisk,
-data__sourceSnapshot,
-data__name,
-data__sourceInstantSnapshot,
-data__sizeGb,
-data__provisionedIops,
 data__enableConfidentialCompute,
-data__sourceStorageObject,
+data__guestOsFeatures,
+data__labelFingerprint,
+data__labels,
+data__licenseCodes,
+data__licenses,
+data__locationHint,
+data__name,
+data__options,
+data__params,
+data__physicalBlockSizeBytes,
+data__provisionedIops,
+data__provisionedThroughput,
+data__replicaZones,
 data__resourcePolicies,
+data__sizeGb,
+data__sourceDisk,
+data__sourceImage,
+data__sourceImageEncryptionKey,
+data__sourceInstantSnapshot,
+data__sourceSnapshot,
+data__sourceSnapshotEncryptionKey,
+data__sourceStorageObject,
+data__storagePool,
+data__type,
 project,
 zone,
-sourceImage,
-requestId
+requestId,
+sourceImage
 )
 SELECT 
-'{{ guestOsFeatures }}',
-'{{ type }}',
-'{{ provisionedThroughput }}',
-'{{ labels }}',
-'{{ architecture }}',
-'{{ storagePool }}',
-'{{ options }}',
-'{{ sourceSnapshotEncryptionKey }}',
-'{{ description }}',
-'{{ sourceImage }}',
-'{{ asyncPrimaryDisk }}',
-'{{ replicaZones }}',
-'{{ physicalBlockSizeBytes }}',
-'{{ licenseCodes }}',
-'{{ labelFingerprint }}',
-'{{ licenses }}',
-'{{ params }}',
 '{{ accessMode }}',
-'{{ sourceImageEncryptionKey }}',
-'{{ locationHint }}',
+'{{ architecture }}',
+'{{ asyncPrimaryDisk }}',
+'{{ description }}',
 '{{ diskEncryptionKey }}',
-'{{ sourceDisk }}',
-'{{ sourceSnapshot }}',
-'{{ name }}',
-'{{ sourceInstantSnapshot }}',
-'{{ sizeGb }}',
-'{{ provisionedIops }}',
 {{ enableConfidentialCompute }},
-'{{ sourceStorageObject }}',
+'{{ guestOsFeatures }}',
+'{{ labelFingerprint }}',
+'{{ labels }}',
+'{{ licenseCodes }}',
+'{{ licenses }}',
+'{{ locationHint }}',
+'{{ name }}',
+'{{ options }}',
+'{{ params }}',
+'{{ physicalBlockSizeBytes }}',
+'{{ provisionedIops }}',
+'{{ provisionedThroughput }}',
+'{{ replicaZones }}',
 '{{ resourcePolicies }}',
+'{{ sizeGb }}',
+'{{ sourceDisk }}',
+'{{ sourceImage }}',
+'{{ sourceImageEncryptionKey }}',
+'{{ sourceInstantSnapshot }}',
+'{{ sourceSnapshot }}',
+'{{ sourceSnapshotEncryptionKey }}',
+'{{ sourceStorageObject }}',
+'{{ storagePool }}',
+'{{ type }}',
 '{{ project }}',
 '{{ zone }}',
-'{{ sourceImage }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ sourceImage }}'
 RETURNING
 id,
 name,
@@ -1113,133 +1113,6 @@ zone
     - name: zone
       value: "{{ zone }}"
       description: Required parameter for the disks resource.
-    - name: guestOsFeatures
-      description: |
-        A list of features to enable on the guest operating system. Applicable
-        only for bootable images. Read
-        Enabling guest operating system features to see a list of available
-        options.
-      value:
-        - type: "{{ type }}"
-    - name: type
-      value: "{{ type }}"
-      description: |
-        URL of the disk type resource describing which disk type to use to create
-        the disk. Provide this when creating the disk. For example:projects/project/zones/zone/diskTypes/pd-ssd. See Persistent disk
-        types.
-    - name: provisionedThroughput
-      value: "{{ provisionedThroughput }}"
-      description: |
-        Indicates how much throughput to provision for the disk. This sets the
-        number of throughput mb per second that the disk can handle. Values must be
-        greater than or equal to 1.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels to apply to this disk. These can be later modified by
-        the setLabels method.
-    - name: architecture
-      value: "{{ architecture }}"
-      description: |
-        The architecture of the disk. Valid values are
-        ARM64 or X86_64.
-      valid_values: ['ARCHITECTURE_UNSPECIFIED', 'ARM64', 'X86_64']
-    - name: storagePool
-      value: "{{ storagePool }}"
-      description: |
-        The storage pool in which the new disk is created. You can provide
-        this as a partial or full URL to the resource. For example, the following
-        are valid values:
-        - https://www.googleapis.com/compute/v1/projects/project/zones/zone/storagePools/storagePool
-        - projects/project/zones/zone/storagePools/storagePool
-        - zones/zone/storagePools/storagePool
-    - name: options
-      value: "{{ options }}"
-      description: |
-        Internal use only.
-    - name: sourceSnapshotEncryptionKey
-      description: |
-        Thecustomer-supplied
-        encryption key of the source snapshot. Required if the source snapshot
-        is protected by a customer-supplied encryption key.
-      value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-        kmsKeyName: "{{ kmsKeyName }}"
-        sha256: "{{ sha256 }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: sourceImage
-      value: "{{ sourceImage }}"
-      description: |
-        The source image used to create this disk. If the source image is
-        deleted, this field will not be set.
-        To create a disk with one of the public operating system images, specify
-        the image by its family name. For example, specifyfamily/debian-9 to use the latest Debian 9 image:
-        projects/debian-cloud/global/images/family/debian-9
-        Alternatively, use a specific version of a public operating system image:
-        projects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD
-        To create a disk with a custom image that you created, specify the
-        image name in the following format:
-        global/images/my-custom-image
-        You can also specify a custom image by its image family, which returns
-        the latest version of the image in that family. Replace the image name
-        with family/family-name:
-        global/images/family/my-image-family
-    - name: asyncPrimaryDisk
-      description: |
-        Disk asynchronously replicated into this disk.
-      value:
-        diskId: "{{ diskId }}"
-        consistencyGroupPolicyId: "{{ consistencyGroupPolicyId }}"
-        disk: "{{ disk }}"
-        consistencyGroupPolicy: "{{ consistencyGroupPolicy }}"
-    - name: replicaZones
-      value:
-        - "{{ replicaZones }}"
-      description: |
-        URLs of the zones where the disk should be replicated to. Only applicable
-        for regional resources.
-    - name: physicalBlockSizeBytes
-      value: "{{ physicalBlockSizeBytes }}"
-      description: |
-        Physical block size of the persistent disk, in bytes.
-        If not present in a request, a default value is used.
-        The currently supported size is 4096, other sizes may be added in
-        the future.
-        If an unsupported value is requested, the error message will list
-        the supported values for the caller's project.
-    - name: licenseCodes
-      value:
-        - "{{ licenseCodes }}"
-      description: |
-        Integer license codes indicating which licenses are attached to this disk.
-    - name: labelFingerprint
-      value: "{{ labelFingerprint }}"
-      description: |
-        A fingerprint for the labels being applied to this disk, which is
-        essentially a hash of the labels set used for optimistic locking. The
-        fingerprint is initially generated by Compute Engine and changes after
-        every request to modify or update labels. You must always provide an
-        up-to-date fingerprint hash in order to update or change labels,
-        otherwise the request will fail with error412 conditionNotMet.
-        To see the latest fingerprint, make a get() request to
-        retrieve a disk.
-    - name: licenses
-      value:
-        - "{{ licenses }}"
-      description: |
-        A list of publicly visible licenses. Reserved for Google's use.
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: accessMode
       value: "{{ accessMode }}"
       description: |
@@ -1252,22 +1125,25 @@ zone
         attached to multiple instances in RO mode.
         The AccessMode is only valid for Hyperdisk disk types.
       valid_values: ['READ_ONLY_MANY', 'READ_WRITE_MANY', 'READ_WRITE_SINGLE']
-    - name: sourceImageEncryptionKey
+    - name: architecture
+      value: "{{ architecture }}"
       description: |
-        Thecustomer-supplied
-        encryption key of the source image. Required if the source image is
-        protected by a customer-supplied encryption key.
+        The architecture of the disk. Valid values are
+        ARM64 or X86_64.
+      valid_values: ['ARCHITECTURE_UNSPECIFIED', 'ARM64', 'X86_64']
+    - name: asyncPrimaryDisk
+      description: |
+        Disk asynchronously replicated into this disk.
       value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-        kmsKeyName: "{{ kmsKeyName }}"
-        sha256: "{{ sha256 }}"
-    - name: locationHint
-      value: "{{ locationHint }}"
+        consistencyGroupPolicy: "{{ consistencyGroupPolicy }}"
+        consistencyGroupPolicyId: "{{ consistencyGroupPolicyId }}"
+        disk: "{{ disk }}"
+        diskId: "{{ diskId }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        An opaque location hint used to place the disk close to other resources.
-        This field is for use by internal tools that use the public API.
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: diskEncryptionKey
       description: |
         Encrypts the disk using a
@@ -1290,11 +1166,116 @@ zone
         disk is encrypted using an automatically generated key and you don't need
         to provide a key to use the disk later.
       value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         sha256: "{{ sha256 }}"
+    - name: enableConfidentialCompute
+      value: {{ enableConfidentialCompute }}
+      description: |
+        Whether this disk is using confidential compute mode.
+    - name: guestOsFeatures
+      description: |
+        A list of features to enable on the guest operating system. Applicable
+        only for bootable images. Read
+        Enabling guest operating system features to see a list of available
+        options.
+      value:
+        - type: "{{ type }}"
+    - name: labelFingerprint
+      value: "{{ labelFingerprint }}"
+      description: |
+        A fingerprint for the labels being applied to this disk, which is
+        essentially a hash of the labels set used for optimistic locking. The
+        fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update labels. You must always provide an
+        up-to-date fingerprint hash in order to update or change labels,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve a disk.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels to apply to this disk. These can be later modified by
+        the setLabels method.
+    - name: licenseCodes
+      value:
+        - "{{ licenseCodes }}"
+      description: |
+        Integer license codes indicating which licenses are attached to this disk.
+    - name: licenses
+      value:
+        - "{{ licenses }}"
+      description: |
+        A list of publicly visible licenses. Reserved for Google's use.
+    - name: locationHint
+      value: "{{ locationHint }}"
+      description: |
+        An opaque location hint used to place the disk close to other resources.
+        This field is for use by internal tools that use the public API.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`
+        which means the first character must be a lowercase letter, and all
+        following characters must be a dash, lowercase letter, or digit, except
+        the last character, which cannot be a dash.
+    - name: options
+      value: "{{ options }}"
+      description: |
+        Internal use only.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: physicalBlockSizeBytes
+      value: "{{ physicalBlockSizeBytes }}"
+      description: |
+        Physical block size of the persistent disk, in bytes.
+        If not present in a request, a default value is used.
+        The currently supported size is 4096, other sizes may be added in
+        the future.
+        If an unsupported value is requested, the error message will list
+        the supported values for the caller's project.
+    - name: provisionedIops
+      value: "{{ provisionedIops }}"
+      description: |
+        Indicates how many IOPS to provision for the disk. This sets the number
+        of I/O operations per second that the disk can handle. Values must be
+        between 10,000 and 120,000. For more details, see theExtreme persistent
+        disk documentation.
+    - name: provisionedThroughput
+      value: "{{ provisionedThroughput }}"
+      description: |
+        Indicates how much throughput to provision for the disk. This sets the
+        number of throughput mb per second that the disk can handle. Values must be
+        greater than or equal to 1.
+    - name: replicaZones
+      value:
+        - "{{ replicaZones }}"
+      description: |
+        URLs of the zones where the disk should be replicated to. Only applicable
+        for regional resources.
+    - name: resourcePolicies
+      value:
+        - "{{ resourcePolicies }}"
+      description: |
+        Resource policies applied to this disk for automatic snapshot creations.
+    - name: sizeGb
+      value: "{{ sizeGb }}"
+      description: |
+        Size, in GB, of the persistent disk. You can specify
+        this field when creating a persistent disk using thesourceImage, sourceSnapshot, orsourceDisk parameter, or specify it alone to create an empty
+        persistent disk.
+        If you specify this field along with a source, the value ofsizeGb must not be less than the size of the
+        source.
+        Acceptable values are greater than 0.
     - name: sourceDisk
       value: "{{ sourceDisk }}"
       description: |
@@ -1313,25 +1294,34 @@ zone
         zones/zone/disks/disk
         -
         regions/region/disks/disk
-    - name: sourceSnapshot
-      value: "{{ sourceSnapshot }}"
+    - name: sourceImage
+      value: "{{ sourceImage }}"
       description: |
-        The source snapshot used to create this disk. You can provide this as a
-        partial or full URL to the resource. For example, the following are valid
-        values:
-        - https://www.googleapis.com/compute/v1/projects/project/global/snapshots/snapshot
-        - projects/project/global/snapshots/snapshot
-        - global/snapshots/snapshot
-    - name: name
-      value: "{{ name }}"
+        The source image used to create this disk. If the source image is
+        deleted, this field will not be set.
+        To create a disk with one of the public operating system images, specify
+        the image by its family name. For example, specifyfamily/debian-9 to use the latest Debian 9 image:
+        projects/debian-cloud/global/images/family/debian-9
+        Alternatively, use a specific version of a public operating system image:
+        projects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD
+        To create a disk with a custom image that you created, specify the
+        image name in the following format:
+        global/images/my-custom-image
+        You can also specify a custom image by its image family, which returns
+        the latest version of the image in that family. Replace the image name
+        with family/family-name:
+        global/images/family/my-image-family
+    - name: sourceImageEncryptionKey
       description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`
-        which means the first character must be a lowercase letter, and all
-        following characters must be a dash, lowercase letter, or digit, except
-        the last character, which cannot be a dash.
+        Thecustomer-supplied
+        encryption key of the source image. Required if the source image is
+        protected by a customer-supplied encryption key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+        sha256: "{{ sha256 }}"
     - name: sourceInstantSnapshot
       value: "{{ sourceInstantSnapshot }}"
       description: |
@@ -1341,26 +1331,26 @@ zone
         - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instantSnapshots/instantSnapshot
         - projects/project/zones/zone/instantSnapshots/instantSnapshot
         - zones/zone/instantSnapshots/instantSnapshot
-    - name: sizeGb
-      value: "{{ sizeGb }}"
+    - name: sourceSnapshot
+      value: "{{ sourceSnapshot }}"
       description: |
-        Size, in GB, of the persistent disk. You can specify
-        this field when creating a persistent disk using thesourceImage, sourceSnapshot, orsourceDisk parameter, or specify it alone to create an empty
-        persistent disk.
-        If you specify this field along with a source, the value ofsizeGb must not be less than the size of the
-        source.
-        Acceptable values are greater than 0.
-    - name: provisionedIops
-      value: "{{ provisionedIops }}"
+        The source snapshot used to create this disk. You can provide this as a
+        partial or full URL to the resource. For example, the following are valid
+        values:
+        - https://www.googleapis.com/compute/v1/projects/project/global/snapshots/snapshot
+        - projects/project/global/snapshots/snapshot
+        - global/snapshots/snapshot
+    - name: sourceSnapshotEncryptionKey
       description: |
-        Indicates how many IOPS to provision for the disk. This sets the number
-        of I/O operations per second that the disk can handle. Values must be
-        between 10,000 and 120,000. For more details, see theExtreme persistent
-        disk documentation.
-    - name: enableConfidentialCompute
-      value: {{ enableConfidentialCompute }}
-      description: |
-        Whether this disk is using confidential compute mode.
+        Thecustomer-supplied
+        encryption key of the source snapshot. Required if the source snapshot
+        is protected by a customer-supplied encryption key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+        sha256: "{{ sha256 }}"
     - name: sourceStorageObject
       value: "{{ sourceStorageObject }}"
       description: |
@@ -1371,15 +1361,25 @@ zone
         multiple disks from a source storage object. To create many disks from a
         source storage object, use gcloud compute images
         import instead.
-    - name: resourcePolicies
-      value:
-        - "{{ resourcePolicies }}"
+    - name: storagePool
+      value: "{{ storagePool }}"
       description: |
-        Resource policies applied to this disk for automatic snapshot creations.
-    - name: sourceImage
-      value: "{{ sourceImage }}"
+        The storage pool in which the new disk is created. You can provide
+        this as a partial or full URL to the resource. For example, the following
+        are valid values:
+        - https://www.googleapis.com/compute/v1/projects/project/zones/zone/storagePools/storagePool
+        - projects/project/zones/zone/storagePools/storagePool
+        - zones/zone/storagePools/storagePool
+    - name: type
+      value: "{{ type }}"
+      description: |
+        URL of the disk type resource describing which disk type to use to create
+        the disk. Provide this when creating the disk. For example:projects/project/zones/zone/diskTypes/pd-ssd. See Persistent disk
+        types.
     - name: requestId
       value: "{{ requestId }}"
+    - name: sourceImage
+      value: "{{ sourceImage }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -1401,36 +1401,36 @@ Updates the specified disk with the data included in the request.<br />The updat
 ```sql
 UPDATE google.compute.disks
 SET 
-data__guestOsFeatures = '{{ guestOsFeatures }}',
-data__type = '{{ type }}',
-data__provisionedThroughput = '{{ provisionedThroughput }}',
-data__labels = '{{ labels }}',
-data__architecture = '{{ architecture }}',
-data__storagePool = '{{ storagePool }}',
-data__options = '{{ options }}',
-data__sourceSnapshotEncryptionKey = '{{ sourceSnapshotEncryptionKey }}',
-data__description = '{{ description }}',
-data__sourceImage = '{{ sourceImage }}',
-data__asyncPrimaryDisk = '{{ asyncPrimaryDisk }}',
-data__replicaZones = '{{ replicaZones }}',
-data__physicalBlockSizeBytes = '{{ physicalBlockSizeBytes }}',
-data__licenseCodes = '{{ licenseCodes }}',
-data__labelFingerprint = '{{ labelFingerprint }}',
-data__licenses = '{{ licenses }}',
-data__params = '{{ params }}',
 data__accessMode = '{{ accessMode }}',
-data__sourceImageEncryptionKey = '{{ sourceImageEncryptionKey }}',
-data__locationHint = '{{ locationHint }}',
+data__architecture = '{{ architecture }}',
+data__asyncPrimaryDisk = '{{ asyncPrimaryDisk }}',
+data__description = '{{ description }}',
 data__diskEncryptionKey = '{{ diskEncryptionKey }}',
-data__sourceDisk = '{{ sourceDisk }}',
-data__sourceSnapshot = '{{ sourceSnapshot }}',
-data__name = '{{ name }}',
-data__sourceInstantSnapshot = '{{ sourceInstantSnapshot }}',
-data__sizeGb = '{{ sizeGb }}',
-data__provisionedIops = '{{ provisionedIops }}',
 data__enableConfidentialCompute = {{ enableConfidentialCompute }},
+data__guestOsFeatures = '{{ guestOsFeatures }}',
+data__labelFingerprint = '{{ labelFingerprint }}',
+data__labels = '{{ labels }}',
+data__licenseCodes = '{{ licenseCodes }}',
+data__licenses = '{{ licenses }}',
+data__locationHint = '{{ locationHint }}',
+data__name = '{{ name }}',
+data__options = '{{ options }}',
+data__params = '{{ params }}',
+data__physicalBlockSizeBytes = '{{ physicalBlockSizeBytes }}',
+data__provisionedIops = '{{ provisionedIops }}',
+data__provisionedThroughput = '{{ provisionedThroughput }}',
+data__replicaZones = '{{ replicaZones }}',
+data__resourcePolicies = '{{ resourcePolicies }}',
+data__sizeGb = '{{ sizeGb }}',
+data__sourceDisk = '{{ sourceDisk }}',
+data__sourceImage = '{{ sourceImage }}',
+data__sourceImageEncryptionKey = '{{ sourceImageEncryptionKey }}',
+data__sourceInstantSnapshot = '{{ sourceInstantSnapshot }}',
+data__sourceSnapshot = '{{ sourceSnapshot }}',
+data__sourceSnapshotEncryptionKey = '{{ sourceSnapshotEncryptionKey }}',
 data__sourceStorageObject = '{{ sourceStorageObject }}',
-data__resourcePolicies = '{{ resourcePolicies }}'
+data__storagePool = '{{ storagePool }}',
+data__type = '{{ type }}'
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required
@@ -1498,64 +1498,48 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="start_async_replication"
+    defaultValue="bulk_insert"
     values={[
-        { label: 'start_async_replication', value: 'start_async_replication' },
-        { label: 'stop_group_async_replication', value: 'stop_group_async_replication' },
-        { label: 'set_labels', value: 'set_labels' },
-        { label: 'resize', value: 'resize' },
-        { label: 'stop_async_replication', value: 'stop_async_replication' },
         { label: 'bulk_insert', value: 'bulk_insert' },
-        { label: 'bulk_set_labels', value: 'bulk_set_labels' }
+        { label: 'bulk_set_labels', value: 'bulk_set_labels' },
+        { label: 'resize', value: 'resize' },
+        { label: 'set_labels', value: 'set_labels' },
+        { label: 'start_async_replication', value: 'start_async_replication' },
+        { label: 'stop_async_replication', value: 'stop_async_replication' },
+        { label: 'stop_group_async_replication', value: 'stop_group_async_replication' }
     ]}
 >
-<TabItem value="start_async_replication">
+<TabItem value="bulk_insert">
 
-Starts asynchronous replication.<br />Must be invoked on the primary disk.
+Bulk create a set of disks.
 
 ```sql
-EXEC google.compute.disks.start_async_replication 
+EXEC google.compute.disks.bulk_insert 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
-@disk='{{ disk }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"asyncSecondaryDisk": "{{ asyncSecondaryDisk }}"
+"instantSnapshotGroupParameters": "{{ instantSnapshotGroupParameters }}", 
+"snapshotGroupParameters": "{{ snapshotGroupParameters }}", 
+"sourceConsistencyGroupPolicy": "{{ sourceConsistencyGroupPolicy }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="stop_group_async_replication">
+<TabItem value="bulk_set_labels">
 
-Stops asynchronous replication for a consistency group of disks.<br />Can be invoked either in the primary or secondary scope.
-
-```sql
-EXEC google.compute.disks.stop_group_async_replication 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"resourcePolicy": "{{ resourcePolicy }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_labels">
-
-Sets the labels on a disk. To learn more about labels, read theLabeling<br />Resources documentation.
+Sets the labels on many disks at once. To learn more about labels, read theLabeling<br />Resources documentation.
 
 ```sql
-EXEC google.compute.disks.set_labels 
+EXEC google.compute.disks.bulk_set_labels 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
-@resource='{{ resource }}' --required, 
-@requestId='{{ requestId }}' 
+@requestId='{{ requestId }}', 
+@resource='{{ resource }}' 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"requests": "{{ requests }}"
 }'
 ;
 ```
@@ -1577,6 +1561,41 @@ EXEC google.compute.disks.resize
 ;
 ```
 </TabItem>
+<TabItem value="set_labels">
+
+Sets the labels on a disk. To learn more about labels, read theLabeling<br />Resources documentation.
+
+```sql
+EXEC google.compute.disks.set_labels 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@resource='{{ resource }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="start_async_replication">
+
+Starts asynchronous replication.<br />Must be invoked on the primary disk.
+
+```sql
+EXEC google.compute.disks.start_async_replication 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@disk='{{ disk }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"asyncSecondaryDisk": "{{ asyncSecondaryDisk }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="stop_async_replication">
 
 Stops asynchronous replication.<br />Can be invoked either on the primary or on the secondary disk.
@@ -1590,37 +1609,18 @@ EXEC google.compute.disks.stop_async_replication
 ;
 ```
 </TabItem>
-<TabItem value="bulk_insert">
+<TabItem value="stop_group_async_replication">
 
-Bulk create a set of disks.
+Stops asynchronous replication for a consistency group of disks.<br />Can be invoked either in the primary or secondary scope.
 
 ```sql
-EXEC google.compute.disks.bulk_insert 
+EXEC google.compute.disks.stop_group_async_replication 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"sourceConsistencyGroupPolicy": "{{ sourceConsistencyGroupPolicy }}", 
-"snapshotGroupParameters": "{{ snapshotGroupParameters }}", 
-"instantSnapshotGroupParameters": "{{ instantSnapshotGroupParameters }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="bulk_set_labels">
-
-Sets the labels on many disks at once. To learn more about labels, read theLabeling<br />Resources documentation.
-
-```sql
-EXEC google.compute.disks.bulk_set_labels 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@requestId='{{ requestId }}', 
-@resource='{{ resource }}' 
-@@json=
-'{
-"requests": "{{ requests }}"
+"resourcePolicy": "{{ resourcePolicy }}"
 }'
 ;
 ```

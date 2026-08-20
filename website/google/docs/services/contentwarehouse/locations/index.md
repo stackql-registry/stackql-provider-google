@@ -51,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#run_pipeline"><CopyableCode code="run_pipeline" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Run a predefined pipeline.</td>
-</tr>
-<tr>
     <td><a href="#initialize"><CopyableCode code="initialize" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Provisions resources for given tenant project. Returns a long running operation.</td>
+</tr>
+<tr>
+    <td><a href="#run_pipeline"><CopyableCode code="run_pipeline" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Run a predefined pipeline.</td>
 </tr>
 </tbody>
 </table>
@@ -96,31 +96,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="run_pipeline"
+    defaultValue="initialize"
     values={[
-        { label: 'run_pipeline', value: 'run_pipeline' },
-        { label: 'initialize', value: 'initialize' }
+        { label: 'initialize', value: 'initialize' },
+        { label: 'run_pipeline', value: 'run_pipeline' }
     ]}
 >
-<TabItem value="run_pipeline">
-
-Run a predefined pipeline.
-
-```sql
-EXEC google.contentwarehouse.locations.run_pipeline 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"requestMetadata": "{{ requestMetadata }}", 
-"gcsIngestWithDocAiProcessorsPipeline": "{{ gcsIngestWithDocAiProcessorsPipeline }}", 
-"gcsIngestPipeline": "{{ gcsIngestPipeline }}", 
-"processWithDocAiPipeline": "{{ processWithDocAiPipeline }}", 
-"exportCdwPipeline": "{{ exportCdwPipeline }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="initialize">
 
 Provisions resources for given tenant project. Returns a long running operation.
@@ -131,11 +112,30 @@ EXEC google.contentwarehouse.locations.initialize
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"documentCreatorDefaultRole": "{{ documentCreatorDefaultRole }}", 
-"kmsKey": "{{ kmsKey }}", 
 "accessControlMode": "{{ accessControlMode }}", 
+"databaseType": "{{ databaseType }}", 
+"documentCreatorDefaultRole": "{{ documentCreatorDefaultRole }}", 
 "enableCalUserEmailLogging": {{ enableCalUserEmailLogging }}, 
-"databaseType": "{{ databaseType }}"
+"kmsKey": "{{ kmsKey }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="run_pipeline">
+
+Run a predefined pipeline.
+
+```sql
+EXEC google.contentwarehouse.locations.run_pipeline 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"exportCdwPipeline": "{{ exportCdwPipeline }}", 
+"gcsIngestPipeline": "{{ gcsIngestPipeline }}", 
+"gcsIngestWithDocAiProcessorsPipeline": "{{ gcsIngestWithDocAiProcessorsPipeline }}", 
+"processWithDocAiPipeline": "{{ processWithDocAiPipeline }}", 
+"requestMetadata": "{{ requestMetadata }}"
 }'
 ;
 ```

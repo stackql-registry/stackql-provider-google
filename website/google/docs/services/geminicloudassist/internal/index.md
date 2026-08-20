@@ -58,11 +58,11 @@ The following methods are available for this resource:
     <td>Calls the ask_cloud_assist tool. Called INTERNALLY by ESF after translating an MCP request.</td>
 </tr>
 <tr>
-    <td><a href="#invoke_operation"><CopyableCode code="invoke_operation" /></a></td>
+    <td><a href="#design_infra"><CopyableCode code="design_infra" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>Calls the invoke_operation tool.</td>
+    <td>Calls the design_infra tool.</td>
 </tr>
 <tr>
     <td><a href="#investigate_issue"><CopyableCode code="investigate_issue" /></a></td>
@@ -72,11 +72,11 @@ The following methods are available for this resource:
     <td>Calls the investigate_issue tool.</td>
 </tr>
 <tr>
-    <td><a href="#design_infra"><CopyableCode code="design_infra" /></a></td>
+    <td><a href="#invoke_operation"><CopyableCode code="invoke_operation" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>Calls the design_infra tool.</td>
+    <td>Calls the invoke_operation tool.</td>
 </tr>
 <tr>
     <td><a href="#optimize_costs"><CopyableCode code="optimize_costs" /></a></td>
@@ -110,9 +110,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="ask_cloud_assist"
     values={[
         { label: 'ask_cloud_assist', value: 'ask_cloud_assist' },
-        { label: 'invoke_operation', value: 'invoke_operation' },
-        { label: 'investigate_issue', value: 'investigate_issue' },
         { label: 'design_infra', value: 'design_infra' },
+        { label: 'investigate_issue', value: 'investigate_issue' },
+        { label: 'invoke_operation', value: 'invoke_operation' },
         { label: 'optimize_costs', value: 'optimize_costs' }
     ]}
 >
@@ -124,38 +124,8 @@ Calls the ask_cloud_assist tool. Called INTERNALLY by ESF after translating an M
 EXEC google.geminicloudassist.internal.ask_cloud_assist 
 @@json=
 '{
-"userQuery": "{{ userQuery }}", 
-"project": "{{ project }}", 
-"contextId": "{{ contextId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="invoke_operation">
-
-Calls the invoke_operation tool.
-
-```sql
-EXEC google.geminicloudassist.internal.invoke_operation 
-@@json=
-'{
-"userQuery": "{{ userQuery }}", 
-"project": "{{ project }}", 
-"contextId": "{{ contextId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="investigate_issue">
-
-Calls the investigate_issue tool.
-
-```sql
-EXEC google.geminicloudassist.internal.investigate_issue 
-@@json=
-'{
-"project": "{{ project }}", 
 "contextId": "{{ contextId }}", 
+"project": "{{ project }}", 
 "userQuery": "{{ userQuery }}"
 }'
 ;
@@ -169,10 +139,40 @@ Calls the design_infra tool.
 EXEC google.geminicloudassist.internal.design_infra 
 @@json=
 '{
-"userQuery": "{{ userQuery }}", 
 "command": "{{ command }}", 
+"contextId": "{{ contextId }}", 
 "project": "{{ project }}", 
-"contextId": "{{ contextId }}"
+"userQuery": "{{ userQuery }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="investigate_issue">
+
+Calls the investigate_issue tool.
+
+```sql
+EXEC google.geminicloudassist.internal.investigate_issue 
+@@json=
+'{
+"contextId": "{{ contextId }}", 
+"project": "{{ project }}", 
+"userQuery": "{{ userQuery }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="invoke_operation">
+
+Calls the invoke_operation tool.
+
+```sql
+EXEC google.geminicloudassist.internal.invoke_operation 
+@@json=
+'{
+"contextId": "{{ contextId }}", 
+"project": "{{ project }}", 
+"userQuery": "{{ userQuery }}"
 }'
 ;
 ```
@@ -185,9 +185,9 @@ Calls the optimize_costs tool.
 EXEC google.geminicloudassist.internal.optimize_costs 
 @@json=
 '{
-"userQuery": "{{ userQuery }}", 
+"contextId": "{{ contextId }}", 
 "project": "{{ project }}", 
-"contextId": "{{ contextId }}"
+"userQuery": "{{ userQuery }}"
 }'
 ;
 ```

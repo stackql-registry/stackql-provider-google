@@ -350,25 +350,11 @@ The following methods are available for this resource:
     <td>Deletes the workload. Make sure that workload's direct children are already in a deleted state, otherwise the request will fail with a FAILED_PRECONDITION error. In addition to assuredworkloads.workload.delete permission, the user should also have orgpolicy.policy.set permission on the deleted folder to remove Assured Workloads OrgPolicies.</td>
 </tr>
 <tr>
-    <td><a href="#restrict_allowed_resources"><CopyableCode code="restrict_allowed_resources" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
-    <td></td>
-    <td>Restrict the list of resources allowed in the Workload environment. The current list of allowed products can be found at https://cloud.google.com/assured-workloads/docs/supported-products In addition to assuredworkloads.workload.update permission, the user should also have orgpolicy.policy.set permission on the folder resource to use this functionality.</td>
-</tr>
-<tr>
     <td><a href="#analyze_workload_move"><CopyableCode code="analyze_workload_move" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-project"><code>project</code></a>, <a href="#parameter-assetTypes"><code>assetTypes</code></a></td>
+    <td><a href="#parameter-assetTypes"><code>assetTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-project"><code>project</code></a></td>
     <td>Analyzes a hypothetical move of a source resource to a target workload to surface compliance risks. The analysis is best effort and is not guaranteed to be exhaustive.</td>
-</tr>
-<tr>
-    <td><a href="#enable_resource_monitoring"><CopyableCode code="enable_resource_monitoring" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
-    <td></td>
-    <td>Enable resource violation monitoring for a workload.</td>
 </tr>
 <tr>
     <td><a href="#enable_compliance_updates"><CopyableCode code="enable_compliance_updates" /></a></td>
@@ -378,11 +364,25 @@ The following methods are available for this resource:
     <td>This endpoint enables Assured Workloads service to offer compliance updates for the folder based assured workload. It sets up an Assured Workloads Service Agent, having permissions to read compliance controls (for example: Org Policies) applied on the workload. The caller must have `resourcemanager.folders.getIamPolicy` and `resourcemanager.folders.setIamPolicy` permissions on the assured workload folder.</td>
 </tr>
 <tr>
+    <td><a href="#enable_resource_monitoring"><CopyableCode code="enable_resource_monitoring" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
+    <td></td>
+    <td>Enable resource violation monitoring for a workload.</td>
+</tr>
+<tr>
     <td><a href="#mutate_partner_permissions"><CopyableCode code="mutate_partner_permissions" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
     <td></td>
     <td>Update the permissions settings for an existing partner workload. For force updates don't set etag field in the Workload. Only one update operation per workload can be in progress.</td>
+</tr>
+<tr>
+    <td><a href="#restrict_allowed_resources"><CopyableCode code="restrict_allowed_resources" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
+    <td></td>
+    <td>Restrict the list of resources allowed in the Workload environment. The current list of allowed products can be found at https://cloud.google.com/assured-workloads/docs/supported-products In addition to assuredworkloads.workload.update permission, the user should also have orgpolicy.policy.set permission on the folder resource to use this functionality.</td>
 </tr>
 </tbody>
 </table>
@@ -559,41 +559,41 @@ Creates Assured Workload.
 
 ```sql
 INSERT INTO google.assuredworkloads.workloads (
-data__labels,
 data__billingAccount,
-data__resourceSettings,
-data__kmsSettings,
-data__workloadOptions,
-data__partnerPermissions,
-data__etag,
-data__partner,
-data__name,
 data__complianceRegime,
+data__displayName,
 data__enableSovereignControls,
+data__etag,
+data__kmsSettings,
+data__labels,
+data__name,
+data__partner,
+data__partnerPermissions,
 data__partnerServicesBillingAccount,
 data__provisionedResourcesParent,
+data__resourceSettings,
 data__violationNotificationsEnabled,
-data__displayName,
+data__workloadOptions,
 organizationsId,
 locationsId,
 externalId
 )
 SELECT 
-'{{ labels }}',
 '{{ billingAccount }}',
-'{{ resourceSettings }}',
-'{{ kmsSettings }}',
-'{{ workloadOptions }}',
-'{{ partnerPermissions }}',
-'{{ etag }}',
-'{{ partner }}',
-'{{ name }}',
 '{{ complianceRegime }}',
+'{{ displayName }}',
 {{ enableSovereignControls }},
+'{{ etag }}',
+'{{ kmsSettings }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ partner }}',
+'{{ partnerPermissions }}',
 '{{ partnerServicesBillingAccount }}',
 '{{ provisionedResourcesParent }}',
+'{{ resourceSettings }}',
 {{ violationNotificationsEnabled }},
-'{{ displayName }}',
+'{{ workloadOptions }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ externalId }}'
@@ -617,62 +617,54 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the workloads resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels applied to the workload.
     - name: billingAccount
       value: "{{ billingAccount }}"
       description: |
         Optional. The billing account used for the resources which are direct children of workload. This billing account is initially associated with the resources created as part of Workload creation. After the initial creation of these resources, the customer can change the assigned billing account. The resource name has the form \`billingAccounts/{billing_account_id}\`. For example, \`billingAccounts/012345-567890-ABCDEF\`.
-    - name: resourceSettings
+    - name: complianceRegime
+      value: "{{ complianceRegime }}"
       description: |
-        Input only. Resource properties that are used to customize workload resources. These properties (such as custom project id) will be used to create workload resources if possible. This field is optional.
-      value:
-        - resourceId: "{{ resourceId }}"
-          displayName: "{{ displayName }}"
-          resourceType: "{{ resourceType }}"
+        Required. Immutable. Compliance Regime associated with this workload.
+      valid_values: ['COMPLIANCE_REGIME_UNSPECIFIED', 'ASSURED_WORKLOADS_FOR_PARTNERS', 'AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT', 'CANADA_DATA_BOUNDARY_AND_SUPPORT', 'DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS', 'DATA_BOUNDARY_FOR_CANADA_PROTECTED_B', 'DATA_BOUNDARY_FOR_CJIS', 'DATA_BOUNDARY_FOR_FEDRAMP_HIGH', 'DATA_BOUNDARY_FOR_FEDRAMP_MODERATE', 'DATA_BOUNDARY_FOR_IL2', 'DATA_BOUNDARY_FOR_IL4', 'DATA_BOUNDARY_FOR_IL5', 'DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075', 'DATA_BOUNDARY_FOR_ITAR', 'EU_DATA_BOUNDARY_AND_SUPPORT', 'ISRAEL_DATA_BOUNDARY_AND_SUPPORT', 'JAPAN_DATA_BOUNDARY', 'SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS', 'KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS', 'REGIONAL_DATA_BOUNDARY', 'US_DATA_BOUNDARY_AND_SUPPORT', 'US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES', 'US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT', 'AU_REGIONS_AND_US_SUPPORT', 'CA_PROTECTED_B', 'CA_REGIONS_AND_SUPPORT', 'CANADA_CONTROLLED_GOODS', 'CJIS', 'EU_REGIONS_AND_SUPPORT', 'FEDRAMP_HIGH', 'FEDRAMP_MODERATE', 'HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS', 'HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT', 'HIPAA', 'HITRUST', 'IL2', 'IL4', 'IL5', 'IRS_1075', 'ISR_REGIONS', 'ISR_REGIONS_AND_SUPPORT', 'ITAR', 'JP_REGIONS_AND_SUPPORT', 'KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS', 'REGIONAL_CONTROLS', 'US_REGIONAL_ACCESS']
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The user-assigned display name of the Workload. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, and spaces. Example: My Workload
+    - name: enableSovereignControls
+      value: {{ enableSovereignControls }}
+      description: |
+        Optional. Indicates the sovereignty status of the given workload. Currently meant to be used by Europe/Canada customers.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. ETag of the workload, it is calculated on the basis of the Workload contents. It will be used in Update & Delete operations.
     - name: kmsSettings
       description: |
         Input only. Settings used to create a CMEK crypto key. When set, a project with a KMS CMEK key is provisioned. This field is deprecated as of Feb 28, 2022. In order to create a Keyring, callers should specify, ENCRYPTION_KEYS_PROJECT or KEYRING in ResourceSettings.resource_type field.
       value:
         nextRotationTime: "{{ nextRotationTime }}"
         rotationPeriod: "{{ rotationPeriod }}"
-    - name: workloadOptions
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Optional. Options to be set for the given created workload.
-      value:
-        kajEnrollmentType: "{{ kajEnrollmentType }}"
-    - name: partnerPermissions
+        Optional. Labels applied to the workload.
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. Permissions granted to the AW Partner SA account for the customer workload
-      value:
-        dataLogsViewer: {{ dataLogsViewer }}
-        serviceAccessApprover: {{ serviceAccessApprover }}
-        assuredWorkloadsMonitoring: {{ assuredWorkloadsMonitoring }}
-        accessTransparencyLogsSupportCaseViewer: {{ accessTransparencyLogsSupportCaseViewer }}
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. ETag of the workload, it is calculated on the basis of the Workload contents. It will be used in Update & Delete operations.
+        Optional. The resource name of the workload. Format: organizations/{organization}/locations/{location}/workloads/{workload} Read-only.
     - name: partner
       value: "{{ partner }}"
       description: |
         Optional. Partner regime associated with this workload.
       valid_values: ['PARTNER_UNSPECIFIED', 'LOCAL_CONTROLS_BY_S3NS', 'SOVEREIGN_CONTROLS_BY_T_SYSTEMS', 'SOVEREIGN_CONTROLS_BY_SIA_MINSAIT', 'SOVEREIGN_CONTROLS_BY_PSN', 'SOVEREIGN_CONTROLS_BY_CNTXT', 'SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM', 'SPAIN_DATA_BOUNDARY_BY_TELEFONICA']
-    - name: name
-      value: "{{ name }}"
+    - name: partnerPermissions
       description: |
-        Optional. The resource name of the workload. Format: organizations/{organization}/locations/{location}/workloads/{workload} Read-only.
-    - name: complianceRegime
-      value: "{{ complianceRegime }}"
-      description: |
-        Required. Immutable. Compliance Regime associated with this workload.
-      valid_values: ['COMPLIANCE_REGIME_UNSPECIFIED', 'ASSURED_WORKLOADS_FOR_PARTNERS', 'AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT', 'CANADA_DATA_BOUNDARY_AND_SUPPORT', 'DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS', 'DATA_BOUNDARY_FOR_CANADA_PROTECTED_B', 'DATA_BOUNDARY_FOR_CJIS', 'DATA_BOUNDARY_FOR_FEDRAMP_HIGH', 'DATA_BOUNDARY_FOR_FEDRAMP_MODERATE', 'DATA_BOUNDARY_FOR_IL2', 'DATA_BOUNDARY_FOR_IL4', 'DATA_BOUNDARY_FOR_IL5', 'DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075', 'DATA_BOUNDARY_FOR_ITAR', 'EU_DATA_BOUNDARY_AND_SUPPORT', 'ISRAEL_DATA_BOUNDARY_AND_SUPPORT', 'JAPAN_DATA_BOUNDARY', 'SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS', 'KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS', 'REGIONAL_DATA_BOUNDARY', 'US_DATA_BOUNDARY_AND_SUPPORT', 'US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES', 'US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT', 'AU_REGIONS_AND_US_SUPPORT', 'CA_PROTECTED_B', 'CA_REGIONS_AND_SUPPORT', 'CANADA_CONTROLLED_GOODS', 'CJIS', 'EU_REGIONS_AND_SUPPORT', 'FEDRAMP_HIGH', 'FEDRAMP_MODERATE', 'HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS', 'HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT', 'HIPAA', 'HITRUST', 'IL2', 'IL4', 'IL5', 'IRS_1075', 'ISR_REGIONS', 'ISR_REGIONS_AND_SUPPORT', 'ITAR', 'JP_REGIONS_AND_SUPPORT', 'KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS', 'REGIONAL_CONTROLS', 'US_REGIONAL_ACCESS']
-    - name: enableSovereignControls
-      value: {{ enableSovereignControls }}
-      description: |
-        Optional. Indicates the sovereignty status of the given workload. Currently meant to be used by Europe/Canada customers.
+        Optional. Permissions granted to the AW Partner SA account for the customer workload
+      value:
+        accessTransparencyLogsSupportCaseViewer: {{ accessTransparencyLogsSupportCaseViewer }}
+        assuredWorkloadsMonitoring: {{ assuredWorkloadsMonitoring }}
+        dataLogsViewer: {{ dataLogsViewer }}
+        serviceAccessApprover: {{ serviceAccessApprover }}
     - name: partnerServicesBillingAccount
       value: "{{ partnerServicesBillingAccount }}"
       description: |
@@ -681,14 +673,22 @@ response
       value: "{{ provisionedResourcesParent }}"
       description: |
         Input only. The parent resource for the resources managed by this Assured Workload. May be either empty or a folder resource which is a child of the Workload parent. If not specified all resources are created under the parent organization. Format: folders/{folder_id}
+    - name: resourceSettings
+      description: |
+        Input only. Resource properties that are used to customize workload resources. These properties (such as custom project id) will be used to create workload resources if possible. This field is optional.
+      value:
+        - displayName: "{{ displayName }}"
+          resourceId: "{{ resourceId }}"
+          resourceType: "{{ resourceType }}"
     - name: violationNotificationsEnabled
       value: {{ violationNotificationsEnabled }}
       description: |
         Optional. Indicates whether the e-mail notification for a violation is enabled for a workload. This value will be by default True, and if not present will be considered as true. This should only be updated via updateWorkload call. Any Changes to this field during the createWorkload call will not be honored. This will always be true while creating the workload.
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: workloadOptions
       description: |
-        Required. The user-assigned display name of the Workload. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, and spaces. Example: My Workload
+        Optional. Options to be set for the given created workload.
+      value:
+        kajEnrollmentType: "{{ kajEnrollmentType }}"
     - name: externalId
       value: "{{ externalId }}"
 `}</CodeBlock>
@@ -712,21 +712,21 @@ Updates an existing workload. Currently allows updating of workload display_name
 ```sql
 UPDATE google.assuredworkloads.workloads
 SET 
-data__labels = '{{ labels }}',
 data__billingAccount = '{{ billingAccount }}',
-data__resourceSettings = '{{ resourceSettings }}',
-data__kmsSettings = '{{ kmsSettings }}',
-data__workloadOptions = '{{ workloadOptions }}',
-data__partnerPermissions = '{{ partnerPermissions }}',
-data__etag = '{{ etag }}',
-data__partner = '{{ partner }}',
-data__name = '{{ name }}',
 data__complianceRegime = '{{ complianceRegime }}',
+data__displayName = '{{ displayName }}',
 data__enableSovereignControls = {{ enableSovereignControls }},
+data__etag = '{{ etag }}',
+data__kmsSettings = '{{ kmsSettings }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__partner = '{{ partner }}',
+data__partnerPermissions = '{{ partnerPermissions }}',
 data__partnerServicesBillingAccount = '{{ partnerServicesBillingAccount }}',
 data__provisionedResourcesParent = '{{ provisionedResourcesParent }}',
+data__resourceSettings = '{{ resourceSettings }}',
 data__violationNotificationsEnabled = {{ violationNotificationsEnabled }},
-data__displayName = '{{ displayName }}'
+data__workloadOptions = '{{ workloadOptions }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -788,31 +788,15 @@ AND etag = '{{ etag }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="restrict_allowed_resources"
+    defaultValue="analyze_workload_move"
     values={[
-        { label: 'restrict_allowed_resources', value: 'restrict_allowed_resources' },
         { label: 'analyze_workload_move', value: 'analyze_workload_move' },
-        { label: 'enable_resource_monitoring', value: 'enable_resource_monitoring' },
         { label: 'enable_compliance_updates', value: 'enable_compliance_updates' },
-        { label: 'mutate_partner_permissions', value: 'mutate_partner_permissions' }
+        { label: 'enable_resource_monitoring', value: 'enable_resource_monitoring' },
+        { label: 'mutate_partner_permissions', value: 'mutate_partner_permissions' },
+        { label: 'restrict_allowed_resources', value: 'restrict_allowed_resources' }
     ]}
 >
-<TabItem value="restrict_allowed_resources">
-
-Restrict the list of resources allowed in the Workload environment. The current list of allowed products can be found at https://cloud.google.com/assured-workloads/docs/supported-products In addition to assuredworkloads.workload.update permission, the user should also have orgpolicy.policy.set permission on the folder resource to use this functionality.
-
-```sql
-EXEC google.assuredworkloads.workloads.restrict_allowed_resources 
-@organizationsId='{{ organizationsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@workloadsId='{{ workloadsId }}' --required 
-@@json=
-'{
-"restrictionType": "{{ restrictionType }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="analyze_workload_move">
 
 Analyzes a hypothetical move of a source resource to a target workload to surface compliance risks. The analysis is best effort and is not guaranteed to be exhaustive.
@@ -822,22 +806,10 @@ EXEC google.assuredworkloads.workloads.analyze_workload_move
 @organizationsId='{{ organizationsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @workloadsId='{{ workloadsId }}' --required, 
+@assetTypes='{{ assetTypes }}', 
 @pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@project='{{ project }}', 
-@assetTypes='{{ assetTypes }}'
-;
-```
-</TabItem>
-<TabItem value="enable_resource_monitoring">
-
-Enable resource violation monitoring for a workload.
-
-```sql
-EXEC google.assuredworkloads.workloads.enable_resource_monitoring 
-@organizationsId='{{ organizationsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@workloadsId='{{ workloadsId }}' --required
+@project='{{ project }}'
 ;
 ```
 </TabItem>
@@ -847,6 +819,18 @@ This endpoint enables Assured Workloads service to offer compliance updates for 
 
 ```sql
 EXEC google.assuredworkloads.workloads.enable_compliance_updates 
+@organizationsId='{{ organizationsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@workloadsId='{{ workloadsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="enable_resource_monitoring">
+
+Enable resource violation monitoring for a workload.
+
+```sql
+EXEC google.assuredworkloads.workloads.enable_resource_monitoring 
 @organizationsId='{{ organizationsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @workloadsId='{{ workloadsId }}' --required
@@ -864,9 +848,25 @@ EXEC google.assuredworkloads.workloads.mutate_partner_permissions
 @workloadsId='{{ workloadsId }}' --required 
 @@json=
 '{
-"updateMask": "{{ updateMask }}", 
+"etag": "{{ etag }}", 
 "partnerPermissions": "{{ partnerPermissions }}", 
-"etag": "{{ etag }}"
+"updateMask": "{{ updateMask }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restrict_allowed_resources">
+
+Restrict the list of resources allowed in the Workload environment. The current list of allowed products can be found at https://cloud.google.com/assured-workloads/docs/supported-products In addition to assuredworkloads.workload.update permission, the user should also have orgpolicy.policy.set permission on the folder resource to use this functionality.
+
+```sql
+EXEC google.assuredworkloads.workloads.restrict_allowed_resources 
+@organizationsId='{{ organizationsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@workloadsId='{{ workloadsId }}' --required 
+@@json=
+'{
+"restrictionType": "{{ restrictionType }}"
 }'
 ;
 ```

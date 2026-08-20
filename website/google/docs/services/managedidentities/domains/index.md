@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists domains in a project.</td>
 </tr>
 <tr>
@@ -250,46 +250,11 @@ The following methods are available for this resource:
     <td>Deletes a domain.</td>
 </tr>
 <tr>
-    <td><a href="#disable_migration"><CopyableCode code="disable_migration" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
-    <td></td>
-    <td>Disable Domain Migration</td>
-</tr>
-<tr>
-    <td><a href="#detach_trust"><CopyableCode code="detach_trust" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
-    <td></td>
-    <td>Removes an AD trust.</td>
-</tr>
-<tr>
-    <td><a href="#validate_trust"><CopyableCode code="validate_trust" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
-    <td></td>
-    <td>Validates a trust state, that the target domain is reachable, and that the target domain is able to accept incoming trust requests.</td>
-</tr>
-<tr>
     <td><a href="#attach_trust"><CopyableCode code="attach_trust" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
     <td></td>
     <td>Adds an AD trust to a domain.</td>
-</tr>
-<tr>
-    <td><a href="#reconfigure_trust"><CopyableCode code="reconfigure_trust" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
-    <td></td>
-    <td>Updates the DNS conditional forwarder.</td>
-</tr>
-<tr>
-    <td><a href="#domain_join_machine"><CopyableCode code="domain_join_machine" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
-    <td></td>
-    <td>DomainJoinMachine API joins a Compute Engine VM to the domain</td>
 </tr>
 <tr>
     <td><a href="#check_migration_permission"><CopyableCode code="check_migration_permission" /></a></td>
@@ -299,18 +264,25 @@ The following methods are available for this resource:
     <td>CheckMigrationPermission API gets the current state of DomainMigration</td>
 </tr>
 <tr>
-    <td><a href="#reset_admin_password"><CopyableCode code="reset_admin_password" /></a></td>
+    <td><a href="#detach_trust"><CopyableCode code="detach_trust" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
     <td></td>
-    <td>Resets a domain's administrator password.</td>
+    <td>Removes an AD trust.</td>
 </tr>
 <tr>
-    <td><a href="#extend_schema"><CopyableCode code="extend_schema" /></a></td>
+    <td><a href="#disable_migration"><CopyableCode code="disable_migration" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
     <td></td>
-    <td>Extend Schema for Domain</td>
+    <td>Disable Domain Migration</td>
+</tr>
+<tr>
+    <td><a href="#domain_join_machine"><CopyableCode code="domain_join_machine" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
+    <td></td>
+    <td>DomainJoinMachine API joins a Compute Engine VM to the domain</td>
 </tr>
 <tr>
     <td><a href="#enable_migration"><CopyableCode code="enable_migration" /></a></td>
@@ -320,11 +292,39 @@ The following methods are available for this resource:
     <td>Enable Domain Migration</td>
 </tr>
 <tr>
+    <td><a href="#extend_schema"><CopyableCode code="extend_schema" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
+    <td></td>
+    <td>Extend Schema for Domain</td>
+</tr>
+<tr>
+    <td><a href="#reconfigure_trust"><CopyableCode code="reconfigure_trust" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
+    <td></td>
+    <td>Updates the DNS conditional forwarder.</td>
+</tr>
+<tr>
+    <td><a href="#reset_admin_password"><CopyableCode code="reset_admin_password" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
+    <td></td>
+    <td>Resets a domain's administrator password.</td>
+</tr>
+<tr>
     <td><a href="#restore"><CopyableCode code="restore" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
     <td></td>
     <td>RestoreDomain restores domain backup mentioned in the RestoreDomainRequest</td>
+</tr>
+<tr>
+    <td><a href="#validate_trust"><CopyableCode code="validate_trust" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
+    <td></td>
+    <td>Validates a trust state, that the target domain is reachable, and that the target domain is able to accept incoming trust requests.</td>
 </tr>
 </tbody>
 </table>
@@ -440,10 +440,10 @@ trusts,
 updateTime
 FROM google.managedidentities.domains
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -465,24 +465,24 @@ Creates a Microsoft AD domain.
 
 ```sql
 INSERT INTO google.managedidentities.domains (
-data__name,
 data__admin,
-data__reservedIpRange,
-data__locations,
-data__labels,
 data__auditLogsEnabled,
 data__authorizedNetworks,
+data__labels,
+data__locations,
+data__name,
+data__reservedIpRange,
 projectsId,
 domainName
 )
 SELECT 
-'{{ name }}',
 '{{ admin }}',
-'{{ reservedIpRange }}',
-'{{ locations }}',
-'{{ labels }}',
 {{ auditLogsEnabled }},
 '{{ authorizedNetworks }}',
+'{{ labels }}',
+'{{ locations }}',
+'{{ name }}',
+'{{ reservedIpRange }}',
 '{{ projectsId }}',
 '{{ domainName }}'
 RETURNING
@@ -502,27 +502,10 @@ response
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the domains resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. The unique name of the domain using the form: \`projects/{project_id}/locations/global/domains/{domain_name}\`.
     - name: admin
       value: "{{ admin }}"
       description: |
         Optional. The name of delegated administrator account used to perform Active Directory operations. If not specified, \`setupadmin\` will be used.
-    - name: reservedIpRange
-      value: "{{ reservedIpRange }}"
-      description: |
-        Required. The CIDR range of internal addresses that are reserved for this domain. Reserved networks must be /24 or larger. Ranges must be unique and non-overlapping with existing subnets in [Domain].[authorized_networks].
-    - name: locations
-      value:
-        - "{{ locations }}"
-      description: |
-        Required. Locations where domain needs to be provisioned. The locations can be specified according to https://cloud.google.com/compute/docs/regions-zones, such as \`us-west1\` or \`us-east4\`. Each domain supports up to 4 locations, separated by commas. Each location will use a /26 block.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Resource labels that can contain user-provided metadata.
     - name: auditLogsEnabled
       value: {{ auditLogsEnabled }}
       description: |
@@ -532,6 +515,23 @@ response
         - "{{ authorizedNetworks }}"
       description: |
         Optional. The full names of the Google Compute Engine [networks](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) the domain instance is connected to. Networks can be added using UpdateDomain. The domain is only available on networks listed in \`authorized_networks\`. If CIDR subnets overlap between networks, domain creation will fail.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels that can contain user-provided metadata.
+    - name: locations
+      value:
+        - "{{ locations }}"
+      description: |
+        Required. Locations where domain needs to be provisioned. The locations can be specified according to https://cloud.google.com/compute/docs/regions-zones, such as \`us-west1\` or \`us-east4\`. Each domain supports up to 4 locations, separated by commas. Each location will use a /26 block.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The unique name of the domain using the form: \`projects/{project_id}/locations/global/domains/{domain_name}\`.
+    - name: reservedIpRange
+      value: "{{ reservedIpRange }}"
+      description: |
+        Required. The CIDR range of internal addresses that are reserved for this domain. Reserved networks must be /24 or larger. Ranges must be unique and non-overlapping with existing subnets in [Domain].[authorized_networks].
     - name: domainName
       value: "{{ domainName }}"
 `}</CodeBlock>
@@ -555,13 +555,13 @@ Updates the metadata and configuration of a domain.
 ```sql
 UPDATE google.managedidentities.domains
 SET 
-data__name = '{{ name }}',
 data__admin = '{{ admin }}',
-data__reservedIpRange = '{{ reservedIpRange }}',
-data__locations = '{{ locations }}',
-data__labels = '{{ labels }}',
 data__auditLogsEnabled = {{ auditLogsEnabled }},
-data__authorizedNetworks = '{{ authorizedNetworks }}'
+data__authorizedNetworks = '{{ authorizedNetworks }}',
+data__labels = '{{ labels }}',
+data__locations = '{{ locations }}',
+data__name = '{{ name }}',
+data__reservedIpRange = '{{ reservedIpRange }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND domainsId = '{{ domainsId }}' --required
@@ -602,27 +602,42 @@ AND domainsId = '{{ domainsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="disable_migration"
+    defaultValue="attach_trust"
     values={[
-        { label: 'disable_migration', value: 'disable_migration' },
-        { label: 'detach_trust', value: 'detach_trust' },
-        { label: 'validate_trust', value: 'validate_trust' },
         { label: 'attach_trust', value: 'attach_trust' },
-        { label: 'reconfigure_trust', value: 'reconfigure_trust' },
-        { label: 'domain_join_machine', value: 'domain_join_machine' },
         { label: 'check_migration_permission', value: 'check_migration_permission' },
-        { label: 'reset_admin_password', value: 'reset_admin_password' },
-        { label: 'extend_schema', value: 'extend_schema' },
+        { label: 'detach_trust', value: 'detach_trust' },
+        { label: 'disable_migration', value: 'disable_migration' },
+        { label: 'domain_join_machine', value: 'domain_join_machine' },
         { label: 'enable_migration', value: 'enable_migration' },
-        { label: 'restore', value: 'restore' }
+        { label: 'extend_schema', value: 'extend_schema' },
+        { label: 'reconfigure_trust', value: 'reconfigure_trust' },
+        { label: 'reset_admin_password', value: 'reset_admin_password' },
+        { label: 'restore', value: 'restore' },
+        { label: 'validate_trust', value: 'validate_trust' }
     ]}
 >
-<TabItem value="disable_migration">
+<TabItem value="attach_trust">
 
-Disable Domain Migration
+Adds an AD trust to a domain.
 
 ```sql
-EXEC google.managedidentities.domains.disable_migration 
+EXEC google.managedidentities.domains.attach_trust 
+@projectsId='{{ projectsId }}' --required, 
+@domainsId='{{ domainsId }}' --required 
+@@json=
+'{
+"trust": "{{ trust }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="check_migration_permission">
+
+CheckMigrationPermission API gets the current state of DomainMigration
+
+```sql
+EXEC google.managedidentities.domains.check_migration_permission 
 @projectsId='{{ projectsId }}' --required, 
 @domainsId='{{ domainsId }}' --required
 ;
@@ -643,49 +658,14 @@ EXEC google.managedidentities.domains.detach_trust
 ;
 ```
 </TabItem>
-<TabItem value="validate_trust">
+<TabItem value="disable_migration">
 
-Validates a trust state, that the target domain is reachable, and that the target domain is able to accept incoming trust requests.
-
-```sql
-EXEC google.managedidentities.domains.validate_trust 
-@projectsId='{{ projectsId }}' --required, 
-@domainsId='{{ domainsId }}' --required 
-@@json=
-'{
-"trust": "{{ trust }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="attach_trust">
-
-Adds an AD trust to a domain.
+Disable Domain Migration
 
 ```sql
-EXEC google.managedidentities.domains.attach_trust 
+EXEC google.managedidentities.domains.disable_migration 
 @projectsId='{{ projectsId }}' --required, 
-@domainsId='{{ domainsId }}' --required 
-@@json=
-'{
-"trust": "{{ trust }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="reconfigure_trust">
-
-Updates the DNS conditional forwarder.
-
-```sql
-EXEC google.managedidentities.domains.reconfigure_trust 
-@projectsId='{{ projectsId }}' --required, 
-@domainsId='{{ domainsId }}' --required 
-@@json=
-'{
-"targetDomainName": "{{ targetDomainName }}", 
-"targetDnsIpAddresses": "{{ targetDnsIpAddresses }}"
-}'
+@domainsId='{{ domainsId }}' --required
 ;
 ```
 </TabItem>
@@ -699,32 +679,25 @@ EXEC google.managedidentities.domains.domain_join_machine
 @domainsId='{{ domainsId }}' --required 
 @@json=
 '{
-"vmIdToken": "{{ vmIdToken }}", 
+"force": {{ force }}, 
 "ouName": "{{ ouName }}", 
-"force": {{ force }}
+"vmIdToken": "{{ vmIdToken }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="check_migration_permission">
+<TabItem value="enable_migration">
 
-CheckMigrationPermission API gets the current state of DomainMigration
-
-```sql
-EXEC google.managedidentities.domains.check_migration_permission 
-@projectsId='{{ projectsId }}' --required, 
-@domainsId='{{ domainsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="reset_admin_password">
-
-Resets a domain's administrator password.
+Enable Domain Migration
 
 ```sql
-EXEC google.managedidentities.domains.reset_admin_password 
+EXEC google.managedidentities.domains.enable_migration 
 @projectsId='{{ projectsId }}' --required, 
-@domainsId='{{ domainsId }}' --required
+@domainsId='{{ domainsId }}' --required 
+@@json=
+'{
+"migratingDomains": "{{ migratingDomains }}"
+}'
 ;
 ```
 </TabItem>
@@ -745,18 +718,30 @@ EXEC google.managedidentities.domains.extend_schema
 ;
 ```
 </TabItem>
-<TabItem value="enable_migration">
+<TabItem value="reconfigure_trust">
 
-Enable Domain Migration
+Updates the DNS conditional forwarder.
 
 ```sql
-EXEC google.managedidentities.domains.enable_migration 
+EXEC google.managedidentities.domains.reconfigure_trust 
 @projectsId='{{ projectsId }}' --required, 
 @domainsId='{{ domainsId }}' --required 
 @@json=
 '{
-"migratingDomains": "{{ migratingDomains }}"
+"targetDnsIpAddresses": "{{ targetDnsIpAddresses }}", 
+"targetDomainName": "{{ targetDomainName }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="reset_admin_password">
+
+Resets a domain's administrator password.
+
+```sql
+EXEC google.managedidentities.domains.reset_admin_password 
+@projectsId='{{ projectsId }}' --required, 
+@domainsId='{{ domainsId }}' --required
 ;
 ```
 </TabItem>
@@ -771,6 +756,21 @@ EXEC google.managedidentities.domains.restore
 @@json=
 '{
 "backupId": "{{ backupId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="validate_trust">
+
+Validates a trust state, that the target domain is reachable, and that the target domain is able to accept incoming trust requests.
+
+```sql
+EXEC google.managedidentities.domains.validate_trust 
+@projectsId='{{ projectsId }}' --required, 
+@domainsId='{{ domainsId }}' --required 
+@@json=
+'{
+"trust": "{{ trust }}"
 }'
 ;
 ```

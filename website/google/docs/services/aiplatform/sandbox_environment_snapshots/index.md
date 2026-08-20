@@ -197,21 +197,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentSnapshotsId"><code>sandboxEnvironmentSnapshotsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentSnapshotsId"><code>sandboxEnvironmentSnapshotsId</code></a></td>
     <td></td>
     <td>Gets details of the specific SandboxEnvironmentSnapshot.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists SandboxEnvironmentSnapshots in a given reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentSnapshotsId"><code>sandboxEnvironmentSnapshotsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentSnapshotsId"><code>sandboxEnvironmentSnapshotsId</code></a></td>
     <td></td>
     <td>Deletes the specific SandboxEnvironmentSnapshot.</td>
 </tr>
@@ -231,6 +231,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-reasoningEnginesId">
     <td><CopyableCode code="reasoningEnginesId" /></td>
     <td><code>string</code></td>
@@ -286,7 +296,9 @@ sourceSandboxEnvironment,
 ttl,
 updateTime
 FROM google.aiplatform.sandbox_environment_snapshots
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
 AND sandboxEnvironmentSnapshotsId = '{{ sandboxEnvironmentSnapshotsId }}' -- required
 ;
 ```
@@ -309,10 +321,12 @@ sourceSandboxEnvironment,
 ttl,
 updateTime
 FROM google.aiplatform.sandbox_environment_snapshots
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
-AND pageToken = '{{ pageToken }}'
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -333,7 +347,9 @@ Deletes the specific SandboxEnvironmentSnapshot.
 
 ```sql
 DELETE FROM google.aiplatform.sandbox_environment_snapshots
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' --required
 AND sandboxEnvironmentSnapshotsId = '{{ sandboxEnvironmentSnapshotsId }}' --required
 ;
 ```

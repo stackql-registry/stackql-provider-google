@@ -116,6 +116,11 @@ The following fields are returned by `SELECT` queries:
     <td>User-provided description of the Service. This field currently has a 512-character limit.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="durableExecution" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Immutable. Indicates whether the Service has durable execution enabled. This field is immutable once the Service is created.</td>
+</tr>
+<tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
     <td>Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.</td>
@@ -259,6 +264,206 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The fully qualified name of this Service. In CreateServiceRequest, this field is ignored, and instead composed from CreateServiceRequest.parent and CreateServiceRequest.service_id. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/services/&#123;service_id&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="annotations" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected in new resources. All system annotations in v1 now have a corresponding field in v2 Service. This field follows Kubernetes annotations' namespacing, limits, and rules.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="binaryAuthorization" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Settings for the Binary Authorization feature. (id: GoogleCloudRunV2BinaryAuthorization)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="buildConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for building a Cloud Run function. (id: GoogleCloudRunV2BuildConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="client" /></td>
+    <td><code>string</code></td>
+    <td>Arbitrary identifier for the API client.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clientVersion" /></td>
+    <td><code>string</code></td>
+    <td>Arbitrary version identifier for the API client.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="conditions" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The Conditions of all other associated sub-resources. They contain additional diagnostics information in case the Service does not reach its Serving state. See comments in `reconciling` for additional information on reconciliation process in Cloud Run.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation time.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="creator" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Email address of the authenticated creator.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customAudiences" /></td>
+    <td><code>array</code></td>
+    <td>One or more custom audiences that you want this service to support. Specify each custom audience as the full URL in a string. The custom audiences are encoded in the token and used to authenticate requests. For more information, see https://cloud.google.com/run/docs/configuring/custom-audiences.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="defaultUriDisabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Disables public resolution of the default URI of this service.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deleteTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The deletion time. It is only populated as a response to a Delete request.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>User-provided description of the Service. This field currently has a 512-character limit.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="durableExecution" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Immutable. Indicates whether the Service has durable execution enabled. This field is immutable once the Service is created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="expireTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. For a deleted resource, the time after which it will be permanently deleted.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="generation" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. A number that monotonically increases every time the user modifies the desired state. Please note that unlike v1, this is an int64 value. As with most Google APIs, its JSON representation will be a `string` instead of an `integer`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="iapEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. IAP settings on the Service.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ingress" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Provides the ingress settings for this Service. On output, returns the currently observed ingress settings, or INGRESS_TRAFFIC_UNSPECIFIED if no revision is active. (INGRESS_TRAFFIC_UNSPECIFIED, INGRESS_TRAFFIC_ALL, INGRESS_TRAFFIC_INTERNAL_ONLY, INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER, INGRESS_TRAFFIC_NONE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="invokerIamDisabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Disables IAM permission check for run.routes.invoke for callers of this service. For more information, visit https://cloud.google.com/run/docs/securing/managing-access#invoker_check.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Service.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastModifier" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Email address of the last authenticated modifier.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="latestCreatedRevision" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Name of the last created revision. See comments in `reconciling` for additional information on reconciliation process in Cloud Run.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="latestReadyRevision" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Name of the latest revision that is serving traffic. See comments in `reconciling` for additional information on reconciliation process in Cloud Run.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="launchStage" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output. (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="multiRegionSettings" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Settings for multi-region deployment. (id: GoogleCloudRunV2MultiRegionSettings)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="observedGeneration" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. The generation of this Service currently serving traffic. See comments in `reconciling` for additional information on reconciliation process in Cloud Run. Please note that unlike v1, this is an int64 value. As with most Google APIs, its JSON representation will be a `string` instead of an `integer`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="reconciling" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Returns true if the Service is currently being acted upon by the system to bring it into the desired state. When a new Service is created, or an existing one is updated, Cloud Run will asynchronously perform all necessary steps to bring the Service to the desired serving state. This process is called reconciliation. While reconciliation is in process, `observed_generation`, `latest_ready_revision`, `traffic_statuses`, and `uri` will have transient values that might mismatch the intended state: Once reconciliation is over (and this field is false), there are two possible outcomes: reconciliation succeeded and the serving state matches the Service, or there was an error, and reconciliation failed. This state can be found in `terminal_condition.state`. If reconciliation succeeded, the following fields will match: `traffic` and `traffic_statuses`, `observed_generation` and `generation`, `latest_ready_revision` and `latest_created_revision`. If reconciliation failed, `traffic_statuses`, `observed_generation`, and `latest_ready_revision` will have the state of the last serving revision, or empty for newly created Services. Additional information on the failure can be found in `terminal_condition` and `conditions`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scaling" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Specifies service-level scaling settings (id: GoogleCloudRunV2ServiceScaling)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sshEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Enables SSH access to the Service.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="template" /></td>
+    <td><code>object</code></td>
+    <td>Required. The template used to create revisions for this Service. (id: GoogleCloudRunV2RevisionTemplate)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="terminalCondition" /></td>
+    <td><code>object</code></td>
+    <td>Defines a status condition for a resource. (id: GoogleCloudRunV2Condition)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="threatDetectionEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. True if Cloud Run Threat Detection monitoring is enabled for the parent project of this Service.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="traffic" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Specifies how to distribute traffic over a collection of Revisions belonging to the Service. If traffic is empty or not provided, defaults to 100% traffic to the latest `Ready` Revision.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="trafficStatuses" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Detailed status information for corresponding traffic targets. See comments in `reconciling` for additional information on reconciliation process in Cloud Run.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Server assigned unique identifier for the trigger. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last-modified time.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uri" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The main URI in which this Service is serving traffic.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="urls" /></td>
+    <td><code>array</code></td>
+    <td>Output only. All URLs serving traffic for this Service.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -290,7 +495,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists Services. Results are sorted by creation time, descending.</td>
 </tr>
 <tr>
@@ -304,7 +509,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-forceNewRevision"><code>forceNewRevision</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-forceNewRevision"><code>forceNewRevision</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates a Service.</td>
 </tr>
 <tr>
@@ -421,6 +626,7 @@ customAudiences,
 defaultUriDisabled,
 deleteTime,
 description,
+durableExecution,
 etag,
 expireTime,
 generation,
@@ -460,13 +666,52 @@ Lists Services. Results are sorted by creation time, descending.
 
 ```sql
 SELECT
-*
+name,
+annotations,
+binaryAuthorization,
+buildConfig,
+client,
+clientVersion,
+conditions,
+createTime,
+creator,
+customAudiences,
+defaultUriDisabled,
+deleteTime,
+description,
+durableExecution,
+etag,
+expireTime,
+generation,
+iapEnabled,
+ingress,
+invokerIamDisabled,
+labels,
+lastModifier,
+latestCreatedRevision,
+latestReadyRevision,
+launchStage,
+multiRegionSettings,
+observedGeneration,
+reconciling,
+satisfiesPzs,
+scaling,
+sshEnabled,
+template,
+terminalCondition,
+threatDetectionEnabled,
+traffic,
+trafficStatuses,
+uid,
+updateTime,
+uri,
+urls
 FROM google.run.services
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -488,52 +733,54 @@ Creates a new Service in a given project and location.
 
 ```sql
 INSERT INTO google.run.services (
-data__labels,
-data__customAudiences,
-data__clientVersion,
-data__ingress,
-data__buildConfig,
-data__invokerIamDisabled,
-data__binaryAuthorization,
-data__template,
-data__client,
-data__launchStage,
-data__etag,
-data__description,
-data__traffic,
-data__iapEnabled,
-data__scaling,
 data__annotations,
+data__binaryAuthorization,
+data__buildConfig,
+data__client,
+data__clientVersion,
+data__customAudiences,
 data__defaultUriDisabled,
+data__description,
+data__durableExecution,
+data__etag,
+data__iapEnabled,
+data__ingress,
+data__invokerIamDisabled,
+data__labels,
+data__launchStage,
 data__multiRegionSettings,
-data__sshEnabled,
 data__name,
+data__scaling,
+data__sshEnabled,
+data__template,
+data__traffic,
 projectsId,
 locationsId,
 serviceId,
 validateOnly
 )
 SELECT 
-'{{ labels }}',
-'{{ customAudiences }}',
-'{{ clientVersion }}',
-'{{ ingress }}',
-'{{ buildConfig }}',
-{{ invokerIamDisabled }},
-'{{ binaryAuthorization }}',
-'{{ template }}',
-'{{ client }}',
-'{{ launchStage }}',
-'{{ etag }}',
-'{{ description }}',
-'{{ traffic }}',
-{{ iapEnabled }},
-'{{ scaling }}',
 '{{ annotations }}',
+'{{ binaryAuthorization }}',
+'{{ buildConfig }}',
+'{{ client }}',
+'{{ clientVersion }}',
+'{{ customAudiences }}',
 {{ defaultUriDisabled }},
+'{{ description }}',
+{{ durableExecution }},
+'{{ etag }}',
+{{ iapEnabled }},
+'{{ ingress }}',
+{{ invokerIamDisabled }},
+'{{ labels }}',
+'{{ launchStage }}',
 '{{ multiRegionSettings }}',
-{{ sshEnabled }},
 '{{ name }}',
+'{{ scaling }}',
+{{ sshEnabled }},
+'{{ template }}',
+'{{ traffic }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serviceId }}',
@@ -558,243 +805,247 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the services resource.
-    - name: labels
-      value: "{{ labels }}"
+    - name: annotations
+      value: "{{ annotations }}"
       description: |
-        Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with \`run.googleapis.com\`, \`cloud.googleapis.com\`, \`serving.knative.dev\`, or \`autoscaling.knative.dev\` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Service.
-    - name: customAudiences
+        Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with \`run.googleapis.com\`, \`cloud.googleapis.com\`, \`serving.knative.dev\`, or \`autoscaling.knative.dev\` namespaces, and they will be rejected in new resources. All system annotations in v1 now have a corresponding field in v2 Service. This field follows Kubernetes annotations' namespacing, limits, and rules.
+    - name: binaryAuthorization
+      description: |
+        Optional. Settings for the Binary Authorization feature.
       value:
-        - "{{ customAudiences }}"
-      description: |
-        One or more custom audiences that you want this service to support. Specify each custom audience as the full URL in a string. The custom audiences are encoded in the token and used to authenticate requests. For more information, see https://cloud.google.com/run/docs/configuring/custom-audiences.
-    - name: clientVersion
-      value: "{{ clientVersion }}"
-      description: |
-        Arbitrary version identifier for the API client.
-    - name: ingress
-      value: "{{ ingress }}"
-      description: |
-        Optional. Provides the ingress settings for this Service. On output, returns the currently observed ingress settings, or INGRESS_TRAFFIC_UNSPECIFIED if no revision is active.
-      valid_values: ['INGRESS_TRAFFIC_UNSPECIFIED', 'INGRESS_TRAFFIC_ALL', 'INGRESS_TRAFFIC_INTERNAL_ONLY', 'INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER', 'INGRESS_TRAFFIC_NONE']
+        breakglassJustification: "{{ breakglassJustification }}"
+        policy: "{{ policy }}"
+        useDefault: {{ useDefault }}
     - name: buildConfig
       description: |
         Optional. Configuration for building a Cloud Run function.
       value:
         baseImage: "{{ baseImage }}"
-        serviceAccount: "{{ serviceAccount }}"
-        sourceLocation: "{{ sourceLocation }}"
-        name: "{{ name }}"
-        workerPool: "{{ workerPool }}"
-        functionTarget: "{{ functionTarget }}"
-        imageUri: "{{ imageUri }}"
         enableAutomaticUpdates: {{ enableAutomaticUpdates }}
         environmentVariables: "{{ environmentVariables }}"
-    - name: invokerIamDisabled
-      value: {{ invokerIamDisabled }}
-      description: |
-        Optional. Disables IAM permission check for run.routes.invoke for callers of this service. For more information, visit https://cloud.google.com/run/docs/securing/managing-access#invoker_check.
-    - name: binaryAuthorization
-      description: |
-        Optional. Settings for the Binary Authorization feature.
-      value:
-        useDefault: {{ useDefault }}
-        breakglassJustification: "{{ breakglassJustification }}"
-        policy: "{{ policy }}"
-    - name: template
-      description: |
-        Required. The template used to create revisions for this Service.
-      value:
-        volumes:
-          - gcs:
-              mountOptions:
-                - "{{ mountOptions }}"
-              readOnly: {{ readOnly }}
-              bucket: "{{ bucket }}"
-            nfs:
-              server: "{{ server }}"
-              path: "{{ path }}"
-              readOnly: {{ readOnly }}
-            cloudSqlInstance:
-              instances:
-                - "{{ instances }}"
-            emptyDir:
-              sizeLimit: "{{ sizeLimit }}"
-              medium: "{{ medium }}"
-            secret:
-              secret: "{{ secret }}"
-              items:
-                - version: "{{ version }}"
-                  mode: {{ mode }}
-                  path: "{{ path }}"
-              defaultMode: {{ defaultMode }}
-            name: "{{ name }}"
-        sessionAffinity: {{ sessionAffinity }}
-        client: "{{ client }}"
-        timeout: "{{ timeout }}"
-        serviceMesh:
-          mesh: "{{ mesh }}"
-        encryptionKeyShutdownDuration: "{{ encryptionKeyShutdownDuration }}"
-        encryptionKeyRevocationAction: "{{ encryptionKeyRevocationAction }}"
-        maxInstanceRequestConcurrency: {{ maxInstanceRequestConcurrency }}
-        vpcAccess:
-          egress: "{{ egress }}"
-          networkInterfaces:
-            - tags: "{{ tags }}"
-              network: "{{ network }}"
-              subnetwork: "{{ subnetwork }}"
-          connector: "{{ connector }}"
-        revision: "{{ revision }}"
-        healthCheckDisabled: {{ healthCheckDisabled }}
-        annotations: "{{ annotations }}"
-        nodeSelector:
-          accelerator: "{{ accelerator }}"
-        scaling:
-          minInstanceCount: {{ minInstanceCount }}
-          maxInstanceCount: {{ maxInstanceCount }}
-          cpuUtilization: {{ cpuUtilization }}
-          concurrencyUtilization: {{ concurrencyUtilization }}
-        encryptionKey: "{{ encryptionKey }}"
+        functionTarget: "{{ functionTarget }}"
+        imageUri: "{{ imageUri }}"
+        name: "{{ name }}"
         serviceAccount: "{{ serviceAccount }}"
-        containers:
-          - readinessProbe:
-              timeoutSeconds: {{ timeoutSeconds }}
-              grpc:
-                port: {{ port }}
-                service: "{{ service }}"
-              periodSeconds: {{ periodSeconds }}
-              initialDelaySeconds: {{ initialDelaySeconds }}
-              failureThreshold: {{ failureThreshold }}
-              httpGet:
-                port: {{ port }}
-                path: "{{ path }}"
-                httpHeaders:
-                  - name: "{{ name }}"
-                    value: "{{ value }}"
-              tcpSocket:
-                port: {{ port }}
-            ports: "{{ ports }}"
-            command: "{{ command }}"
-            env: "{{ env }}"
-            resources:
-              startupCpuBoost: {{ startupCpuBoost }}
-              limits: "{{ limits }}"
-              cpuIdle: {{ cpuIdle }}
-            livenessProbe:
-              timeoutSeconds: {{ timeoutSeconds }}
-              grpc:
-                port: {{ port }}
-                service: "{{ service }}"
-              periodSeconds: {{ periodSeconds }}
-              initialDelaySeconds: {{ initialDelaySeconds }}
-              failureThreshold: {{ failureThreshold }}
-              httpGet:
-                port: {{ port }}
-                path: "{{ path }}"
-                httpHeaders:
-                  - name: "{{ name }}"
-                    value: "{{ value }}"
-              tcpSocket:
-                port: {{ port }}
-            image: "{{ image }}"
-            args: "{{ args }}"
-            sourceCode:
-              inlinedSource:
-                sources:
-                  - content: "{{ content }}"
-                    filename: "{{ filename }}"
-              cloudStorageSource:
-                generation: "{{ generation }}"
-                bucket: "{{ bucket }}"
-                object: "{{ object }}"
-            name: "{{ name }}"
-            workingDir: "{{ workingDir }}"
-            startupProbe:
-              timeoutSeconds: {{ timeoutSeconds }}
-              grpc:
-                port: {{ port }}
-                service: "{{ service }}"
-              periodSeconds: {{ periodSeconds }}
-              initialDelaySeconds: {{ initialDelaySeconds }}
-              failureThreshold: {{ failureThreshold }}
-              httpGet:
-                port: {{ port }}
-                path: "{{ path }}"
-                httpHeaders:
-                  - name: "{{ name }}"
-                    value: "{{ value }}"
-              tcpSocket:
-                port: {{ port }}
-            dependsOn: "{{ dependsOn }}"
-            sandboxLauncher: {{ sandboxLauncher }}
-            volumeMounts: "{{ volumeMounts }}"
-            baseImageUri: "{{ baseImageUri }}"
-            buildInfo:
-              sourceLocation: "{{ sourceLocation }}"
-              functionTarget: "{{ functionTarget }}"
-        clientVersion: "{{ clientVersion }}"
-        executionEnvironment: "{{ executionEnvironment }}"
-        labels: "{{ labels }}"
-        gpuZonalRedundancyDisabled: {{ gpuZonalRedundancyDisabled }}
+        sourceLocation: "{{ sourceLocation }}"
+        workerPool: "{{ workerPool }}"
     - name: client
       value: "{{ client }}"
       description: |
         Arbitrary identifier for the API client.
+    - name: clientVersion
+      value: "{{ clientVersion }}"
+      description: |
+        Arbitrary version identifier for the API client.
+    - name: customAudiences
+      value:
+        - "{{ customAudiences }}"
+      description: |
+        One or more custom audiences that you want this service to support. Specify each custom audience as the full URL in a string. The custom audiences are encoded in the token and used to authenticate requests. For more information, see https://cloud.google.com/run/docs/configuring/custom-audiences.
+    - name: defaultUriDisabled
+      value: {{ defaultUriDisabled }}
+      description: |
+        Optional. Disables public resolution of the default URI of this service.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User-provided description of the Service. This field currently has a 512-character limit.
+    - name: durableExecution
+      value: {{ durableExecution }}
+      description: |
+        Optional. Immutable. Indicates whether the Service has durable execution enabled. This field is immutable once the Service is created.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
+    - name: iapEnabled
+      value: {{ iapEnabled }}
+      description: |
+        Optional. IAP settings on the Service.
+    - name: ingress
+      value: "{{ ingress }}"
+      description: |
+        Optional. Provides the ingress settings for this Service. On output, returns the currently observed ingress settings, or INGRESS_TRAFFIC_UNSPECIFIED if no revision is active.
+      valid_values: ['INGRESS_TRAFFIC_UNSPECIFIED', 'INGRESS_TRAFFIC_ALL', 'INGRESS_TRAFFIC_INTERNAL_ONLY', 'INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER', 'INGRESS_TRAFFIC_NONE']
+    - name: invokerIamDisabled
+      value: {{ invokerIamDisabled }}
+      description: |
+        Optional. Disables IAM permission check for run.routes.invoke for callers of this service. For more information, visit https://cloud.google.com/run/docs/securing/managing-access#invoker_check.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with \`run.googleapis.com\`, \`cloud.googleapis.com\`, \`serving.knative.dev\`, or \`autoscaling.knative.dev\` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Service.
     - name: launchStage
       value: "{{ launchStage }}"
       description: |
         Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports \`ALPHA\`, \`BETA\`, and \`GA\`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.
       valid_values: ['LAUNCH_STAGE_UNSPECIFIED', 'UNIMPLEMENTED', 'PRELAUNCH', 'EARLY_ACCESS', 'ALPHA', 'BETA', 'GA', 'DEPRECATED']
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        User-provided description of the Service. This field currently has a 512-character limit.
-    - name: traffic
-      description: |
-        Optional. Specifies how to distribute traffic over a collection of Revisions belonging to the Service. If traffic is empty or not provided, defaults to 100% traffic to the latest \`Ready\` Revision.
-      value:
-        - type: "{{ type }}"
-          percent: {{ percent }}
-          tag: "{{ tag }}"
-          revision: "{{ revision }}"
-    - name: iapEnabled
-      value: {{ iapEnabled }}
-      description: |
-        Optional. IAP settings on the Service.
-    - name: scaling
-      description: |
-        Optional. Specifies service-level scaling settings
-      value:
-        maxInstanceCount: {{ maxInstanceCount }}
-        manualInstanceCount: {{ manualInstanceCount }}
-        minInstanceCount: {{ minInstanceCount }}
-        scalingMode: "{{ scalingMode }}"
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with \`run.googleapis.com\`, \`cloud.googleapis.com\`, \`serving.knative.dev\`, or \`autoscaling.knative.dev\` namespaces, and they will be rejected in new resources. All system annotations in v1 now have a corresponding field in v2 Service. This field follows Kubernetes annotations' namespacing, limits, and rules.
-    - name: defaultUriDisabled
-      value: {{ defaultUriDisabled }}
-      description: |
-        Optional. Disables public resolution of the default URI of this service.
     - name: multiRegionSettings
       description: |
         Optional. Settings for multi-region deployment.
       value:
+        multiRegionId: "{{ multiRegionId }}"
         regions:
           - "{{ regions }}"
-        multiRegionId: "{{ multiRegionId }}"
-    - name: sshEnabled
-      value: {{ sshEnabled }}
-      description: |
-        Optional. Enables SSH access to the Service.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. The fully qualified name of this Service. In CreateServiceRequest, this field is ignored, and instead composed from CreateServiceRequest.parent and CreateServiceRequest.service_id. Format: projects/{project}/locations/{location}/services/{service_id}
+    - name: scaling
+      description: |
+        Optional. Specifies service-level scaling settings
+      value:
+        manualInstanceCount: {{ manualInstanceCount }}
+        maxInstanceCount: {{ maxInstanceCount }}
+        minInstanceCount: {{ minInstanceCount }}
+        scalingMode: "{{ scalingMode }}"
+    - name: sshEnabled
+      value: {{ sshEnabled }}
+      description: |
+        Optional. Enables SSH access to the Service.
+    - name: template
+      description: |
+        Required. The template used to create revisions for this Service.
+      value:
+        annotations: "{{ annotations }}"
+        client: "{{ client }}"
+        clientVersion: "{{ clientVersion }}"
+        containers:
+          - args: "{{ args }}"
+            baseImageUri: "{{ baseImageUri }}"
+            buildInfo:
+              functionTarget: "{{ functionTarget }}"
+              sourceLocation: "{{ sourceLocation }}"
+            command: "{{ command }}"
+            dependsOn: "{{ dependsOn }}"
+            env: "{{ env }}"
+            image: "{{ image }}"
+            livenessProbe:
+              failureThreshold: {{ failureThreshold }}
+              grpc:
+                port: {{ port }}
+                service: "{{ service }}"
+              httpGet:
+                httpHeaders:
+                  - name: "{{ name }}"
+                    value: "{{ value }}"
+                path: "{{ path }}"
+                port: {{ port }}
+              initialDelaySeconds: {{ initialDelaySeconds }}
+              periodSeconds: {{ periodSeconds }}
+              tcpSocket:
+                port: {{ port }}
+              timeoutSeconds: {{ timeoutSeconds }}
+            name: "{{ name }}"
+            ports: "{{ ports }}"
+            readinessProbe:
+              failureThreshold: {{ failureThreshold }}
+              grpc:
+                port: {{ port }}
+                service: "{{ service }}"
+              httpGet:
+                httpHeaders:
+                  - name: "{{ name }}"
+                    value: "{{ value }}"
+                path: "{{ path }}"
+                port: {{ port }}
+              initialDelaySeconds: {{ initialDelaySeconds }}
+              periodSeconds: {{ periodSeconds }}
+              tcpSocket:
+                port: {{ port }}
+              timeoutSeconds: {{ timeoutSeconds }}
+            resources:
+              cpuIdle: {{ cpuIdle }}
+              limits: "{{ limits }}"
+              startupCpuBoost: {{ startupCpuBoost }}
+            sandboxLauncher: {{ sandboxLauncher }}
+            sourceCode:
+              cloudStorageSource:
+                bucket: "{{ bucket }}"
+                generation: "{{ generation }}"
+                object: "{{ object }}"
+              inlinedSource:
+                sources:
+                  - content: "{{ content }}"
+                    filename: "{{ filename }}"
+            startupProbe:
+              failureThreshold: {{ failureThreshold }}
+              grpc:
+                port: {{ port }}
+                service: "{{ service }}"
+              httpGet:
+                httpHeaders:
+                  - name: "{{ name }}"
+                    value: "{{ value }}"
+                path: "{{ path }}"
+                port: {{ port }}
+              initialDelaySeconds: {{ initialDelaySeconds }}
+              periodSeconds: {{ periodSeconds }}
+              tcpSocket:
+                port: {{ port }}
+              timeoutSeconds: {{ timeoutSeconds }}
+            volumeMounts: "{{ volumeMounts }}"
+            workingDir: "{{ workingDir }}"
+        encryptionKey: "{{ encryptionKey }}"
+        encryptionKeyRevocationAction: "{{ encryptionKeyRevocationAction }}"
+        encryptionKeyShutdownDuration: "{{ encryptionKeyShutdownDuration }}"
+        executionEnvironment: "{{ executionEnvironment }}"
+        gpuZonalRedundancyDisabled: {{ gpuZonalRedundancyDisabled }}
+        healthCheckDisabled: {{ healthCheckDisabled }}
+        labels: "{{ labels }}"
+        maxInstanceRequestConcurrency: {{ maxInstanceRequestConcurrency }}
+        nodeSelector:
+          accelerator: "{{ accelerator }}"
+        revision: "{{ revision }}"
+        scaling:
+          concurrencyUtilization: {{ concurrencyUtilization }}
+          cpuUtilization: {{ cpuUtilization }}
+          maxInstanceCount: {{ maxInstanceCount }}
+          minInstanceCount: {{ minInstanceCount }}
+        serviceAccount: "{{ serviceAccount }}"
+        serviceMesh:
+          mesh: "{{ mesh }}"
+        sessionAffinity: {{ sessionAffinity }}
+        timeout: "{{ timeout }}"
+        volumes:
+          - cloudSqlInstance:
+              instances:
+                - "{{ instances }}"
+            emptyDir:
+              medium: "{{ medium }}"
+              sizeLimit: "{{ sizeLimit }}"
+            gcs:
+              bucket: "{{ bucket }}"
+              mountOptions:
+                - "{{ mountOptions }}"
+              readOnly: {{ readOnly }}
+            name: "{{ name }}"
+            nfs:
+              path: "{{ path }}"
+              readOnly: {{ readOnly }}
+              server: "{{ server }}"
+            secret:
+              defaultMode: {{ defaultMode }}
+              items:
+                - mode: {{ mode }}
+                  path: "{{ path }}"
+                  version: "{{ version }}"
+              secret: "{{ secret }}"
+        vpcAccess:
+          connector: "{{ connector }}"
+          egress: "{{ egress }}"
+          networkInterfaces:
+            - network: "{{ network }}"
+              subnetwork: "{{ subnetwork }}"
+              tags: "{{ tags }}"
+    - name: traffic
+      description: |
+        Optional. Specifies how to distribute traffic over a collection of Revisions belonging to the Service. If traffic is empty or not provided, defaults to 100% traffic to the latest \`Ready\` Revision.
+      value:
+        - percent: {{ percent }}
+          revision: "{{ revision }}"
+          tag: "{{ tag }}"
+          type: "{{ type }}"
     - name: serviceId
       value: "{{ serviceId }}"
     - name: validateOnly
@@ -820,34 +1071,35 @@ Updates a Service.
 ```sql
 UPDATE google.run.services
 SET 
-data__labels = '{{ labels }}',
-data__customAudiences = '{{ customAudiences }}',
-data__clientVersion = '{{ clientVersion }}',
-data__ingress = '{{ ingress }}',
-data__buildConfig = '{{ buildConfig }}',
-data__invokerIamDisabled = {{ invokerIamDisabled }},
-data__binaryAuthorization = '{{ binaryAuthorization }}',
-data__template = '{{ template }}',
-data__client = '{{ client }}',
-data__launchStage = '{{ launchStage }}',
-data__etag = '{{ etag }}',
-data__description = '{{ description }}',
-data__traffic = '{{ traffic }}',
-data__iapEnabled = {{ iapEnabled }},
-data__scaling = '{{ scaling }}',
 data__annotations = '{{ annotations }}',
+data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__buildConfig = '{{ buildConfig }}',
+data__client = '{{ client }}',
+data__clientVersion = '{{ clientVersion }}',
+data__customAudiences = '{{ customAudiences }}',
 data__defaultUriDisabled = {{ defaultUriDisabled }},
+data__description = '{{ description }}',
+data__durableExecution = {{ durableExecution }},
+data__etag = '{{ etag }}',
+data__iapEnabled = {{ iapEnabled }},
+data__ingress = '{{ ingress }}',
+data__invokerIamDisabled = {{ invokerIamDisabled }},
+data__labels = '{{ labels }}',
+data__launchStage = '{{ launchStage }}',
 data__multiRegionSettings = '{{ multiRegionSettings }}',
+data__name = '{{ name }}',
+data__scaling = '{{ scaling }}',
 data__sshEnabled = {{ sshEnabled }},
-data__name = '{{ name }}'
+data__template = '{{ template }}',
+data__traffic = '{{ traffic }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
+AND allowMissing = {{ allowMissing}}
 AND forceNewRevision = {{ forceNewRevision}}
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
-AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 done,

@@ -62,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>A configuration represents a behavior an engine should follow when producing new findings. (id: Configuration)</td>
+    <td>The snapshot of the configuration (id: Configuration)</td>
 </tr>
 </tbody>
 </table>
@@ -88,7 +88,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-configurationsId"><code>configurationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List configuration revisions that meet the filter criteria.</td>
 </tr>
 </tbody>
@@ -160,10 +160,10 @@ snapshot
 FROM google.threatintelligence.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND configurationsId = '{{ configurationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

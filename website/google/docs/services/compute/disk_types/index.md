@@ -133,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Output only. [Output Only] Type of resource. Always compute#diskTypeList for disk types. (default: compute#diskTypeList)</td>
+    <td>Output only. [Output Only] Type of resource. Alwayscompute#regionDiskTypeList for region disk types. (default: compute#regionDiskTypeList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
@@ -242,22 +242,22 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-diskType"><code>diskType</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-diskType"><code>diskType</code></a></td>
     <td></td>
-    <td>Returns the specified disk type.</td>
+    <td>Returns the specified regional disk type.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of disk types available to the specified<br />project.</td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves a list of regional disk types available to the specified project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of disk types.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 </tbody>
@@ -286,8 +286,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-zone">
-    <td><CopyableCode code="zone" /></td>
+<tr id="parameter-region">
+    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -341,7 +341,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Returns the specified disk type.
+Returns the specified regional disk type.
 
 ```sql
 SELECT
@@ -358,14 +358,14 @@ validDiskSize,
 zone
 FROM google.compute.disk_types
 WHERE project = '{{ project }}' -- required
-AND zone = '{{ zone }}' -- required
+AND region = '{{ region }}' -- required
 AND diskType = '{{ diskType }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Retrieves a list of disk types available to the specified<br />project.
+Retrieves a list of regional disk types available to the specified project.
 
 ```sql
 SELECT
@@ -377,11 +377,11 @@ selfLink,
 warning
 FROM google.compute.disk_types
 WHERE project = '{{ project }}' -- required
-AND zone = '{{ zone }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
+AND region = '{{ region }}' -- required
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -405,13 +405,13 @@ validDiskSize,
 zone
 FROM google.compute.disk_types
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>

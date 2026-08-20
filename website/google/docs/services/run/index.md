@@ -18,7 +18,7 @@ run service documentation.
 
 :::info[Service Summary]
 
-total resources: __14__  
+total resources: __15__  
 
 :::
 
@@ -31,13 +31,14 @@ total resources: __14__
 <a href="/services/run/instances_iam_policies/">instances_iam_policies</a><br />
 <a href="/services/run/jobs/">jobs</a><br />
 <a href="/services/run/jobs_iam_policies/">jobs_iam_policies</a><br />
-<a href="/services/run/locations/">locations</a>
+<a href="/services/run/locations/">locations</a><br />
+<a href="/services/run/operations/">operations</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/run/operations/">operations</a><br />
 <a href="/services/run/revisions/">revisions</a><br />
 <a href="/services/run/services/">services</a><br />
 <a href="/services/run/services_iam_policies/">services_iam_policies</a><br />
+<a href="/services/run/source_uploads/">source_uploads</a><br />
 <a href="/services/run/tasks/">tasks</a><br />
 <a href="/services/run/worker_pools/">worker_pools</a><br />
 <a href="/services/run/worker_pools_iam_policies/">worker_pools_iam_policies</a>

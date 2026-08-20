@@ -415,7 +415,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists/Searches devices.</td>
 </tr>
 <tr>
@@ -433,18 +433,18 @@ The following methods are available for this resource:
     <td>Deletes the specified device.</td>
 </tr>
 <tr>
-    <td><a href="#wipe"><CopyableCode code="wipe" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-devicesId"><code>devicesId</code></a></td>
-    <td></td>
-    <td>Wipes all data on the specified device.</td>
-</tr>
-<tr>
     <td><a href="#cancel_wipe"><CopyableCode code="cancel_wipe" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a></td>
     <td></td>
     <td>Cancels an unfinished device wipe. This operation can be used to cancel device wipe in the gap between the wipe operation returning success and the device being wiped. This operation is possible when the device is in a "pending wipe" state. The device enters the "pending wipe" state when a wipe device command is issued, but has not yet been sent to the device. The cancel wipe will fail if the wipe command has already been issued to the device.</td>
+</tr>
+<tr>
+    <td><a href="#wipe"><CopyableCode code="wipe" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td></td>
+    <td>Wipes all data on the specified device.</td>
 </tr>
 </tbody>
 </table>
@@ -593,11 +593,11 @@ unifiedDeviceId,
 wifiMacAddresses
 FROM google.cloudidentity.devices
 WHERE customer = '{{ customer }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -619,20 +619,20 @@ Creates a device. Only company-owned device may be created. **Note**: This metho
 
 ```sql
 INSERT INTO google.cloudidentity.devices (
-data__deviceId,
-data__serialNumber,
 data__assetTag,
-data__lastSyncTime,
+data__deviceId,
 data__hostname,
+data__lastSyncTime,
+data__serialNumber,
 data__wifiMacAddresses,
 customer
 )
 SELECT 
-'{{ deviceId }}',
-'{{ serialNumber }}',
 '{{ assetTag }}',
-'{{ lastSyncTime }}',
+'{{ deviceId }}',
 '{{ hostname }}',
+'{{ lastSyncTime }}',
+'{{ serialNumber }}',
 '{{ wifiMacAddresses }}',
 '{{ customer }}'
 RETURNING
@@ -649,26 +649,26 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: devices
   props:
-    - name: deviceId
-      value: "{{ deviceId }}"
-      description: |
-        Unique identifier for the device.
-    - name: serialNumber
-      value: "{{ serialNumber }}"
-      description: |
-        Serial Number of device. Example: HT82V1A01076.
     - name: assetTag
       value: "{{ assetTag }}"
       description: |
         Asset tag of the device.
-    - name: lastSyncTime
-      value: "{{ lastSyncTime }}"
+    - name: deviceId
+      value: "{{ deviceId }}"
       description: |
-        Most recent time when device synced with this service.
+        Unique identifier for the device.
     - name: hostname
       value: "{{ hostname }}"
       description: |
         Host name of the device.
+    - name: lastSyncTime
+      value: "{{ lastSyncTime }}"
+      description: |
+        Most recent time when device synced with this service.
+    - name: serialNumber
+      value: "{{ serialNumber }}"
+      description: |
+        Serial Number of device. Example: HT82V1A01076.
     - name: wifiMacAddresses
       value:
         - "{{ wifiMacAddresses }}"
@@ -707,12 +707,26 @@ AND customer = '{{ customer }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="wipe"
+    defaultValue="cancel_wipe"
     values={[
-        { label: 'wipe', value: 'wipe' },
-        { label: 'cancel_wipe', value: 'cancel_wipe' }
+        { label: 'cancel_wipe', value: 'cancel_wipe' },
+        { label: 'wipe', value: 'wipe' }
     ]}
 >
+<TabItem value="cancel_wipe">
+
+Cancels an unfinished device wipe. This operation can be used to cancel device wipe in the gap between the wipe operation returning success and the device being wiped. This operation is possible when the device is in a "pending wipe" state. The device enters the "pending wipe" state when a wipe device command is issued, but has not yet been sent to the device. The cancel wipe will fail if the wipe command has already been issued to the device.
+
+```sql
+EXEC google.cloudidentity.devices.cancel_wipe 
+@devicesId='{{ devicesId }}' --required 
+@@json=
+'{
+"customer": "{{ customer }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="wipe">
 
 Wipes all data on the specified device.
@@ -724,20 +738,6 @@ EXEC google.cloudidentity.devices.wipe
 '{
 "customer": "{{ customer }}", 
 "removeResetLock": {{ removeResetLock }}
-}'
-;
-```
-</TabItem>
-<TabItem value="cancel_wipe">
-
-Cancels an unfinished device wipe. This operation can be used to cancel device wipe in the gap between the wipe operation returning success and the device being wiped. This operation is possible when the device is in a "pending wipe" state. The device enters the "pending wipe" state when a wipe device command is issued, but has not yet been sent to the device. The cancel wipe will fail if the wipe command has already been issued to the device.
-
-```sql
-EXEC google.cloudidentity.devices.cancel_wipe 
-@devicesId='{{ devicesId }}' --required 
-@@json=
-'{
-"customer": "{{ customer }}"
 }'
 ;
 ```

@@ -374,28 +374,28 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.examples (
-data__playbookOutput,
-data__displayName,
-data__conversationState,
-data__name,
-data__languageCode,
-data__playbookInput,
-data__description,
 data__actions,
+data__conversationState,
+data__description,
+data__displayName,
+data__languageCode,
+data__name,
+data__playbookInput,
+data__playbookOutput,
 projectsId,
 locationsId,
 agentsId,
 playbooksId
 )
 SELECT 
-'{{ playbookOutput }}',
-'{{ displayName }}',
-'{{ conversationState }}',
-'{{ name }}',
-'{{ languageCode }}',
-'{{ playbookInput }}',
-'{{ description }}',
 '{{ actions }}',
+'{{ conversationState }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ languageCode }}',
+'{{ name }}',
+'{{ playbookInput }}',
+'{{ playbookOutput }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}',
@@ -432,39 +432,9 @@ updateTime
     - name: playbooksId
       value: "{{ playbooksId }}"
       description: Required parameter for the examples resource.
-    - name: playbookOutput
-      value:
-        executionSummary: "{{ executionSummary }}"
-    - name: displayName
-      value: "{{ displayName }}"
-    - name: conversationState
-      value: "{{ conversationState }}"
-      valid_values: ['OUTPUT_STATE_UNSPECIFIED', 'OUTPUT_STATE_OK', 'OUTPUT_STATE_CANCELLED', 'OUTPUT_STATE_FAILED', 'OUTPUT_STATE_ESCALATED', 'OUTPUT_STATE_PENDING']
-    - name: name
-      value: "{{ name }}"
-    - name: languageCode
-      value: "{{ languageCode }}"
-    - name: playbookInput
-      value:
-        precedingConversationSummary: "{{ precedingConversationSummary }}"
-    - name: description
-      value: "{{ description }}"
     - name: actions
       value:
-        - userUtterance:
-            text: "{{ text }}"
-          playbookInvocation:
-            displayName: "{{ displayName }}"
-            playbookOutput:
-              executionSummary: "{{ executionSummary }}"
-            playbook: "{{ playbook }}"
-            playbookState: "{{ playbookState }}"
-            playbookInput:
-              precedingConversationSummary: "{{ precedingConversationSummary }}"
-          playbookTransition:
-            playbook: "{{ playbook }}"
-            displayName: "{{ displayName }}"
-          agentUtterance:
+        - agentUtterance:
             text: "{{ text }}"
           flowInvocation:
             displayName: "{{ displayName }}"
@@ -473,12 +443,42 @@ updateTime
           flowTransition:
             displayName: "{{ displayName }}"
             flow: "{{ flow }}"
+          playbookInvocation:
+            displayName: "{{ displayName }}"
+            playbook: "{{ playbook }}"
+            playbookInput:
+              precedingConversationSummary: "{{ precedingConversationSummary }}"
+            playbookOutput:
+              executionSummary: "{{ executionSummary }}"
+            playbookState: "{{ playbookState }}"
+          playbookTransition:
+            displayName: "{{ displayName }}"
+            playbook: "{{ playbook }}"
           toolUse:
-            tool: "{{ tool }}"
+            action: "{{ action }}"
             displayName: "{{ displayName }}"
             inputActionParameters: "{{ inputActionParameters }}"
-            action: "{{ action }}"
             outputActionParameters: "{{ outputActionParameters }}"
+            tool: "{{ tool }}"
+          userUtterance:
+            text: "{{ text }}"
+    - name: conversationState
+      value: "{{ conversationState }}"
+      valid_values: ['OUTPUT_STATE_UNSPECIFIED', 'OUTPUT_STATE_OK', 'OUTPUT_STATE_CANCELLED', 'OUTPUT_STATE_FAILED', 'OUTPUT_STATE_ESCALATED', 'OUTPUT_STATE_PENDING']
+    - name: description
+      value: "{{ description }}"
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: languageCode
+      value: "{{ languageCode }}"
+    - name: name
+      value: "{{ name }}"
+    - name: playbookInput
+      value:
+        precedingConversationSummary: "{{ precedingConversationSummary }}"
+    - name: playbookOutput
+      value:
+        executionSummary: "{{ executionSummary }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -500,14 +500,14 @@ No description available.
 ```sql
 UPDATE google.dialogflow.examples
 SET 
-data__playbookOutput = '{{ playbookOutput }}',
-data__displayName = '{{ displayName }}',
+data__actions = '{{ actions }}',
 data__conversationState = '{{ conversationState }}',
-data__name = '{{ name }}',
-data__languageCode = '{{ languageCode }}',
-data__playbookInput = '{{ playbookInput }}',
 data__description = '{{ description }}',
-data__actions = '{{ actions }}'
+data__displayName = '{{ displayName }}',
+data__languageCode = '{{ languageCode }}',
+data__name = '{{ name }}',
+data__playbookInput = '{{ playbookInput }}',
+data__playbookOutput = '{{ playbookOutput }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

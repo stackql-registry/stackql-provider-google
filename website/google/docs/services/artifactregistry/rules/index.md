@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists rules.</td>
 </tr>
 <tr>
@@ -271,8 +271,8 @@ FROM google.artifactregistry.rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -294,22 +294,22 @@ Creates a rule.
 
 ```sql
 INSERT INTO google.artifactregistry.rules (
-data__packageId,
-data__name,
-data__condition,
 data__action,
+data__condition,
+data__name,
 data__operation,
+data__packageId,
 projectsId,
 locationsId,
 repositoriesId,
 ruleId
 )
 SELECT 
-'{{ packageId }}',
-'{{ name }}',
-'{{ condition }}',
 '{{ action }}',
+'{{ condition }}',
+'{{ name }}',
 '{{ operation }}',
+'{{ packageId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -337,30 +337,30 @@ packageId
     - name: repositoriesId
       value: "{{ repositoriesId }}"
       description: Required parameter for the rules resource.
-    - name: packageId
-      value: "{{ packageId }}"
-      description: |
-        The package ID the rule applies to. If empty, this rule applies to all packages inside the repository.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of the rule, for example: \`projects/p1/locations/us-central1/repositories/repo1/rules/rule1\`.
-    - name: condition
-      description: |
-        Optional. A CEL expression for conditions that must be met in order for the rule to apply. If not provided, the rule matches all objects.
-      value:
-        location: "{{ location }}"
-        expression: "{{ expression }}"
-        title: "{{ title }}"
-        description: "{{ description }}"
     - name: action
       value: "{{ action }}"
       description: |
         The action this rule takes.
       valid_values: ['ACTION_UNSPECIFIED', 'ALLOW', 'DENY']
+    - name: condition
+      description: |
+        Optional. A CEL expression for conditions that must be met in order for the rule to apply. If not provided, the rule matches all objects.
+      value:
+        description: "{{ description }}"
+        expression: "{{ expression }}"
+        location: "{{ location }}"
+        title: "{{ title }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the rule, for example: \`projects/p1/locations/us-central1/repositories/repo1/rules/rule1\`.
     - name: operation
       value: "{{ operation }}"
       valid_values: ['OPERATION_UNSPECIFIED', 'DOWNLOAD']
+    - name: packageId
+      value: "{{ packageId }}"
+      description: |
+        The package ID the rule applies to. If empty, this rule applies to all packages inside the repository.
     - name: ruleId
       value: "{{ ruleId }}"
 `}</CodeBlock>
@@ -384,11 +384,11 @@ Updates a rule.
 ```sql
 UPDATE google.artifactregistry.rules
 SET 
-data__packageId = '{{ packageId }}',
-data__name = '{{ name }}',
-data__condition = '{{ condition }}',
 data__action = '{{ action }}',
-data__operation = '{{ operation }}'
+data__condition = '{{ condition }}',
+data__name = '{{ name }}',
+data__operation = '{{ operation }}',
+data__packageId = '{{ packageId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_mirroring_endpoint_group_associations_list"><CopyableCode code="projects_locations_mirroring_endpoint_group_associations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists associations in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
@@ -351,10 +351,10 @@ updateTime
 FROM google.networksecurity.mirroring_endpoint_group_associations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -376,20 +376,20 @@ Creates an association in a given project and location. See https://google.aip.d
 
 ```sql
 INSERT INTO google.networksecurity.mirroring_endpoint_group_associations (
-data__network,
 data__labels,
 data__mirroringEndpointGroup,
 data__name,
+data__network,
 projectsId,
 locationsId,
 mirroringEndpointGroupAssociationId,
 requestId
 )
 SELECT 
-'{{ network }}',
 '{{ labels }}',
 '{{ mirroringEndpointGroup }}',
 '{{ name }}',
+'{{ network }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ mirroringEndpointGroupAssociationId }}',
@@ -414,10 +414,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the mirroring_endpoint_group_associations resource.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Immutable. The VPC network that is associated. for example: \`projects/123456789/global/networks/my-network\`. See https://google.aip.dev/124.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -430,6 +426,10 @@ response
       value: "{{ name }}"
       description: |
         Immutable. Identifier. The resource name of this endpoint group association, for example: \`projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-eg-association\`. See https://google.aip.dev/122 for more details.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Immutable. The VPC network that is associated. for example: \`projects/123456789/global/networks/my-network\`. See https://google.aip.dev/124.
     - name: mirroringEndpointGroupAssociationId
       value: "{{ mirroringEndpointGroupAssociationId }}"
     - name: requestId
@@ -455,10 +455,10 @@ Updates an association. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.mirroring_endpoint_group_associations
 SET 
-data__network = '{{ network }}',
 data__labels = '{{ labels }}',
 data__mirroringEndpointGroup = '{{ mirroringEndpointGroup }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__network = '{{ network }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

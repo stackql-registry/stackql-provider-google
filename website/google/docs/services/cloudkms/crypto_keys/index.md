@@ -222,7 +222,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a></td>
-    <td><a href="#parameter-trustedWrappingEnabled"><code>trustedWrappingEnabled</code></a>, <a href="#parameter-cryptoKeyId"><code>cryptoKeyId</code></a>, <a href="#parameter-skipInitialVersionCreation"><code>skipInitialVersionCreation</code></a></td>
+    <td><a href="#parameter-cryptoKeyId"><code>cryptoKeyId</code></a>, <a href="#parameter-skipInitialVersionCreation"><code>skipInitialVersionCreation</code></a>, <a href="#parameter-trustedWrappingEnabled"><code>trustedWrappingEnabled</code></a></td>
     <td>Create a new CryptoKey within a KeyRing. CryptoKey.purpose and CryptoKey.version_template.algorithm are required.</td>
 </tr>
 <tr>
@@ -240,13 +240,6 @@ The following methods are available for this resource:
     <td>Permanently deletes the given CryptoKey. All child CryptoKeyVersions must have been previously deleted using KeyManagementService.DeleteCryptoKeyVersion. The specified crypto key will be immediately and permanently deleted upon calling this method. This action cannot be undone.</td>
 </tr>
 <tr>
-    <td><a href="#update_primary_version"><CopyableCode code="update_primary_version" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
-    <td></td>
-    <td>Update the version of a CryptoKey that will be used in Encrypt. Returns an error if called on a key whose purpose is not ENCRYPT_DECRYPT.</td>
-</tr>
-<tr>
     <td><a href="#decrypt"><CopyableCode code="decrypt" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
@@ -259,6 +252,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
     <td></td>
     <td>Encrypts data, so that it can only be recovered by a call to Decrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.</td>
+</tr>
+<tr>
+    <td><a href="#update_primary_version"><CopyableCode code="update_primary_version" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
+    <td></td>
+    <td>Update the version of a CryptoKey that will be used in Encrypt. Returns an error if called on a key whose purpose is not ENCRYPT_DECRYPT.</td>
 </tr>
 </tbody>
 </table>
@@ -427,38 +427,38 @@ Create a new CryptoKey within a KeyRing. CryptoKey.purpose and CryptoKey.version
 
 ```sql
 INSERT INTO google.cloudkms.crypto_keys (
-data__rotationPeriod,
-data__labels,
-data__versionTemplate,
-data__purpose,
+data__cryptoKeyBackend,
+data__destroyScheduledDuration,
 data__importOnly,
 data__keyAccessJustificationsPolicy,
+data__labels,
 data__nextRotationTime,
-data__destroyScheduledDuration,
-data__cryptoKeyBackend,
+data__purpose,
+data__rotationPeriod,
+data__versionTemplate,
 projectsId,
 locationsId,
 keyRingsId,
-trustedWrappingEnabled,
 cryptoKeyId,
-skipInitialVersionCreation
+skipInitialVersionCreation,
+trustedWrappingEnabled
 )
 SELECT 
-'{{ rotationPeriod }}',
-'{{ labels }}',
-'{{ versionTemplate }}',
-'{{ purpose }}',
+'{{ cryptoKeyBackend }}',
+'{{ destroyScheduledDuration }}',
 {{ importOnly }},
 '{{ keyAccessJustificationsPolicy }}',
+'{{ labels }}',
 '{{ nextRotationTime }}',
-'{{ destroyScheduledDuration }}',
-'{{ cryptoKeyBackend }}',
+'{{ purpose }}',
+'{{ rotationPeriod }}',
+'{{ versionTemplate }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyRingsId }}',
-'{{ trustedWrappingEnabled }}',
 '{{ cryptoKeyId }}',
-'{{ skipInitialVersionCreation }}'
+'{{ skipInitialVersionCreation }}',
+'{{ trustedWrappingEnabled }}'
 RETURNING
 name,
 createTime,
@@ -489,25 +489,14 @@ versionTemplate
     - name: keyRingsId
       value: "{{ keyRingsId }}"
       description: Required parameter for the crypto_keys resource.
-    - name: rotationPeriod
-      value: "{{ rotationPeriod }}"
+    - name: cryptoKeyBackend
+      value: "{{ cryptoKeyBackend }}"
       description: |
-        next_rotation_time will be advanced by this period when the service automatically rotates a key. Must be at least 24 hours and at most 876,000 hours. If rotation_period is set, next_rotation_time must also be set. Keys with purpose ENCRYPT_DECRYPT support automatic rotation. For other keys, this field must be omitted.
-    - name: labels
-      value: "{{ labels }}"
+        Immutable. The resource name of the backend environment where the key material for all CryptoKeyVersions associated with this CryptoKey reside and where all related cryptographic operations are performed. Only applicable if CryptoKeyVersions have a ProtectionLevel of EXTERNAL_VPC, with the resource name in the format \`projects/*/locations/*/ekmConnections/*\`. Only applicable if CryptoKeyVersions have a ProtectionLevel of HSM_SINGLE_TENANT, with the resource name in the format \`projects/*/locations/*/singleTenantHsmInstances/*\`. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.
+    - name: destroyScheduledDuration
+      value: "{{ destroyScheduledDuration }}"
       description: |
-        Labels with user-defined metadata. For more information, see [Labeling Keys](https://cloud.google.com/kms/docs/labeling-keys).
-    - name: versionTemplate
-      description: |
-        A template describing settings for new CryptoKeyVersion instances. The properties of new CryptoKeyVersion instances created by either CreateCryptoKeyVersion or auto-rotation are controlled by this template.
-      value:
-        algorithm: "{{ algorithm }}"
-        protectionLevel: "{{ protectionLevel }}"
-    - name: purpose
-      value: "{{ purpose }}"
-      description: |
-        Immutable. The immutable purpose of this CryptoKey.
-      valid_values: ['CRYPTO_KEY_PURPOSE_UNSPECIFIED', 'ENCRYPT_DECRYPT', 'ASYMMETRIC_SIGN', 'ASYMMETRIC_DECRYPT', 'RAW_ENCRYPT_DECRYPT', 'MAC', 'KEY_ENCAPSULATION', 'AES_WRAPPING']
+        Immutable. The period of time that versions of this key spend in the DESTROY_SCHEDULED state before transitioning to DESTROYED. If not specified at creation time, the default duration is 30 days.
     - name: importOnly
       value: {{ importOnly }}
       description: |
@@ -518,24 +507,35 @@ versionTemplate
       value:
         allowedAccessReasons:
           - "{{ allowedAccessReasons }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels with user-defined metadata. For more information, see [Labeling Keys](https://cloud.google.com/kms/docs/labeling-keys).
     - name: nextRotationTime
       value: "{{ nextRotationTime }}"
       description: |
         At next_rotation_time, the Key Management Service will automatically: 1. Create a new version of this CryptoKey. 2. Mark the new version as primary. Key rotations performed manually via CreateCryptoKeyVersion and UpdateCryptoKeyPrimaryVersion do not affect next_rotation_time. Keys with purpose ENCRYPT_DECRYPT support automatic rotation. For other keys, this field must be omitted.
-    - name: destroyScheduledDuration
-      value: "{{ destroyScheduledDuration }}"
+    - name: purpose
+      value: "{{ purpose }}"
       description: |
-        Immutable. The period of time that versions of this key spend in the DESTROY_SCHEDULED state before transitioning to DESTROYED. If not specified at creation time, the default duration is 30 days.
-    - name: cryptoKeyBackend
-      value: "{{ cryptoKeyBackend }}"
+        Immutable. The immutable purpose of this CryptoKey.
+      valid_values: ['CRYPTO_KEY_PURPOSE_UNSPECIFIED', 'ENCRYPT_DECRYPT', 'ASYMMETRIC_SIGN', 'ASYMMETRIC_DECRYPT', 'RAW_ENCRYPT_DECRYPT', 'MAC', 'KEY_ENCAPSULATION', 'AES_WRAPPING']
+    - name: rotationPeriod
+      value: "{{ rotationPeriod }}"
       description: |
-        Immutable. The resource name of the backend environment where the key material for all CryptoKeyVersions associated with this CryptoKey reside and where all related cryptographic operations are performed. Only applicable if CryptoKeyVersions have a ProtectionLevel of EXTERNAL_VPC, with the resource name in the format \`projects/*/locations/*/ekmConnections/*\`. Only applicable if CryptoKeyVersions have a ProtectionLevel of HSM_SINGLE_TENANT, with the resource name in the format \`projects/*/locations/*/singleTenantHsmInstances/*\`. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.
-    - name: trustedWrappingEnabled
-      value: {{ trustedWrappingEnabled }}
+        next_rotation_time will be advanced by this period when the service automatically rotates a key. Must be at least 24 hours and at most 876,000 hours. If rotation_period is set, next_rotation_time must also be set. Keys with purpose ENCRYPT_DECRYPT support automatic rotation. For other keys, this field must be omitted.
+    - name: versionTemplate
+      description: |
+        A template describing settings for new CryptoKeyVersion instances. The properties of new CryptoKeyVersion instances created by either CreateCryptoKeyVersion or auto-rotation are controlled by this template.
+      value:
+        algorithm: "{{ algorithm }}"
+        protectionLevel: "{{ protectionLevel }}"
     - name: cryptoKeyId
       value: "{{ cryptoKeyId }}"
     - name: skipInitialVersionCreation
       value: {{ skipInitialVersionCreation }}
+    - name: trustedWrappingEnabled
+      value: {{ trustedWrappingEnabled }}
 `}</CodeBlock>
 
 </TabItem>
@@ -557,15 +557,15 @@ Update a CryptoKey.
 ```sql
 UPDATE google.cloudkms.crypto_keys
 SET 
-data__rotationPeriod = '{{ rotationPeriod }}',
-data__labels = '{{ labels }}',
-data__versionTemplate = '{{ versionTemplate }}',
-data__purpose = '{{ purpose }}',
+data__cryptoKeyBackend = '{{ cryptoKeyBackend }}',
+data__destroyScheduledDuration = '{{ destroyScheduledDuration }}',
 data__importOnly = {{ importOnly }},
 data__keyAccessJustificationsPolicy = '{{ keyAccessJustificationsPolicy }}',
+data__labels = '{{ labels }}',
 data__nextRotationTime = '{{ nextRotationTime }}',
-data__destroyScheduledDuration = '{{ destroyScheduledDuration }}',
-data__cryptoKeyBackend = '{{ cryptoKeyBackend }}'
+data__purpose = '{{ purpose }}',
+data__rotationPeriod = '{{ rotationPeriod }}',
+data__versionTemplate = '{{ versionTemplate }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -617,30 +617,13 @@ AND cryptoKeysId = '{{ cryptoKeysId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="update_primary_version"
+    defaultValue="decrypt"
     values={[
-        { label: 'update_primary_version', value: 'update_primary_version' },
         { label: 'decrypt', value: 'decrypt' },
-        { label: 'encrypt', value: 'encrypt' }
+        { label: 'encrypt', value: 'encrypt' },
+        { label: 'update_primary_version', value: 'update_primary_version' }
     ]}
 >
-<TabItem value="update_primary_version">
-
-Update the version of a CryptoKey that will be used in Encrypt. Returns an error if called on a key whose purpose is not ENCRYPT_DECRYPT.
-
-```sql
-EXEC google.cloudkms.crypto_keys.update_primary_version 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@keyRingsId='{{ keyRingsId }}' --required, 
-@cryptoKeysId='{{ cryptoKeysId }}' --required 
-@@json=
-'{
-"cryptoKeyVersionId": "{{ cryptoKeyVersionId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="decrypt">
 
 Decrypts data that was protected by Encrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.
@@ -653,9 +636,9 @@ EXEC google.cloudkms.crypto_keys.decrypt
 @cryptoKeysId='{{ cryptoKeysId }}' --required 
 @@json=
 '{
-"ciphertext": "{{ ciphertext }}", 
 "additionalAuthenticatedData": "{{ additionalAuthenticatedData }}", 
 "additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}", 
+"ciphertext": "{{ ciphertext }}", 
 "ciphertextCrc32c": "{{ ciphertextCrc32c }}"
 }'
 ;
@@ -673,10 +656,27 @@ EXEC google.cloudkms.crypto_keys.encrypt
 @cryptoKeysId='{{ cryptoKeysId }}' --required 
 @@json=
 '{
-"plaintext": "{{ plaintext }}", 
 "additionalAuthenticatedData": "{{ additionalAuthenticatedData }}", 
-"plaintextCrc32c": "{{ plaintextCrc32c }}", 
-"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}"
+"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}", 
+"plaintext": "{{ plaintext }}", 
+"plaintextCrc32c": "{{ plaintextCrc32c }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="update_primary_version">
+
+Update the version of a CryptoKey that will be used in Encrypt. Returns an error if called on a key whose purpose is not ENCRYPT_DECRYPT.
+
+```sql
+EXEC google.cloudkms.crypto_keys.update_primary_version 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@keyRingsId='{{ keyRingsId }}' --required, 
+@cryptoKeysId='{{ cryptoKeysId }}' --required 
+@@json=
+'{
+"cryptoKeyVersionId": "{{ cryptoKeyVersionId }}"
 }'
 ;
 ```

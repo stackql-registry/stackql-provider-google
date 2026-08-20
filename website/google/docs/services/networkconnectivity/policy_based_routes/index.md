@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists policy-based routes in a given project and location.</td>
 </tr>
 <tr>
@@ -380,10 +380,10 @@ virtualMachine,
 warnings
 FROM google.networkconnectivity.policy_based_routes
 WHERE projectsId = '{{ projectsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -405,31 +405,31 @@ Creates a new policy-based route in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.policy_based_routes (
-data__nextHopOtherRoutes,
+data__description,
+data__filter,
+data__interconnectAttachment,
+data__labels,
 data__name,
 data__network,
-data__description,
-data__interconnectAttachment,
 data__nextHopIlbIp,
+data__nextHopOtherRoutes,
 data__priority,
-data__filter,
 data__virtualMachine,
-data__labels,
 projectsId,
 policyBasedRouteId,
 requestId
 )
 SELECT 
-'{{ nextHopOtherRoutes }}',
+'{{ description }}',
+'{{ filter }}',
+'{{ interconnectAttachment }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ network }}',
-'{{ description }}',
-'{{ interconnectAttachment }}',
 '{{ nextHopIlbIp }}',
+'{{ nextHopOtherRoutes }}',
 {{ priority }},
-'{{ filter }}',
 '{{ virtualMachine }}',
-'{{ labels }}',
 '{{ projectsId }}',
 '{{ policyBasedRouteId }}',
 '{{ requestId }}'
@@ -450,11 +450,27 @@ response
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the policy_based_routes resource.
-    - name: nextHopOtherRoutes
-      value: "{{ nextHopOtherRoutes }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Optional. Other routes that will be referenced to determine the next hop of the packet.
-      valid_values: ['OTHER_ROUTES_UNSPECIFIED', 'DEFAULT_ROUTING']
+        Optional. An optional description of this resource. Provide this field when you create the resource.
+    - name: filter
+      description: |
+        Required. The filter to match L4 traffic.
+      value:
+        destRange: "{{ destRange }}"
+        ipProtocol: "{{ ipProtocol }}"
+        protocolVersion: "{{ protocolVersion }}"
+        srcRange: "{{ srcRange }}"
+    - name: interconnectAttachment
+      description: |
+        Optional. The interconnect attachments that this policy-based route applies to.
+      value:
+        region: "{{ region }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels.
     - name: name
       value: "{{ name }}"
       description: |
@@ -463,41 +479,25 @@ response
       value: "{{ network }}"
       description: |
         Required. Fully-qualified URL of the network that this route applies to, for example: projects/my-project/global/networks/my-network.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. An optional description of this resource. Provide this field when you create the resource.
-    - name: interconnectAttachment
-      description: |
-        Optional. The interconnect attachments that this policy-based route applies to.
-      value:
-        region: "{{ region }}"
     - name: nextHopIlbIp
       value: "{{ nextHopIlbIp }}"
       description: |
         Optional. The IP address of a global-access-enabled L4 ILB that is the next hop for matching packets. For this version, only nextHopIlbIp is supported.
+    - name: nextHopOtherRoutes
+      value: "{{ nextHopOtherRoutes }}"
+      description: |
+        Optional. Other routes that will be referenced to determine the next hop of the packet.
+      valid_values: ['OTHER_ROUTES_UNSPECIFIED', 'DEFAULT_ROUTING']
     - name: priority
       value: {{ priority }}
       description: |
         Optional. The priority of this policy-based route. Priority is used to break ties in cases where there are more than one matching policy-based routes found. In cases where multiple policy-based routes are matched, the one with the lowest-numbered priority value wins. The default value is 1000. The priority value must be from 1 to 65535, inclusive.
-    - name: filter
-      description: |
-        Required. The filter to match L4 traffic.
-      value:
-        srcRange: "{{ srcRange }}"
-        ipProtocol: "{{ ipProtocol }}"
-        destRange: "{{ destRange }}"
-        protocolVersion: "{{ protocolVersion }}"
     - name: virtualMachine
       description: |
         Optional. VM instances that this policy-based route applies to.
       value:
         tags:
           - "{{ tags }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        User-defined labels.
     - name: policyBasedRouteId
       value: "{{ policyBasedRouteId }}"
     - name: requestId

@@ -122,7 +122,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_association"><CopyableCode code="get_association" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
     <td><a href="#parameter-name"><code>name</code></a></td>
     <td>Gets an association with the specified name.</td>
 </tr>
@@ -130,20 +130,20 @@ The following methods are available for this resource:
     <td><a href="#list_associations"><CopyableCode code="list_associations" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-targetResource"><code>targetResource</code></a>, <a href="#parameter-includeInheritedPolicies"><code>includeInheritedPolicies</code></a></td>
+    <td><a href="#parameter-includeInheritedPolicies"><code>includeInheritedPolicies</code></a>, <a href="#parameter-targetResource"><code>targetResource</code></a></td>
     <td>Lists associations of a specified target, i.e., organization or folder.</td>
 </tr>
 <tr>
     <td><a href="#add_association"><CopyableCode code="add_association" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
     <td><a href="#parameter-replaceExistingAssociation"><code>replaceExistingAssociation</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Inserts an association for the specified firewall policy.</td>
 </tr>
 <tr>
     <td><a href="#remove_association"><CopyableCode code="remove_association" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
     <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Removes an association for the specified firewall policy.</td>
 </tr>
@@ -165,6 +165,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-firewallPolicy">
     <td><CopyableCode code="firewallPolicy" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-project">
+    <td><CopyableCode code="project" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -217,7 +222,8 @@ displayName,
 firewallPolicyId,
 shortName
 FROM google.compute.firewall_policies_associations
-WHERE firewallPolicy = '{{ firewallPolicy }}' -- required
+WHERE project = '{{ project }}' -- required
+AND firewallPolicy = '{{ firewallPolicy }}' -- required
 AND name = '{{ name }}'
 ;
 ```
@@ -231,8 +237,8 @@ SELECT
 associations,
 kind
 FROM google.compute.firewall_policies_associations
-WHERE targetResource = '{{ targetResource }}'
-AND includeInheritedPolicies = '{{ includeInheritedPolicies }}'
+WHERE includeInheritedPolicies = '{{ includeInheritedPolicies }}'
+AND targetResource = '{{ targetResource }}'
 ;
 ```
 </TabItem>
@@ -254,17 +260,19 @@ Inserts an association for the specified firewall policy.
 
 ```sql
 INSERT INTO google.compute.firewall_policies_associations (
-data__name,
-data__displayName,
 data__attachmentTarget,
+data__displayName,
+data__name,
+project,
 firewallPolicy,
 replaceExistingAssociation,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ attachmentTarget }}',
+'{{ displayName }}',
+'{{ name }}',
+'{{ project }}',
 '{{ firewallPolicy }}',
 '{{ replaceExistingAssociation }}',
 '{{ requestId }}'
@@ -304,22 +312,25 @@ zone
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: firewall_policies_associations
   props:
+    - name: project
+      value: "{{ project }}"
+      description: Required parameter for the firewall_policies_associations resource.
     - name: firewallPolicy
       value: "{{ firewallPolicy }}"
       description: Required parameter for the firewall_policies_associations resource.
-    - name: name
-      value: "{{ name }}"
+    - name: attachmentTarget
+      value: "{{ attachmentTarget }}"
       description: |
-        The name for an association.
+        The target that the firewall policy is attached to.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         [Output Only] Deprecated, please use short name instead. The display name
         of the firewall policy of the association.
-    - name: attachmentTarget
-      value: "{{ attachmentTarget }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        The target that the firewall policy is attached to.
+        The name for an association.
     - name: replaceExistingAssociation
       value: {{ replaceExistingAssociation }}
     - name: requestId
@@ -344,7 +355,8 @@ Removes an association for the specified firewall policy.
 
 ```sql
 DELETE FROM google.compute.firewall_policies_associations
-WHERE firewallPolicy = '{{ firewallPolicy }}' --required
+WHERE project = '{{ project }}' --required
+AND firewallPolicy = '{{ firewallPolicy }}' --required
 AND name = '{{ name }}'
 AND requestId = '{{ requestId }}'
 ;

@@ -497,7 +497,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of custom images<br />available to the specified project. Custom images are images you<br />create that belong to your project. This method does not<br />get any images that belong to other projects, including publicly-available<br />images, like Debian 8. If you want to get a list of publicly-available<br />images, use this method to make a request to the respective image project,<br />such as debian-cloud or windows-cloud.</td>
 </tr>
 <tr>
@@ -727,11 +727,11 @@ selfLink,
 warning
 FROM google.compute.images
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -753,57 +753,57 @@ Creates an image in the specified project using the data included<br />in the re
 
 ```sql
 INSERT INTO google.compute.images (
-data__sourceSnapshotEncryptionKey,
-data__description,
-data__family,
-data__imageEncryptionKey,
-data__sourceSnapshot,
-data__sourceDiskEncryptionKey,
-data__name,
-data__storageLocations,
-data__sourceImage,
-data__archiveSizeBytes,
-data__sourceType,
-data__rawDisk,
-data__labels,
-data__labelFingerprint,
-data__shieldedInstanceInitialState,
-data__guestOsFeatures,
-data__licenseCodes,
-data__params,
-data__licenses,
-data__diskSizeGb,
-data__sourceImageEncryptionKey,
-data__sourceDisk,
 data__architecture,
+data__archiveSizeBytes,
+data__description,
+data__diskSizeGb,
+data__family,
+data__guestOsFeatures,
+data__imageEncryptionKey,
+data__labelFingerprint,
+data__labels,
+data__licenseCodes,
+data__licenses,
+data__name,
+data__params,
+data__rawDisk,
+data__shieldedInstanceInitialState,
+data__sourceDisk,
+data__sourceDiskEncryptionKey,
+data__sourceImage,
+data__sourceImageEncryptionKey,
+data__sourceSnapshot,
+data__sourceSnapshotEncryptionKey,
+data__sourceType,
+data__storageLocations,
 project,
 forceCreate,
 requestId
 )
 SELECT 
-'{{ sourceSnapshotEncryptionKey }}',
-'{{ description }}',
-'{{ family }}',
-'{{ imageEncryptionKey }}',
-'{{ sourceSnapshot }}',
-'{{ sourceDiskEncryptionKey }}',
-'{{ name }}',
-'{{ storageLocations }}',
-'{{ sourceImage }}',
-'{{ archiveSizeBytes }}',
-'{{ sourceType }}',
-'{{ rawDisk }}',
-'{{ labels }}',
-'{{ labelFingerprint }}',
-'{{ shieldedInstanceInitialState }}',
-'{{ guestOsFeatures }}',
-'{{ licenseCodes }}',
-'{{ params }}',
-'{{ licenses }}',
-'{{ diskSizeGb }}',
-'{{ sourceImageEncryptionKey }}',
-'{{ sourceDisk }}',
 '{{ architecture }}',
+'{{ archiveSizeBytes }}',
+'{{ description }}',
+'{{ diskSizeGb }}',
+'{{ family }}',
+'{{ guestOsFeatures }}',
+'{{ imageEncryptionKey }}',
+'{{ labelFingerprint }}',
+'{{ labels }}',
+'{{ licenseCodes }}',
+'{{ licenses }}',
+'{{ name }}',
+'{{ params }}',
+'{{ rawDisk }}',
+'{{ shieldedInstanceInitialState }}',
+'{{ sourceDisk }}',
+'{{ sourceDiskEncryptionKey }}',
+'{{ sourceImage }}',
+'{{ sourceImageEncryptionKey }}',
+'{{ sourceSnapshot }}',
+'{{ sourceSnapshotEncryptionKey }}',
+'{{ sourceType }}',
+'{{ storageLocations }}',
 '{{ project }}',
 '{{ forceCreate }}',
 '{{ requestId }}'
@@ -846,21 +846,26 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the images resource.
-    - name: sourceSnapshotEncryptionKey
+    - name: architecture
+      value: "{{ architecture }}"
       description: |
-        The customer-supplied encryption key of the source snapshot. Required if
-        the source snapshot is protected by a customer-supplied encryption key.
-      value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-        kmsKeyName: "{{ kmsKeyName }}"
-        sha256: "{{ sha256 }}"
+        The architecture of the image. Valid values are
+        ARM64 or X86_64.
+      valid_values: ['ARCHITECTURE_UNSPECIFIED', 'ARM64', 'X86_64']
+    - name: archiveSizeBytes
+      value: "{{ archiveSizeBytes }}"
+      description: |
+        Size of the image tar.gz archive stored in Google Cloud
+        Storage (in bytes).
     - name: description
       value: "{{ description }}"
       description: |
         An optional description of this resource. Provide this property when you
         create the resource.
+    - name: diskSizeGb
+      value: "{{ diskSizeGb }}"
+      description: |
+        Size of the image when restored onto a persistent disk (in GB).
     - name: family
       value: "{{ family }}"
       description: |
@@ -872,6 +877,12 @@ zone
         When creating disks, you can specify an image family instead of a specific
         image name. The image family always returns its latest image that is not
         deprecated. The name of the image family must comply with RFC1035.
+    - name: guestOsFeatures
+      description: |
+        A list of features to enable on the guest operating system. Applicable
+        only for bootable images. To see a list of available options, see theguestOSfeatures[].type parameter.
+      value:
+        - type: "{{ type }}"
     - name: imageEncryptionKey
       description: |
         Encrypts the image using acustomer-supplied
@@ -885,10 +896,124 @@ zone
         disk will be encrypted using an automatically generated key and you do not
         need to provide a key to use the image later.
       value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+        sha256: "{{ sha256 }}"
+    - name: labelFingerprint
+      value: "{{ labelFingerprint }}"
+      description: |
+        A fingerprint for the labels being applied to this image, which is
+        essentially a hash of the labels used for optimistic locking. The
+        fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update labels. You must always provide an
+        up-to-date fingerprint hash in order to update or change labels,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve an image.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels to apply to this image. These can be later modified by
+        the setLabels method.
+    - name: licenseCodes
+      value:
+        - "{{ licenseCodes }}"
+      description: |
+        Integer license codes indicating which licenses are attached to this image.
+    - name: licenses
+      value:
+        - "{{ licenses }}"
+      description: |
+        Any applicable license URI.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource; provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: rawDisk
+      description: |
+        The parameters of the raw disk image.
+      value:
+        containerType: "{{ containerType }}"
+        sha1Checksum: "{{ sha1Checksum }}"
+        source: "{{ source }}"
+    - name: shieldedInstanceInitialState
+      description: |
+        Set the secure boot keys of shielded instance.
+      value:
+        dbs:
+          - content: "{{ content }}"
+            fileType: "{{ fileType }}"
+        dbxs:
+          - content: "{{ content }}"
+            fileType: "{{ fileType }}"
+        keks:
+          - content: "{{ content }}"
+            fileType: "{{ fileType }}"
+        pk:
+          content: "{{ content }}"
+          fileType: "{{ fileType }}"
+    - name: sourceDisk
+      value: "{{ sourceDisk }}"
+      description: |
+        URL of the source disk used to create this image.
+        For example, the following are valid values:
+        - https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk
+        - projects/project/zones/zone/disks/disk
+        - zones/zone/disks/disk
+        In order to create an image, you must provide the full or partial URL of
+        one of the following:
+        - The rawDisk.source URL
+        - The sourceDisk URL
+        - The sourceImage URL
+        - The sourceSnapshot URL
+    - name: sourceDiskEncryptionKey
+      description: |
+        Thecustomer-supplied
+        encryption key of the source disk. Required if the source disk is
+        protected by a customer-supplied encryption key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+        sha256: "{{ sha256 }}"
+    - name: sourceImage
+      value: "{{ sourceImage }}"
+      description: |
+        URL of the source image used to create this image.
+        The following are valid formats for the URL:
+        - https://www.googleapis.com/compute/v1/projects/project_id/global/
+        images/image_name
+        - projects/project_id/global/images/image_name
+        In order to create an image, you must provide the full or partial URL of
+        one of the following:
+        - The rawDisk.source URL
+        - The sourceDisk URL
+        - The sourceImage URL
+        - The sourceSnapshot URL
+    - name: sourceImageEncryptionKey
+      description: |
+        The customer-supplied encryption key of the source image. Required if the
+        source image is protected by a customer-supplied encryption key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         sha256: "{{ sha256 }}"
     - name: sourceSnapshot
       value: "{{ sourceSnapshot }}"
@@ -904,52 +1029,16 @@ zone
         - The sourceDisk URL
         - The sourceImage URL
         - The sourceSnapshot URL
-    - name: sourceDiskEncryptionKey
+    - name: sourceSnapshotEncryptionKey
       description: |
-        Thecustomer-supplied
-        encryption key of the source disk. Required if the source disk is
-        protected by a customer-supplied encryption key.
+        The customer-supplied encryption key of the source snapshot. Required if
+        the source snapshot is protected by a customer-supplied encryption key.
       value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         sha256: "{{ sha256 }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource; provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must be
-        a dash, lowercase letter, or digit, except the last character, which cannot
-        be a dash.
-    - name: storageLocations
-      value:
-        - "{{ storageLocations }}"
-      description: |
-        Cloud Storage bucket storage location of the image (regional or
-        multi-regional).
-    - name: sourceImage
-      value: "{{ sourceImage }}"
-      description: |
-        URL of the source image used to create this image.
-        The following are valid formats for the URL:
-        - https://www.googleapis.com/compute/v1/projects/project_id/global/
-        images/image_name
-        - projects/project_id/global/images/image_name
-        In order to create an image, you must provide the full or partial URL of
-        one of the following:
-        - The rawDisk.source URL
-        - The sourceDisk URL
-        - The sourceImage URL
-        - The sourceSnapshot URL
-    - name: archiveSizeBytes
-      value: "{{ archiveSizeBytes }}"
-      description: |
-        Size of the image tar.gz archive stored in Google Cloud
-        Storage (in bytes).
     - name: sourceType
       value: "{{ sourceType }}"
       description: |
@@ -957,101 +1046,12 @@ zone
         default and only valid value is RAW.
       valid_values: ['RAW']
       default: RAW
-    - name: rawDisk
-      description: |
-        The parameters of the raw disk image.
+    - name: storageLocations
       value:
-        sha1Checksum: "{{ sha1Checksum }}"
-        source: "{{ source }}"
-        containerType: "{{ containerType }}"
-    - name: labels
-      value: "{{ labels }}"
+        - "{{ storageLocations }}"
       description: |
-        Labels to apply to this image. These can be later modified by
-        the setLabels method.
-    - name: labelFingerprint
-      value: "{{ labelFingerprint }}"
-      description: |
-        A fingerprint for the labels being applied to this image, which is
-        essentially a hash of the labels used for optimistic locking. The
-        fingerprint is initially generated by Compute Engine and changes after
-        every request to modify or update labels. You must always provide an
-        up-to-date fingerprint hash in order to update or change labels,
-        otherwise the request will fail with error412 conditionNotMet.
-        To see the latest fingerprint, make a get() request to
-        retrieve an image.
-    - name: shieldedInstanceInitialState
-      description: |
-        Set the secure boot keys of shielded instance.
-      value:
-        pk:
-          content: "{{ content }}"
-          fileType: "{{ fileType }}"
-        keks:
-          - content: "{{ content }}"
-            fileType: "{{ fileType }}"
-        dbs:
-          - content: "{{ content }}"
-            fileType: "{{ fileType }}"
-        dbxs:
-          - content: "{{ content }}"
-            fileType: "{{ fileType }}"
-    - name: guestOsFeatures
-      description: |
-        A list of features to enable on the guest operating system. Applicable
-        only for bootable images. To see a list of available options, see theguestOSfeatures[].type parameter.
-      value:
-        - type: "{{ type }}"
-    - name: licenseCodes
-      value:
-        - "{{ licenseCodes }}"
-      description: |
-        Integer license codes indicating which licenses are attached to this image.
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: licenses
-      value:
-        - "{{ licenses }}"
-      description: |
-        Any applicable license URI.
-    - name: diskSizeGb
-      value: "{{ diskSizeGb }}"
-      description: |
-        Size of the image when restored onto a persistent disk (in GB).
-    - name: sourceImageEncryptionKey
-      description: |
-        The customer-supplied encryption key of the source image. Required if the
-        source image is protected by a customer-supplied encryption key.
-      value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-        kmsKeyName: "{{ kmsKeyName }}"
-        sha256: "{{ sha256 }}"
-    - name: sourceDisk
-      value: "{{ sourceDisk }}"
-      description: |
-        URL of the source disk used to create this image.
-        For example, the following are valid values:
-        - https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk
-        - projects/project/zones/zone/disks/disk
-        - zones/zone/disks/disk
-        In order to create an image, you must provide the full or partial URL of
-        one of the following:
-        - The rawDisk.source URL
-        - The sourceDisk URL
-        - The sourceImage URL
-        - The sourceSnapshot URL
-    - name: architecture
-      value: "{{ architecture }}"
-      description: |
-        The architecture of the image. Valid values are
-        ARM64 or X86_64.
-      valid_values: ['ARCHITECTURE_UNSPECIFIED', 'ARM64', 'X86_64']
+        Cloud Storage bucket storage location of the image (regional or
+        multi-regional).
     - name: forceCreate
       value: {{ forceCreate }}
     - name: requestId
@@ -1077,29 +1077,29 @@ Patches the specified image with the data included in the request.<br />Only the
 ```sql
 UPDATE google.compute.images
 SET 
-data__sourceSnapshotEncryptionKey = '{{ sourceSnapshotEncryptionKey }}',
-data__description = '{{ description }}',
-data__family = '{{ family }}',
-data__imageEncryptionKey = '{{ imageEncryptionKey }}',
-data__sourceSnapshot = '{{ sourceSnapshot }}',
-data__sourceDiskEncryptionKey = '{{ sourceDiskEncryptionKey }}',
-data__name = '{{ name }}',
-data__storageLocations = '{{ storageLocations }}',
-data__sourceImage = '{{ sourceImage }}',
+data__architecture = '{{ architecture }}',
 data__archiveSizeBytes = '{{ archiveSizeBytes }}',
-data__sourceType = '{{ sourceType }}',
-data__rawDisk = '{{ rawDisk }}',
-data__labels = '{{ labels }}',
-data__labelFingerprint = '{{ labelFingerprint }}',
-data__shieldedInstanceInitialState = '{{ shieldedInstanceInitialState }}',
-data__guestOsFeatures = '{{ guestOsFeatures }}',
-data__licenseCodes = '{{ licenseCodes }}',
-data__params = '{{ params }}',
-data__licenses = '{{ licenses }}',
+data__description = '{{ description }}',
 data__diskSizeGb = '{{ diskSizeGb }}',
-data__sourceImageEncryptionKey = '{{ sourceImageEncryptionKey }}',
+data__family = '{{ family }}',
+data__guestOsFeatures = '{{ guestOsFeatures }}',
+data__imageEncryptionKey = '{{ imageEncryptionKey }}',
+data__labelFingerprint = '{{ labelFingerprint }}',
+data__labels = '{{ labels }}',
+data__licenseCodes = '{{ licenseCodes }}',
+data__licenses = '{{ licenses }}',
+data__name = '{{ name }}',
+data__params = '{{ params }}',
+data__rawDisk = '{{ rawDisk }}',
+data__shieldedInstanceInitialState = '{{ shieldedInstanceInitialState }}',
 data__sourceDisk = '{{ sourceDisk }}',
-data__architecture = '{{ architecture }}'
+data__sourceDiskEncryptionKey = '{{ sourceDiskEncryptionKey }}',
+data__sourceImage = '{{ sourceImage }}',
+data__sourceImageEncryptionKey = '{{ sourceImageEncryptionKey }}',
+data__sourceSnapshot = '{{ sourceSnapshot }}',
+data__sourceSnapshotEncryptionKey = '{{ sourceSnapshotEncryptionKey }}',
+data__sourceType = '{{ sourceType }}',
+data__storageLocations = '{{ storageLocations }}'
 WHERE 
 project = '{{ project }}' --required
 AND image = '{{ image }}' --required
@@ -1180,11 +1180,11 @@ EXEC google.compute.images.deprecate
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"state": "{{ state }}", 
-"replacement": "{{ replacement }}", 
 "deleted": "{{ deleted }}", 
 "deprecated": "{{ deprecated }}", 
-"obsolete": "{{ obsolete }}"
+"obsolete": "{{ obsolete }}", 
+"replacement": "{{ replacement }}", 
+"state": "{{ state }}"
 }'
 ;
 ```
@@ -1199,8 +1199,8 @@ EXEC google.compute.images.set_labels
 @resource='{{ resource }}' --required 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

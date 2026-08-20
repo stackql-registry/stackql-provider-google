@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the InterconnectAttachmentGroups for a project in the given scope.</td>
 </tr>
 <tr>
@@ -332,11 +332,11 @@ unreachables,
 warning
 FROM google.compute.interconnect_attachment_groups
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -360,20 +360,20 @@ Creates a InterconnectAttachmentGroup in the specified project in the given<br /
 INSERT INTO google.compute.interconnect_attachment_groups (
 data__attachments,
 data__description,
+data__etag,
 data__intent,
 data__interconnectGroup,
 data__name,
-data__etag,
 project,
 requestId
 )
 SELECT 
 '{{ attachments }}',
 '{{ description }}',
+'{{ etag }}',
 '{{ intent }}',
 '{{ interconnectGroup }}',
 '{{ name }}',
-'{{ etag }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -428,6 +428,14 @@ zone
       description: |
         An optional description of this resource. Provide this property when you
         create the resource.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Opaque system-generated token that uniquely identifies the configuration.
+        If provided when patching a configuration in update mode, the provided
+        token must match the current token or the update is rejected. This provides
+        a reliable means of doing read-modify-write (optimistic locking) as
+        described byAIP 154.
     - name: intent
       description: |
         The user's intent for this AttachmentGroup. This is the only required field
@@ -450,14 +458,6 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Opaque system-generated token that uniquely identifies the configuration.
-        If provided when patching a configuration in update mode, the provided
-        token must match the current token or the update is rejected. This provides
-        a reliable means of doing read-modify-write (optimistic locking) as
-        described byAIP 154.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -483,10 +483,10 @@ UPDATE google.compute.interconnect_attachment_groups
 SET 
 data__attachments = '{{ attachments }}',
 data__description = '{{ description }}',
+data__etag = '{{ etag }}',
 data__intent = '{{ intent }}',
 data__interconnectGroup = '{{ interconnectGroup }}',
-data__name = '{{ name }}',
-data__etag = '{{ etag }}'
+data__name = '{{ name }}'
 WHERE 
 project = '{{ project }}' --required
 AND interconnectAttachmentGroup = '{{ interconnectAttachmentGroup }}' --required

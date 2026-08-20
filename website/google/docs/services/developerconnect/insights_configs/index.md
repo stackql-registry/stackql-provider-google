@@ -215,28 +215,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists InsightsConfigs in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-insightsConfigId"><code>insightsConfigId</code></a></td>
+    <td><a href="#parameter-insightsConfigId"><code>insightsConfigId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new InsightsConfig in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightsConfigsId"><code>insightsConfigsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single InsightsConfig.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightsConfigsId"><code>insightsConfigsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single Insight.</td>
 </tr>
 </tbody>
@@ -373,10 +373,10 @@ updateTime
 FROM google.developerconnect.insights_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -398,30 +398,30 @@ Creates a new InsightsConfig in a given project and location.
 
 ```sql
 INSERT INTO google.developerconnect.insights_configs (
-data__state,
 data__annotations,
-data__artifactConfigs,
 data__appHubApplication,
-data__projects,
+data__artifactConfigs,
 data__labels,
 data__name,
+data__projects,
+data__state,
 projectsId,
 locationsId,
-validateOnly,
-insightsConfigId
+insightsConfigId,
+validateOnly
 )
 SELECT 
-'{{ state }}',
 '{{ annotations }}',
-'{{ artifactConfigs }}',
 '{{ appHubApplication }}',
-'{{ projects }}',
+'{{ artifactConfigs }}',
 '{{ labels }}',
 '{{ name }}',
+'{{ projects }}',
+'{{ state }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ insightsConfigId }}'
+'{{ insightsConfigId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -442,35 +442,24 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the insights_configs resource.
-    - name: state
-      value: "{{ state }}"
-      description: |
-        Optional. Output only. The state of the InsightsConfig.
-      valid_values: ['STATE_UNSPECIFIED', 'PENDING', 'COMPLETE', 'ERROR']
     - name: annotations
       value: "{{ annotations }}"
       description: |
         Optional. User specified annotations. See https://google.aip.dev/148#annotations for more details such as format and size limitations.
-    - name: artifactConfigs
-      description: |
-        Optional. The artifact configurations of the artifacts that are deployed.
-      value:
-        - uri: "{{ uri }}"
-          googleArtifactAnalysis:
-            projectId: "{{ projectId }}"
-          googleArtifactRegistry:
-            artifactRegistryPackage: "{{ artifactRegistryPackage }}"
-            projectId: "{{ projectId }}"
     - name: appHubApplication
       value: "{{ appHubApplication }}"
       description: |
         Optional. The name of the App Hub Application. Format: projects/{project}/locations/{location}/applications/{application}
-    - name: projects
+    - name: artifactConfigs
       description: |
-        Optional. The projects to track with the InsightsConfig.
+        Optional. The artifact configurations of the artifacts that are deployed.
       value:
-        projectIds:
-          - "{{ projectIds }}"
+        - googleArtifactAnalysis:
+            projectId: "{{ projectId }}"
+          googleArtifactRegistry:
+            artifactRegistryPackage: "{{ artifactRegistryPackage }}"
+            projectId: "{{ projectId }}"
+          uri: "{{ uri }}"
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -479,10 +468,21 @@ response
       value: "{{ name }}"
       description: |
         Identifier. The name of the InsightsConfig. Format: projects/{project}/locations/{location}/insightsConfigs/{insightsConfig}
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: projects
+      description: |
+        Optional. The projects to track with the InsightsConfig.
+      value:
+        projectIds:
+          - "{{ projectIds }}"
+    - name: state
+      value: "{{ state }}"
+      description: |
+        Optional. Output only. The state of the InsightsConfig.
+      valid_values: ['STATE_UNSPECIFIED', 'PENDING', 'COMPLETE', 'ERROR']
     - name: insightsConfigId
       value: "{{ insightsConfigId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -504,20 +504,20 @@ Updates the parameters of a single InsightsConfig.
 ```sql
 UPDATE google.developerconnect.insights_configs
 SET 
-data__state = '{{ state }}',
 data__annotations = '{{ annotations }}',
-data__artifactConfigs = '{{ artifactConfigs }}',
 data__appHubApplication = '{{ appHubApplication }}',
-data__projects = '{{ projects }}',
+data__artifactConfigs = '{{ artifactConfigs }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__projects = '{{ projects }}',
+data__state = '{{ state }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND insightsConfigsId = '{{ insightsConfigsId }}' --required
-AND validateOnly = {{ validateOnly}}
-AND requestId = '{{ requestId}}'
 AND allowMissing = {{ allowMissing}}
+AND requestId = '{{ requestId}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -546,8 +546,8 @@ DELETE FROM google.developerconnect.insights_configs
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND insightsConfigsId = '{{ insightsConfigsId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 AND validateOnly = '{{ validateOnly }}'
 ;
 ```

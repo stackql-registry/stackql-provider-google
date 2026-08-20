@@ -114,6 +114,56 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Name of the resource in the format of $provider-$site.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Description of the profile.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Human readable name of this profile, used to identify this profile in the UI.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="flow" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Type of provisioning flows supported by this profile. (KEY_PROVISIONING_FLOW_UNSPECIFIED, INPUT_ONLY, OUTPUT_ONLY, INPUT_OR_OUTPUT)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Labels as key value pairs.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="orderState" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Order state for this profile. (STATE_UNSPECIFIED, CLOSED, OPEN)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="provider" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Name of the provider on the other end of this profile. E.g. “Amazon Web Services” or “Microsoft Azure”.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="providerSite" /></td>
+    <td><code>string</code></td>
+    <td>Output only. If the profile is a Cloud Service Provider with compute resources, this is populated with the region where connectivity is being established. If the profile provides facility-level selection, this is an identity of the facility any connections on this profile are going through.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sla" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Availability class that will be configured for this particular RemoteTransportProfile. (SERVICE_LEVEL_AVAILABILITY_UNSPECIFIED, HIGH, MAXIMUM)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="supportedBandwidths" /></td>
+    <td><code>array</code></td>
+    <td>Output only. List of bandwidth enum values that are supported by this profile.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -145,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists RemoteTransportProfiles in a given project and location.</td>
 </tr>
 </tbody>
@@ -240,14 +290,23 @@ Lists RemoteTransportProfiles in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+description,
+displayName,
+flow,
+labels,
+orderState,
+provider,
+providerSite,
+sla,
+supportedBandwidths
 FROM google.networkconnectivity.remote_transport_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

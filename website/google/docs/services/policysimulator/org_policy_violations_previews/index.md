@@ -326,68 +326,68 @@ response
       description: |
         Required. The proposed changes we are previewing violations for.
       value:
+        customConstraints:
+          - customConstraint:
+              actionType: "{{ actionType }}"
+              condition: "{{ condition }}"
+              description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              methodTypes:
+                - "{{ methodTypes }}"
+              name: "{{ name }}"
+              resourceTypes:
+                - "{{ resourceTypes }}"
+              updateTime: "{{ updateTime }}"
+            customConstraintParent: "{{ customConstraintParent }}"
         policies:
-          - policyParent: "{{ policyParent }}"
-            policy:
-              dryRunSpec:
-                updateTime: "{{ updateTime }}"
-                inheritFromParent: {{ inheritFromParent }}
-                reset: {{ reset }}
-                rules:
-                  - parameters: "{{ parameters }}"
-                    values:
-                      allowedValues: "{{ allowedValues }}"
-                      deniedValues: "{{ deniedValues }}"
-                    denyAll: {{ denyAll }}
-                    enforce: {{ enforce }}
-                    allowAll: {{ allowAll }}
-                    condition:
-                      location: "{{ location }}"
-                      description: "{{ description }}"
-                      expression: "{{ expression }}"
-                      title: "{{ title }}"
-                etag: "{{ etag }}"
+          - policy:
               alternate:
                 launch: "{{ launch }}"
                 spec:
-                  updateTime: "{{ updateTime }}"
+                  etag: "{{ etag }}"
                   inheritFromParent: {{ inheritFromParent }}
                   reset: {{ reset }}
                   rules: "{{ rules }}"
-                  etag: "{{ etag }}"
-              name: "{{ name }}"
-              spec:
-                updateTime: "{{ updateTime }}"
+                  updateTime: "{{ updateTime }}"
+              dryRunSpec:
+                etag: "{{ etag }}"
                 inheritFromParent: {{ inheritFromParent }}
                 reset: {{ reset }}
                 rules:
-                  - parameters: "{{ parameters }}"
+                  - allowAll: {{ allowAll }}
+                    condition:
+                      description: "{{ description }}"
+                      expression: "{{ expression }}"
+                      location: "{{ location }}"
+                      title: "{{ title }}"
+                    denyAll: {{ denyAll }}
+                    enforce: {{ enforce }}
+                    parameters: "{{ parameters }}"
                     values:
                       allowedValues: "{{ allowedValues }}"
                       deniedValues: "{{ deniedValues }}"
-                    denyAll: {{ denyAll }}
-                    enforce: {{ enforce }}
-                    allowAll: {{ allowAll }}
+                updateTime: "{{ updateTime }}"
+              etag: "{{ etag }}"
+              name: "{{ name }}"
+              spec:
+                etag: "{{ etag }}"
+                inheritFromParent: {{ inheritFromParent }}
+                reset: {{ reset }}
+                rules:
+                  - allowAll: {{ allowAll }}
                     condition:
-                      location: "{{ location }}"
                       description: "{{ description }}"
                       expression: "{{ expression }}"
+                      location: "{{ location }}"
                       title: "{{ title }}"
-                etag: "{{ etag }}"
-              etag: "{{ etag }}"
-        customConstraints:
-          - customConstraintParent: "{{ customConstraintParent }}"
-            customConstraint:
-              resourceTypes:
-                - "{{ resourceTypes }}"
-              actionType: "{{ actionType }}"
-              methodTypes:
-                - "{{ methodTypes }}"
-              displayName: "{{ displayName }}"
-              updateTime: "{{ updateTime }}"
-              condition: "{{ condition }}"
-              description: "{{ description }}"
-              name: "{{ name }}"
+                    denyAll: {{ denyAll }}
+                    enforce: {{ enforce }}
+                    parameters: "{{ parameters }}"
+                    values:
+                      allowedValues: "{{ allowedValues }}"
+                      deniedValues: "{{ deniedValues }}"
+                updateTime: "{{ updateTime }}"
+            policyParent: "{{ policyParent }}"
     - name: orgPolicyViolationsPreviewId
       value: "{{ orgPolicyViolationsPreviewId }}"
 `}</CodeBlock>

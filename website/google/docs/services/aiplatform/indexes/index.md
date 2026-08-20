@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists Indexes in a Location.</td>
 </tr>
 <tr>
@@ -403,10 +403,10 @@ updateTime
 FROM google.aiplatform.indexes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND readMask = '{{ readMask }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -428,26 +428,26 @@ Creates an Index.
 
 ```sql
 INSERT INTO google.aiplatform.indexes (
-data__displayName,
-data__etag,
 data__description,
-data__metadataSchemaUri,
+data__displayName,
 data__encryptionSpec,
-data__labels,
+data__etag,
 data__indexUpdateMethod,
+data__labels,
 data__metadata,
+data__metadataSchemaUri,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ etag }}',
 '{{ description }}',
-'{{ metadataSchemaUri }}',
+'{{ displayName }}',
 '{{ encryptionSpec }}',
-'{{ labels }}',
+'{{ etag }}',
 '{{ indexUpdateMethod }}',
+'{{ labels }}',
 '{{ metadata }}',
+'{{ metadataSchemaUri }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -470,40 +470,40 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the indexes resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the Index. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: description
       value: "{{ description }}"
       description: |
         The description of the Index.
-    - name: metadataSchemaUri
-      value: "{{ metadataSchemaUri }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Immutable. Points to a YAML file stored on Google Cloud Storage describing additional information about the Index, that is specific to it. Unset if the Index does not have any additional information. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+        Required. The display name of the Index. The name can be up to 128 characters long and can consist of any UTF-8 characters.
     - name: encryptionSpec
       description: |
         Immutable. Customer-managed encryption key spec for an Index. If set, this Index and all sub-resources of this Index will be secured by this key.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
-    - name: labels
-      value: "{{ labels }}"
+    - name: etag
+      value: "{{ etag }}"
       description: |
-        The labels with user-defined metadata to organize your Indexes. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: indexUpdateMethod
       value: "{{ indexUpdateMethod }}"
       description: |
         Immutable. The update method to use with this Index. If not set, BATCH_UPDATE will be used by default.
       valid_values: ['INDEX_UPDATE_METHOD_UNSPECIFIED', 'BATCH_UPDATE', 'STREAM_UPDATE']
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your Indexes. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
     - name: metadata
       value: "{{ metadata }}"
       description: |
         An additional information about the Index; the schema of the metadata can be found in metadata_schema.
+    - name: metadataSchemaUri
+      value: "{{ metadataSchemaUri }}"
+      description: |
+        Immutable. Points to a YAML file stored on Google Cloud Storage describing additional information about the Index, that is specific to it. Unset if the Index does not have any additional information. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
 `}</CodeBlock>
 
 </TabItem>
@@ -525,14 +525,14 @@ Updates an Index.
 ```sql
 UPDATE google.aiplatform.indexes
 SET 
-data__displayName = '{{ displayName }}',
-data__etag = '{{ etag }}',
 data__description = '{{ description }}',
-data__metadataSchemaUri = '{{ metadataSchemaUri }}',
+data__displayName = '{{ displayName }}',
 data__encryptionSpec = '{{ encryptionSpec }}',
-data__labels = '{{ labels }}',
+data__etag = '{{ etag }}',
 data__indexUpdateMethod = '{{ indexUpdateMethod }}',
-data__metadata = '{{ metadata }}'
+data__labels = '{{ labels }}',
+data__metadata = '{{ metadata }}',
+data__metadataSchemaUri = '{{ metadataSchemaUri }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

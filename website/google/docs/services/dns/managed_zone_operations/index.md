@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-managedZone"><code>managedZone</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-sortBy"><code>sortBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-sortBy"><code>sortBy</code></a></td>
     <td>Enumerates Operations for the given ManagedZone.</td>
 </tr>
 </tbody>
@@ -281,8 +281,8 @@ FROM google.dns.managed_zone_operations
 WHERE project = '{{ project }}' -- required
 AND managedZone = '{{ managedZone }}' -- required
 AND maxResults = '{{ maxResults }}'
-AND sortBy = '{{ sortBy }}'
 AND pageToken = '{{ pageToken }}'
+AND sortBy = '{{ sortBy }}'
 ;
 ```
 </TabItem>

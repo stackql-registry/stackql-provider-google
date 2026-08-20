@@ -33,16 +33,70 @@ Creates, updates, deletes, gets or lists a <code>big_query_exports</code> resour
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_big_query_exports_get"
+    defaultValue="folders_big_query_exports_get"
     values={[
+        { label: 'folders_big_query_exports_get', value: 'folders_big_query_exports_get' },
         { label: 'organizations_big_query_exports_get', value: 'organizations_big_query_exports_get' },
         { label: 'projects_big_query_exports_get', value: 'projects_big_query_exports_get' },
-        { label: 'folders_big_query_exports_get', value: 'folders_big_query_exports_get' },
+        { label: 'folders_big_query_exports_list', value: 'folders_big_query_exports_list' },
         { label: 'organizations_big_query_exports_list', value: 'organizations_big_query_exports_list' },
-        { label: 'projects_big_query_exports_list', value: 'projects_big_query_exports_list' },
-        { label: 'folders_big_query_exports_list', value: 'folders_big_query_exports_list' }
+        { label: 'projects_big_query_exports_list', value: 'projects_big_query_exports_list' }
     ]}
 >
+<TabItem value="folders_big_query_exports_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataset" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="mostRecentEditor" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="principal" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="organizations_big_query_exports_get">
 
 <table>
@@ -151,7 +205,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_big_query_exports_get">
+<TabItem value="folders_big_query_exports_list">
 
 <table>
 <thead>
@@ -260,60 +314,6 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_big_query_exports_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="dataset" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="mostRecentEditor" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="principal" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="folders_big_query_exports_list">
 
 <table>
 <thead>
@@ -385,6 +385,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#folders_big_query_exports_get"><CopyableCode code="folders_big_query_exports_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_big_query_exports_get"><CopyableCode code="organizations_big_query_exports_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
@@ -399,31 +406,31 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_big_query_exports_get"><CopyableCode code="folders_big_query_exports_get" /></a></td>
+    <td><a href="#folders_big_query_exports_list"><CopyableCode code="folders_big_query_exports_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_big_query_exports_list"><CopyableCode code="organizations_big_query_exports_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
     <td><a href="#projects_big_query_exports_list"><CopyableCode code="projects_big_query_exports_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_big_query_exports_list"><CopyableCode code="folders_big_query_exports_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
+    <td><a href="#folders_big_query_exports_create"><CopyableCode code="folders_big_query_exports_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-bigQueryExportId"><code>bigQueryExportId</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -441,10 +448,10 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_big_query_exports_create"><CopyableCode code="folders_big_query_exports_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-bigQueryExportId"><code>bigQueryExportId</code></a></td>
+    <td><a href="#folders_big_query_exports_patch"><CopyableCode code="folders_big_query_exports_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -462,10 +469,10 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_big_query_exports_patch"><CopyableCode code="folders_big_query_exports_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
+    <td><a href="#folders_big_query_exports_delete"><CopyableCode code="folders_big_query_exports_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td></td>
     <td></td>
 </tr>
 <tr>
@@ -479,13 +486,6 @@ The following methods are available for this resource:
     <td><a href="#projects_big_query_exports_delete"><CopyableCode code="projects_big_query_exports_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_big_query_exports_delete"><CopyableCode code="folders_big_query_exports_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -551,16 +551,36 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_big_query_exports_get"
+    defaultValue="folders_big_query_exports_get"
     values={[
+        { label: 'folders_big_query_exports_get', value: 'folders_big_query_exports_get' },
         { label: 'organizations_big_query_exports_get', value: 'organizations_big_query_exports_get' },
         { label: 'projects_big_query_exports_get', value: 'projects_big_query_exports_get' },
-        { label: 'folders_big_query_exports_get', value: 'folders_big_query_exports_get' },
+        { label: 'folders_big_query_exports_list', value: 'folders_big_query_exports_list' },
         { label: 'organizations_big_query_exports_list', value: 'organizations_big_query_exports_list' },
-        { label: 'projects_big_query_exports_list', value: 'projects_big_query_exports_list' },
-        { label: 'folders_big_query_exports_list', value: 'folders_big_query_exports_list' }
+        { label: 'projects_big_query_exports_list', value: 'projects_big_query_exports_list' }
     ]}
 >
+<TabItem value="folders_big_query_exports_get">
+
+Successful response
+
+```sql
+SELECT
+name,
+createTime,
+dataset,
+description,
+filter,
+mostRecentEditor,
+principal,
+updateTime
+FROM google.securitycenter.big_query_exports
+WHERE foldersId = '{{ foldersId }}' -- required
+AND bigQueryExportsId = '{{ bigQueryExportsId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="organizations_big_query_exports_get">
 
 Successful response
@@ -601,7 +621,7 @@ AND bigQueryExportsId = '{{ bigQueryExportsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="folders_big_query_exports_get">
+<TabItem value="folders_big_query_exports_list">
 
 Successful response
 
@@ -617,7 +637,8 @@ principal,
 updateTime
 FROM google.securitycenter.big_query_exports
 WHERE foldersId = '{{ foldersId }}' -- required
-AND bigQueryExportsId = '{{ bigQueryExportsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -637,8 +658,8 @@ principal,
 updateTime
 FROM google.securitycenter.big_query_exports
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -658,29 +679,8 @@ principal,
 updateTime
 FROM google.securitycenter.big_query_exports
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="folders_big_query_exports_list">
-
-Successful response
-
-```sql
-SELECT
-name,
-createTime,
-dataset,
-description,
-filter,
-mostRecentEditor,
-principal,
-updateTime
-FROM google.securitycenter.big_query_exports
-WHERE foldersId = '{{ foldersId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -690,32 +690,64 @@ AND pageSize = '{{ pageSize }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="organizations_big_query_exports_create"
+    defaultValue="folders_big_query_exports_create"
     values={[
+        { label: 'folders_big_query_exports_create', value: 'folders_big_query_exports_create' },
         { label: 'organizations_big_query_exports_create', value: 'organizations_big_query_exports_create' },
         { label: 'projects_big_query_exports_create', value: 'projects_big_query_exports_create' },
-        { label: 'folders_big_query_exports_create', value: 'folders_big_query_exports_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
+<TabItem value="folders_big_query_exports_create">
+
+No description available.
+
+```sql
+INSERT INTO google.securitycenter.big_query_exports (
+data__dataset,
+data__description,
+data__filter,
+data__name,
+foldersId,
+bigQueryExportId
+)
+SELECT 
+'{{ dataset }}',
+'{{ description }}',
+'{{ filter }}',
+'{{ name }}',
+'{{ foldersId }}',
+'{{ bigQueryExportId }}'
+RETURNING
+name,
+createTime,
+dataset,
+description,
+filter,
+mostRecentEditor,
+principal,
+updateTime
+;
+```
+</TabItem>
 <TabItem value="organizations_big_query_exports_create">
 
 No description available.
 
 ```sql
 INSERT INTO google.securitycenter.big_query_exports (
-data__name,
+data__dataset,
 data__description,
 data__filter,
-data__dataset,
+data__name,
 organizationsId,
 bigQueryExportId
 )
 SELECT 
-'{{ name }}',
+'{{ dataset }}',
 '{{ description }}',
 '{{ filter }}',
-'{{ dataset }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ bigQueryExportId }}'
 RETURNING
@@ -736,51 +768,19 @@ No description available.
 
 ```sql
 INSERT INTO google.securitycenter.big_query_exports (
-data__name,
+data__dataset,
 data__description,
 data__filter,
-data__dataset,
+data__name,
 projectsId,
 bigQueryExportId
 )
 SELECT 
-'{{ name }}',
+'{{ dataset }}',
 '{{ description }}',
 '{{ filter }}',
-'{{ dataset }}',
+'{{ name }}',
 '{{ projectsId }}',
-'{{ bigQueryExportId }}'
-RETURNING
-name,
-createTime,
-dataset,
-description,
-filter,
-mostRecentEditor,
-principal,
-updateTime
-;
-```
-</TabItem>
-<TabItem value="folders_big_query_exports_create">
-
-No description available.
-
-```sql
-INSERT INTO google.securitycenter.big_query_exports (
-data__name,
-data__description,
-data__filter,
-data__dataset,
-foldersId,
-bigQueryExportId
-)
-SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ filter }}',
-'{{ dataset }}',
-'{{ foldersId }}',
 '{{ bigQueryExportId }}'
 RETURNING
 name,
@@ -799,23 +799,23 @@ updateTime
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: big_query_exports
   props:
+    - name: foldersId
+      value: "{{ foldersId }}"
+      description: Required parameter for the big_query_exports resource.
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the big_query_exports resource.
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the big_query_exports resource.
-    - name: foldersId
-      value: "{{ foldersId }}"
-      description: Required parameter for the big_query_exports resource.
-    - name: name
-      value: "{{ name }}"
+    - name: dataset
+      value: "{{ dataset }}"
     - name: description
       value: "{{ description }}"
     - name: filter
       value: "{{ filter }}"
-    - name: dataset
-      value: "{{ dataset }}"
+    - name: name
+      value: "{{ name }}"
     - name: bigQueryExportId
       value: "{{ bigQueryExportId }}"
 `}</CodeBlock>
@@ -827,13 +827,39 @@ updateTime
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="organizations_big_query_exports_patch"
+    defaultValue="folders_big_query_exports_patch"
     values={[
+        { label: 'folders_big_query_exports_patch', value: 'folders_big_query_exports_patch' },
         { label: 'organizations_big_query_exports_patch', value: 'organizations_big_query_exports_patch' },
-        { label: 'projects_big_query_exports_patch', value: 'projects_big_query_exports_patch' },
-        { label: 'folders_big_query_exports_patch', value: 'folders_big_query_exports_patch' }
+        { label: 'projects_big_query_exports_patch', value: 'projects_big_query_exports_patch' }
     ]}
 >
+<TabItem value="folders_big_query_exports_patch">
+
+No description available.
+
+```sql
+UPDATE google.securitycenter.big_query_exports
+SET 
+data__dataset = '{{ dataset }}',
+data__description = '{{ description }}',
+data__filter = '{{ filter }}',
+data__name = '{{ name }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
+AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+createTime,
+dataset,
+description,
+filter,
+mostRecentEditor,
+principal,
+updateTime;
+```
+</TabItem>
 <TabItem value="organizations_big_query_exports_patch">
 
 No description available.
@@ -841,10 +867,10 @@ No description available.
 ```sql
 UPDATE google.securitycenter.big_query_exports
 SET 
-data__name = '{{ name }}',
+data__dataset = '{{ dataset }}',
 data__description = '{{ description }}',
 data__filter = '{{ filter }}',
-data__dataset = '{{ dataset }}'
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
@@ -867,38 +893,12 @@ No description available.
 ```sql
 UPDATE google.securitycenter.big_query_exports
 SET 
-data__name = '{{ name }}',
+data__dataset = '{{ dataset }}',
 data__description = '{{ description }}',
 data__filter = '{{ filter }}',
-data__dataset = '{{ dataset }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
-AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-createTime,
-dataset,
-description,
-filter,
-mostRecentEditor,
-principal,
-updateTime;
-```
-</TabItem>
-<TabItem value="folders_big_query_exports_patch">
-
-No description available.
-
-```sql
-UPDATE google.securitycenter.big_query_exports
-SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__filter = '{{ filter }}',
-data__dataset = '{{ dataset }}'
-WHERE 
-foldersId = '{{ foldersId }}' --required
 AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -918,13 +918,24 @@ updateTime;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="organizations_big_query_exports_delete"
+    defaultValue="folders_big_query_exports_delete"
     values={[
+        { label: 'folders_big_query_exports_delete', value: 'folders_big_query_exports_delete' },
         { label: 'organizations_big_query_exports_delete', value: 'organizations_big_query_exports_delete' },
-        { label: 'projects_big_query_exports_delete', value: 'projects_big_query_exports_delete' },
-        { label: 'folders_big_query_exports_delete', value: 'folders_big_query_exports_delete' }
+        { label: 'projects_big_query_exports_delete', value: 'projects_big_query_exports_delete' }
     ]}
 >
+<TabItem value="folders_big_query_exports_delete">
+
+No description available.
+
+```sql
+DELETE FROM google.securitycenter.big_query_exports
+WHERE foldersId = '{{ foldersId }}' --required
+AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="organizations_big_query_exports_delete">
 
 No description available.
@@ -943,17 +954,6 @@ No description available.
 ```sql
 DELETE FROM google.securitycenter.big_query_exports
 WHERE projectsId = '{{ projectsId }}' --required
-AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="folders_big_query_exports_delete">
-
-No description available.
-
-```sql
-DELETE FROM google.securitycenter.big_query_exports
-WHERE foldersId = '{{ foldersId }}' --required
 AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
 ;
 ```

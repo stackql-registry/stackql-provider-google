@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists all the HealthCheckService resources that have been<br />configured for the specified project in the given region.</td>
 </tr>
 <tr>
@@ -322,9 +322,9 @@ warning
 FROM google.compute.health_check_services
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -348,24 +348,24 @@ Creates a regional HealthCheckService resource in the<br />specified project and
 
 ```sql
 INSERT INTO google.compute.health_check_services (
-data__healthStatusAggregationPolicy,
-data__healthChecks,
 data__description,
-data__networkEndpointGroups,
 data__fingerprint,
+data__healthChecks,
+data__healthStatusAggregationPolicy,
 data__name,
+data__networkEndpointGroups,
 data__notificationEndpoints,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ healthStatusAggregationPolicy }}',
-'{{ healthChecks }}',
 '{{ description }}',
-'{{ networkEndpointGroups }}',
 '{{ fingerprint }}',
+'{{ healthChecks }}',
+'{{ healthStatusAggregationPolicy }}',
 '{{ name }}',
+'{{ networkEndpointGroups }}',
 '{{ notificationEndpoints }}',
 '{{ project }}',
 '{{ region }}',
@@ -412,6 +412,32 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the health_check_services resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: fingerprint
+      value: "{{ fingerprint }}"
+      description: |
+        Fingerprint of this resource. A hash of the contents stored in this object.
+        This field is used in optimistic locking. This field will be ignored when
+        inserting a HealthCheckService. An up-to-date fingerprint must
+        be provided in order to patch/update the HealthCheckService; Otherwise, the
+        request will fail with error 412 conditionNotMet. To see the
+        latest fingerprint, make a get() request to retrieve the
+        HealthCheckService.
+    - name: healthChecks
+      value:
+        - "{{ healthChecks }}"
+      description: |
+        A list of URLs to the HealthCheck resources. Must have
+        at least one HealthCheck, and not more than 10 for regionalHealthCheckService, and not more than 1 for globalHealthCheckService.HealthCheck resources must haveportSpecification=USE_SERVING_PORT orportSpecification=USE_FIXED_PORT. For
+        regional HealthCheckService, theHealthCheck must be regional and in the same
+        region. For global HealthCheckService,HealthCheck must be global. Mix of regional and globalHealthChecks is not supported. Multiple regionalHealthChecks must belong to the same region. RegionalHealthChecks must belong to the same region as zones ofNetworkEndpointGroups. For globalHealthCheckService using globalINTERNET_IP_PORT NetworkEndpointGroups, the
+        global HealthChecks must specify sourceRegions,
+        and HealthChecks that specify sourceRegions can
+        only be used with global INTERNET_IP_PORTNetworkEndpointGroups.
     - name: healthStatusAggregationPolicy
       value: "{{ healthStatusAggregationPolicy }}"
       description: |
@@ -425,40 +451,6 @@ zone
         .
         This is only allowed with regional HealthCheckService.
       valid_values: ['AND', 'NO_AGGREGATION']
-    - name: healthChecks
-      value:
-        - "{{ healthChecks }}"
-      description: |
-        A list of URLs to the HealthCheck resources. Must have
-        at least one HealthCheck, and not more than 10 for regionalHealthCheckService, and not more than 1 for globalHealthCheckService.HealthCheck resources must haveportSpecification=USE_SERVING_PORT orportSpecification=USE_FIXED_PORT. For
-        regional HealthCheckService, theHealthCheck must be regional and in the same
-        region. For global HealthCheckService,HealthCheck must be global. Mix of regional and globalHealthChecks is not supported. Multiple regionalHealthChecks must belong to the same region. RegionalHealthChecks must belong to the same region as zones ofNetworkEndpointGroups. For globalHealthCheckService using globalINTERNET_IP_PORT NetworkEndpointGroups, the
-        global HealthChecks must specify sourceRegions,
-        and HealthChecks that specify sourceRegions can
-        only be used with global INTERNET_IP_PORTNetworkEndpointGroups.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: networkEndpointGroups
-      value:
-        - "{{ networkEndpointGroups }}"
-      description: |
-        A list of URLs to the NetworkEndpointGroup
-        resources. Must not have more than 100.  For regionalHealthCheckService, NEGs must be in
-        zones in the region of the HealthCheckService. For globalHealthCheckServices, the NetworkEndpointGroups
-        must be global INTERNET_IP_PORT.
-    - name: fingerprint
-      value: "{{ fingerprint }}"
-      description: |
-        Fingerprint of this resource. A hash of the contents stored in this object.
-        This field is used in optimistic locking. This field will be ignored when
-        inserting a HealthCheckService. An up-to-date fingerprint must
-        be provided in order to patch/update the HealthCheckService; Otherwise, the
-        request will fail with error 412 conditionNotMet. To see the
-        latest fingerprint, make a get() request to retrieve the
-        HealthCheckService.
     - name: name
       value: "{{ name }}"
       description: |
@@ -469,6 +461,14 @@ zone
         must be a lowercase letter, and all following characters must be a dash,
         lowercase letter, or digit, except the last character, which cannot be a
         dash.
+    - name: networkEndpointGroups
+      value:
+        - "{{ networkEndpointGroups }}"
+      description: |
+        A list of URLs to the NetworkEndpointGroup
+        resources. Must not have more than 100.  For regionalHealthCheckService, NEGs must be in
+        zones in the region of the HealthCheckService. For globalHealthCheckServices, the NetworkEndpointGroups
+        must be global INTERNET_IP_PORT.
     - name: notificationEndpoints
       value:
         - "{{ notificationEndpoints }}"
@@ -500,12 +500,12 @@ Updates the specified regional HealthCheckService resource<br />with the data in
 ```sql
 UPDATE google.compute.health_check_services
 SET 
-data__healthStatusAggregationPolicy = '{{ healthStatusAggregationPolicy }}',
-data__healthChecks = '{{ healthChecks }}',
 data__description = '{{ description }}',
-data__networkEndpointGroups = '{{ networkEndpointGroups }}',
 data__fingerprint = '{{ fingerprint }}',
+data__healthChecks = '{{ healthChecks }}',
+data__healthStatusAggregationPolicy = '{{ healthStatusAggregationPolicy }}',
 data__name = '{{ name }}',
+data__networkEndpointGroups = '{{ networkEndpointGroups }}',
 data__notificationEndpoints = '{{ notificationEndpoints }}'
 WHERE 
 project = '{{ project }}' --required

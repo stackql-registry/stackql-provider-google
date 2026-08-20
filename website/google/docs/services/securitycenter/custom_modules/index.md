@@ -33,13 +33,77 @@ Creates, updates, deletes, gets or lists a <code>custom_modules</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_event_threat_detection_settings_custom_modules_get"
+    defaultValue="folders_event_threat_detection_settings_custom_modules_get"
     values={[
+        { label: 'folders_event_threat_detection_settings_custom_modules_get', value: 'folders_event_threat_detection_settings_custom_modules_get' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_get', value: 'organizations_event_threat_detection_settings_custom_modules_get' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_get', value: 'projects_event_threat_detection_settings_custom_modules_get' },
-        { label: 'folders_event_threat_detection_settings_custom_modules_get', value: 'folders_event_threat_detection_settings_custom_modules_get' }
+        { label: 'projects_event_threat_detection_settings_custom_modules_get', value: 'projects_event_threat_detection_settings_custom_modules_get' }
     ]}
 >
+<TabItem value="folders_event_threat_detection_settings_custom_modules_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="ancestorModule" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudProvider" /></td>
+    <td><code>string</code></td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="config" /></td>
+    <td><code>object</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="enablementState" /></td>
+    <td><code>string</code></td>
+    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastEditor" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_get">
 
 <table>
@@ -105,70 +169,6 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_event_threat_detection_settings_custom_modules_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="ancestorModule" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="cloudProvider" /></td>
-    <td><code>string</code></td>
-    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="config" /></td>
-    <td><code>object</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="enablementState" /></td>
-    <td><code>string</code></td>
-    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastEditor" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="folders_event_threat_detection_settings_custom_modules_get">
 
 <table>
 <thead>
@@ -250,6 +250,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#folders_event_threat_detection_settings_custom_modules_get"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_event_threat_detection_settings_custom_modules_get"><CopyableCode code="organizations_event_threat_detection_settings_custom_modules_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
@@ -264,10 +271,17 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_event_threat_detection_settings_custom_modules_get"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
+    <td><a href="#folders_event_threat_detection_settings_custom_modules_patch"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_security_health_analytics_settings_custom_modules_patch"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -285,13 +299,6 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_security_health_analytics_settings_custom_modules_patch"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td></td>
-</tr>
-<tr>
     <td><a href="#projects_event_threat_detection_settings_custom_modules_patch"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
@@ -299,17 +306,17 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_security_health_analytics_settings_custom_modules_patch"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_patch" /></a></td>
+    <td><a href="#projects_security_health_analytics_settings_custom_modules_patch"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_event_threat_detection_settings_custom_modules_patch"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#folders_security_health_analytics_settings_custom_modules_simulate"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_simulate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td></td>
     <td></td>
 </tr>
 <tr>
@@ -323,13 +330,6 @@ The following methods are available for this resource:
     <td><a href="#projects_security_health_analytics_settings_custom_modules_simulate"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_simulate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_security_health_analytics_settings_custom_modules_simulate"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_simulate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -380,13 +380,35 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_event_threat_detection_settings_custom_modules_get"
+    defaultValue="folders_event_threat_detection_settings_custom_modules_get"
     values={[
+        { label: 'folders_event_threat_detection_settings_custom_modules_get', value: 'folders_event_threat_detection_settings_custom_modules_get' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_get', value: 'organizations_event_threat_detection_settings_custom_modules_get' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_get', value: 'projects_event_threat_detection_settings_custom_modules_get' },
-        { label: 'folders_event_threat_detection_settings_custom_modules_get', value: 'folders_event_threat_detection_settings_custom_modules_get' }
+        { label: 'projects_event_threat_detection_settings_custom_modules_get', value: 'projects_event_threat_detection_settings_custom_modules_get' }
     ]}
 >
+<TabItem value="folders_event_threat_detection_settings_custom_modules_get">
+
+Successful response
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+config,
+description,
+displayName,
+enablementState,
+lastEditor,
+type,
+updateTime
+FROM google.securitycenter.custom_modules
+WHERE foldersId = '{{ foldersId }}' -- required
+AND customModulesId = '{{ customModulesId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_get">
 
 Successful response
@@ -431,12 +453,41 @@ AND customModulesId = '{{ customModulesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="folders_event_threat_detection_settings_custom_modules_get">
+</Tabs>
 
-Successful response
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="folders_event_threat_detection_settings_custom_modules_patch"
+    values={[
+        { label: 'folders_event_threat_detection_settings_custom_modules_patch', value: 'folders_event_threat_detection_settings_custom_modules_patch' },
+        { label: 'folders_security_health_analytics_settings_custom_modules_patch', value: 'folders_security_health_analytics_settings_custom_modules_patch' },
+        { label: 'organizations_event_threat_detection_settings_custom_modules_patch', value: 'organizations_event_threat_detection_settings_custom_modules_patch' },
+        { label: 'organizations_security_health_analytics_settings_custom_modules_patch', value: 'organizations_security_health_analytics_settings_custom_modules_patch' },
+        { label: 'projects_event_threat_detection_settings_custom_modules_patch', value: 'projects_event_threat_detection_settings_custom_modules_patch' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_patch', value: 'projects_security_health_analytics_settings_custom_modules_patch' }
+    ]}
+>
+<TabItem value="folders_event_threat_detection_settings_custom_modules_patch">
+
+No description available.
 
 ```sql
-SELECT
+UPDATE google.securitycenter.custom_modules
+SET 
+data__cloudProvider = '{{ cloudProvider }}',
+data__config = '{{ config }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__enablementState = '{{ enablementState }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
+AND customModulesId = '{{ customModulesId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
 name,
 ancestorModule,
 cloudProvider,
@@ -446,29 +497,36 @@ displayName,
 enablementState,
 lastEditor,
 type,
-updateTime
-FROM google.securitycenter.custom_modules
-WHERE foldersId = '{{ foldersId }}' -- required
-AND customModulesId = '{{ customModulesId }}' -- required
-;
+updateTime;
 ```
 </TabItem>
-</Tabs>
+<TabItem value="folders_security_health_analytics_settings_custom_modules_patch">
 
+No description available.
 
-## `UPDATE` examples
-
-<Tabs
-    defaultValue="organizations_event_threat_detection_settings_custom_modules_patch"
-    values={[
-        { label: 'organizations_event_threat_detection_settings_custom_modules_patch', value: 'organizations_event_threat_detection_settings_custom_modules_patch' },
-        { label: 'organizations_security_health_analytics_settings_custom_modules_patch', value: 'organizations_security_health_analytics_settings_custom_modules_patch' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_patch', value: 'projects_security_health_analytics_settings_custom_modules_patch' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_patch', value: 'projects_event_threat_detection_settings_custom_modules_patch' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_patch', value: 'folders_security_health_analytics_settings_custom_modules_patch' },
-        { label: 'folders_event_threat_detection_settings_custom_modules_patch', value: 'folders_event_threat_detection_settings_custom_modules_patch' }
-    ]}
->
+```sql
+UPDATE google.securitycenter.custom_modules
+SET 
+data__cloudProvider = '{{ cloudProvider }}',
+data__customConfig = '{{ customConfig }}',
+data__displayName = '{{ displayName }}',
+data__enablementState = '{{ enablementState }}',
+data__name = '{{ name }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
+AND customModulesId = '{{ customModulesId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+ancestorModule,
+cloudProvider,
+customConfig,
+displayName,
+enablementState,
+lastEditor,
+updateTime;
+```
+</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_patch">
 
 No description available.
@@ -476,13 +534,13 @@ No description available.
 ```sql
 UPDATE google.securitycenter.custom_modules
 SET 
-data__name = '{{ name }}',
-data__config = '{{ config }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__type = '{{ type }}',
 data__cloudProvider = '{{ cloudProvider }}',
-data__enablementState = '{{ enablementState }}'
+data__config = '{{ config }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__enablementState = '{{ enablementState }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
@@ -507,40 +565,13 @@ No description available.
 ```sql
 UPDATE google.securitycenter.custom_modules
 SET 
+data__cloudProvider = '{{ cloudProvider }}',
+data__customConfig = '{{ customConfig }}',
 data__displayName = '{{ displayName }}',
 data__enablementState = '{{ enablementState }}',
-data__name = '{{ name }}',
-data__customConfig = '{{ customConfig }}',
-data__cloudProvider = '{{ cloudProvider }}'
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
-AND customModulesId = '{{ customModulesId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-ancestorModule,
-cloudProvider,
-customConfig,
-displayName,
-enablementState,
-lastEditor,
-updateTime;
-```
-</TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_patch">
-
-No description available.
-
-```sql
-UPDATE google.securitycenter.custom_modules
-SET 
-data__displayName = '{{ displayName }}',
-data__enablementState = '{{ enablementState }}',
-data__name = '{{ name }}',
-data__customConfig = '{{ customConfig }}',
-data__cloudProvider = '{{ cloudProvider }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -561,13 +592,13 @@ No description available.
 ```sql
 UPDATE google.securitycenter.custom_modules
 SET 
-data__name = '{{ name }}',
-data__config = '{{ config }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__type = '{{ type }}',
 data__cloudProvider = '{{ cloudProvider }}',
-data__enablementState = '{{ enablementState }}'
+data__config = '{{ config }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__enablementState = '{{ enablementState }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
@@ -585,20 +616,20 @@ type,
 updateTime;
 ```
 </TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_patch">
+<TabItem value="projects_security_health_analytics_settings_custom_modules_patch">
 
 No description available.
 
 ```sql
 UPDATE google.securitycenter.custom_modules
 SET 
+data__cloudProvider = '{{ cloudProvider }}',
+data__customConfig = '{{ customConfig }}',
 data__displayName = '{{ displayName }}',
 data__enablementState = '{{ enablementState }}',
-data__name = '{{ name }}',
-data__customConfig = '{{ customConfig }}',
-data__cloudProvider = '{{ cloudProvider }}'
+data__name = '{{ name }}'
 WHERE 
-foldersId = '{{ foldersId }}' --required
+projectsId = '{{ projectsId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -612,50 +643,34 @@ lastEditor,
 updateTime;
 ```
 </TabItem>
-<TabItem value="folders_event_threat_detection_settings_custom_modules_patch">
-
-No description available.
-
-```sql
-UPDATE google.securitycenter.custom_modules
-SET 
-data__name = '{{ name }}',
-data__config = '{{ config }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__type = '{{ type }}',
-data__cloudProvider = '{{ cloudProvider }}',
-data__enablementState = '{{ enablementState }}'
-WHERE 
-foldersId = '{{ foldersId }}' --required
-AND customModulesId = '{{ customModulesId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-ancestorModule,
-cloudProvider,
-config,
-description,
-displayName,
-enablementState,
-lastEditor,
-type,
-updateTime;
-```
-</TabItem>
 </Tabs>
 
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_security_health_analytics_settings_custom_modules_simulate"
+    defaultValue="folders_security_health_analytics_settings_custom_modules_simulate"
     values={[
+        { label: 'folders_security_health_analytics_settings_custom_modules_simulate', value: 'folders_security_health_analytics_settings_custom_modules_simulate' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_simulate', value: 'organizations_security_health_analytics_settings_custom_modules_simulate' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_simulate', value: 'projects_security_health_analytics_settings_custom_modules_simulate' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_simulate', value: 'folders_security_health_analytics_settings_custom_modules_simulate' }
+        { label: 'projects_security_health_analytics_settings_custom_modules_simulate', value: 'projects_security_health_analytics_settings_custom_modules_simulate' }
     ]}
 >
+<TabItem value="folders_security_health_analytics_settings_custom_modules_simulate">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.custom_modules.folders_security_health_analytics_settings_custom_modules_simulate 
+@foldersId='{{ foldersId }}' --required 
+@@json=
+'{
+"customConfig": "{{ customConfig }}", 
+"resource": "{{ resource }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="organizations_security_health_analytics_settings_custom_modules_simulate">
 
 Successful response
@@ -678,21 +693,6 @@ Successful response
 ```sql
 EXEC google.securitycenter.custom_modules.projects_security_health_analytics_settings_custom_modules_simulate 
 @projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"customConfig": "{{ customConfig }}", 
-"resource": "{{ resource }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_simulate">
-
-Successful response
-
-```sql
-EXEC google.securitycenter.custom_modules.folders_security_health_analytics_settings_custom_modules_simulate 
-@foldersId='{{ foldersId }}' --required 
 @@json=
 '{
 "customConfig": "{{ customConfig }}", 

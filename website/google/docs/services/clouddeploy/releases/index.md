@@ -88,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deliveryPipelineSnapshot" /></td>
     <td><code>object</code></td>
-    <td>Output only. Snapshot of the parent pipeline taken at release creation time. (id: DeliveryPipeline)</td>
+    <td>A `DeliveryPipeline` resource in the Cloud Deploy API. A `DeliveryPipeline` defines a pipeline through which a Skaffold configuration can progress. (id: DeliveryPipeline)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deployParameters" /></td>
@@ -217,7 +217,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deliveryPipelineSnapshot" /></td>
     <td><code>object</code></td>
-    <td>Output only. Snapshot of the parent pipeline taken at release creation time. (id: DeliveryPipeline)</td>
+    <td>A `DeliveryPipeline` resource in the Cloud Deploy API. A `DeliveryPipeline` defines a pipeline through which a Skaffold configuration can progress. (id: DeliveryPipeline)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deployParameters" /></td>
@@ -325,14 +325,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Releases in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-overrideDeployPolicy"><code>overrideDeployPolicy</code></a>, <a href="#parameter-releaseId"><code>releaseId</code></a></td>
+    <td><a href="#parameter-overrideDeployPolicy"><code>overrideDeployPolicy</code></a>, <a href="#parameter-releaseId"><code>releaseId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new Release in a given project and location.</td>
 </tr>
 <tr>
@@ -501,9 +501,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -525,44 +525,44 @@ Creates a new Release in a given project and location.
 
 ```sql
 INSERT INTO google.clouddeploy.releases (
-data__description,
-data__skaffoldVersion,
-data__skaffoldConfigPath,
-data__skaffoldConfigUri,
 data__annotations,
-data__etag,
 data__buildArtifacts,
-data__toolVersions,
 data__deployParameters,
+data__description,
+data__etag,
 data__labels,
 data__name,
+data__skaffoldConfigPath,
+data__skaffoldConfigUri,
+data__skaffoldVersion,
+data__toolVersions,
 projectsId,
 locationsId,
 deliveryPipelinesId,
-requestId,
-validateOnly,
 overrideDeployPolicy,
-releaseId
+releaseId,
+requestId,
+validateOnly
 )
 SELECT 
-'{{ description }}',
-'{{ skaffoldVersion }}',
-'{{ skaffoldConfigPath }}',
-'{{ skaffoldConfigUri }}',
 '{{ annotations }}',
-'{{ etag }}',
 '{{ buildArtifacts }}',
-'{{ toolVersions }}',
 '{{ deployParameters }}',
+'{{ description }}',
+'{{ etag }}',
 '{{ labels }}',
 '{{ name }}',
+'{{ skaffoldConfigPath }}',
+'{{ skaffoldConfigUri }}',
+'{{ skaffoldVersion }}',
+'{{ toolVersions }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ deliveryPipelinesId }}',
-'{{ requestId }}',
-'{{ validateOnly }}',
 '{{ overrideDeployPolicy }}',
-'{{ releaseId }}'
+'{{ releaseId }}',
+'{{ requestId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -586,50 +586,28 @@ response
     - name: deliveryPipelinesId
       value: "{{ deliveryPipelinesId }}"
       description: Required parameter for the releases resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the \`Release\`. Max length is 255 characters.
-    - name: skaffoldVersion
-      value: "{{ skaffoldVersion }}"
-      description: |
-        Optional. The Skaffold version to use when operating on this release, such as "1.20.0". Not all versions are valid; Cloud Deploy supports a specific set of versions. If unset, the most recent supported Skaffold version will be used.
-    - name: skaffoldConfigPath
-      value: "{{ skaffoldConfigPath }}"
-      description: |
-        Optional. Filepath of the Skaffold config inside of the config URI.
-    - name: skaffoldConfigUri
-      value: "{{ skaffoldConfigUri }}"
-      description: |
-        Optional. Cloud Storage URI of tar.gz archive containing Skaffold configuration.
     - name: annotations
       value: "{{ annotations }}"
       description: |
         Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: buildArtifacts
       description: |
         Optional. List of artifacts to pass through to Skaffold command.
       value:
         - image: "{{ image }}"
           tag: "{{ tag }}"
-    - name: toolVersions
-      description: |
-        Optional. The tool versions to use for this release and all subsequent operations involving this release. If unset, tool versions are frozen when the release is created.
-      value:
-        docker: "{{ docker }}"
-        kpt: "{{ kpt }}"
-        helm: "{{ helm }}"
-        kubectl: "{{ kubectl }}"
-        kustomize: "{{ kustomize }}"
-        skaffold: "{{ skaffold }}"
     - name: deployParameters
       value: "{{ deployParameters }}"
       description: |
         Optional. The deploy parameters to use for all targets in this release.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the \`Release\`. Max length is 255 characters.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -638,14 +616,36 @@ response
       value: "{{ name }}"
       description: |
         Identifier. Name of the \`Release\`. Format is \`projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}\`. The \`release\` component must match \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`
-    - name: requestId
-      value: "{{ requestId }}"
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: skaffoldConfigPath
+      value: "{{ skaffoldConfigPath }}"
+      description: |
+        Optional. Filepath of the Skaffold config inside of the config URI.
+    - name: skaffoldConfigUri
+      value: "{{ skaffoldConfigUri }}"
+      description: |
+        Optional. Cloud Storage URI of tar.gz archive containing Skaffold configuration.
+    - name: skaffoldVersion
+      value: "{{ skaffoldVersion }}"
+      description: |
+        Optional. The Skaffold version to use when operating on this release, such as "1.20.0". Not all versions are valid; Cloud Deploy supports a specific set of versions. If unset, the most recent supported Skaffold version will be used.
+    - name: toolVersions
+      description: |
+        Optional. The tool versions to use for this release and all subsequent operations involving this release. If unset, tool versions are frozen when the release is created.
+      value:
+        docker: "{{ docker }}"
+        helm: "{{ helm }}"
+        kpt: "{{ kpt }}"
+        kubectl: "{{ kubectl }}"
+        kustomize: "{{ kustomize }}"
+        skaffold: "{{ skaffold }}"
     - name: overrideDeployPolicy
       value: "{{ overrideDeployPolicy }}"
     - name: releaseId
       value: "{{ releaseId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>

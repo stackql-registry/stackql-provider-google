@@ -289,18 +289,18 @@ Creates a policy tag in a taxonomy.
 
 ```sql
 INSERT INTO google.datacatalog.policy_tags (
-data__name,
-data__displayName,
 data__description,
+data__displayName,
+data__name,
 data__parentPolicyTag,
 projectsId,
 locationsId,
 taxonomiesId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ parentPolicyTag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -328,18 +328,18 @@ parentPolicyTag
     - name: taxonomiesId
       value: "{{ taxonomiesId }}"
       description: Required parameter for the policy_tags resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. User-defined name of this policy tag. The name can't start or end with spaces and must be unique within the parent taxonomy, contain only Unicode letters, numbers, underscores, dashes and spaces, and be at most 200 bytes long when encoded in UTF-8.
     - name: description
       value: "{{ description }}"
       description: |
         Description of this policy tag. If not set, defaults to empty. The description must contain only Unicode characters, tabs, newlines, carriage returns and page breaks, and be at most 2000 bytes long when encoded in UTF-8.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. User-defined name of this policy tag. The name can't start or end with spaces and must be unique within the parent taxonomy, contain only Unicode letters, numbers, underscores, dashes and spaces, and be at most 200 bytes long when encoded in UTF-8.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs.
     - name: parentPolicyTag
       value: "{{ parentPolicyTag }}"
       description: |
@@ -365,9 +365,9 @@ Updates a policy tag, including its display name, description, and parent policy
 ```sql
 UPDATE google.datacatalog.policy_tags
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__parentPolicyTag = '{{ parentPolicyTag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

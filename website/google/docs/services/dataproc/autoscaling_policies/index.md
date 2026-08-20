@@ -279,7 +279,7 @@ The following methods are available for this resource:
     <td><a href="#projects_regions_autoscaling_policies_list"><CopyableCode code="projects_regions_autoscaling_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists autoscaling policies in the project.</td>
 </tr>
 <tr>
@@ -461,8 +461,8 @@ workerConfig
 FROM google.dataproc.autoscaling_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND regionsId = '{{ regionsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -485,22 +485,22 @@ Creates new autoscaling policy.
 
 ```sql
 INSERT INTO google.dataproc.autoscaling_policies (
-data__workerConfig,
-data__secondaryWorkerConfig,
-data__clusterType,
-data__labels,
-data__id,
 data__basicAlgorithm,
+data__clusterType,
+data__id,
+data__labels,
+data__secondaryWorkerConfig,
+data__workerConfig,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ workerConfig }}',
-'{{ secondaryWorkerConfig }}',
-'{{ clusterType }}',
-'{{ labels }}',
-'{{ id }}',
 '{{ basicAlgorithm }}',
+'{{ clusterType }}',
+'{{ id }}',
+'{{ labels }}',
+'{{ secondaryWorkerConfig }}',
+'{{ workerConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -520,22 +520,22 @@ Creates new autoscaling policy.
 
 ```sql
 INSERT INTO google.dataproc.autoscaling_policies (
-data__workerConfig,
-data__secondaryWorkerConfig,
-data__clusterType,
-data__labels,
-data__id,
 data__basicAlgorithm,
+data__clusterType,
+data__id,
+data__labels,
+data__secondaryWorkerConfig,
+data__workerConfig,
 projectsId,
 regionsId
 )
 SELECT 
-'{{ workerConfig }}',
-'{{ secondaryWorkerConfig }}',
-'{{ clusterType }}',
-'{{ labels }}',
-'{{ id }}',
 '{{ basicAlgorithm }}',
+'{{ clusterType }}',
+'{{ id }}',
+'{{ labels }}',
+'{{ secondaryWorkerConfig }}',
+'{{ workerConfig }}',
 '{{ projectsId }}',
 '{{ regionsId }}'
 RETURNING
@@ -563,51 +563,51 @@ workerConfig
     - name: regionsId
       value: "{{ regionsId }}"
       description: Required parameter for the autoscaling_policies resource.
-    - name: workerConfig
+    - name: basicAlgorithm
       description: |
-        Required. Describes how the autoscaler will operate for primary workers.
+        Basic algorithm for autoscaling.
       value:
-        minInstances: {{ minInstances }}
-        maxInstances: {{ maxInstances }}
-        weight: {{ weight }}
-    - name: secondaryWorkerConfig
-      description: |
-        Optional. Describes how the autoscaler will operate for secondary workers.
-      value:
-        minInstances: {{ minInstances }}
-        maxInstances: {{ maxInstances }}
-        weight: {{ weight }}
+        cooldownPeriod: "{{ cooldownPeriod }}"
+        sparkStandaloneConfig:
+          gracefulDecommissionTimeout: "{{ gracefulDecommissionTimeout }}"
+          removeOnlyIdleWorkers: {{ removeOnlyIdleWorkers }}
+          scaleDownFactor: {{ scaleDownFactor }}
+          scaleDownMinWorkerFraction: {{ scaleDownMinWorkerFraction }}
+          scaleUpFactor: {{ scaleUpFactor }}
+          scaleUpMinWorkerFraction: {{ scaleUpMinWorkerFraction }}
+        yarnConfig:
+          gracefulDecommissionTimeout: "{{ gracefulDecommissionTimeout }}"
+          scaleDownFactor: {{ scaleDownFactor }}
+          scaleDownMinWorkerFraction: {{ scaleDownMinWorkerFraction }}
+          scaleUpFactor: {{ scaleUpFactor }}
+          scaleUpMinWorkerFraction: {{ scaleUpMinWorkerFraction }}
     - name: clusterType
       value: "{{ clusterType }}"
       description: |
         Optional. The type of the clusters for which this autoscaling policy is to be configured.
       valid_values: ['CLUSTER_TYPE_UNSPECIFIED', 'STANDARD', 'ZERO_SCALE']
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. The labels to associate with this autoscaling policy. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with an autoscaling policy.
     - name: id
       value: "{{ id }}"
       description: |
         Required. The policy id.The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of between 3 and 50 characters.
-    - name: basicAlgorithm
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Basic algorithm for autoscaling.
+        Optional. The labels to associate with this autoscaling policy. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with an autoscaling policy.
+    - name: secondaryWorkerConfig
+      description: |
+        Optional. Describes how the autoscaler will operate for secondary workers.
       value:
-        sparkStandaloneConfig:
-          scaleUpMinWorkerFraction: {{ scaleUpMinWorkerFraction }}
-          removeOnlyIdleWorkers: {{ removeOnlyIdleWorkers }}
-          scaleUpFactor: {{ scaleUpFactor }}
-          scaleDownFactor: {{ scaleDownFactor }}
-          scaleDownMinWorkerFraction: {{ scaleDownMinWorkerFraction }}
-          gracefulDecommissionTimeout: "{{ gracefulDecommissionTimeout }}"
-        yarnConfig:
-          scaleUpFactor: {{ scaleUpFactor }}
-          scaleDownFactor: {{ scaleDownFactor }}
-          scaleDownMinWorkerFraction: {{ scaleDownMinWorkerFraction }}
-          gracefulDecommissionTimeout: "{{ gracefulDecommissionTimeout }}"
-          scaleUpMinWorkerFraction: {{ scaleUpMinWorkerFraction }}
-        cooldownPeriod: "{{ cooldownPeriod }}"
+        maxInstances: {{ maxInstances }}
+        minInstances: {{ minInstances }}
+        weight: {{ weight }}
+    - name: workerConfig
+      description: |
+        Required. Describes how the autoscaler will operate for primary workers.
+      value:
+        maxInstances: {{ maxInstances }}
+        minInstances: {{ minInstances }}
+        weight: {{ weight }}
 `}</CodeBlock>
 
 </TabItem>
@@ -630,12 +630,12 @@ Updates (replaces) autoscaling policy.Disabled check for update_mask, because al
 ```sql
 REPLACE google.dataproc.autoscaling_policies
 SET 
-data__workerConfig = '{{ workerConfig }}',
-data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}',
+data__basicAlgorithm = '{{ basicAlgorithm }}',
 data__clusterType = '{{ clusterType }}',
-data__labels = '{{ labels }}',
 data__id = '{{ id }}',
-data__basicAlgorithm = '{{ basicAlgorithm }}'
+data__labels = '{{ labels }}',
+data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}',
+data__workerConfig = '{{ workerConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -657,12 +657,12 @@ Updates (replaces) autoscaling policy.Disabled check for update_mask, because al
 ```sql
 REPLACE google.dataproc.autoscaling_policies
 SET 
-data__workerConfig = '{{ workerConfig }}',
-data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}',
+data__basicAlgorithm = '{{ basicAlgorithm }}',
 data__clusterType = '{{ clusterType }}',
-data__labels = '{{ labels }}',
 data__id = '{{ id }}',
-data__basicAlgorithm = '{{ basicAlgorithm }}'
+data__labels = '{{ labels }}',
+data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}',
+data__workerConfig = '{{ workerConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND regionsId = '{{ regionsId }}' --required

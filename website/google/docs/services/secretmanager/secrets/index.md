@@ -255,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Secrets.</td>
 </tr>
 <tr>
@@ -413,8 +413,8 @@ versionAliases,
 versionDestroyTtl
 FROM google.secretmanager.secrets
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -437,36 +437,36 @@ Creates a new Secret containing no SecretVersions.
 
 ```sql
 INSERT INTO google.secretmanager.secrets (
-data__labels,
-data__tags,
-data__etag,
 data__annotations,
 data__customerManagedEncryption,
-data__versionAliases,
-data__versionDestroyTtl,
-data__secretType,
+data__etag,
 data__expireTime,
-data__topics,
-data__ttl,
+data__labels,
 data__replication,
 data__rotation,
+data__secretType,
+data__tags,
+data__topics,
+data__ttl,
+data__versionAliases,
+data__versionDestroyTtl,
 projectsId,
 secretId
 )
 SELECT 
-'{{ labels }}',
-'{{ tags }}',
-'{{ etag }}',
 '{{ annotations }}',
 '{{ customerManagedEncryption }}',
-'{{ versionAliases }}',
-'{{ versionDestroyTtl }}',
-'{{ secretType }}',
+'{{ etag }}',
 '{{ expireTime }}',
-'{{ topics }}',
-'{{ ttl }}',
+'{{ labels }}',
 '{{ replication }}',
 '{{ rotation }}',
+'{{ secretType }}',
+'{{ tags }}',
+'{{ topics }}',
+'{{ ttl }}',
+'{{ versionAliases }}',
+'{{ versionDestroyTtl }}',
 '{{ projectsId }}',
 '{{ secretId }}'
 RETURNING
@@ -497,18 +497,6 @@ versionDestroyTtl
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the secrets resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The labels assigned to this Secret. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \`p{Ll}p{Lo}{0,62}\` Label values must be between 0 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \`[p{Ll}p{Lo}p{N}_-]{0,63}\` No more than 64 labels can be assigned to a given resource.
-    - name: tags
-      value: "{{ tags }}"
-      description: |
-        Optional. Input only. Immutable. Mapping of Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing" Tags are used to organize and group resources. Tags can be used to control policy evaluation for the resource.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. Etag of the currently stored Secret.
     - name: annotations
       value: "{{ annotations }}"
       description: |
@@ -518,32 +506,18 @@ versionDestroyTtl
         Optional. The customer-managed encryption configuration of the regionalized secrets. If no configuration is provided, Google-managed default encryption is used. Updates to the Secret encryption configuration only apply to SecretVersions added afterwards. They do not apply retroactively to existing SecretVersions.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
-    - name: versionAliases
-      value: "{{ versionAliases }}"
+    - name: etag
+      value: "{{ etag }}"
       description: |
-        Optional. Mapping from version alias to version name. A version alias is a string with a maximum length of 63 characters and can contain uppercase and lowercase letters, numerals, and the hyphen (\`-\`) and underscore ('_') characters. An alias string must start with a letter and cannot be the string 'latest' or 'NEW'. No more than 50 aliases can be assigned to a given secret. Version-Alias pairs will be viewable via GetSecret and modifiable via UpdateSecret. Access by alias is only be supported on GetSecretVersion and AccessSecretVersion.
-    - name: versionDestroyTtl
-      value: "{{ versionDestroyTtl }}"
-      description: |
-        Optional. Secret Version TTL after destruction request This is a part of the Delayed secret version destroy feature. For secret with TTL>0, version destruction doesn't happen immediately on calling destroy instead the version goes to a disabled state and destruction happens after the TTL expires.
-    - name: secretType
-      value: "{{ secretType }}"
-      description: |
-        Optional. Immutable. This defines the type of the secret. Enforces certain structural requirements on the SecretVersions. For secret of type UNSPECIFIED, the SecretVersions can be of any type.
-      valid_values: ['SECRET_TYPE_UNSPECIFIED', 'CLOUD_SQL_DB_CREDENTIALS', 'ACCESS_KEY', 'CERTIFICATE', 'OTHER_DB_CREDENTIALS', 'OTHER']
+        Optional. Etag of the currently stored Secret.
     - name: expireTime
       value: "{{ expireTime }}"
       description: |
         Optional. Timestamp in UTC when the Secret is scheduled to expire. This is always provided on output, regardless of what was sent on input.
-    - name: topics
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Optional. A list of up to 10 Pub/Sub topics to which messages are published when control plane operations are called on the secret or its versions.
-      value:
-        - name: "{{ name }}"
-    - name: ttl
-      value: "{{ ttl }}"
-      description: |
-        Input only. The TTL for the Secret.
+        The labels assigned to this Secret. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \`p{Ll}p{Lo}{0,62}\` Label values must be between 0 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \`[p{Ll}p{Lo}p{N}_-]{0,63}\` No more than 64 labels can be assigned to a given resource.
     - name: replication
       description: |
         Optional. Immutable. The replication policy of the secret data attached to the Secret. The replication policy cannot be changed after the Secret has been created.
@@ -553,21 +527,47 @@ versionDestroyTtl
             kmsKeyName: "{{ kmsKeyName }}"
         userManaged:
           replicas:
-            - location: "{{ location }}"
-              customerManagedEncryption:
+            - customerManagedEncryption:
                 kmsKeyName: "{{ kmsKeyName }}"
+              location: "{{ location }}"
     - name: rotation
       description: |
         Optional. Rotation policy attached to the Secret. May be excluded if there is no rotation policy.
       value:
-        nextRotationTime: "{{ nextRotationTime }}"
         managedRotationStatus:
-          state: "{{ state }}"
           error:
-            details: "{{ details }}"
             code: {{ code }}
+            details: "{{ details }}"
             message: "{{ message }}"
+          state: "{{ state }}"
+        nextRotationTime: "{{ nextRotationTime }}"
         rotationPeriod: "{{ rotationPeriod }}"
+    - name: secretType
+      value: "{{ secretType }}"
+      description: |
+        Optional. Immutable. This defines the type of the secret. Enforces certain structural requirements on the SecretVersions. For secret of type UNSPECIFIED, the SecretVersions can be of any type.
+      valid_values: ['SECRET_TYPE_UNSPECIFIED', 'CLOUD_SQL_DB_CREDENTIALS', 'ACCESS_KEY', 'CERTIFICATE', 'OTHER_DB_CREDENTIALS', 'OTHER']
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Mapping of Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing" Tags are used to organize and group resources. Tags can be used to control policy evaluation for the resource.
+    - name: topics
+      description: |
+        Optional. A list of up to 10 Pub/Sub topics to which messages are published when control plane operations are called on the secret or its versions.
+      value:
+        - name: "{{ name }}"
+    - name: ttl
+      value: "{{ ttl }}"
+      description: |
+        Input only. The TTL for the Secret.
+    - name: versionAliases
+      value: "{{ versionAliases }}"
+      description: |
+        Optional. Mapping from version alias to version name. A version alias is a string with a maximum length of 63 characters and can contain uppercase and lowercase letters, numerals, and the hyphen (\`-\`) and underscore ('_') characters. An alias string must start with a letter and cannot be the string 'latest' or 'NEW'. No more than 50 aliases can be assigned to a given secret. Version-Alias pairs will be viewable via GetSecret and modifiable via UpdateSecret. Access by alias is only be supported on GetSecretVersion and AccessSecretVersion.
+    - name: versionDestroyTtl
+      value: "{{ versionDestroyTtl }}"
+      description: |
+        Optional. Secret Version TTL after destruction request This is a part of the Delayed secret version destroy feature. For secret with TTL>0, version destruction doesn't happen immediately on calling destroy instead the version goes to a disabled state and destruction happens after the TTL expires.
     - name: secretId
       value: "{{ secretId }}"
 `}</CodeBlock>
@@ -591,19 +591,19 @@ Updates metadata of an existing Secret.
 ```sql
 UPDATE google.secretmanager.secrets
 SET 
-data__labels = '{{ labels }}',
-data__tags = '{{ tags }}',
-data__etag = '{{ etag }}',
 data__annotations = '{{ annotations }}',
 data__customerManagedEncryption = '{{ customerManagedEncryption }}',
-data__versionAliases = '{{ versionAliases }}',
-data__versionDestroyTtl = '{{ versionDestroyTtl }}',
-data__secretType = '{{ secretType }}',
+data__etag = '{{ etag }}',
 data__expireTime = '{{ expireTime }}',
+data__labels = '{{ labels }}',
+data__replication = '{{ replication }}',
+data__rotation = '{{ rotation }}',
+data__secretType = '{{ secretType }}',
+data__tags = '{{ tags }}',
 data__topics = '{{ topics }}',
 data__ttl = '{{ ttl }}',
-data__replication = '{{ replication }}',
-data__rotation = '{{ rotation }}'
+data__versionAliases = '{{ versionAliases }}',
+data__versionDestroyTtl = '{{ versionDestroyTtl }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND secretsId = '{{ secretsId }}' --required

@@ -100,12 +100,12 @@ Finds orphan ResourceEvents matching the criteria and moves them to the Archived
 EXEC google.assuredworkloads.assuredworkloads.archive_resource_events 
 @@json=
 '{
-"eventCutoffTime": "{{ eventCutoffTime }}", 
-"region": "{{ region }}", 
-"organizationId": "{{ organizationId }}", 
-"batchSize": {{ batchSize }}, 
 "archiveTime": "{{ archiveTime }}", 
-"maxEventsMove": {{ maxEventsMove }}
+"batchSize": {{ batchSize }}, 
+"eventCutoffTime": "{{ eventCutoffTime }}", 
+"maxEventsMove": {{ maxEventsMove }}, 
+"organizationId": "{{ organizationId }}", 
+"region": "{{ region }}"
 }'
 ;
 ```
@@ -118,12 +118,12 @@ Finds matching ArchivedResourceEvents and moves them back to the ResourceEvents 
 EXEC google.assuredworkloads.assuredworkloads.revert_archived_resource_events 
 @@json=
 '{
-"region": "{{ region }}", 
-"archiveStartTime": "{{ archiveStartTime }}", 
 "archiveEndTime": "{{ archiveEndTime }}", 
-"organizationId": "{{ organizationId }}", 
+"archiveStartTime": "{{ archiveStartTime }}", 
 "batchSize": {{ batchSize }}, 
-"maxEventsMove": {{ maxEventsMove }}
+"maxEventsMove": {{ maxEventsMove }}, 
+"organizationId": "{{ organizationId }}", 
+"region": "{{ region }}"
 }'
 ;
 ```

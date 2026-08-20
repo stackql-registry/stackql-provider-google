@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Services in a given project and location.</td>
 </tr>
 <tr>
@@ -209,7 +209,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Service.</td>
 </tr>
 <tr>
@@ -335,8 +335,8 @@ FROM google.agentregistry.services
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -358,26 +358,26 @@ Creates a new Service in a given project and location.
 
 ```sql
 INSERT INTO google.agentregistry.services (
-data__mcpServerSpec,
 data__agentSpec,
-data__name,
+data__description,
 data__displayName,
 data__endpointSpec,
-data__description,
 data__interfaces,
+data__mcpServerSpec,
+data__name,
 projectsId,
 locationsId,
 requestId,
 serviceId
 )
 SELECT 
-'{{ mcpServerSpec }}',
 '{{ agentSpec }}',
-'{{ name }}',
+'{{ description }}',
 '{{ displayName }}',
 '{{ endpointSpec }}',
-'{{ description }}',
 '{{ interfaces }}',
+'{{ mcpServerSpec }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}',
@@ -402,22 +402,16 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the services resource.
-    - name: mcpServerSpec
-      description: |
-        Optional. The spec of the MCP Server. When \`mcp_server_spec\` is set, the type of the service is MCP Server.
-      value:
-        type: "{{ type }}"
-        content: "{{ content }}"
     - name: agentSpec
       description: |
         Optional. The spec of the Agent. When \`agent_spec\` is set, the type of the service is Agent.
       value:
-        type: "{{ type }}"
         content: "{{ content }}"
-    - name: name
-      value: "{{ name }}"
+        type: "{{ type }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Identifier. The resource name of the Service. Format: \`projects/{project}/locations/{location}/services/{service}\`.
+        Optional. User-defined description of an Service. Can have a maximum length of \`2048\` characters.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -426,18 +420,24 @@ response
       description: |
         Optional. The spec of the Endpoint. When \`endpoint_spec\` is set, the type of the service is Endpoint.
       value:
-        type: "{{ type }}"
         content: "{{ content }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. User-defined description of an Service. Can have a maximum length of \`2048\` characters.
+        type: "{{ type }}"
     - name: interfaces
       description: |
         Optional. The connection details for the Service.
       value:
-        - url: "{{ url }}"
-          protocolBinding: "{{ protocolBinding }}"
+        - protocolBinding: "{{ protocolBinding }}"
+          url: "{{ url }}"
+    - name: mcpServerSpec
+      description: |
+        Optional. The spec of the MCP Server. When \`mcp_server_spec\` is set, the type of the service is MCP Server.
+      value:
+        content: "{{ content }}"
+        type: "{{ type }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the Service. Format: \`projects/{project}/locations/{location}/services/{service}\`.
     - name: requestId
       value: "{{ requestId }}"
     - name: serviceId
@@ -463,19 +463,19 @@ Updates the parameters of a single Service.
 ```sql
 UPDATE google.agentregistry.services
 SET 
-data__mcpServerSpec = '{{ mcpServerSpec }}',
 data__agentSpec = '{{ agentSpec }}',
-data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
 data__endpointSpec = '{{ endpointSpec }}',
-data__description = '{{ description }}',
-data__interfaces = '{{ interfaces }}'
+data__interfaces = '{{ interfaces }}',
+data__mcpServerSpec = '{{ mcpServerSpec }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

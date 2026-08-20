@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists GoldengateConnectionAssignments in a given project and location.</td>
 </tr>
 <tr>
@@ -287,9 +287,9 @@ FROM google.oracledatabase.goldengate_connection_assignments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -312,9 +312,9 @@ Creates a new GoldengateConnectionAssignment in a given project and location.
 ```sql
 INSERT INTO google.oracledatabase.goldengate_connection_assignments (
 data__displayName,
-data__properties,
-data__name,
 data__labels,
+data__name,
+data__properties,
 projectsId,
 locationsId,
 goldengateConnectionAssignmentId,
@@ -322,9 +322,9 @@ requestId
 )
 SELECT 
 '{{ displayName }}',
-'{{ properties }}',
-'{{ name }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ properties }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ goldengateConnectionAssignmentId }}',
@@ -353,23 +353,23 @@ response
       value: "{{ displayName }}"
       description: |
         Optional. The display name for the GoldengateConnectionAssignment.
-    - name: properties
-      description: |
-        Required. The properties of the GoldengateConnectionAssignment.
-      value:
-        ocid: "{{ ocid }}"
-        goldengateConnection: "{{ goldengateConnection }}"
-        state: "{{ state }}"
-        goldengateDeployment: "{{ goldengateDeployment }}"
-        alias: "{{ alias }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the GoldengateConnectionAssignment resource in the following format: projects/{project}/locations/{region}/goldengateConnectionAssignments/{goldengate_connection_assignment}
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. The labels or tags associated with the GoldengateConnectionAssignment.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the GoldengateConnectionAssignment resource in the following format: projects/{project}/locations/{region}/goldengateConnectionAssignments/{goldengate_connection_assignment}
+    - name: properties
+      description: |
+        Required. The properties of the GoldengateConnectionAssignment.
+      value:
+        alias: "{{ alias }}"
+        goldengateConnection: "{{ goldengateConnection }}"
+        goldengateDeployment: "{{ goldengateDeployment }}"
+        ocid: "{{ ocid }}"
+        state: "{{ state }}"
     - name: goldengateConnectionAssignmentId
       value: "{{ goldengateConnectionAssignmentId }}"
     - name: requestId

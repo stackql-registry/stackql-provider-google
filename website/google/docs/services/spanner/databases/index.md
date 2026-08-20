@@ -393,18 +393,18 @@ Creates a new Spanner database and starts to prepare it for serving. The returne
 ```sql
 INSERT INTO google.spanner.databases (
 data__createStatement,
-data__extraStatements,
-data__encryptionConfig,
 data__databaseDialect,
+data__encryptionConfig,
+data__extraStatements,
 data__protoDescriptors,
 projectsId,
 instancesId
 )
 SELECT 
 '{{ createStatement }}',
-'{{ extraStatements }}',
-'{{ encryptionConfig }}',
 '{{ databaseDialect }}',
+'{{ encryptionConfig }}',
+'{{ extraStatements }}',
 '{{ protoDescriptors }}',
 '{{ projectsId }}',
 '{{ instancesId }}'
@@ -432,11 +432,11 @@ response
       value: "{{ createStatement }}"
       description: |
         Required. A \`CREATE DATABASE\` statement, which specifies the ID of the new database. The database ID must conform to the regular expression \`a-z*[a-z0-9]\` and be between 2 and 30 characters in length. If the database ID is a reserved word or if it contains a hyphen, the database ID must be enclosed in backticks (\`\` \` \`\`).
-    - name: extraStatements
-      value:
-        - "{{ extraStatements }}"
+    - name: databaseDialect
+      value: "{{ databaseDialect }}"
       description: |
-        Optional. A list of DDL statements to run inside the newly created database. Statements can create tables, indexes, etc. These statements execute atomically with the creation of the database: if there is an error in any statement, the database is not created.
+        Optional. The dialect of the Cloud Spanner Database.
+      valid_values: ['DATABASE_DIALECT_UNSPECIFIED', 'GOOGLE_STANDARD_SQL', 'POSTGRESQL']
     - name: encryptionConfig
       description: |
         Optional. The encryption configuration for the database. If this field is not specified, Cloud Spanner will encrypt/decrypt all data at rest using Google default encryption.
@@ -444,11 +444,11 @@ response
         kmsKeyName: "{{ kmsKeyName }}"
         kmsKeyNames:
           - "{{ kmsKeyNames }}"
-    - name: databaseDialect
-      value: "{{ databaseDialect }}"
+    - name: extraStatements
+      value:
+        - "{{ extraStatements }}"
       description: |
-        Optional. The dialect of the Cloud Spanner Database.
-      valid_values: ['DATABASE_DIALECT_UNSPECIFIED', 'GOOGLE_STANDARD_SQL', 'POSTGRESQL']
+        Optional. A list of DDL statements to run inside the newly created database. Statements can create tables, indexes, etc. These statements execute atomically with the creation of the database: if there is an error in any statement, the database is not created.
     - name: protoDescriptors
       value: "{{ protoDescriptors }}"
       description: |
@@ -474,8 +474,8 @@ Updates a Cloud Spanner database. The returned long-running operation can be use
 ```sql
 UPDATE google.spanner.databases
 SET 
-data__name = '{{ name }}',
-data__enableDropProtection = {{ enableDropProtection }}
+data__enableDropProtection = {{ enableDropProtection }},
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -535,9 +535,9 @@ EXEC google.spanner.databases.projects_instances_databases_changequorum
 @databasesId='{{ databasesId }}' --required 
 @@json=
 '{
+"etag": "{{ etag }}", 
 "name": "{{ name }}", 
-"quorumType": "{{ quorumType }}", 
-"etag": "{{ etag }}"
+"quorumType": "{{ quorumType }}"
 }'
 ;
 ```
@@ -552,8 +552,8 @@ EXEC google.spanner.databases.projects_instances_databases_restore
 @instancesId='{{ instancesId }}' --required 
 @@json=
 '{
-"databaseId": "{{ databaseId }}", 
 "backup": "{{ backup }}", 
+"databaseId": "{{ databaseId }}", 
 "encryptionConfig": "{{ encryptionConfig }}"
 }'
 ;

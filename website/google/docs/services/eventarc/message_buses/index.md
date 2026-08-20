@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List message buses.</td>
 </tr>
 <tr>
@@ -209,14 +209,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-messageBusesId"><code>messageBusesId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Update a single message bus.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-messageBusesId"><code>messageBusesId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Delete a single message bus.</td>
 </tr>
 </tbody>
@@ -349,10 +349,10 @@ updateTime
 FROM google.eventarc.message_buses
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -374,24 +374,24 @@ Create a new MessageBus in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.message_buses (
-data__displayName,
-data__name,
-data__loggingConfig,
-data__cryptoKeyName,
-data__labels,
 data__annotations,
+data__cryptoKeyName,
+data__displayName,
+data__labels,
+data__loggingConfig,
+data__name,
 projectsId,
 locationsId,
 messageBusId,
 validateOnly
 )
 SELECT 
-'{{ displayName }}',
-'{{ name }}',
-'{{ loggingConfig }}',
-'{{ cryptoKeyName }}',
-'{{ labels }}',
 '{{ annotations }}',
+'{{ cryptoKeyName }}',
+'{{ displayName }}',
+'{{ labels }}',
+'{{ loggingConfig }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ messageBusId }}',
@@ -416,31 +416,31 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the message_buses resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Resource annotations.
+    - name: cryptoKeyName
+      value: "{{ cryptoKeyName }}"
+      description: |
+        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern \`projects/*/locations/*/keyRings/*/cryptoKeys/*\`.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. Resource display name.
-    - name: name
-      value: "{{ name }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Identifier. Resource name of the form projects/{project}/locations/{location}/messageBuses/{message_bus}
+        Optional. Resource labels.
     - name: loggingConfig
       description: |
         Optional. Config to control Platform logging for the Message Bus. This log configuration is applied to the Message Bus itself, and all the Enrollments attached to it.
       value:
         logSeverity: "{{ logSeverity }}"
-    - name: cryptoKeyName
-      value: "{{ cryptoKeyName }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern \`projects/*/locations/*/keyRings/*/cryptoKeys/*\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Resource labels.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. Resource annotations.
+        Identifier. Resource name of the form projects/{project}/locations/{location}/messageBuses/{message_bus}
     - name: messageBusId
       value: "{{ messageBusId }}"
     - name: validateOnly
@@ -466,19 +466,19 @@ Update a single message bus.
 ```sql
 UPDATE google.eventarc.message_buses
 SET 
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}',
-data__loggingConfig = '{{ loggingConfig }}',
+data__annotations = '{{ annotations }}',
 data__cryptoKeyName = '{{ cryptoKeyName }}',
+data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__loggingConfig = '{{ loggingConfig }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND messageBusesId = '{{ messageBusesId }}' --required
 AND allowMissing = {{ allowMissing}}
-AND validateOnly = {{ validateOnly}}
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -507,8 +507,8 @@ DELETE FROM google.eventarc.message_buses
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND messageBusesId = '{{ messageBusesId }}' --required
-AND etag = '{{ etag }}'
 AND allowMissing = '{{ allowMissing }}'
+AND etag = '{{ etag }}'
 AND validateOnly = '{{ validateOnly }}'
 ;
 ```

@@ -205,21 +205,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists CustomTargetTypes in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-customTargetTypeId"><code>customTargetTypeId</code></a></td>
+    <td><a href="#parameter-customTargetTypeId"><code>customTargetTypeId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new CustomTargetType in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-customTargetTypesId"><code>customTargetTypesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates a single CustomTargetType.</td>
 </tr>
 <tr>
@@ -366,10 +366,10 @@ updateTime
 FROM google.clouddeploy.custom_target_types
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -391,32 +391,32 @@ Creates a new CustomTargetType in a given project and location.
 
 ```sql
 INSERT INTO google.clouddeploy.custom_target_types (
-data__description,
-data__etag,
 data__annotations,
 data__customActions,
+data__description,
+data__etag,
 data__labels,
 data__name,
 data__tasks,
 projectsId,
 locationsId,
+customTargetTypeId,
 requestId,
-validateOnly,
-customTargetTypeId
+validateOnly
 )
 SELECT 
-'{{ description }}',
-'{{ etag }}',
 '{{ annotations }}',
 '{{ customActions }}',
+'{{ description }}',
+'{{ etag }}',
 '{{ labels }}',
 '{{ name }}',
 '{{ tasks }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ customTargetTypeId }}',
 '{{ requestId }}',
-'{{ validateOnly }}',
-'{{ customTargetTypeId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -437,14 +437,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the custom_target_types resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the \`CustomTargetType\`. Max length is 255 characters.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: annotations
       value: "{{ annotations }}"
       description: |
@@ -453,21 +445,29 @@ response
       description: |
         Optional. Configures render and deploy for the \`CustomTargetType\` using Skaffold custom actions.
       value:
-        renderAction: "{{ renderAction }}"
         deployAction: "{{ deployAction }}"
         includeSkaffoldModules:
-          - googleCloudStorage:
+          - configs: "{{ configs }}"
+            git:
+              path: "{{ path }}"
+              ref: "{{ ref }}"
+              repo: "{{ repo }}"
+            googleCloudBuildRepo:
+              path: "{{ path }}"
+              ref: "{{ ref }}"
+              repository: "{{ repository }}"
+            googleCloudStorage:
               path: "{{ path }}"
               source: "{{ source }}"
-            configs: "{{ configs }}"
-            git:
-              repo: "{{ repo }}"
-              ref: "{{ ref }}"
-              path: "{{ path }}"
-            googleCloudBuildRepo:
-              ref: "{{ ref }}"
-              path: "{{ path }}"
-              repository: "{{ repository }}"
+        renderAction: "{{ renderAction }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the \`CustomTargetType\`. Max length is 255 characters.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -480,28 +480,28 @@ response
       description: |
         Optional. Configures render and deploy for the \`CustomTargetType\` using tasks.
       value:
-        render:
-          container:
-            image: "{{ image }}"
-            command:
-              - "{{ command }}"
-            env: "{{ env }}"
-            args:
-              - "{{ args }}"
         deploy:
           container:
-            image: "{{ image }}"
+            args:
+              - "{{ args }}"
             command:
               - "{{ command }}"
             env: "{{ env }}"
+            image: "{{ image }}"
+        render:
+          container:
             args:
               - "{{ args }}"
+            command:
+              - "{{ command }}"
+            env: "{{ env }}"
+            image: "{{ image }}"
+    - name: customTargetTypeId
+      value: "{{ customTargetTypeId }}"
     - name: requestId
       value: "{{ requestId }}"
     - name: validateOnly
       value: {{ validateOnly }}
-    - name: customTargetTypeId
-      value: "{{ customTargetTypeId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -523,10 +523,10 @@ Updates a single CustomTargetType.
 ```sql
 UPDATE google.clouddeploy.custom_target_types
 SET 
-data__description = '{{ description }}',
-data__etag = '{{ etag }}',
 data__annotations = '{{ annotations }}',
 data__customActions = '{{ customActions }}',
+data__description = '{{ description }}',
+data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
 data__tasks = '{{ tasks }}'
@@ -534,10 +534,10 @@ WHERE
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND customTargetTypesId = '{{ customTargetTypesId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,

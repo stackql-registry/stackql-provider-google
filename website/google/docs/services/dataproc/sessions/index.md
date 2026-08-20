@@ -255,14 +255,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_sessions_list"><CopyableCode code="projects_locations_sessions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists interactive sessions.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_sessions_create"><CopyableCode code="projects_locations_sessions_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-sessionId"><code>sessionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sessionId"><code>sessionId</code></a></td>
     <td>Create an interactive session asynchronously.</td>
 </tr>
 <tr>
@@ -401,9 +401,9 @@ uuid
 FROM google.dataproc.sessions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -425,32 +425,32 @@ Create an interactive session asynchronously.
 
 ```sql
 INSERT INTO google.dataproc.sessions (
-data__user,
+data__environmentConfig,
 data__jupyterSession,
+data__labels,
 data__name,
 data__runtimeConfig,
-data__environmentConfig,
-data__sparkConnectSession,
 data__sessionTemplate,
-data__labels,
+data__sparkConnectSession,
+data__user,
 projectsId,
 locationsId,
-sessionId,
-requestId
+requestId,
+sessionId
 )
 SELECT 
-'{{ user }}',
+'{{ environmentConfig }}',
 '{{ jupyterSession }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ runtimeConfig }}',
-'{{ environmentConfig }}',
-'{{ sparkConnectSession }}',
 '{{ sessionTemplate }}',
-'{{ labels }}',
+'{{ sparkConnectSession }}',
+'{{ user }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ sessionId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ sessionId }}'
 RETURNING
 name,
 done,
@@ -471,16 +471,37 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the sessions resource.
-    - name: user
-      value: "{{ user }}"
+    - name: environmentConfig
       description: |
-        Optional. The email address of the user who owns the session.
+        Optional. Environment configuration for the session execution.
+      value:
+        executionConfig:
+          authenticationConfig:
+            userWorkloadAuthenticationType: "{{ userWorkloadAuthenticationType }}"
+          idleTtl: "{{ idleTtl }}"
+          kmsKey: "{{ kmsKey }}"
+          networkTags:
+            - "{{ networkTags }}"
+          networkUri: "{{ networkUri }}"
+          resourceManagerTags: "{{ resourceManagerTags }}"
+          serviceAccount: "{{ serviceAccount }}"
+          stagingBucket: "{{ stagingBucket }}"
+          subnetworkUri: "{{ subnetworkUri }}"
+          ttl: "{{ ttl }}"
+        peripheralsConfig:
+          metastoreService: "{{ metastoreService }}"
+          sparkHistoryServerConfig:
+            dataprocCluster: "{{ dataprocCluster }}"
     - name: jupyterSession
       description: |
         Optional. Jupyter session config.
       value:
         displayName: "{{ displayName }}"
         kernel: "{{ kernel }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels to associate with the session. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
     - name: name
       value: "{{ name }}"
       description: |
@@ -489,53 +510,32 @@ response
       description: |
         Optional. Runtime configuration for the session execution.
       value:
-        properties: "{{ properties }}"
-        version: "{{ version }}"
-        repositoryConfig:
-          pypiRepositoryConfig:
-            pypiRepository: "{{ pypiRepository }}"
         autotuningConfig:
           scenarios:
             - "{{ scenarios }}"
-        containerImage: "{{ containerImage }}"
         cohort: "{{ cohort }}"
-    - name: environmentConfig
-      description: |
-        Optional. Environment configuration for the session execution.
-      value:
-        peripheralsConfig:
-          metastoreService: "{{ metastoreService }}"
-          sparkHistoryServerConfig:
-            dataprocCluster: "{{ dataprocCluster }}"
-        executionConfig:
-          idleTtl: "{{ idleTtl }}"
-          authenticationConfig:
-            userWorkloadAuthenticationType: "{{ userWorkloadAuthenticationType }}"
-          subnetworkUri: "{{ subnetworkUri }}"
-          kmsKey: "{{ kmsKey }}"
-          networkTags:
-            - "{{ networkTags }}"
-          ttl: "{{ ttl }}"
-          serviceAccount: "{{ serviceAccount }}"
-          networkUri: "{{ networkUri }}"
-          resourceManagerTags: "{{ resourceManagerTags }}"
-          stagingBucket: "{{ stagingBucket }}"
-    - name: sparkConnectSession
-      value: "{{ sparkConnectSession }}"
-      description: |
-        Optional. Spark connect session config.
+        containerImage: "{{ containerImage }}"
+        properties: "{{ properties }}"
+        repositoryConfig:
+          pypiRepositoryConfig:
+            pypiRepository: "{{ pypiRepository }}"
+        version: "{{ version }}"
     - name: sessionTemplate
       value: "{{ sessionTemplate }}"
       description: |
         Optional. The session template used by the session.Only resource names, including project ID and location, are valid.Example: * https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id] * projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]The template must be in the same project and Dataproc region as the session.
-    - name: labels
-      value: "{{ labels }}"
+    - name: sparkConnectSession
+      value: "{{ sparkConnectSession }}"
       description: |
-        Optional. The labels to associate with the session. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
-    - name: sessionId
-      value: "{{ sessionId }}"
+        Optional. Spark connect session config.
+    - name: user
+      value: "{{ user }}"
+      description: |
+        Optional. The email address of the user who owns the session.
     - name: requestId
       value: "{{ requestId }}"
+    - name: sessionId
+      value: "{{ sessionId }}"
 `}</CodeBlock>
 
 </TabItem>

@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns the list of all keys that belong to a project.</td>
 </tr>
 <tr>
@@ -331,8 +331,8 @@ wafSettings,
 webSettings
 FROM google.recaptchaenterprise.keys
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -354,29 +354,29 @@ Creates a new reCAPTCHA Enterprise key.
 
 ```sql
 INSERT INTO google.recaptchaenterprise.keys (
-data__webSettings,
-data__wafSettings,
 data__androidSettings,
-data__iosSettings,
-data__universalSettings,
-data__name,
-data__labels,
 data__displayName,
 data__expressSettings,
+data__iosSettings,
+data__labels,
+data__name,
 data__testingOptions,
+data__universalSettings,
+data__wafSettings,
+data__webSettings,
 projectsId
 )
 SELECT 
-'{{ webSettings }}',
-'{{ wafSettings }}',
 '{{ androidSettings }}',
-'{{ iosSettings }}',
-'{{ universalSettings }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ displayName }}',
 '{{ expressSettings }}',
+'{{ iosSettings }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ testingOptions }}',
+'{{ universalSettings }}',
+'{{ wafSettings }}',
+'{{ webSettings }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -401,57 +401,14 @@ webSettings
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the keys resource.
-    - name: webSettings
-      description: |
-        Settings for keys that can be used by websites.
-      value:
-        allowAmpTraffic: {{ allowAmpTraffic }}
-        challengeSettings:
-          defaultSettings:
-            scoreThreshold: {{ scoreThreshold }}
-          actionSettings: "{{ actionSettings }}"
-        allowedDomains:
-          - "{{ allowedDomains }}"
-        integrationType: "{{ integrationType }}"
-        challengeSecurityPreference: "{{ challengeSecurityPreference }}"
-        allowAllDomains: {{ allowAllDomains }}
-    - name: wafSettings
-      description: |
-        Optional. Settings for Web Application Firewall (WAF).
-      value:
-        wafService: "{{ wafService }}"
-        wafFeature: "{{ wafFeature }}"
     - name: androidSettings
       description: |
         Settings for keys that can be used by Android apps.
       value:
+        allowAllPackageNames: {{ allowAllPackageNames }}
         allowedPackageNames:
           - "{{ allowedPackageNames }}"
         supportNonGoogleAppStoreDistribution: {{ supportNonGoogleAppStoreDistribution }}
-        allowAllPackageNames: {{ allowAllPackageNames }}
-    - name: iosSettings
-      description: |
-        Settings for keys that can be used by iOS apps.
-      value:
-        allowAllBundleIds: {{ allowAllBundleIds }}
-        allowedBundleIds:
-          - "{{ allowedBundleIds }}"
-        appleDeveloperId:
-          teamId: "{{ teamId }}"
-          privateKey: "{{ privateKey }}"
-          keyId: "{{ keyId }}"
-    - name: universalSettings
-      value: "{{ universalSettings }}"
-      description: |
-        Settings for keys that are configured through their Policy.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name for the Key in the format \`projects/{project}/keys/{key}\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. See [Creating and managing labels] (https://cloud.google.com/recaptcha/docs/labels).
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -460,12 +417,55 @@ webSettings
       value: "{{ expressSettings }}"
       description: |
         Settings for keys that can be used by reCAPTCHA Express.
+    - name: iosSettings
+      description: |
+        Settings for keys that can be used by iOS apps.
+      value:
+        allowAllBundleIds: {{ allowAllBundleIds }}
+        allowedBundleIds:
+          - "{{ allowedBundleIds }}"
+        appleDeveloperId:
+          keyId: "{{ keyId }}"
+          privateKey: "{{ privateKey }}"
+          teamId: "{{ teamId }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. See [Creating and managing labels] (https://cloud.google.com/recaptcha/docs/labels).
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name for the Key in the format \`projects/{project}/keys/{key}\`.
     - name: testingOptions
       description: |
         Optional. Options for user acceptance testing.
       value:
         testingChallenge: "{{ testingChallenge }}"
         testingScore: {{ testingScore }}
+    - name: universalSettings
+      value: "{{ universalSettings }}"
+      description: |
+        Settings for keys that are configured through their Policy.
+    - name: wafSettings
+      description: |
+        Optional. Settings for Web Application Firewall (WAF).
+      value:
+        wafFeature: "{{ wafFeature }}"
+        wafService: "{{ wafService }}"
+    - name: webSettings
+      description: |
+        Settings for keys that can be used by websites.
+      value:
+        allowAllDomains: {{ allowAllDomains }}
+        allowAmpTraffic: {{ allowAmpTraffic }}
+        allowedDomains:
+          - "{{ allowedDomains }}"
+        challengeSecurityPreference: "{{ challengeSecurityPreference }}"
+        challengeSettings:
+          actionSettings: "{{ actionSettings }}"
+          defaultSettings:
+            scoreThreshold: {{ scoreThreshold }}
+        integrationType: "{{ integrationType }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -487,16 +487,16 @@ Updates the specified key.
 ```sql
 UPDATE google.recaptchaenterprise.keys
 SET 
-data__webSettings = '{{ webSettings }}',
-data__wafSettings = '{{ wafSettings }}',
 data__androidSettings = '{{ androidSettings }}',
-data__iosSettings = '{{ iosSettings }}',
-data__universalSettings = '{{ universalSettings }}',
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
 data__displayName = '{{ displayName }}',
 data__expressSettings = '{{ expressSettings }}',
-data__testingOptions = '{{ testingOptions }}'
+data__iosSettings = '{{ iosSettings }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__testingOptions = '{{ testingOptions }}',
+data__universalSettings = '{{ universalSettings }}',
+data__wafSettings = '{{ wafSettings }}',
+data__webSettings = '{{ webSettings }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND keysId = '{{ keysId }}' --required

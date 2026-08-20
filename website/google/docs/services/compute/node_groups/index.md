@@ -310,14 +310,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of node groups available to the specified project.<br />Note: use nodeGroups.listNodes for more details about each group.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of node groups.<br />Note: use nodeGroups.listNodes for more details about each group.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -342,18 +342,18 @@ The following methods are available for this resource:
     <td>Deletes the specified NodeGroup resource.</td>
 </tr>
 <tr>
-    <td><a href="#set_node_template"><CopyableCode code="set_node_template" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-nodeGroup"><code>nodeGroup</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates the node template of the node group.</td>
-</tr>
-<tr>
     <td><a href="#perform_maintenance"><CopyableCode code="perform_maintenance" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-nodeGroup"><code>nodeGroup</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Perform maintenance on a subset of nodes in the node group.</td>
+</tr>
+<tr>
+    <td><a href="#set_node_template"><CopyableCode code="set_node_template" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-nodeGroup"><code>nodeGroup</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Updates the node template of the node group.</td>
 </tr>
 <tr>
     <td><a href="#simulate_maintenance_event"><CopyableCode code="simulate_maintenance_event" /></a></td>
@@ -496,11 +496,11 @@ warning
 FROM google.compute.node_groups
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -529,13 +529,13 @@ status,
 zone
 FROM google.compute.node_groups
 WHERE project = '{{ project }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -557,32 +557,32 @@ Creates a NodeGroup resource in the specified project using the data<br />includ
 
 ```sql
 INSERT INTO google.compute.node_groups (
-data__locationHint,
+data__autoscalingPolicy,
+data__description,
 data__fingerprint,
+data__locationHint,
+data__maintenanceInterval,
 data__maintenancePolicy,
 data__maintenanceWindow,
-data__maintenanceInterval,
 data__name,
-data__autoscalingPolicy,
-data__shareSettings,
-data__description,
 data__nodeTemplate,
+data__shareSettings,
 project,
 zone,
 initialNodeCount,
 requestId
 )
 SELECT 
-'{{ locationHint }}',
+'{{ autoscalingPolicy }}',
+'{{ description }}',
 '{{ fingerprint }}',
+'{{ locationHint }}',
+'{{ maintenanceInterval }}',
 '{{ maintenancePolicy }}',
 '{{ maintenanceWindow }}',
-'{{ maintenanceInterval }}',
 '{{ name }}',
-'{{ autoscalingPolicy }}',
-'{{ shareSettings }}',
-'{{ description }}',
 '{{ nodeTemplate }}',
+'{{ shareSettings }}',
 '{{ project }}',
 '{{ zone }}',
 '{{ initialNodeCount }}',
@@ -632,6 +632,20 @@ zone
     - name: initialNodeCount
       value: "{{ initialNodeCount }}"
       description: Required parameter for the node_groups resource.
+    - name: autoscalingPolicy
+      description: |
+        Specifies how autoscaling should behave.
+      value:
+        maxNodes: {{ maxNodes }}
+        minNodes: {{ minNodes }}
+        mode: "{{ mode }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: fingerprint
+      value: "{{ fingerprint }}"
     - name: locationHint
       value: "{{ locationHint }}"
       description: |
@@ -640,8 +654,12 @@ zone
         This field is for use by internal tools that use the public API.
         The location hint here on the NodeGroup overrides any location_hint
         present in the NodeTemplate.
-    - name: fingerprint
-      value: "{{ fingerprint }}"
+    - name: maintenanceInterval
+      value: "{{ maintenanceInterval }}"
+      description: |
+        Specifies the frequency of planned maintenance events. The accepted values
+        are: \`AS_NEEDED\` and \`RECURRENT\`.
+      valid_values: ['AS_NEEDED', 'RECURRENT']
     - name: maintenancePolicy
       value: "{{ maintenancePolicy }}"
       description: |
@@ -655,16 +673,10 @@ zone
         Time window specified for daily maintenance operations. GCE's internal
         maintenance will be performed within this window.
       value:
-        startTime: "{{ startTime }}"
         maintenanceDuration:
           nanos: {{ nanos }}
           seconds: "{{ seconds }}"
-    - name: maintenanceInterval
-      value: "{{ maintenanceInterval }}"
-      description: |
-        Specifies the frequency of planned maintenance events. The accepted values
-        are: \`AS_NEEDED\` and \`RECURRENT\`.
-      valid_values: ['AS_NEEDED', 'RECURRENT']
+        startTime: "{{ startTime }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -676,28 +688,16 @@ zone
         character must be a lowercase letter, and all following characters must be
         a dash, lowercase letter, or digit, except the last character, which cannot
         be a dash.
-    - name: autoscalingPolicy
-      description: |
-        Specifies how autoscaling should behave.
-      value:
-        minNodes: {{ minNodes }}
-        mode: "{{ mode }}"
-        maxNodes: {{ maxNodes }}
-    - name: shareSettings
-      description: |
-        Share-settings for the node group
-      value:
-        shareType: "{{ shareType }}"
-        projectMap: "{{ projectMap }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
     - name: nodeTemplate
       value: "{{ nodeTemplate }}"
       description: |
         URL of the node template to create the node group from.
+    - name: shareSettings
+      description: |
+        Share-settings for the node group
+      value:
+        projectMap: "{{ projectMap }}"
+        shareType: "{{ shareType }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -721,16 +721,16 @@ Updates the specified node group.
 ```sql
 UPDATE google.compute.node_groups
 SET 
-data__locationHint = '{{ locationHint }}',
+data__autoscalingPolicy = '{{ autoscalingPolicy }}',
+data__description = '{{ description }}',
 data__fingerprint = '{{ fingerprint }}',
+data__locationHint = '{{ locationHint }}',
+data__maintenanceInterval = '{{ maintenanceInterval }}',
 data__maintenancePolicy = '{{ maintenancePolicy }}',
 data__maintenanceWindow = '{{ maintenanceWindow }}',
-data__maintenanceInterval = '{{ maintenanceInterval }}',
 data__name = '{{ name }}',
-data__autoscalingPolicy = '{{ autoscalingPolicy }}',
-data__shareSettings = '{{ shareSettings }}',
-data__description = '{{ description }}',
-data__nodeTemplate = '{{ nodeTemplate }}'
+data__nodeTemplate = '{{ nodeTemplate }}',
+data__shareSettings = '{{ shareSettings }}'
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required
@@ -796,30 +796,13 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_node_template"
+    defaultValue="perform_maintenance"
     values={[
-        { label: 'set_node_template', value: 'set_node_template' },
         { label: 'perform_maintenance', value: 'perform_maintenance' },
+        { label: 'set_node_template', value: 'set_node_template' },
         { label: 'simulate_maintenance_event', value: 'simulate_maintenance_event' }
     ]}
 >
-<TabItem value="set_node_template">
-
-Updates the node template of the node group.
-
-```sql
-EXEC google.compute.node_groups.set_node_template 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@nodeGroup='{{ nodeGroup }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"nodeTemplate": "{{ nodeTemplate }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="perform_maintenance">
 
 Perform maintenance on a subset of nodes in the node group.
@@ -834,6 +817,23 @@ EXEC google.compute.node_groups.perform_maintenance
 '{
 "nodes": "{{ nodes }}", 
 "startTime": "{{ startTime }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_node_template">
+
+Updates the node template of the node group.
+
+```sql
+EXEC google.compute.node_groups.set_node_template 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@nodeGroup='{{ nodeGroup }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"nodeTemplate": "{{ nodeTemplate }}"
 }'
 ;
 ```

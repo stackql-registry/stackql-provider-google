@@ -132,8 +132,8 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_query_results"><CopyableCode code="get_query_results" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+jobId"><code>+jobId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-timeoutMs"><code>timeoutMs</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-formatOptions.timestampOutputFormat"><code>formatOptions.timestampOutputFormat</code></a>, <a href="#parameter-formatOptions.useInt64Timestamp"><code>formatOptions.useInt64Timestamp</code></a>, <a href="#parameter-startIndex"><code>startIndex</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td><a href="#parameter-formatOptions.timestampOutputFormat"><code>formatOptions.timestampOutputFormat</code></a>, <a href="#parameter-formatOptions.useInt64Timestamp"><code>formatOptions.useInt64Timestamp</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startIndex"><code>startIndex</code></a>, <a href="#parameter-timeoutMs"><code>timeoutMs</code></a></td>
     <td>RPC to get the results of a query job. # IAM Permissions Requires the following IAM permission(s) to use this method: - `bigquery.jobs.get` on the job. - `bigquery.tables.getData` on the destination table. If the user matches the creator of the job, the following IAM permission(s) are required instead: - `bigquery.jobs.create` on the project. - `bigquery.tables.getData` on the destination table.</td>
 </tr>
 </tbody>
@@ -152,8 +152,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-+jobId">
-    <td><CopyableCode code="+jobId" /></td>
+<tr id="parameter-jobId">
+    <td><CopyableCode code="jobId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -228,14 +228,14 @@ totalBytesProcessed,
 totalRows
 FROM google.bigquery.query_results
 WHERE projectId = '{{ projectId }}' -- required
-AND +jobId = '{{ +jobId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND timeoutMs = '{{ timeoutMs }}'
-AND maxResults = '{{ maxResults }}'
-AND location = '{{ location }}'
+AND jobId = '{{ jobId }}' -- required
 AND formatOptions.timestampOutputFormat = '{{ formatOptions.timestampOutputFormat }}'
 AND formatOptions.useInt64Timestamp = '{{ formatOptions.useInt64Timestamp }}'
+AND location = '{{ location }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
 AND startIndex = '{{ startIndex }}'
+AND timeoutMs = '{{ timeoutMs }}'
 ;
 ```
 </TabItem>

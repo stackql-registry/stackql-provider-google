@@ -104,8 +104,8 @@ EXEC google.dataflow.locations.projects_locations_worker_messages
 @location='{{ location }}' --required 
 @@json=
 '{
-"workerMessages": "{{ workerMessages }}", 
-"location": "{{ location }}"
+"location": "{{ location }}", 
+"workerMessages": "{{ workerMessages }}"
 }'
 ;
 ```

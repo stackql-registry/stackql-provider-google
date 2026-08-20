@@ -295,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists tuning jobs in a location.</td>
 </tr>
 <tr>
@@ -306,18 +306,18 @@ The following methods are available for this resource:
     <td>Creates a tuning job. A created tuning job will be subsequently executed to start the model tuning process.</td>
 </tr>
 <tr>
-    <td><a href="#rebase_tuned_model"><CopyableCode code="rebase_tuned_model" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Rebase a tuned model. A rebase operation takes a model that was previously tuned on a base model version, and retunes it on a new base model version. The rebase operation creates a new tuning job and a new tuned model.</td>
-</tr>
-<tr>
     <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tuningJobsId"><code>tuningJobsId</code></a></td>
     <td></td>
     <td>Cancels a tuning job. Starts an asynchronous cancellation request. The server makes a best effort to cancel the job, but success is not guaranteed. Clients can use GenAiTuningService.GetTuningJob or other methods to check whether the cancellation succeeded or whether the job completed despite cancellation. On successful cancellation, the tuning job is not deleted. Instead, its state is set to `CANCELLED`, and `error` is set to a status with a `google.rpc.Status.code` of 1, corresponding to `Code.CANCELLED`.</td>
+</tr>
+<tr>
+    <td><a href="#rebase_tuned_model"><CopyableCode code="rebase_tuned_model" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Rebase a tuned model. A rebase operation takes a model that was previously tuned on a base model version, and retunes it on a new base model version. The rebase operation creates a new tuning job and a new tuned model.</td>
 </tr>
 </tbody>
 </table>
@@ -439,9 +439,9 @@ updateTime
 FROM google.aiplatform.tuning_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -463,28 +463,28 @@ Creates a tuning job. A created tuning job will be subsequently executed to star
 
 ```sql
 INSERT INTO google.aiplatform.tuning_jobs (
-data__tunedModelDisplayName,
-data__description,
 data__baseModel,
-data__labels,
-data__supervisedTuningSpec,
+data__description,
 data__encryptionSpec,
-data__preferenceOptimizationSpec,
+data__labels,
 data__preTunedModel,
+data__preferenceOptimizationSpec,
 data__serviceAccount,
+data__supervisedTuningSpec,
+data__tunedModelDisplayName,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ tunedModelDisplayName }}',
-'{{ description }}',
 '{{ baseModel }}',
-'{{ labels }}',
-'{{ supervisedTuningSpec }}',
+'{{ description }}',
 '{{ encryptionSpec }}',
-'{{ preferenceOptimizationSpec }}',
+'{{ labels }}',
 '{{ preTunedModel }}',
+'{{ preferenceOptimizationSpec }}',
 '{{ serviceAccount }}',
+'{{ supervisedTuningSpec }}',
+'{{ tunedModelDisplayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -522,395 +522,400 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the tuning_jobs resource.
-    - name: tunedModelDisplayName
-      value: "{{ tunedModelDisplayName }}"
-      description: |
-        Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters. For continuous tuning, tuned_model_display_name will by default use the same display name as the pre-tuned model. If a new display name is provided, the tuning job will create a new model instead of a new version.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the TuningJob.
     - name: baseModel
       value: "{{ baseModel }}"
       description: |
         The base model that is being tuned. See [Supported models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
-    - name: labels
-      value: "{{ labels }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Optional. The labels with user-defined metadata to organize TuningJob and generated resources such as Model and Endpoint. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-    - name: supervisedTuningSpec
-      description: |
-        Tuning Spec for Supervised Fine Tuning.
-      value:
-        exportLastCheckpointOnly: {{ exportLastCheckpointOnly }}
-        validationDatasetUri: "{{ validationDatasetUri }}"
-        trainingDatasetUri: "{{ trainingDatasetUri }}"
-        evaluationConfig:
-          metrics:
-            - pointwiseMetricSpec:
-                metricPromptTemplate: "{{ metricPromptTemplate }}"
-                systemInstruction: "{{ systemInstruction }}"
-                customOutputFormatConfig:
-                  returnRawOutput: {{ returnRawOutput }}
-              bleuSpec:
-                useEffectiveOrder: {{ useEffectiveOrder }}
-              rougeSpec:
-                useStemmer: {{ useStemmer }}
-                rougeType: "{{ rougeType }}"
-                splitSummaries: {{ splitSummaries }}
-              exactMatchSpec: "{{ exactMatchSpec }}"
-              computationBasedMetricSpec:
-                type: "{{ type }}"
-                parameters: "{{ parameters }}"
-              predefinedMetricSpec:
-                metricSpecName: "{{ metricSpecName }}"
-                metricSpecParameters: "{{ metricSpecParameters }}"
-              metadata:
-                otherMetadata: "{{ otherMetadata }}"
-                title: "{{ title }}"
-                scoreRange:
-                  min: {{ min }}
-                  step: {{ step }}
-                  description: "{{ description }}"
-                  max: {{ max }}
-              customCodeExecutionSpec:
-                evaluationFunction: "{{ evaluationFunction }}"
-              pairwiseMetricSpec:
-                systemInstruction: "{{ systemInstruction }}"
-                baselineResponseFieldName: "{{ baselineResponseFieldName }}"
-                candidateResponseFieldName: "{{ candidateResponseFieldName }}"
-                metricPromptTemplate: "{{ metricPromptTemplate }}"
-                customOutputFormatConfig:
-                  returnRawOutput: {{ returnRawOutput }}
-              aggregationMetrics: "{{ aggregationMetrics }}"
-              llmBasedMetricSpec:
-                systemInstruction: "{{ systemInstruction }}"
-                judgeAutoraterConfig:
-                  samplingCount: {{ samplingCount }}
-                  flipEnabled: {{ flipEnabled }}
-                  autoraterModel: "{{ autoraterModel }}"
-                  generationConfig: "{{ generationConfig }}"
-                rubricGroupKey: "{{ rubricGroupKey }}"
-                resultParserConfig:
-                  customCodeParserConfig: "{{ customCodeParserConfig }}"
-                predefinedRubricGenerationSpec:
-                  metricSpecName: "{{ metricSpecName }}"
-                  metricSpecParameters: "{{ metricSpecParameters }}"
-                metricPromptTemplate: "{{ metricPromptTemplate }}"
-                rubricGenerationSpec:
-                  promptTemplate: "{{ promptTemplate }}"
-                  modelConfig: "{{ modelConfig }}"
-                  rubricTypeOntology: "{{ rubricTypeOntology }}"
-                  rubricContentType: "{{ rubricContentType }}"
-                additionalConfig: "{{ additionalConfig }}"
-          inferenceGenerationConfig:
-            speechConfig:
-              languageCode: "{{ languageCode }}"
-              multiSpeakerVoiceConfig:
-                speakerVoiceConfigs: "{{ speakerVoiceConfigs }}"
-              voiceConfig:
-                replicatedVoiceConfig: "{{ replicatedVoiceConfig }}"
-                prebuiltVoiceConfig: "{{ prebuiltVoiceConfig }}"
-            seed: {{ seed }}
-            imageConfig:
-              personGeneration: "{{ personGeneration }}"
-              aspectRatio: "{{ aspectRatio }}"
-              imageSize: "{{ imageSize }}"
-              prominentPeople: "{{ prominentPeople }}"
-              imageOutputOptions:
-                compressionQuality: {{ compressionQuality }}
-                mimeType: "{{ mimeType }}"
-            audioTranscriptionConfig:
-              customVocabulary:
-                - "{{ customVocabulary }}"
-              languageHints:
-                languageCodes: "{{ languageCodes }}"
-              diarization: {{ diarization }}
-              adaptationPhrases:
-                - "{{ adaptationPhrases }}"
-              languageAuto: "{{ languageAuto }}"
-              wordTimestamp: {{ wordTimestamp }}
-            maxOutputTokens: {{ maxOutputTokens }}
-            responseModalities:
-              - "{{ responseModalities }}"
-            topP: {{ topP }}
-            responseJsonSchema: "{{ responseJsonSchema }}"
-            responseFormat:
-              - audio:
-                  mimeType: "{{ mimeType }}"
-                  bitRate: {{ bitRate }}
-                  delivery: "{{ delivery }}"
-                  sampleRate: {{ sampleRate }}
-                text:
-                  mimeType: "{{ mimeType }}"
-                  schema: "{{ schema }}"
-                image:
-                  mimeType: "{{ mimeType }}"
-                  delivery: "{{ delivery }}"
-                  aspectRatio: "{{ aspectRatio }}"
-                  imageSize: "{{ imageSize }}"
-                video:
-                  delivery: "{{ delivery }}"
-                  aspectRatio: "{{ aspectRatio }}"
-                  gcsUri: "{{ gcsUri }}"
-                  duration: "{{ duration }}"
-            thinkingConfig:
-              includeThoughts: {{ includeThoughts }}
-              thinkingLevel: "{{ thinkingLevel }}"
-              thinkingBudget: {{ thinkingBudget }}
-            enableAffectiveDialog: {{ enableAffectiveDialog }}
-            topK: {{ topK }}
-            logprobs: {{ logprobs }}
-            presencePenalty: {{ presencePenalty }}
-            candidateCount: {{ candidateCount }}
-            responseSchema:
-              ref: "{{ ref }}"
-              enum:
-                - "{{ enum }}"
-              minLength: "{{ minLength }}"
-              title: "{{ title }}"
-              minimum: {{ minimum }}
-              maxProperties: "{{ maxProperties }}"
-              properties: "{{ properties }}"
-              nullable: {{ nullable }}
-              example: "{{ example }}"
-              minProperties: "{{ minProperties }}"
-              type: "{{ type }}"
-              pattern: "{{ pattern }}"
-              additionalProperties: "{{ additionalProperties }}"
-              format: "{{ format }}"
-              propertyOrdering:
-                - "{{ propertyOrdering }}"
-              minItems: "{{ minItems }}"
-              maximum: {{ maximum }}
-              maxLength: "{{ maxLength }}"
-              items:
-                ref: "{{ ref }}"
-                enum: "{{ enum }}"
-                minLength: "{{ minLength }}"
-                title: "{{ title }}"
-                minimum: {{ minimum }}
-                maxProperties: "{{ maxProperties }}"
-                properties: "{{ properties }}"
-                nullable: {{ nullable }}
-                example: "{{ example }}"
-                minProperties: "{{ minProperties }}"
-                type: "{{ type }}"
-                pattern: "{{ pattern }}"
-                additionalProperties: "{{ additionalProperties }}"
-                format: "{{ format }}"
-                propertyOrdering: "{{ propertyOrdering }}"
-                minItems: "{{ minItems }}"
-                maximum: {{ maximum }}
-                maxLength: "{{ maxLength }}"
-                items: "{{ items }}"
-                description: "{{ description }}"
-                required: "{{ required }}"
-                maxItems: "{{ maxItems }}"
-                defs: "{{ defs }}"
-                anyOf: "{{ anyOf }}"
-                default: "{{ default }}"
-              description: "{{ description }}"
-              required:
-                - "{{ required }}"
-              maxItems: "{{ maxItems }}"
-              defs: "{{ defs }}"
-              anyOf:
-                - ref: "{{ ref }}"
-                  enum: "{{ enum }}"
-                  minLength: "{{ minLength }}"
-                  title: "{{ title }}"
-                  minimum: {{ minimum }}
-                  maxProperties: "{{ maxProperties }}"
-                  properties: "{{ properties }}"
-                  nullable: {{ nullable }}
-                  example: "{{ example }}"
-                  minProperties: "{{ minProperties }}"
-                  type: "{{ type }}"
-                  pattern: "{{ pattern }}"
-                  additionalProperties: "{{ additionalProperties }}"
-                  format: "{{ format }}"
-                  propertyOrdering: "{{ propertyOrdering }}"
-                  minItems: "{{ minItems }}"
-                  maximum: {{ maximum }}
-                  maxLength: "{{ maxLength }}"
-                  items:
-                    ref: "{{ ref }}"
-                    enum: "{{ enum }}"
-                    minLength: "{{ minLength }}"
-                    title: "{{ title }}"
-                    minimum: {{ minimum }}
-                    maxProperties: "{{ maxProperties }}"
-                    properties: "{{ properties }}"
-                    nullable: {{ nullable }}
-                    example: "{{ example }}"
-                    minProperties: "{{ minProperties }}"
-                    type: "{{ type }}"
-                    pattern: "{{ pattern }}"
-                    additionalProperties: "{{ additionalProperties }}"
-                    format: "{{ format }}"
-                    propertyOrdering: "{{ propertyOrdering }}"
-                    minItems: "{{ minItems }}"
-                    maximum: {{ maximum }}
-                    maxLength: "{{ maxLength }}"
-                    items: "{{ items }}"
-                    description: "{{ description }}"
-                    required: "{{ required }}"
-                    maxItems: "{{ maxItems }}"
-                    defs: "{{ defs }}"
-                    anyOf: "{{ anyOf }}"
-                    default: "{{ default }}"
-                  description: "{{ description }}"
-                  required: "{{ required }}"
-                  maxItems: "{{ maxItems }}"
-                  defs: "{{ defs }}"
-                  anyOf: "{{ anyOf }}"
-                  default: "{{ default }}"
-              default: "{{ default }}"
-            routingConfig:
-              manualMode:
-                modelName: "{{ modelName }}"
-              autoMode:
-                modelRoutingPreference: "{{ modelRoutingPreference }}"
-            audioTimestamp: {{ audioTimestamp }}
-            temperature: {{ temperature }}
-            stopSequences:
-              - "{{ stopSequences }}"
-            responseLogprobs: {{ responseLogprobs }}
-            responseMimeType: "{{ responseMimeType }}"
-            mediaResolution: "{{ mediaResolution }}"
-            frequencyPenalty: {{ frequencyPenalty }}
-          autoraterConfig:
-            samplingCount: {{ samplingCount }}
-            flipEnabled: {{ flipEnabled }}
-            autoraterModel: "{{ autoraterModel }}"
-            generationConfig:
-              speechConfig:
-                languageCode: "{{ languageCode }}"
-                multiSpeakerVoiceConfig: "{{ multiSpeakerVoiceConfig }}"
-                voiceConfig: "{{ voiceConfig }}"
-              seed: {{ seed }}
-              imageConfig:
-                personGeneration: "{{ personGeneration }}"
-                aspectRatio: "{{ aspectRatio }}"
-                imageSize: "{{ imageSize }}"
-                prominentPeople: "{{ prominentPeople }}"
-                imageOutputOptions: "{{ imageOutputOptions }}"
-              audioTranscriptionConfig:
-                customVocabulary: "{{ customVocabulary }}"
-                languageHints: "{{ languageHints }}"
-                diarization: {{ diarization }}
-                adaptationPhrases: "{{ adaptationPhrases }}"
-                languageAuto: "{{ languageAuto }}"
-                wordTimestamp: {{ wordTimestamp }}
-              maxOutputTokens: {{ maxOutputTokens }}
-              responseModalities:
-                - "{{ responseModalities }}"
-              topP: {{ topP }}
-              responseJsonSchema: "{{ responseJsonSchema }}"
-              responseFormat:
-                - audio:
-                    mimeType: "{{ mimeType }}"
-                    bitRate: {{ bitRate }}
-                    delivery: "{{ delivery }}"
-                    sampleRate: {{ sampleRate }}
-                  text:
-                    mimeType: "{{ mimeType }}"
-                    schema: "{{ schema }}"
-                  image:
-                    mimeType: "{{ mimeType }}"
-                    delivery: "{{ delivery }}"
-                    aspectRatio: "{{ aspectRatio }}"
-                    imageSize: "{{ imageSize }}"
-                  video:
-                    delivery: "{{ delivery }}"
-                    aspectRatio: "{{ aspectRatio }}"
-                    gcsUri: "{{ gcsUri }}"
-                    duration: "{{ duration }}"
-              thinkingConfig:
-                includeThoughts: {{ includeThoughts }}
-                thinkingLevel: "{{ thinkingLevel }}"
-                thinkingBudget: {{ thinkingBudget }}
-              enableAffectiveDialog: {{ enableAffectiveDialog }}
-              topK: {{ topK }}
-              logprobs: {{ logprobs }}
-              presencePenalty: {{ presencePenalty }}
-              candidateCount: {{ candidateCount }}
-              responseSchema:
-                ref: "{{ ref }}"
-                enum: "{{ enum }}"
-                minLength: "{{ minLength }}"
-                title: "{{ title }}"
-                minimum: {{ minimum }}
-                maxProperties: "{{ maxProperties }}"
-                properties: "{{ properties }}"
-                nullable: {{ nullable }}
-                example: "{{ example }}"
-                minProperties: "{{ minProperties }}"
-                type: "{{ type }}"
-                pattern: "{{ pattern }}"
-                additionalProperties: "{{ additionalProperties }}"
-                format: "{{ format }}"
-                propertyOrdering: "{{ propertyOrdering }}"
-                minItems: "{{ minItems }}"
-                maximum: {{ maximum }}
-                maxLength: "{{ maxLength }}"
-                items: "{{ items }}"
-                description: "{{ description }}"
-                required: "{{ required }}"
-                maxItems: "{{ maxItems }}"
-                defs: "{{ defs }}"
-                anyOf: "{{ anyOf }}"
-                default: "{{ default }}"
-              routingConfig:
-                manualMode: "{{ manualMode }}"
-                autoMode: "{{ autoMode }}"
-              audioTimestamp: {{ audioTimestamp }}
-              temperature: {{ temperature }}
-              stopSequences:
-                - "{{ stopSequences }}"
-              responseLogprobs: {{ responseLogprobs }}
-              responseMimeType: "{{ responseMimeType }}"
-              mediaResolution: "{{ mediaResolution }}"
-              frequencyPenalty: {{ frequencyPenalty }}
-          outputConfig:
-            gcsDestination:
-              outputUriPrefix: "{{ outputUriPrefix }}"
-          datasetCustomMetrics:
-            - displayName: "{{ displayName }}"
-              aggregationFunction: "{{ aggregationFunction }}"
-        hyperParameters:
-          adapterSize: "{{ adapterSize }}"
-          epochCount: "{{ epochCount }}"
-          learningRateMultiplier: {{ learningRateMultiplier }}
+        Optional. The description of the TuningJob.
     - name: encryptionSpec
       description: |
         Customer-managed encryption key options for a TuningJob. If this is set, then all resources created by the TuningJob will be encrypted with the provided encryption key.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels with user-defined metadata to organize TuningJob and generated resources such as Model and Endpoint. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+    - name: preTunedModel
+      description: |
+        The pre-tuned model for continuous tuning.
+      value:
+        baseModel: "{{ baseModel }}"
+        checkpointId: "{{ checkpointId }}"
+        tunedModelName: "{{ tunedModelName }}"
     - name: preferenceOptimizationSpec
       description: |
         Tuning Spec for Preference Optimization.
       value:
+        exportLastCheckpointOnly: {{ exportLastCheckpointOnly }}
         hyperParameters:
           adapterSize: "{{ adapterSize }}"
           beta: {{ beta }}
           epochCount: "{{ epochCount }}"
           learningRateMultiplier: {{ learningRateMultiplier }}
-        validationDatasetUri: "{{ validationDatasetUri }}"
         trainingDatasetUri: "{{ trainingDatasetUri }}"
-        exportLastCheckpointOnly: {{ exportLastCheckpointOnly }}
-    - name: preTunedModel
-      description: |
-        The pre-tuned model for continuous tuning.
-      value:
-        tunedModelName: "{{ tunedModelName }}"
-        checkpointId: "{{ checkpointId }}"
-        baseModel: "{{ baseModel }}"
+        validationDatasetUri: "{{ validationDatasetUri }}"
     - name: serviceAccount
       value: "{{ serviceAccount }}"
       description: |
         The service account that the tuningJob workload runs as. If not specified, the Vertex AI Secure Fine-Tuned Service Agent in the project will be used. See https://cloud.google.com/iam/docs/service-agents#vertex-ai-secure-fine-tuning-service-agent Users starting the pipeline must have the \`iam.serviceAccounts.actAs\` permission on this service account.
+    - name: supervisedTuningSpec
+      description: |
+        Tuning Spec for Supervised Fine Tuning.
+      value:
+        evaluationConfig:
+          autoraterConfig:
+            autoraterModel: "{{ autoraterModel }}"
+            flipEnabled: {{ flipEnabled }}
+            generationConfig:
+              audioTimestamp: {{ audioTimestamp }}
+              audioTranscriptionConfig:
+                adaptationPhrases: "{{ adaptationPhrases }}"
+                customVocabulary: "{{ customVocabulary }}"
+                diarization: {{ diarization }}
+                languageAuto: "{{ languageAuto }}"
+                languageCodes: "{{ languageCodes }}"
+                languageHints: "{{ languageHints }}"
+                wordTimestamp: {{ wordTimestamp }}
+              candidateCount: {{ candidateCount }}
+              enableAffectiveDialog: {{ enableAffectiveDialog }}
+              frequencyPenalty: {{ frequencyPenalty }}
+              imageConfig:
+                aspectRatio: "{{ aspectRatio }}"
+                imageOutputOptions: "{{ imageOutputOptions }}"
+                imageSize: "{{ imageSize }}"
+                personGeneration: "{{ personGeneration }}"
+                prominentPeople: "{{ prominentPeople }}"
+              logprobs: {{ logprobs }}
+              maxOutputTokens: {{ maxOutputTokens }}
+              mediaResolution: "{{ mediaResolution }}"
+              presencePenalty: {{ presencePenalty }}
+              responseFormat:
+                - audio:
+                    bitRate: {{ bitRate }}
+                    delivery: "{{ delivery }}"
+                    mimeType: "{{ mimeType }}"
+                    sampleRate: {{ sampleRate }}
+                  image:
+                    aspectRatio: "{{ aspectRatio }}"
+                    delivery: "{{ delivery }}"
+                    imageSize: "{{ imageSize }}"
+                    mimeType: "{{ mimeType }}"
+                  text:
+                    mimeType: "{{ mimeType }}"
+                    schema: "{{ schema }}"
+                  video:
+                    aspectRatio: "{{ aspectRatio }}"
+                    delivery: "{{ delivery }}"
+                    duration: "{{ duration }}"
+                    gcsUri: "{{ gcsUri }}"
+                    resolution: "{{ resolution }}"
+              responseJsonSchema: "{{ responseJsonSchema }}"
+              responseLogprobs: {{ responseLogprobs }}
+              responseMimeType: "{{ responseMimeType }}"
+              responseModalities:
+                - "{{ responseModalities }}"
+              responseSchema:
+                additionalProperties: "{{ additionalProperties }}"
+                anyOf: "{{ anyOf }}"
+                default: "{{ default }}"
+                defs: "{{ defs }}"
+                description: "{{ description }}"
+                enum: "{{ enum }}"
+                example: "{{ example }}"
+                format: "{{ format }}"
+                items: "{{ items }}"
+                maxItems: "{{ maxItems }}"
+                maxLength: "{{ maxLength }}"
+                maxProperties: "{{ maxProperties }}"
+                maximum: {{ maximum }}
+                minItems: "{{ minItems }}"
+                minLength: "{{ minLength }}"
+                minProperties: "{{ minProperties }}"
+                minimum: {{ minimum }}
+                nullable: {{ nullable }}
+                pattern: "{{ pattern }}"
+                properties: "{{ properties }}"
+                propertyOrdering: "{{ propertyOrdering }}"
+                ref: "{{ ref }}"
+                required: "{{ required }}"
+                title: "{{ title }}"
+                type: "{{ type }}"
+              routingConfig:
+                autoMode: "{{ autoMode }}"
+                manualMode: "{{ manualMode }}"
+              seed: {{ seed }}
+              speechConfig:
+                languageCode: "{{ languageCode }}"
+                multiSpeakerVoiceConfig: "{{ multiSpeakerVoiceConfig }}"
+                voiceConfig: "{{ voiceConfig }}"
+              stopSequences:
+                - "{{ stopSequences }}"
+              temperature: {{ temperature }}
+              thinkingConfig:
+                includeThoughts: {{ includeThoughts }}
+                thinkingBudget: {{ thinkingBudget }}
+                thinkingLevel: "{{ thinkingLevel }}"
+              topK: {{ topK }}
+              topP: {{ topP }}
+            samplingCount: {{ samplingCount }}
+          datasetCustomMetrics:
+            - aggregationFunction: "{{ aggregationFunction }}"
+              displayName: "{{ displayName }}"
+          inferenceGenerationConfig:
+            audioTimestamp: {{ audioTimestamp }}
+            audioTranscriptionConfig:
+              adaptationPhrases:
+                - "{{ adaptationPhrases }}"
+              customVocabulary:
+                - "{{ customVocabulary }}"
+              diarization: {{ diarization }}
+              languageAuto: "{{ languageAuto }}"
+              languageCodes:
+                - "{{ languageCodes }}"
+              languageHints:
+                languageCodes: "{{ languageCodes }}"
+              wordTimestamp: {{ wordTimestamp }}
+            candidateCount: {{ candidateCount }}
+            enableAffectiveDialog: {{ enableAffectiveDialog }}
+            frequencyPenalty: {{ frequencyPenalty }}
+            imageConfig:
+              aspectRatio: "{{ aspectRatio }}"
+              imageOutputOptions:
+                compressionQuality: {{ compressionQuality }}
+                mimeType: "{{ mimeType }}"
+              imageSize: "{{ imageSize }}"
+              personGeneration: "{{ personGeneration }}"
+              prominentPeople: "{{ prominentPeople }}"
+            logprobs: {{ logprobs }}
+            maxOutputTokens: {{ maxOutputTokens }}
+            mediaResolution: "{{ mediaResolution }}"
+            presencePenalty: {{ presencePenalty }}
+            responseFormat:
+              - audio:
+                  bitRate: {{ bitRate }}
+                  delivery: "{{ delivery }}"
+                  mimeType: "{{ mimeType }}"
+                  sampleRate: {{ sampleRate }}
+                image:
+                  aspectRatio: "{{ aspectRatio }}"
+                  delivery: "{{ delivery }}"
+                  imageSize: "{{ imageSize }}"
+                  mimeType: "{{ mimeType }}"
+                text:
+                  mimeType: "{{ mimeType }}"
+                  schema: "{{ schema }}"
+                video:
+                  aspectRatio: "{{ aspectRatio }}"
+                  delivery: "{{ delivery }}"
+                  duration: "{{ duration }}"
+                  gcsUri: "{{ gcsUri }}"
+                  resolution: "{{ resolution }}"
+            responseJsonSchema: "{{ responseJsonSchema }}"
+            responseLogprobs: {{ responseLogprobs }}
+            responseMimeType: "{{ responseMimeType }}"
+            responseModalities:
+              - "{{ responseModalities }}"
+            responseSchema:
+              additionalProperties: "{{ additionalProperties }}"
+              anyOf:
+                - additionalProperties: "{{ additionalProperties }}"
+                  anyOf: "{{ anyOf }}"
+                  default: "{{ default }}"
+                  defs: "{{ defs }}"
+                  description: "{{ description }}"
+                  enum: "{{ enum }}"
+                  example: "{{ example }}"
+                  format: "{{ format }}"
+                  items:
+                    additionalProperties: "{{ additionalProperties }}"
+                    anyOf: "{{ anyOf }}"
+                    default: "{{ default }}"
+                    defs: "{{ defs }}"
+                    description: "{{ description }}"
+                    enum: "{{ enum }}"
+                    example: "{{ example }}"
+                    format: "{{ format }}"
+                    items: "{{ items }}"
+                    maxItems: "{{ maxItems }}"
+                    maxLength: "{{ maxLength }}"
+                    maxProperties: "{{ maxProperties }}"
+                    maximum: {{ maximum }}
+                    minItems: "{{ minItems }}"
+                    minLength: "{{ minLength }}"
+                    minProperties: "{{ minProperties }}"
+                    minimum: {{ minimum }}
+                    nullable: {{ nullable }}
+                    pattern: "{{ pattern }}"
+                    properties: "{{ properties }}"
+                    propertyOrdering: "{{ propertyOrdering }}"
+                    ref: "{{ ref }}"
+                    required: "{{ required }}"
+                    title: "{{ title }}"
+                    type: "{{ type }}"
+                  maxItems: "{{ maxItems }}"
+                  maxLength: "{{ maxLength }}"
+                  maxProperties: "{{ maxProperties }}"
+                  maximum: {{ maximum }}
+                  minItems: "{{ minItems }}"
+                  minLength: "{{ minLength }}"
+                  minProperties: "{{ minProperties }}"
+                  minimum: {{ minimum }}
+                  nullable: {{ nullable }}
+                  pattern: "{{ pattern }}"
+                  properties: "{{ properties }}"
+                  propertyOrdering: "{{ propertyOrdering }}"
+                  ref: "{{ ref }}"
+                  required: "{{ required }}"
+                  title: "{{ title }}"
+                  type: "{{ type }}"
+              default: "{{ default }}"
+              defs: "{{ defs }}"
+              description: "{{ description }}"
+              enum:
+                - "{{ enum }}"
+              example: "{{ example }}"
+              format: "{{ format }}"
+              items:
+                additionalProperties: "{{ additionalProperties }}"
+                anyOf: "{{ anyOf }}"
+                default: "{{ default }}"
+                defs: "{{ defs }}"
+                description: "{{ description }}"
+                enum: "{{ enum }}"
+                example: "{{ example }}"
+                format: "{{ format }}"
+                items: "{{ items }}"
+                maxItems: "{{ maxItems }}"
+                maxLength: "{{ maxLength }}"
+                maxProperties: "{{ maxProperties }}"
+                maximum: {{ maximum }}
+                minItems: "{{ minItems }}"
+                minLength: "{{ minLength }}"
+                minProperties: "{{ minProperties }}"
+                minimum: {{ minimum }}
+                nullable: {{ nullable }}
+                pattern: "{{ pattern }}"
+                properties: "{{ properties }}"
+                propertyOrdering: "{{ propertyOrdering }}"
+                ref: "{{ ref }}"
+                required: "{{ required }}"
+                title: "{{ title }}"
+                type: "{{ type }}"
+              maxItems: "{{ maxItems }}"
+              maxLength: "{{ maxLength }}"
+              maxProperties: "{{ maxProperties }}"
+              maximum: {{ maximum }}
+              minItems: "{{ minItems }}"
+              minLength: "{{ minLength }}"
+              minProperties: "{{ minProperties }}"
+              minimum: {{ minimum }}
+              nullable: {{ nullable }}
+              pattern: "{{ pattern }}"
+              properties: "{{ properties }}"
+              propertyOrdering:
+                - "{{ propertyOrdering }}"
+              ref: "{{ ref }}"
+              required:
+                - "{{ required }}"
+              title: "{{ title }}"
+              type: "{{ type }}"
+            routingConfig:
+              autoMode:
+                modelRoutingPreference: "{{ modelRoutingPreference }}"
+              manualMode:
+                modelName: "{{ modelName }}"
+            seed: {{ seed }}
+            speechConfig:
+              languageCode: "{{ languageCode }}"
+              multiSpeakerVoiceConfig:
+                speakerVoiceConfigs: "{{ speakerVoiceConfigs }}"
+              voiceConfig:
+                prebuiltVoiceConfig: "{{ prebuiltVoiceConfig }}"
+                replicatedVoiceConfig: "{{ replicatedVoiceConfig }}"
+            stopSequences:
+              - "{{ stopSequences }}"
+            temperature: {{ temperature }}
+            thinkingConfig:
+              includeThoughts: {{ includeThoughts }}
+              thinkingBudget: {{ thinkingBudget }}
+              thinkingLevel: "{{ thinkingLevel }}"
+            topK: {{ topK }}
+            topP: {{ topP }}
+          metrics:
+            - aggregationMetrics: "{{ aggregationMetrics }}"
+              bleuSpec:
+                useEffectiveOrder: {{ useEffectiveOrder }}
+              computationBasedMetricSpec:
+                parameters: "{{ parameters }}"
+                type: "{{ type }}"
+              customCodeExecutionSpec:
+                evaluationFunction: "{{ evaluationFunction }}"
+              exactMatchSpec: "{{ exactMatchSpec }}"
+              llmBasedMetricSpec:
+                additionalConfig: "{{ additionalConfig }}"
+                judgeAutoraterConfig:
+                  autoraterModel: "{{ autoraterModel }}"
+                  flipEnabled: {{ flipEnabled }}
+                  generationConfig: "{{ generationConfig }}"
+                  samplingCount: {{ samplingCount }}
+                metricPromptTemplate: "{{ metricPromptTemplate }}"
+                predefinedRubricGenerationSpec:
+                  metricSpecName: "{{ metricSpecName }}"
+                  metricSpecParameters: "{{ metricSpecParameters }}"
+                resultParserConfig:
+                  customCodeParserConfig: "{{ customCodeParserConfig }}"
+                rubricGenerationSpec:
+                  modelConfig: "{{ modelConfig }}"
+                  promptTemplate: "{{ promptTemplate }}"
+                  rubricContentType: "{{ rubricContentType }}"
+                  rubricTypeOntology: "{{ rubricTypeOntology }}"
+                rubricGroupKey: "{{ rubricGroupKey }}"
+                systemInstruction: "{{ systemInstruction }}"
+              metadata:
+                otherMetadata: "{{ otherMetadata }}"
+                scoreRange:
+                  description: "{{ description }}"
+                  max: {{ max }}
+                  min: {{ min }}
+                  step: {{ step }}
+                title: "{{ title }}"
+              pairwiseMetricSpec:
+                baselineResponseFieldName: "{{ baselineResponseFieldName }}"
+                candidateResponseFieldName: "{{ candidateResponseFieldName }}"
+                customOutputFormatConfig:
+                  returnRawOutput: {{ returnRawOutput }}
+                metricPromptTemplate: "{{ metricPromptTemplate }}"
+                systemInstruction: "{{ systemInstruction }}"
+              pointwiseMetricSpec:
+                customOutputFormatConfig:
+                  returnRawOutput: {{ returnRawOutput }}
+                metricPromptTemplate: "{{ metricPromptTemplate }}"
+                systemInstruction: "{{ systemInstruction }}"
+              predefinedMetricSpec:
+                metricSpecName: "{{ metricSpecName }}"
+                metricSpecParameters: "{{ metricSpecParameters }}"
+              rougeSpec:
+                rougeType: "{{ rougeType }}"
+                splitSummaries: {{ splitSummaries }}
+                useStemmer: {{ useStemmer }}
+          outputConfig:
+            gcsDestination:
+              outputUriPrefix: "{{ outputUriPrefix }}"
+        exportLastCheckpointOnly: {{ exportLastCheckpointOnly }}
+        hyperParameters:
+          adapterSize: "{{ adapterSize }}"
+          epochCount: "{{ epochCount }}"
+          learningRateMultiplier: {{ learningRateMultiplier }}
+        trainingDatasetUri: "{{ trainingDatasetUri }}"
+        validationDatasetUri: "{{ validationDatasetUri }}"
+    - name: tunedModelDisplayName
+      value: "{{ tunedModelDisplayName }}"
+      description: |
+        Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters. For continuous tuning, tuned_model_display_name will by default use the same display name as the pre-tuned model. If a new display name is provided, the tuning job will create a new model instead of a new version.
 `}</CodeBlock>
 
 </TabItem>
@@ -920,12 +925,24 @@ updateTime
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="rebase_tuned_model"
+    defaultValue="cancel"
     values={[
-        { label: 'rebase_tuned_model', value: 'rebase_tuned_model' },
-        { label: 'cancel', value: 'cancel' }
+        { label: 'cancel', value: 'cancel' },
+        { label: 'rebase_tuned_model', value: 'rebase_tuned_model' }
     ]}
 >
+<TabItem value="cancel">
+
+Cancels a tuning job. Starts an asynchronous cancellation request. The server makes a best effort to cancel the job, but success is not guaranteed. Clients can use GenAiTuningService.GetTuningJob or other methods to check whether the cancellation succeeded or whether the job completed despite cancellation. On successful cancellation, the tuning job is not deleted. Instead, its state is set to `CANCELLED`, and `error` is set to a status with a `google.rpc.Status.code` of 1, corresponding to `Code.CANCELLED`.
+
+```sql
+EXEC google.aiplatform.tuning_jobs.cancel 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@tuningJobsId='{{ tuningJobsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="rebase_tuned_model">
 
 Rebase a tuned model. A rebase operation takes a model that was previously tuned on a base model version, and retunes it on a new base model version. The rebase operation creates a new tuning job and a new tuned model.
@@ -936,23 +953,11 @@ EXEC google.aiplatform.tuning_jobs.rebase_tuned_model
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"tuningJob": "{{ tuningJob }}", 
+"artifactDestination": "{{ artifactDestination }}", 
 "deployToSameEndpoint": {{ deployToSameEndpoint }}, 
 "tunedModelRef": "{{ tunedModelRef }}", 
-"artifactDestination": "{{ artifactDestination }}"
+"tuningJob": "{{ tuningJob }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="cancel">
-
-Cancels a tuning job. Starts an asynchronous cancellation request. The server makes a best effort to cancel the job, but success is not guaranteed. Clients can use GenAiTuningService.GetTuningJob or other methods to check whether the cancellation succeeded or whether the job completed despite cancellation. On successful cancellation, the tuning job is not deleted. Instead, its state is set to `CANCELLED`, and `error` is set to a status with a `google.rpc.Status.code` of 1, corresponding to `Code.CANCELLED`.
-
-```sql
-EXEC google.aiplatform.tuning_jobs.cancel 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@tuningJobsId='{{ tuningJobsId }}' --required
 ;
 ```
 </TabItem>

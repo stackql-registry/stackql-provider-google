@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists multicast consumer associations in a given project and location.</td>
 </tr>
 <tr>
@@ -219,7 +219,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicastConsumerAssociationsId"><code>multicastConsumerAssociationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single multicast consumer association.</td>
 </tr>
 <tr>
@@ -351,10 +351,10 @@ updateTime
 FROM google.networkservices.multicast_consumer_associations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -376,22 +376,22 @@ Creates a new multicast consumer association in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.multicast_consumer_associations (
-data__name,
+data__description,
 data__labels,
 data__multicastDomainActivation,
+data__name,
 data__network,
-data__description,
 projectsId,
 locationsId,
 multicastConsumerAssociationId,
 requestId
 )
 SELECT 
-'{{ name }}',
+'{{ description }}',
 '{{ labels }}',
 '{{ multicastDomainActivation }}',
+'{{ name }}',
 '{{ network }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ multicastConsumerAssociationId }}',
@@ -416,10 +416,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the multicast_consumer_associations resource.
-    - name: name
-      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Identifier. The resource name of the multicast consumer association. Use the following format: \`projects/*/locations/*/multicastConsumerAssociations/*\`.
+        Optional. An optional text description of the multicast consumer association.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -428,14 +428,14 @@ response
       value: "{{ multicastDomainActivation }}"
       description: |
         Optional. The resource name of the multicast domain activation that is in the same zone as this multicast consumer association. Use the following format: \`projects/*/locations/*/multicastDomainActivations/*\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the multicast consumer association. Use the following format: \`projects/*/locations/*/multicastConsumerAssociations/*\`.
     - name: network
       value: "{{ network }}"
       description: |
         Required. The resource name of the multicast consumer VPC network. Use following format: \`projects/{project}/locations/global/networks/{network}\`.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. An optional text description of the multicast consumer association.
     - name: multicastConsumerAssociationId
       value: "{{ multicastConsumerAssociationId }}"
     - name: requestId
@@ -461,17 +461,17 @@ Updates the parameters of a single multicast consumer association.
 ```sql
 UPDATE google.networkservices.multicast_consumer_associations
 SET 
-data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__labels = '{{ labels }}',
 data__multicastDomainActivation = '{{ multicastDomainActivation }}',
-data__network = '{{ network }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}',
+data__network = '{{ network }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND multicastConsumerAssociationsId = '{{ multicastConsumerAssociationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

@@ -350,14 +350,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of addresses contained within<br />the specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of addresses.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -375,18 +375,18 @@ The following methods are available for this resource:
     <td>Deletes the specified address resource.</td>
 </tr>
 <tr>
-    <td><a href="#set_labels"><CopyableCode code="set_labels" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the labels on an Address. To learn more about labels, read theLabeling<br />Resources documentation.</td>
-</tr>
-<tr>
     <td><a href="#move"><CopyableCode code="move" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-address"><code>address</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Moves the specified address resource.</td>
+</tr>
+<tr>
+    <td><a href="#set_labels"><CopyableCode code="set_labels" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the labels on an Address. To learn more about labels, read theLabeling<br />Resources documentation.</td>
 </tr>
 </tbody>
 </table>
@@ -526,10 +526,10 @@ warning
 FROM google.compute.addresses
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -564,12 +564,12 @@ users
 FROM google.compute.addresses
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -591,43 +591,43 @@ Creates an address resource in the specified project by using the data<br />incl
 
 ```sql
 INSERT INTO google.compute.addresses (
-data__name,
-data__ipVersion,
-data__purpose,
+data__address,
 data__addressType,
+data__description,
+data__ipCollection,
+data__ipVersion,
+data__ipv6EndpointType,
 data__labelFingerprint,
 data__labels,
-data__description,
-data__networkTier,
-data__ipCollection,
-data__selfLink,
-data__address,
-data__users,
-data__prefixLength,
-data__ipv6EndpointType,
-data__subnetwork,
+data__name,
 data__network,
+data__networkTier,
+data__prefixLength,
+data__purpose,
+data__selfLink,
+data__subnetwork,
+data__users,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ ipVersion }}',
-'{{ purpose }}',
+'{{ address }}',
 '{{ addressType }}',
+'{{ description }}',
+'{{ ipCollection }}',
+'{{ ipVersion }}',
+'{{ ipv6EndpointType }}',
 '{{ labelFingerprint }}',
 '{{ labels }}',
-'{{ description }}',
-'{{ networkTier }}',
-'{{ ipCollection }}',
-'{{ selfLink }}',
-'{{ address }}',
-'{{ users }}',
-{{ prefixLength }},
-'{{ ipv6EndpointType }}',
-'{{ subnetwork }}',
+'{{ name }}',
 '{{ network }}',
+'{{ networkTier }}',
+{{ prefixLength }},
+'{{ purpose }}',
+'{{ selfLink }}',
+'{{ subnetwork }}',
+'{{ users }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -673,6 +673,70 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the addresses resource.
+    - name: address
+      value: "{{ address }}"
+      description: |
+        The static IP address represented by this resource.
+    - name: addressType
+      value: "{{ addressType }}"
+      description: |
+        The type of address to reserve, either INTERNAL orEXTERNAL. If unspecified, defaults to EXTERNAL.
+      valid_values: ['EXTERNAL', 'INTERNAL', 'UNSPECIFIED_TYPE']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this field when you
+        create the resource.
+    - name: ipCollection
+      value: "{{ ipCollection }}"
+      description: |
+        Reference to the source of IP addresses.
+        It supports the following cases:
+        -
+        Case 1: PublicDelegatedPrefix (PDP) for BYOIP external
+        addresses. If an IPv4 PDP is used, the PDP must support enhanced IPv4
+        allocations. If an IPv6 PDP is used, the PDP must be in
+        EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.
+        -
+        Case 2: Internal Range for global internal addresses.
+        Use one of the following formats to specify the resource:
+        For a Public Delegated Prefix:
+        -
+        Full resource URL:https://www.googleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedPrefixes/pdp
+        - Partial URL:
+        - projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name
+        - regions/region/publicDelegatedPrefixes/pdp-name
+        For an Internal Range:
+        - Full URL:https://networkconnectivity.googleapis.com/v1/projects/project/locations/global/internalRanges/internal-range
+        - Partial URL:projects/project/locations/global/internalRanges/internal-range
+    - name: ipVersion
+      value: "{{ ipVersion }}"
+      description: |
+        The IP version that will be used by this address. Valid options areIPV4 or IPV6.
+      valid_values: ['IPV4', 'IPV6', 'UNSPECIFIED_VERSION']
+    - name: ipv6EndpointType
+      value: "{{ ipv6EndpointType }}"
+      description: |
+        The endpoint type of this address, which should be VM
+        or NETLB. This is used for deciding which type of endpoint
+        this address can be used after the external IPv6 address reservation.
+      valid_values: ['NETLB', 'VM']
+    - name: labelFingerprint
+      value: "{{ labelFingerprint }}"
+      description: |
+        A fingerprint for the labels being applied to this Address, which is
+        essentially a hash of the labels set used for optimistic locking. The
+        fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update labels. You must always provide an
+        up-to-date fingerprint hash in order to update or change labels,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve an Address.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
+        Label values may be empty.
     - name: name
       value: "{{ name }}"
       description: |
@@ -683,11 +747,24 @@ zone
         must be a lowercase letter, and all following characters (except for the
         last character) must be a dash, lowercase letter, or digit. The last
         character must be a lowercase letter or digit.
-    - name: ipVersion
-      value: "{{ ipVersion }}"
+    - name: network
+      value: "{{ network }}"
       description: |
-        The IP version that will be used by this address. Valid options areIPV4 or IPV6.
-      valid_values: ['IPV4', 'IPV6', 'UNSPECIFIED_VERSION']
+        The URL of the network in which to reserve the address. This field can
+        only be used with INTERNAL type with theVPC_PEERING purpose.
+    - name: networkTier
+      value: "{{ networkTier }}"
+      description: |
+        This signifies the networking tier used for configuring this address and
+        can only take the following values: PREMIUM orSTANDARD. Internal IP addresses are always Premium Tier;
+        global external IP addresses are always Premium Tier; regional external IP
+        addresses can be either Standard or Premium Tier.
+        If this field is not specified, it is assumed to be PREMIUM.
+      valid_values: ['FIXED_STANDARD', 'PREMIUM', 'STANDARD', 'STANDARD_OVERRIDES_FIXED_STANDARD']
+    - name: prefixLength
+      value: {{ prefixLength }}
+      description: |
+        The prefix length if the resource represents an IP range.
     - name: purpose
       value: "{{ purpose }}"
       description: |
@@ -719,98 +796,21 @@ zone
         can only be assigned to global external Passthrough Network Load Balancer
         forwarding rules, as an Availability Group 1 address.
       valid_values: ['DNS_RESOLVER', 'GCE_ENDPOINT', 'IPSEC_INTERCONNECT', 'NAT_AUTO', 'PRIVATE_SERVICE_CONNECT', 'SERVERLESS', 'SHARED_LOADBALANCER_VIP', 'VPC_PEERING']
-    - name: addressType
-      value: "{{ addressType }}"
-      description: |
-        The type of address to reserve, either INTERNAL orEXTERNAL. If unspecified, defaults to EXTERNAL.
-      valid_values: ['EXTERNAL', 'INTERNAL', 'UNSPECIFIED_TYPE']
-    - name: labelFingerprint
-      value: "{{ labelFingerprint }}"
-      description: |
-        A fingerprint for the labels being applied to this Address, which is
-        essentially a hash of the labels set used for optimistic locking. The
-        fingerprint is initially generated by Compute Engine and changes after
-        every request to modify or update labels. You must always provide an
-        up-to-date fingerprint hash in order to update or change labels,
-        otherwise the request will fail with error412 conditionNotMet.
-        To see the latest fingerprint, make a get() request to
-        retrieve an Address.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
-        Label values may be empty.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this field when you
-        create the resource.
-    - name: networkTier
-      value: "{{ networkTier }}"
-      description: |
-        This signifies the networking tier used for configuring this address and
-        can only take the following values: PREMIUM orSTANDARD. Internal IP addresses are always Premium Tier;
-        global external IP addresses are always Premium Tier; regional external IP
-        addresses can be either Standard or Premium Tier.
-        If this field is not specified, it is assumed to be PREMIUM.
-      valid_values: ['FIXED_STANDARD', 'PREMIUM', 'STANDARD', 'STANDARD_OVERRIDES_FIXED_STANDARD']
-    - name: ipCollection
-      value: "{{ ipCollection }}"
-      description: |
-        Reference to the source of IP addresses.
-        It supports the following cases:
-        -
-        Case 1: PublicDelegatedPrefix (PDP) for BYOIP external
-        addresses. If an IPv4 PDP is used, the PDP must support enhanced IPv4
-        allocations. If an IPv6 PDP is used, the PDP must be in
-        EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.
-        -
-        Case 2: Internal Range for global internal addresses.
-        Use one of the following formats to specify the resource:
-        For a Public Delegated Prefix:
-        -
-        Full resource URL:https://www.googleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedPrefixes/pdp
-        - Partial URL:
-        - projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name
-        - regions/region/publicDelegatedPrefixes/pdp-name
-        For an Internal Range:
-        - Full URL:https://networkconnectivity.googleapis.com/v1/projects/project/locations/global/internalRanges/internal-range
-        - Partial URL:projects/project/locations/global/internalRanges/internal-range
     - name: selfLink
       value: "{{ selfLink }}"
       description: |
         [Output Only] Server-defined URL for the resource.
-    - name: address
-      value: "{{ address }}"
-      description: |
-        The static IP address represented by this resource.
-    - name: users
-      value:
-        - "{{ users }}"
-      description: |
-        [Output Only] The URLs of the resources that are using this address.
-    - name: prefixLength
-      value: {{ prefixLength }}
-      description: |
-        The prefix length if the resource represents an IP range.
-    - name: ipv6EndpointType
-      value: "{{ ipv6EndpointType }}"
-      description: |
-        The endpoint type of this address, which should be VM
-        or NETLB. This is used for deciding which type of endpoint
-        this address can be used after the external IPv6 address reservation.
-      valid_values: ['NETLB', 'VM']
     - name: subnetwork
       value: "{{ subnetwork }}"
       description: |
         The URL of the subnetwork in which to reserve the address. If an IP address
         is specified, it must be within the subnetwork's IP range. This field can
         only be used with INTERNAL type with aGCE_ENDPOINT or DNS_RESOLVER purpose.
-    - name: network
-      value: "{{ network }}"
+    - name: users
+      value:
+        - "{{ users }}"
       description: |
-        The URL of the network in which to reserve the address. This field can
-        only be used with INTERNAL type with theVPC_PEERING purpose.
+        [Output Only] The URLs of the resources that are using this address.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -846,30 +846,12 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_labels"
+    defaultValue="move"
     values={[
-        { label: 'set_labels', value: 'set_labels' },
-        { label: 'move', value: 'move' }
+        { label: 'move', value: 'move' },
+        { label: 'set_labels', value: 'set_labels' }
     ]}
 >
-<TabItem value="set_labels">
-
-Sets the labels on an Address. To learn more about labels, read theLabeling<br />Resources documentation.
-
-```sql
-EXEC google.compute.addresses.set_labels 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@resource='{{ resource }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="move">
 
 Moves the specified address resource.
@@ -882,8 +864,26 @@ EXEC google.compute.addresses.move
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"destinationAddress": "{{ destinationAddress }}", 
-"description": "{{ description }}"
+"description": "{{ description }}", 
+"destinationAddress": "{{ destinationAddress }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_labels">
+
+Sets the labels on an Address. To learn more about labels, read theLabeling<br />Resources documentation.
+
+```sql
+EXEC google.compute.addresses.set_labels 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
+@resource='{{ resource }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

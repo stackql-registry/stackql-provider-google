@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ImportJobs.</td>
 </tr>
 <tr>
@@ -352,10 +352,10 @@ FROM google.cloudkms.import_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND keyRingsId = '{{ keyRingsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -377,8 +377,8 @@ Create a new ImportJob within a KeyRing. ImportJob.import_method is required.
 
 ```sql
 INSERT INTO google.cloudkms.import_jobs (
-data__importMethod,
 data__cryptoKeyBackend,
+data__importMethod,
 data__protectionLevel,
 projectsId,
 locationsId,
@@ -386,8 +386,8 @@ keyRingsId,
 importJobId
 )
 SELECT 
-'{{ importMethod }}',
 '{{ cryptoKeyBackend }}',
+'{{ importMethod }}',
 '{{ protectionLevel }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -423,15 +423,15 @@ state
     - name: keyRingsId
       value: "{{ keyRingsId }}"
       description: Required parameter for the import_jobs resource.
+    - name: cryptoKeyBackend
+      value: "{{ cryptoKeyBackend }}"
+      description: |
+        Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future. Supported resources: * \`"projects/*/locations/*/singleTenantHsmInstances/*"\`
     - name: importMethod
       value: "{{ importMethod }}"
       description: |
         Required. Immutable. The wrapping method to be used for incoming key material.
       valid_values: ['IMPORT_METHOD_UNSPECIFIED', 'RSA_OAEP_3072_SHA1_AES_256', 'RSA_OAEP_4096_SHA1_AES_256', 'RSA_OAEP_3072_SHA256_AES_256', 'RSA_OAEP_4096_SHA256_AES_256', 'RSA_OAEP_3072_SHA256', 'RSA_OAEP_4096_SHA256', 'HPKE_KEM_ML_KEM_768_HKDF_SHA256_AES_256_GCM', 'HPKE_KEM_ML_KEM_1024_HKDF_SHA256_AES_256_GCM', 'HPKE_KEM_XWING_HKDF_SHA256_AES_256_GCM']
-    - name: cryptoKeyBackend
-      value: "{{ cryptoKeyBackend }}"
-      description: |
-        Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future. Supported resources: * \`"projects/*/locations/*/singleTenantHsmInstances/*"\`
     - name: protectionLevel
       value: "{{ protectionLevel }}"
       description: |

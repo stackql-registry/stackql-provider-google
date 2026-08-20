@@ -33,72 +33,13 @@ Creates, updates, deletes, gets or lists a <code>constraints</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_constraints_list"
+    defaultValue="folders_constraints_list"
     values={[
-        { label: 'projects_constraints_list', value: 'projects_constraints_list' },
         { label: 'folders_constraints_list', value: 'folders_constraints_list' },
-        { label: 'organizations_constraints_list', value: 'organizations_constraints_list' }
+        { label: 'organizations_constraints_list', value: 'organizations_constraints_list' },
+        { label: 'projects_constraints_list', value: 'projects_constraints_list' }
     ]}
 >
-<TabItem value="projects_constraints_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The resource name of the constraint. Must be in one of the following forms: * `projects/&#123;project_number&#125;/constraints/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/constraints/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/constraints/&#123;constraint_name&#125;` For example, "/projects/123/constraints/compute.disableSerialPortAccess".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="booleanConstraint" /></td>
-    <td><code>object</code></td>
-    <td>Defines this constraint as being a boolean constraint. (id: GoogleCloudOrgpolicyV2ConstraintBooleanConstraint)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="constraintDefault" /></td>
-    <td><code>string</code></td>
-    <td>The evaluation behavior of this constraint in the absence of a policy. (CONSTRAINT_DEFAULT_UNSPECIFIED, ALLOW, DENY)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Detailed description of what this constraint controls as well as how and where it is enforced. Mutable.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The human readable name. Mutable.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="equivalentConstraint" /></td>
-    <td><code>string</code></td>
-    <td>Defines the equivalent constraint name, if it exists. Managed constraints can have an equivalent legacy managed constraint, and legacy managed constraints can have an equivalent managed constraint. For example, "constraints/iam.disableServiceAccountKeyUpload" is equivalent to "constraints/iam.managed.disableServiceAccountKeyUpload".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="listConstraint" /></td>
-    <td><code>object</code></td>
-    <td>Defines this constraint as being a list constraint. (id: GoogleCloudOrgpolicyV2ConstraintListConstraint)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="supportsDryRun" /></td>
-    <td><code>boolean</code></td>
-    <td>Shows if dry run is supported for this constraint or not.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="supportsSimulation" /></td>
-    <td><code>boolean</code></td>
-    <td>Shows if simulation is supported for this constraint or not.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="folders_constraints_list">
 
 <table>
@@ -159,6 +100,65 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="organizations_constraints_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The resource name of the constraint. Must be in one of the following forms: * `projects/&#123;project_number&#125;/constraints/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/constraints/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/constraints/&#123;constraint_name&#125;` For example, "/projects/123/constraints/compute.disableSerialPortAccess".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="booleanConstraint" /></td>
+    <td><code>object</code></td>
+    <td>Defines this constraint as being a boolean constraint. (id: GoogleCloudOrgpolicyV2ConstraintBooleanConstraint)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="constraintDefault" /></td>
+    <td><code>string</code></td>
+    <td>The evaluation behavior of this constraint in the absence of a policy. (CONSTRAINT_DEFAULT_UNSPECIFIED, ALLOW, DENY)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Detailed description of what this constraint controls as well as how and where it is enforced. Mutable.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The human readable name. Mutable.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="equivalentConstraint" /></td>
+    <td><code>string</code></td>
+    <td>Defines the equivalent constraint name, if it exists. Managed constraints can have an equivalent legacy managed constraint, and legacy managed constraints can have an equivalent managed constraint. For example, "constraints/iam.disableServiceAccountKeyUpload" is equivalent to "constraints/iam.managed.disableServiceAccountKeyUpload".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="listConstraint" /></td>
+    <td><code>object</code></td>
+    <td>Defines this constraint as being a list constraint. (id: GoogleCloudOrgpolicyV2ConstraintListConstraint)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="supportsDryRun" /></td>
+    <td><code>boolean</code></td>
+    <td>Shows if dry run is supported for this constraint or not.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="supportsSimulation" /></td>
+    <td><code>boolean</code></td>
+    <td>Shows if simulation is supported for this constraint or not.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_constraints_list">
 
 <table>
 <thead>
@@ -235,13 +235,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_constraints_list"><CopyableCode code="projects_constraints_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists constraints that could be applied on the specified resource.</td>
-</tr>
-<tr>
     <td><a href="#folders_constraints_list"><CopyableCode code="folders_constraints_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
@@ -252,6 +245,13 @@ The following methods are available for this resource:
     <td><a href="#organizations_constraints_list"><CopyableCode code="organizations_constraints_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists constraints that could be applied on the specified resource.</td>
+</tr>
+<tr>
+    <td><a href="#projects_constraints_list"><CopyableCode code="projects_constraints_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists constraints that could be applied on the specified resource.</td>
 </tr>
@@ -302,35 +302,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_constraints_list"
+    defaultValue="folders_constraints_list"
     values={[
-        { label: 'projects_constraints_list', value: 'projects_constraints_list' },
         { label: 'folders_constraints_list', value: 'folders_constraints_list' },
-        { label: 'organizations_constraints_list', value: 'organizations_constraints_list' }
+        { label: 'organizations_constraints_list', value: 'organizations_constraints_list' },
+        { label: 'projects_constraints_list', value: 'projects_constraints_list' }
     ]}
 >
-<TabItem value="projects_constraints_list">
-
-Lists constraints that could be applied on the specified resource.
-
-```sql
-SELECT
-name,
-booleanConstraint,
-constraintDefault,
-description,
-displayName,
-equivalentConstraint,
-listConstraint,
-supportsDryRun,
-supportsSimulation
-FROM google.orgpolicy.constraints
-WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="folders_constraints_list">
 
 Lists constraints that could be applied on the specified resource.
@@ -370,6 +348,28 @@ supportsDryRun,
 supportsSimulation
 FROM google.orgpolicy.constraints
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_constraints_list">
+
+Lists constraints that could be applied on the specified resource.
+
+```sql
+SELECT
+name,
+booleanConstraint,
+constraintDefault,
+description,
+displayName,
+equivalentConstraint,
+listConstraint,
+supportsDryRun,
+supportsSimulation
+FROM google.orgpolicy.constraints
+WHERE projectsId = '{{ projectsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;

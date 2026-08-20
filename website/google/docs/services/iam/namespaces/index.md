@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists all non-deleted WorkloadIdentityPoolNamespaces in a workload identity pool. If `show_deleted` is set to `true`, then deleted namespaces are also listed.</td>
 </tr>
 <tr>
@@ -295,9 +295,9 @@ FROM google.iam.namespaces
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -319,18 +319,18 @@ Creates a new WorkloadIdentityPoolNamespace in a WorkloadIdentityPool.
 
 ```sql
 INSERT INTO google.iam.namespaces (
-data__name,
 data__description,
 data__disabled,
+data__name,
 projectsId,
 locationsId,
 workloadIdentityPoolsId,
 workloadIdentityPoolNamespaceId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
 {{ disabled }},
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workloadIdentityPoolsId }}',
@@ -358,10 +358,6 @@ response
     - name: workloadIdentityPoolsId
       value: "{{ workloadIdentityPoolsId }}"
       description: Required parameter for the namespaces resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the namespace.
     - name: description
       value: "{{ description }}"
       description: |
@@ -370,6 +366,10 @@ response
       value: {{ disabled }}
       description: |
         Optional. Whether the namespace is disabled. If disabled, credentials may no longer be issued for identities within this namespace, however existing credentials will still be accepted until they expire.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the namespace.
     - name: workloadIdentityPoolNamespaceId
       value: "{{ workloadIdentityPoolNamespaceId }}"
 `}</CodeBlock>
@@ -393,9 +393,9 @@ Updates an existing WorkloadIdentityPoolNamespace in a WorkloadIdentityPool.
 ```sql
 UPDATE google.iam.namespaces
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__disabled = {{ disabled }}
+data__disabled = {{ disabled }},
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

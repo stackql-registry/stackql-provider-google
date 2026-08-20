@@ -37,8 +37,8 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'get', value: 'get' },
         { label: 'query_workloads', value: 'query_workloads' },
-        { label: 'query', value: 'query' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'query', value: 'query' }
     ]}
 >
 <TabItem value="get">
@@ -139,6 +139,80 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The full resource name of the auth_provider. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/authProviders/&#123;auth_provider&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="allowedScopes" /></td>
+    <td><code>array</code></td>
+    <td>Optional. List of scopes that are allowed to be requested for this auth_provider. If this list is non-empty, only scopes within this list may be requested. If this list is empty, all scopes may be requested. Scopes appearing in `blocked_scopes` are disallowed even if they appear in `allowed_scopes`. The number of allowed scopes is limited to 200.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="authProviderTypeParams" /></td>
+    <td><code>object</code></td>
+    <td>Required. AuthProvider type specific parameters. (id: AuthProviderTypeParams)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="blockedScopes" /></td>
+    <td><code>array</code></td>
+    <td>Optional. List of scopes that are blocked from being requested for this auth_provider. If a scope appears in this list, it will not be requested, even if it also appears in `allowed_scopes`. `blocked_scopes` takes precedence over `allowed_scopes`. The number of blocked scopes is limited to 200.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. [Output only] Create time stamp</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deleted" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. This is set to true if the auth_provider is deleted.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Description of the resource. Must be less than 256 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="expireTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the auth_provider will expire.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels as key value pairs</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The state of the auth_provider. (STATE_UNSPECIFIED, ENABLED, DISABLED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. [Output only] Update time stamp</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workloadIds" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Input only. Represents the workload identity in IAM `principal://` format of the agent(s) that will use this AuthProvider. Example: `principal://agents.global.org-$&#123;ORG_ID&#125;.system.id.goog/resources/aiplatform/projects/&#123;PROJECT_ID&#125;/locations/&#123;LOCATIONS&#125;/reasoningEngines/&#123;ID&#125;`</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="query">
 
 <table>
@@ -160,20 +234,6 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>A token identifying a page of results the server should return. If this field is omitted, there are no subsequent pages.</td>
 </tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
 </tbody>
 </table>
 </TabItem>
@@ -209,18 +269,18 @@ The following methods are available for this resource:
     <td>Queries what all workloads are using a given auth_provider.</td>
 </tr>
 <tr>
-    <td><a href="#query"><CopyableCode code="query" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-workloadId"><code>workloadId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Queries what all auth_providers are used by a given workload_id.</td>
-</tr>
-<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists AuthProviders in a given project and location.</td>
+</tr>
+<tr>
+    <td><a href="#query"><CopyableCode code="query" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-workloadId"><code>workloadId</code></a></td>
+    <td>Queries what all auth_providers are used by a given workload_id.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -233,7 +293,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authProvidersId"><code>authProvidersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single AuthProvider.</td>
 </tr>
 <tr>
@@ -244,18 +304,11 @@ The following methods are available for this resource:
     <td>Deletes a single AuthProvider.</td>
 </tr>
 <tr>
-    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><a href="#disable"><CopyableCode code="disable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authProvidersId"><code>authProvidersId</code></a></td>
     <td></td>
-    <td>Undeletes a single AuthProvider.</td>
-</tr>
-<tr>
-    <td><a href="#revoke_authorization"><CopyableCode code="revoke_authorization" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authProvidersId"><code>authProvidersId</code></a></td>
-    <td></td>
-    <td>Revokes all authorizations for a specific user on an AuthProvider. This deletes all authorization records associated with the user and AuthProvider, effectively revoking access across all agents.</td>
+    <td>Disables a single AuthProvider.</td>
 </tr>
 <tr>
     <td><a href="#enable"><CopyableCode code="enable" /></a></td>
@@ -265,11 +318,18 @@ The following methods are available for this resource:
     <td>Enables a single AuthProvider.</td>
 </tr>
 <tr>
-    <td><a href="#disable"><CopyableCode code="disable" /></a></td>
+    <td><a href="#revoke_authorization"><CopyableCode code="revoke_authorization" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authProvidersId"><code>authProvidersId</code></a></td>
     <td></td>
-    <td>Disables a single AuthProvider.</td>
+    <td>Revokes all authorizations for a specific user on an AuthProvider. This deletes all authorization records associated with the user and AuthProvider, effectively revoking access across all agents.</td>
+</tr>
+<tr>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authProvidersId"><code>authProvidersId</code></a></td>
+    <td></td>
+    <td>Undeletes a single AuthProvider.</td>
 </tr>
 </tbody>
 </table>
@@ -357,8 +417,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'get', value: 'get' },
         { label: 'query_workloads', value: 'query_workloads' },
-        { label: 'query', value: 'query' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'query', value: 'query' }
     ]}
 >
 <TabItem value="get">
@@ -403,6 +463,35 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
+<TabItem value="list">
+
+Lists AuthProviders in a given project and location.
+
+```sql
+SELECT
+name,
+allowedScopes,
+authProviderTypeParams,
+blockedScopes,
+createTime,
+deleted,
+description,
+expireTime,
+labels,
+state,
+updateTime,
+workloadIds
+FROM google.agentidentity.auth_providers
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
+;
+```
+</TabItem>
 <TabItem value="query">
 
 Queries what all auth_providers are used by a given workload_id.
@@ -414,27 +503,9 @@ nextPageToken
 FROM google.agentidentity.auth_providers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND workloadId = '{{ workloadId }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="list">
-
-Lists AuthProviders in a given project and location.
-
-```sql
-SELECT
-*
-FROM google.agentidentity.auth_providers
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -456,26 +527,26 @@ Creates a new AuthProvider in a given project and location.
 
 ```sql
 INSERT INTO google.agentidentity.auth_providers (
-data__authProviderTypeParams,
 data__allowedScopes,
-data__workloadIds,
-data__name,
+data__authProviderTypeParams,
 data__blockedScopes,
 data__description,
 data__labels,
+data__name,
+data__workloadIds,
 projectsId,
 locationsId,
 authProviderId,
 requestId
 )
 SELECT 
-'{{ authProviderTypeParams }}',
 '{{ allowedScopes }}',
-'{{ workloadIds }}',
-'{{ name }}',
+'{{ authProviderTypeParams }}',
 '{{ blockedScopes }}',
 '{{ description }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ workloadIds }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ authProviderId }}',
@@ -507,39 +578,30 @@ workloadIds
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the auth_providers resource.
-    - name: authProviderTypeParams
-      description: |
-        Required. AuthProvider type specific parameters.
-      value:
-        geAuthProvider: "{{ geAuthProvider }}"
-        twoLeggedOauth:
-          clientSecret: "{{ clientSecret }}"
-          clientId: "{{ clientId }}"
-          tokenUrl: "{{ tokenUrl }}"
-        apiKey:
-          apiKey: "{{ apiKey }}"
-        threeLeggedOauth:
-          clientSecret: "{{ clientSecret }}"
-          clientId: "{{ clientId }}"
-          enablePkce: {{ enablePkce }}
-          redirectUrl: "{{ redirectUrl }}"
-          defaultContinueUri: "{{ defaultContinueUri }}"
-          authorizationUrl: "{{ authorizationUrl }}"
-          tokenUrl: "{{ tokenUrl }}"
     - name: allowedScopes
       value:
         - "{{ allowedScopes }}"
       description: |
         Optional. List of scopes that are allowed to be requested for this auth_provider. If this list is non-empty, only scopes within this list may be requested. If this list is empty, all scopes may be requested. Scopes appearing in \`blocked_scopes\` are disallowed even if they appear in \`allowed_scopes\`. The number of allowed scopes is limited to 200.
-    - name: workloadIds
+    - name: authProviderTypeParams
+      description: |
+        Required. AuthProvider type specific parameters.
       value:
-        - "{{ workloadIds }}"
-      description: |
-        Optional. Input only. Represents the workload identity in IAM \`principal://\` format of the agent(s) that will use this AuthProvider. Example: \`principal://agents.global.org-\${ORG_ID}.system.id.goog/resources/aiplatform/projects/{PROJECT_ID}/locations/{LOCATIONS}/reasoningEngines/{ID}\`
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The full resource name of the auth_provider. Format: projects/{project}/locations/{location}/authProviders/{auth_provider}
+        apiKey:
+          apiKey: "{{ apiKey }}"
+        geAuthProvider: "{{ geAuthProvider }}"
+        threeLeggedOauth:
+          authorizationUrl: "{{ authorizationUrl }}"
+          clientId: "{{ clientId }}"
+          clientSecret: "{{ clientSecret }}"
+          defaultContinueUri: "{{ defaultContinueUri }}"
+          enablePkce: {{ enablePkce }}
+          redirectUrl: "{{ redirectUrl }}"
+          tokenUrl: "{{ tokenUrl }}"
+        twoLeggedOauth:
+          clientId: "{{ clientId }}"
+          clientSecret: "{{ clientSecret }}"
+          tokenUrl: "{{ tokenUrl }}"
     - name: blockedScopes
       value:
         - "{{ blockedScopes }}"
@@ -553,6 +615,15 @@ workloadIds
       value: "{{ labels }}"
       description: |
         Optional. Labels as key value pairs
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The full resource name of the auth_provider. Format: projects/{project}/locations/{location}/authProviders/{auth_provider}
+    - name: workloadIds
+      value:
+        - "{{ workloadIds }}"
+      description: |
+        Optional. Input only. Represents the workload identity in IAM \`principal://\` format of the agent(s) that will use this AuthProvider. Example: \`principal://agents.global.org-\${ORG_ID}.system.id.goog/resources/aiplatform/projects/{PROJECT_ID}/locations/{LOCATIONS}/reasoningEngines/{ID}\`
     - name: authProviderId
       value: "{{ authProviderId }}"
     - name: requestId
@@ -578,19 +649,19 @@ Updates the parameters of a single AuthProvider.
 ```sql
 UPDATE google.agentidentity.auth_providers
 SET 
-data__authProviderTypeParams = '{{ authProviderTypeParams }}',
 data__allowedScopes = '{{ allowedScopes }}',
-data__workloadIds = '{{ workloadIds }}',
-data__name = '{{ name }}',
+data__authProviderTypeParams = '{{ authProviderTypeParams }}',
 data__blockedScopes = '{{ blockedScopes }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__workloadIds = '{{ workloadIds }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND authProvidersId = '{{ authProvidersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 allowedScopes,
@@ -636,20 +707,36 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undelete"
+    defaultValue="disable"
     values={[
-        { label: 'undelete', value: 'undelete' },
-        { label: 'revoke_authorization', value: 'revoke_authorization' },
+        { label: 'disable', value: 'disable' },
         { label: 'enable', value: 'enable' },
-        { label: 'disable', value: 'disable' }
+        { label: 'revoke_authorization', value: 'revoke_authorization' },
+        { label: 'undelete', value: 'undelete' }
     ]}
 >
-<TabItem value="undelete">
+<TabItem value="disable">
 
-Undeletes a single AuthProvider.
+Disables a single AuthProvider.
 
 ```sql
-EXEC google.agentidentity.auth_providers.undelete 
+EXEC google.agentidentity.auth_providers.disable 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@authProvidersId='{{ authProvidersId }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="enable">
+
+Enables a single AuthProvider.
+
+```sql
+EXEC google.agentidentity.auth_providers.enable 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @authProvidersId='{{ authProvidersId }}' --required 
@@ -676,28 +763,12 @@ EXEC google.agentidentity.auth_providers.revoke_authorization
 ;
 ```
 </TabItem>
-<TabItem value="enable">
+<TabItem value="undelete">
 
-Enables a single AuthProvider.
-
-```sql
-EXEC google.agentidentity.auth_providers.enable 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@authProvidersId='{{ authProvidersId }}' --required 
-@@json=
-'{
-"requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="disable">
-
-Disables a single AuthProvider.
+Undeletes a single AuthProvider.
 
 ```sql
-EXEC google.agentidentity.auth_providers.disable 
+EXEC google.agentidentity.auth_providers.undelete 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @authProvidersId='{{ authProvidersId }}' --required 

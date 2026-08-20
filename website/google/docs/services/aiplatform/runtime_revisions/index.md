@@ -51,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#stream_query"><CopyableCode code="stream_query" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-runtimeRevisionsId"><code>runtimeRevisionsId</code></a></td>
-    <td></td>
-    <td>Streams queries using a reasoning engine.</td>
-</tr>
-<tr>
     <td><a href="#query"><CopyableCode code="query" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-runtimeRevisionsId"><code>runtimeRevisionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-runtimeRevisionsId"><code>runtimeRevisionsId</code></a></td>
     <td></td>
     <td>Queries using a reasoning engine.</td>
+</tr>
+<tr>
+    <td><a href="#stream_query"><CopyableCode code="stream_query" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-runtimeRevisionsId"><code>runtimeRevisionsId</code></a></td>
+    <td></td>
+    <td>Streams queries using a reasoning engine.</td>
 </tr>
 </tbody>
 </table>
@@ -80,6 +80,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-reasoningEnginesId">
     <td><CopyableCode code="reasoningEnginesId" /></td>
     <td><code>string</code></td>
@@ -96,18 +106,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="stream_query"
+    defaultValue="query"
     values={[
-        { label: 'stream_query', value: 'stream_query' },
-        { label: 'query', value: 'query' }
+        { label: 'query', value: 'query' },
+        { label: 'stream_query', value: 'stream_query' }
     ]}
 >
-<TabItem value="stream_query">
+<TabItem value="query">
 
-Streams queries using a reasoning engine.
+Queries using a reasoning engine.
 
 ```sql
-EXEC google.aiplatform.runtime_revisions.stream_query 
+EXEC google.aiplatform.runtime_revisions.query 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required, 
 @runtimeRevisionsId='{{ runtimeRevisionsId }}' --required 
 @@json=
@@ -118,18 +130,20 @@ EXEC google.aiplatform.runtime_revisions.stream_query
 ;
 ```
 </TabItem>
-<TabItem value="query">
+<TabItem value="stream_query">
 
-Queries using a reasoning engine.
+Streams queries using a reasoning engine.
 
 ```sql
-EXEC google.aiplatform.runtime_revisions.query 
+EXEC google.aiplatform.runtime_revisions.stream_query 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required, 
 @runtimeRevisionsId='{{ runtimeRevisionsId }}' --required 
 @@json=
 '{
-"input": "{{ input }}", 
-"classMethod": "{{ classMethod }}"
+"classMethod": "{{ classMethod }}", 
+"input": "{{ input }}"
 }'
 ;
 ```

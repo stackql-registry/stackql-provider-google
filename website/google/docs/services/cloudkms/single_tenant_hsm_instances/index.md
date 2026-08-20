@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists SingleTenantHsmInstances.</td>
 </tr>
 <tr>
@@ -296,11 +296,11 @@ unrefreshedDurationUntilDisable
 FROM google.cloudkms.single_tenant_hsm_instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -322,17 +322,17 @@ Creates a new SingleTenantHsmInstance in a given Project and Location. User must
 
 ```sql
 INSERT INTO google.cloudkms.single_tenant_hsm_instances (
+data__keyPortabilityEnabled,
 data__name,
 data__quorumAuth,
-data__keyPortabilityEnabled,
 projectsId,
 locationsId,
 singleTenantHsmInstanceId
 )
 SELECT 
+{{ keyPortabilityEnabled }},
 '{{ name }}',
 '{{ quorumAuth }}',
-{{ keyPortabilityEnabled }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ singleTenantHsmInstanceId }}'
@@ -356,6 +356,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the single_tenant_hsm_instances resource.
+    - name: keyPortabilityEnabled
+      value: {{ keyPortabilityEnabled }}
+      description: |
+        Optional. Immutable. Indicates whether key portability is enabled for the SingleTenantHsmInstance. This can only be set at creation time. Key portability features are disabled by default.
     - name: name
       value: "{{ name }}"
       description: |
@@ -368,10 +372,6 @@ response
         totalApproverCount: {{ totalApproverCount }}
         twoFactorPublicKeyPems:
           - "{{ twoFactorPublicKeyPems }}"
-    - name: keyPortabilityEnabled
-      value: {{ keyPortabilityEnabled }}
-      description: |
-        Optional. Immutable. Indicates whether key portability is enabled for the SingleTenantHsmInstance. This can only be set at creation time. Key portability features are disabled by default.
     - name: singleTenantHsmInstanceId
       value: "{{ singleTenantHsmInstanceId }}"
 `}</CodeBlock>

@@ -33,93 +33,14 @@ Creates, updates, deletes, gets or lists a <code>discovery_configs</code> resour
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_discovery_configs_get"
+    defaultValue="organizations_locations_discovery_configs_get"
     values={[
-        { label: 'projects_locations_discovery_configs_get', value: 'projects_locations_discovery_configs_get' },
         { label: 'organizations_locations_discovery_configs_get', value: 'organizations_locations_discovery_configs_get' },
-        { label: 'projects_locations_discovery_configs_list', value: 'projects_locations_discovery_configs_list' },
-        { label: 'organizations_locations_discovery_configs_list', value: 'organizations_locations_discovery_configs_list' }
+        { label: 'projects_locations_discovery_configs_get', value: 'projects_locations_discovery_configs_get' },
+        { label: 'organizations_locations_discovery_configs_list', value: 'organizations_locations_discovery_configs_list' },
+        { label: 'projects_locations_discovery_configs_list', value: 'projects_locations_discovery_configs_list' }
     ]}
 >
-<TabItem value="projects_locations_discovery_configs_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="actions" /></td>
-    <td><code>array</code></td>
-    <td>Actions to execute at the completion of scanning.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of a DiscoveryConfig.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Display name (max 100 chars)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errors" /></td>
-    <td><code>array</code></td>
-    <td>Output only. A stream of errors encountered when the config was activated. Repeated errors may result in the config automatically being paused. Output only field. Will return the last 100 errors. Whenever the config is modified this list will be cleared.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="inspectTemplates" /></td>
-    <td><code>array</code></td>
-    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastRunTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp of the last time this config was executed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="orgConfig" /></td>
-    <td><code>object</code></td>
-    <td>Only set when the parent is an org. (id: GooglePrivacyDlpV2OrgConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="otherCloudStartingLocation" /></td>
-    <td><code>object</code></td>
-    <td>Must be set only when scanning other clouds. (id: GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="processingLocation" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Processing location configuration. Vertex AI dataset scanning will set processing_location.image_fallback_type to MultiRegionProcessing by default. (id: GooglePrivacyDlpV2ProcessingLocation)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="status" /></td>
-    <td><code>string</code></td>
-    <td>Required. A status for this configuration. (STATUS_UNSPECIFIED, RUNNING, PAUSED)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="targets" /></td>
-    <td><code>array</code></td>
-    <td>Target to match against for determining what to scan and how frequently.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of a DiscoveryConfig.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_discovery_configs_get">
 
 <table>
@@ -199,7 +120,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_discovery_configs_list">
+<TabItem value="projects_locations_discovery_configs_get">
 
 <table>
 <thead>
@@ -279,6 +200,85 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="organizations_locations_discovery_configs_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="actions" /></td>
+    <td><code>array</code></td>
+    <td>Actions to execute at the completion of scanning.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of a DiscoveryConfig.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Display name (max 100 chars)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="errors" /></td>
+    <td><code>array</code></td>
+    <td>Output only. A stream of errors encountered when the config was activated. Repeated errors may result in the config automatically being paused. Output only field. Will return the last 100 errors. Whenever the config is modified this list will be cleared.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="inspectTemplates" /></td>
+    <td><code>array</code></td>
+    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastRunTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp of the last time this config was executed.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="orgConfig" /></td>
+    <td><code>object</code></td>
+    <td>Only set when the parent is an org. (id: GooglePrivacyDlpV2OrgConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="otherCloudStartingLocation" /></td>
+    <td><code>object</code></td>
+    <td>Must be set only when scanning other clouds. (id: GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="processingLocation" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Processing location configuration. Vertex AI dataset scanning will set processing_location.image_fallback_type to MultiRegionProcessing by default. (id: GooglePrivacyDlpV2ProcessingLocation)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="status" /></td>
+    <td><code>string</code></td>
+    <td>Required. A status for this configuration. (STATUS_UNSPECIFIED, RUNNING, PAUSED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targets" /></td>
+    <td><code>array</code></td>
+    <td>Target to match against for determining what to scan and how frequently.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of a DiscoveryConfig.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_discovery_configs_list">
 
 <table>
 <thead>
@@ -375,13 +375,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_discovery_configs_get"><CopyableCode code="projects_locations_discovery_configs_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveryConfigsId"><code>discoveryConfigsId</code></a></td>
-    <td></td>
-    <td>Gets a discovery configuration.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_discovery_configs_get"><CopyableCode code="organizations_locations_discovery_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveryConfigsId"><code>discoveryConfigsId</code></a></td>
@@ -389,25 +382,25 @@ The following methods are available for this resource:
     <td>Gets a discovery configuration.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_discovery_configs_list"><CopyableCode code="projects_locations_discovery_configs_list" /></a></td>
+    <td><a href="#projects_locations_discovery_configs_get"><CopyableCode code="projects_locations_discovery_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists discovery configurations.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveryConfigsId"><code>discoveryConfigsId</code></a></td>
+    <td></td>
+    <td>Gets a discovery configuration.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_discovery_configs_list"><CopyableCode code="organizations_locations_discovery_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists discovery configurations.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_discovery_configs_create"><CopyableCode code="projects_locations_discovery_configs_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
+    <td><a href="#projects_locations_discovery_configs_list"><CopyableCode code="projects_locations_discovery_configs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Creates a config for discovery to scan and profile storage.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists discovery configurations.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_discovery_configs_create"><CopyableCode code="organizations_locations_discovery_configs_create" /></a></td>
@@ -417,11 +410,11 @@ The following methods are available for this resource:
     <td>Creates a config for discovery to scan and profile storage.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_discovery_configs_patch"><CopyableCode code="projects_locations_discovery_configs_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveryConfigsId"><code>discoveryConfigsId</code></a></td>
+    <td><a href="#projects_locations_discovery_configs_create"><CopyableCode code="projects_locations_discovery_configs_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Updates a discovery configuration.</td>
+    <td>Creates a config for discovery to scan and profile storage.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_discovery_configs_patch"><CopyableCode code="organizations_locations_discovery_configs_patch" /></a></td>
@@ -431,16 +424,23 @@ The following methods are available for this resource:
     <td>Updates a discovery configuration.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_discovery_configs_delete"><CopyableCode code="projects_locations_discovery_configs_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#projects_locations_discovery_configs_patch"><CopyableCode code="projects_locations_discovery_configs_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveryConfigsId"><code>discoveryConfigsId</code></a></td>
     <td></td>
-    <td>Deletes a discovery configuration.</td>
+    <td>Updates a discovery configuration.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_discovery_configs_delete"><CopyableCode code="organizations_locations_discovery_configs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveryConfigsId"><code>discoveryConfigsId</code></a></td>
+    <td></td>
+    <td>Deletes a discovery configuration.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_discovery_configs_delete"><CopyableCode code="projects_locations_discovery_configs_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveryConfigsId"><code>discoveryConfigsId</code></a></td>
     <td></td>
     <td>Deletes a discovery configuration.</td>
 </tr>
@@ -501,40 +501,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_discovery_configs_get"
+    defaultValue="organizations_locations_discovery_configs_get"
     values={[
-        { label: 'projects_locations_discovery_configs_get', value: 'projects_locations_discovery_configs_get' },
         { label: 'organizations_locations_discovery_configs_get', value: 'organizations_locations_discovery_configs_get' },
-        { label: 'projects_locations_discovery_configs_list', value: 'projects_locations_discovery_configs_list' },
-        { label: 'organizations_locations_discovery_configs_list', value: 'organizations_locations_discovery_configs_list' }
+        { label: 'projects_locations_discovery_configs_get', value: 'projects_locations_discovery_configs_get' },
+        { label: 'organizations_locations_discovery_configs_list', value: 'organizations_locations_discovery_configs_list' },
+        { label: 'projects_locations_discovery_configs_list', value: 'projects_locations_discovery_configs_list' }
     ]}
 >
-<TabItem value="projects_locations_discovery_configs_get">
-
-Gets a discovery configuration.
-
-```sql
-SELECT
-name,
-actions,
-createTime,
-displayName,
-errors,
-inspectTemplates,
-lastRunTime,
-orgConfig,
-otherCloudStartingLocation,
-processingLocation,
-status,
-targets,
-updateTime
-FROM google.dlp.discovery_configs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND discoveryConfigsId = '{{ discoveryConfigsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_discovery_configs_get">
 
 Gets a discovery configuration.
@@ -561,9 +535,9 @@ AND discoveryConfigsId = '{{ discoveryConfigsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_discovery_configs_list">
+<TabItem value="projects_locations_discovery_configs_get">
 
-Lists discovery configurations.
+Gets a discovery configuration.
 
 ```sql
 SELECT
@@ -583,9 +557,7 @@ updateTime
 FROM google.dlp.discovery_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
+AND discoveryConfigsId = '{{ discoveryConfigsId }}' -- required
 ;
 ```
 </TabItem>
@@ -611,42 +583,18 @@ updateTime
 FROM google.dlp.discovery_configs
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-</Tabs>
+<TabItem value="projects_locations_discovery_configs_list">
 
-
-## `INSERT` examples
-
-<Tabs
-    defaultValue="projects_locations_discovery_configs_create"
-    values={[
-        { label: 'projects_locations_discovery_configs_create', value: 'projects_locations_discovery_configs_create' },
-        { label: 'organizations_locations_discovery_configs_create', value: 'organizations_locations_discovery_configs_create' },
-        { label: 'Manifest', value: 'manifest' }
-    ]}
->
-<TabItem value="projects_locations_discovery_configs_create">
-
-Creates a config for discovery to scan and profile storage.
+Lists discovery configurations.
 
 ```sql
-INSERT INTO google.dlp.discovery_configs (
-data__configId,
-data__discoveryConfig,
-projectsId,
-locationsId
-)
-SELECT 
-'{{ configId }}',
-'{{ discoveryConfig }}',
-'{{ projectsId }}',
-'{{ locationsId }}'
-RETURNING
+SELECT
 name,
 actions,
 createTime,
@@ -660,9 +608,28 @@ processingLocation,
 status,
 targets,
 updateTime
+FROM google.dlp.discovery_configs
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
+</Tabs>
+
+
+## `INSERT` examples
+
+<Tabs
+    defaultValue="organizations_locations_discovery_configs_create"
+    values={[
+        { label: 'organizations_locations_discovery_configs_create', value: 'organizations_locations_discovery_configs_create' },
+        { label: 'projects_locations_discovery_configs_create', value: 'projects_locations_discovery_configs_create' },
+        { label: 'Manifest', value: 'manifest' }
+    ]}
+>
 <TabItem value="organizations_locations_discovery_configs_create">
 
 Creates a config for discovery to scan and profile storage.
@@ -696,19 +663,52 @@ updateTime
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_discovery_configs_create">
+
+Creates a config for discovery to scan and profile storage.
+
+```sql
+INSERT INTO google.dlp.discovery_configs (
+data__configId,
+data__discoveryConfig,
+projectsId,
+locationsId
+)
+SELECT 
+'{{ configId }}',
+'{{ discoveryConfig }}',
+'{{ projectsId }}',
+'{{ locationsId }}'
+RETURNING
+name,
+actions,
+createTime,
+displayName,
+errors,
+inspectTemplates,
+lastRunTime,
+orgConfig,
+otherCloudStartingLocation,
+processingLocation,
+status,
+targets,
+updateTime
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: discovery_configs
   props:
-    - name: projectsId
-      value: "{{ projectsId }}"
+    - name: organizationsId
+      value: "{{ organizationsId }}"
       description: Required parameter for the discovery_configs resource.
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the discovery_configs resource.
-    - name: organizationsId
-      value: "{{ organizationsId }}"
+    - name: projectsId
+      value: "{{ projectsId }}"
       description: Required parameter for the discovery_configs resource.
     - name: configId
       value: "{{ configId }}"
@@ -718,175 +718,175 @@ updateTime
       description: |
         Required. The DiscoveryConfig to create.
       value:
-        updateTime: "{{ updateTime }}"
+        actions:
+          - exportData:
+              profileTable:
+                datasetId: "{{ datasetId }}"
+                projectId: "{{ projectId }}"
+                tableId: "{{ tableId }}"
+              sampleFindingsTable:
+                datasetId: "{{ datasetId }}"
+                projectId: "{{ projectId }}"
+                tableId: "{{ tableId }}"
+            pubSubNotification:
+              detailOfMessage: "{{ detailOfMessage }}"
+              event: "{{ event }}"
+              pubsubCondition:
+                expressions:
+                  conditions: "{{ conditions }}"
+                  logicalOperator: "{{ logicalOperator }}"
+              topic: "{{ topic }}"
+            publishToChronicle: "{{ publishToChronicle }}"
+            publishToDataplexCatalog:
+              lowerDataRiskToLow: {{ lowerDataRiskToLow }}
+            publishToScc: "{{ publishToScc }}"
+            tagResources:
+              lowerDataRiskToLow: {{ lowerDataRiskToLow }}
+              profileGenerationsToTag:
+                - "{{ profileGenerationsToTag }}"
+              tagConditions:
+                - sensitivityScore:
+                    score: "{{ score }}"
+                  tag:
+                    namespacedValue: "{{ namespacedValue }}"
         createTime: "{{ createTime }}"
+        displayName: "{{ displayName }}"
+        errors:
+          - details:
+              code: {{ code }}
+              details: "{{ details }}"
+              message: "{{ message }}"
+            extraInfo: "{{ extraInfo }}"
+            timestamps: "{{ timestamps }}"
+        inspectTemplates:
+          - "{{ inspectTemplates }}"
+        lastRunTime: "{{ lastRunTime }}"
+        name: "{{ name }}"
+        orgConfig:
+          location:
+            folderId: "{{ folderId }}"
+            organizationId: "{{ organizationId }}"
+          projectId: "{{ projectId }}"
         otherCloudStartingLocation:
           awsLocation:
             accountId: "{{ accountId }}"
             allAssetInventoryAssets: {{ allAssetInventoryAssets }}
         processingLocation:
-          imageFallbackLocation:
-            multiRegionProcessing: "{{ multiRegionProcessing }}"
-            globalProcessing: "{{ globalProcessing }}"
           documentFallbackLocation:
-            multiRegionProcessing: "{{ multiRegionProcessing }}"
             globalProcessing: "{{ globalProcessing }}"
-        name: "{{ name }}"
-        inspectTemplates:
-          - "{{ inspectTemplates }}"
-        errors:
-          - timestamps: "{{ timestamps }}"
-            extraInfo: "{{ extraInfo }}"
-            details:
-              message: "{{ message }}"
-              details: "{{ details }}"
-              code: {{ code }}
-        actions:
-          - pubSubNotification:
-              topic: "{{ topic }}"
-              event: "{{ event }}"
-              pubsubCondition:
-                expressions:
-                  logicalOperator: "{{ logicalOperator }}"
-                  conditions: "{{ conditions }}"
-              detailOfMessage: "{{ detailOfMessage }}"
-            publishToScc: "{{ publishToScc }}"
-            tagResources:
-              tagConditions:
-                - tag:
-                    namespacedValue: "{{ namespacedValue }}"
-                  sensitivityScore:
-                    score: "{{ score }}"
-              profileGenerationsToTag:
-                - "{{ profileGenerationsToTag }}"
-              lowerDataRiskToLow: {{ lowerDataRiskToLow }}
-            publishToDataplexCatalog:
-              lowerDataRiskToLow: {{ lowerDataRiskToLow }}
-            exportData:
-              profileTable:
-                projectId: "{{ projectId }}"
-                datasetId: "{{ datasetId }}"
-                tableId: "{{ tableId }}"
-              sampleFindingsTable:
-                projectId: "{{ projectId }}"
-                datasetId: "{{ datasetId }}"
-                tableId: "{{ tableId }}"
-            publishToChronicle: "{{ publishToChronicle }}"
-        lastRunTime: "{{ lastRunTime }}"
+            multiRegionProcessing: "{{ multiRegionProcessing }}"
+          imageFallbackLocation:
+            globalProcessing: "{{ globalProcessing }}"
+            multiRegionProcessing: "{{ multiRegionProcessing }}"
         status: "{{ status }}"
-        displayName: "{{ displayName }}"
         targets:
           - bigQueryTarget:
+              cadence:
+                inspectTemplateModifiedCadence:
+                  frequency: "{{ frequency }}"
+                refreshFrequency: "{{ refreshFrequency }}"
+                schemaModifiedCadence:
+                  frequency: "{{ frequency }}"
+                  types: "{{ types }}"
+                tableModifiedCadence:
+                  frequency: "{{ frequency }}"
+                  types: "{{ types }}"
+              conditions:
+                createdAfter: "{{ createdAfter }}"
+                orConditions:
+                  minAge: "{{ minAge }}"
+                  minRowCount: {{ minRowCount }}
+                typeCollection: "{{ typeCollection }}"
+                types:
+                  types: "{{ types }}"
+              disabled: "{{ disabled }}"
               filter:
-                tables:
-                  includeRegexes: "{{ includeRegexes }}"
                 otherTables: "{{ otherTables }}"
                 tableReference:
                   datasetId: "{{ datasetId }}"
                   projectId: "{{ projectId }}"
                   tableId: "{{ tableId }}"
-              disabled: "{{ disabled }}"
-              cadence:
-                schemaModifiedCadence:
-                  types: "{{ types }}"
-                  frequency: "{{ frequency }}"
-                tableModifiedCadence:
-                  types: "{{ types }}"
-                  frequency: "{{ frequency }}"
-                inspectTemplateModifiedCadence:
-                  frequency: "{{ frequency }}"
-                refreshFrequency: "{{ refreshFrequency }}"
-              conditions:
-                typeCollection: "{{ typeCollection }}"
-                types:
-                  types: "{{ types }}"
-                createdAfter: "{{ createdAfter }}"
-                orConditions:
-                  minRowCount: {{ minRowCount }}
-                  minAge: "{{ minAge }}"
+                tables:
+                  includeRegexes: "{{ includeRegexes }}"
             cloudSqlTarget:
               conditions:
                 databaseEngines:
                   - "{{ databaseEngines }}"
                 types:
                   - "{{ types }}"
-              generationCadence:
-                schemaModifiedCadence:
-                  types: "{{ types }}"
-                  frequency: "{{ frequency }}"
-                inspectTemplateModifiedCadence:
-                  frequency: "{{ frequency }}"
-                refreshFrequency: "{{ refreshFrequency }}"
+              disabled: "{{ disabled }}"
               filter:
+                collection:
+                  includeRegexes: "{{ includeRegexes }}"
                 databaseResourceReference:
                   database: "{{ database }}"
                   databaseResource: "{{ databaseResource }}"
-                  projectId: "{{ projectId }}"
                   instance: "{{ instance }}"
-                collection:
-                  includeRegexes: "{{ includeRegexes }}"
+                  projectId: "{{ projectId }}"
                 others: "{{ others }}"
-              disabled: "{{ disabled }}"
-            secretsTarget: "{{ secretsTarget }}"
+              generationCadence:
+                inspectTemplateModifiedCadence:
+                  frequency: "{{ frequency }}"
+                refreshFrequency: "{{ refreshFrequency }}"
+                schemaModifiedCadence:
+                  frequency: "{{ frequency }}"
+                  types: "{{ types }}"
             cloudStorageTarget:
+              conditions:
+                cloudStorageConditions:
+                  includedBucketAttributes: "{{ includedBucketAttributes }}"
+                  includedObjectAttributes: "{{ includedObjectAttributes }}"
+                createdAfter: "{{ createdAfter }}"
+                minAge: "{{ minAge }}"
+              disabled: "{{ disabled }}"
               filter:
-                collection:
-                  includeTags: "{{ includeTags }}"
-                  includeRegexes: "{{ includeRegexes }}"
                 cloudStorageResourceReference:
                   bucketName: "{{ bucketName }}"
                   projectId: "{{ projectId }}"
+                collection:
+                  includeRegexes: "{{ includeRegexes }}"
+                  includeTags: "{{ includeTags }}"
                 others: "{{ others }}"
-              disabled: "{{ disabled }}"
-              conditions:
-                createdAfter: "{{ createdAfter }}"
-                cloudStorageConditions:
-                  includedObjectAttributes: "{{ includedObjectAttributes }}"
-                  includedBucketAttributes: "{{ includedBucketAttributes }}"
-                minAge: "{{ minAge }}"
               generationCadence:
-                refreshFrequency: "{{ refreshFrequency }}"
                 inspectTemplateModifiedCadence:
                   frequency: "{{ frequency }}"
+                refreshFrequency: "{{ refreshFrequency }}"
             otherCloudTarget:
-              generationCadence:
-                refreshFrequency: "{{ refreshFrequency }}"
-                inspectTemplateModifiedCadence:
-                  frequency: "{{ frequency }}"
-              dataSourceType:
-                dataSource: "{{ dataSource }}"
-              disabled: "{{ disabled }}"
               conditions:
-                minAge: "{{ minAge }}"
                 amazonS3BucketConditions:
                   bucketTypes: "{{ bucketTypes }}"
                   objectStorageClasses: "{{ objectStorageClasses }}"
+                minAge: "{{ minAge }}"
+              dataSourceType:
+                dataSource: "{{ dataSource }}"
+              disabled: "{{ disabled }}"
               filter:
-                singleResource:
-                  amazonS3Bucket: "{{ amazonS3Bucket }}"
                 collection:
                   includeRegexes: "{{ includeRegexes }}"
                 others: "{{ others }}"
-            vertexDatasetTarget:
-              filter:
-                collection:
-                  vertexDatasetRegexes: "{{ vertexDatasetRegexes }}"
-                vertexDatasetResourceReference:
-                  datasetResourceName: "{{ datasetResourceName }}"
-                others: "{{ others }}"
-              disabled: "{{ disabled }}"
-              conditions:
-                createdAfter: "{{ createdAfter }}"
-                minAge: "{{ minAge }}"
+                singleResource:
+                  amazonS3Bucket: "{{ amazonS3Bucket }}"
               generationCadence:
                 inspectTemplateModifiedCadence:
                   frequency: "{{ frequency }}"
                 refreshFrequency: "{{ refreshFrequency }}"
-        orgConfig:
-          projectId: "{{ projectId }}"
-          location:
-            organizationId: "{{ organizationId }}"
-            folderId: "{{ folderId }}"
+            secretsTarget: "{{ secretsTarget }}"
+            vertexDatasetTarget:
+              conditions:
+                createdAfter: "{{ createdAfter }}"
+                minAge: "{{ minAge }}"
+              disabled: "{{ disabled }}"
+              filter:
+                collection:
+                  vertexDatasetRegexes: "{{ vertexDatasetRegexes }}"
+                others: "{{ others }}"
+                vertexDatasetResourceReference:
+                  datasetResourceName: "{{ datasetResourceName }}"
+              generationCadence:
+                inspectTemplateModifiedCadence:
+                  frequency: "{{ frequency }}"
+                refreshFrequency: "{{ refreshFrequency }}"
+        updateTime: "{{ updateTime }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -896,23 +896,23 @@ updateTime
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_locations_discovery_configs_patch"
+    defaultValue="organizations_locations_discovery_configs_patch"
     values={[
-        { label: 'projects_locations_discovery_configs_patch', value: 'projects_locations_discovery_configs_patch' },
-        { label: 'organizations_locations_discovery_configs_patch', value: 'organizations_locations_discovery_configs_patch' }
+        { label: 'organizations_locations_discovery_configs_patch', value: 'organizations_locations_discovery_configs_patch' },
+        { label: 'projects_locations_discovery_configs_patch', value: 'projects_locations_discovery_configs_patch' }
     ]}
 >
-<TabItem value="projects_locations_discovery_configs_patch">
+<TabItem value="organizations_locations_discovery_configs_patch">
 
 Updates a discovery configuration.
 
 ```sql
 UPDATE google.dlp.discovery_configs
 SET 
-data__updateMask = '{{ updateMask }}',
-data__discoveryConfig = '{{ discoveryConfig }}'
+data__discoveryConfig = '{{ discoveryConfig }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
-projectsId = '{{ projectsId }}' --required
+organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND discoveryConfigsId = '{{ discoveryConfigsId }}' --required
 RETURNING
@@ -931,17 +931,17 @@ targets,
 updateTime;
 ```
 </TabItem>
-<TabItem value="organizations_locations_discovery_configs_patch">
+<TabItem value="projects_locations_discovery_configs_patch">
 
 Updates a discovery configuration.
 
 ```sql
 UPDATE google.dlp.discovery_configs
 SET 
-data__updateMask = '{{ updateMask }}',
-data__discoveryConfig = '{{ discoveryConfig }}'
+data__discoveryConfig = '{{ discoveryConfig }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
-organizationsId = '{{ organizationsId }}' --required
+projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND discoveryConfigsId = '{{ discoveryConfigsId }}' --required
 RETURNING
@@ -966,24 +966,12 @@ updateTime;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_locations_discovery_configs_delete"
+    defaultValue="organizations_locations_discovery_configs_delete"
     values={[
-        { label: 'projects_locations_discovery_configs_delete', value: 'projects_locations_discovery_configs_delete' },
-        { label: 'organizations_locations_discovery_configs_delete', value: 'organizations_locations_discovery_configs_delete' }
+        { label: 'organizations_locations_discovery_configs_delete', value: 'organizations_locations_discovery_configs_delete' },
+        { label: 'projects_locations_discovery_configs_delete', value: 'projects_locations_discovery_configs_delete' }
     ]}
 >
-<TabItem value="projects_locations_discovery_configs_delete">
-
-Deletes a discovery configuration.
-
-```sql
-DELETE FROM google.dlp.discovery_configs
-WHERE projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND discoveryConfigsId = '{{ discoveryConfigsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_discovery_configs_delete">
 
 Deletes a discovery configuration.
@@ -991,6 +979,18 @@ Deletes a discovery configuration.
 ```sql
 DELETE FROM google.dlp.discovery_configs
 WHERE organizationsId = '{{ organizationsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND discoveryConfigsId = '{{ discoveryConfigsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_discovery_configs_delete">
+
+Deletes a discovery configuration.
+
+```sql
+DELETE FROM google.dlp.discovery_configs
+WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND discoveryConfigsId = '{{ discoveryConfigsId }}' --required
 ;

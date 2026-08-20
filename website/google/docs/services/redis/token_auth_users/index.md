@@ -74,6 +74,16 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the token based auth user. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/clusters/&#123;cluster&#125;/tokenAuthUsers/&#123;token_auth_user&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The state of the token based auth user. (STATE_UNSPECIFIED, ACTIVE, CREATING, UPDATING, DELETING)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -105,14 +115,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the token auth users for a token based auth enabled cluster.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a>, <a href="#parameter-tokenAuthUsersId"><code>tokenAuthUsersId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a token auth user for a token based auth enabled cluster.</td>
 </tr>
 </tbody>
@@ -215,15 +225,16 @@ Lists all the token auth users for a token based auth enabled cluster.
 
 ```sql
 SELECT
-*
+name,
+state
 FROM google.redis.token_auth_users
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -248,8 +259,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND clustersId = '{{ clustersId }}' --required
 AND tokenAuthUsersId = '{{ tokenAuthUsersId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

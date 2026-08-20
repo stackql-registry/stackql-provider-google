@@ -438,29 +438,29 @@ Creates a PersistentResource.
 
 ```sql
 INSERT INTO google.aiplatform.persistent_resources (
+data__displayName,
+data__encryptionSpec,
 data__labels,
 data__name,
-data__encryptionSpec,
-data__resourcePools,
 data__network,
-data__resourceRuntimeSpec,
 data__pscInterfaceConfig,
-data__displayName,
 data__reservedIpRanges,
+data__resourcePools,
+data__resourceRuntimeSpec,
 projectsId,
 locationsId,
 persistentResourceId
 )
 SELECT 
+'{{ displayName }}',
+'{{ encryptionSpec }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ encryptionSpec }}',
-'{{ resourcePools }}',
 '{{ network }}',
-'{{ resourceRuntimeSpec }}',
 '{{ pscInterfaceConfig }}',
-'{{ displayName }}',
 '{{ reservedIpRanges }}',
+'{{ resourcePools }}',
+'{{ resourceRuntimeSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ persistentResourceId }}'
@@ -484,6 +484,15 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the persistent_resources resource.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The display name of the PersistentResource. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: encryptionSpec
+      description: |
+        Optional. Customer-managed encryption key spec for a PersistentResource. If set, this PersistentResource and all sub-resources of this PersistentResource will be secured by this key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -492,72 +501,63 @@ response
       value: "{{ name }}"
       description: |
         Immutable. Resource name of a PersistentResource.
-    - name: encryptionSpec
-      description: |
-        Optional. Customer-managed encryption key spec for a PersistentResource. If set, this PersistentResource and all sub-resources of this PersistentResource will be secured by this key.
-      value:
-        kmsKeyName: "{{ kmsKeyName }}"
-    - name: resourcePools
-      description: |
-        Required. The spec of the pools of different resources.
-      value:
-        - usedReplicaCount: "{{ usedReplicaCount }}"
-          id: "{{ id }}"
-          machineSpec:
-            machineType: "{{ machineType }}"
-            tpuTopology: "{{ tpuTopology }}"
-            reservationAffinity:
-              reservationAffinityType: "{{ reservationAffinityType }}"
-              key: "{{ key }}"
-              values:
-                - "{{ values }}"
-            acceleratorCount: {{ acceleratorCount }}
-            acceleratorType: "{{ acceleratorType }}"
-            gpuPartitionSize: "{{ gpuPartitionSize }}"
-          replicaCount: "{{ replicaCount }}"
-          diskSpec:
-            bootDiskType: "{{ bootDiskType }}"
-            bootDiskSizeGb: {{ bootDiskSizeGb }}
-          autoscalingSpec:
-            maxReplicaCount: "{{ maxReplicaCount }}"
-            minReplicaCount: "{{ minReplicaCount }}"
     - name: network
       value: "{{ network }}"
       description: |
         Optional. The full name of the Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to peered with Vertex AI to host the persistent resources. For example, \`projects/12345/global/networks/myVPC\`. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert) is of the form \`projects/{project}/global/networks/{network}\`. Where {project} is a project number, as in \`12345\`, and {network} is a network name. To specify this field, you must have already [configured VPC Network Peering for Vertex AI](https://cloud.google.com/vertex-ai/docs/general/vpc-peering). If this field is left unspecified, the resources aren't peered with any network.
+    - name: pscInterfaceConfig
+      description: |
+        Optional. Configuration for PSC-I for PersistentResource.
+      value:
+        dnsPeeringConfigs:
+          - domain: "{{ domain }}"
+            targetNetwork: "{{ targetNetwork }}"
+            targetProject: "{{ targetProject }}"
+        networkAttachment: "{{ networkAttachment }}"
+    - name: reservedIpRanges
+      value:
+        - "{{ reservedIpRanges }}"
+      description: |
+        Optional. A list of names for the reserved IP ranges under the VPC network that can be used for this persistent resource. If set, we will deploy the persistent resource within the provided IP ranges. Otherwise, the persistent resource is deployed to any IP ranges under the provided VPC network. Example: ['vertex-ai-ip-range'].
+    - name: resourcePools
+      description: |
+        Required. The spec of the pools of different resources.
+      value:
+        - autoscalingSpec:
+            maxReplicaCount: "{{ maxReplicaCount }}"
+            minReplicaCount: "{{ minReplicaCount }}"
+          diskSpec:
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            bootDiskType: "{{ bootDiskType }}"
+          id: "{{ id }}"
+          machineSpec:
+            acceleratorCount: {{ acceleratorCount }}
+            acceleratorType: "{{ acceleratorType }}"
+            gpuPartitionSize: "{{ gpuPartitionSize }}"
+            machineType: "{{ machineType }}"
+            reservationAffinity:
+              key: "{{ key }}"
+              reservationAffinityType: "{{ reservationAffinityType }}"
+              values:
+                - "{{ values }}"
+            tpuTopology: "{{ tpuTopology }}"
+          replicaCount: "{{ replicaCount }}"
+          usedReplicaCount: "{{ usedReplicaCount }}"
     - name: resourceRuntimeSpec
       description: |
         Optional. Persistent Resource runtime spec. For example, used for Ray cluster configuration.
       value:
         raySpec:
           headNodeResourcePoolId: "{{ headNodeResourcePoolId }}"
+          imageUri: "{{ imageUri }}"
           rayLogsSpec:
             disabled: {{ disabled }}
-          resourcePoolImages: "{{ resourcePoolImages }}"
           rayMetricSpec:
             disabled: {{ disabled }}
-          imageUri: "{{ imageUri }}"
+          resourcePoolImages: "{{ resourcePoolImages }}"
         serviceAccountSpec:
           enableCustomServiceAccount: {{ enableCustomServiceAccount }}
           serviceAccount: "{{ serviceAccount }}"
-    - name: pscInterfaceConfig
-      description: |
-        Optional. Configuration for PSC-I for PersistentResource.
-      value:
-        networkAttachment: "{{ networkAttachment }}"
-        dnsPeeringConfigs:
-          - targetNetwork: "{{ targetNetwork }}"
-            domain: "{{ domain }}"
-            targetProject: "{{ targetProject }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. The display name of the PersistentResource. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-    - name: reservedIpRanges
-      value:
-        - "{{ reservedIpRanges }}"
-      description: |
-        Optional. A list of names for the reserved IP ranges under the VPC network that can be used for this persistent resource. If set, we will deploy the persistent resource within the provided IP ranges. Otherwise, the persistent resource is deployed to any IP ranges under the provided VPC network. Example: ['vertex-ai-ip-range'].
     - name: persistentResourceId
       value: "{{ persistentResourceId }}"
 `}</CodeBlock>
@@ -581,15 +581,15 @@ Updates a PersistentResource.
 ```sql
 UPDATE google.aiplatform.persistent_resources
 SET 
+data__displayName = '{{ displayName }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__encryptionSpec = '{{ encryptionSpec }}',
-data__resourcePools = '{{ resourcePools }}',
 data__network = '{{ network }}',
-data__resourceRuntimeSpec = '{{ resourceRuntimeSpec }}',
 data__pscInterfaceConfig = '{{ pscInterfaceConfig }}',
-data__displayName = '{{ displayName }}',
-data__reservedIpRanges = '{{ reservedIpRanges }}'
+data__reservedIpRanges = '{{ reservedIpRanges }}',
+data__resourcePools = '{{ resourcePools }}',
+data__resourceRuntimeSpec = '{{ resourceRuntimeSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

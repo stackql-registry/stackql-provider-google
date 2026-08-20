@@ -93,8 +93,8 @@ EXEC google.iam.permissions.query_testable_permissions
 @@json=
 '{
 "fullResourceName": "{{ fullResourceName }}", 
-"pageToken": "{{ pageToken }}", 
-"pageSize": {{ pageSize }}
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}"
 }'
 ;
 ```

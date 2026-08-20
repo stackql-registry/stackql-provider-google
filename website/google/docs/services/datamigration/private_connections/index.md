@@ -81,6 +81,11 @@ The following fields are returned by `SELECT` queries:
     <td>PSC Interface configuration. (id: PscInterfaceConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="reservedPublicIpConfig" /></td>
+    <td><code>object</code></td>
+    <td>Reserved Public IP configuration. (id: ReservedPublicIpConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Reserved for future use.</td>
@@ -150,6 +155,11 @@ The following fields are returned by `SELECT` queries:
     <td>PSC Interface configuration. (id: PscInterfaceConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="reservedPublicIpConfig" /></td>
+    <td><code>object</code></td>
+    <td>Reserved Public IP configuration. (id: ReservedPublicIpConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Reserved for future use.</td>
@@ -212,7 +222,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-skipValidation"><code>skipValidation</code></a>, <a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a></td>
+    <td><a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-skipValidation"><code>skipValidation</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new private connection in a given project and location.</td>
 </tr>
 <tr>
@@ -317,6 +327,7 @@ displayName,
 error,
 labels,
 pscInterfaceConfig,
+reservedPublicIpConfig,
 satisfiesPzi,
 satisfiesPzs,
 state,
@@ -341,6 +352,7 @@ displayName,
 error,
 labels,
 pscInterfaceConfig,
+reservedPublicIpConfig,
 satisfiesPzi,
 satisfiesPzs,
 state,
@@ -374,30 +386,32 @@ Creates a new private connection in a given project and location.
 
 ```sql
 INSERT INTO google.datamigration.private_connections (
-data__name,
-data__labels,
 data__displayName,
-data__vpcPeeringConfig,
+data__labels,
+data__name,
 data__pscInterfaceConfig,
+data__reservedPublicIpConfig,
+data__vpcPeeringConfig,
 projectsId,
 locationsId,
-validateOnly,
+privateConnectionId,
 requestId,
 skipValidation,
-privateConnectionId
+validateOnly
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
 '{{ displayName }}',
-'{{ vpcPeeringConfig }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ pscInterfaceConfig }}',
+'{{ reservedPublicIpConfig }}',
+'{{ vpcPeeringConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
+'{{ privateConnectionId }}',
 '{{ requestId }}',
 '{{ skipValidation }}',
-'{{ privateConnectionId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -418,37 +432,44 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the private_connections resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of the resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The resource labels for private connections to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: \`{ "name": "wrench", "mass": "1.3kg", "count": "3" }\`.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The private connection display name.
-    - name: vpcPeeringConfig
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        VPC peering configuration.
-      value:
-        vpcName: "{{ vpcName }}"
-        subnet: "{{ subnet }}"
+        The resource labels for private connections to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: \`{ "name": "wrench", "mass": "1.3kg", "count": "3" }\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the resource.
     - name: pscInterfaceConfig
       description: |
         PSC Interface configuration.
       value:
         networkAttachment: "{{ networkAttachment }}"
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: reservedPublicIpConfig
+      description: |
+        Reserved Public IP configuration.
+      value:
+        egressPublicIps:
+          - "{{ egressPublicIps }}"
+        natIpsCount: {{ natIpsCount }}
+    - name: vpcPeeringConfig
+      description: |
+        VPC peering configuration.
+      value:
+        subnet: "{{ subnet }}"
+        vpcName: "{{ vpcName }}"
+    - name: privateConnectionId
+      value: "{{ privateConnectionId }}"
     - name: requestId
       value: "{{ requestId }}"
     - name: skipValidation
       value: {{ skipValidation }}
-    - name: privateConnectionId
-      value: "{{ privateConnectionId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>

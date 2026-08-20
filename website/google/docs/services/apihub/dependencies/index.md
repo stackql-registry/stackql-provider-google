@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List dependencies based on the provided filter and pagination parameters.</td>
 </tr>
 <tr>
@@ -329,9 +329,9 @@ updateTime
 FROM google.apihub.dependencies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -353,21 +353,21 @@ Create a dependency between two entities in the API hub.
 
 ```sql
 INSERT INTO google.apihub.dependencies (
-data__supplier,
 data__attributes,
 data__consumer,
 data__description,
 data__name,
+data__supplier,
 projectsId,
 locationsId,
 dependencyId
 )
 SELECT 
-'{{ supplier }}',
 '{{ attributes }}',
 '{{ consumer }}',
 '{{ description }}',
 '{{ name }}',
+'{{ supplier }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dependencyId }}'
@@ -396,13 +396,6 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the dependencies resource.
-    - name: supplier
-      description: |
-        Required. Immutable. The entity acting as the supplier in the dependency.
-      value:
-        operationResourceName: "{{ operationResourceName }}"
-        externalApiResourceName: "{{ externalApiResourceName }}"
-        displayName: "{{ displayName }}"
     - name: attributes
       value: "{{ attributes }}"
       description: |
@@ -411,9 +404,9 @@ updateTime
       description: |
         Required. Immutable. The entity acting as the consumer in the dependency.
       value:
-        operationResourceName: "{{ operationResourceName }}"
-        externalApiResourceName: "{{ externalApiResourceName }}"
         displayName: "{{ displayName }}"
+        externalApiResourceName: "{{ externalApiResourceName }}"
+        operationResourceName: "{{ operationResourceName }}"
     - name: description
       value: "{{ description }}"
       description: |
@@ -422,6 +415,13 @@ updateTime
       value: "{{ name }}"
       description: |
         Identifier. The name of the dependency in the API Hub. Format: \`projects/{project}/locations/{location}/dependencies/{dependency}\`
+    - name: supplier
+      description: |
+        Required. Immutable. The entity acting as the supplier in the dependency.
+      value:
+        displayName: "{{ displayName }}"
+        externalApiResourceName: "{{ externalApiResourceName }}"
+        operationResourceName: "{{ operationResourceName }}"
     - name: dependencyId
       value: "{{ dependencyId }}"
 `}</CodeBlock>
@@ -445,11 +445,11 @@ Update a dependency based on the update_mask provided in the request. The follow
 ```sql
 UPDATE google.apihub.dependencies
 SET 
-data__supplier = '{{ supplier }}',
 data__attributes = '{{ attributes }}',
 data__consumer = '{{ consumer }}',
 data__description = '{{ description }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__supplier = '{{ supplier }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

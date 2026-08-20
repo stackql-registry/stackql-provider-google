@@ -132,15 +132,15 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#fetch"><CopyableCode code="fetch" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dbFrameworkComplianceReportsId"><code>dbFrameworkComplianceReportsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dbFrameworkComplianceReportsId"><code>dbFrameworkComplianceReportsId</code></a></td>
     <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Fetches the framework compliance report for a given scope.</td>
 </tr>
 <tr>
     <td><a href="#aggregate"><CopyableCode code="aggregate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dbFrameworkComplianceReportsId"><code>dbFrameworkComplianceReportsId</code></a></td>
-    <td><a href="#parameter-interval.startTime"><code>interval.startTime</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-interval.endTime"><code>interval.endTime</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dbFrameworkComplianceReportsId"><code>dbFrameworkComplianceReportsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-interval.endTime"><code>interval.endTime</code></a>, <a href="#parameter-interval.startTime"><code>interval.startTime</code></a></td>
     <td>Gets the aggregated compliance report over time for a given scope.</td>
 </tr>
 </tbody>
@@ -164,13 +164,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-locationsId">
-    <td><CopyableCode code="locationsId" /></td>
+<tr id="parameter-foldersId">
+    <td><CopyableCode code="foldersId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-projectsId">
-    <td><CopyableCode code="projectsId" /></td>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -224,7 +224,7 @@ supportedCloudProviders,
 targetResourceDetails,
 updateTime
 FROM google.assuredworkloads.db_framework_compliance_reports
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dbFrameworkComplianceReportsId = '{{ dbFrameworkComplianceReportsId }}' -- required
 AND endTime = '{{ endTime }}'
@@ -249,12 +249,12 @@ Gets the aggregated compliance report over time for a given scope.
 
 ```sql
 EXEC google.assuredworkloads.db_framework_compliance_reports.aggregate 
-@projectsId='{{ projectsId }}' --required, 
+@foldersId='{{ foldersId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @dbFrameworkComplianceReportsId='{{ dbFrameworkComplianceReportsId }}' --required, 
-@interval.startTime='{{ interval.startTime }}', 
 @filter='{{ filter }}', 
-@interval.endTime='{{ interval.endTime }}'
+@interval.endTime='{{ interval.endTime }}', 
+@interval.startTime='{{ interval.startTime }}'
 ;
 ```
 </TabItem>

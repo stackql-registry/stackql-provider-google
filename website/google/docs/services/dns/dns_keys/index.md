@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-managedZone"><code>managedZone</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-digestType"><code>digestType</code></a></td>
+    <td><a href="#parameter-digestType"><code>digestType</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Enumerates DnsKeys to a ResourceRecordSet collection.</td>
 </tr>
 </tbody>
@@ -317,9 +317,9 @@ type
 FROM google.dns.dns_keys
 WHERE project = '{{ project }}' -- required
 AND managedZone = '{{ managedZone }}' -- required
+AND digestType = '{{ digestType }}'
 AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
-AND digestType = '{{ digestType }}'
 ;
 ```
 </TabItem>

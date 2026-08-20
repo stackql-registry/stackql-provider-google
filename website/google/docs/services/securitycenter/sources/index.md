@@ -36,12 +36,46 @@ The following fields are returned by `SELECT` queries:
     defaultValue="organizations_sources_get"
     values={[
         { label: 'organizations_sources_get', value: 'organizations_sources_get' },
+        { label: 'folders_sources_list', value: 'folders_sources_list' },
         { label: 'organizations_sources_list', value: 'organizations_sources_list' },
-        { label: 'projects_sources_list', value: 'projects_sources_list' },
-        { label: 'folders_sources_list', value: 'folders_sources_list' }
+        { label: 'projects_sources_list', value: 'projects_sources_list' }
     ]}
 >
 <TabItem value="organizations_sources_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="canonicalName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="folders_sources_list">
 
 <table>
 <thead>
@@ -143,40 +177,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_sources_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="canonicalName" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 </Tabs>
 
 ## Methods
@@ -202,24 +202,24 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
+    <td><a href="#folders_sources_list"><CopyableCode code="folders_sources_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_sources_list"><CopyableCode code="organizations_sources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
     <td><a href="#projects_sources_list"><CopyableCode code="projects_sources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_sources_list"><CopyableCode code="folders_sources_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -296,9 +296,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="organizations_sources_get"
     values={[
         { label: 'organizations_sources_get', value: 'organizations_sources_get' },
+        { label: 'folders_sources_list', value: 'folders_sources_list' },
         { label: 'organizations_sources_list', value: 'organizations_sources_list' },
-        { label: 'projects_sources_list', value: 'projects_sources_list' },
-        { label: 'folders_sources_list', value: 'folders_sources_list' }
+        { label: 'projects_sources_list', value: 'projects_sources_list' }
     ]}
 >
 <TabItem value="organizations_sources_get">
@@ -317,6 +317,23 @@ AND sourcesId = '{{ sourcesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="folders_sources_list">
+
+Successful response
+
+```sql
+SELECT
+name,
+canonicalName,
+description,
+displayName
+FROM google.securitycenter.sources
+WHERE foldersId = '{{ foldersId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_sources_list">
 
 Successful response
@@ -329,8 +346,8 @@ description,
 displayName
 FROM google.securitycenter.sources
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -346,25 +363,8 @@ description,
 displayName
 FROM google.securitycenter.sources
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="folders_sources_list">
-
-Successful response
-
-```sql
-SELECT
-name,
-canonicalName,
-description,
-displayName
-FROM google.securitycenter.sources
-WHERE foldersId = '{{ foldersId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -386,17 +386,17 @@ No description available.
 
 ```sql
 INSERT INTO google.securitycenter.sources (
-data__name,
 data__canonicalName,
-data__displayName,
 data__description,
+data__displayName,
+data__name,
 organizationsId
 )
 SELECT 
-'{{ name }}',
 '{{ canonicalName }}',
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -414,14 +414,14 @@ displayName
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the sources resource.
-    - name: name
-      value: "{{ name }}"
     - name: canonicalName
       value: "{{ canonicalName }}"
-    - name: displayName
-      value: "{{ displayName }}"
     - name: description
       value: "{{ description }}"
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: name
+      value: "{{ name }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -443,10 +443,10 @@ No description available.
 ```sql
 UPDATE google.securitycenter.sources
 SET 
-data__name = '{{ name }}',
 data__canonicalName = '{{ canonicalName }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required

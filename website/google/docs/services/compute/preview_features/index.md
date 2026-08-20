@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Returns the details of the given PreviewFeature.</td>
 </tr>
 <tr>
@@ -289,11 +289,11 @@ unreachables,
 warning
 FROM google.compute.preview_features
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -315,9 +315,9 @@ Patches the given PreviewFeature. This method is used to enable or disable<br />
 ```sql
 UPDATE google.compute.preview_features
 SET 
+data__activationStatus = '{{ activationStatus }}',
 data__name = '{{ name }}',
-data__rolloutOperation = '{{ rolloutOperation }}',
-data__activationStatus = '{{ activationStatus }}'
+data__rolloutOperation = '{{ rolloutOperation }}'
 WHERE 
 project = '{{ project }}' --required
 AND previewFeature = '{{ previewFeature }}' --required

@@ -122,10 +122,17 @@ The following methods are available for this resource:
     <td>Gets an environment. Returns NOT_FOUND if the environment does not exist.</td>
 </tr>
 <tr>
+    <td><a href="#authorize"><CopyableCode code="authorize" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>Sends OAuth credentials to a running environment on behalf of a user. When this completes, the environment will be authorized to run various Google Cloud command line tools without requiring the user to manually authenticate.</td>
+</tr>
+<tr>
     <td><a href="#generate_access_token"><CopyableCode code="generate_access_token" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-ttl"><code>ttl</code></a>, <a href="#parameter-expireTime"><code>expireTime</code></a></td>
+    <td><a href="#parameter-expireTime"><code>expireTime</code></a>, <a href="#parameter-ttl"><code>ttl</code></a></td>
     <td>Generates an access token for the user's environment.</td>
 </tr>
 <tr>
@@ -134,13 +141,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
     <td></td>
     <td>Starts an existing environment, allowing clients to connect to it. The returned operation will contain an instance of StartEnvironmentMetadata in its metadata field. Users can wait for the environment to start by polling this operation via GetOperation. Once the environment has finished starting and is ready to accept connections, the operation will contain a StartEnvironmentResponse in its response field.</td>
-</tr>
-<tr>
-    <td><a href="#authorize"><CopyableCode code="authorize" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>Sends OAuth credentials to a running environment on behalf of a user. When this completes, the environment will be authorized to run various Google Cloud command line tools without requiring the user to manually authenticate.</td>
 </tr>
 </tbody>
 </table>
@@ -216,13 +216,30 @@ AND environmentsId = '{{ environmentsId }}' -- required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="generate_access_token"
+    defaultValue="authorize"
     values={[
+        { label: 'authorize', value: 'authorize' },
         { label: 'generate_access_token', value: 'generate_access_token' },
-        { label: 'start', value: 'start' },
-        { label: 'authorize', value: 'authorize' }
+        { label: 'start', value: 'start' }
     ]}
 >
+<TabItem value="authorize">
+
+Sends OAuth credentials to a running environment on behalf of a user. When this completes, the environment will be authorized to run various Google Cloud command line tools without requiring the user to manually authenticate.
+
+```sql
+EXEC google.cloudshell.environments.authorize 
+@usersId='{{ usersId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required 
+@@json=
+'{
+"accessToken": "{{ accessToken }}", 
+"expireTime": "{{ expireTime }}", 
+"idToken": "{{ idToken }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="generate_access_token">
 
 Generates an access token for the user's environment.
@@ -231,8 +248,8 @@ Generates an access token for the user's environment.
 EXEC google.cloudshell.environments.generate_access_token 
 @usersId='{{ usersId }}' --required, 
 @environmentsId='{{ environmentsId }}' --required, 
-@ttl='{{ ttl }}', 
-@expireTime='{{ expireTime }}'
+@expireTime='{{ expireTime }}', 
+@ttl='{{ ttl }}'
 ;
 ```
 </TabItem>
@@ -248,23 +265,6 @@ EXEC google.cloudshell.environments.start
 '{
 "accessToken": "{{ accessToken }}", 
 "publicKeys": "{{ publicKeys }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="authorize">
-
-Sends OAuth credentials to a running environment on behalf of a user. When this completes, the environment will be authorized to run various Google Cloud command line tools without requiring the user to manually authenticate.
-
-```sql
-EXEC google.cloudshell.environments.authorize 
-@usersId='{{ usersId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required 
-@@json=
-'{
-"accessToken": "{{ accessToken }}", 
-"expireTime": "{{ expireTime }}", 
-"idToken": "{{ idToken }}"
 }'
 ;
 ```

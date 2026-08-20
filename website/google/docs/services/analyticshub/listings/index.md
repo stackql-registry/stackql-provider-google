@@ -486,44 +486,44 @@ Creates a new listing.
 
 ```sql
 INSERT INTO google.analyticshub.listings (
-data__discoveryType,
-data__categories,
-data__dataProvider,
-data__publisher,
-data__icon,
-data__pubsubTopic,
-data__storedProcedureConfig,
-data__logLinkedDatasetQueryUserEmail,
-data__restrictedExportConfig,
-data__primaryContact,
-data__displayName,
-data__documentation,
-data__description,
-data__requestAccess,
 data__allowOnlyMetadataSharing,
 data__bigqueryDataset,
+data__categories,
+data__dataProvider,
+data__description,
+data__discoveryType,
+data__displayName,
+data__documentation,
+data__icon,
+data__logLinkedDatasetQueryUserEmail,
+data__primaryContact,
+data__publisher,
+data__pubsubTopic,
+data__requestAccess,
+data__restrictedExportConfig,
+data__storedProcedureConfig,
 projectsId,
 locationsId,
 dataExchangesId,
 listingId
 )
 SELECT 
-'{{ discoveryType }}',
-'{{ categories }}',
-'{{ dataProvider }}',
-'{{ publisher }}',
-'{{ icon }}',
-'{{ pubsubTopic }}',
-'{{ storedProcedureConfig }}',
-{{ logLinkedDatasetQueryUserEmail }},
-'{{ restrictedExportConfig }}',
-'{{ primaryContact }}',
-'{{ displayName }}',
-'{{ documentation }}',
-'{{ description }}',
-'{{ requestAccess }}',
 {{ allowOnlyMetadataSharing }},
 '{{ bigqueryDataset }}',
+'{{ categories }}',
+'{{ dataProvider }}',
+'{{ description }}',
+'{{ discoveryType }}',
+'{{ displayName }}',
+'{{ documentation }}',
+'{{ icon }}',
+{{ logLinkedDatasetQueryUserEmail }},
+'{{ primaryContact }}',
+'{{ publisher }}',
+'{{ pubsubTopic }}',
+'{{ requestAccess }}',
+'{{ restrictedExportConfig }}',
+'{{ storedProcedureConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataExchangesId }}',
@@ -566,11 +566,28 @@ storedProcedureConfig
     - name: dataExchangesId
       value: "{{ dataExchangesId }}"
       description: Required parameter for the listings resource.
-    - name: discoveryType
-      value: "{{ discoveryType }}"
+    - name: allowOnlyMetadataSharing
+      value: {{ allowOnlyMetadataSharing }}
       description: |
-        Optional. Type of discovery of the listing on the discovery page.
-      valid_values: ['DISCOVERY_TYPE_UNSPECIFIED', 'DISCOVERY_TYPE_PRIVATE', 'DISCOVERY_TYPE_PUBLIC']
+        Optional. If true, the listing is only available to get the resource metadata. Listing is non subscribable.
+    - name: bigqueryDataset
+      description: |
+        Shared dataset i.e. BigQuery dataset source.
+      value:
+        dataset: "{{ dataset }}"
+        effectiveReplicas:
+          - location: "{{ location }}"
+            primaryState: "{{ primaryState }}"
+            replicaState: "{{ replicaState }}"
+        replicaLocations:
+          - "{{ replicaLocations }}"
+        restrictedExportPolicy:
+          enabled: {{ enabled }}
+          restrictDirectTableAccess: {{ restrictDirectTableAccess }}
+          restrictQueryResult: {{ restrictQueryResult }}
+        selectedResources:
+          - routine: "{{ routine }}"
+            table: "{{ table }}"
     - name: categories
       value:
         - "{{ categories }}"
@@ -582,45 +599,15 @@ storedProcedureConfig
       value:
         name: "{{ name }}"
         primaryContact: "{{ primaryContact }}"
-    - name: publisher
+    - name: description
+      value: "{{ description }}"
       description: |
-        Optional. Details of the publisher who owns the listing and who can share the source data.
-      value:
-        name: "{{ name }}"
-        primaryContact: "{{ primaryContact }}"
-    - name: icon
-      value: "{{ icon }}"
+        Optional. Short description of the listing. The description must not contain Unicode non-characters and C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
+    - name: discoveryType
+      value: "{{ discoveryType }}"
       description: |
-        Optional. Base64 encoded image representing the listing. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the contents of the field are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.
-    - name: pubsubTopic
-      description: |
-        Pub/Sub topic source.
-      value:
-        topic: "{{ topic }}"
-        dataAffinityRegions:
-          - "{{ dataAffinityRegions }}"
-    - name: storedProcedureConfig
-      description: |
-        Optional. If set, stored procedure configuration will be propagated and enforced on the linked dataset.
-      value:
-        enabled: {{ enabled }}
-        allowedStoredProcedureTypes:
-          - "{{ allowedStoredProcedureTypes }}"
-    - name: logLinkedDatasetQueryUserEmail
-      value: {{ logLinkedDatasetQueryUserEmail }}
-      description: |
-        Optional. By default, false. If true, the Listing has an email sharing mandate enabled.
-    - name: restrictedExportConfig
-      description: |
-        Optional. If set, restricted export configuration will be propagated and enforced on the linked dataset.
-      value:
-        enabled: {{ enabled }}
-        restrictDirectTableAccess: {{ restrictDirectTableAccess }}
-        restrictQueryResult: {{ restrictQueryResult }}
-    - name: primaryContact
-      value: "{{ primaryContact }}"
-      description: |
-        Optional. Email or URL of the primary point of contact of the listing. Max Length: 1000 bytes.
+        Optional. Type of discovery of the listing on the discovery page.
+      valid_values: ['DISCOVERY_TYPE_UNSPECIFIED', 'DISCOVERY_TYPE_PRIVATE', 'DISCOVERY_TYPE_PUBLIC']
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -629,36 +616,49 @@ storedProcedureConfig
       value: "{{ documentation }}"
       description: |
         Optional. Documentation describing the listing.
-    - name: description
-      value: "{{ description }}"
+    - name: icon
+      value: "{{ icon }}"
       description: |
-        Optional. Short description of the listing. The description must not contain Unicode non-characters and C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
+        Optional. Base64 encoded image representing the listing. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the contents of the field are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.
+    - name: logLinkedDatasetQueryUserEmail
+      value: {{ logLinkedDatasetQueryUserEmail }}
+      description: |
+        Optional. By default, false. If true, the Listing has an email sharing mandate enabled.
+    - name: primaryContact
+      value: "{{ primaryContact }}"
+      description: |
+        Optional. Email or URL of the primary point of contact of the listing. Max Length: 1000 bytes.
+    - name: publisher
+      description: |
+        Optional. Details of the publisher who owns the listing and who can share the source data.
+      value:
+        name: "{{ name }}"
+        primaryContact: "{{ primaryContact }}"
+    - name: pubsubTopic
+      description: |
+        Pub/Sub topic source.
+      value:
+        dataAffinityRegions:
+          - "{{ dataAffinityRegions }}"
+        topic: "{{ topic }}"
     - name: requestAccess
       value: "{{ requestAccess }}"
       description: |
         Optional. Email or URL of the request access of the listing. Subscribers can use this reference to request access. Max Length: 1000 bytes.
-    - name: allowOnlyMetadataSharing
-      value: {{ allowOnlyMetadataSharing }}
+    - name: restrictedExportConfig
       description: |
-        Optional. If true, the listing is only available to get the resource metadata. Listing is non subscribable.
-    - name: bigqueryDataset
-      description: |
-        Shared dataset i.e. BigQuery dataset source.
+        Optional. If set, restricted export configuration will be propagated and enforced on the linked dataset.
       value:
-        replicaLocations:
-          - "{{ replicaLocations }}"
-        effectiveReplicas:
-          - primaryState: "{{ primaryState }}"
-            location: "{{ location }}"
-            replicaState: "{{ replicaState }}"
-        restrictedExportPolicy:
-          restrictQueryResult: {{ restrictQueryResult }}
-          enabled: {{ enabled }}
-          restrictDirectTableAccess: {{ restrictDirectTableAccess }}
-        dataset: "{{ dataset }}"
-        selectedResources:
-          - table: "{{ table }}"
-            routine: "{{ routine }}"
+        enabled: {{ enabled }}
+        restrictDirectTableAccess: {{ restrictDirectTableAccess }}
+        restrictQueryResult: {{ restrictQueryResult }}
+    - name: storedProcedureConfig
+      description: |
+        Optional. If set, stored procedure configuration will be propagated and enforced on the linked dataset.
+      value:
+        allowedStoredProcedureTypes:
+          - "{{ allowedStoredProcedureTypes }}"
+        enabled: {{ enabled }}
     - name: listingId
       value: "{{ listingId }}"
 `}</CodeBlock>
@@ -682,22 +682,22 @@ Updates an existing listing.
 ```sql
 UPDATE google.analyticshub.listings
 SET 
-data__discoveryType = '{{ discoveryType }}',
+data__allowOnlyMetadataSharing = {{ allowOnlyMetadataSharing }},
+data__bigqueryDataset = '{{ bigqueryDataset }}',
 data__categories = '{{ categories }}',
 data__dataProvider = '{{ dataProvider }}',
-data__publisher = '{{ publisher }}',
-data__icon = '{{ icon }}',
-data__pubsubTopic = '{{ pubsubTopic }}',
-data__storedProcedureConfig = '{{ storedProcedureConfig }}',
-data__logLinkedDatasetQueryUserEmail = {{ logLinkedDatasetQueryUserEmail }},
-data__restrictedExportConfig = '{{ restrictedExportConfig }}',
-data__primaryContact = '{{ primaryContact }}',
+data__description = '{{ description }}',
+data__discoveryType = '{{ discoveryType }}',
 data__displayName = '{{ displayName }}',
 data__documentation = '{{ documentation }}',
-data__description = '{{ description }}',
+data__icon = '{{ icon }}',
+data__logLinkedDatasetQueryUserEmail = {{ logLinkedDatasetQueryUserEmail }},
+data__primaryContact = '{{ primaryContact }}',
+data__publisher = '{{ publisher }}',
+data__pubsubTopic = '{{ pubsubTopic }}',
 data__requestAccess = '{{ requestAccess }}',
-data__allowOnlyMetadataSharing = {{ allowOnlyMetadataSharing }},
-data__bigqueryDataset = '{{ bigqueryDataset }}'
+data__restrictedExportConfig = '{{ restrictedExportConfig }}',
+data__storedProcedureConfig = '{{ storedProcedureConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

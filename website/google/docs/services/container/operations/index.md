@@ -33,103 +33,14 @@ Creates, updates, deletes, gets or lists an <code>operations</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_zones_operations_get"
+    defaultValue="projects_locations_operations_get"
     values={[
-        { label: 'projects_zones_operations_get', value: 'projects_zones_operations_get' },
         { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
-        { label: 'projects_zones_operations_list', value: 'projects_zones_operations_list' },
-        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' }
+        { label: 'projects_zones_operations_get', value: 'projects_zones_operations_get' },
+        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
+        { label: 'projects_zones_operations_list', value: 'projects_zones_operations_list' }
     ]}
 >
-<TabItem value="projects_zones_operations_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The server-assigned ID for the operation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="clusterConditions" /></td>
-    <td><code>array</code></td>
-    <td>Which conditions caused the current cluster state. Deprecated. Use field error instead.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="detail" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Detailed operation progress, if available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="endTime" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The time the operation completed, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure. (id: Status)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="location" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) or [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nodepoolConditions" /></td>
-    <td><code>array</code></td>
-    <td>Which conditions caused the current node pool state. Deprecated. Use field error instead.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="operationType" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The operation type. (TYPE_UNSPECIFIED, CREATE_CLUSTER, DELETE_CLUSTER, UPGRADE_MASTER, UPGRADE_NODES, REPAIR_CLUSTER, UPDATE_CLUSTER, CREATE_NODE_POOL, DELETE_NODE_POOL, SET_NODE_POOL_MANAGEMENT, AUTO_REPAIR_NODES, AUTO_UPGRADE_NODES, SET_LABELS, SET_MASTER_AUTH, SET_NODE_POOL_SIZE, SET_NETWORK_POLICY, SET_MAINTENANCE_POLICY, RESIZE_CLUSTER, FLEET_FEATURE_UPGRADE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="progress" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Progress information for an operation. (id: OperationProgress)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selfLink" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-defined URI for the operation. Example: `https://container.googleapis.com/v1alpha1/projects/123/locations/us-central1/operations/operation-123`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="startTime" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The time the operation started, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="status" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The current status of the operation. (STATUS_UNSPECIFIED, PENDING, RUNNING, DONE, ABORTING)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="statusMessage" /></td>
-    <td><code>string</code></td>
-    <td>Output only. If an error has occurred, a textual description of the error. Deprecated. Use the field error instead.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="targetLink" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-defined URI for the target of the operation. The format of this is a URI to the resource being modified (such as a cluster, node pool, or node). For node pool repairs, there may be multiple nodes being repaired, but only one will be the target. Examples: - ## `https://container.googleapis.com/v1/projects/123/locations/us-central1/clusters/my-cluster` ## `https://container.googleapis.com/v1/projects/123/zones/us-central1-c/clusters/my-cluster/nodePools/my-np` `https://container.googleapis.com/v1/projects/123/zones/us-central1-c/clusters/my-cluster/nodePools/my-np/node/my-node`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="zone" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the operation is taking place. This field is deprecated, use location instead.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="projects_locations_operations_get">
 
 <table>
@@ -219,7 +130,96 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_zones_operations_list">
+<TabItem value="projects_zones_operations_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The server-assigned ID for the operation.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clusterConditions" /></td>
+    <td><code>array</code></td>
+    <td>Which conditions caused the current cluster state. Deprecated. Use field error instead.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="detail" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Detailed operation progress, if available.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endTime" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The time the operation completed, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="error" /></td>
+    <td><code>object</code></td>
+    <td>The error result of the operation in case of failure. (id: Status)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="location" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) or [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nodepoolConditions" /></td>
+    <td><code>array</code></td>
+    <td>Which conditions caused the current node pool state. Deprecated. Use field error instead.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="operationType" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The operation type. (TYPE_UNSPECIFIED, CREATE_CLUSTER, DELETE_CLUSTER, UPGRADE_MASTER, UPGRADE_NODES, REPAIR_CLUSTER, UPDATE_CLUSTER, CREATE_NODE_POOL, DELETE_NODE_POOL, SET_NODE_POOL_MANAGEMENT, AUTO_REPAIR_NODES, AUTO_UPGRADE_NODES, SET_LABELS, SET_MASTER_AUTH, SET_NODE_POOL_SIZE, SET_NETWORK_POLICY, SET_MAINTENANCE_POLICY, RESIZE_CLUSTER, FLEET_FEATURE_UPGRADE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="progress" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Progress information for an operation. (id: OperationProgress)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Server-defined URI for the operation. Example: `https://container.googleapis.com/v1alpha1/projects/123/locations/us-central1/operations/operation-123`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="startTime" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The time the operation started, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="status" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The current status of the operation. (STATUS_UNSPECIFIED, PENDING, RUNNING, DONE, ABORTING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="statusMessage" /></td>
+    <td><code>string</code></td>
+    <td>Output only. If an error has occurred, a textual description of the error. Deprecated. Use the field error instead.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targetLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Server-defined URI for the target of the operation. The format of this is a URI to the resource being modified (such as a cluster, node pool, or node). For node pool repairs, there may be multiple nodes being repaired, but only one will be the target. Examples: - ## `https://container.googleapis.com/v1/projects/123/locations/us-central1/clusters/my-cluster` ## `https://container.googleapis.com/v1/projects/123/zones/us-central1-c/clusters/my-cluster/nodePools/my-np` `https://container.googleapis.com/v1/projects/123/zones/us-central1-c/clusters/my-cluster/nodePools/my-np/node/my-node`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="zone" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the operation is taking place. This field is deprecated, use location instead.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_operations_list">
 
 <table>
 <thead>
@@ -243,7 +243,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_operations_list">
+<TabItem value="projects_zones_operations_list">
 
 <table>
 <thead>
@@ -285,25 +285,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#projects_locations_operations_get"><CopyableCode code="projects_locations_operations_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-operationId"><code>operationId</code></a>, <a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
+    <td>Gets the specified operation.</td>
+</tr>
+<tr>
     <td><a href="#projects_zones_operations_get"><CopyableCode code="projects_zones_operations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-operationId"><code>operationId</code></a></td>
     <td><a href="#parameter-name"><code>name</code></a></td>
     <td>Gets the specified operation.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_operations_get"><CopyableCode code="projects_locations_operations_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
-    <td><a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-operationId"><code>operationId</code></a></td>
-    <td>Gets the specified operation.</td>
-</tr>
-<tr>
-    <td><a href="#projects_zones_operations_list"><CopyableCode code="projects_zones_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-parent"><code>parent</code></a></td>
-    <td>Lists all operations in a project in a specific zone or all zones.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_operations_list"><CopyableCode code="projects_locations_operations_list" /></a></td>
@@ -313,16 +306,23 @@ The following methods are available for this resource:
     <td>Lists all operations in a project in a specific zone or all zones.</td>
 </tr>
 <tr>
-    <td><a href="#projects_zones_operations_cancel"><CopyableCode code="projects_zones_operations_cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-operationId"><code>operationId</code></a></td>
-    <td></td>
-    <td>Cancels the specified operation.</td>
+    <td><a href="#projects_zones_operations_list"><CopyableCode code="projects_zones_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
+    <td><a href="#parameter-parent"><code>parent</code></a></td>
+    <td>Lists all operations in a project in a specific zone or all zones.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_operations_cancel"><CopyableCode code="projects_locations_operations_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td></td>
+    <td>Cancels the specified operation.</td>
+</tr>
+<tr>
+    <td><a href="#projects_zones_operations_cancel"><CopyableCode code="projects_zones_operations_cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-operationId"><code>operationId</code></a></td>
     <td></td>
     <td>Cancels the specified operation.</td>
 </tr>
@@ -403,14 +403,45 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_zones_operations_get"
+    defaultValue="projects_locations_operations_get"
     values={[
-        { label: 'projects_zones_operations_get', value: 'projects_zones_operations_get' },
         { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
-        { label: 'projects_zones_operations_list', value: 'projects_zones_operations_list' },
-        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' }
+        { label: 'projects_zones_operations_get', value: 'projects_zones_operations_get' },
+        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
+        { label: 'projects_zones_operations_list', value: 'projects_zones_operations_list' }
     ]}
 >
+<TabItem value="projects_locations_operations_get">
+
+Gets the specified operation.
+
+```sql
+SELECT
+name,
+clusterConditions,
+detail,
+endTime,
+error,
+location,
+nodepoolConditions,
+operationType,
+progress,
+selfLink,
+startTime,
+status,
+statusMessage,
+targetLink,
+zone
+FROM google.container.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND operationsId = '{{ operationsId }}' -- required
+AND operationId = '{{ operationId }}'
+AND projectId = '{{ projectId }}'
+AND zone = '{{ zone }}'
+;
+```
+</TabItem>
 <TabItem value="projects_zones_operations_get">
 
 Gets the specified operation.
@@ -440,34 +471,19 @@ AND name = '{{ name }}'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_operations_get">
+<TabItem value="projects_locations_operations_list">
 
-Gets the specified operation.
+Lists all operations in a project in a specific zone or all zones.
 
 ```sql
 SELECT
-name,
-clusterConditions,
-detail,
-endTime,
-error,
-location,
-nodepoolConditions,
-operationType,
-progress,
-selfLink,
-startTime,
-status,
-statusMessage,
-targetLink,
-zone
+missingZones,
+operations
 FROM google.container.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND operationsId = '{{ operationsId }}' -- required
-AND zone = '{{ zone }}'
 AND projectId = '{{ projectId }}'
-AND operationId = '{{ operationId }}'
+AND zone = '{{ zone }}'
 ;
 ```
 </TabItem>
@@ -486,53 +502,18 @@ AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_operations_list">
-
-Lists all operations in a project in a specific zone or all zones.
-
-```sql
-SELECT
-missingZones,
-operations
-FROM google.container.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND projectId = '{{ projectId }}'
-AND zone = '{{ zone }}'
-;
-```
-</TabItem>
 </Tabs>
 
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_zones_operations_cancel"
+    defaultValue="projects_locations_operations_cancel"
     values={[
-        { label: 'projects_zones_operations_cancel', value: 'projects_zones_operations_cancel' },
-        { label: 'projects_locations_operations_cancel', value: 'projects_locations_operations_cancel' }
+        { label: 'projects_locations_operations_cancel', value: 'projects_locations_operations_cancel' },
+        { label: 'projects_zones_operations_cancel', value: 'projects_zones_operations_cancel' }
     ]}
 >
-<TabItem value="projects_zones_operations_cancel">
-
-Cancels the specified operation.
-
-```sql
-EXEC google.container.operations.projects_zones_operations_cancel 
-@projectId='{{ projectId }}' --required, 
-@zone='{{ zone }}' --required, 
-@operationId='{{ operationId }}' --required 
-@@json=
-'{
-"zone": "{{ zone }}", 
-"projectId": "{{ projectId }}", 
-"operationId": "{{ operationId }}", 
-"name": "{{ name }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_operations_cancel">
 
 Cancels the specified operation.
@@ -544,10 +525,29 @@ EXEC google.container.operations.projects_locations_operations_cancel
 @operationsId='{{ operationsId }}' --required 
 @@json=
 '{
-"zone": "{{ zone }}", 
-"projectId": "{{ projectId }}", 
+"name": "{{ name }}", 
 "operationId": "{{ operationId }}", 
-"name": "{{ name }}"
+"projectId": "{{ projectId }}", 
+"zone": "{{ zone }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_zones_operations_cancel">
+
+Cancels the specified operation.
+
+```sql
+EXEC google.container.operations.projects_zones_operations_cancel 
+@projectId='{{ projectId }}' --required, 
+@zone='{{ zone }}' --required, 
+@operationId='{{ operationId }}' --required 
+@@json=
+'{
+"name": "{{ name }}", 
+"operationId": "{{ operationId }}", 
+"projectId": "{{ projectId }}", 
+"zone": "{{ zone }}"
 }'
 ;
 ```

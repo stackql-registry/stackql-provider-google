@@ -129,6 +129,71 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Resource name of the data product. Format: projects/&#123;project_id_or_number&#125;/locations/&#123;location_id&#125;/dataProducts/&#123;data_product_id&#125;.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="accessApprovalConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for access approval for the data product. (id: GoogleCloudDataplexV1DataProductAccessApprovalConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="accessGroups" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data product access groups by access group id as key. If data product is used only for packaging data assets, then access groups may be empty. However, if a data product is used for sharing data assets, then at least one access group must be specified.Example: &#123; "analyst": &#123; "id": "analyst", "displayName": "Analyst", "description": "Access group for analysts", "principal": &#123; "googleGroup": "analysts@example.com" &#125; &#125; &#125; </td>
+</tr>
+<tr>
+    <td><CopyableCode code="assetCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of data assets associated with this data product.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the data product was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Description of the data product.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Required. User-friendly display name of the data product.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="icon" /></td>
+    <td><code>string (byte)</code></td>
+    <td>Optional. Base64 encoded image representing the data product. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the content of the fields are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. User-defined labels for the data product.Example: &#123; "environment": "production", "billing": "marketing-department" &#125; </td>
+</tr>
+<tr>
+    <td><CopyableCode code="ownerEmails" /></td>
+    <td><code>array</code></td>
+    <td>Required. Emails of the data product owners.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. System generated unique ID for the data product. This ID will be different if the data product is deleted and re-created with the same name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the data product was last updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -160,14 +225,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_products_list"><CopyableCode code="projects_locations_data_products_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists data products for a given project.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_products_create"><CopyableCode code="projects_locations_data_products_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-dataProductId"><code>dataProductId</code></a></td>
+    <td><a href="#parameter-dataProductId"><code>dataProductId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a data product.</td>
 </tr>
 <tr>
@@ -181,7 +246,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_products_delete"><CopyableCode code="projects_locations_data_products_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataProductsId"><code>dataProductsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a data product. The deletion will fail if the data product is not empty (i.e. contains at least one data asset).</td>
 </tr>
 <tr>
@@ -306,14 +371,26 @@ Lists data products for a given project.
 
 ```sql
 SELECT
-*
+name,
+accessApprovalConfig,
+accessGroups,
+assetCount,
+createTime,
+description,
+displayName,
+etag,
+icon,
+labels,
+ownerEmails,
+uid,
+updateTime
 FROM google.dataplex.data_products
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -335,34 +412,34 @@ Creates a data product.
 
 ```sql
 INSERT INTO google.dataplex.data_products (
-data__accessGroups,
-data__labels,
-data__ownerEmails,
 data__accessApprovalConfig,
+data__accessGroups,
 data__description,
+data__displayName,
 data__etag,
 data__icon,
-data__displayName,
+data__labels,
 data__name,
+data__ownerEmails,
 projectsId,
 locationsId,
-validateOnly,
-dataProductId
+dataProductId,
+validateOnly
 )
 SELECT 
-'{{ accessGroups }}',
-'{{ labels }}',
-'{{ ownerEmails }}',
 '{{ accessApprovalConfig }}',
+'{{ accessGroups }}',
 '{{ description }}',
+'{{ displayName }}',
 '{{ etag }}',
 '{{ icon }}',
-'{{ displayName }}',
+'{{ labels }}',
 '{{ name }}',
+'{{ ownerEmails }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ dataProductId }}'
+'{{ dataProductId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -383,29 +460,24 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the data_products resource.
-    - name: accessGroups
-      value: "{{ accessGroups }}"
-      description: |
-        Optional. Data product access groups by access group id as key. If data product is used only for packaging data assets, then access groups may be empty. However, if a data product is used for sharing data assets, then at least one access group must be specified.Example: { "analyst": { "id": "analyst", "displayName": "Analyst", "description": "Access group for analysts", "principal": { "googleGroup": "analysts@example.com" } } }
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels for the data product.Example: { "environment": "production", "billing": "marketing-department" }
-    - name: ownerEmails
-      value:
-        - "{{ ownerEmails }}"
-      description: |
-        Required. Emails of the data product owners.
     - name: accessApprovalConfig
       description: |
         Optional. Configuration for access approval for the data product.
       value:
         approverEmails:
           - "{{ approverEmails }}"
+    - name: accessGroups
+      value: "{{ accessGroups }}"
+      description: |
+        Optional. Data product access groups by access group id as key. If data product is used only for packaging data assets, then access groups may be empty. However, if a data product is used for sharing data assets, then at least one access group must be specified.Example: { "analyst": { "id": "analyst", "displayName": "Analyst", "description": "Access group for analysts", "principal": { "googleGroup": "analysts@example.com" } } }
     - name: description
       value: "{{ description }}"
       description: |
         Optional. Description of the data product.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. User-friendly display name of the data product.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -414,18 +486,23 @@ response
       value: "{{ icon }}"
       description: |
         Optional. Base64 encoded image representing the data product. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the content of the fields are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Required. User-friendly display name of the data product.
+        Optional. User-defined labels for the data product.Example: { "environment": "production", "billing": "marketing-department" }
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. Resource name of the data product. Format: projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_product_id}.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: ownerEmails
+      value:
+        - "{{ ownerEmails }}"
+      description: |
+        Required. Emails of the data product owners.
     - name: dataProductId
       value: "{{ dataProductId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -447,15 +524,15 @@ Updates a data product.
 ```sql
 UPDATE google.dataplex.data_products
 SET 
-data__accessGroups = '{{ accessGroups }}',
-data__labels = '{{ labels }}',
-data__ownerEmails = '{{ ownerEmails }}',
 data__accessApprovalConfig = '{{ accessApprovalConfig }}',
+data__accessGroups = '{{ accessGroups }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__etag = '{{ etag }}',
 data__icon = '{{ icon }}',
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__ownerEmails = '{{ ownerEmails }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -490,8 +567,8 @@ DELETE FROM google.dataplex.data_products
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND dataProductsId = '{{ dataProductsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -517,8 +594,8 @@ EXEC google.dataplex.data_products.projects_locations_data_products_request_acce
 @dataProductsId='{{ dataProductsId }}' --required 
 @@json=
 '{
-"validateOnly": {{ validateOnly }}, 
-"changeRequest": "{{ changeRequest }}"
+"changeRequest": "{{ changeRequest }}", 
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```

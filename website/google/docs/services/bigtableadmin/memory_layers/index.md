@@ -49,26 +49,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. Name of the memory layer. This is always: "projects/&#123;project&#125;/instances/&#123;instance&#125;/clusters/&#123;cluster&#125;/memoryLayer".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The etag for this memory layer. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="memoryConfig" /></td>
-    <td><code>object</code></td>
-    <td>The configuration of this memory layer. Set an empty `memory_config` to enable the memory layer. Unset this to disable the memory layer. (id: GoogleBigtableAdminV2MemoryLayerMemoryConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The current state of the memory layer. (STATE_NOT_KNOWN, READY, ENABLING, RESIZING, DISABLED)</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -154,10 +134,7 @@ Lists information about memory layers.
 
 ```sql
 SELECT
-name,
-etag,
-memoryConfig,
-state
+*
 FROM google.bigtableadmin.memory_layers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required

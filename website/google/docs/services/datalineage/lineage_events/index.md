@@ -282,10 +282,10 @@ Creates a new lineage event.
 
 ```sql
 INSERT INTO google.datalineage.lineage_events (
-data__name,
-data__links,
-data__startTime,
 data__endTime,
+data__links,
+data__name,
+data__startTime,
 projectsId,
 locationsId,
 processesId,
@@ -293,10 +293,10 @@ runsId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ links }}',
-'{{ startTime }}',
 '{{ endTime }}',
+'{{ links }}',
+'{{ name }}',
+'{{ startTime }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ processesId }}',
@@ -327,32 +327,32 @@ startTime
     - name: runsId
       value: "{{ runsId }}"
       description: Required parameter for the lineage_events resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The resource name of the lineage event. Format: \`projects/{project}/locations/{location}/processes/{process}/runs/{run}/lineageEvents/{lineage_event}\`. Can be specified or auto-assigned. {lineage_event} must be not longer than 200 characters and only contain characters in a set: \`a-zA-Z0-9_-:.\`
-    - name: links
-      description: |
-        Optional. List of source-target pairs. Can't contain more than 100 tuples.
-      value:
-        - source:
-            fullyQualifiedName: "{{ fullyQualifiedName }}"
-            field:
-              - "{{ field }}"
-          target:
-            fullyQualifiedName: "{{ fullyQualifiedName }}"
-            field:
-              - "{{ field }}"
-          dependencyInfo:
-            dependencyType: "{{ dependencyType }}"
-    - name: startTime
-      value: "{{ startTime }}"
-      description: |
-        Required. The beginning of the transformation which resulted in this lineage event. For streaming scenarios, it should be the beginning of the period from which the lineage is being reported.
     - name: endTime
       value: "{{ endTime }}"
       description: |
         Optional. The end of the transformation which resulted in this lineage event. For streaming scenarios, it should be the end of the period from which the lineage is being reported.
+    - name: links
+      description: |
+        Optional. List of source-target pairs. Can't contain more than 100 tuples.
+      value:
+        - dependencyInfo:
+            dependencyType: "{{ dependencyType }}"
+          source:
+            field:
+              - "{{ field }}"
+            fullyQualifiedName: "{{ fullyQualifiedName }}"
+          target:
+            field:
+              - "{{ field }}"
+            fullyQualifiedName: "{{ fullyQualifiedName }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the lineage event. Format: \`projects/{project}/locations/{location}/processes/{process}/runs/{run}/lineageEvents/{lineage_event}\`. Can be specified or auto-assigned. {lineage_event} must be not longer than 200 characters and only contain characters in a set: \`a-zA-Z0-9_-:.\`
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Required. The beginning of the transformation which resulted in this lineage event. For streaming scenarios, it should be the beginning of the period from which the lineage is being reported.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

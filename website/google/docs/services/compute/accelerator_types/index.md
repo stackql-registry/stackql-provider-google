@@ -87,6 +87,11 @@ The following fields are returned by `SELECT` queries:
     <td>[Output Only] Maximum number of accelerator cards allowed per instance.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="resourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Contains standard resource metadata for an AcceleratorType resource. It is populated for each instance of the AcceleratorType resource, and includes the api_version the instance was retrieved through, and its canonical resource_type name. (id: ResourceMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
     <td>Output only. [Output Only] Server-defined, fully qualified URL for this resource.</td>
@@ -190,6 +195,11 @@ The following fields are returned by `SELECT` queries:
     <td>[Output Only] Maximum number of accelerator cards allowed per instance.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="resourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Contains standard resource metadata for an AcceleratorType resource. It is populated for each instance of the AcceleratorType resource, and includes the api_version the instance was retrieved through, and its canonical resource_type name. (id: ResourceMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
     <td>Output only. [Output Only] Server-defined, fully qualified URL for this resource.</td>
@@ -230,14 +240,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of accelerator types that are available to the specified<br />project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of accelerator types.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 </tbody>
@@ -332,6 +342,7 @@ deprecated,
 description,
 kind,
 maximumCardsPerInstance,
+resourceMetadata,
 selfLink,
 zone
 FROM google.compute.accelerator_types
@@ -356,11 +367,11 @@ warning
 FROM google.compute.accelerator_types
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -377,17 +388,18 @@ deprecated,
 description,
 kind,
 maximumCardsPerInstance,
+resourceMetadata,
 selfLink,
 zone
 FROM google.compute.accelerator_types
 WHERE project = '{{ project }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>

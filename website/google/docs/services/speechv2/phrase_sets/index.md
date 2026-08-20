@@ -245,14 +245,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists PhraseSets.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-phraseSetId"><code>phraseSetId</code></a></td>
+    <td><a href="#parameter-phraseSetId"><code>phraseSetId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a PhraseSet.</td>
 </tr>
 <tr>
@@ -266,7 +266,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-phraseSetsId"><code>phraseSetsId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes the PhraseSet.</td>
 </tr>
 <tr>
@@ -411,9 +411,9 @@ updateTime
 FROM google.speechv2.phrase_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -435,24 +435,24 @@ Creates a PhraseSet.
 
 ```sql
 INSERT INTO google.speechv2.phrase_sets (
-data__displayName,
-data__phrases,
 data__annotations,
 data__boost,
+data__displayName,
+data__phrases,
 projectsId,
 locationsId,
-validateOnly,
-phraseSetId
+phraseSetId,
+validateOnly
 )
 SELECT 
-'{{ displayName }}',
-'{{ phrases }}',
 '{{ annotations }}',
 {{ boost }},
+'{{ displayName }}',
+'{{ phrases }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ phraseSetId }}'
+'{{ phraseSetId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -473,16 +473,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the phrase_sets resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        User-settable, human-readable name for the PhraseSet. Must be 63 characters or less.
-    - name: phrases
-      description: |
-        A list of word and phrases.
-      value:
-        - value: "{{ value }}"
-          boost: {{ boost }}
     - name: annotations
       value: "{{ annotations }}"
       description: |
@@ -491,10 +481,20 @@ response
       value: {{ boost }}
       description: |
         Hint Boost. Positive value will increase the probability that a specific phrase will be recognized over other similar sounding phrases. The higher the boost, the higher the chance of false positive recognition as well. Valid \`boost\` values are between 0 (exclusive) and 20. We recommend using a binary search approach to finding the optimal value for your use case as well as adding phrases both with and without boost to your requests.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User-settable, human-readable name for the PhraseSet. Must be 63 characters or less.
+    - name: phrases
+      description: |
+        A list of word and phrases.
+      value:
+        - boost: {{ boost }}
+          value: "{{ value }}"
     - name: phraseSetId
       value: "{{ phraseSetId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -516,10 +516,10 @@ Updates the PhraseSet.
 ```sql
 UPDATE google.speechv2.phrase_sets
 SET 
-data__displayName = '{{ displayName }}',
-data__phrases = '{{ phrases }}',
 data__annotations = '{{ annotations }}',
-data__boost = {{ boost }}
+data__boost = {{ boost }},
+data__displayName = '{{ displayName }}',
+data__phrases = '{{ phrases }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -555,8 +555,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND phraseSetsId = '{{ phraseSetsId }}' --required
 AND allowMissing = '{{ allowMissing }}'
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -582,9 +582,9 @@ EXEC google.speechv2.phrase_sets.undelete
 @phraseSetsId='{{ phraseSetsId }}' --required 
 @@json=
 '{
+"etag": "{{ etag }}", 
 "name": "{{ name }}", 
-"validateOnly": {{ validateOnly }}, 
-"etag": "{{ etag }}"
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```

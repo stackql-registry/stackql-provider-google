@@ -145,21 +145,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Users in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-userId"><code>userId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-userId"><code>userId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new User in a given project, location, and cluster.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a>, <a href="#parameter-usersId"><code>usersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single User.</td>
 </tr>
 <tr>
@@ -296,10 +296,10 @@ FROM google.alloydb.users
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -321,27 +321,27 @@ Creates a new User in a given project, location, and cluster.
 
 ```sql
 INSERT INTO google.alloydb.users (
-data__userType,
 data__databaseRoles,
-data__password,
 data__keepExtraRoles,
+data__password,
+data__userType,
 projectsId,
 locationsId,
 clustersId,
-userId,
 requestId,
+userId,
 validateOnly
 )
 SELECT 
-'{{ userType }}',
 '{{ databaseRoles }}',
-'{{ password }}',
 {{ keepExtraRoles }},
+'{{ password }}',
+'{{ userType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clustersId }}',
-'{{ userId }}',
 '{{ requestId }}',
+'{{ userId }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -366,28 +366,28 @@ userType
     - name: clustersId
       value: "{{ clustersId }}"
       description: Required parameter for the users resource.
-    - name: userType
-      value: "{{ userType }}"
-      description: |
-        Optional. Type of this user.
-      valid_values: ['USER_TYPE_UNSPECIFIED', 'ALLOYDB_BUILT_IN', 'ALLOYDB_IAM_USER']
     - name: databaseRoles
       value:
         - "{{ databaseRoles }}"
       description: |
         Optional. List of database roles this user has. The database role strings are subject to the PostgreSQL naming conventions.
-    - name: password
-      value: "{{ password }}"
-      description: |
-        Input only. Password for the user.
     - name: keepExtraRoles
       value: {{ keepExtraRoles }}
       description: |
         Input only. If the user already exists and it has additional roles, keep them granted.
-    - name: userId
-      value: "{{ userId }}"
+    - name: password
+      value: "{{ password }}"
+      description: |
+        Input only. Password for the user.
+    - name: userType
+      value: "{{ userType }}"
+      description: |
+        Optional. Type of this user.
+      valid_values: ['USER_TYPE_UNSPECIFIED', 'ALLOYDB_BUILT_IN', 'ALLOYDB_IAM_USER']
     - name: requestId
       value: "{{ requestId }}"
+    - name: userId
+      value: "{{ userId }}"
     - name: validateOnly
       value: {{ validateOnly }}
 `}</CodeBlock>
@@ -411,19 +411,19 @@ Updates the parameters of a single User.
 ```sql
 UPDATE google.alloydb.users
 SET 
-data__userType = '{{ userType }}',
 data__databaseRoles = '{{ databaseRoles }}',
+data__keepExtraRoles = {{ keepExtraRoles }},
 data__password = '{{ password }}',
-data__keepExtraRoles = {{ keepExtraRoles }}
+data__userType = '{{ userType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND clustersId = '{{ clustersId }}' --required
 AND usersId = '{{ usersId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
-AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
+AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 databaseRoles,

@@ -54,7 +54,7 @@ The following methods are available for this resource:
     <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-days"><code>days</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-plantsDescription"><code>plantsDescription</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a></td>
+    <td><a href="#parameter-days"><code>days</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-plantsDescription"><code>plantsDescription</code></a></td>
     <td>Returns up to 5 days of daily pollen information in more than 65 countries, up to 1km resolution.</td>
 </tr>
 </tbody>
@@ -127,11 +127,11 @@ Returns up to 5 days of daily pollen information in more than 65 countries, up t
 EXEC google.pollen.forecast.lookup 
 @days='{{ days }}', 
 @languageCode='{{ languageCode }}', 
-@pageToken='{{ pageToken }}', 
-@pageSize='{{ pageSize }}', 
-@plantsDescription={{ plantsDescription }}, 
 @location.latitude='{{ location.latitude }}', 
-@location.longitude='{{ location.longitude }}'
+@location.longitude='{{ location.longitude }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@plantsDescription={{ plantsDescription }}
 ;
 ```
 </TabItem>

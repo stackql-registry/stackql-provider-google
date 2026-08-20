@@ -109,6 +109,51 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the quota rule. Format: `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/volumes/volumes/&#123;volume_id&#125;/quotaRules/&#123;quota_rule_id&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Create time of the quota rule</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Description of the quota rule</td>
+</tr>
+<tr>
+    <td><CopyableCode code="diskLimitMib" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Required. The maximum allowed disk space in MiB.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels of the quota rule</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State of the quota rule (STATE_UNSPECIFIED, CREATING, UPDATING, DELETING, READY, ERROR)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="stateDetails" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State details of the quota rule</td>
+</tr>
+<tr>
+    <td><CopyableCode code="target" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The quota rule applies to the specified user or group, identified by a Unix UID/GID, Windows SID, or null for default.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td>Required. The type of quota rule. (TYPE_UNSPECIFIED, INDIVIDUAL_USER_QUOTA, INDIVIDUAL_GROUP_QUOTA, DEFAULT_USER_QUOTA, DEFAULT_GROUP_QUOTA)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -140,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns list of all quota rules in a location.</td>
 </tr>
 <tr>
@@ -271,15 +316,23 @@ Returns list of all quota rules in a location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+diskLimitMib,
+labels,
+state,
+stateDetails,
+target,
+type
 FROM google.netapp.quota_rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND volumesId = '{{ volumesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -301,24 +354,24 @@ Creates a new quota rule.
 
 ```sql
 INSERT INTO google.netapp.quota_rules (
+data__description,
+data__diskLimitMib,
 data__labels,
 data__name,
 data__target,
-data__description,
 data__type,
-data__diskLimitMib,
 projectsId,
 locationsId,
 volumesId,
 quotaRuleId
 )
 SELECT 
+'{{ description }}',
+{{ diskLimitMib }},
 '{{ labels }}',
 '{{ name }}',
 '{{ target }}',
-'{{ description }}',
 '{{ type }}',
-{{ diskLimitMib }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ volumesId }}',
@@ -346,6 +399,14 @@ response
     - name: volumesId
       value: "{{ volumesId }}"
       description: Required parameter for the quota_rules resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the quota rule
+    - name: diskLimitMib
+      value: {{ diskLimitMib }}
+      description: |
+        Required. The maximum allowed disk space in MiB.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -358,19 +419,11 @@ response
       value: "{{ target }}"
       description: |
         Optional. The quota rule applies to the specified user or group, identified by a Unix UID/GID, Windows SID, or null for default.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the quota rule
     - name: type
       value: "{{ type }}"
       description: |
         Required. The type of quota rule.
       valid_values: ['TYPE_UNSPECIFIED', 'INDIVIDUAL_USER_QUOTA', 'INDIVIDUAL_GROUP_QUOTA', 'DEFAULT_USER_QUOTA', 'DEFAULT_GROUP_QUOTA']
-    - name: diskLimitMib
-      value: {{ diskLimitMib }}
-      description: |
-        Required. The maximum allowed disk space in MiB.
     - name: quotaRuleId
       value: "{{ quotaRuleId }}"
 `}</CodeBlock>
@@ -394,12 +447,12 @@ Updates a quota rule.
 ```sql
 UPDATE google.netapp.quota_rules
 SET 
+data__description = '{{ description }}',
+data__diskLimitMib = {{ diskLimitMib }},
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
 data__target = '{{ target }}',
-data__description = '{{ description }}',
-data__type = '{{ type }}',
-data__diskLimitMib = {{ diskLimitMib }}
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

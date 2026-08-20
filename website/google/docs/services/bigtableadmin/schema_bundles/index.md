@@ -139,7 +139,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a>, <a href="#parameter-schemaBundlesId"><code>schemaBundlesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-ignoreWarnings"><code>ignoreWarnings</code></a></td>
+    <td><a href="#parameter-ignoreWarnings"><code>ignoreWarnings</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a schema bundle in the specified table.</td>
 </tr>
 <tr>
@@ -286,18 +286,18 @@ Creates a new schema bundle in the specified table.
 
 ```sql
 INSERT INTO google.bigtableadmin.schema_bundles (
+data__etag,
 data__name,
 data__protoSchema,
-data__etag,
 projectsId,
 instancesId,
 tablesId,
 schemaBundleId
 )
 SELECT 
+'{{ etag }}',
 '{{ name }}',
 '{{ protoSchema }}',
-'{{ etag }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ tablesId }}',
@@ -325,6 +325,10 @@ response
     - name: tablesId
       value: "{{ tablesId }}"
       description: Required parameter for the schema_bundles resource.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. The etag for this schema bundle. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.
     - name: name
       value: "{{ name }}"
       description: |
@@ -334,10 +338,6 @@ response
         Schema for Protobufs.
       value:
         protoDescriptors: "{{ protoDescriptors }}"
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. The etag for this schema bundle. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.
     - name: schemaBundleId
       value: "{{ schemaBundleId }}"
 `}</CodeBlock>
@@ -361,16 +361,16 @@ Updates a schema bundle in the specified table.
 ```sql
 UPDATE google.bigtableadmin.schema_bundles
 SET 
+data__etag = '{{ etag }}',
 data__name = '{{ name }}',
-data__protoSchema = '{{ protoSchema }}',
-data__etag = '{{ etag }}'
+data__protoSchema = '{{ protoSchema }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
 AND tablesId = '{{ tablesId }}' --required
 AND schemaBundlesId = '{{ schemaBundlesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND ignoreWarnings = {{ ignoreWarnings}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

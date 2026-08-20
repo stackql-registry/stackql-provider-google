@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_adaptive_mt_datasets_list"><CopyableCode code="projects_locations_adaptive_mt_datasets_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all Adaptive MT datasets for which the caller has read permission.</td>
 </tr>
 <tr>
@@ -283,9 +283,9 @@ updateTime
 FROM google.translate.adaptive_mt_datasets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -308,18 +308,18 @@ Creates an Adaptive MT dataset.
 ```sql
 INSERT INTO google.translate.adaptive_mt_datasets (
 data__displayName,
-data__sourceLanguageCode,
 data__exampleCount,
 data__name,
+data__sourceLanguageCode,
 data__targetLanguageCode,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ displayName }}',
-'{{ sourceLanguageCode }}',
 {{ exampleCount }},
 '{{ name }}',
+'{{ sourceLanguageCode }}',
 '{{ targetLanguageCode }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -349,10 +349,6 @@ updateTime
       value: "{{ displayName }}"
       description: |
         The name of the dataset to show in the interface. The name can be up to 32 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
-    - name: sourceLanguageCode
-      value: "{{ sourceLanguageCode }}"
-      description: |
-        The BCP-47 language code of the source language.
     - name: exampleCount
       value: {{ exampleCount }}
       description: |
@@ -361,6 +357,10 @@ updateTime
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the dataset, in form of \`projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset_id}\`
+    - name: sourceLanguageCode
+      value: "{{ sourceLanguageCode }}"
+      description: |
+        The BCP-47 language code of the source language.
     - name: targetLanguageCode
       value: "{{ targetLanguageCode }}"
       description: |

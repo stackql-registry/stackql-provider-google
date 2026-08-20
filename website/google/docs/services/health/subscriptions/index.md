@@ -278,8 +278,8 @@ Updates the data types for an existing user subscription.
 UPDATE google.health.subscriptions
 SET 
 data__dataTypes = '{{ dataTypes }}',
-data__user = '{{ user }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__user = '{{ user }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND subscribersId = '{{ subscribersId }}' --required

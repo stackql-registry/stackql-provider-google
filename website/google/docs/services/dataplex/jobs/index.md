@@ -36,86 +36,12 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_lakes_tasks_jobs_get"
     values={[
         { label: 'projects_locations_lakes_tasks_jobs_get', value: 'projects_locations_lakes_tasks_jobs_get' },
-        { label: 'projects_locations_lakes_tasks_jobs_list', value: 'projects_locations_lakes_tasks_jobs_list' },
         { label: 'projects_locations_data_scans_jobs_get', value: 'projects_locations_data_scans_jobs_get' },
+        { label: 'projects_locations_lakes_tasks_jobs_list', value: 'projects_locations_lakes_tasks_jobs_list' },
         { label: 'projects_locations_data_scans_jobs_list', value: 'projects_locations_data_scans_jobs_list' }
     ]}
 >
 <TabItem value="projects_locations_lakes_tasks_jobs_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The relative resource name of the job, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/lakes/&#123;lake_id&#125;/tasks/&#123;task_id&#125;/jobs/&#123;job_id&#125;.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="endTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the job ended.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="executionSpec" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Spec related to how a task is executed. (id: GoogleCloudDataplexV1TaskExecutionSpec)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Output only. User-defined labels for the task.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="message" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Additional information about the current state.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="retryCount" /></td>
-    <td><code>integer (uint32)</code></td>
-    <td>Output only. The number of times the job has been retried (excluding the initial attempt).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="service" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The underlying service running a job. (SERVICE_UNSPECIFIED, DATAPROC)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceJob" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The full resource name for the job run under a particular service.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="startTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the job was started.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Execution state for the job. (STATE_UNSPECIFIED, RUNNING, CANCELLING, CANCELLED, SUCCEEDED, FAILED, ABORTED)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="trigger" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Job execution trigger. (TRIGGER_UNSPECIFIED, TASK_CONFIG, RUN_REQUEST)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System generated globally unique ID for the job.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_lakes_tasks_jobs_list">
 
 <table>
 <thead>
@@ -294,6 +220,80 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="unstructuredDataProfileSpec" /></td>
     <td><code>object</code></td>
     <td>Output only. Settings for an unstructured data profile scan. (id: GoogleCloudDataplexV1UnstructuredDataProfileSpec)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_lakes_tasks_jobs_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The relative resource name of the job, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/lakes/&#123;lake_id&#125;/tasks/&#123;task_id&#125;/jobs/&#123;job_id&#125;.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the job ended.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="executionSpec" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Spec related to how a task is executed. (id: GoogleCloudDataplexV1TaskExecutionSpec)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Output only. User-defined labels for the task.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="message" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Additional information about the current state.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="retryCount" /></td>
+    <td><code>integer (uint32)</code></td>
+    <td>Output only. The number of times the job has been retried (excluding the initial attempt).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="service" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The underlying service running a job. (SERVICE_UNSPECIFIED, DATAPROC)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceJob" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The full resource name for the job run under a particular service.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="startTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the job was started.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Execution state for the job. (STATE_UNSPECIFIED, RUNNING, CANCELLING, CANCELLED, SUCCEEDED, FAILED, ABORTED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="trigger" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Job execution trigger. (TRIGGER_UNSPECIFIED, TASK_CONFIG, RUN_REQUEST)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. System generated globally unique ID for the job.</td>
 </tr>
 </tbody>
 </table>
@@ -432,13 +432,6 @@ The following methods are available for this resource:
     <td>Get job resource.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_lakes_tasks_jobs_list"><CopyableCode code="projects_locations_lakes_tasks_jobs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists Jobs under the given task.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_scans_jobs_get"><CopyableCode code="projects_locations_data_scans_jobs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
@@ -446,18 +439,25 @@ The following methods are available for this resource:
     <td>Gets a DataScanJob resource.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_lakes_tasks_jobs_list"><CopyableCode code="projects_locations_lakes_tasks_jobs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists Jobs under the given task.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_data_scans_jobs_list"><CopyableCode code="projects_locations_data_scans_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DataScanJobs under the given DataScan.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_lakes_tasks_jobs_cancel"><CopyableCode code="projects_locations_lakes_tasks_jobs_cancel" /></a></td>
+    <td><a href="#projects_locations_data_scans_jobs_cancel"><CopyableCode code="projects_locations_data_scans_jobs_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
     <td></td>
-    <td>Cancel jobs running for the task resource.</td>
+    <td>Cancels a running/pending DataScan job.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_scans_jobs_generate_data_quality_rules"><CopyableCode code="projects_locations_data_scans_jobs_generate_data_quality_rules" /></a></td>
@@ -467,11 +467,11 @@ The following methods are available for this resource:
     <td>Generates recommended data quality rules based on the results of a data profiling scan.Use the recommendations to build rules for a data quality scan.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_scans_jobs_cancel"><CopyableCode code="projects_locations_data_scans_jobs_cancel" /></a></td>
+    <td><a href="#projects_locations_lakes_tasks_jobs_cancel"><CopyableCode code="projects_locations_lakes_tasks_jobs_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
     <td></td>
-    <td>Cancels a running/pending DataScan job.</td>
+    <td>Cancel jobs running for the task resource.</td>
 </tr>
 </tbody>
 </table>
@@ -548,8 +548,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_lakes_tasks_jobs_get"
     values={[
         { label: 'projects_locations_lakes_tasks_jobs_get', value: 'projects_locations_lakes_tasks_jobs_get' },
-        { label: 'projects_locations_lakes_tasks_jobs_list', value: 'projects_locations_lakes_tasks_jobs_list' },
         { label: 'projects_locations_data_scans_jobs_get', value: 'projects_locations_data_scans_jobs_get' },
+        { label: 'projects_locations_lakes_tasks_jobs_list', value: 'projects_locations_lakes_tasks_jobs_list' },
         { label: 'projects_locations_data_scans_jobs_list', value: 'projects_locations_data_scans_jobs_list' }
     ]}
 >
@@ -577,34 +577,6 @@ AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
 AND tasksId = '{{ tasksId }}' -- required
 AND jobsId = '{{ jobsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_lakes_tasks_jobs_list">
-
-Lists Jobs under the given task.
-
-```sql
-SELECT
-name,
-endTime,
-executionSpec,
-labels,
-message,
-retryCount,
-service,
-serviceJob,
-startTime,
-state,
-trigger,
-uid
-FROM google.dataplex.jobs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND lakesId = '{{ lakesId }}' -- required
-AND tasksId = '{{ tasksId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -642,6 +614,34 @@ AND view = '{{ view }}'
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_lakes_tasks_jobs_list">
+
+Lists Jobs under the given task.
+
+```sql
+SELECT
+name,
+endTime,
+executionSpec,
+labels,
+message,
+retryCount,
+service,
+serviceJob,
+startTime,
+state,
+trigger,
+uid
+FROM google.dataplex.jobs
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND lakesId = '{{ lakesId }}' -- required
+AND tasksId = '{{ tasksId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_data_scans_jobs_list">
 
 Lists DataScanJobs under the given DataScan.
@@ -671,9 +671,9 @@ FROM google.dataplex.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataScansId = '{{ dataScansId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -683,23 +683,22 @@ AND filter = '{{ filter }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_lakes_tasks_jobs_cancel"
+    defaultValue="projects_locations_data_scans_jobs_cancel"
     values={[
-        { label: 'projects_locations_lakes_tasks_jobs_cancel', value: 'projects_locations_lakes_tasks_jobs_cancel' },
+        { label: 'projects_locations_data_scans_jobs_cancel', value: 'projects_locations_data_scans_jobs_cancel' },
         { label: 'projects_locations_data_scans_jobs_generate_data_quality_rules', value: 'projects_locations_data_scans_jobs_generate_data_quality_rules' },
-        { label: 'projects_locations_data_scans_jobs_cancel', value: 'projects_locations_data_scans_jobs_cancel' }
+        { label: 'projects_locations_lakes_tasks_jobs_cancel', value: 'projects_locations_lakes_tasks_jobs_cancel' }
     ]}
 >
-<TabItem value="projects_locations_lakes_tasks_jobs_cancel">
+<TabItem value="projects_locations_data_scans_jobs_cancel">
 
-Cancel jobs running for the task resource.
+Cancels a running/pending DataScan job.
 
 ```sql
-EXEC google.dataplex.jobs.projects_locations_lakes_tasks_jobs_cancel 
+EXEC google.dataplex.jobs.projects_locations_data_scans_jobs_cancel 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@lakesId='{{ lakesId }}' --required, 
-@tasksId='{{ tasksId }}' --required, 
+@dataScansId='{{ dataScansId }}' --required, 
 @jobsId='{{ jobsId }}' --required
 ;
 ```
@@ -717,15 +716,16 @@ EXEC google.dataplex.jobs.projects_locations_data_scans_jobs_generate_data_quali
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_data_scans_jobs_cancel">
+<TabItem value="projects_locations_lakes_tasks_jobs_cancel">
 
-Cancels a running/pending DataScan job.
+Cancel jobs running for the task resource.
 
 ```sql
-EXEC google.dataplex.jobs.projects_locations_data_scans_jobs_cancel 
+EXEC google.dataplex.jobs.projects_locations_lakes_tasks_jobs_cancel 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@dataScansId='{{ dataScansId }}' --required, 
+@lakesId='{{ lakesId }}' --required, 
+@tasksId='{{ tasksId }}' --required, 
 @jobsId='{{ jobsId }}' --required
 ;
 ```

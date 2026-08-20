@@ -370,14 +370,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of storage pools contained within<br />the specified zone.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of storage pools.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -544,8 +544,8 @@ WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -580,13 +580,13 @@ storagePoolType,
 zone
 FROM google.compute.storage_pools
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -608,37 +608,37 @@ Creates a storage pool in the specified project using the data<br />in the reque
 
 ```sql
 INSERT INTO google.compute.storage_pools (
-data__labelFingerprint,
-data__shareSettings,
-data__params,
-data__name,
-data__description,
-data__poolProvisionedCapacityGb,
-data__labels,
-data__poolProvisionedIops,
-data__storagePoolType,
 data__capacityProvisioningType,
-data__performanceProvisioningType,
+data__description,
 data__exapoolProvisionedCapacityGb,
+data__labelFingerprint,
+data__labels,
+data__name,
+data__params,
+data__performanceProvisioningType,
+data__poolProvisionedCapacityGb,
+data__poolProvisionedIops,
 data__poolProvisionedThroughput,
+data__shareSettings,
+data__storagePoolType,
 project,
 zone,
 requestId
 )
 SELECT 
-'{{ labelFingerprint }}',
-'{{ shareSettings }}',
-'{{ params }}',
-'{{ name }}',
-'{{ description }}',
-'{{ poolProvisionedCapacityGb }}',
-'{{ labels }}',
-'{{ poolProvisionedIops }}',
-'{{ storagePoolType }}',
 '{{ capacityProvisioningType }}',
-'{{ performanceProvisioningType }}',
+'{{ description }}',
 '{{ exapoolProvisionedCapacityGb }}',
+'{{ labelFingerprint }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ params }}',
+'{{ performanceProvisioningType }}',
+'{{ poolProvisionedCapacityGb }}',
+'{{ poolProvisionedIops }}',
 '{{ poolProvisionedThroughput }}',
+'{{ shareSettings }}',
+'{{ storagePoolType }}',
 '{{ project }}',
 '{{ zone }}',
 '{{ requestId }}'
@@ -684,6 +684,23 @@ zone
     - name: zone
       value: "{{ zone }}"
       description: Required parameter for the storage_pools resource.
+    - name: capacityProvisioningType
+      value: "{{ capacityProvisioningType }}"
+      description: |
+        Provisioning type of the byte capacity of the pool.
+      valid_values: ['ADVANCED', 'STANDARD', 'UNSPECIFIED']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: exapoolProvisionedCapacityGb
+      description: |
+        Provisioned capacities for each SKU for this Exapool in GiB
+      value:
+        capacityOptimized: "{{ capacityOptimized }}"
+        readOptimized: "{{ readOptimized }}"
+        writeOptimized: "{{ writeOptimized }}"
     - name: labelFingerprint
       value: "{{ labelFingerprint }}"
       description: |
@@ -695,17 +712,11 @@ zone
         otherwise the request will fail with error412 conditionNotMet.
         To see the latest fingerprint, make a get() request to
         retrieve a storage pool.
-    - name: shareSettings
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Share settings for the storage pool.
-      value:
-        projectMap: "{{ projectMap }}"
-    - name: params
-      description: |
-        Input only. Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
+        Labels to apply to this storage pool. These can be later modified by
+        the setLabels method.
     - name: name
       value: "{{ name }}"
       description: |
@@ -716,53 +727,42 @@ zone
         which means the first character must be a lowercase letter, and all
         following characters must be a dash, lowercase letter, or digit, except
         the last character, which cannot be a dash.
-    - name: description
-      value: "{{ description }}"
+    - name: params
       description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: poolProvisionedCapacityGb
-      value: "{{ poolProvisionedCapacityGb }}"
-      description: |
-        Size of the storage pool in GiB. For more information about the size
-        limits, see https://cloud.google.com/compute/docs/disks/storage-pools.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels to apply to this storage pool. These can be later modified by
-        the setLabels method.
-    - name: poolProvisionedIops
-      value: "{{ poolProvisionedIops }}"
-      description: |
-        Provisioned IOPS of the storage pool. Only relevant if the storage pool
-        type is hyperdisk-balanced.
-    - name: storagePoolType
-      value: "{{ storagePoolType }}"
-      description: |
-        Type of the storage pool.
-    - name: capacityProvisioningType
-      value: "{{ capacityProvisioningType }}"
-      description: |
-        Provisioning type of the byte capacity of the pool.
-      valid_values: ['ADVANCED', 'STANDARD', 'UNSPECIFIED']
+        Input only. Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: performanceProvisioningType
       value: "{{ performanceProvisioningType }}"
       description: |
         Provisioning type of the performance-related parameters of the pool,
         such as throughput and IOPS.
       valid_values: ['ADVANCED', 'STANDARD', 'UNSPECIFIED']
-    - name: exapoolProvisionedCapacityGb
+    - name: poolProvisionedCapacityGb
+      value: "{{ poolProvisionedCapacityGb }}"
       description: |
-        Provisioned capacities for each SKU for this Exapool in GiB
-      value:
-        capacityOptimized: "{{ capacityOptimized }}"
-        readOptimized: "{{ readOptimized }}"
-        writeOptimized: "{{ writeOptimized }}"
+        Size of the storage pool in GiB. For more information about the size
+        limits, see https://cloud.google.com/compute/docs/disks/storage-pools.
+    - name: poolProvisionedIops
+      value: "{{ poolProvisionedIops }}"
+      description: |
+        Provisioned IOPS of the storage pool. Only relevant if the storage pool
+        type is hyperdisk-balanced.
     - name: poolProvisionedThroughput
       value: "{{ poolProvisionedThroughput }}"
       description: |
         Provisioned throughput of the storage pool in MiB/s. Only relevant if the
         storage pool type is hyperdisk-balanced or hyperdisk-throughput.
+    - name: shareSettings
+      description: |
+        Share settings for the storage pool.
+      value:
+        projectMap: "{{ projectMap }}"
+    - name: storagePoolType
+      value: "{{ storagePoolType }}"
+      description: |
+        Type of the storage pool.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -786,19 +786,19 @@ Updates the specified storagePool with the data included in the request.<br />Th
 ```sql
 UPDATE google.compute.storage_pools
 SET 
-data__labelFingerprint = '{{ labelFingerprint }}',
-data__shareSettings = '{{ shareSettings }}',
-data__params = '{{ params }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__poolProvisionedCapacityGb = '{{ poolProvisionedCapacityGb }}',
-data__labels = '{{ labels }}',
-data__poolProvisionedIops = '{{ poolProvisionedIops }}',
-data__storagePoolType = '{{ storagePoolType }}',
 data__capacityProvisioningType = '{{ capacityProvisioningType }}',
-data__performanceProvisioningType = '{{ performanceProvisioningType }}',
+data__description = '{{ description }}',
 data__exapoolProvisionedCapacityGb = '{{ exapoolProvisionedCapacityGb }}',
-data__poolProvisionedThroughput = '{{ poolProvisionedThroughput }}'
+data__labelFingerprint = '{{ labelFingerprint }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__params = '{{ params }}',
+data__performanceProvisioningType = '{{ performanceProvisioningType }}',
+data__poolProvisionedCapacityGb = '{{ poolProvisionedCapacityGb }}',
+data__poolProvisionedIops = '{{ poolProvisionedIops }}',
+data__poolProvisionedThroughput = '{{ poolProvisionedThroughput }}',
+data__shareSettings = '{{ shareSettings }}',
+data__storagePoolType = '{{ storagePoolType }}'
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required

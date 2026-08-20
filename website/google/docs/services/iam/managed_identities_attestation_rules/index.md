@@ -78,7 +78,7 @@ The following methods are available for this resource:
     <td><a href="#list_attestation_rules"><CopyableCode code="list_attestation_rules" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a>, <a href="#parameter-namespacesId"><code>namespacesId</code></a>, <a href="#parameter-managedIdentitiesId"><code>managedIdentitiesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List all AttestationRule on a WorkloadIdentityPoolManagedIdentity.</td>
 </tr>
 <tr>
@@ -175,8 +175,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' -- required
 AND namespacesId = '{{ namespacesId }}' -- required
 AND managedIdentitiesId = '{{ managedIdentitiesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -244,7 +244,7 @@ response
       description: Required parameter for the managed_identities_attestation_rules resource.
     - name: attestationRule
       description: |
-        Defines which workloads can receive an identity within a pool. When an AttestationRule is defined under a managed identity, matching workloads may receive that identity.
+        Required. The attestation rule to be added.
       value:
         googleCloudResource: "{{ googleCloudResource }}"
 `}</CodeBlock>

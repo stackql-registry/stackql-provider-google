@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_list"><CopyableCode code="projects_locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 </tbody>
@@ -236,9 +236,9 @@ locationId,
 metadata
 FROM google.dialogflow.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```

@@ -167,9 +167,9 @@ Updates the IAP settings on a particular IAP protected resource. It replaces all
 ```sql
 UPDATE google.iap.iap_settings
 SET 
-data__name = '{{ name }}',
 data__accessSettings = '{{ accessSettings }}',
-data__applicationSettings = '{{ applicationSettings }}'
+data__applicationSettings = '{{ applicationSettings }}',
+data__name = '{{ name }}'
 WHERE 
 v1Id = '{{ v1Id }}' --required
 AND updateMask = '{{ updateMask}}'

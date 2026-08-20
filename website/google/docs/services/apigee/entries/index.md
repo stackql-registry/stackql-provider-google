@@ -33,40 +33,16 @@ Creates, updates, deletes, gets or lists an <code>entries</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_environments_keyvaluemaps_entries_get"
+    defaultValue="organizations_apis_keyvaluemaps_entries_get"
     values={[
-        { label: 'organizations_environments_keyvaluemaps_entries_get', value: 'organizations_environments_keyvaluemaps_entries_get' },
         { label: 'organizations_apis_keyvaluemaps_entries_get', value: 'organizations_apis_keyvaluemaps_entries_get' },
-        { label: 'organizations_keyvaluemaps_entries_get', value: 'organizations_keyvaluemaps_entries_get' },
-        { label: 'organizations_environments_keyvaluemaps_entries_list', value: 'organizations_environments_keyvaluemaps_entries_list' },
+        { label: 'organizations_environments_keyvaluemaps_entries_get', value: 'organizations_environments_keyvaluemaps_entries_get' },
         { label: 'organizations_apis_keyvaluemaps_entries_list', value: 'organizations_apis_keyvaluemaps_entries_list' },
+        { label: 'organizations_environments_keyvaluemaps_entries_list', value: 'organizations_environments_keyvaluemaps_entries_list' },
+        { label: 'organizations_keyvaluemaps_entries_get', value: 'organizations_keyvaluemaps_entries_get' },
         { label: 'organizations_keyvaluemaps_entries_list', value: 'organizations_keyvaluemaps_entries_list' }
     ]}
 >
-<TabItem value="organizations_environments_keyvaluemaps_entries_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Resource URI that can be used to identify the scope of the key value map entries.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="value" /></td>
-    <td><code>string</code></td>
-    <td>Required. Data or payload that is being retrieved and associated with the unique key.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_apis_keyvaluemaps_entries_get">
 
 <table>
@@ -91,7 +67,31 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_keyvaluemaps_entries_get">
+<TabItem value="organizations_environments_keyvaluemaps_entries_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Resource URI that can be used to identify the scope of the key value map entries.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="value" /></td>
+    <td><code>string</code></td>
+    <td>Required. Data or payload that is being retrieved and associated with the unique key.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_apis_keyvaluemaps_entries_list">
 
 <table>
 <thead>
@@ -139,7 +139,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_apis_keyvaluemaps_entries_list">
+<TabItem value="organizations_keyvaluemaps_entries_get">
 
 <table>
 <thead>
@@ -205,13 +205,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_environments_keyvaluemaps_entries_get"><CopyableCode code="organizations_environments_keyvaluemaps_entries_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
-    <td></td>
-    <td>Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
-</tr>
-<tr>
     <td><a href="#organizations_apis_keyvaluemaps_entries_get"><CopyableCode code="organizations_apis_keyvaluemaps_entries_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
@@ -219,18 +212,11 @@ The following methods are available for this resource:
     <td>Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_keyvaluemaps_entries_get"><CopyableCode code="organizations_keyvaluemaps_entries_get" /></a></td>
+    <td><a href="#organizations_environments_keyvaluemaps_entries_get"><CopyableCode code="organizations_environments_keyvaluemaps_entries_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
     <td></td>
     <td>Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_environments_keyvaluemaps_entries_list"><CopyableCode code="organizations_environments_keyvaluemaps_entries_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
 <tr>
     <td><a href="#organizations_apis_keyvaluemaps_entries_list"><CopyableCode code="organizations_apis_keyvaluemaps_entries_list" /></a></td>
@@ -240,6 +226,20 @@ The following methods are available for this resource:
     <td>Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
 <tr>
+    <td><a href="#organizations_environments_keyvaluemaps_entries_list"><CopyableCode code="organizations_environments_keyvaluemaps_entries_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_keyvaluemaps_entries_get"><CopyableCode code="organizations_keyvaluemaps_entries_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
+    <td></td>
+    <td>Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
+</tr>
+<tr>
     <td><a href="#organizations_keyvaluemaps_entries_list"><CopyableCode code="organizations_keyvaluemaps_entries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
@@ -247,16 +247,16 @@ The following methods are available for this resource:
     <td>Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_keyvaluemaps_entries_create"><CopyableCode code="organizations_environments_keyvaluemaps_entries_create" /></a></td>
+    <td><a href="#organizations_apis_keyvaluemaps_entries_create"><CopyableCode code="organizations_apis_keyvaluemaps_entries_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
     <td></td>
     <td>Creates key value entries in a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_apis_keyvaluemaps_entries_create"><CopyableCode code="organizations_apis_keyvaluemaps_entries_create" /></a></td>
+    <td><a href="#organizations_environments_keyvaluemaps_entries_create"><CopyableCode code="organizations_environments_keyvaluemaps_entries_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
     <td></td>
     <td>Creates key value entries in a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
@@ -268,16 +268,16 @@ The following methods are available for this resource:
     <td>Creates key value entries in a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_keyvaluemaps_entries_update"><CopyableCode code="organizations_environments_keyvaluemaps_entries_update" /></a></td>
+    <td><a href="#organizations_apis_keyvaluemaps_entries_update"><CopyableCode code="organizations_apis_keyvaluemaps_entries_update" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
     <td></td>
     <td>Update key value entry scoped to an organization, environment, or API proxy for an existing key.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_apis_keyvaluemaps_entries_update"><CopyableCode code="organizations_apis_keyvaluemaps_entries_update" /></a></td>
+    <td><a href="#organizations_environments_keyvaluemaps_entries_update"><CopyableCode code="organizations_environments_keyvaluemaps_entries_update" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
     <td></td>
     <td>Update key value entry scoped to an organization, environment, or API proxy for an existing key.</td>
 </tr>
@@ -289,16 +289,16 @@ The following methods are available for this resource:
     <td>Update key value entry scoped to an organization, environment, or API proxy for an existing key.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_keyvaluemaps_entries_delete"><CopyableCode code="organizations_environments_keyvaluemaps_entries_delete" /></a></td>
+    <td><a href="#organizations_apis_keyvaluemaps_entries_delete"><CopyableCode code="organizations_apis_keyvaluemaps_entries_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
     <td></td>
     <td>Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Notes:** * After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_apis_keyvaluemaps_entries_delete"><CopyableCode code="organizations_apis_keyvaluemaps_entries_delete" /></a></td>
+    <td><a href="#organizations_environments_keyvaluemaps_entries_delete"><CopyableCode code="organizations_environments_keyvaluemaps_entries_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
     <td></td>
     <td>Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Notes:** * After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
@@ -366,32 +366,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_environments_keyvaluemaps_entries_get"
+    defaultValue="organizations_apis_keyvaluemaps_entries_get"
     values={[
-        { label: 'organizations_environments_keyvaluemaps_entries_get', value: 'organizations_environments_keyvaluemaps_entries_get' },
         { label: 'organizations_apis_keyvaluemaps_entries_get', value: 'organizations_apis_keyvaluemaps_entries_get' },
-        { label: 'organizations_keyvaluemaps_entries_get', value: 'organizations_keyvaluemaps_entries_get' },
-        { label: 'organizations_environments_keyvaluemaps_entries_list', value: 'organizations_environments_keyvaluemaps_entries_list' },
+        { label: 'organizations_environments_keyvaluemaps_entries_get', value: 'organizations_environments_keyvaluemaps_entries_get' },
         { label: 'organizations_apis_keyvaluemaps_entries_list', value: 'organizations_apis_keyvaluemaps_entries_list' },
+        { label: 'organizations_environments_keyvaluemaps_entries_list', value: 'organizations_environments_keyvaluemaps_entries_list' },
+        { label: 'organizations_keyvaluemaps_entries_get', value: 'organizations_keyvaluemaps_entries_get' },
         { label: 'organizations_keyvaluemaps_entries_list', value: 'organizations_keyvaluemaps_entries_list' }
     ]}
 >
-<TabItem value="organizations_environments_keyvaluemaps_entries_get">
-
-Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.
-
-```sql
-SELECT
-name,
-value
-FROM google.apigee.entries
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND environmentsId = '{{ environmentsId }}' -- required
-AND keyvaluemapsId = '{{ keyvaluemapsId }}' -- required
-AND entriesId = '{{ entriesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_apis_keyvaluemaps_entries_get">
 
 Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.
@@ -408,7 +392,7 @@ AND entriesId = '{{ entriesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="organizations_keyvaluemaps_entries_get">
+<TabItem value="organizations_environments_keyvaluemaps_entries_get">
 
 Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.
 
@@ -418,8 +402,26 @@ name,
 value
 FROM google.apigee.entries
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND environmentsId = '{{ environmentsId }}' -- required
 AND keyvaluemapsId = '{{ keyvaluemapsId }}' -- required
 AND entriesId = '{{ entriesId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_apis_keyvaluemaps_entries_list">
+
+Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.
+
+```sql
+SELECT
+name,
+value
+FROM google.apigee.entries
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND apisId = '{{ apisId }}' -- required
+AND keyvaluemapsId = '{{ keyvaluemapsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -440,9 +442,9 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="organizations_apis_keyvaluemaps_entries_list">
+<TabItem value="organizations_keyvaluemaps_entries_get">
 
-Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.
+Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.
 
 ```sql
 SELECT
@@ -450,10 +452,8 @@ name,
 value
 FROM google.apigee.entries
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
 AND keyvaluemapsId = '{{ keyvaluemapsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND entriesId = '{{ entriesId }}' -- required
 ;
 ```
 </TabItem>
@@ -479,38 +479,14 @@ AND pageToken = '{{ pageToken }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="organizations_environments_keyvaluemaps_entries_create"
+    defaultValue="organizations_apis_keyvaluemaps_entries_create"
     values={[
-        { label: 'organizations_environments_keyvaluemaps_entries_create', value: 'organizations_environments_keyvaluemaps_entries_create' },
         { label: 'organizations_apis_keyvaluemaps_entries_create', value: 'organizations_apis_keyvaluemaps_entries_create' },
+        { label: 'organizations_environments_keyvaluemaps_entries_create', value: 'organizations_environments_keyvaluemaps_entries_create' },
         { label: 'organizations_keyvaluemaps_entries_create', value: 'organizations_keyvaluemaps_entries_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="organizations_environments_keyvaluemaps_entries_create">
-
-Creates key value entries in a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.
-
-```sql
-INSERT INTO google.apigee.entries (
-data__name,
-data__value,
-organizationsId,
-environmentsId,
-keyvaluemapsId
-)
-SELECT 
-'{{ name }}',
-'{{ value }}',
-'{{ organizationsId }}',
-'{{ environmentsId }}',
-'{{ keyvaluemapsId }}'
-RETURNING
-name,
-value
-;
-```
-</TabItem>
 <TabItem value="organizations_apis_keyvaluemaps_entries_create">
 
 Creates key value entries in a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.
@@ -528,6 +504,30 @@ SELECT
 '{{ value }}',
 '{{ organizationsId }}',
 '{{ apisId }}',
+'{{ keyvaluemapsId }}'
+RETURNING
+name,
+value
+;
+```
+</TabItem>
+<TabItem value="organizations_environments_keyvaluemaps_entries_create">
+
+Creates key value entries in a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.
+
+```sql
+INSERT INTO google.apigee.entries (
+data__name,
+data__value,
+organizationsId,
+environmentsId,
+keyvaluemapsId
+)
+SELECT 
+'{{ name }}',
+'{{ value }}',
+'{{ organizationsId }}',
+'{{ environmentsId }}',
 '{{ keyvaluemapsId }}'
 RETURNING
 name,
@@ -565,14 +565,14 @@ value
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the entries resource.
-    - name: environmentsId
-      value: "{{ environmentsId }}"
+    - name: apisId
+      value: "{{ apisId }}"
       description: Required parameter for the entries resource.
     - name: keyvaluemapsId
       value: "{{ keyvaluemapsId }}"
       description: Required parameter for the entries resource.
-    - name: apisId
-      value: "{{ apisId }}"
+    - name: environmentsId
+      value: "{{ environmentsId }}"
       description: Required parameter for the entries resource.
     - name: name
       value: "{{ name }}"
@@ -591,32 +591,13 @@ value
 ## `REPLACE` examples
 
 <Tabs
-    defaultValue="organizations_environments_keyvaluemaps_entries_update"
+    defaultValue="organizations_apis_keyvaluemaps_entries_update"
     values={[
-        { label: 'organizations_environments_keyvaluemaps_entries_update', value: 'organizations_environments_keyvaluemaps_entries_update' },
         { label: 'organizations_apis_keyvaluemaps_entries_update', value: 'organizations_apis_keyvaluemaps_entries_update' },
+        { label: 'organizations_environments_keyvaluemaps_entries_update', value: 'organizations_environments_keyvaluemaps_entries_update' },
         { label: 'organizations_keyvaluemaps_entries_update', value: 'organizations_keyvaluemaps_entries_update' }
     ]}
 >
-<TabItem value="organizations_environments_keyvaluemaps_entries_update">
-
-Update key value entry scoped to an organization, environment, or API proxy for an existing key.
-
-```sql
-REPLACE google.apigee.entries
-SET 
-data__name = '{{ name }}',
-data__value = '{{ value }}'
-WHERE 
-organizationsId = '{{ organizationsId }}' --required
-AND environmentsId = '{{ environmentsId }}' --required
-AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required
-AND entriesId = '{{ entriesId }}' --required
-RETURNING
-name,
-value;
-```
-</TabItem>
 <TabItem value="organizations_apis_keyvaluemaps_entries_update">
 
 Update key value entry scoped to an organization, environment, or API proxy for an existing key.
@@ -629,6 +610,25 @@ data__value = '{{ value }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apisId = '{{ apisId }}' --required
+AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required
+AND entriesId = '{{ entriesId }}' --required
+RETURNING
+name,
+value;
+```
+</TabItem>
+<TabItem value="organizations_environments_keyvaluemaps_entries_update">
+
+Update key value entry scoped to an organization, environment, or API proxy for an existing key.
+
+```sql
+REPLACE google.apigee.entries
+SET 
+data__name = '{{ name }}',
+data__value = '{{ value }}'
+WHERE 
+organizationsId = '{{ organizationsId }}' --required
+AND environmentsId = '{{ environmentsId }}' --required
 AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required
 AND entriesId = '{{ entriesId }}' --required
 RETURNING
@@ -660,26 +660,13 @@ value;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="organizations_environments_keyvaluemaps_entries_delete"
+    defaultValue="organizations_apis_keyvaluemaps_entries_delete"
     values={[
-        { label: 'organizations_environments_keyvaluemaps_entries_delete', value: 'organizations_environments_keyvaluemaps_entries_delete' },
         { label: 'organizations_apis_keyvaluemaps_entries_delete', value: 'organizations_apis_keyvaluemaps_entries_delete' },
+        { label: 'organizations_environments_keyvaluemaps_entries_delete', value: 'organizations_environments_keyvaluemaps_entries_delete' },
         { label: 'organizations_keyvaluemaps_entries_delete', value: 'organizations_keyvaluemaps_entries_delete' }
     ]}
 >
-<TabItem value="organizations_environments_keyvaluemaps_entries_delete">
-
-Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Notes:** * After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.
-
-```sql
-DELETE FROM google.apigee.entries
-WHERE organizationsId = '{{ organizationsId }}' --required
-AND environmentsId = '{{ environmentsId }}' --required
-AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required
-AND entriesId = '{{ entriesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_apis_keyvaluemaps_entries_delete">
 
 Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Notes:** * After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.
@@ -688,6 +675,19 @@ Deletes a key value entry from a key value map scoped to an organization, enviro
 DELETE FROM google.apigee.entries
 WHERE organizationsId = '{{ organizationsId }}' --required
 AND apisId = '{{ apisId }}' --required
+AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required
+AND entriesId = '{{ entriesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="organizations_environments_keyvaluemaps_entries_delete">
+
+Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Notes:** * After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.
+
+```sql
+DELETE FROM google.apigee.entries
+WHERE organizationsId = '{{ organizationsId }}' --required
+AND environmentsId = '{{ environmentsId }}' --required
 AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required
 AND entriesId = '{{ entriesId }}' --required
 ;

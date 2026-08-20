@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_security_feedback_list"><CopyableCode code="organizations_security_feedback_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all feedback reports which have already been submitted.</td>
 </tr>
 <tr>
@@ -293,8 +293,8 @@ reason,
 updateTime
 FROM google.apigee.security_feedback
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -316,20 +316,20 @@ Creates a new report containing customer feedback.
 
 ```sql
 INSERT INTO google.apigee.security_feedback (
-data__displayName,
 data__comment,
+data__displayName,
+data__feedbackContexts,
 data__feedbackType,
 data__reason,
-data__feedbackContexts,
 organizationsId,
 securityFeedbackId
 )
 SELECT 
-'{{ displayName }}',
 '{{ comment }}',
+'{{ displayName }}',
+'{{ feedbackContexts }}',
 '{{ feedbackType }}',
 '{{ reason }}',
-'{{ feedbackContexts }}',
 '{{ organizationsId }}',
 '{{ securityFeedbackId }}'
 RETURNING
@@ -352,14 +352,20 @@ updateTime
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the security_feedback resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. The display name of the feedback.
     - name: comment
       value: "{{ comment }}"
       description: |
         Optional. Optional text the user can provide for additional, unstructured context.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The display name of the feedback.
+    - name: feedbackContexts
+      description: |
+        Required. One or more attribute/value pairs for constraining the feedback.
+      value:
+        - attribute: "{{ attribute }}"
+          values: "{{ values }}"
     - name: feedbackType
       value: "{{ feedbackType }}"
       description: |
@@ -370,12 +376,6 @@ updateTime
       description: |
         Optional. The reason for the feedback.
       valid_values: ['REASON_UNSPECIFIED', 'INTERNAL_SYSTEM', 'NON_RISK_CLIENT', 'NAT', 'PENETRATION_TEST', 'OTHER']
-    - name: feedbackContexts
-      description: |
-        Required. One or more attribute/value pairs for constraining the feedback.
-      value:
-        - values: "{{ values }}"
-          attribute: "{{ attribute }}"
     - name: securityFeedbackId
       value: "{{ securityFeedbackId }}"
 `}</CodeBlock>
@@ -399,11 +399,11 @@ Updates a specific feedback report.
 ```sql
 UPDATE google.apigee.security_feedback
 SET 
-data__displayName = '{{ displayName }}',
 data__comment = '{{ comment }}',
+data__displayName = '{{ displayName }}',
+data__feedbackContexts = '{{ feedbackContexts }}',
 data__feedbackType = '{{ feedbackType }}',
-data__reason = '{{ reason }}',
-data__feedbackContexts = '{{ feedbackContexts }}'
+data__reason = '{{ reason }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityFeedbackId = '{{ securityFeedbackId }}' --required

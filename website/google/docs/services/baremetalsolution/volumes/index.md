@@ -523,24 +523,24 @@ Update details of a single storage volume.
 ```sql
 UPDATE google.baremetalsolution.volumes
 SET 
+data__autoGrownSizeGib = '{{ autoGrownSizeGib }}',
+data__currentSizeGib = '{{ currentSizeGib }}',
+data__emergencySizeGib = '{{ emergencySizeGib }}',
+data__id = '{{ id }}',
 data__labels = '{{ labels }}',
 data__maxSizeGib = '{{ maxSizeGib }}',
 data__notes = '{{ notes }}',
-data__snapshotReservationDetail = '{{ snapshotReservationDetail }}',
-data__currentSizeGib = '{{ currentSizeGib }}',
-data__autoGrownSizeGib = '{{ autoGrownSizeGib }}',
-data__emergencySizeGib = '{{ emergencySizeGib }}',
+data__originallyRequestedSizeGib = '{{ originallyRequestedSizeGib }}',
 data__performanceTier = '{{ performanceTier }}',
+data__pod = '{{ pod }}',
+data__remainingSpaceGib = '{{ remainingSpaceGib }}',
 data__requestedSizeGib = '{{ requestedSizeGib }}',
 data__snapshotAutoDeleteBehavior = '{{ snapshotAutoDeleteBehavior }}',
-data__originallyRequestedSizeGib = '{{ originallyRequestedSizeGib }}',
-data__workloadProfile = '{{ workloadProfile }}',
-data__pod = '{{ pod }}',
 data__snapshotEnabled = {{ snapshotEnabled }},
-data__remainingSpaceGib = '{{ remainingSpaceGib }}',
-data__storageType = '{{ storageType }}',
+data__snapshotReservationDetail = '{{ snapshotReservationDetail }}',
 data__state = '{{ state }}',
-data__id = '{{ id }}'
+data__storageType = '{{ storageType }}',
+data__workloadProfile = '{{ workloadProfile }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

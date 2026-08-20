@@ -65,18 +65,18 @@ The following methods are available for this resource:
     <td>Creates new lineage events together with their parents: process and run. Updates the process and run if they already exist. Mapped from Open Lineage specification: https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json.</td>
 </tr>
 <tr>
-    <td><a href="#search_links"><CopyableCode code="search_links" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Retrieve a list of links connected to a specific asset. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. You can retrieve links in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.</td>
-</tr>
-<tr>
     <td><a href="#search_lineage_streaming"><CopyableCode code="search_lineage_streaming" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Retrieves a streaming response of lineage links connected to the requested assets by performing a breadth-first search in the given direction. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. This method retrieves links from all valid locations provided in the request. This method supports Column-Level Lineage (CLL) along with wildcard support to retrieve all CLL for an Entity FQN. Following permissions are required to retrieve links: * `datalineage.events.get` permission for the project where the link is stored for entity-level lineage. * `datalineage.events.getFields` permission for the project where the link is stored for column-level lineage. This method also returns processes that created the links if explicitly requested by setting [max_process_per_link](google.cloud.datacatalog.lineage.v1.SearchLineageStreamingRequest.limits.max_process_per_link) is non-zero and full process details are requested via `links.processes.process` in the [FieldMask](https://developers.google.com/workspace/docs/api/how-tos/field-masks#read_with_a_field_mask). Permission required to retrieve processes: * `datalineage.processes.get` permission for the project where the process is stored.</td>
+</tr>
+<tr>
+    <td><a href="#search_links"><CopyableCode code="search_links" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Retrieve a list of links connected to a specific asset. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. You can retrieve links in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.</td>
 </tr>
 </tbody>
 </table>
@@ -119,8 +119,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'batch_search_link_processes', value: 'batch_search_link_processes' },
         { label: 'process_open_lineage_run_event', value: 'process_open_lineage_run_event' },
-        { label: 'search_links', value: 'search_links' },
-        { label: 'search_lineage_streaming', value: 'search_lineage_streaming' }
+        { label: 'search_lineage_streaming', value: 'search_lineage_streaming' },
+        { label: 'search_links', value: 'search_links' }
     ]}
 >
 <TabItem value="batch_search_link_processes">
@@ -133,9 +133,9 @@ EXEC google.datalineage.locations.batch_search_link_processes
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"links": "{{ links }}", 
 "pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"links": "{{ links }}"
+"pageToken": "{{ pageToken }}"
 }'
 ;
 ```
@@ -152,26 +152,6 @@ EXEC google.datalineage.locations.process_open_lineage_run_event
 ;
 ```
 </TabItem>
-<TabItem value="search_links">
-
-Retrieve a list of links connected to a specific asset. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. You can retrieve links in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.
-
-```sql
-EXEC google.datalineage.locations.search_links 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"targets": "{{ targets }}", 
-"source": "{{ source }}", 
-"target": "{{ target }}", 
-"pageToken": "{{ pageToken }}", 
-"sources": "{{ sources }}", 
-"pageSize": {{ pageSize }}
-}'
-;
-```
-</TabItem>
 <TabItem value="search_lineage_streaming">
 
 Retrieves a streaming response of lineage links connected to the requested assets by performing a breadth-first search in the given direction. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. This method retrieves links from all valid locations provided in the request. This method supports Column-Level Lineage (CLL) along with wildcard support to retrieve all CLL for an Entity FQN. Following permissions are required to retrieve links: * `datalineage.events.get` permission for the project where the link is stored for entity-level lineage. * `datalineage.events.getFields` permission for the project where the link is stored for column-level lineage. This method also returns processes that created the links if explicitly requested by setting [max_process_per_link](google.cloud.datacatalog.lineage.v1.SearchLineageStreamingRequest.limits.max_process_per_link) is non-zero and full process details are requested via `links.processes.process` in the [FieldMask](https://developers.google.com/workspace/docs/api/how-tos/field-masks#read_with_a_field_mask). Permission required to retrieve processes: * `datalineage.processes.get` permission for the project where the process is stored.
@@ -182,11 +162,31 @@ EXEC google.datalineage.locations.search_lineage_streaming
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"rootCriteria": "{{ rootCriteria }}", 
-"locations": "{{ locations }}", 
 "direction": "{{ direction }}", 
 "filters": "{{ filters }}", 
-"limits": "{{ limits }}"
+"limits": "{{ limits }}", 
+"locations": "{{ locations }}", 
+"rootCriteria": "{{ rootCriteria }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="search_links">
+
+Retrieve a list of links connected to a specific asset. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. You can retrieve links in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.
+
+```sql
+EXEC google.datalineage.locations.search_links 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"source": "{{ source }}", 
+"sources": "{{ sources }}", 
+"target": "{{ target }}", 
+"targets": "{{ targets }}"
 }'
 ;
 ```

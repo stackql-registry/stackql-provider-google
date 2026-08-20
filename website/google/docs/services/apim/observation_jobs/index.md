@@ -89,6 +89,31 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. name of resource Format: projects/&#123;project&#125;/locations/&#123;location&#125;/observationJobs/&#123;observation_job&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. [Output only] Create time stamp</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sources" /></td>
+    <td><code>array</code></td>
+    <td>Optional. These should be of the same kind of source.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The observation job state (STATE_UNSPECIFIED, CREATING, ENABLING, ENABLED, DISABLING, DISABLED, DELETING, ERROR)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. [Output only] Update time stamp</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -127,7 +152,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-observationJobId"><code>observationJobId</code></a></td>
+    <td><a href="#parameter-observationJobId"><code>observationJobId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>CreateObservationJob creates a new ObservationJob but does not have any effecton its own. It is a configuration that can be used in an Observation Job to collect data about existing APIs.</td>
 </tr>
 <tr>
@@ -238,7 +263,11 @@ ListObservationJobs gets all ObservationJobs for a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+sources,
+state,
+updateTime
 FROM google.apim.observation_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -269,16 +298,16 @@ data__name,
 data__sources,
 projectsId,
 locationsId,
-requestId,
-observationJobId
+observationJobId,
+requestId
 )
 SELECT 
 '{{ name }}',
 '{{ sources }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ observationJobId }}'
+'{{ observationJobId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -308,10 +337,10 @@ response
         - "{{ sources }}"
       description: |
         Optional. These should be of the same kind of source.
-    - name: requestId
-      value: "{{ requestId }}"
     - name: observationJobId
       value: "{{ observationJobId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>

@@ -184,8 +184,8 @@ Patch Instance settings
 ```sql
 UPDATE google.compute.instance_settings
 SET 
-data__metadata = '{{ metadata }}',
-data__fingerprint = '{{ fingerprint }}'
+data__fingerprint = '{{ fingerprint }}',
+data__metadata = '{{ metadata }}'
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required

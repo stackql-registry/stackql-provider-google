@@ -13,3 +13,5 @@ svcResp.tmp
 debug.log
 test/.stackql/
 website/*/.shared-config/
+.env
+/.claude

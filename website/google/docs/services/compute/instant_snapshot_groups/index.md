@@ -195,14 +195,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>retrieves the list of InstantSnapshotGroup resources contained within<br />the specified zone.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-sourceConsistencyGroup"><code>sourceConsistencyGroup</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sourceConsistencyGroup"><code>sourceConsistencyGroup</code></a></td>
     <td>inserts a Zonal InstantSnapshotGroup resource</td>
 </tr>
 <tr>
@@ -332,10 +332,10 @@ warning
 FROM google.compute.instant_snapshot_groups
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -358,22 +358,22 @@ inserts a Zonal InstantSnapshotGroup resource
 
 ```sql
 INSERT INTO google.compute.instant_snapshot_groups (
-data__sourceConsistencyGroup,
 data__description,
 data__name,
+data__sourceConsistencyGroup,
 project,
 zone,
-sourceConsistencyGroup,
-requestId
+requestId,
+sourceConsistencyGroup
 )
 SELECT 
-'{{ sourceConsistencyGroup }}',
 '{{ description }}',
 '{{ name }}',
+'{{ sourceConsistencyGroup }}',
 '{{ project }}',
 '{{ zone }}',
-'{{ sourceConsistencyGroup }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ sourceConsistencyGroup }}'
 RETURNING
 id,
 name,
@@ -416,8 +416,6 @@ zone
     - name: zone
       value: "{{ zone }}"
       description: Required parameter for the instant_snapshot_groups resource.
-    - name: sourceConsistencyGroup
-      value: "{{ sourceConsistencyGroup }}"
     - name: description
       value: "{{ description }}"
       description: |
@@ -437,6 +435,8 @@ zone
       value: "{{ sourceConsistencyGroup }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: sourceConsistencyGroup
+      value: "{{ sourceConsistencyGroup }}"
 `}</CodeBlock>
 
 </TabItem>

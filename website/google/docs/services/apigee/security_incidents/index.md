@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_security_incidents_list"><CopyableCode code="organizations_environments_security_incidents_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>ListSecurityIncidents lists all the security incident associated with the environment.</td>
 </tr>
 <tr>
@@ -305,9 +305,9 @@ trafficCount
 FROM google.apigee.security_incidents
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -330,10 +330,10 @@ UpdateSecurityIncidents updates an existing security incident.
 ```sql
 UPDATE google.apigee.security_incidents
 SET 
-data__trafficCount = '{{ trafficCount }}',
 data__displayName = '{{ displayName }}',
 data__name = '{{ name }}',
-data__observability = '{{ observability }}'
+data__observability = '{{ observability }}',
+data__trafficCount = '{{ trafficCount }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

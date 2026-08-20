@@ -323,23 +323,23 @@ Creates a new ClientTlsPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.client_tls_policies (
-data__labels,
-data__serverValidationCa,
-data__name,
-data__sni,
 data__clientCertificate,
 data__description,
+data__labels,
+data__name,
+data__serverValidationCa,
+data__sni,
 projectsId,
 locationsId,
 clientTlsPolicyId
 )
 SELECT 
-'{{ labels }}',
-'{{ serverValidationCa }}',
-'{{ name }}',
-'{{ sni }}',
 '{{ clientCertificate }}',
 '{{ description }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ serverValidationCa }}',
+'{{ sni }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clientTlsPolicyId }}'
@@ -363,26 +363,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the client_tls_policies resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of label tags associated with the resource.
-    - name: serverValidationCa
-      description: |
-        Optional. Defines the mechanism to obtain the Certificate Authority certificate to validate the server certificate. If empty, client does not validate the server certificate.
-      value:
-        - grpcEndpoint:
-            targetUri: "{{ targetUri }}"
-          certificateProviderInstance:
-            pluginInstance: "{{ pluginInstance }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Name of the ClientTlsPolicy resource. It matches the pattern \`projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_policy}\`
-    - name: sni
-      value: "{{ sni }}"
-      description: |
-        Optional. Server Name Indication string to present to the server during TLS handshake. E.g: "secure.example.com".
     - name: clientCertificate
       description: |
         Optional. Defines a mechanism to provision client identity (public and private keys) for peer to peer authentication. The presence of this dictates mTLS.
@@ -395,6 +375,26 @@ response
       value: "{{ description }}"
       description: |
         Optional. Free-text description of the resource.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Name of the ClientTlsPolicy resource. It matches the pattern \`projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_policy}\`
+    - name: serverValidationCa
+      description: |
+        Optional. Defines the mechanism to obtain the Certificate Authority certificate to validate the server certificate. If empty, client does not validate the server certificate.
+      value:
+        - certificateProviderInstance:
+            pluginInstance: "{{ pluginInstance }}"
+          grpcEndpoint:
+            targetUri: "{{ targetUri }}"
+    - name: sni
+      value: "{{ sni }}"
+      description: |
+        Optional. Server Name Indication string to present to the server during TLS handshake. E.g: "secure.example.com".
     - name: clientTlsPolicyId
       value: "{{ clientTlsPolicyId }}"
 `}</CodeBlock>
@@ -418,12 +418,12 @@ Updates the parameters of a single ClientTlsPolicy.
 ```sql
 UPDATE google.networksecurity.client_tls_policies
 SET 
-data__labels = '{{ labels }}',
-data__serverValidationCa = '{{ serverValidationCa }}',
-data__name = '{{ name }}',
-data__sni = '{{ sni }}',
 data__clientCertificate = '{{ clientCertificate }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__serverValidationCa = '{{ serverValidationCa }}',
+data__sni = '{{ sni }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

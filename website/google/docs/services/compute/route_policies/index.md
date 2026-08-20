@@ -140,7 +140,7 @@ The following methods are available for this resource:
     <td><a href="#list_route_policies"><CopyableCode code="list_route_policies" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of router route policy subresources available to the<br />specified project.</td>
 </tr>
 <tr>
@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#delete_route_policy"><CopyableCode code="delete_route_policy" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-policy"><code>policy</code></a></td>
+    <td><a href="#parameter-policy"><code>policy</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes Route Policy</td>
 </tr>
 </tbody>
@@ -268,10 +268,10 @@ FROM google.compute.route_policies
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND router = '{{ router }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -294,11 +294,11 @@ Updates or creates new Route Policy
 ```sql
 UPDATE google.compute.route_policies
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
+data__name = '{{ name }}',
 data__terms = '{{ terms }}',
-data__type = '{{ type }}',
-data__fingerprint = '{{ fingerprint }}'
+data__type = '{{ type }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -354,8 +354,8 @@ DELETE FROM google.compute.route_policies
 WHERE project = '{{ project }}' --required
 AND region = '{{ region }}' --required
 AND router = '{{ router }}' --required
-AND requestId = '{{ requestId }}'
 AND policy = '{{ policy }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_static_ips"><CopyableCode code="fetch_static_ips" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-fetchReservedPublicIps"><code>fetchReservedPublicIps</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Fetches a set of static IP addresses that need to be allowlisted by the customer when using the static-IP connectivity method.</td>
 </tr>
 </tbody>
@@ -110,6 +110,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-projectsId">
     <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-fetchReservedPublicIps">
+    <td><CopyableCode code="fetchReservedPublicIps" /></td>
+    <td><code>boolean</code></td>
     <td></td>
 </tr>
 <tr id="parameter-pageSize">
@@ -144,6 +149,7 @@ staticIps
 FROM google.datamigration.static_ips
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND fetchReservedPublicIps = '{{ fetchReservedPublicIps }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;

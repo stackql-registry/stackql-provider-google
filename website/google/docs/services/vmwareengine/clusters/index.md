@@ -195,21 +195,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists `Cluster` resources in a given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new cluster in a given private cloud. Creating a new cluster provides additional nodes for use in the parent private cloud and requires sufficient [node quota](https://cloud.google.com/vmware-engine/quotas).</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Modifies a `Cluster` resource. Only fields specified in `updateMask` are applied. During operation processing, the resource is temporarily in the `ACTIVE` state before the operation fully completes. For that period of time, you can't update the resource. Use the operation status to determine when the processing fully completes.</td>
 </tr>
 <tr>
@@ -220,18 +220,18 @@ The following methods are available for this resource:
     <td>Deletes a `Cluster` resource. To avoid unintended data loss, migrate or gracefully shut down any workloads running on the cluster before deletion. You cannot delete the management cluster of a private cloud using this method.</td>
 </tr>
 <tr>
-    <td><a href="#unmount_datastore"><CopyableCode code="unmount_datastore" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td></td>
-    <td>Unmounts a `Datastore` on a cluster resource</td>
-</tr>
-<tr>
     <td><a href="#mount_datastore"><CopyableCode code="mount_datastore" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td></td>
     <td>Mounts a `Datastore` on a cluster resource</td>
+</tr>
+<tr>
+    <td><a href="#unmount_datastore"><CopyableCode code="unmount_datastore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Unmounts a `Datastore` on a cluster resource</td>
 </tr>
 </tbody>
 </table>
@@ -365,9 +365,9 @@ FROM google.vmwareengine.clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -396,9 +396,9 @@ data__stretchedClusterConfig,
 projectsId,
 locationsId,
 privateCloudsId,
-validateOnly,
 clusterId,
-requestId
+requestId,
+validateOnly
 )
 SELECT 
 '{{ autoscalingSettings }}',
@@ -407,9 +407,9 @@ SELECT
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
-'{{ validateOnly }}',
 '{{ clusterId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -437,10 +437,10 @@ response
       description: |
         Optional. Configuration of the autoscaling applied to this cluster.
       value:
-        coolDownPeriod: "{{ coolDownPeriod }}"
         autoscalingPolicies: "{{ autoscalingPolicies }}"
-        minClusterNodeCount: {{ minClusterNodeCount }}
+        coolDownPeriod: "{{ coolDownPeriod }}"
         maxClusterNodeCount: {{ maxClusterNodeCount }}
+        minClusterNodeCount: {{ minClusterNodeCount }}
     - name: nodeTypeConfigs
       value: "{{ nodeTypeConfigs }}"
       description: |
@@ -451,12 +451,12 @@ response
       value:
         preferredLocation: "{{ preferredLocation }}"
         secondaryLocation: "{{ secondaryLocation }}"
-    - name: validateOnly
-      value: {{ validateOnly }}
     - name: clusterId
       value: "{{ clusterId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -486,9 +486,9 @@ projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
 AND clustersId = '{{ clustersId }}' --required
-AND validateOnly = {{ validateOnly}}
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -528,31 +528,12 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="unmount_datastore"
+    defaultValue="mount_datastore"
     values={[
-        { label: 'unmount_datastore', value: 'unmount_datastore' },
-        { label: 'mount_datastore', value: 'mount_datastore' }
+        { label: 'mount_datastore', value: 'mount_datastore' },
+        { label: 'unmount_datastore', value: 'unmount_datastore' }
     ]}
 >
-<TabItem value="unmount_datastore">
-
-Unmounts a `Datastore` on a cluster resource
-
-```sql
-EXEC google.vmwareengine.clusters.unmount_datastore 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@privateCloudsId='{{ privateCloudsId }}' --required, 
-@clustersId='{{ clustersId }}' --required 
-@@json=
-'{
-"requestId": "{{ requestId }}", 
-"datastore": "{{ datastore }}", 
-"validateOnly": {{ validateOnly }}
-}'
-;
-```
-</TabItem>
 <TabItem value="mount_datastore">
 
 Mounts a `Datastore` on a cluster resource
@@ -565,9 +546,28 @@ EXEC google.vmwareengine.clusters.mount_datastore
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
-"ignoreColocation": {{ ignoreColocation }}, 
 "datastoreMountConfig": "{{ datastoreMountConfig }}", 
+"ignoreColocation": {{ ignoreColocation }}, 
+"requestId": "{{ requestId }}", 
+"validateOnly": {{ validateOnly }}
+}'
+;
+```
+</TabItem>
+<TabItem value="unmount_datastore">
+
+Unmounts a `Datastore` on a cluster resource
+
+```sql
+EXEC google.vmwareengine.clusters.unmount_datastore 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@privateCloudsId='{{ privateCloudsId }}' --required, 
+@clustersId='{{ clustersId }}' --required 
+@@json=
+'{
+"datastore": "{{ datastore }}", 
+"requestId": "{{ requestId }}", 
 "validateOnly": {{ validateOnly }}
 }'
 ;

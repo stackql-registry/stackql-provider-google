@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List policies.</td>
 </tr>
 <tr>
@@ -245,9 +245,9 @@ policyQuery,
 setting,
 type
 FROM google.cloudidentity.policies
-WHERE pageToken = '{{ pageToken }}'
+WHERE filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -299,10 +299,10 @@ response
       description: |
         Required. The PolicyQuery the Setting applies to.
       value:
-        orgUnit: "{{ orgUnit }}"
-        sortOrder: {{ sortOrder }}
-        query: "{{ query }}"
         group: "{{ group }}"
+        orgUnit: "{{ orgUnit }}"
+        query: "{{ query }}"
+        sortOrder: {{ sortOrder }}
     - name: setting
       description: |
         Required. The Setting configured by this Policy.

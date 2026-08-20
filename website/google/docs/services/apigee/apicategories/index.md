@@ -265,17 +265,17 @@ Creates a new API category.
 
 ```sql
 INSERT INTO google.apigee.apicategories (
-data__siteId,
 data__id,
 data__name,
+data__siteId,
 data__updateTime,
 organizationsId,
 sitesId
 )
 SELECT 
-'{{ siteId }}',
 '{{ id }}',
 '{{ name }}',
+'{{ siteId }}',
 '{{ updateTime }}',
 '{{ organizationsId }}',
 '{{ sitesId }}'
@@ -299,10 +299,6 @@ status
     - name: sitesId
       value: "{{ sitesId }}"
       description: Required parameter for the apicategories resource.
-    - name: siteId
-      value: "{{ siteId }}"
-      description: |
-        Name of the portal.
     - name: id
       value: "{{ id }}"
       description: |
@@ -311,6 +307,10 @@ status
       value: "{{ name }}"
       description: |
         Name of the category.
+    - name: siteId
+      value: "{{ siteId }}"
+      description: |
+        Name of the portal.
     - name: updateTime
       value: "{{ updateTime }}"
       description: |
@@ -336,9 +336,9 @@ Updates an API category.
 ```sql
 UPDATE google.apigee.apicategories
 SET 
-data__siteId = '{{ siteId }}',
 data__id = '{{ id }}',
 data__name = '{{ name }}',
+data__siteId = '{{ siteId }}',
 data__updateTime = '{{ updateTime }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

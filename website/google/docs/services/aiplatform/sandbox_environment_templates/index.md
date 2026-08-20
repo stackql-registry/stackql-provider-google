@@ -81,6 +81,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. The configuration for egress control of this template. (id: GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="ingressControlConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The configuration for private ingress (PSC-E) of this template. When set, the sandbox router is exposed privately via a PSC service attachment so VPC-SC customers can connect from their VPC over a private endpoint instead of the public internet. The resulting service attachment is surfaced on `SandboxEnvironment.connection_info.service_attachment`. Only the PSC-E (service-attachment/ingress) portion of `PrivateServiceConnectConfig` applies here: `enable_private_service_connect` and `project_allowlist` (the consumer projects allowed to connect). The nested `psc_interface_config` (PSC-I / egress) is not used for sandbox ingress; sandbox egress is configured via `egress_control_config` instead. (id: GoogleCloudAiplatformV1PrivateServiceConnectConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
     <td>Output only. The state of the sandbox environment template. (UNSPECIFIED, PROVISIONING, ACTIVE, DEPROVISIONING, DELETED, FAILED)</td>
@@ -135,6 +140,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. The configuration for egress control of this template. (id: GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="ingressControlConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The configuration for private ingress (PSC-E) of this template. When set, the sandbox router is exposed privately via a PSC service attachment so VPC-SC customers can connect from their VPC over a private endpoint instead of the public internet. The resulting service attachment is surfaced on `SandboxEnvironment.connection_info.service_attachment`. Only the PSC-E (service-attachment/ingress) portion of `PrivateServiceConnectConfig` applies here: `enable_private_service_connect` and `project_allowlist` (the consumer projects allowed to connect). The nested `psc_interface_config` (PSC-I / egress) is not used for sandbox ingress; sandbox egress is configured via `egress_control_config` instead. (id: GoogleCloudAiplatformV1PrivateServiceConnectConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
     <td>Output only. The state of the sandbox environment template. (UNSPECIFIED, PROVISIONING, ACTIVE, DEPROVISIONING, DELETED, FAILED)</td>
@@ -167,28 +177,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentTemplatesId"><code>sandboxEnvironmentTemplatesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentTemplatesId"><code>sandboxEnvironmentTemplatesId</code></a></td>
     <td></td>
     <td>Gets details of the specific SandboxEnvironmentTemplate.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists SandboxEnvironmentTemplates in a given reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td></td>
     <td>Creates a SandboxEnvironmentTemplate in a given reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentTemplatesId"><code>sandboxEnvironmentTemplatesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sandboxEnvironmentTemplatesId"><code>sandboxEnvironmentTemplatesId</code></a></td>
     <td></td>
     <td>Deletes the specific SandboxEnvironmentTemplate.</td>
 </tr>
@@ -208,6 +218,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-reasoningEnginesId">
     <td><CopyableCode code="reasoningEnginesId" /></td>
     <td><code>string</code></td>
@@ -257,10 +277,13 @@ customContainerEnvironment,
 defaultContainerEnvironment,
 displayName,
 egressControlConfig,
+ingressControlConfig,
 state,
 updateTime
 FROM google.aiplatform.sandbox_environment_templates
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
 AND sandboxEnvironmentTemplatesId = '{{ sandboxEnvironmentTemplatesId }}' -- required
 ;
 ```
@@ -277,13 +300,16 @@ customContainerEnvironment,
 defaultContainerEnvironment,
 displayName,
 egressControlConfig,
+ingressControlConfig,
 state,
 updateTime
 FROM google.aiplatform.sandbox_environment_templates
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
-AND pageToken = '{{ pageToken }}'
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -305,19 +331,25 @@ Creates a SandboxEnvironmentTemplate in a given reasoning engine.
 
 ```sql
 INSERT INTO google.aiplatform.sandbox_environment_templates (
+data__customContainerEnvironment,
+data__defaultContainerEnvironment,
 data__displayName,
 data__egressControlConfig,
-data__defaultContainerEnvironment,
+data__ingressControlConfig,
 data__name,
-data__customContainerEnvironment,
+projectsId,
+locationsId,
 reasoningEnginesId
 )
 SELECT 
+'{{ customContainerEnvironment }}',
+'{{ defaultContainerEnvironment }}',
 '{{ displayName }}',
 '{{ egressControlConfig }}',
-'{{ defaultContainerEnvironment }}',
+'{{ ingressControlConfig }}',
 '{{ name }}',
-'{{ customContainerEnvironment }}',
+'{{ projectsId }}',
+'{{ locationsId }}',
 '{{ reasoningEnginesId }}'
 RETURNING
 name,
@@ -333,9 +365,35 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sandbox_environment_templates
   props:
+    - name: projectsId
+      value: "{{ projectsId }}"
+      description: Required parameter for the sandbox_environment_templates resource.
+    - name: locationsId
+      value: "{{ locationsId }}"
+      description: Required parameter for the sandbox_environment_templates resource.
     - name: reasoningEnginesId
       value: "{{ reasoningEnginesId }}"
       description: Required parameter for the sandbox_environment_templates resource.
+    - name: customContainerEnvironment
+      description: |
+        The sandbox environment for custom container workloads.
+      value:
+        customContainerSpec:
+          imageUri: "{{ imageUri }}"
+        ports:
+          - port: {{ port }}
+            protocol: "{{ protocol }}"
+        resources:
+          limits: "{{ limits }}"
+          requests: "{{ requests }}"
+    - name: defaultContainerEnvironment
+      description: |
+        The sandbox environment for default container workloads.
+      value:
+        defaultContainerCategory: "{{ defaultContainerCategory }}"
+        resources:
+          limits: "{{ limits }}"
+          requests: "{{ requests }}"
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -345,36 +403,31 @@ response
         Optional. The configuration for egress control of this template.
       value:
         customerVpcNetwork: "{{ customerVpcNetwork }}"
-        internetAccess: {{ internetAccess }}
-        networkAttachment: "{{ networkAttachment }}"
         dnsPeeringConfigs:
           - domain: "{{ domain }}"
-            targetProject: "{{ targetProject }}"
             targetNetwork: "{{ targetNetwork }}"
-    - name: defaultContainerEnvironment
+            targetProject: "{{ targetProject }}"
+        internetAccess: {{ internetAccess }}
+        networkAttachment: "{{ networkAttachment }}"
+    - name: ingressControlConfig
       description: |
-        The sandbox environment for default container workloads.
+        Optional. The configuration for private ingress (PSC-E) of this template. When set, the sandbox router is exposed privately via a PSC service attachment so VPC-SC customers can connect from their VPC over a private endpoint instead of the public internet. The resulting service attachment is surfaced on \`SandboxEnvironment.connection_info.service_attachment\`. Only the PSC-E (service-attachment/ingress) portion of \`PrivateServiceConnectConfig\` applies here: \`enable_private_service_connect\` and \`project_allowlist\` (the consumer projects allowed to connect). The nested \`psc_interface_config\` (PSC-I / egress) is not used for sandbox ingress; sandbox egress is configured via \`egress_control_config\` instead.
       value:
-        defaultContainerCategory: "{{ defaultContainerCategory }}"
-        resources:
-          requests: "{{ requests }}"
-          limits: "{{ limits }}"
+        enablePrivateServiceConnect: {{ enablePrivateServiceConnect }}
+        projectAllowlist:
+          - "{{ projectAllowlist }}"
+        pscAutomationConfigs:
+          - errorMessage: "{{ errorMessage }}"
+            forwardingRule: "{{ forwardingRule }}"
+            ipAddress: "{{ ipAddress }}"
+            network: "{{ network }}"
+            projectId: "{{ projectId }}"
+            state: "{{ state }}"
+        serviceAttachment: "{{ serviceAttachment }}"
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the SandboxEnvironmentTemplate. Format: \`projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sandboxEnvironmentTemplates/{sandbox_environment_template}\`
-    - name: customContainerEnvironment
-      description: |
-        The sandbox environment for custom container workloads.
-      value:
-        resources:
-          requests: "{{ requests }}"
-          limits: "{{ limits }}"
-        customContainerSpec:
-          imageUri: "{{ imageUri }}"
-        ports:
-          - port: {{ port }}
-            protocol: "{{ protocol }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -395,7 +448,9 @@ Deletes the specific SandboxEnvironmentTemplate.
 
 ```sql
 DELETE FROM google.aiplatform.sandbox_environment_templates
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' --required
 AND sandboxEnvironmentTemplatesId = '{{ sandboxEnvironmentTemplatesId }}' --required
 ;
 ```

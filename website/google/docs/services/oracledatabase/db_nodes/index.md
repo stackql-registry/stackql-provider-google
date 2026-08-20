@@ -82,7 +82,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-cloudVmClustersId"><code>cloudVmClustersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-exadbVmClustersId"><code>exadbVmClustersId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the database nodes of a VM Cluster.</td>
 </tr>
@@ -102,8 +102,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-cloudVmClustersId">
-    <td><CopyableCode code="cloudVmClustersId" /></td>
+<tr id="parameter-exadbVmClustersId">
+    <td><CopyableCode code="exadbVmClustersId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -149,7 +149,7 @@ properties
 FROM google.oracledatabase.db_nodes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND cloudVmClustersId = '{{ cloudVmClustersId }}' -- required
+AND exadbVmClustersId = '{{ exadbVmClustersId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;

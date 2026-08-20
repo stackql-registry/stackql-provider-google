@@ -255,21 +255,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Use this method to list streams in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-streamId"><code>streamId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-streamId"><code>streamId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Use this method to create a stream.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-streamsId"><code>streamsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Use this method to update the configuration of a stream.</td>
 </tr>
 <tr>
@@ -428,10 +428,10 @@ updateTime
 FROM google.datastream.streams
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -453,38 +453,38 @@ Use this method to create a stream.
 
 ```sql
 INSERT INTO google.datastream.streams (
-data__displayName,
-data__destinationConfig,
 data__backfillAll,
-data__sourceConfig,
-data__labels,
-data__customerManagedEncryptionKey,
 data__backfillNone,
-data__state,
+data__customerManagedEncryptionKey,
+data__destinationConfig,
+data__displayName,
+data__labels,
 data__ruleSets,
+data__sourceConfig,
+data__state,
 projectsId,
 locationsId,
+force,
 requestId,
-validateOnly,
 streamId,
-force
+validateOnly
 )
 SELECT 
-'{{ displayName }}',
-'{{ destinationConfig }}',
 '{{ backfillAll }}',
-'{{ sourceConfig }}',
-'{{ labels }}',
-'{{ customerManagedEncryptionKey }}',
 '{{ backfillNone }}',
-'{{ state }}',
+'{{ customerManagedEncryptionKey }}',
+'{{ destinationConfig }}',
+'{{ displayName }}',
+'{{ labels }}',
 '{{ ruleSets }}',
+'{{ sourceConfig }}',
+'{{ state }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ force }}',
 '{{ requestId }}',
-'{{ validateOnly }}',
 '{{ streamId }}',
-'{{ force }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -505,233 +505,89 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the streams resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Display name.
-    - name: destinationConfig
-      description: |
-        Required. Destination connection profile configuration.
-      value:
-        bigqueryDestinationConfig:
-          appendOnly: "{{ appendOnly }}"
-          dataFreshness: "{{ dataFreshness }}"
-          singleTargetDataset:
-            datasetId: "{{ datasetId }}"
-          sourceHierarchyDatasets:
-            datasetTemplate:
-              datasetIdPrefix: "{{ datasetIdPrefix }}"
-              location: "{{ location }}"
-              kmsKeyName: "{{ kmsKeyName }}"
-            projectId: "{{ projectId }}"
-          blmtConfig:
-            rootPath: "{{ rootPath }}"
-            bucket: "{{ bucket }}"
-            tableFormat: "{{ tableFormat }}"
-            connectionName: "{{ connectionName }}"
-            fileFormat: "{{ fileFormat }}"
-          merge: "{{ merge }}"
-        gcsDestinationConfig:
-          avroFileFormat: "{{ avroFileFormat }}"
-          jsonFileFormat:
-            schemaFileFormat: "{{ schemaFileFormat }}"
-            compression: "{{ compression }}"
-          path: "{{ path }}"
-          fileRotationMb: {{ fileRotationMb }}
-          fileRotationInterval: "{{ fileRotationInterval }}"
-        destinationConnectionProfile: "{{ destinationConnectionProfile }}"
     - name: backfillAll
       description: |
         Automatically backfill objects included in the stream source configuration. Specific objects can be excluded.
       value:
         mongodbExcludedObjects:
           databases:
-            - database: "{{ database }}"
-              collections: "{{ collections }}"
-        salesforceExcludedObjects:
-          objects:
-            - objectName: "{{ objectName }}"
-              fields: "{{ fields }}"
-        spannerExcludedObjects:
-          schemas:
-            - tables: "{{ tables }}"
-              schema: "{{ schema }}"
-        saasExcludedObjects:
-          objects:
-            - properties: "{{ properties }}"
-              objectName: "{{ objectName }}"
-        oracleExcludedObjects:
-          oracleSchemas:
-            - schema: "{{ schema }}"
-              oracleTables: "{{ oracleTables }}"
+            - collections: "{{ collections }}"
+              database: "{{ database }}"
         mysqlExcludedObjects:
           mysqlDatabases:
             - database: "{{ database }}"
               mysqlTables: "{{ mysqlTables }}"
+        oracleExcludedObjects:
+          oracleSchemas:
+            - oracleTables: "{{ oracleTables }}"
+              schema: "{{ schema }}"
+        postgresqlExcludedObjects:
+          postgresqlSchemas:
+            - postgresqlTables: "{{ postgresqlTables }}"
+              schema: "{{ schema }}"
+        saasExcludedObjects:
+          objects:
+            - objectName: "{{ objectName }}"
+              properties: "{{ properties }}"
+        salesforceExcludedObjects:
+          objects:
+            - fields: "{{ fields }}"
+              objectName: "{{ objectName }}"
+        spannerExcludedObjects:
+          schemas:
+            - schema: "{{ schema }}"
+              tables: "{{ tables }}"
         sqlServerExcludedObjects:
           schemas:
             - schema: "{{ schema }}"
               tables: "{{ tables }}"
-        postgresqlExcludedObjects:
-          postgresqlSchemas:
-            - schema: "{{ schema }}"
-              postgresqlTables: "{{ postgresqlTables }}"
-    - name: sourceConfig
-      description: |
-        Required. Source connection profile configuration.
-      value:
-        serviceNowSourceConfig:
-          includeObjects:
-            objects:
-              - properties: "{{ properties }}"
-                objectName: "{{ objectName }}"
-          excludeObjects:
-            objects:
-              - properties: "{{ properties }}"
-                objectName: "{{ objectName }}"
-          pollingInterval: "{{ pollingInterval }}"
-        postgresqlSourceConfig:
-          includeObjects:
-            postgresqlSchemas:
-              - schema: "{{ schema }}"
-                postgresqlTables: "{{ postgresqlTables }}"
-          publication: "{{ publication }}"
-          replicationSlot: "{{ replicationSlot }}"
-          excludeObjects:
-            postgresqlSchemas:
-              - schema: "{{ schema }}"
-                postgresqlTables: "{{ postgresqlTables }}"
-          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
-        mysqlSourceConfig:
-          excludeObjects:
-            mysqlDatabases:
-              - database: "{{ database }}"
-                mysqlTables: "{{ mysqlTables }}"
-          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
-          binaryLogPosition: "{{ binaryLogPosition }}"
-          gtid: "{{ gtid }}"
-          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
-          includeObjects:
-            mysqlDatabases:
-              - database: "{{ database }}"
-                mysqlTables: "{{ mysqlTables }}"
-        spannerSourceConfig:
-          changeStreamName: "{{ changeStreamName }}"
-          includeObjects:
-            schemas:
-              - tables: "{{ tables }}"
-                schema: "{{ schema }}"
-          fgacRole: "{{ fgacRole }}"
-          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
-          backfillDataBoostEnabled: {{ backfillDataBoostEnabled }}
-          excludeObjects:
-            schemas:
-              - tables: "{{ tables }}"
-                schema: "{{ schema }}"
-          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
-          spannerRpcPriority: "{{ spannerRpcPriority }}"
-        salesforceSourceConfig:
-          pollingInterval: "{{ pollingInterval }}"
-          includeObjects:
-            objects:
-              - objectName: "{{ objectName }}"
-                fields: "{{ fields }}"
-          excludeObjects:
-            objects:
-              - objectName: "{{ objectName }}"
-                fields: "{{ fields }}"
-        sourceConnectionProfile: "{{ sourceConnectionProfile }}"
-        oracleSourceConfig:
-          includeObjects:
-            oracleSchemas:
-              - schema: "{{ schema }}"
-                oracleTables: "{{ oracleTables }}"
-          logMiner: "{{ logMiner }}"
-          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
-          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
-          excludeObjects:
-            oracleSchemas:
-              - schema: "{{ schema }}"
-                oracleTables: "{{ oracleTables }}"
-          binaryLogParser:
-            logFileDirectories:
-              onlineLogDirectory: "{{ onlineLogDirectory }}"
-              archivedLogDirectory: "{{ archivedLogDirectory }}"
-            oracleAsmLogFileAccess: "{{ oracleAsmLogFileAccess }}"
-          dropLargeObjects: "{{ dropLargeObjects }}"
-          streamLargeObjects: "{{ streamLargeObjects }}"
-        mongodbSourceConfig:
-          includeObjects:
-            databases:
-              - database: "{{ database }}"
-                collections: "{{ collections }}"
-          excludeObjects:
-            databases:
-              - database: "{{ database }}"
-                collections: "{{ collections }}"
-          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
-          jsonMode: "{{ jsonMode }}"
-        salesforceMarketingCloudSourceConfig:
-          includeObjects:
-            objects:
-              - properties: "{{ properties }}"
-                objectName: "{{ objectName }}"
-          excludeObjects:
-            objects:
-              - properties: "{{ properties }}"
-                objectName: "{{ objectName }}"
-          fullRefreshPollingInterval: "{{ fullRefreshPollingInterval }}"
-          pollingInterval: "{{ pollingInterval }}"
-        dataverseSourceConfig:
-          includeObjects:
-            objects:
-              - properties: "{{ properties }}"
-                objectName: "{{ objectName }}"
-          excludeObjects:
-            objects:
-              - properties: "{{ properties }}"
-                objectName: "{{ objectName }}"
-          pollingInterval: "{{ pollingInterval }}"
-        sqlServerSourceConfig:
-          includeObjects:
-            schemas:
-              - schema: "{{ schema }}"
-                tables: "{{ tables }}"
-          transactionLogs: "{{ transactionLogs }}"
-          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
-          excludeObjects:
-            schemas:
-              - schema: "{{ schema }}"
-                tables: "{{ tables }}"
-          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
-          changeTables: "{{ changeTables }}"
-        workdaySourceConfig:
-          pollingInterval: "{{ pollingInterval }}"
-          includeObjects:
-            objects:
-              - properties: "{{ properties }}"
-                objectName: "{{ objectName }}"
-          excludeObjects:
-            objects:
-              - properties: "{{ properties }}"
-                objectName: "{{ objectName }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels.
-    - name: customerManagedEncryptionKey
-      value: "{{ customerManagedEncryptionKey }}"
-      description: |
-        Immutable. A reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data will be encrypted using an internal Stream-specific encryption key provisioned through KMS.
     - name: backfillNone
       value: "{{ backfillNone }}"
       description: |
         Do not automatically backfill any objects.
-    - name: state
-      value: "{{ state }}"
+    - name: customerManagedEncryptionKey
+      value: "{{ customerManagedEncryptionKey }}"
       description: |
-        The state of the stream.
-      valid_values: ['STATE_UNSPECIFIED', 'NOT_STARTED', 'RUNNING', 'PAUSED', 'MAINTENANCE', 'FAILED', 'FAILED_PERMANENTLY', 'STARTING', 'DRAINING']
+        Immutable. A reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data will be encrypted using an internal Stream-specific encryption key provisioned through KMS.
+    - name: destinationConfig
+      description: |
+        Required. Destination connection profile configuration.
+      value:
+        bigqueryDestinationConfig:
+          appendOnly: "{{ appendOnly }}"
+          blmtConfig:
+            bucket: "{{ bucket }}"
+            connectionName: "{{ connectionName }}"
+            fileFormat: "{{ fileFormat }}"
+            rootPath: "{{ rootPath }}"
+            tableFormat: "{{ tableFormat }}"
+          dataFreshness: "{{ dataFreshness }}"
+          merge: "{{ merge }}"
+          singleTargetDataset:
+            datasetId: "{{ datasetId }}"
+          sourceHierarchyDatasets:
+            datasetTemplate:
+              datasetIdPrefix: "{{ datasetIdPrefix }}"
+              kmsKeyName: "{{ kmsKeyName }}"
+              location: "{{ location }}"
+            projectId: "{{ projectId }}"
+        destinationConnectionProfile: "{{ destinationConnectionProfile }}"
+        gcsDestinationConfig:
+          avroFileFormat: "{{ avroFileFormat }}"
+          fileRotationInterval: "{{ fileRotationInterval }}"
+          fileRotationMb: {{ fileRotationMb }}
+          jsonFileFormat:
+            compression: "{{ compression }}"
+            schemaFileFormat: "{{ schemaFileFormat }}"
+          path: "{{ path }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels.
     - name: ruleSets
       description: |
         Optional. Rule sets to apply to the stream.
@@ -740,16 +596,8 @@ response
           objectFilter:
             sourceObjectIdentifier:
               mongodbIdentifier:
-                database: "{{ database }}"
                 collection: "{{ collection }}"
-              salesforceIdentifier:
-                objectName: "{{ objectName }}"
-              sqlServerIdentifier:
-                schema: "{{ schema }}"
-                table: "{{ table }}"
-              spannerIdentifier:
-                schema: "{{ schema }}"
-                table: "{{ table }}"
+                database: "{{ database }}"
               mysqlIdentifier:
                 database: "{{ database }}"
                 table: "{{ table }}"
@@ -759,14 +607,166 @@ response
               postgresqlIdentifier:
                 schema: "{{ schema }}"
                 table: "{{ table }}"
-    - name: requestId
-      value: "{{ requestId }}"
-    - name: validateOnly
-      value: {{ validateOnly }}
-    - name: streamId
-      value: "{{ streamId }}"
+              salesforceIdentifier:
+                objectName: "{{ objectName }}"
+              spannerIdentifier:
+                schema: "{{ schema }}"
+                table: "{{ table }}"
+              sqlServerIdentifier:
+                schema: "{{ schema }}"
+                table: "{{ table }}"
+    - name: sourceConfig
+      description: |
+        Required. Source connection profile configuration.
+      value:
+        dataverseSourceConfig:
+          excludeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                properties: "{{ properties }}"
+          includeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                properties: "{{ properties }}"
+          pollingInterval: "{{ pollingInterval }}"
+        mongodbSourceConfig:
+          excludeObjects:
+            databases:
+              - collections: "{{ collections }}"
+                database: "{{ database }}"
+          includeObjects:
+            databases:
+              - collections: "{{ collections }}"
+                database: "{{ database }}"
+          jsonMode: "{{ jsonMode }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+        mysqlSourceConfig:
+          binaryLogPosition: "{{ binaryLogPosition }}"
+          excludeObjects:
+            mysqlDatabases:
+              - database: "{{ database }}"
+                mysqlTables: "{{ mysqlTables }}"
+          gtid: "{{ gtid }}"
+          includeObjects:
+            mysqlDatabases:
+              - database: "{{ database }}"
+                mysqlTables: "{{ mysqlTables }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
+        oracleSourceConfig:
+          binaryLogParser:
+            logFileDirectories:
+              archivedLogDirectory: "{{ archivedLogDirectory }}"
+              onlineLogDirectory: "{{ onlineLogDirectory }}"
+            oracleAsmLogFileAccess: "{{ oracleAsmLogFileAccess }}"
+          dropLargeObjects: "{{ dropLargeObjects }}"
+          excludeObjects:
+            oracleSchemas:
+              - oracleTables: "{{ oracleTables }}"
+                schema: "{{ schema }}"
+          includeObjects:
+            oracleSchemas:
+              - oracleTables: "{{ oracleTables }}"
+                schema: "{{ schema }}"
+          logMiner: "{{ logMiner }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
+          streamLargeObjects: "{{ streamLargeObjects }}"
+        postgresqlSourceConfig:
+          excludeObjects:
+            postgresqlSchemas:
+              - postgresqlTables: "{{ postgresqlTables }}"
+                schema: "{{ schema }}"
+          includeObjects:
+            postgresqlSchemas:
+              - postgresqlTables: "{{ postgresqlTables }}"
+                schema: "{{ schema }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          publication: "{{ publication }}"
+          replicationSlot: "{{ replicationSlot }}"
+        salesforceMarketingCloudSourceConfig:
+          excludeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                properties: "{{ properties }}"
+          fullRefreshPollingInterval: "{{ fullRefreshPollingInterval }}"
+          includeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                properties: "{{ properties }}"
+          pollingInterval: "{{ pollingInterval }}"
+        salesforceSourceConfig:
+          excludeObjects:
+            objects:
+              - fields: "{{ fields }}"
+                objectName: "{{ objectName }}"
+          includeObjects:
+            objects:
+              - fields: "{{ fields }}"
+                objectName: "{{ objectName }}"
+          pollingInterval: "{{ pollingInterval }}"
+        serviceNowSourceConfig:
+          excludeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                properties: "{{ properties }}"
+          includeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                properties: "{{ properties }}"
+          pollingInterval: "{{ pollingInterval }}"
+        sourceConnectionProfile: "{{ sourceConnectionProfile }}"
+        spannerSourceConfig:
+          backfillDataBoostEnabled: {{ backfillDataBoostEnabled }}
+          changeStreamName: "{{ changeStreamName }}"
+          excludeObjects:
+            schemas:
+              - schema: "{{ schema }}"
+                tables: "{{ tables }}"
+          fgacRole: "{{ fgacRole }}"
+          includeObjects:
+            schemas:
+              - schema: "{{ schema }}"
+                tables: "{{ tables }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
+          spannerRpcPriority: "{{ spannerRpcPriority }}"
+        sqlServerSourceConfig:
+          changeTables: "{{ changeTables }}"
+          excludeObjects:
+            schemas:
+              - schema: "{{ schema }}"
+                tables: "{{ tables }}"
+          includeObjects:
+            schemas:
+              - schema: "{{ schema }}"
+                tables: "{{ tables }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
+          transactionLogs: "{{ transactionLogs }}"
+        workdaySourceConfig:
+          excludeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                properties: "{{ properties }}"
+          includeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                properties: "{{ properties }}"
+          pollingInterval: "{{ pollingInterval }}"
+    - name: state
+      value: "{{ state }}"
+      description: |
+        The state of the stream.
+      valid_values: ['STATE_UNSPECIFIED', 'NOT_STARTED', 'RUNNING', 'PAUSED', 'MAINTENANCE', 'FAILED', 'FAILED_PERMANENTLY', 'STARTING', 'DRAINING']
     - name: force
       value: {{ force }}
+    - name: requestId
+      value: "{{ requestId }}"
+    - name: streamId
+      value: "{{ streamId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -788,23 +788,23 @@ Use this method to update the configuration of a stream.
 ```sql
 UPDATE google.datastream.streams
 SET 
-data__displayName = '{{ displayName }}',
-data__destinationConfig = '{{ destinationConfig }}',
 data__backfillAll = '{{ backfillAll }}',
-data__sourceConfig = '{{ sourceConfig }}',
-data__labels = '{{ labels }}',
-data__customerManagedEncryptionKey = '{{ customerManagedEncryptionKey }}',
 data__backfillNone = '{{ backfillNone }}',
-data__state = '{{ state }}',
-data__ruleSets = '{{ ruleSets }}'
+data__customerManagedEncryptionKey = '{{ customerManagedEncryptionKey }}',
+data__destinationConfig = '{{ destinationConfig }}',
+data__displayName = '{{ displayName }}',
+data__labels = '{{ labels }}',
+data__ruleSets = '{{ ruleSets }}',
+data__sourceConfig = '{{ sourceConfig }}',
+data__state = '{{ state }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND streamsId = '{{ streamsId }}' --required
+AND force = {{ force}}
 AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
-AND force = {{ force}}
 RETURNING
 name,
 done,

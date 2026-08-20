@@ -88,7 +88,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a></td>
-    <td><a href="#parameter-subjectPrefix"><code>subjectPrefix</code></a>, <a href="#parameter-deleted"><code>deleted</code></a></td>
+    <td><a href="#parameter-deleted"><code>deleted</code></a>, <a href="#parameter-subjectPrefix"><code>subjectPrefix</code></a></td>
     <td>List subjects in the schema registry. The response will be an array of subject names.</td>
 </tr>
 <tr>
@@ -180,8 +180,8 @@ FROM google.managedkafka.subjects
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' -- required
-AND subjectPrefix = '{{ subjectPrefix }}'
 AND deleted = '{{ deleted }}'
+AND subjectPrefix = '{{ subjectPrefix }}'
 ;
 ```
 </TabItem>
@@ -233,11 +233,11 @@ EXEC google.managedkafka.subjects.lookup_version
 @subjectsId='{{ subjectsId }}' --required 
 @@json=
 '{
-"normalize": {{ normalize }}, 
-"schemaType": "{{ schemaType }}", 
-"references": "{{ references }}", 
 "deleted": {{ deleted }}, 
-"schema": "{{ schema }}"
+"normalize": {{ normalize }}, 
+"references": "{{ references }}", 
+"schema": "{{ schema }}", 
+"schemaType": "{{ schemaType }}"
 }'
 ;
 ```

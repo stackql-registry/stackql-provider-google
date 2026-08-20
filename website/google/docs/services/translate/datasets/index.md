@@ -213,18 +213,18 @@ The following methods are available for this resource:
     <td>Deletes a dataset and all of its contents.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_datasets_import_data"><CopyableCode code="projects_locations_datasets_import_data" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td></td>
-    <td>Import sentence pairs into translation Dataset.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_datasets_export_data"><CopyableCode code="projects_locations_datasets_export_data" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
     <td></td>
     <td>Exports dataset's data to the provided output location.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_datasets_import_data"><CopyableCode code="projects_locations_datasets_import_data" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
+    <td></td>
+    <td>Import sentence pairs into translation Dataset.</td>
 </tr>
 </tbody>
 </table>
@@ -344,18 +344,18 @@ Creates a Dataset.
 
 ```sql
 INSERT INTO google.translate.datasets (
+data__displayName,
 data__name,
 data__sourceLanguageCode,
 data__targetLanguageCode,
-data__displayName,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ displayName }}',
 '{{ name }}',
 '{{ sourceLanguageCode }}',
 '{{ targetLanguageCode }}',
-'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -378,6 +378,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the datasets resource.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The name of the dataset to show in the interface. The name can be up to 32 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
     - name: name
       value: "{{ name }}"
       description: |
@@ -390,10 +394,6 @@ response
       value: "{{ targetLanguageCode }}"
       description: |
         The BCP-47 language code of the target language.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        The name of the dataset to show in the interface. The name can be up to 32 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
 `}</CodeBlock>
 
 </TabItem>
@@ -426,28 +426,12 @@ AND datasetsId = '{{ datasetsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_datasets_import_data"
+    defaultValue="projects_locations_datasets_export_data"
     values={[
-        { label: 'projects_locations_datasets_import_data', value: 'projects_locations_datasets_import_data' },
-        { label: 'projects_locations_datasets_export_data', value: 'projects_locations_datasets_export_data' }
+        { label: 'projects_locations_datasets_export_data', value: 'projects_locations_datasets_export_data' },
+        { label: 'projects_locations_datasets_import_data', value: 'projects_locations_datasets_import_data' }
     ]}
 >
-<TabItem value="projects_locations_datasets_import_data">
-
-Import sentence pairs into translation Dataset.
-
-```sql
-EXEC google.translate.datasets.projects_locations_datasets_import_data 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required 
-@@json=
-'{
-"inputConfig": "{{ inputConfig }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_datasets_export_data">
 
 Exports dataset's data to the provided output location.
@@ -460,6 +444,22 @@ EXEC google.translate.datasets.projects_locations_datasets_export_data
 @@json=
 '{
 "outputConfig": "{{ outputConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_datasets_import_data">
+
+Import sentence pairs into translation Dataset.
+
+```sql
+EXEC google.translate.datasets.projects_locations_datasets_import_data 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@datasetsId='{{ datasetsId }}' --required 
+@@json=
+'{
+"inputConfig": "{{ inputConfig }}"
 }'
 ;
 ```

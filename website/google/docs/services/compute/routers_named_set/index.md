@@ -187,10 +187,10 @@ Updates or creates new Named Set
 UPDATE google.compute.routers_named_set
 SET 
 data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__type = '{{ type }}',
 data__elements = '{{ elements }}',
-data__fingerprint = '{{ fingerprint }}'
+data__fingerprint = '{{ fingerprint }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required

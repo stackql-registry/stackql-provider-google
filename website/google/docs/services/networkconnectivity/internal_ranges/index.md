@@ -265,21 +265,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists internal ranges in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-internalRangeId"><code>internalRangeId</code></a></td>
+    <td><a href="#parameter-internalRangeId"><code>internalRangeId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new internal range in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-internalRangesId"><code>internalRangesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single internal range.</td>
 </tr>
 <tr>
@@ -423,10 +423,10 @@ users
 FROM google.networkconnectivity.internal_ranges
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -448,44 +448,44 @@ Creates a new internal range in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.internal_ranges (
-data__description,
-data__overlaps,
-data__immutable,
-data__name,
-data__network,
-data__prefixLength,
 data__allocationOptions,
-data__targetCidrRange,
-data__usage,
-data__peering,
+data__description,
+data__excludeCidrRanges,
+data__immutable,
 data__ipCidrRange,
 data__labels,
 data__migration,
-data__excludeCidrRanges,
+data__name,
+data__network,
+data__overlaps,
+data__peering,
+data__prefixLength,
+data__targetCidrRange,
+data__usage,
 projectsId,
 locationsId,
-requestId,
-internalRangeId
+internalRangeId,
+requestId
 )
 SELECT 
-'{{ description }}',
-'{{ overlaps }}',
-{{ immutable }},
-'{{ name }}',
-'{{ network }}',
-{{ prefixLength }},
 '{{ allocationOptions }}',
-'{{ targetCidrRange }}',
-'{{ usage }}',
-'{{ peering }}',
+'{{ description }}',
+'{{ excludeCidrRanges }}',
+{{ immutable }},
 '{{ ipCidrRange }}',
 '{{ labels }}',
 '{{ migration }}',
-'{{ excludeCidrRanges }}',
+'{{ name }}',
+'{{ network }}',
+'{{ overlaps }}',
+'{{ peering }}',
+{{ prefixLength }},
+'{{ targetCidrRange }}',
+'{{ usage }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ internalRangeId }}'
+'{{ internalRangeId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -506,52 +506,25 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the internal_ranges resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. A description of this resource.
-    - name: overlaps
-      value:
-        - "{{ overlaps }}"
-      description: |
-        Optional. Types of resources that are allowed to overlap with the current internal range.
-    - name: immutable
-      value: {{ immutable }}
-      description: |
-        Optional. Immutable ranges cannot have their fields modified, except for labels and description.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of an internal range. Format: projects/{project}/locations/{location}/internalRanges/{internal_range} See: https://google.aip.dev/122#fields-representing-resource-names
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Immutable. The URL or resource ID of the network in which to reserve the internal range. The network cannot be deleted if there are any reserved internal ranges referring to it. Legacy networks are not supported. For example: https://www.googleapis.com/compute/v1/projects/{project}/locations/global/networks/{network} projects/{project}/locations/global/networks/{network} {network}
-    - name: prefixLength
-      value: {{ prefixLength }}
-      description: |
-        Optional. An alternate to ip_cidr_range. Can be set when trying to create an IPv4 reservation that automatically finds a free range of the given size. If both ip_cidr_range and prefix_length are set, there is an error if the range sizes do not match. Can also be used during updates to change the range size. NOTE: For IPv6 this field only works if ip_cidr_range is set as well, and both fields must match. In other words, with IPv6 this field only works as a redundant parameter.
     - name: allocationOptions
       description: |
         Optional. Range auto-allocation options, may be set only when auto-allocation is selected by not setting ip_cidr_range (and setting prefix_length).
       value:
         allocationStrategy: "{{ allocationStrategy }}"
         firstAvailableRangesLookupSize: {{ firstAvailableRangesLookupSize }}
-    - name: targetCidrRange
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of this resource.
+    - name: excludeCidrRanges
       value:
-        - "{{ targetCidrRange }}"
+        - "{{ excludeCidrRanges }}"
       description: |
-        Optional. Can be set to narrow down or pick a different address space while searching for a free range. If not set, defaults to the ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"] address space (for auto-mode networks, the "10.0.0.0/9" range is used instead of "10.0.0.0/8"). This can be used to target the search in other rfc-1918 address spaces like "172.16.0.0/12" and "192.168.0.0/16" or non-rfc-1918 address spaces used in the VPC.
-    - name: usage
-      value: "{{ usage }}"
+        Optional. ExcludeCidrRanges flag. Specifies a set of CIDR blocks that allows exclusion of particular CIDR ranges from the auto-allocation process, without having to reserve these blocks
+    - name: immutable
+      value: {{ immutable }}
       description: |
-        Optional. The type of usage set for this InternalRange.
-      valid_values: ['USAGE_UNSPECIFIED', 'FOR_VPC', 'EXTERNAL_TO_VPC', 'FOR_MIGRATION']
-    - name: peering
-      value: "{{ peering }}"
-      description: |
-        Optional. The type of peering set for this internal range.
-      valid_values: ['PEERING_UNSPECIFIED', 'FOR_SELF', 'FOR_PEER', 'NOT_SHARED']
+        Optional. Immutable ranges cannot have their fields modified, except for labels and description.
     - name: ipCidrRange
       value: "{{ ipCidrRange }}"
       description: |
@@ -566,15 +539,42 @@ response
       value:
         source: "{{ source }}"
         target: "{{ target }}"
-    - name: excludeCidrRanges
-      value:
-        - "{{ excludeCidrRanges }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. ExcludeCidrRanges flag. Specifies a set of CIDR blocks that allows exclusion of particular CIDR ranges from the auto-allocation process, without having to reserve these blocks
-    - name: requestId
-      value: "{{ requestId }}"
+        Identifier. The name of an internal range. Format: projects/{project}/locations/{location}/internalRanges/{internal_range} See: https://google.aip.dev/122#fields-representing-resource-names
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Immutable. The URL or resource ID of the network in which to reserve the internal range. The network cannot be deleted if there are any reserved internal ranges referring to it. Legacy networks are not supported. For example: https://www.googleapis.com/compute/v1/projects/{project}/locations/global/networks/{network} projects/{project}/locations/global/networks/{network} {network}
+    - name: overlaps
+      value:
+        - "{{ overlaps }}"
+      description: |
+        Optional. Types of resources that are allowed to overlap with the current internal range.
+    - name: peering
+      value: "{{ peering }}"
+      description: |
+        Optional. The type of peering set for this internal range.
+      valid_values: ['PEERING_UNSPECIFIED', 'FOR_SELF', 'FOR_PEER', 'NOT_SHARED']
+    - name: prefixLength
+      value: {{ prefixLength }}
+      description: |
+        Optional. An alternate to ip_cidr_range. Can be set when trying to create an IPv4 reservation that automatically finds a free range of the given size. If both ip_cidr_range and prefix_length are set, there is an error if the range sizes do not match. Can also be used during updates to change the range size. NOTE: For IPv6 this field only works if ip_cidr_range is set as well, and both fields must match. In other words, with IPv6 this field only works as a redundant parameter.
+    - name: targetCidrRange
+      value:
+        - "{{ targetCidrRange }}"
+      description: |
+        Optional. Can be set to narrow down or pick a different address space while searching for a free range. If not set, defaults to the ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"] address space (for auto-mode networks, the "10.0.0.0/9" range is used instead of "10.0.0.0/8"). This can be used to target the search in other rfc-1918 address spaces like "172.16.0.0/12" and "192.168.0.0/16" or non-rfc-1918 address spaces used in the VPC.
+    - name: usage
+      value: "{{ usage }}"
+      description: |
+        Optional. The type of usage set for this InternalRange.
+      valid_values: ['USAGE_UNSPECIFIED', 'FOR_VPC', 'EXTERNAL_TO_VPC', 'FOR_MIGRATION']
     - name: internalRangeId
       value: "{{ internalRangeId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -596,26 +596,26 @@ Updates the parameters of a single internal range.
 ```sql
 UPDATE google.networkconnectivity.internal_ranges
 SET 
-data__description = '{{ description }}',
-data__overlaps = '{{ overlaps }}',
-data__immutable = {{ immutable }},
-data__name = '{{ name }}',
-data__network = '{{ network }}',
-data__prefixLength = {{ prefixLength }},
 data__allocationOptions = '{{ allocationOptions }}',
-data__targetCidrRange = '{{ targetCidrRange }}',
-data__usage = '{{ usage }}',
-data__peering = '{{ peering }}',
+data__description = '{{ description }}',
+data__excludeCidrRanges = '{{ excludeCidrRanges }}',
+data__immutable = {{ immutable }},
 data__ipCidrRange = '{{ ipCidrRange }}',
 data__labels = '{{ labels }}',
 data__migration = '{{ migration }}',
-data__excludeCidrRanges = '{{ excludeCidrRanges }}'
+data__name = '{{ name }}',
+data__network = '{{ network }}',
+data__overlaps = '{{ overlaps }}',
+data__peering = '{{ peering }}',
+data__prefixLength = {{ prefixLength }},
+data__targetCidrRange = '{{ targetCidrRange }}',
+data__usage = '{{ usage }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND internalRangesId = '{{ internalRangesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

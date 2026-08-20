@@ -152,7 +152,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-observationSourceId"><code>observationSourceId</code></a></td>
+    <td><a href="#parameter-observationSourceId"><code>observationSourceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>CreateObservationSource creates a new ObservationSource but does not affect any deployed infrastructure. It is a configuration that can be used in an Observation Job to collect data about APIs running in user's dataplane.</td>
 </tr>
 <tr>
@@ -284,16 +284,16 @@ data__gclbObservationSource,
 data__name,
 projectsId,
 locationsId,
-requestId,
-observationSourceId
+observationSourceId,
+requestId
 )
 SELECT 
 '{{ gclbObservationSource }}',
 '{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ observationSourceId }}'
+'{{ observationSourceId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -319,16 +319,16 @@ response
         The GCLB observation source
       value:
         pscNetworkConfigs:
-          - subnetwork: "{{ subnetwork }}"
-            network: "{{ network }}"
+          - network: "{{ network }}"
+            subnetwork: "{{ subnetwork }}"
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. name of resource For MVP, each region can only have 1 source.
-    - name: requestId
-      value: "{{ requestId }}"
     - name: observationSourceId
       value: "{{ observationSourceId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>

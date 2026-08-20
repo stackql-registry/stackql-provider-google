@@ -116,10 +116,10 @@ EXEC google.managedkafka.compatibility.check_compatibility
 @compatibilityId='{{ compatibilityId }}' --required 
 @@json=
 '{
-"verbose": {{ verbose }}, 
-"schemaType": "{{ schemaType }}", 
+"references": "{{ references }}", 
 "schema": "{{ schema }}", 
-"references": "{{ references }}"
+"schemaType": "{{ schemaType }}", 
+"verbose": {{ verbose }}
 }'
 ;
 ```

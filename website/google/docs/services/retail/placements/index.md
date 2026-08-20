@@ -58,18 +58,18 @@ The following methods are available for this resource:
     <td>Performs a conversational search. This feature is only available for users who have Conversational Search enabled.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_placements_search"><CopyableCode code="projects_locations_catalogs_placements_search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-placementsId"><code>placementsId</code></a></td>
-    <td></td>
-    <td>Performs a search. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_catalogs_placements_predict"><CopyableCode code="projects_locations_catalogs_placements_predict" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-placementsId"><code>placementsId</code></a></td>
     <td></td>
     <td>Makes a recommendation prediction.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_catalogs_placements_search"><CopyableCode code="projects_locations_catalogs_placements_search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-placementsId"><code>placementsId</code></a></td>
+    <td></td>
+    <td>Performs a search. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.</td>
 </tr>
 </tbody>
 </table>
@@ -116,8 +116,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_catalogs_placements_conversational_search"
     values={[
         { label: 'projects_locations_catalogs_placements_conversational_search', value: 'projects_locations_catalogs_placements_conversational_search' },
-        { label: 'projects_locations_catalogs_placements_search', value: 'projects_locations_catalogs_placements_search' },
-        { label: 'projects_locations_catalogs_placements_predict', value: 'projects_locations_catalogs_placements_predict' }
+        { label: 'projects_locations_catalogs_placements_predict', value: 'projects_locations_catalogs_placements_predict' },
+        { label: 'projects_locations_catalogs_placements_search', value: 'projects_locations_catalogs_placements_search' }
     ]}
 >
 <TabItem value="projects_locations_catalogs_placements_conversational_search">
@@ -132,16 +132,39 @@ EXEC google.retail.placements.projects_locations_catalogs_placements_conversatio
 @placementsId='{{ placementsId }}' --required 
 @@json=
 '{
-"userInfo": "{{ userInfo }}", 
+"branch": "{{ branch }}", 
+"conversationId": "{{ conversationId }}", 
 "conversationalFilteringSpec": "{{ conversationalFilteringSpec }}", 
-"userLabels": "{{ userLabels }}", 
+"pageCategories": "{{ pageCategories }}", 
+"query": "{{ query }}", 
 "safetySettings": "{{ safetySettings }}", 
 "searchParams": "{{ searchParams }}", 
-"query": "{{ query }}", 
-"pageCategories": "{{ pageCategories }}", 
-"visitorId": "{{ visitorId }}", 
-"branch": "{{ branch }}", 
-"conversationId": "{{ conversationId }}"
+"userInfo": "{{ userInfo }}", 
+"userLabels": "{{ userLabels }}", 
+"visitorId": "{{ visitorId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_placements_predict">
+
+Makes a recommendation prediction.
+
+```sql
+EXEC google.retail.placements.projects_locations_catalogs_placements_predict 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required, 
+@placementsId='{{ placementsId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"labels": "{{ labels }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"params": "{{ params }}", 
+"userEvent": "{{ userEvent }}", 
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```
@@ -159,55 +182,32 @@ EXEC google.retail.placements.projects_locations_catalogs_placements_search
 @@json=
 '{
 "boostSpec": "{{ boostSpec }}", 
-"orderBy": "{{ orderBy }}", 
-"offset": {{ offset }}, 
-"languageCode": "{{ languageCode }}", 
-"filter": "{{ filter }}", 
-"userAttributes": "{{ userAttributes }}", 
-"visitorId": "{{ visitorId }}", 
-"query": "{{ query }}", 
-"regionCode": "{{ regionCode }}", 
-"queryExpansionSpec": "{{ queryExpansionSpec }}", 
-"personalizationSpec": "{{ personalizationSpec }}", 
-"conversationalSearchSpec": "{{ conversationalSearchSpec }}", 
-"userInfo": "{{ userInfo }}", 
-"facetSpecs": "{{ facetSpecs }}", 
-"placeId": "{{ placeId }}", 
-"canonicalFilter": "{{ canonicalFilter }}", 
-"variantRollupKeys": "{{ variantRollupKeys }}", 
-"pageCategories": "{{ pageCategories }}", 
 "branch": "{{ branch }}", 
-"pageToken": "{{ pageToken }}", 
-"tileNavigationSpec": "{{ tileNavigationSpec }}", 
-"entity": "{{ entity }}", 
+"canonicalFilter": "{{ canonicalFilter }}", 
+"conversationalSearchSpec": "{{ conversationalSearchSpec }}", 
 "dynamicFacetSpec": "{{ dynamicFacetSpec }}", 
-"searchMode": "{{ searchMode }}", 
-"labels": "{{ labels }}", 
-"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
-"pageSize": {{ pageSize }}
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_catalogs_placements_predict">
-
-Makes a recommendation prediction.
-
-```sql
-EXEC google.retail.placements.projects_locations_catalogs_placements_predict 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required, 
-@placementsId='{{ placementsId }}' --required 
-@@json=
-'{
-"pageSize": {{ pageSize }}, 
-"params": "{{ params }}", 
-"pageToken": "{{ pageToken }}", 
+"entity": "{{ entity }}", 
+"facetSpecs": "{{ facetSpecs }}", 
 "filter": "{{ filter }}", 
-"validateOnly": {{ validateOnly }}, 
 "labels": "{{ labels }}", 
-"userEvent": "{{ userEvent }}"
+"languageCode": "{{ languageCode }}", 
+"offset": {{ offset }}, 
+"orderBy": "{{ orderBy }}", 
+"pageCategories": "{{ pageCategories }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"personalizationSpec": "{{ personalizationSpec }}", 
+"placeId": "{{ placeId }}", 
+"query": "{{ query }}", 
+"queryExpansionSpec": "{{ queryExpansionSpec }}", 
+"regionCode": "{{ regionCode }}", 
+"searchMode": "{{ searchMode }}", 
+"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
+"tileNavigationSpec": "{{ tileNavigationSpec }}", 
+"userAttributes": "{{ userAttributes }}", 
+"userInfo": "{{ userInfo }}", 
+"variantRollupKeys": "{{ variantRollupKeys }}", 
+"visitorId": "{{ visitorId }}"
 }'
 ;
 ```

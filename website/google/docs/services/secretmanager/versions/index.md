@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists SecretVersions. This call does not return secret data.</td>
 </tr>
 <tr>
@@ -194,6 +194,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td></td>
     <td>Destroys a SecretVersion. Sets the state of the SecretVersion to DESTROYED and irrevocably destroys the secret data.</td>
+</tr>
+<tr>
+    <td><a href="#access"><CopyableCode code="access" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td></td>
+    <td>Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.</td>
 </tr>
 <tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
@@ -208,13 +215,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td></td>
     <td>Enables a SecretVersion. Sets the state of the SecretVersion to ENABLED.</td>
-</tr>
-<tr>
-    <td><a href="#access"><CopyableCode code="access" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td></td>
-    <td>Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.</td>
 </tr>
 </tbody>
 </table>
@@ -314,9 +314,9 @@ state
 FROM google.secretmanager.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND secretsId = '{{ secretsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -349,13 +349,25 @@ AND versionsId = '{{ versionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="disable"
+    defaultValue="access"
     values={[
+        { label: 'access', value: 'access' },
         { label: 'disable', value: 'disable' },
-        { label: 'enable', value: 'enable' },
-        { label: 'access', value: 'access' }
+        { label: 'enable', value: 'enable' }
     ]}
 >
+<TabItem value="access">
+
+Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.
+
+```sql
+EXEC google.secretmanager.versions.access 
+@projectsId='{{ projectsId }}' --required, 
+@secretsId='{{ secretsId }}' --required, 
+@versionsId='{{ versionsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="disable">
 
 Disables a SecretVersion. Sets the state of the SecretVersion to DISABLED.
@@ -385,18 +397,6 @@ EXEC google.secretmanager.versions.enable
 '{
 "etag": "{{ etag }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="access">
-
-Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.
-
-```sql
-EXEC google.secretmanager.versions.access 
-@projectsId='{{ projectsId }}' --required, 
-@secretsId='{{ secretsId }}' --required, 
-@versionsId='{{ versionsId }}' --required
 ;
 ```
 </TabItem>

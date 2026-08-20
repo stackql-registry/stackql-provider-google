@@ -265,28 +265,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieves a list of all connection profiles in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-connectionProfileId"><code>connectionProfileId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-skipValidation"><code>skipValidation</code></a></td>
+    <td><a href="#parameter-connectionProfileId"><code>connectionProfileId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-skipValidation"><code>skipValidation</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new connection profile in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionProfilesId"><code>connectionProfilesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-skipValidation"><code>skipValidation</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-skipValidation"><code>skipValidation</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Update the configuration of a single connection profile.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionProfilesId"><code>connectionProfilesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single Database Migration Service connection profile. A connection profile can only be deleted if it is not in use by any active migration jobs.</td>
 </tr>
 </tbody>
@@ -438,10 +438,10 @@ updateTime
 FROM google.datamigration.connection_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -463,44 +463,44 @@ Creates a new connection profile in a given project and location.
 
 ```sql
 INSERT INTO google.datamigration.connection_profiles (
-data__displayName,
-data__name,
-data__labels,
 data__alloydb,
-data__sqlserver,
-data__state,
 data__cloudsql,
-data__postgresql,
-data__oracle,
+data__displayName,
+data__labels,
 data__mysql,
+data__name,
+data__oracle,
+data__postgresql,
 data__provider,
 data__role,
+data__sqlserver,
+data__state,
 projectsId,
 locationsId,
 connectionProfileId,
 requestId,
-validateOnly,
-skipValidation
+skipValidation,
+validateOnly
 )
 SELECT 
-'{{ displayName }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ alloydb }}',
-'{{ sqlserver }}',
-'{{ state }}',
 '{{ cloudsql }}',
-'{{ postgresql }}',
-'{{ oracle }}',
+'{{ displayName }}',
+'{{ labels }}',
 '{{ mysql }}',
+'{{ name }}',
+'{{ oracle }}',
+'{{ postgresql }}',
 '{{ provider }}',
 '{{ role }}',
+'{{ sqlserver }}',
+'{{ state }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectionProfileId }}',
 '{{ requestId }}',
-'{{ validateOnly }}',
-'{{ skipValidation }}'
+'{{ skipValidation }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -521,213 +521,175 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the connection_profiles resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        The connection profile display name.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of this connection profile resource in the form of projects/{project}/locations/{location}/connectionProfiles/{connectionProfile}.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The resource labels for connection profile to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: \`{ "name": "wrench", "mass": "1.3kg", "count": "3" }\`.
     - name: alloydb
       description: |
         An AlloyDB cluster connection profile.
       value:
         clusterId: "{{ clusterId }}"
         settings:
+          databaseVersion: "{{ databaseVersion }}"
           encryptionConfig:
             kmsKeyName: "{{ kmsKeyName }}"
           initialUser:
+            password: "{{ password }}"
             passwordSet: {{ passwordSet }}
             user: "{{ user }}"
-            password: "{{ password }}"
-          vpcNetwork: "{{ vpcNetwork }}"
-          databaseVersion: "{{ databaseVersion }}"
+          labels: "{{ labels }}"
           primaryInstanceSettings:
-            labels: "{{ labels }}"
+            databaseFlags: "{{ databaseFlags }}"
+            id: "{{ id }}"
             instanceNetworkConfig:
               authorizedExternalNetworks:
                 - cidrRange: "{{ cidrRange }}"
               enableOutboundPublicIp: {{ enableOutboundPublicIp }}
               enablePublicIp: {{ enablePublicIp }}
-            databaseFlags: "{{ databaseFlags }}"
-            privateIp: "{{ privateIp }}"
+            labels: "{{ labels }}"
+            machineConfig:
+              cpuCount: {{ cpuCount }}
+              machineType: "{{ machineType }}"
             outboundPublicIpAddresses:
               - "{{ outboundPublicIpAddresses }}"
-            machineConfig:
-              machineType: "{{ machineType }}"
-              cpuCount: {{ cpuCount }}
-            id: "{{ id }}"
-          labels: "{{ labels }}"
-    - name: sqlserver
-      description: |
-        Connection profile for a SQL Server data source.
-      value:
-        database: "{{ database }}"
-        port: {{ port }}
-        forwardSshConnectivity:
-          username: "{{ username }}"
-          port: {{ port }}
-          hostname: "{{ hostname }}"
-          privateKey: "{{ privateKey }}"
-          password: "{{ password }}"
-        username: "{{ username }}"
-        privateConnectivity:
-          privateConnection: "{{ privateConnection }}"
-        ssl:
-          clientKey: "{{ clientKey }}"
-          type: "{{ type }}"
-          clientCertificate: "{{ clientCertificate }}"
-          caCertificate: "{{ caCertificate }}"
-          sslFlags: "{{ sslFlags }}"
-        backups:
-          gcsBucket: "{{ gcsBucket }}"
-          gcsPrefix: "{{ gcsPrefix }}"
-        passwordSet: {{ passwordSet }}
-        dbmPort: {{ dbmPort }}
-        password: "{{ password }}"
-        cloudSqlProjectId: "{{ cloudSqlProjectId }}"
-        cloudSqlId: "{{ cloudSqlId }}"
-        privateServiceConnectConnectivity:
-          serviceAttachment: "{{ serviceAttachment }}"
-        host: "{{ host }}"
-        staticIpConnectivity: "{{ staticIpConnectivity }}"
-    - name: state
-      value: "{{ state }}"
-      description: |
-        The current connection profile state (e.g. DRAFT, READY, or FAILED).
-      valid_values: ['STATE_UNSPECIFIED', 'DRAFT', 'CREATING', 'READY', 'UPDATING', 'DELETING', 'DELETED', 'FAILED']
+            privateIp: "{{ privateIp }}"
+          vpcNetwork: "{{ vpcNetwork }}"
     - name: cloudsql
       description: |
         A CloudSQL database connection profile.
       value:
+        additionalPublicIp: "{{ additionalPublicIp }}"
+        cloudSqlId: "{{ cloudSqlId }}"
+        privateIp: "{{ privateIp }}"
+        publicIp: "{{ publicIp }}"
         settings:
-          userLabels: "{{ userLabels }}"
-          rootPassword: "{{ rootPassword }}"
-          sourceId: "{{ sourceId }}"
-          secondaryZone: "{{ secondaryZone }}"
-          databaseVersion: "{{ databaseVersion }}"
-          databaseVersionName: "{{ databaseVersionName }}"
-          dataDiskSizeGb: "{{ dataDiskSizeGb }}"
-          dataCacheConfig:
-            dataCacheEnabled: {{ dataCacheEnabled }}
           activationPolicy: "{{ activationPolicy }}"
           autoStorageIncrease: {{ autoStorageIncrease }}
-          zone: "{{ zone }}"
-          storageAutoResizeLimit: "{{ storageAutoResizeLimit }}"
-          dataDiskType: "{{ dataDiskType }}"
-          rootPasswordSet: {{ rootPasswordSet }}
-          dataDiskProvisionedIops: "{{ dataDiskProvisionedIops }}"
-          dataDiskProvisionedThroughput: "{{ dataDiskProvisionedThroughput }}"
           availabilityType: "{{ availabilityType }}"
           cmekKeyName: "{{ cmekKeyName }}"
-          edition: "{{ edition }}"
-          tier: "{{ tier }}"
+          collation: "{{ collation }}"
+          dataCacheConfig:
+            dataCacheEnabled: {{ dataCacheEnabled }}
+          dataDiskProvisionedIops: "{{ dataDiskProvisionedIops }}"
+          dataDiskProvisionedThroughput: "{{ dataDiskProvisionedThroughput }}"
+          dataDiskSizeGb: "{{ dataDiskSizeGb }}"
+          dataDiskType: "{{ dataDiskType }}"
           databaseFlags: "{{ databaseFlags }}"
+          databaseVersion: "{{ databaseVersion }}"
+          databaseVersionName: "{{ databaseVersionName }}"
+          edition: "{{ edition }}"
           ipConfig:
+            allocatedIpRange: "{{ allocatedIpRange }}"
+            authorizedNetworks:
+              - expireTime: "{{ expireTime }}"
+                label: "{{ label }}"
+                ttl: "{{ ttl }}"
+                value: "{{ value }}"
             enableIpv4: {{ enableIpv4 }}
             privateNetwork: "{{ privateNetwork }}"
-            allocatedIpRange: "{{ allocatedIpRange }}"
             requireSsl: {{ requireSsl }}
-            authorizedNetworks:
-              - value: "{{ value }}"
-                label: "{{ label }}"
-                expireTime: "{{ expireTime }}"
-                ttl: "{{ ttl }}"
-          collation: "{{ collation }}"
-        privateIp: "{{ privateIp }}"
-        cloudSqlId: "{{ cloudSqlId }}"
-        publicIp: "{{ publicIp }}"
-        additionalPublicIp: "{{ additionalPublicIp }}"
-    - name: postgresql
+          rootPassword: "{{ rootPassword }}"
+          rootPasswordSet: {{ rootPasswordSet }}
+          secondaryZone: "{{ secondaryZone }}"
+          sourceId: "{{ sourceId }}"
+          storageAutoResizeLimit: "{{ storageAutoResizeLimit }}"
+          tier: "{{ tier }}"
+          userLabels: "{{ userLabels }}"
+          zone: "{{ zone }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        A PostgreSQL database connection profile.
+        The connection profile display name.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The resource labels for connection profile to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: \`{ "name": "wrench", "mass": "1.3kg", "count": "3" }\`.
+    - name: mysql
+      description: |
+        A MySQL database connection profile.
       value:
-        passwordSet: {{ passwordSet }}
-        password: "{{ password }}"
-        username: "{{ username }}"
-        privateConnectivity:
-          privateConnection: "{{ privateConnection }}"
-        ssl:
-          clientKey: "{{ clientKey }}"
-          type: "{{ type }}"
-          clientCertificate: "{{ clientCertificate }}"
-          caCertificate: "{{ caCertificate }}"
-          sslFlags: "{{ sslFlags }}"
-        forwardSshConnectivity:
-          username: "{{ username }}"
-          port: {{ port }}
-          hostname: "{{ hostname }}"
-          privateKey: "{{ privateKey }}"
-          password: "{{ password }}"
-        networkArchitecture: "{{ networkArchitecture }}"
-        database: "{{ database }}"
-        port: {{ port }}
-        host: "{{ host }}"
-        enableIamAuthentication: {{ enableIamAuthentication }}
-        staticIpConnectivity: "{{ staticIpConnectivity }}"
         cloudSqlId: "{{ cloudSqlId }}"
-        privateServiceConnectConnectivity:
-          serviceAttachment: "{{ serviceAttachment }}"
-        alloydbClusterId: "{{ alloydbClusterId }}"
+        host: "{{ host }}"
+        password: "{{ password }}"
+        passwordSet: {{ passwordSet }}
+        port: {{ port }}
+        ssl:
+          caCertificate: "{{ caCertificate }}"
+          clientCertificate: "{{ clientCertificate }}"
+          clientKey: "{{ clientKey }}"
+          sslFlags: "{{ sslFlags }}"
+          type: "{{ type }}"
+        username: "{{ username }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of this connection profile resource in the form of projects/{project}/locations/{location}/connectionProfiles/{connectionProfile}.
     - name: oracle
       description: |
         An Oracle database connection profile.
       value:
         databaseService: "{{ databaseService }}"
-        staticServiceIpConnectivity: "{{ staticServiceIpConnectivity }}"
+        forwardSshConnectivity:
+          hostname: "{{ hostname }}"
+          password: "{{ password }}"
+          port: {{ port }}
+          privateKey: "{{ privateKey }}"
+          username: "{{ username }}"
         host: "{{ host }}"
-        passwordSet: {{ passwordSet }}
+        oracleAsmConfig:
+          asmService: "{{ asmService }}"
+          hostname: "{{ hostname }}"
+          password: "{{ password }}"
+          passwordSet: {{ passwordSet }}
+          port: {{ port }}
+          ssl:
+            caCertificate: "{{ caCertificate }}"
+            clientCertificate: "{{ clientCertificate }}"
+            clientKey: "{{ clientKey }}"
+            sslFlags: "{{ sslFlags }}"
+            type: "{{ type }}"
+          username: "{{ username }}"
         password: "{{ password }}"
-        username: "{{ username }}"
+        passwordSet: {{ passwordSet }}
+        port: {{ port }}
         privateConnectivity:
           privateConnection: "{{ privateConnection }}"
-        oracleAsmConfig:
-          username: "{{ username }}"
-          ssl:
-            clientKey: "{{ clientKey }}"
-            type: "{{ type }}"
-            clientCertificate: "{{ clientCertificate }}"
-            caCertificate: "{{ caCertificate }}"
-            sslFlags: "{{ sslFlags }}"
-          port: {{ port }}
-          hostname: "{{ hostname }}"
-          passwordSet: {{ passwordSet }}
-          asmService: "{{ asmService }}"
-          password: "{{ password }}"
         ssl:
-          clientKey: "{{ clientKey }}"
-          type: "{{ type }}"
-          clientCertificate: "{{ clientCertificate }}"
           caCertificate: "{{ caCertificate }}"
-          sslFlags: "{{ sslFlags }}"
-        forwardSshConnectivity:
-          username: "{{ username }}"
-          port: {{ port }}
-          hostname: "{{ hostname }}"
-          privateKey: "{{ privateKey }}"
-          password: "{{ password }}"
-        port: {{ port }}
-    - name: mysql
-      description: |
-        A MySQL database connection profile.
-      value:
-        port: {{ port }}
-        ssl:
-          clientKey: "{{ clientKey }}"
-          type: "{{ type }}"
           clientCertificate: "{{ clientCertificate }}"
-          caCertificate: "{{ caCertificate }}"
+          clientKey: "{{ clientKey }}"
           sslFlags: "{{ sslFlags }}"
-        cloudSqlId: "{{ cloudSqlId }}"
+          type: "{{ type }}"
+        staticServiceIpConnectivity: "{{ staticServiceIpConnectivity }}"
         username: "{{ username }}"
-        password: "{{ password }}"
+    - name: postgresql
+      description: |
+        A PostgreSQL database connection profile.
+      value:
+        alloydbClusterId: "{{ alloydbClusterId }}"
+        cloudSqlId: "{{ cloudSqlId }}"
+        database: "{{ database }}"
+        enableIamAuthentication: {{ enableIamAuthentication }}
+        forwardSshConnectivity:
+          hostname: "{{ hostname }}"
+          password: "{{ password }}"
+          port: {{ port }}
+          privateKey: "{{ privateKey }}"
+          username: "{{ username }}"
         host: "{{ host }}"
+        networkArchitecture: "{{ networkArchitecture }}"
+        password: "{{ password }}"
         passwordSet: {{ passwordSet }}
+        port: {{ port }}
+        privateConnectivity:
+          privateConnection: "{{ privateConnection }}"
+        privateServiceConnectConnectivity:
+          serviceAttachment: "{{ serviceAttachment }}"
+        ssl:
+          caCertificate: "{{ caCertificate }}"
+          clientCertificate: "{{ clientCertificate }}"
+          clientKey: "{{ clientKey }}"
+          sslFlags: "{{ sslFlags }}"
+          type: "{{ type }}"
+        staticIpConnectivity: "{{ staticIpConnectivity }}"
+        username: "{{ username }}"
     - name: provider
       value: "{{ provider }}"
       description: |
@@ -738,14 +700,52 @@ response
       description: |
         Optional. The connection profile role.
       valid_values: ['ROLE_UNSPECIFIED', 'SOURCE', 'DESTINATION']
+    - name: sqlserver
+      description: |
+        Connection profile for a SQL Server data source.
+      value:
+        backups:
+          gcsBucket: "{{ gcsBucket }}"
+          gcsPrefix: "{{ gcsPrefix }}"
+        cloudSqlId: "{{ cloudSqlId }}"
+        cloudSqlProjectId: "{{ cloudSqlProjectId }}"
+        database: "{{ database }}"
+        dbmPort: {{ dbmPort }}
+        forwardSshConnectivity:
+          hostname: "{{ hostname }}"
+          password: "{{ password }}"
+          port: {{ port }}
+          privateKey: "{{ privateKey }}"
+          username: "{{ username }}"
+        host: "{{ host }}"
+        password: "{{ password }}"
+        passwordSet: {{ passwordSet }}
+        port: {{ port }}
+        privateConnectivity:
+          privateConnection: "{{ privateConnection }}"
+        privateServiceConnectConnectivity:
+          serviceAttachment: "{{ serviceAttachment }}"
+        ssl:
+          caCertificate: "{{ caCertificate }}"
+          clientCertificate: "{{ clientCertificate }}"
+          clientKey: "{{ clientKey }}"
+          sslFlags: "{{ sslFlags }}"
+          type: "{{ type }}"
+        staticIpConnectivity: "{{ staticIpConnectivity }}"
+        username: "{{ username }}"
+    - name: state
+      value: "{{ state }}"
+      description: |
+        The current connection profile state (e.g. DRAFT, READY, or FAILED).
+      valid_values: ['STATE_UNSPECIFIED', 'DRAFT', 'CREATING', 'READY', 'UPDATING', 'DELETING', 'DELETED', 'FAILED']
     - name: connectionProfileId
       value: "{{ connectionProfileId }}"
     - name: requestId
       value: "{{ requestId }}"
-    - name: validateOnly
-      value: {{ validateOnly }}
     - name: skipValidation
       value: {{ skipValidation }}
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -767,26 +767,26 @@ Update the configuration of a single connection profile.
 ```sql
 UPDATE google.datamigration.connection_profiles
 SET 
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
 data__alloydb = '{{ alloydb }}',
-data__sqlserver = '{{ sqlserver }}',
-data__state = '{{ state }}',
 data__cloudsql = '{{ cloudsql }}',
-data__postgresql = '{{ postgresql }}',
-data__oracle = '{{ oracle }}',
+data__displayName = '{{ displayName }}',
+data__labels = '{{ labels }}',
 data__mysql = '{{ mysql }}',
+data__name = '{{ name }}',
+data__oracle = '{{ oracle }}',
+data__postgresql = '{{ postgresql }}',
 data__provider = '{{ provider }}',
-data__role = '{{ role }}'
+data__role = '{{ role }}',
+data__sqlserver = '{{ sqlserver }}',
+data__state = '{{ state }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionProfilesId = '{{ connectionProfilesId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND requestId = '{{ requestId}}'
-AND updateMask = '{{ updateMask}}'
 AND skipValidation = {{ skipValidation}}
+AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -815,8 +815,8 @@ DELETE FROM google.datamigration.connection_profiles
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionProfilesId = '{{ connectionProfilesId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

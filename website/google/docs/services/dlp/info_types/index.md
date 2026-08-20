@@ -33,15 +33,15 @@ Creates, updates, deletes, gets or lists an <code>info_types</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_info_types_list"
+    defaultValue="organizations_locations_info_types_list"
     values={[
-        { label: 'projects_locations_info_types_list', value: 'projects_locations_info_types_list' },
         { label: 'organizations_locations_info_types_list', value: 'organizations_locations_info_types_list' },
+        { label: 'projects_locations_info_types_list', value: 'projects_locations_info_types_list' },
         { label: 'locations_info_types_list', value: 'locations_info_types_list' },
         { label: 'info_types_list', value: 'info_types_list' }
     ]}
 >
-<TabItem value="projects_locations_info_types_list">
+<TabItem value="organizations_locations_info_types_list">
 
 <table>
 <thead>
@@ -60,7 +60,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_locations_info_types_list">
+<TabItem value="projects_locations_info_types_list">
 
 <table>
 <thead>
@@ -135,13 +135,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_info_types_list"><CopyableCode code="projects_locations_info_types_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
-    <td>Returns a list of the sensitive information types that the DLP API supports. See https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference to learn more.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_info_types_list"><CopyableCode code="organizations_locations_info_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -149,17 +142,24 @@ The following methods are available for this resource:
     <td>Returns a list of the sensitive information types that the DLP API supports. See https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference to learn more.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_info_types_list"><CopyableCode code="projects_locations_info_types_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td>Returns a list of the sensitive information types that the DLP API supports. See https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference to learn more.</td>
+</tr>
+<tr>
     <td><a href="#locations_info_types_list"><CopyableCode code="locations_info_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
     <td>Returns a list of the sensitive information types that the DLP API supports. See https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference to learn more.</td>
 </tr>
 <tr>
     <td><a href="#info_types_list"><CopyableCode code="info_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>Returns a list of the sensitive information types that the DLP API supports. See https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference to learn more.</td>
 </tr>
 </tbody>
@@ -219,30 +219,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_info_types_list"
+    defaultValue="organizations_locations_info_types_list"
     values={[
-        { label: 'projects_locations_info_types_list', value: 'projects_locations_info_types_list' },
         { label: 'organizations_locations_info_types_list', value: 'organizations_locations_info_types_list' },
+        { label: 'projects_locations_info_types_list', value: 'projects_locations_info_types_list' },
         { label: 'locations_info_types_list', value: 'locations_info_types_list' },
         { label: 'info_types_list', value: 'info_types_list' }
     ]}
 >
-<TabItem value="projects_locations_info_types_list">
-
-Returns a list of the sensitive information types that the DLP API supports. See https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference to learn more.
-
-```sql
-SELECT
-infoTypes
-FROM google.dlp.info_types
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND languageCode = '{{ languageCode }}'
-AND filter = '{{ filter }}'
-AND locationId = '{{ locationId }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_info_types_list">
 
 Returns a list of the sensitive information types that the DLP API supports. See https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference to learn more.
@@ -259,6 +243,22 @@ AND locationId = '{{ locationId }}'
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_info_types_list">
+
+Returns a list of the sensitive information types that the DLP API supports. See https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference to learn more.
+
+```sql
+SELECT
+infoTypes
+FROM google.dlp.info_types
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND languageCode = '{{ languageCode }}'
+AND locationId = '{{ locationId }}'
+;
+```
+</TabItem>
 <TabItem value="locations_info_types_list">
 
 Returns a list of the sensitive information types that the DLP API supports. See https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference to learn more.
@@ -268,9 +268,9 @@ SELECT
 infoTypes
 FROM google.dlp.info_types
 WHERE locationsId = '{{ locationsId }}' -- required
-AND locationId = '{{ locationId }}'
-AND languageCode = '{{ languageCode }}'
 AND filter = '{{ filter }}'
+AND languageCode = '{{ languageCode }}'
+AND locationId = '{{ locationId }}'
 ;
 ```
 </TabItem>
@@ -282,8 +282,8 @@ Returns a list of the sensitive information types that the DLP API supports. See
 SELECT
 infoTypes
 FROM google.dlp.info_types
-WHERE languageCode = '{{ languageCode }}'
-AND filter = '{{ filter }}'
+WHERE filter = '{{ filter }}'
+AND languageCode = '{{ languageCode }}'
 AND locationId = '{{ locationId }}'
 AND parent = '{{ parent }}'
 ;

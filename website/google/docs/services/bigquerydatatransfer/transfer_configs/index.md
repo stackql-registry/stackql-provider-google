@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_transfer_configs_get"
     values={[
         { label: 'projects_locations_transfer_configs_get', value: 'projects_locations_transfer_configs_get' },
-        { label: 'projects_transfer_configs_get', value: 'projects_transfer_configs_get' },
         { label: 'projects_locations_transfer_configs_list', value: 'projects_locations_transfer_configs_list' },
+        { label: 'projects_transfer_configs_get', value: 'projects_transfer_configs_get' },
         { label: 'projects_transfer_configs_list', value: 'projects_transfer_configs_list' }
     ]}
 >
@@ -165,7 +165,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_transfer_configs_get">
+<TabItem value="projects_locations_transfer_configs_list">
 
 <table>
 <thead>
@@ -289,7 +289,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_transfer_configs_list">
+<TabItem value="projects_transfer_configs_get">
 
 <table>
 <thead>
@@ -562,6 +562,13 @@ The following methods are available for this resource:
     <td>Returns information about a data transfer config.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_transfer_configs_list"><CopyableCode code="projects_locations_transfer_configs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-dataSourceIds"><code>dataSourceIds</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Returns information about all transfer configs owned by a project in the specified location.</td>
+</tr>
+<tr>
     <td><a href="#projects_transfer_configs_get"><CopyableCode code="projects_transfer_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
@@ -569,45 +576,38 @@ The following methods are available for this resource:
     <td>Returns information about a data transfer config.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_transfer_configs_list"><CopyableCode code="projects_locations_transfer_configs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-dataSourceIds"><code>dataSourceIds</code></a></td>
-    <td>Returns information about all transfer configs owned by a project in the specified location.</td>
-</tr>
-<tr>
     <td><a href="#projects_transfer_configs_list"><CopyableCode code="projects_transfer_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-dataSourceIds"><code>dataSourceIds</code></a></td>
+    <td><a href="#parameter-dataSourceIds"><code>dataSourceIds</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns information about all transfer configs owned by a project in the specified location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_transfer_configs_create"><CopyableCode code="projects_locations_transfer_configs_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a></td>
+    <td><a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a></td>
     <td>Creates a new data transfer configuration.</td>
 </tr>
 <tr>
     <td><a href="#projects_transfer_configs_create"><CopyableCode code="projects_transfer_configs_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a>, <a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a></td>
+    <td><a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a></td>
     <td>Creates a new data transfer configuration.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_transfer_configs_patch"><CopyableCode code="projects_locations_transfer_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a></td>
     <td>Updates a data transfer configuration. All fields must be set, even if they are not updated.</td>
 </tr>
 <tr>
     <td><a href="#projects_transfer_configs_patch"><CopyableCode code="projects_transfer_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a></td>
+    <td><a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a></td>
     <td>Updates a data transfer configuration. All fields must be set, even if they are not updated.</td>
 </tr>
 <tr>
@@ -625,20 +625,6 @@ The following methods are available for this resource:
     <td>Deletes a data transfer configuration, including any associated transfer runs and logs.</td>
 </tr>
 <tr>
-    <td><a href="#projects_transfer_configs_schedule_runs"><CopyableCode code="projects_transfer_configs_schedule_runs" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td></td>
-    <td>Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.</td>
-</tr>
-<tr>
-    <td><a href="#projects_transfer_configs_start_manual_runs"><CopyableCode code="projects_transfer_configs_start_manual_runs" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td></td>
-    <td>Manually initiates transfer runs. You can schedule these runs in two ways: 1. For a specific point in time using the 'requested_run_time' parameter. 2. For a period between 'start_time' (inclusive) and 'end_time' (exclusive). If scheduling a single run, it is set to execute immediately (schedule_time equals the current time). When scheduling multiple runs within a time range, the first run starts now, and subsequent runs are delayed by 15 seconds each.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_transfer_configs_schedule_runs"><CopyableCode code="projects_locations_transfer_configs_schedule_runs" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
@@ -649,6 +635,20 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_transfer_configs_start_manual_runs"><CopyableCode code="projects_locations_transfer_configs_start_manual_runs" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
+    <td></td>
+    <td>Manually initiates transfer runs. You can schedule these runs in two ways: 1. For a specific point in time using the 'requested_run_time' parameter. 2. For a period between 'start_time' (inclusive) and 'end_time' (exclusive). If scheduling a single run, it is set to execute immediately (schedule_time equals the current time). When scheduling multiple runs within a time range, the first run starts now, and subsequent runs are delayed by 15 seconds each.</td>
+</tr>
+<tr>
+    <td><a href="#projects_transfer_configs_schedule_runs"><CopyableCode code="projects_transfer_configs_schedule_runs" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
+    <td></td>
+    <td>Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.</td>
+</tr>
+<tr>
+    <td><a href="#projects_transfer_configs_start_manual_runs"><CopyableCode code="projects_transfer_configs_start_manual_runs" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
     <td></td>
     <td>Manually initiates transfer runs. You can schedule these runs in two ways: 1. For a specific point in time using the 'requested_run_time' parameter. 2. For a period between 'start_time' (inclusive) and 'end_time' (exclusive). If scheduling a single run, it is set to execute immediately (schedule_time equals the current time). When scheduling multiple runs within a time range, the first run starts now, and subsequent runs are delayed by 15 seconds each.</td>
 </tr>
@@ -727,8 +727,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_transfer_configs_get"
     values={[
         { label: 'projects_locations_transfer_configs_get', value: 'projects_locations_transfer_configs_get' },
-        { label: 'projects_transfer_configs_get', value: 'projects_transfer_configs_get' },
         { label: 'projects_locations_transfer_configs_list', value: 'projects_locations_transfer_configs_list' },
+        { label: 'projects_transfer_configs_get', value: 'projects_transfer_configs_get' },
         { label: 'projects_transfer_configs_list', value: 'projects_transfer_configs_list' }
     ]}
 >
@@ -767,6 +767,43 @@ AND transferConfigsId = '{{ transferConfigsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_transfer_configs_list">
+
+Returns information about all transfer configs owned by a project in the specified location.
+
+```sql
+SELECT
+name,
+dataRefreshWindowDays,
+dataSourceId,
+datasetRegion,
+destinationDatasetId,
+disabled,
+displayName,
+emailPreferences,
+encryptionConfiguration,
+error,
+managedTableType,
+metadataDestination,
+nextRunTime,
+notificationPubsubTopic,
+ownerInfo,
+params,
+schedule,
+scheduleOptions,
+scheduleOptionsV2,
+state,
+updateTime,
+userId
+FROM google.bigquerydatatransfer.transfer_configs
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND dataSourceIds = '{{ dataSourceIds }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_transfer_configs_get">
 
 Returns information about a data transfer config.
@@ -801,43 +838,6 @@ AND transferConfigsId = '{{ transferConfigsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_transfer_configs_list">
-
-Returns information about all transfer configs owned by a project in the specified location.
-
-```sql
-SELECT
-name,
-dataRefreshWindowDays,
-dataSourceId,
-datasetRegion,
-destinationDatasetId,
-disabled,
-displayName,
-emailPreferences,
-encryptionConfiguration,
-error,
-managedTableType,
-metadataDestination,
-nextRunTime,
-notificationPubsubTopic,
-ownerInfo,
-params,
-schedule,
-scheduleOptions,
-scheduleOptionsV2,
-state,
-updateTime,
-userId
-FROM google.bigquerydatatransfer.transfer_configs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND dataSourceIds = '{{ dataSourceIds }}'
-;
-```
-</TabItem>
 <TabItem value="projects_transfer_configs_list">
 
 Returns information about all transfer configs owned by a project in the specified location.
@@ -868,9 +868,9 @@ updateTime,
 userId
 FROM google.bigquerydatatransfer.transfer_configs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND dataSourceIds = '{{ dataSourceIds }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -893,49 +893,49 @@ Creates a new data transfer configuration.
 
 ```sql
 INSERT INTO google.bigquerydatatransfer.transfer_configs (
-data__userId,
-data__scheduleOptions,
-data__emailPreferences,
-data__name,
-data__schedule,
-data__disabled,
-data__encryptionConfiguration,
-data__metadataDestination,
-data__notificationPubsubTopic,
-data__managedTableType,
-data__destinationDatasetId,
-data__params,
-data__displayName,
-data__dataSourceId,
 data__dataRefreshWindowDays,
+data__dataSourceId,
+data__destinationDatasetId,
+data__disabled,
+data__displayName,
+data__emailPreferences,
+data__encryptionConfiguration,
+data__managedTableType,
+data__metadataDestination,
+data__name,
+data__notificationPubsubTopic,
+data__params,
+data__schedule,
+data__scheduleOptions,
 data__scheduleOptionsV2,
+data__userId,
 projectsId,
 locationsId,
-serviceAccountName,
 authorizationCode,
+serviceAccountName,
 versionInfo
 )
 SELECT 
-'{{ userId }}',
-'{{ scheduleOptions }}',
-'{{ emailPreferences }}',
-'{{ name }}',
-'{{ schedule }}',
-{{ disabled }},
-'{{ encryptionConfiguration }}',
-'{{ metadataDestination }}',
-'{{ notificationPubsubTopic }}',
-'{{ managedTableType }}',
-'{{ destinationDatasetId }}',
-'{{ params }}',
-'{{ displayName }}',
-'{{ dataSourceId }}',
 {{ dataRefreshWindowDays }},
+'{{ dataSourceId }}',
+'{{ destinationDatasetId }}',
+{{ disabled }},
+'{{ displayName }}',
+'{{ emailPreferences }}',
+'{{ encryptionConfiguration }}',
+'{{ managedTableType }}',
+'{{ metadataDestination }}',
+'{{ name }}',
+'{{ notificationPubsubTopic }}',
+'{{ params }}',
+'{{ schedule }}',
+'{{ scheduleOptions }}',
 '{{ scheduleOptionsV2 }}',
+'{{ userId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ serviceAccountName }}',
 '{{ authorizationCode }}',
+'{{ serviceAccountName }}',
 '{{ versionInfo }}'
 RETURNING
 name,
@@ -969,48 +969,48 @@ Creates a new data transfer configuration.
 
 ```sql
 INSERT INTO google.bigquerydatatransfer.transfer_configs (
-data__userId,
-data__scheduleOptions,
-data__emailPreferences,
-data__name,
-data__schedule,
-data__disabled,
-data__encryptionConfiguration,
-data__metadataDestination,
-data__notificationPubsubTopic,
-data__managedTableType,
-data__destinationDatasetId,
-data__params,
-data__displayName,
-data__dataSourceId,
 data__dataRefreshWindowDays,
+data__dataSourceId,
+data__destinationDatasetId,
+data__disabled,
+data__displayName,
+data__emailPreferences,
+data__encryptionConfiguration,
+data__managedTableType,
+data__metadataDestination,
+data__name,
+data__notificationPubsubTopic,
+data__params,
+data__schedule,
+data__scheduleOptions,
 data__scheduleOptionsV2,
+data__userId,
 projectsId,
 authorizationCode,
-versionInfo,
-serviceAccountName
+serviceAccountName,
+versionInfo
 )
 SELECT 
-'{{ userId }}',
-'{{ scheduleOptions }}',
-'{{ emailPreferences }}',
-'{{ name }}',
-'{{ schedule }}',
-{{ disabled }},
-'{{ encryptionConfiguration }}',
-'{{ metadataDestination }}',
-'{{ notificationPubsubTopic }}',
-'{{ managedTableType }}',
-'{{ destinationDatasetId }}',
-'{{ params }}',
-'{{ displayName }}',
-'{{ dataSourceId }}',
 {{ dataRefreshWindowDays }},
+'{{ dataSourceId }}',
+'{{ destinationDatasetId }}',
+{{ disabled }},
+'{{ displayName }}',
+'{{ emailPreferences }}',
+'{{ encryptionConfiguration }}',
+'{{ managedTableType }}',
+'{{ metadataDestination }}',
+'{{ name }}',
+'{{ notificationPubsubTopic }}',
+'{{ params }}',
+'{{ schedule }}',
+'{{ scheduleOptions }}',
 '{{ scheduleOptionsV2 }}',
+'{{ userId }}',
 '{{ projectsId }}',
 '{{ authorizationCode }}',
-'{{ versionInfo }}',
-'{{ serviceAccountName }}'
+'{{ serviceAccountName }}',
+'{{ versionInfo }}'
 RETURNING
 name,
 dataRefreshWindowDays,
@@ -1048,74 +1048,70 @@ userId
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the transfer_configs resource.
-    - name: userId
-      value: "{{ userId }}"
+    - name: dataRefreshWindowDays
+      value: {{ dataRefreshWindowDays }}
       description: |
-        Deprecated. Unique ID of the user on whose behalf transfer is done.
-    - name: scheduleOptions
+        The number of days to look back to automatically refresh the data. For example, if \`data_refresh_window_days = 10\`, then every day BigQuery reingests data for [today-10, today-1], rather than ingesting data for just [today-1]. Only valid if the data source supports the feature. Set the value to 0 to use the default value.
+    - name: dataSourceId
+      value: "{{ dataSourceId }}"
       description: |
-        Options customizing the data transfer schedule.
-      value:
-        startTime: "{{ startTime }}"
-        endTime: "{{ endTime }}"
-        disableAutoScheduling: {{ disableAutoScheduling }}
+        Data source ID. This cannot be changed once data transfer is created. The full list of available data source IDs can be returned through an API call: https://cloud.google.com/bigquery-transfer/docs/reference/datatransfer/rest/v1/projects.locations.dataSources/list
+    - name: destinationDatasetId
+      value: "{{ destinationDatasetId }}"
+      description: |
+        The BigQuery target dataset id.
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Is this config disabled. When set to true, no runs will be scheduled for this transfer config.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User specified display name for the data transfer.
     - name: emailPreferences
       description: |
         Email notifications will be sent according to these preferences to the email address of the user who owns this transfer config.
       value:
         enableFailureEmail: {{ enableFailureEmail }}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the transfer config. Transfer config names have the form either \`projects/{project_id}/locations/{region}/transferConfigs/{config_id}\` or \`projects/{project_id}/transferConfigs/{config_id}\`, where \`config_id\` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.
-    - name: schedule
-      value: "{{ schedule }}"
-      description: |
-        Data transfer schedule. If the data source does not support a custom schedule, this should be empty. If it is empty, the default value for the data source will be used. The specified times are in UTC. Examples of valid format: \`1st,3rd monday of month 15:30\`, \`every wed,fri of jan,jun 13:15\`, and \`first sunday of quarter 00:00\`. See more explanation about the format here: https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format NOTE: The minimum interval time between recurring transfers depends on the data source; refer to the documentation for your data source.
-    - name: disabled
-      value: {{ disabled }}
-      description: |
-        Is this config disabled. When set to true, no runs will be scheduled for this transfer config.
     - name: encryptionConfiguration
       description: |
         The encryption configuration part. Currently, it is only used for the optional KMS key name. The BigQuery service account of your project must be granted permissions to use the key. Read methods will return the key name applied in effect. Write methods will apply the key if it is present, or otherwise try to apply project default keys if it is absent.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
+    - name: managedTableType
+      value: "{{ managedTableType }}"
+      description: |
+        The classification of the destination table.
+      valid_values: ['MANAGED_TABLE_TYPE_UNSPECIFIED', 'NATIVE', 'BIGLAKE']
     - name: metadataDestination
       description: |
         The metadata destination of the transfer config.
       value:
         dataplexConfiguration:
           entryGroup: "{{ entryGroup }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the transfer config. Transfer config names have the form either \`projects/{project_id}/locations/{region}/transferConfigs/{config_id}\` or \`projects/{project_id}/transferConfigs/{config_id}\`, where \`config_id\` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.
     - name: notificationPubsubTopic
       value: "{{ notificationPubsubTopic }}"
       description: |
         Pub/Sub topic where notifications will be sent after transfer runs associated with this transfer config finish. The format for specifying a pubsub topic is: \`projects/{project_id}/topics/{topic_id}\`
-    - name: managedTableType
-      value: "{{ managedTableType }}"
-      description: |
-        The classification of the destination table.
-      valid_values: ['MANAGED_TABLE_TYPE_UNSPECIFIED', 'NATIVE', 'BIGLAKE']
-    - name: destinationDatasetId
-      value: "{{ destinationDatasetId }}"
-      description: |
-        The BigQuery target dataset id.
     - name: params
       value: "{{ params }}"
       description: |
         Parameters specific to each data source. For more information see the bq tab in the 'Setting up a data transfer' section for each data source. For example the parameters for Cloud Storage transfers are listed here: https://cloud.google.com/bigquery-transfer/docs/cloud-storage-transfer#bq
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: schedule
+      value: "{{ schedule }}"
       description: |
-        User specified display name for the data transfer.
-    - name: dataSourceId
-      value: "{{ dataSourceId }}"
+        Data transfer schedule. If the data source does not support a custom schedule, this should be empty. If it is empty, the default value for the data source will be used. The specified times are in UTC. Examples of valid format: \`1st,3rd monday of month 15:30\`, \`every wed,fri of jan,jun 13:15\`, and \`first sunday of quarter 00:00\`. See more explanation about the format here: https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format NOTE: The minimum interval time between recurring transfers depends on the data source; refer to the documentation for your data source.
+    - name: scheduleOptions
       description: |
-        Data source ID. This cannot be changed once data transfer is created. The full list of available data source IDs can be returned through an API call: https://cloud.google.com/bigquery-transfer/docs/reference/datatransfer/rest/v1/projects.locations.dataSources/list
-    - name: dataRefreshWindowDays
-      value: {{ dataRefreshWindowDays }}
-      description: |
-        The number of days to look back to automatically refresh the data. For example, if \`data_refresh_window_days = 10\`, then every day BigQuery reingests data for [today-10, today-1], rather than ingesting data for just [today-1]. Only valid if the data source supports the feature. Set the value to 0 to use the default value.
+        Options customizing the data transfer schedule.
+      value:
+        disableAutoScheduling: {{ disableAutoScheduling }}
+        endTime: "{{ endTime }}"
+        startTime: "{{ startTime }}"
     - name: scheduleOptionsV2
       description: |
         Options customizing different types of data transfer schedule. This field replaces "schedule" and "schedule_options" fields. ScheduleOptionsV2 cannot be used together with ScheduleOptions/Schedule.
@@ -1127,10 +1123,14 @@ userId
           endTime: "{{ endTime }}"
           schedule: "{{ schedule }}"
           startTime: "{{ startTime }}"
-    - name: serviceAccountName
-      value: "{{ serviceAccountName }}"
+    - name: userId
+      value: "{{ userId }}"
+      description: |
+        Deprecated. Unique ID of the user on whose behalf transfer is done.
     - name: authorizationCode
       value: "{{ authorizationCode }}"
+    - name: serviceAccountName
+      value: "{{ serviceAccountName }}"
     - name: versionInfo
       value: "{{ versionInfo }}"
 `}</CodeBlock>
@@ -1155,30 +1155,30 @@ Updates a data transfer configuration. All fields must be set, even if they are 
 ```sql
 UPDATE google.bigquerydatatransfer.transfer_configs
 SET 
-data__userId = '{{ userId }}',
-data__scheduleOptions = '{{ scheduleOptions }}',
-data__emailPreferences = '{{ emailPreferences }}',
-data__name = '{{ name }}',
-data__schedule = '{{ schedule }}',
-data__disabled = {{ disabled }},
-data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__metadataDestination = '{{ metadataDestination }}',
-data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
-data__managedTableType = '{{ managedTableType }}',
-data__destinationDatasetId = '{{ destinationDatasetId }}',
-data__params = '{{ params }}',
-data__displayName = '{{ displayName }}',
-data__dataSourceId = '{{ dataSourceId }}',
 data__dataRefreshWindowDays = {{ dataRefreshWindowDays }},
-data__scheduleOptionsV2 = '{{ scheduleOptionsV2 }}'
+data__dataSourceId = '{{ dataSourceId }}',
+data__destinationDatasetId = '{{ destinationDatasetId }}',
+data__disabled = {{ disabled }},
+data__displayName = '{{ displayName }}',
+data__emailPreferences = '{{ emailPreferences }}',
+data__encryptionConfiguration = '{{ encryptionConfiguration }}',
+data__managedTableType = '{{ managedTableType }}',
+data__metadataDestination = '{{ metadataDestination }}',
+data__name = '{{ name }}',
+data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__params = '{{ params }}',
+data__schedule = '{{ schedule }}',
+data__scheduleOptions = '{{ scheduleOptions }}',
+data__scheduleOptionsV2 = '{{ scheduleOptionsV2 }}',
+data__userId = '{{ userId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND transferConfigsId = '{{ transferConfigsId }}' --required
-AND serviceAccountName = '{{ serviceAccountName}}'
 AND authorizationCode = '{{ authorizationCode}}'
-AND versionInfo = '{{ versionInfo}}'
+AND serviceAccountName = '{{ serviceAccountName}}'
 AND updateMask = '{{ updateMask}}'
+AND versionInfo = '{{ versionInfo}}'
 RETURNING
 name,
 dataRefreshWindowDays,
@@ -1211,28 +1211,28 @@ Updates a data transfer configuration. All fields must be set, even if they are 
 ```sql
 UPDATE google.bigquerydatatransfer.transfer_configs
 SET 
-data__userId = '{{ userId }}',
-data__scheduleOptions = '{{ scheduleOptions }}',
-data__emailPreferences = '{{ emailPreferences }}',
-data__name = '{{ name }}',
-data__schedule = '{{ schedule }}',
-data__disabled = {{ disabled }},
-data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__metadataDestination = '{{ metadataDestination }}',
-data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
-data__managedTableType = '{{ managedTableType }}',
-data__destinationDatasetId = '{{ destinationDatasetId }}',
-data__params = '{{ params }}',
-data__displayName = '{{ displayName }}',
-data__dataSourceId = '{{ dataSourceId }}',
 data__dataRefreshWindowDays = {{ dataRefreshWindowDays }},
-data__scheduleOptionsV2 = '{{ scheduleOptionsV2 }}'
+data__dataSourceId = '{{ dataSourceId }}',
+data__destinationDatasetId = '{{ destinationDatasetId }}',
+data__disabled = {{ disabled }},
+data__displayName = '{{ displayName }}',
+data__emailPreferences = '{{ emailPreferences }}',
+data__encryptionConfiguration = '{{ encryptionConfiguration }}',
+data__managedTableType = '{{ managedTableType }}',
+data__metadataDestination = '{{ metadataDestination }}',
+data__name = '{{ name }}',
+data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__params = '{{ params }}',
+data__schedule = '{{ schedule }}',
+data__scheduleOptions = '{{ scheduleOptions }}',
+data__scheduleOptionsV2 = '{{ scheduleOptionsV2 }}',
+data__userId = '{{ userId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND transferConfigsId = '{{ transferConfigsId }}' --required
+AND authorizationCode = '{{ authorizationCode}}'
 AND serviceAccountName = '{{ serviceAccountName}}'
 AND updateMask = '{{ updateMask}}'
-AND authorizationCode = '{{ authorizationCode}}'
 AND versionInfo = '{{ versionInfo}}'
 RETURNING
 name,
@@ -1300,46 +1300,14 @@ AND transferConfigsId = '{{ transferConfigsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_transfer_configs_schedule_runs"
+    defaultValue="projects_locations_transfer_configs_schedule_runs"
     values={[
-        { label: 'projects_transfer_configs_schedule_runs', value: 'projects_transfer_configs_schedule_runs' },
-        { label: 'projects_transfer_configs_start_manual_runs', value: 'projects_transfer_configs_start_manual_runs' },
         { label: 'projects_locations_transfer_configs_schedule_runs', value: 'projects_locations_transfer_configs_schedule_runs' },
-        { label: 'projects_locations_transfer_configs_start_manual_runs', value: 'projects_locations_transfer_configs_start_manual_runs' }
+        { label: 'projects_locations_transfer_configs_start_manual_runs', value: 'projects_locations_transfer_configs_start_manual_runs' },
+        { label: 'projects_transfer_configs_schedule_runs', value: 'projects_transfer_configs_schedule_runs' },
+        { label: 'projects_transfer_configs_start_manual_runs', value: 'projects_transfer_configs_start_manual_runs' }
     ]}
 >
-<TabItem value="projects_transfer_configs_schedule_runs">
-
-Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.
-
-```sql
-EXEC google.bigquerydatatransfer.transfer_configs.projects_transfer_configs_schedule_runs 
-@projectsId='{{ projectsId }}' --required, 
-@transferConfigsId='{{ transferConfigsId }}' --required 
-@@json=
-'{
-"endTime": "{{ endTime }}", 
-"startTime": "{{ startTime }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_transfer_configs_start_manual_runs">
-
-Manually initiates transfer runs. You can schedule these runs in two ways: 1. For a specific point in time using the 'requested_run_time' parameter. 2. For a period between 'start_time' (inclusive) and 'end_time' (exclusive). If scheduling a single run, it is set to execute immediately (schedule_time equals the current time). When scheduling multiple runs within a time range, the first run starts now, and subsequent runs are delayed by 15 seconds each.
-
-```sql
-EXEC google.bigquerydatatransfer.transfer_configs.projects_transfer_configs_start_manual_runs 
-@projectsId='{{ projectsId }}' --required, 
-@transferConfigsId='{{ transferConfigsId }}' --required 
-@@json=
-'{
-"requestedTimeRange": "{{ requestedTimeRange }}", 
-"requestedRunTime": "{{ requestedRunTime }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_transfer_configs_schedule_runs">
 
 Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.
@@ -1368,8 +1336,40 @@ EXEC google.bigquerydatatransfer.transfer_configs.projects_locations_transfer_co
 @transferConfigsId='{{ transferConfigsId }}' --required 
 @@json=
 '{
-"requestedTimeRange": "{{ requestedTimeRange }}", 
-"requestedRunTime": "{{ requestedRunTime }}"
+"requestedRunTime": "{{ requestedRunTime }}", 
+"requestedTimeRange": "{{ requestedTimeRange }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_transfer_configs_schedule_runs">
+
+Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.
+
+```sql
+EXEC google.bigquerydatatransfer.transfer_configs.projects_transfer_configs_schedule_runs 
+@projectsId='{{ projectsId }}' --required, 
+@transferConfigsId='{{ transferConfigsId }}' --required 
+@@json=
+'{
+"endTime": "{{ endTime }}", 
+"startTime": "{{ startTime }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_transfer_configs_start_manual_runs">
+
+Manually initiates transfer runs. You can schedule these runs in two ways: 1. For a specific point in time using the 'requested_run_time' parameter. 2. For a period between 'start_time' (inclusive) and 'end_time' (exclusive). If scheduling a single run, it is set to execute immediately (schedule_time equals the current time). When scheduling multiple runs within a time range, the first run starts now, and subsequent runs are delayed by 15 seconds each.
+
+```sql
+EXEC google.bigquerydatatransfer.transfer_configs.projects_transfer_configs_start_manual_runs 
+@projectsId='{{ projectsId }}' --required, 
+@transferConfigsId='{{ transferConfigsId }}' --required 
+@@json=
+'{
+"requestedRunTime": "{{ requestedRunTime }}", 
+"requestedTimeRange": "{{ requestedTimeRange }}"
 }'
 ;
 ```

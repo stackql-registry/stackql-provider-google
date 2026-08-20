@@ -235,28 +235,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieve a collection of unit kinds.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-unitKindId"><code>unitKindId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-unitKindId"><code>unitKindId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Create a new unit kind.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitKindsId"><code>unitKindsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Update a single unit kind.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitKindsId"><code>unitKindsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Delete a single unit kind.</td>
 </tr>
 </tbody>
@@ -397,9 +397,9 @@ updateTime
 FROM google.saasservicemgmt.unit_kinds
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -422,36 +422,36 @@ Create a new unit kind.
 
 ```sql
 INSERT INTO google.saasservicemgmt.unit_kinds (
-data__defaultRelease,
+data__annotations,
 data__defaultFlagRevisions,
+data__defaultRelease,
+data__dependencies,
+data__inputVariableMappings,
 data__labels,
 data__name,
-data__dependencies,
-data__saas,
 data__outputVariableMappings,
-data__annotations,
-data__inputVariableMappings,
+data__saas,
 projectsId,
 locationsId,
+requestId,
 unitKindId,
-validateOnly,
-requestId
+validateOnly
 )
 SELECT 
-'{{ defaultRelease }}',
+'{{ annotations }}',
 '{{ defaultFlagRevisions }}',
+'{{ defaultRelease }}',
+'{{ dependencies }}',
+'{{ inputVariableMappings }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ dependencies }}',
-'{{ saas }}',
 '{{ outputVariableMappings }}',
-'{{ annotations }}',
-'{{ inputVariableMappings }}',
+'{{ saas }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ requestId }}',
 '{{ unitKindId }}',
-'{{ validateOnly }}',
-'{{ requestId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 annotations,
@@ -481,15 +481,37 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the unit_kinds resource.
-    - name: defaultRelease
-      value: "{{ defaultRelease }}"
+    - name: annotations
+      value: "{{ annotations }}"
       description: |
-        Optional. A reference to the Release object to use as default for creating new units of this UnitKind (optional). If not specified, a new unit must explicitly reference which release to use for its creation.
+        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
     - name: defaultFlagRevisions
       value:
         - "{{ defaultFlagRevisions }}"
       description: |
         Optional. Default revisions of flags for this UnitKind. Newly created units will use the flag default_flag_revisions present at the time of creation.
+    - name: defaultRelease
+      value: "{{ defaultRelease }}"
+      description: |
+        Optional. A reference to the Release object to use as default for creating new units of this UnitKind (optional). If not specified, a new unit must explicitly reference which release to use for its creation.
+    - name: dependencies
+      description: |
+        Optional. Immutable. List of other unit kinds that this release will depend on. Dependencies will be automatically provisioned if not found. Maximum 10.
+      value:
+        - alias: "{{ alias }}"
+          unitKind: "{{ unitKind }}"
+    - name: inputVariableMappings
+      description: |
+        Optional. List of inputVariables for this release that will either be retrieved from a dependency's outputVariables, or will be passed on to a dependency's inputVariables. Maximum 100.
+      value:
+        - from:
+            dependency: "{{ dependency }}"
+            outputVariable: "{{ outputVariable }}"
+          to:
+            dependency: "{{ dependency }}"
+            ignoreForLookup: {{ ignoreForLookup }}
+            inputVariable: "{{ inputVariable }}"
+          variable: "{{ variable }}"
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -498,16 +520,6 @@ updateTime
       value: "{{ name }}"
       description: |
         Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitKinds/{unitKind}"
-    - name: dependencies
-      description: |
-        Optional. Immutable. List of other unit kinds that this release will depend on. Dependencies will be automatically provisioned if not found. Maximum 10.
-      value:
-        - unitKind: "{{ unitKind }}"
-          alias: "{{ alias }}"
-    - name: saas
-      value: "{{ saas }}"
-      description: |
-        Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with App Lifecycle Manager. Part of the App Lifecycle Manager common data model. Immutable once set.
     - name: outputVariableMappings
       description: |
         Optional. List of outputVariables for this unit kind will be passed to this unit's outputVariables. Maximum 100.
@@ -515,33 +527,21 @@ updateTime
         - from:
             dependency: "{{ dependency }}"
             outputVariable: "{{ outputVariable }}"
-          variable: "{{ variable }}"
           to:
-            inputVariable: "{{ inputVariable }}"
             dependency: "{{ dependency }}"
             ignoreForLookup: {{ ignoreForLookup }}
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-    - name: inputVariableMappings
-      description: |
-        Optional. List of inputVariables for this release that will either be retrieved from a dependency's outputVariables, or will be passed on to a dependency's inputVariables. Maximum 100.
-      value:
-        - from:
-            dependency: "{{ dependency }}"
-            outputVariable: "{{ outputVariable }}"
-          variable: "{{ variable }}"
-          to:
             inputVariable: "{{ inputVariable }}"
-            dependency: "{{ dependency }}"
-            ignoreForLookup: {{ ignoreForLookup }}
+          variable: "{{ variable }}"
+    - name: saas
+      value: "{{ saas }}"
+      description: |
+        Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with App Lifecycle Manager. Part of the App Lifecycle Manager common data model. Immutable once set.
+    - name: requestId
+      value: "{{ requestId }}"
     - name: unitKindId
       value: "{{ unitKindId }}"
     - name: validateOnly
       value: {{ validateOnly }}
-    - name: requestId
-      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -563,22 +563,22 @@ Update a single unit kind.
 ```sql
 UPDATE google.saasservicemgmt.unit_kinds
 SET 
-data__defaultRelease = '{{ defaultRelease }}',
+data__annotations = '{{ annotations }}',
 data__defaultFlagRevisions = '{{ defaultFlagRevisions }}',
+data__defaultRelease = '{{ defaultRelease }}',
+data__dependencies = '{{ dependencies }}',
+data__inputVariableMappings = '{{ inputVariableMappings }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__dependencies = '{{ dependencies }}',
-data__saas = '{{ saas }}',
 data__outputVariableMappings = '{{ outputVariableMappings }}',
-data__annotations = '{{ annotations }}',
-data__inputVariableMappings = '{{ inputVariableMappings }}'
+data__saas = '{{ saas }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitKindsId = '{{ unitKindsId }}' --required
+AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
-AND requestId = '{{ requestId}}'
 RETURNING
 name,
 annotations,
@@ -617,8 +617,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitKindsId = '{{ unitKindsId }}' --required
 AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

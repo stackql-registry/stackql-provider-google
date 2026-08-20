@@ -88,7 +88,7 @@ The following methods are available for this resource:
     <td><a href="#get_iam_policy"><CopyableCode code="get_iam_policy" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
-    <td><a href="#parameter-optionsRequestedPolicyVersion"><code>optionsRequestedPolicyVersion</code></a>, <a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a></td>
+    <td><a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a>, <a href="#parameter-optionsRequestedPolicyVersion"><code>optionsRequestedPolicyVersion</code></a></td>
     <td>Gets the access control policy for a resource. May be empty if no such policy or resource exists.</td>
 </tr>
 <tr>
@@ -164,8 +164,8 @@ role
 FROM google.deploymentmanager.deployments_iam_policies
 WHERE project = '{{ project }}' -- required
 AND resource = '{{ resource }}' -- required
-AND optionsRequestedPolicyVersion = '{{ optionsRequestedPolicyVersion }}'
 AND header.bypassBillingFilter = '{{ header.bypassBillingFilter }}'
+AND optionsRequestedPolicyVersion = '{{ optionsRequestedPolicyVersion }}'
 ;
 ```
 </TabItem>
@@ -187,10 +187,10 @@ Sets the access control policy on the specified resource. Replaces any existing 
 ```sql
 REPLACE google.deploymentmanager.deployments_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}',
 data__bindings = '{{ bindings }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__policy = '{{ policy }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 project = '{{ project }}' --required
 AND resource = '{{ resource }}' --required

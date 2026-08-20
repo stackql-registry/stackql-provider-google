@@ -99,6 +99,41 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Resource name, in the form `projects/&#123;project&#125;/locations/&#123;location&#125;/sacAttachments/&#123;sac_attachment&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp when the attachment was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Optional list of labels applied to the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nccGateway" /></td>
+    <td><code>string</code></td>
+    <td>Required. NCC Gateway associated with the attachment. This can be input as an ID or a full resource name. The output always has the form `projects/&#123;project_number&#125;/locations/&#123;location&#125;/spokes/&#123;ncc_gateway&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sacRealm" /></td>
+    <td><code>string</code></td>
+    <td>Required. SAC Realm which owns the attachment. This can be input as an ID or a full resource name. The output always has the form `projects/&#123;project_number&#125;/locations/&#123;location&#125;/sacRealms/&#123;sac_realm&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State of the attachment. (STATE_UNSPECIFIED, PENDING_PARTNER_ATTACHMENT, PARTNER_ATTACHED, PARTNER_DETACHED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp when the attachment was last updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -130,14 +165,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_sac_attachments_list"><CopyableCode code="projects_locations_sac_attachments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists SACAttachments in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_sac_attachments_create"><CopyableCode code="projects_locations_sac_attachments_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-sacAttachmentId"><code>sacAttachmentId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sacAttachmentId"><code>sacAttachmentId</code></a></td>
     <td>Creates a new SACAttachment in a given project and location.</td>
 </tr>
 <tr>
@@ -246,14 +281,20 @@ Lists SACAttachments in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+labels,
+nccGateway,
+sacRealm,
+state,
+updateTime
 FROM google.networksecurity.sac_attachments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -281,8 +322,8 @@ data__nccGateway,
 data__sacRealm,
 projectsId,
 locationsId,
-sacAttachmentId,
-requestId
+requestId,
+sacAttachmentId
 )
 SELECT 
 '{{ labels }}',
@@ -291,8 +332,8 @@ SELECT
 '{{ sacRealm }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ sacAttachmentId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ sacAttachmentId }}'
 RETURNING
 name,
 done,
@@ -329,10 +370,10 @@ response
       value: "{{ sacRealm }}"
       description: |
         Required. SAC Realm which owns the attachment. This can be input as an ID or a full resource name. The output always has the form \`projects/{project_number}/locations/{location}/sacRealms/{sac_realm}\`.
-    - name: sacAttachmentId
-      value: "{{ sacAttachmentId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: sacAttachmentId
+      value: "{{ sacAttachmentId }}"
 `}</CodeBlock>
 
 </TabItem>

@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns descriptions of all snapshots for a volume.</td>
 </tr>
 <tr>
@@ -305,10 +305,10 @@ FROM google.netapp.snapshots
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND volumesId = '{{ volumesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -330,18 +330,18 @@ Create a new snapshot for a volume.
 
 ```sql
 INSERT INTO google.netapp.snapshots (
+data__description,
 data__labels,
 data__name,
-data__description,
 projectsId,
 locationsId,
 volumesId,
 snapshotId
 )
 SELECT 
+'{{ description }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ volumesId }}',
@@ -369,6 +369,10 @@ response
     - name: volumesId
       value: "{{ volumesId }}"
       description: Required parameter for the snapshots resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -377,10 +381,6 @@ response
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the snapshot. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}\`.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.
     - name: snapshotId
       value: "{{ snapshotId }}"
 `}</CodeBlock>
@@ -404,9 +404,9 @@ Updates the settings of a specific snapshot.
 ```sql
 UPDATE google.netapp.snapshots
 SET 
+data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

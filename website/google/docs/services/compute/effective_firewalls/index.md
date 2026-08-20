@@ -52,12 +52,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="firewallPolicys" /></td>
     <td><code>array</code></td>
-    <td>Output only. [Output only] Effective firewalls from firewall policy. It applies to Regional Network Firewall Policies in the specified region, Global Network Firewall Policies and Hierachial Firewall Policies which are associated with the network.</td>
+    <td>[Output Only] Effective firewalls from firewall policies.</td>
 </tr>
 <tr>
     <td><CopyableCode code="firewalls" /></td>
     <td><code>array</code></td>
-    <td>Effective firewalls on the network.</td>
+    <td>Effective firewalls on the instance.</td>
 </tr>
 </tbody>
 </table>
@@ -82,9 +82,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_effective_firewalls"><CopyableCode code="get_effective_firewalls" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-network"><code>network</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-networkInterface"><code>networkInterface</code></a></td>
     <td></td>
-    <td>Returns the effective firewalls on a given network.</td>
+    <td>Returns effective firewalls applied to an interface of the instance.</td>
 </tr>
 </tbody>
 </table>
@@ -102,8 +102,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-network">
-    <td><CopyableCode code="network" /></td>
+<tr id="parameter-instance">
+    <td><CopyableCode code="instance" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-networkInterface">
+    <td><CopyableCode code="networkInterface" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -112,8 +117,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
+<tr id="parameter-zone">
+    <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -130,7 +135,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get_effective_firewalls">
 
-Returns the effective firewalls on a given network.
+Returns effective firewalls applied to an interface of the instance.
 
 ```sql
 SELECT
@@ -138,8 +143,9 @@ firewallPolicys,
 firewalls
 FROM google.compute.effective_firewalls
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
-AND network = '{{ network }}' -- required
+AND zone = '{{ zone }}' -- required
+AND instance = '{{ instance }}' -- required
+AND networkInterface = '{{ networkInterface }}' -- required
 ;
 ```
 </TabItem>

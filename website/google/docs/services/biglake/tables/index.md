@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>List all tables in a specified database.</td>
 </tr>
 <tr>
@@ -327,8 +327,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND catalogsId = '{{ catalogsId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND view = '{{ view }}'
 AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -350,9 +350,9 @@ Creates a new table.
 
 ```sql
 INSERT INTO google.biglake.tables (
-data__type,
 data__etag,
 data__hiveOptions,
+data__type,
 projectsId,
 locationsId,
 catalogsId,
@@ -360,9 +360,9 @@ databasesId,
 tableId
 )
 SELECT 
-'{{ type }}',
 '{{ etag }}',
 '{{ hiveOptions }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -397,11 +397,6 @@ updateTime
     - name: databasesId
       value: "{{ databasesId }}"
       description: Required parameter for the tables resource.
-    - name: type
-      value: "{{ type }}"
-      description: |
-        The table type.
-      valid_values: ['TYPE_UNSPECIFIED', 'HIVE']
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -410,14 +405,19 @@ updateTime
       description: |
         Options of a Hive table.
       value:
-        tableType: "{{ tableType }}"
+        parameters: "{{ parameters }}"
         storageDescriptor:
-          outputFormat: "{{ outputFormat }}"
+          inputFormat: "{{ inputFormat }}"
           locationUri: "{{ locationUri }}"
+          outputFormat: "{{ outputFormat }}"
           serdeInfo:
             serializationLib: "{{ serializationLib }}"
-          inputFormat: "{{ inputFormat }}"
-        parameters: "{{ parameters }}"
+        tableType: "{{ tableType }}"
+    - name: type
+      value: "{{ type }}"
+      description: |
+        The table type.
+      valid_values: ['TYPE_UNSPECIFIED', 'HIVE']
     - name: tableId
       value: "{{ tableId }}"
 `}</CodeBlock>
@@ -441,9 +441,9 @@ Updates an existing table specified by the table ID.
 ```sql
 UPDATE google.biglake.tables
 SET 
-data__type = '{{ type }}',
 data__etag = '{{ etag }}',
-data__hiveOptions = '{{ hiveOptions }}'
+data__hiveOptions = '{{ hiveOptions }}',
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

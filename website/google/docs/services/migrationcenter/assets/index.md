@@ -255,14 +255,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-showHidden"><code>showHidden</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showHidden"><code>showHidden</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists all the assets in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-assetsId"><code>assetsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of an asset.</td>
 </tr>
 <tr>
@@ -287,18 +287,18 @@ The following methods are available for this resource:
     <td>Deletes list of Assets.</td>
 </tr>
 <tr>
-    <td><a href="#report_asset_frames"><CopyableCode code="report_asset_frames" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-source"><code>source</code></a></td>
-    <td>Reports a set of frames.</td>
-</tr>
-<tr>
     <td><a href="#aggregate_values"><CopyableCode code="aggregate_values" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Aggregates the requested fields based on provided function.</td>
+</tr>
+<tr>
+    <td><a href="#report_asset_frames"><CopyableCode code="report_asset_frames" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-source"><code>source</code></a></td>
+    <td>Reports a set of frames.</td>
 </tr>
 </tbody>
 </table>
@@ -443,12 +443,12 @@ updateTime
 FROM google.migrationcenter.assets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
 AND showHidden = '{{ showHidden }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -472,15 +472,15 @@ Updates the parameters of an asset.
 UPDATE google.migrationcenter.assets
 SET 
 data__attributes = '{{ attributes }}',
-data__hideReason = '{{ hideReason }}',
 data__hidden = {{ hidden }},
+data__hideReason = '{{ hideReason }}',
 data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND assetsId = '{{ assetsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 assignedGroups,
@@ -557,12 +557,29 @@ AND locationsId = '{{ locationsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="report_asset_frames"
+    defaultValue="aggregate_values"
     values={[
-        { label: 'report_asset_frames', value: 'report_asset_frames' },
-        { label: 'aggregate_values', value: 'aggregate_values' }
+        { label: 'aggregate_values', value: 'aggregate_values' },
+        { label: 'report_asset_frames', value: 'report_asset_frames' }
     ]}
 >
+<TabItem value="aggregate_values">
+
+Aggregates the requested fields based on provided function.
+
+```sql
+EXEC google.migrationcenter.assets.aggregate_values 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"aggregations": "{{ aggregations }}", 
+"filter": "{{ filter }}", 
+"showHidden": {{ showHidden }}
+}'
+;
+```
+</TabItem>
 <TabItem value="report_asset_frames">
 
 Reports a set of frames.
@@ -575,23 +592,6 @@ EXEC google.migrationcenter.assets.report_asset_frames
 @@json=
 '{
 "framesData": "{{ framesData }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="aggregate_values">
-
-Aggregates the requested fields based on provided function.
-
-```sql
-EXEC google.migrationcenter.assets.aggregate_values 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"showHidden": {{ showHidden }}, 
-"aggregations": "{{ aggregations }}"
 }'
 ;
 ```

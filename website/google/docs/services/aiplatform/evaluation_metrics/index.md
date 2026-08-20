@@ -88,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="metric" /></td>
     <td><code>object</code></td>
-    <td>Optional. The metric configuration. Only LLMMetric and CustomCodeExecutionMetric are supported. (id: GoogleCloudAiplatformV1Metric)</td>
+    <td>The metric used for running evaluations. (id: GoogleCloudAiplatformV1Metric)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -147,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="metric" /></td>
     <td><code>object</code></td>
-    <td>Optional. The metric configuration. Only LLMMetric and CustomCodeExecutionMetric are supported. (id: GoogleCloudAiplatformV1Metric)</td>
+    <td>The metric used for running evaluations. (id: GoogleCloudAiplatformV1Metric)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists EvaluationMetrics.</td>
 </tr>
 <tr>
@@ -310,10 +310,10 @@ updateTime
 FROM google.aiplatform.evaluation_metrics
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -335,25 +335,25 @@ Creates an EvaluationMetric.
 
 ```sql
 INSERT INTO google.aiplatform.evaluation_metrics (
-data__metric,
-data__labels,
-data__gcsUri,
-data__name,
-data__encryptionSpec,
 data__description,
 data__displayName,
+data__encryptionSpec,
+data__gcsUri,
+data__labels,
+data__metric,
+data__name,
 projectsId,
 locationsId,
 evaluationMetricId
 )
 SELECT 
-'{{ metric }}',
-'{{ labels }}',
-'{{ gcsUri }}',
-'{{ name }}',
-'{{ encryptionSpec }}',
 '{{ description }}',
 '{{ displayName }}',
+'{{ encryptionSpec }}',
+'{{ gcsUri }}',
+'{{ labels }}',
+'{{ metric }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ evaluationMetricId }}'
@@ -381,202 +381,6 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the evaluation_metrics resource.
-    - name: metric
-      description: |
-        Optional. The metric configuration. Only LLMMetric and CustomCodeExecutionMetric are supported.
-      value:
-        pointwiseMetricSpec:
-          metricPromptTemplate: "{{ metricPromptTemplate }}"
-          systemInstruction: "{{ systemInstruction }}"
-          customOutputFormatConfig:
-            returnRawOutput: {{ returnRawOutput }}
-        bleuSpec:
-          useEffectiveOrder: {{ useEffectiveOrder }}
-        rougeSpec:
-          useStemmer: {{ useStemmer }}
-          rougeType: "{{ rougeType }}"
-          splitSummaries: {{ splitSummaries }}
-        exactMatchSpec: "{{ exactMatchSpec }}"
-        computationBasedMetricSpec:
-          type: "{{ type }}"
-          parameters: "{{ parameters }}"
-        predefinedMetricSpec:
-          metricSpecName: "{{ metricSpecName }}"
-          metricSpecParameters: "{{ metricSpecParameters }}"
-        metadata:
-          otherMetadata: "{{ otherMetadata }}"
-          title: "{{ title }}"
-          scoreRange:
-            min: {{ min }}
-            step: {{ step }}
-            description: "{{ description }}"
-            max: {{ max }}
-        customCodeExecutionSpec:
-          evaluationFunction: "{{ evaluationFunction }}"
-        pairwiseMetricSpec:
-          systemInstruction: "{{ systemInstruction }}"
-          baselineResponseFieldName: "{{ baselineResponseFieldName }}"
-          candidateResponseFieldName: "{{ candidateResponseFieldName }}"
-          metricPromptTemplate: "{{ metricPromptTemplate }}"
-          customOutputFormatConfig:
-            returnRawOutput: {{ returnRawOutput }}
-        aggregationMetrics:
-          - "{{ aggregationMetrics }}"
-        llmBasedMetricSpec:
-          systemInstruction: "{{ systemInstruction }}"
-          judgeAutoraterConfig:
-            samplingCount: {{ samplingCount }}
-            flipEnabled: {{ flipEnabled }}
-            autoraterModel: "{{ autoraterModel }}"
-            generationConfig:
-              speechConfig:
-                languageCode: "{{ languageCode }}"
-                multiSpeakerVoiceConfig: "{{ multiSpeakerVoiceConfig }}"
-                voiceConfig: "{{ voiceConfig }}"
-              seed: {{ seed }}
-              imageConfig:
-                personGeneration: "{{ personGeneration }}"
-                aspectRatio: "{{ aspectRatio }}"
-                imageSize: "{{ imageSize }}"
-                prominentPeople: "{{ prominentPeople }}"
-                imageOutputOptions: "{{ imageOutputOptions }}"
-              audioTranscriptionConfig:
-                customVocabulary: "{{ customVocabulary }}"
-                languageHints: "{{ languageHints }}"
-                diarization: {{ diarization }}
-                adaptationPhrases: "{{ adaptationPhrases }}"
-                languageAuto: "{{ languageAuto }}"
-                wordTimestamp: {{ wordTimestamp }}
-              maxOutputTokens: {{ maxOutputTokens }}
-              responseModalities:
-                - "{{ responseModalities }}"
-              topP: {{ topP }}
-              responseJsonSchema: "{{ responseJsonSchema }}"
-              responseFormat:
-                - audio:
-                    mimeType: "{{ mimeType }}"
-                    bitRate: {{ bitRate }}
-                    delivery: "{{ delivery }}"
-                    sampleRate: {{ sampleRate }}
-                  text:
-                    mimeType: "{{ mimeType }}"
-                    schema: "{{ schema }}"
-                  image:
-                    mimeType: "{{ mimeType }}"
-                    delivery: "{{ delivery }}"
-                    aspectRatio: "{{ aspectRatio }}"
-                    imageSize: "{{ imageSize }}"
-                  video:
-                    delivery: "{{ delivery }}"
-                    aspectRatio: "{{ aspectRatio }}"
-                    gcsUri: "{{ gcsUri }}"
-                    duration: "{{ duration }}"
-              thinkingConfig:
-                includeThoughts: {{ includeThoughts }}
-                thinkingLevel: "{{ thinkingLevel }}"
-                thinkingBudget: {{ thinkingBudget }}
-              enableAffectiveDialog: {{ enableAffectiveDialog }}
-              topK: {{ topK }}
-              logprobs: {{ logprobs }}
-              presencePenalty: {{ presencePenalty }}
-              candidateCount: {{ candidateCount }}
-              responseSchema:
-                ref: "{{ ref }}"
-                enum: "{{ enum }}"
-                minLength: "{{ minLength }}"
-                title: "{{ title }}"
-                minimum: {{ minimum }}
-                maxProperties: "{{ maxProperties }}"
-                properties: "{{ properties }}"
-                nullable: {{ nullable }}
-                example: "{{ example }}"
-                minProperties: "{{ minProperties }}"
-                type: "{{ type }}"
-                pattern: "{{ pattern }}"
-                additionalProperties: "{{ additionalProperties }}"
-                format: "{{ format }}"
-                propertyOrdering: "{{ propertyOrdering }}"
-                minItems: "{{ minItems }}"
-                maximum: {{ maximum }}
-                maxLength: "{{ maxLength }}"
-                items: "{{ items }}"
-                description: "{{ description }}"
-                required: "{{ required }}"
-                maxItems: "{{ maxItems }}"
-                defs: "{{ defs }}"
-                anyOf: "{{ anyOf }}"
-                default: "{{ default }}"
-              routingConfig:
-                manualMode: "{{ manualMode }}"
-                autoMode: "{{ autoMode }}"
-              audioTimestamp: {{ audioTimestamp }}
-              temperature: {{ temperature }}
-              stopSequences:
-                - "{{ stopSequences }}"
-              responseLogprobs: {{ responseLogprobs }}
-              responseMimeType: "{{ responseMimeType }}"
-              mediaResolution: "{{ mediaResolution }}"
-              frequencyPenalty: {{ frequencyPenalty }}
-          rubricGroupKey: "{{ rubricGroupKey }}"
-          resultParserConfig:
-            customCodeParserConfig:
-              parsingFunction: "{{ parsingFunction }}"
-          predefinedRubricGenerationSpec:
-            metricSpecName: "{{ metricSpecName }}"
-            metricSpecParameters: "{{ metricSpecParameters }}"
-          metricPromptTemplate: "{{ metricPromptTemplate }}"
-          rubricGenerationSpec:
-            promptTemplate: "{{ promptTemplate }}"
-            modelConfig:
-              samplingCount: {{ samplingCount }}
-              flipEnabled: {{ flipEnabled }}
-              autoraterModel: "{{ autoraterModel }}"
-              generationConfig:
-                speechConfig: "{{ speechConfig }}"
-                seed: {{ seed }}
-                imageConfig: "{{ imageConfig }}"
-                audioTranscriptionConfig: "{{ audioTranscriptionConfig }}"
-                maxOutputTokens: {{ maxOutputTokens }}
-                responseModalities: "{{ responseModalities }}"
-                topP: {{ topP }}
-                responseJsonSchema: "{{ responseJsonSchema }}"
-                responseFormat: "{{ responseFormat }}"
-                thinkingConfig: "{{ thinkingConfig }}"
-                enableAffectiveDialog: {{ enableAffectiveDialog }}
-                topK: {{ topK }}
-                logprobs: {{ logprobs }}
-                presencePenalty: {{ presencePenalty }}
-                candidateCount: {{ candidateCount }}
-                responseSchema: "{{ responseSchema }}"
-                routingConfig: "{{ routingConfig }}"
-                audioTimestamp: {{ audioTimestamp }}
-                temperature: {{ temperature }}
-                stopSequences: "{{ stopSequences }}"
-                responseLogprobs: {{ responseLogprobs }}
-                responseMimeType: "{{ responseMimeType }}"
-                mediaResolution: "{{ mediaResolution }}"
-                frequencyPenalty: {{ frequencyPenalty }}
-            rubricTypeOntology:
-              - "{{ rubricTypeOntology }}"
-            rubricContentType: "{{ rubricContentType }}"
-          additionalConfig: "{{ additionalConfig }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels for the evaluation metric.
-    - name: gcsUri
-      value: "{{ gcsUri }}"
-      description: |
-        Optional. The Google Cloud Storage URI that stores the metric specification..
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the EvaluationMetric. Format: \`projects/{project}/locations/{location}/evaluationMetrics/{evaluation_metric}\`
-    - name: encryptionSpec
-      description: |
-        Optional. Customer-managed encryption key spec for this EvaluationMetric. If set, this EvaluationMetric will be secured by this key.
-      value:
-        kmsKeyName: "{{ kmsKeyName }}"
     - name: description
       value: "{{ description }}"
       description: |
@@ -585,6 +389,204 @@ updateTime
       value: "{{ displayName }}"
       description: |
         Required. The user-friendly display name for the EvaluationMetric.
+    - name: encryptionSpec
+      description: |
+        Optional. Customer-managed encryption key spec for this EvaluationMetric. If set, this EvaluationMetric will be secured by this key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: gcsUri
+      value: "{{ gcsUri }}"
+      description: |
+        Optional. The Google Cloud Storage URI that stores the metric specification..
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels for the evaluation metric.
+    - name: metric
+      description: |
+        The metric used for running evaluations.
+      value:
+        aggregationMetrics:
+          - "{{ aggregationMetrics }}"
+        bleuSpec:
+          useEffectiveOrder: {{ useEffectiveOrder }}
+        computationBasedMetricSpec:
+          parameters: "{{ parameters }}"
+          type: "{{ type }}"
+        customCodeExecutionSpec:
+          evaluationFunction: "{{ evaluationFunction }}"
+        exactMatchSpec: "{{ exactMatchSpec }}"
+        llmBasedMetricSpec:
+          additionalConfig: "{{ additionalConfig }}"
+          judgeAutoraterConfig:
+            autoraterModel: "{{ autoraterModel }}"
+            flipEnabled: {{ flipEnabled }}
+            generationConfig:
+              audioTimestamp: {{ audioTimestamp }}
+              audioTranscriptionConfig:
+                adaptationPhrases: "{{ adaptationPhrases }}"
+                customVocabulary: "{{ customVocabulary }}"
+                diarization: {{ diarization }}
+                languageAuto: "{{ languageAuto }}"
+                languageCodes: "{{ languageCodes }}"
+                languageHints: "{{ languageHints }}"
+                wordTimestamp: {{ wordTimestamp }}
+              candidateCount: {{ candidateCount }}
+              enableAffectiveDialog: {{ enableAffectiveDialog }}
+              frequencyPenalty: {{ frequencyPenalty }}
+              imageConfig:
+                aspectRatio: "{{ aspectRatio }}"
+                imageOutputOptions: "{{ imageOutputOptions }}"
+                imageSize: "{{ imageSize }}"
+                personGeneration: "{{ personGeneration }}"
+                prominentPeople: "{{ prominentPeople }}"
+              logprobs: {{ logprobs }}
+              maxOutputTokens: {{ maxOutputTokens }}
+              mediaResolution: "{{ mediaResolution }}"
+              presencePenalty: {{ presencePenalty }}
+              responseFormat:
+                - audio:
+                    bitRate: {{ bitRate }}
+                    delivery: "{{ delivery }}"
+                    mimeType: "{{ mimeType }}"
+                    sampleRate: {{ sampleRate }}
+                  image:
+                    aspectRatio: "{{ aspectRatio }}"
+                    delivery: "{{ delivery }}"
+                    imageSize: "{{ imageSize }}"
+                    mimeType: "{{ mimeType }}"
+                  text:
+                    mimeType: "{{ mimeType }}"
+                    schema: "{{ schema }}"
+                  video:
+                    aspectRatio: "{{ aspectRatio }}"
+                    delivery: "{{ delivery }}"
+                    duration: "{{ duration }}"
+                    gcsUri: "{{ gcsUri }}"
+                    resolution: "{{ resolution }}"
+              responseJsonSchema: "{{ responseJsonSchema }}"
+              responseLogprobs: {{ responseLogprobs }}
+              responseMimeType: "{{ responseMimeType }}"
+              responseModalities:
+                - "{{ responseModalities }}"
+              responseSchema:
+                additionalProperties: "{{ additionalProperties }}"
+                anyOf: "{{ anyOf }}"
+                default: "{{ default }}"
+                defs: "{{ defs }}"
+                description: "{{ description }}"
+                enum: "{{ enum }}"
+                example: "{{ example }}"
+                format: "{{ format }}"
+                items: "{{ items }}"
+                maxItems: "{{ maxItems }}"
+                maxLength: "{{ maxLength }}"
+                maxProperties: "{{ maxProperties }}"
+                maximum: {{ maximum }}
+                minItems: "{{ minItems }}"
+                minLength: "{{ minLength }}"
+                minProperties: "{{ minProperties }}"
+                minimum: {{ minimum }}
+                nullable: {{ nullable }}
+                pattern: "{{ pattern }}"
+                properties: "{{ properties }}"
+                propertyOrdering: "{{ propertyOrdering }}"
+                ref: "{{ ref }}"
+                required: "{{ required }}"
+                title: "{{ title }}"
+                type: "{{ type }}"
+              routingConfig:
+                autoMode: "{{ autoMode }}"
+                manualMode: "{{ manualMode }}"
+              seed: {{ seed }}
+              speechConfig:
+                languageCode: "{{ languageCode }}"
+                multiSpeakerVoiceConfig: "{{ multiSpeakerVoiceConfig }}"
+                voiceConfig: "{{ voiceConfig }}"
+              stopSequences:
+                - "{{ stopSequences }}"
+              temperature: {{ temperature }}
+              thinkingConfig:
+                includeThoughts: {{ includeThoughts }}
+                thinkingBudget: {{ thinkingBudget }}
+                thinkingLevel: "{{ thinkingLevel }}"
+              topK: {{ topK }}
+              topP: {{ topP }}
+            samplingCount: {{ samplingCount }}
+          metricPromptTemplate: "{{ metricPromptTemplate }}"
+          predefinedRubricGenerationSpec:
+            metricSpecName: "{{ metricSpecName }}"
+            metricSpecParameters: "{{ metricSpecParameters }}"
+          resultParserConfig:
+            customCodeParserConfig:
+              parsingFunction: "{{ parsingFunction }}"
+          rubricGenerationSpec:
+            modelConfig:
+              autoraterModel: "{{ autoraterModel }}"
+              flipEnabled: {{ flipEnabled }}
+              generationConfig:
+                audioTimestamp: {{ audioTimestamp }}
+                audioTranscriptionConfig: "{{ audioTranscriptionConfig }}"
+                candidateCount: {{ candidateCount }}
+                enableAffectiveDialog: {{ enableAffectiveDialog }}
+                frequencyPenalty: {{ frequencyPenalty }}
+                imageConfig: "{{ imageConfig }}"
+                logprobs: {{ logprobs }}
+                maxOutputTokens: {{ maxOutputTokens }}
+                mediaResolution: "{{ mediaResolution }}"
+                presencePenalty: {{ presencePenalty }}
+                responseFormat: "{{ responseFormat }}"
+                responseJsonSchema: "{{ responseJsonSchema }}"
+                responseLogprobs: {{ responseLogprobs }}
+                responseMimeType: "{{ responseMimeType }}"
+                responseModalities: "{{ responseModalities }}"
+                responseSchema: "{{ responseSchema }}"
+                routingConfig: "{{ routingConfig }}"
+                seed: {{ seed }}
+                speechConfig: "{{ speechConfig }}"
+                stopSequences: "{{ stopSequences }}"
+                temperature: {{ temperature }}
+                thinkingConfig: "{{ thinkingConfig }}"
+                topK: {{ topK }}
+                topP: {{ topP }}
+              samplingCount: {{ samplingCount }}
+            promptTemplate: "{{ promptTemplate }}"
+            rubricContentType: "{{ rubricContentType }}"
+            rubricTypeOntology:
+              - "{{ rubricTypeOntology }}"
+          rubricGroupKey: "{{ rubricGroupKey }}"
+          systemInstruction: "{{ systemInstruction }}"
+        metadata:
+          otherMetadata: "{{ otherMetadata }}"
+          scoreRange:
+            description: "{{ description }}"
+            max: {{ max }}
+            min: {{ min }}
+            step: {{ step }}
+          title: "{{ title }}"
+        pairwiseMetricSpec:
+          baselineResponseFieldName: "{{ baselineResponseFieldName }}"
+          candidateResponseFieldName: "{{ candidateResponseFieldName }}"
+          customOutputFormatConfig:
+            returnRawOutput: {{ returnRawOutput }}
+          metricPromptTemplate: "{{ metricPromptTemplate }}"
+          systemInstruction: "{{ systemInstruction }}"
+        pointwiseMetricSpec:
+          customOutputFormatConfig:
+            returnRawOutput: {{ returnRawOutput }}
+          metricPromptTemplate: "{{ metricPromptTemplate }}"
+          systemInstruction: "{{ systemInstruction }}"
+        predefinedMetricSpec:
+          metricSpecName: "{{ metricSpecName }}"
+          metricSpecParameters: "{{ metricSpecParameters }}"
+        rougeSpec:
+          rougeType: "{{ rougeType }}"
+          splitSummaries: {{ splitSummaries }}
+          useStemmer: {{ useStemmer }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the EvaluationMetric. Format: \`projects/{project}/locations/{location}/evaluationMetrics/{evaluation_metric}\`
     - name: evaluationMetricId
       value: "{{ evaluationMetricId }}"
 `}</CodeBlock>

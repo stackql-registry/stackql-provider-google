@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_catalogs_models_list"><CopyableCode code="projects_locations_catalogs_models_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the models linked to this event store.</td>
 </tr>
 <tr>
@@ -412,8 +412,8 @@ FROM google.retail.models
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND catalogsId = '{{ catalogsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -435,28 +435,28 @@ Creates a new model.
 
 ```sql
 INSERT INTO google.retail.models (
+data__displayName,
 data__filteringOption,
 data__modelFeaturesConfig,
-data__displayName,
-data__optimizationObjective,
-data__type,
 data__name,
-data__trainingState,
+data__optimizationObjective,
 data__periodicTuningState,
+data__trainingState,
+data__type,
 projectsId,
 locationsId,
 catalogsId,
 dryRun
 )
 SELECT 
+'{{ displayName }}',
 '{{ filteringOption }}',
 '{{ modelFeaturesConfig }}',
-'{{ displayName }}',
-'{{ optimizationObjective }}',
-'{{ type }}',
 '{{ name }}',
-'{{ trainingState }}',
+'{{ optimizationObjective }}',
 '{{ periodicTuningState }}',
+'{{ trainingState }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -484,6 +484,10 @@ response
     - name: catalogsId
       value: "{{ catalogsId }}"
       description: Required parameter for the models resource.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the model. Should be human readable, used to display Recommendation Models in the Retail Cloud Console Dashboard. UTF-8 encoded string with limit of 1024 characters.
     - name: filteringOption
       value: "{{ filteringOption }}"
       description: |
@@ -495,32 +499,28 @@ response
       value:
         frequentlyBoughtTogetherConfig:
           contextProductsType: "{{ contextProductsType }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the model. Should be human readable, used to display Recommendation Models in the Retail Cloud Console Dashboard. UTF-8 encoded string with limit of 1024 characters.
-    - name: optimizationObjective
-      value: "{{ optimizationObjective }}"
-      description: |
-        Optional. The optimization objective e.g. \`cvr\`. Currently supported values: \`ctr\`, \`cvr\`, \`revenue-per-order\`. If not specified, we choose default based on model type. Default depends on type of recommendation: \`recommended-for-you\` => \`ctr\` \`others-you-may-like\` => \`ctr\` \`frequently-bought-together\` => \`revenue_per_order\` This field together with optimization_objective describe model metadata to use to control model training and serving. See https://cloud.google.com/retail/docs/models for more details on what the model metadata control and which combination of parameters are valid. For invalid combinations of parameters (e.g. type = \`frequently-bought-together\` and optimization_objective = \`ctr\`), you receive an error 400 if you try to create/update a recommendation with this set of knobs.
-    - name: type
-      value: "{{ type }}"
-      description: |
-        Required. The type of model e.g. \`home-page\`. Currently supported values: \`recommended-for-you\`, \`others-you-may-like\`, \`frequently-bought-together\`, \`page-optimization\`, \`similar-items\`, \`buy-it-again\`, \`on-sale-items\`, and \`recently-viewed\`(readonly value). This field together with optimization_objective describe model metadata to use to control model training and serving. See https://cloud.google.com/retail/docs/models for more details on what the model metadata control and which combination of parameters are valid. For invalid combinations of parameters (e.g. type = \`frequently-bought-together\` and optimization_objective = \`ctr\`), you receive an error 400 if you try to create/update a recommendation with this set of knobs.
     - name: name
       value: "{{ name }}"
       description: |
         Required. The fully qualified resource name of the model. Format: \`projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/models/{model_id}\` catalog_id has char limit of 50. recommendation_model_id has char limit of 40.
-    - name: trainingState
-      value: "{{ trainingState }}"
+    - name: optimizationObjective
+      value: "{{ optimizationObjective }}"
       description: |
-        Optional. The training state that the model is in (e.g. \`TRAINING\` or \`PAUSED\`). Since part of the cost of running the service is frequency of training - this can be used to determine when to train model in order to control cost. If not specified: the default value for \`CreateModel\` method is \`TRAINING\`. The default value for \`UpdateModel\` method is to keep the state the same as before.
-      valid_values: ['TRAINING_STATE_UNSPECIFIED', 'PAUSED', 'TRAINING']
+        Optional. The optimization objective e.g. \`cvr\`. Currently supported values: \`ctr\`, \`cvr\`, \`revenue-per-order\`. If not specified, we choose default based on model type. Default depends on type of recommendation: \`recommended-for-you\` => \`ctr\` \`others-you-may-like\` => \`ctr\` \`frequently-bought-together\` => \`revenue_per_order\` This field together with optimization_objective describe model metadata to use to control model training and serving. See https://cloud.google.com/retail/docs/models for more details on what the model metadata control and which combination of parameters are valid. For invalid combinations of parameters (e.g. type = \`frequently-bought-together\` and optimization_objective = \`ctr\`), you receive an error 400 if you try to create/update a recommendation with this set of knobs.
     - name: periodicTuningState
       value: "{{ periodicTuningState }}"
       description: |
         Optional. The state of periodic tuning. The period we use is 3 months - to do a one-off tune earlier use the \`TuneModel\` method. Default value is \`PERIODIC_TUNING_ENABLED\`.
       valid_values: ['PERIODIC_TUNING_STATE_UNSPECIFIED', 'PERIODIC_TUNING_DISABLED', 'ALL_TUNING_DISABLED', 'PERIODIC_TUNING_ENABLED']
+    - name: trainingState
+      value: "{{ trainingState }}"
+      description: |
+        Optional. The training state that the model is in (e.g. \`TRAINING\` or \`PAUSED\`). Since part of the cost of running the service is frequency of training - this can be used to determine when to train model in order to control cost. If not specified: the default value for \`CreateModel\` method is \`TRAINING\`. The default value for \`UpdateModel\` method is to keep the state the same as before.
+      valid_values: ['TRAINING_STATE_UNSPECIFIED', 'PAUSED', 'TRAINING']
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The type of model e.g. \`home-page\`. Currently supported values: \`recommended-for-you\`, \`others-you-may-like\`, \`frequently-bought-together\`, \`page-optimization\`, \`similar-items\`, \`buy-it-again\`, \`on-sale-items\`, and \`recently-viewed\`(readonly value). This field together with optimization_objective describe model metadata to use to control model training and serving. See https://cloud.google.com/retail/docs/models for more details on what the model metadata control and which combination of parameters are valid. For invalid combinations of parameters (e.g. type = \`frequently-bought-together\` and optimization_objective = \`ctr\`), you receive an error 400 if you try to create/update a recommendation with this set of knobs.
     - name: dryRun
       value: {{ dryRun }}
 `}</CodeBlock>
@@ -544,14 +544,14 @@ Update of model metadata. Only fields that currently can be updated are: `filter
 ```sql
 UPDATE google.retail.models
 SET 
+data__displayName = '{{ displayName }}',
 data__filteringOption = '{{ filteringOption }}',
 data__modelFeaturesConfig = '{{ modelFeaturesConfig }}',
-data__displayName = '{{ displayName }}',
-data__optimizationObjective = '{{ optimizationObjective }}',
-data__type = '{{ type }}',
 data__name = '{{ name }}',
+data__optimizationObjective = '{{ optimizationObjective }}',
+data__periodicTuningState = '{{ periodicTuningState }}',
 data__trainingState = '{{ trainingState }}',
-data__periodicTuningState = '{{ periodicTuningState }}'
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

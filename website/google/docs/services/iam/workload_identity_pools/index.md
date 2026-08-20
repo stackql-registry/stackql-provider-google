@@ -210,18 +210,18 @@ The following methods are available for this resource:
     <td>Deletes a WorkloadIdentityPool. You cannot use a deleted pool to exchange external credentials for Google Cloud credentials. However, deletion does not revoke credentials that have already been issued. Credentials issued for a deleted pool do not grant access to resources. If the pool is undeleted, and the credentials are not expired, they grant access again. You can undelete a pool for 30 days. After 30 days, deletion is permanent. You cannot update deleted pools. However, you can view and list them.</td>
 </tr>
 <tr>
-    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
-    <td></td>
-    <td>Undeletes a WorkloadIdentityPool, as long as it was deleted fewer than 30 days ago.</td>
-</tr>
-<tr>
     <td><a href="#set_attestation_rules"><CopyableCode code="set_attestation_rules" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
     <td></td>
     <td>Set all AttestationRule on a WorkloadIdentityPoolManagedIdentity. A maximum of 50 AttestationRules can be set.</td>
+</tr>
+<tr>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
+    <td></td>
+    <td>Undeletes a WorkloadIdentityPool, as long as it was deleted fewer than 30 days ago.</td>
 </tr>
 </tbody>
 </table>
@@ -355,25 +355,25 @@ Creates a new WorkloadIdentityPool. You cannot reuse the name of a deleted pool 
 
 ```sql
 INSERT INTO google.iam.workload_identity_pools (
-data__inlineCertificateIssuanceConfig,
-data__disabled,
 data__description,
-data__name,
+data__disabled,
 data__displayName,
+data__inlineCertificateIssuanceConfig,
 data__inlineTrustConfig,
 data__mode,
+data__name,
 projectsId,
 locationsId,
 workloadIdentityPoolId
 )
 SELECT 
-'{{ inlineCertificateIssuanceConfig }}',
-{{ disabled }},
 '{{ description }}',
-'{{ name }}',
+{{ disabled }},
 '{{ displayName }}',
+'{{ inlineCertificateIssuanceConfig }}',
 '{{ inlineTrustConfig }}',
 '{{ mode }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workloadIdentityPoolId }}'
@@ -397,31 +397,27 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the workload_identity_pools resource.
-    - name: inlineCertificateIssuanceConfig
-      description: |
-        Optional. Defines the Certificate Authority (CA) pool resources and configurations required for issuance and rotation of mTLS workload certificates.
-      value:
-        lifetime: "{{ lifetime }}"
-        keyAlgorithm: "{{ keyAlgorithm }}"
-        caPools: "{{ caPools }}"
-        rotationWindowPercentage: {{ rotationWindowPercentage }}
-        useDefaultSharedCa: {{ useDefaultSharedCa }}
-    - name: disabled
-      value: {{ disabled }}
-      description: |
-        Optional. Whether the pool is disabled. You cannot use a disabled pool to exchange tokens, or use existing tokens to access resources. If the pool is re-enabled, existing tokens grant access again.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A description of the pool. Cannot exceed 256 characters.
-    - name: name
-      value: "{{ name }}"
+    - name: disabled
+      value: {{ disabled }}
       description: |
-        Identifier. The resource name of the pool.
+        Optional. Whether the pool is disabled. You cannot use a disabled pool to exchange tokens, or use existing tokens to access resources. If the pool is re-enabled, existing tokens grant access again.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. A display name for the pool. Cannot exceed 32 characters.
+    - name: inlineCertificateIssuanceConfig
+      description: |
+        Optional. Defines the Certificate Authority (CA) pool resources and configurations required for issuance and rotation of mTLS workload certificates.
+      value:
+        caPools: "{{ caPools }}"
+        keyAlgorithm: "{{ keyAlgorithm }}"
+        lifetime: "{{ lifetime }}"
+        rotationWindowPercentage: {{ rotationWindowPercentage }}
+        useDefaultSharedCa: {{ useDefaultSharedCa }}
     - name: inlineTrustConfig
       description: |
         Optional. Represents config to add additional trusted trust domains.
@@ -432,6 +428,10 @@ response
       description: |
         Immutable. The mode the pool is operating in.
       valid_values: ['MODE_UNSPECIFIED', 'FEDERATION_ONLY', 'TRUST_DOMAIN', 'SYSTEM_TRUST_DOMAIN']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the pool.
     - name: workloadIdentityPoolId
       value: "{{ workloadIdentityPoolId }}"
 `}</CodeBlock>
@@ -455,13 +455,13 @@ Updates an existing WorkloadIdentityPool.
 ```sql
 UPDATE google.iam.workload_identity_pools
 SET 
-data__inlineCertificateIssuanceConfig = '{{ inlineCertificateIssuanceConfig }}',
-data__disabled = {{ disabled }},
 data__description = '{{ description }}',
-data__name = '{{ name }}',
+data__disabled = {{ disabled }},
 data__displayName = '{{ displayName }}',
+data__inlineCertificateIssuanceConfig = '{{ inlineCertificateIssuanceConfig }}',
 data__inlineTrustConfig = '{{ inlineTrustConfig }}',
-data__mode = '{{ mode }}'
+data__mode = '{{ mode }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -504,24 +504,12 @@ AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undelete"
+    defaultValue="set_attestation_rules"
     values={[
-        { label: 'undelete', value: 'undelete' },
-        { label: 'set_attestation_rules', value: 'set_attestation_rules' }
+        { label: 'set_attestation_rules', value: 'set_attestation_rules' },
+        { label: 'undelete', value: 'undelete' }
     ]}
 >
-<TabItem value="undelete">
-
-Undeletes a WorkloadIdentityPool, as long as it was deleted fewer than 30 days ago.
-
-```sql
-EXEC google.iam.workload_identity_pools.undelete 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@workloadIdentityPoolsId='{{ workloadIdentityPoolsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="set_attestation_rules">
 
 Set all AttestationRule on a WorkloadIdentityPoolManagedIdentity. A maximum of 50 AttestationRules can be set.
@@ -535,6 +523,18 @@ EXEC google.iam.workload_identity_pools.set_attestation_rules
 '{
 "attestationRules": "{{ attestationRules }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="undelete">
+
+Undeletes a WorkloadIdentityPool, as long as it was deleted fewer than 30 days ago.
+
+```sql
+EXEC google.iam.workload_identity_pools.undelete 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@workloadIdentityPoolsId='{{ workloadIdentityPoolsId }}' --required
 ;
 ```
 </TabItem>

@@ -113,7 +113,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-currencyCode"><code>currencyCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-currencyCode"><code>currencyCode</code></a>, <a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
     <td>Lists all publicly available SKUs for a given cloud service.</td>
 </tr>
 </tbody>
@@ -189,11 +189,11 @@ serviceRegions,
 skuId
 FROM google.cloudbilling.skus
 WHERE servicesId = '{{ servicesId }}' -- required
-AND endTime = '{{ endTime }}'
-AND startTime = '{{ startTime }}'
 AND currencyCode = '{{ currencyCode }}'
+AND endTime = '{{ endTime }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND startTime = '{{ startTime }}'
 ;
 ```
 </TabItem>

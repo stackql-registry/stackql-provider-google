@@ -190,6 +190,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the workflow template, as described in https://cloud.google.com/apis/design/resource_names. For projects.regions.workflowTemplates, the resource name of the template has the following format: projects/&#123;project_id&#125;/regions/&#123;region&#125;/workflowTemplates/&#123;template_id&#125; For projects.locations.workflowTemplates, the resource name of the template has the following format: projects/&#123;project_id&#125;/locations/&#123;location&#125;/workflowTemplates/&#123;template_id&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time template was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dagTimeout" /></td>
+    <td><code>string (google-duration)</code></td>
+    <td>Optional. Timeout duration for the DAG of jobs, expressed in seconds (see JSON representation of duration (https://developers.google.com/protocol-buffers/docs/proto3#json)). The timeout duration must be from 10 minutes ("600s") to 24 hours ("86400s"). The timer begins when the first job is submitted. If the workflow is running at the end of the timeout period, any remaining jobs are cancelled, the workflow is ended, and if the workflow was running on a managed cluster, the cluster is deleted.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Encryption settings for encrypting workflow template job arguments. (id: GoogleCloudDataprocV1WorkflowTemplateEncryptionConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="jobs" /></td>
+    <td><code>array</code></td>
+    <td>Required. The Directed Acyclic Graph of Jobs to submit.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The labels to associate with this template. These labels will be propagated to all jobs and clusters created by the workflow instance.Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).No more than 32 labels can be associated with a template.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="parameters" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Template parameters whose values are substituted into the template. Values for parameters must be provided when the template is instantiated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="placement" /></td>
+    <td><code>object</code></td>
+    <td>Required. WorkflowTemplate scheduling information. (id: WorkflowTemplatePlacement)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time template was last updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="version" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Optional. Used to perform a consistent read-modify-write.This field should be left blank for a CreateWorkflowTemplate request. It is required for an UpdateWorkflowTemplate request, and must match the current server version. A typical update template flow would fetch the current template with a GetWorkflowTemplate request, which will return the current template with the version field filled in with the current server version. The user updates other fields in the template, then returns it as part of the UpdateWorkflowTemplate request.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -204,6 +259,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the workflow template, as described in https://cloud.google.com/apis/design/resource_names. For projects.regions.workflowTemplates, the resource name of the template has the following format: projects/&#123;project_id&#125;/regions/&#123;region&#125;/workflowTemplates/&#123;template_id&#125; For projects.locations.workflowTemplates, the resource name of the template has the following format: projects/&#123;project_id&#125;/locations/&#123;location&#125;/workflowTemplates/&#123;template_id&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time template was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dagTimeout" /></td>
+    <td><code>string (google-duration)</code></td>
+    <td>Optional. Timeout duration for the DAG of jobs, expressed in seconds (see JSON representation of duration (https://developers.google.com/protocol-buffers/docs/proto3#json)). The timeout duration must be from 10 minutes ("600s") to 24 hours ("86400s"). The timer begins when the first job is submitted. If the workflow is running at the end of the timeout period, any remaining jobs are cancelled, the workflow is ended, and if the workflow was running on a managed cluster, the cluster is deleted.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Encryption settings for encrypting workflow template job arguments. (id: GoogleCloudDataprocV1WorkflowTemplateEncryptionConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="jobs" /></td>
+    <td><code>array</code></td>
+    <td>Required. The Directed Acyclic Graph of Jobs to submit.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The labels to associate with this template. These labels will be propagated to all jobs and clusters created by the workflow instance.Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).No more than 32 labels can be associated with a template.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="parameters" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Template parameters whose values are substituted into the template. Values for parameters must be provided when the template is instantiated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="placement" /></td>
+    <td><code>object</code></td>
+    <td>Required. WorkflowTemplate scheduling information. (id: WorkflowTemplatePlacement)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time template was last updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="version" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Optional. Used to perform a consistent read-modify-write.This field should be left blank for a CreateWorkflowTemplate request. It is required for an UpdateWorkflowTemplate request, and must match the current server version. A typical update template flow would fetch the current template with a GetWorkflowTemplate request, which will return the current template with the version field filled in with the current server version. The user updates other fields in the template, then returns it as part of the UpdateWorkflowTemplate request.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -249,7 +359,7 @@ The following methods are available for this resource:
     <td><a href="#projects_regions_workflow_templates_list"><CopyableCode code="projects_regions_workflow_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists workflows that match the specified filter in the request.</td>
 </tr>
 <tr>
@@ -448,7 +558,17 @@ Lists workflows that match the specified filter in the request.
 
 ```sql
 SELECT
-*
+id,
+name,
+createTime,
+dagTimeout,
+encryptionConfig,
+jobs,
+labels,
+parameters,
+placement,
+updateTime,
+version
 FROM google.dataproc.workflow_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -463,12 +583,22 @@ Lists workflows that match the specified filter in the request.
 
 ```sql
 SELECT
-*
+id,
+name,
+createTime,
+dagTimeout,
+encryptionConfig,
+jobs,
+labels,
+parameters,
+placement,
+updateTime,
+version
 FROM google.dataproc.workflow_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND regionsId = '{{ regionsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -491,26 +621,26 @@ Creates new workflow template.
 
 ```sql
 INSERT INTO google.dataproc.workflow_templates (
-data__placement,
-data__id,
-data__version,
 data__dagTimeout,
 data__encryptionConfig,
-data__labels,
+data__id,
 data__jobs,
+data__labels,
 data__parameters,
+data__placement,
+data__version,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ placement }}',
-'{{ id }}',
-{{ version }},
 '{{ dagTimeout }}',
 '{{ encryptionConfig }}',
-'{{ labels }}',
+'{{ id }}',
 '{{ jobs }}',
+'{{ labels }}',
 '{{ parameters }}',
+'{{ placement }}',
+{{ version }},
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -534,26 +664,26 @@ Creates new workflow template.
 
 ```sql
 INSERT INTO google.dataproc.workflow_templates (
-data__placement,
-data__id,
-data__version,
 data__dagTimeout,
 data__encryptionConfig,
-data__labels,
+data__id,
 data__jobs,
+data__labels,
 data__parameters,
+data__placement,
+data__version,
 projectsId,
 regionsId
 )
 SELECT 
-'{{ placement }}',
-'{{ id }}',
-{{ version }},
 '{{ dagTimeout }}',
 '{{ encryptionConfig }}',
-'{{ labels }}',
+'{{ id }}',
 '{{ jobs }}',
+'{{ labels }}',
 '{{ parameters }}',
+'{{ placement }}',
+{{ version }},
 '{{ projectsId }}',
 '{{ regionsId }}'
 RETURNING
@@ -585,237 +715,6 @@ version
     - name: regionsId
       value: "{{ regionsId }}"
       description: Required parameter for the workflow_templates resource.
-    - name: placement
-      description: |
-        Required. WorkflowTemplate scheduling information.
-      value:
-        managedCluster:
-          config:
-            clusterType: "{{ clusterType }}"
-            secondaryWorkerConfig:
-              numInstances: {{ numInstances }}
-              minCpuPlatform: "{{ minCpuPlatform }}"
-              instanceNames:
-                - "{{ instanceNames }}"
-              diskConfig:
-                numLocalSsds: {{ numLocalSsds }}
-                bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-                bootDiskType: "{{ bootDiskType }}"
-                bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
-                bootDiskSizeGb: {{ bootDiskSizeGb }}
-                localSsdInterface: "{{ localSsdInterface }}"
-                attachedDiskConfigs: "{{ attachedDiskConfigs }}"
-              managedGroupConfig:
-                instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
-                instanceTemplateName: "{{ instanceTemplateName }}"
-                instanceGroupManagerName: "{{ instanceGroupManagerName }}"
-              instanceReferences:
-                - publicKey: "{{ publicKey }}"
-                  instanceName: "{{ instanceName }}"
-                  instanceId: "{{ instanceId }}"
-                  publicEciesKey: "{{ publicEciesKey }}"
-              imageUri: "{{ imageUri }}"
-              preemptibility: "{{ preemptibility }}"
-              isPreemptible: {{ isPreemptible }}
-              startupConfig:
-                requiredRegistrationFraction: {{ requiredRegistrationFraction }}
-              machineTypeUri: "{{ machineTypeUri }}"
-              minNumInstances: {{ minNumInstances }}
-              accelerators:
-                - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
-                  acceleratorCount: {{ acceleratorCount }}
-              instanceFlexibilityPolicy:
-                provisioningModelMix: "{{ provisioningModelMix }}"
-                instanceMachineTypes: "{{ instanceMachineTypes }}"
-                instanceSelectionList: "{{ instanceSelectionList }}"
-                instanceSelectionResults: "{{ instanceSelectionResults }}"
-            engine: "{{ engine }}"
-            diagnosticBucket: "{{ diagnosticBucket }}"
-            softwareConfig:
-              imageVersion: "{{ imageVersion }}"
-              properties: "{{ properties }}"
-              optionalComponents:
-                - "{{ optionalComponents }}"
-            encryptionConfig:
-              gcePdKmsKeyName: "{{ gcePdKmsKeyName }}"
-              kmsKey: "{{ kmsKey }}"
-            auxiliaryNodeGroups:
-              - nodeGroup:
-                  nodeGroupConfig: "{{ nodeGroupConfig }}"
-                  labels: "{{ labels }}"
-                  roles: "{{ roles }}"
-                  name: "{{ name }}"
-                nodeGroupId: "{{ nodeGroupId }}"
-            masterConfig:
-              numInstances: {{ numInstances }}
-              minCpuPlatform: "{{ minCpuPlatform }}"
-              instanceNames:
-                - "{{ instanceNames }}"
-              diskConfig:
-                numLocalSsds: {{ numLocalSsds }}
-                bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-                bootDiskType: "{{ bootDiskType }}"
-                bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
-                bootDiskSizeGb: {{ bootDiskSizeGb }}
-                localSsdInterface: "{{ localSsdInterface }}"
-                attachedDiskConfigs: "{{ attachedDiskConfigs }}"
-              managedGroupConfig:
-                instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
-                instanceTemplateName: "{{ instanceTemplateName }}"
-                instanceGroupManagerName: "{{ instanceGroupManagerName }}"
-              instanceReferences:
-                - publicKey: "{{ publicKey }}"
-                  instanceName: "{{ instanceName }}"
-                  instanceId: "{{ instanceId }}"
-                  publicEciesKey: "{{ publicEciesKey }}"
-              imageUri: "{{ imageUri }}"
-              preemptibility: "{{ preemptibility }}"
-              isPreemptible: {{ isPreemptible }}
-              startupConfig:
-                requiredRegistrationFraction: {{ requiredRegistrationFraction }}
-              machineTypeUri: "{{ machineTypeUri }}"
-              minNumInstances: {{ minNumInstances }}
-              accelerators:
-                - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
-                  acceleratorCount: {{ acceleratorCount }}
-              instanceFlexibilityPolicy:
-                provisioningModelMix: "{{ provisioningModelMix }}"
-                instanceMachineTypes: "{{ instanceMachineTypes }}"
-                instanceSelectionList: "{{ instanceSelectionList }}"
-                instanceSelectionResults: "{{ instanceSelectionResults }}"
-            securityConfig:
-              kerberosConfig:
-                keystorePasswordUri: "{{ keystorePasswordUri }}"
-                truststorePasswordUri: "{{ truststorePasswordUri }}"
-                realm: "{{ realm }}"
-                keystoreUri: "{{ keystoreUri }}"
-                keyPasswordUri: "{{ keyPasswordUri }}"
-                rootPrincipalPasswordUri: "{{ rootPrincipalPasswordUri }}"
-                tgtLifetimeHours: {{ tgtLifetimeHours }}
-                enableKerberos: {{ enableKerberos }}
-                crossRealmTrustAdminServer: "{{ crossRealmTrustAdminServer }}"
-                crossRealmTrustSharedPasswordUri: "{{ crossRealmTrustSharedPasswordUri }}"
-                kdcDbKeyUri: "{{ kdcDbKeyUri }}"
-                kmsKeyUri: "{{ kmsKeyUri }}"
-                truststoreUri: "{{ truststoreUri }}"
-                crossRealmTrustKdc: "{{ crossRealmTrustKdc }}"
-                crossRealmTrustRealm: "{{ crossRealmTrustRealm }}"
-              identityConfig:
-                userServiceAccountMapping: "{{ userServiceAccountMapping }}"
-                enableSsh: {{ enableSsh }}
-            lifecycleConfig:
-              autoDeleteTtl: "{{ autoDeleteTtl }}"
-              idleStartTime: "{{ idleStartTime }}"
-              autoDeleteTime: "{{ autoDeleteTime }}"
-              idleDeleteTtl: "{{ idleDeleteTtl }}"
-              idleStopTtl: "{{ idleStopTtl }}"
-              autoStopTime: "{{ autoStopTime }}"
-              autoStopTtl: "{{ autoStopTtl }}"
-            metastoreConfig:
-              dataprocMetastoreService: "{{ dataprocMetastoreService }}"
-            dataprocMetricConfig:
-              metrics:
-                - metricSource: "{{ metricSource }}"
-                  metricOverrides: "{{ metricOverrides }}"
-            workerConfig:
-              numInstances: {{ numInstances }}
-              minCpuPlatform: "{{ minCpuPlatform }}"
-              instanceNames:
-                - "{{ instanceNames }}"
-              diskConfig:
-                numLocalSsds: {{ numLocalSsds }}
-                bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
-                bootDiskType: "{{ bootDiskType }}"
-                bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
-                bootDiskSizeGb: {{ bootDiskSizeGb }}
-                localSsdInterface: "{{ localSsdInterface }}"
-                attachedDiskConfigs: "{{ attachedDiskConfigs }}"
-              managedGroupConfig:
-                instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
-                instanceTemplateName: "{{ instanceTemplateName }}"
-                instanceGroupManagerName: "{{ instanceGroupManagerName }}"
-              instanceReferences:
-                - publicKey: "{{ publicKey }}"
-                  instanceName: "{{ instanceName }}"
-                  instanceId: "{{ instanceId }}"
-                  publicEciesKey: "{{ publicEciesKey }}"
-              imageUri: "{{ imageUri }}"
-              preemptibility: "{{ preemptibility }}"
-              isPreemptible: {{ isPreemptible }}
-              startupConfig:
-                requiredRegistrationFraction: {{ requiredRegistrationFraction }}
-              machineTypeUri: "{{ machineTypeUri }}"
-              minNumInstances: {{ minNumInstances }}
-              accelerators:
-                - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
-                  acceleratorCount: {{ acceleratorCount }}
-              instanceFlexibilityPolicy:
-                provisioningModelMix: "{{ provisioningModelMix }}"
-                instanceMachineTypes: "{{ instanceMachineTypes }}"
-                instanceSelectionList: "{{ instanceSelectionList }}"
-                instanceSelectionResults: "{{ instanceSelectionResults }}"
-            endpointConfig:
-              enableHttpPortAccess: {{ enableHttpPortAccess }}
-              httpPorts: "{{ httpPorts }}"
-            configBucket: "{{ configBucket }}"
-            clusterTier: "{{ clusterTier }}"
-            gkeClusterConfig:
-              nodePoolTarget:
-                - roles: "{{ roles }}"
-                  nodePool: "{{ nodePool }}"
-                  nodePoolConfig:
-                    locations: "{{ locations }}"
-                    autoscaling: "{{ autoscaling }}"
-                    config: "{{ config }}"
-              namespacedGkeDeploymentTarget:
-                targetGkeCluster: "{{ targetGkeCluster }}"
-                clusterNamespace: "{{ clusterNamespace }}"
-              gkeClusterTarget: "{{ gkeClusterTarget }}"
-            gceClusterConfig:
-              serviceAccountScopes:
-                - "{{ serviceAccountScopes }}"
-              nodeGroupAffinity:
-                nodeGroupUri: "{{ nodeGroupUri }}"
-              privateIpv6GoogleAccess: "{{ privateIpv6GoogleAccess }}"
-              networkUri: "{{ networkUri }}"
-              shieldedInstanceConfig:
-                enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-                enableVtpm: {{ enableVtpm }}
-                enableSecureBoot: {{ enableSecureBoot }}
-              serviceAccount: "{{ serviceAccount }}"
-              metadata: "{{ metadata }}"
-              confidentialInstanceConfig:
-                enableConfidentialCompute: {{ enableConfidentialCompute }}
-                confidentialInstanceType: "{{ confidentialInstanceType }}"
-              subnetworkUri: "{{ subnetworkUri }}"
-              autoZoneExcludeZoneUris:
-                - "{{ autoZoneExcludeZoneUris }}"
-              internalIpOnly: {{ internalIpOnly }}
-              zoneUri: "{{ zoneUri }}"
-              tags:
-                - "{{ tags }}"
-              reservationAffinity:
-                consumeReservationType: "{{ consumeReservationType }}"
-                key: "{{ key }}"
-                values: "{{ values }}"
-              resourceManagerTags: "{{ resourceManagerTags }}"
-            tempBucket: "{{ tempBucket }}"
-            initializationActions:
-              - executableFile: "{{ executableFile }}"
-                executionTimeout: "{{ executionTimeout }}"
-            autoscalingConfig:
-              policyUri: "{{ policyUri }}"
-          labels: "{{ labels }}"
-          clusterName: "{{ clusterName }}"
-        clusterSelector:
-          zone: "{{ zone }}"
-          clusterLabels: "{{ clusterLabels }}"
-    - name: id
-      value: "{{ id }}"
-    - name: version
-      value: {{ version }}
-      description: |
-        Optional. Used to perform a consistent read-modify-write.This field should be left blank for a CreateWorkflowTemplate request. It is required for an UpdateWorkflowTemplate request, and must match the current server version. A typical update template flow would fetch the current template with a GetWorkflowTemplate request, which will return the current template with the version field filled in with the current server version. The user updates other fields in the template, then returns it as part of the UpdateWorkflowTemplate request.
     - name: dagTimeout
       value: "{{ dagTimeout }}"
       description: |
@@ -825,147 +724,151 @@ version
         Optional. Encryption settings for encrypting workflow template job arguments.
       value:
         kmsKey: "{{ kmsKey }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. The labels to associate with this template. These labels will be propagated to all jobs and clusters created by the workflow instance.Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).No more than 32 labels can be associated with a template.
+    - name: id
+      value: "{{ id }}"
     - name: jobs
       description: |
         Required. The Directed Acyclic Graph of Jobs to submit.
       value:
-        - pysparkJob:
-            mainPythonFileUri: "{{ mainPythonFileUri }}"
-            pythonFileUris:
-              - "{{ pythonFileUris }}"
-            properties: "{{ properties }}"
-            loggingConfig:
-              driverLogLevels: "{{ driverLogLevels }}"
-            jarFileUris:
-              - "{{ jarFileUris }}"
+        - flinkJob:
             args:
               - "{{ args }}"
-            archiveUris:
-              - "{{ archiveUris }}"
-            fileUris:
-              - "{{ fileUris }}"
-          sparkSqlJob:
-            queryList:
-              queries:
-                - "{{ queries }}"
-            scriptVariables: "{{ scriptVariables }}"
-            queryFileUri: "{{ queryFileUri }}"
-            properties: "{{ properties }}"
-            loggingConfig:
-              driverLogLevels: "{{ driverLogLevels }}"
             jarFileUris:
               - "{{ jarFileUris }}"
-          hadoopJob:
+            loggingConfig:
+              driverLogLevels: "{{ driverLogLevels }}"
             mainClass: "{{ mainClass }}"
             mainJarFileUri: "{{ mainJarFileUri }}"
             properties: "{{ properties }}"
-            loggingConfig:
-              driverLogLevels: "{{ driverLogLevels }}"
-            jarFileUris:
-              - "{{ jarFileUris }}"
-            args:
-              - "{{ args }}"
+            savepointUri: "{{ savepointUri }}"
+          hadoopJob:
             archiveUris:
               - "{{ archiveUris }}"
-            fileUris:
-              - "{{ fileUris }}"
-          prerequisiteStepIds: "{{ prerequisiteStepIds }}"
-          pigJob:
-            queryFileUri: "{{ queryFileUri }}"
-            scriptVariables: "{{ scriptVariables }}"
-            jarFileUris:
-              - "{{ jarFileUris }}"
-            properties: "{{ properties }}"
-            loggingConfig:
-              driverLogLevels: "{{ driverLogLevels }}"
-            queryList:
-              queries:
-                - "{{ queries }}"
-            continueOnFailure: {{ continueOnFailure }}
-          sparkRJob:
-            properties: "{{ properties }}"
-            loggingConfig:
-              driverLogLevels: "{{ driverLogLevels }}"
             args:
               - "{{ args }}"
-            archiveUris:
-              - "{{ archiveUris }}"
-            mainRFileUri: "{{ mainRFileUri }}"
             fileUris:
               - "{{ fileUris }}"
+            jarFileUris:
+              - "{{ jarFileUris }}"
+            loggingConfig:
+              driverLogLevels: "{{ driverLogLevels }}"
+            mainClass: "{{ mainClass }}"
+            mainJarFileUri: "{{ mainJarFileUri }}"
+            properties: "{{ properties }}"
           hiveJob:
-            scriptVariables: "{{ scriptVariables }}"
-            queryFileUri: "{{ queryFileUri }}"
-            properties: "{{ properties }}"
+            continueOnFailure: {{ continueOnFailure }}
             jarFileUris:
               - "{{ jarFileUris }}"
-            continueOnFailure: {{ continueOnFailure }}
+            properties: "{{ properties }}"
+            queryFileUri: "{{ queryFileUri }}"
             queryList:
               queries:
                 - "{{ queries }}"
+            scriptVariables: "{{ scriptVariables }}"
+          labels: "{{ labels }}"
+          pigJob:
+            continueOnFailure: {{ continueOnFailure }}
+            jarFileUris:
+              - "{{ jarFileUris }}"
+            loggingConfig:
+              driverLogLevels: "{{ driverLogLevels }}"
+            properties: "{{ properties }}"
+            queryFileUri: "{{ queryFileUri }}"
+            queryList:
+              queries:
+                - "{{ queries }}"
+            scriptVariables: "{{ scriptVariables }}"
+          prerequisiteStepIds: "{{ prerequisiteStepIds }}"
           prestoJob:
-            outputFormat: "{{ outputFormat }}"
-            continueOnFailure: {{ continueOnFailure }}
-            queryList:
-              queries:
-                - "{{ queries }}"
             clientTags:
               - "{{ clientTags }}"
-            properties: "{{ properties }}"
+            continueOnFailure: {{ continueOnFailure }}
             loggingConfig:
               driverLogLevels: "{{ driverLogLevels }}"
+            outputFormat: "{{ outputFormat }}"
+            properties: "{{ properties }}"
             queryFileUri: "{{ queryFileUri }}"
+            queryList:
+              queries:
+                - "{{ queries }}"
+          pysparkJob:
+            archiveUris:
+              - "{{ archiveUris }}"
+            args:
+              - "{{ args }}"
+            fileUris:
+              - "{{ fileUris }}"
+            jarFileUris:
+              - "{{ jarFileUris }}"
+            loggingConfig:
+              driverLogLevels: "{{ driverLogLevels }}"
+            mainPythonFileUri: "{{ mainPythonFileUri }}"
+            properties: "{{ properties }}"
+            pythonFileUris:
+              - "{{ pythonFileUris }}"
           scheduling:
             maxFailuresPerHour: {{ maxFailuresPerHour }}
             maxFailuresTotal: {{ maxFailuresTotal }}
-          labels: "{{ labels }}"
           sparkJob:
-            args:
-              - "{{ args }}"
             archiveUris:
               - "{{ archiveUris }}"
-            fileUris:
-              - "{{ fileUris }}"
-            properties: "{{ properties }}"
-            loggingConfig:
-              driverLogLevels: "{{ driverLogLevels }}"
-            jarFileUris:
-              - "{{ jarFileUris }}"
-            mainClass: "{{ mainClass }}"
-            mainJarFileUri: "{{ mainJarFileUri }}"
-          flinkJob:
-            mainClass: "{{ mainClass }}"
-            savepointUri: "{{ savepointUri }}"
-            mainJarFileUri: "{{ mainJarFileUri }}"
             args:
               - "{{ args }}"
-            properties: "{{ properties }}"
-            loggingConfig:
-              driverLogLevels: "{{ driverLogLevels }}"
+            fileUris:
+              - "{{ fileUris }}"
             jarFileUris:
               - "{{ jarFileUris }}"
-          stepId: "{{ stepId }}"
-          trinoJob:
-            queryFileUri: "{{ queryFileUri }}"
-            properties: "{{ properties }}"
             loggingConfig:
               driverLogLevels: "{{ driverLogLevels }}"
-            continueOnFailure: {{ continueOnFailure }}
+            mainClass: "{{ mainClass }}"
+            mainJarFileUri: "{{ mainJarFileUri }}"
+            properties: "{{ properties }}"
+          sparkRJob:
+            archiveUris:
+              - "{{ archiveUris }}"
+            args:
+              - "{{ args }}"
+            fileUris:
+              - "{{ fileUris }}"
+            loggingConfig:
+              driverLogLevels: "{{ driverLogLevels }}"
+            mainRFileUri: "{{ mainRFileUri }}"
+            properties: "{{ properties }}"
+          sparkSqlJob:
+            jarFileUris:
+              - "{{ jarFileUris }}"
+            loggingConfig:
+              driverLogLevels: "{{ driverLogLevels }}"
+            properties: "{{ properties }}"
+            queryFileUri: "{{ queryFileUri }}"
             queryList:
               queries:
                 - "{{ queries }}"
+            scriptVariables: "{{ scriptVariables }}"
+          stepId: "{{ stepId }}"
+          trinoJob:
             clientTags:
               - "{{ clientTags }}"
+            continueOnFailure: {{ continueOnFailure }}
+            loggingConfig:
+              driverLogLevels: "{{ driverLogLevels }}"
             outputFormat: "{{ outputFormat }}"
+            properties: "{{ properties }}"
+            queryFileUri: "{{ queryFileUri }}"
+            queryList:
+              queries:
+                - "{{ queries }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels to associate with this template. These labels will be propagated to all jobs and clusters created by the workflow instance.Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).No more than 32 labels can be associated with a template.
     - name: parameters
       description: |
         Optional. Template parameters whose values are substituted into the template. Values for parameters must be provided when the template is instantiated.
       value:
         - description: "{{ description }}"
+          fields: "{{ fields }}"
+          name: "{{ name }}"
           validation:
             regex:
               regexes:
@@ -973,8 +876,235 @@ version
             values:
               values:
                 - "{{ values }}"
-          fields: "{{ fields }}"
-          name: "{{ name }}"
+    - name: placement
+      description: |
+        Required. WorkflowTemplate scheduling information.
+      value:
+        clusterSelector:
+          clusterLabels: "{{ clusterLabels }}"
+          zone: "{{ zone }}"
+        managedCluster:
+          clusterName: "{{ clusterName }}"
+          config:
+            autoscalingConfig:
+              policyUri: "{{ policyUri }}"
+            auxiliaryNodeGroups:
+              - nodeGroup:
+                  labels: "{{ labels }}"
+                  name: "{{ name }}"
+                  nodeGroupConfig: "{{ nodeGroupConfig }}"
+                  roles: "{{ roles }}"
+                nodeGroupId: "{{ nodeGroupId }}"
+            clusterTier: "{{ clusterTier }}"
+            clusterType: "{{ clusterType }}"
+            configBucket: "{{ configBucket }}"
+            dataprocMetricConfig:
+              metrics:
+                - metricOverrides: "{{ metricOverrides }}"
+                  metricSource: "{{ metricSource }}"
+            diagnosticBucket: "{{ diagnosticBucket }}"
+            encryptionConfig:
+              gcePdKmsKeyName: "{{ gcePdKmsKeyName }}"
+              kmsKey: "{{ kmsKey }}"
+            endpointConfig:
+              enableHttpPortAccess: {{ enableHttpPortAccess }}
+              httpPorts: "{{ httpPorts }}"
+            engine: "{{ engine }}"
+            gceClusterConfig:
+              autoZoneExcludeZoneUris:
+                - "{{ autoZoneExcludeZoneUris }}"
+              confidentialInstanceConfig:
+                confidentialInstanceType: "{{ confidentialInstanceType }}"
+                enableConfidentialCompute: {{ enableConfidentialCompute }}
+              internalIpOnly: {{ internalIpOnly }}
+              metadata: "{{ metadata }}"
+              networkUri: "{{ networkUri }}"
+              nodeGroupAffinity:
+                nodeGroupUri: "{{ nodeGroupUri }}"
+              privateIpv6GoogleAccess: "{{ privateIpv6GoogleAccess }}"
+              reservationAffinity:
+                consumeReservationType: "{{ consumeReservationType }}"
+                key: "{{ key }}"
+                values: "{{ values }}"
+              resourceManagerTags: "{{ resourceManagerTags }}"
+              serviceAccount: "{{ serviceAccount }}"
+              serviceAccountScopes:
+                - "{{ serviceAccountScopes }}"
+              shieldedInstanceConfig:
+                enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+                enableSecureBoot: {{ enableSecureBoot }}
+                enableVtpm: {{ enableVtpm }}
+              subnetworkUri: "{{ subnetworkUri }}"
+              tags:
+                - "{{ tags }}"
+              zoneUri: "{{ zoneUri }}"
+            gkeClusterConfig:
+              gkeClusterTarget: "{{ gkeClusterTarget }}"
+              namespacedGkeDeploymentTarget:
+                clusterNamespace: "{{ clusterNamespace }}"
+                targetGkeCluster: "{{ targetGkeCluster }}"
+              nodePoolTarget:
+                - nodePool: "{{ nodePool }}"
+                  nodePoolConfig:
+                    autoscaling: "{{ autoscaling }}"
+                    config: "{{ config }}"
+                    locations: "{{ locations }}"
+                  roles: "{{ roles }}"
+            initializationActions:
+              - executableFile: "{{ executableFile }}"
+                executionTimeout: "{{ executionTimeout }}"
+            lifecycleConfig:
+              autoDeleteTime: "{{ autoDeleteTime }}"
+              autoDeleteTtl: "{{ autoDeleteTtl }}"
+              autoStopTime: "{{ autoStopTime }}"
+              autoStopTtl: "{{ autoStopTtl }}"
+              idleDeleteTtl: "{{ idleDeleteTtl }}"
+              idleStartTime: "{{ idleStartTime }}"
+              idleStopTtl: "{{ idleStopTtl }}"
+            masterConfig:
+              accelerators:
+                - acceleratorCount: {{ acceleratorCount }}
+                  acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+              diskConfig:
+                attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                bootDiskSizeGb: {{ bootDiskSizeGb }}
+                bootDiskType: "{{ bootDiskType }}"
+                localSsdInterface: "{{ localSsdInterface }}"
+                numLocalSsds: {{ numLocalSsds }}
+              imageUri: "{{ imageUri }}"
+              instanceFlexibilityPolicy:
+                instanceMachineTypes: "{{ instanceMachineTypes }}"
+                instanceSelectionList: "{{ instanceSelectionList }}"
+                instanceSelectionResults: "{{ instanceSelectionResults }}"
+                provisioningModelMix: "{{ provisioningModelMix }}"
+              instanceNames:
+                - "{{ instanceNames }}"
+              instanceReferences:
+                - instanceId: "{{ instanceId }}"
+                  instanceName: "{{ instanceName }}"
+                  publicEciesKey: "{{ publicEciesKey }}"
+                  publicKey: "{{ publicKey }}"
+              isPreemptible: {{ isPreemptible }}
+              machineTypeUri: "{{ machineTypeUri }}"
+              managedGroupConfig:
+                instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+                instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+                instanceTemplateName: "{{ instanceTemplateName }}"
+              minCpuPlatform: "{{ minCpuPlatform }}"
+              minNumInstances: {{ minNumInstances }}
+              numInstances: {{ numInstances }}
+              preemptibility: "{{ preemptibility }}"
+              startupConfig:
+                requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+            metastoreConfig:
+              dataprocMetastoreService: "{{ dataprocMetastoreService }}"
+            secondaryWorkerConfig:
+              accelerators:
+                - acceleratorCount: {{ acceleratorCount }}
+                  acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+              diskConfig:
+                attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                bootDiskSizeGb: {{ bootDiskSizeGb }}
+                bootDiskType: "{{ bootDiskType }}"
+                localSsdInterface: "{{ localSsdInterface }}"
+                numLocalSsds: {{ numLocalSsds }}
+              imageUri: "{{ imageUri }}"
+              instanceFlexibilityPolicy:
+                instanceMachineTypes: "{{ instanceMachineTypes }}"
+                instanceSelectionList: "{{ instanceSelectionList }}"
+                instanceSelectionResults: "{{ instanceSelectionResults }}"
+                provisioningModelMix: "{{ provisioningModelMix }}"
+              instanceNames:
+                - "{{ instanceNames }}"
+              instanceReferences:
+                - instanceId: "{{ instanceId }}"
+                  instanceName: "{{ instanceName }}"
+                  publicEciesKey: "{{ publicEciesKey }}"
+                  publicKey: "{{ publicKey }}"
+              isPreemptible: {{ isPreemptible }}
+              machineTypeUri: "{{ machineTypeUri }}"
+              managedGroupConfig:
+                instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+                instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+                instanceTemplateName: "{{ instanceTemplateName }}"
+              minCpuPlatform: "{{ minCpuPlatform }}"
+              minNumInstances: {{ minNumInstances }}
+              numInstances: {{ numInstances }}
+              preemptibility: "{{ preemptibility }}"
+              startupConfig:
+                requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+            securityConfig:
+              identityConfig:
+                enableSsh: {{ enableSsh }}
+                userServiceAccountMapping: "{{ userServiceAccountMapping }}"
+              kerberosConfig:
+                crossRealmTrustAdminServer: "{{ crossRealmTrustAdminServer }}"
+                crossRealmTrustKdc: "{{ crossRealmTrustKdc }}"
+                crossRealmTrustRealm: "{{ crossRealmTrustRealm }}"
+                crossRealmTrustSharedPasswordUri: "{{ crossRealmTrustSharedPasswordUri }}"
+                enableKerberos: {{ enableKerberos }}
+                kdcDbKeyUri: "{{ kdcDbKeyUri }}"
+                keyPasswordUri: "{{ keyPasswordUri }}"
+                keystorePasswordUri: "{{ keystorePasswordUri }}"
+                keystoreUri: "{{ keystoreUri }}"
+                kmsKeyUri: "{{ kmsKeyUri }}"
+                realm: "{{ realm }}"
+                rootPrincipalPasswordUri: "{{ rootPrincipalPasswordUri }}"
+                tgtLifetimeHours: {{ tgtLifetimeHours }}
+                truststorePasswordUri: "{{ truststorePasswordUri }}"
+                truststoreUri: "{{ truststoreUri }}"
+            softwareConfig:
+              imageVersion: "{{ imageVersion }}"
+              optionalComponents:
+                - "{{ optionalComponents }}"
+              properties: "{{ properties }}"
+            tempBucket: "{{ tempBucket }}"
+            workerConfig:
+              accelerators:
+                - acceleratorCount: {{ acceleratorCount }}
+                  acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+              diskConfig:
+                attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                bootDiskSizeGb: {{ bootDiskSizeGb }}
+                bootDiskType: "{{ bootDiskType }}"
+                localSsdInterface: "{{ localSsdInterface }}"
+                numLocalSsds: {{ numLocalSsds }}
+              imageUri: "{{ imageUri }}"
+              instanceFlexibilityPolicy:
+                instanceMachineTypes: "{{ instanceMachineTypes }}"
+                instanceSelectionList: "{{ instanceSelectionList }}"
+                instanceSelectionResults: "{{ instanceSelectionResults }}"
+                provisioningModelMix: "{{ provisioningModelMix }}"
+              instanceNames:
+                - "{{ instanceNames }}"
+              instanceReferences:
+                - instanceId: "{{ instanceId }}"
+                  instanceName: "{{ instanceName }}"
+                  publicEciesKey: "{{ publicEciesKey }}"
+                  publicKey: "{{ publicKey }}"
+              isPreemptible: {{ isPreemptible }}
+              machineTypeUri: "{{ machineTypeUri }}"
+              managedGroupConfig:
+                instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+                instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+                instanceTemplateName: "{{ instanceTemplateName }}"
+              minCpuPlatform: "{{ minCpuPlatform }}"
+              minNumInstances: {{ minNumInstances }}
+              numInstances: {{ numInstances }}
+              preemptibility: "{{ preemptibility }}"
+              startupConfig:
+                requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+          labels: "{{ labels }}"
+    - name: version
+      value: {{ version }}
+      description: |
+        Optional. Used to perform a consistent read-modify-write.This field should be left blank for a CreateWorkflowTemplate request. It is required for an UpdateWorkflowTemplate request, and must match the current server version. A typical update template flow would fetch the current template with a GetWorkflowTemplate request, which will return the current template with the version field filled in with the current server version. The user updates other fields in the template, then returns it as part of the UpdateWorkflowTemplate request.
 `}</CodeBlock>
 
 </TabItem>
@@ -997,14 +1127,14 @@ Updates (replaces) workflow template. The updated template must contain version 
 ```sql
 REPLACE google.dataproc.workflow_templates
 SET 
-data__placement = '{{ placement }}',
-data__id = '{{ id }}',
-data__version = {{ version }},
 data__dagTimeout = '{{ dagTimeout }}',
 data__encryptionConfig = '{{ encryptionConfig }}',
-data__labels = '{{ labels }}',
+data__id = '{{ id }}',
 data__jobs = '{{ jobs }}',
-data__parameters = '{{ parameters }}'
+data__labels = '{{ labels }}',
+data__parameters = '{{ parameters }}',
+data__placement = '{{ placement }}',
+data__version = {{ version }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1030,14 +1160,14 @@ Updates (replaces) workflow template. The updated template must contain version 
 ```sql
 REPLACE google.dataproc.workflow_templates
 SET 
-data__placement = '{{ placement }}',
-data__id = '{{ id }}',
-data__version = {{ version }},
 data__dagTimeout = '{{ dagTimeout }}',
 data__encryptionConfig = '{{ encryptionConfig }}',
-data__labels = '{{ labels }}',
+data__id = '{{ id }}',
 data__jobs = '{{ jobs }}',
-data__parameters = '{{ parameters }}'
+data__labels = '{{ labels }}',
+data__parameters = '{{ parameters }}',
+data__placement = '{{ placement }}',
+data__version = {{ version }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND regionsId = '{{ regionsId }}' --required
@@ -1119,9 +1249,9 @@ EXEC google.dataproc.workflow_templates.projects_locations_workflow_templates_in
 @workflowTemplatesId='{{ workflowTemplatesId }}' --required 
 @@json=
 '{
+"parameters": "{{ parameters }}", 
 "requestId": "{{ requestId }}", 
-"version": {{ version }}, 
-"parameters": "{{ parameters }}"
+"version": {{ version }}
 }'
 ;
 ```
@@ -1137,14 +1267,14 @@ EXEC google.dataproc.workflow_templates.projects_locations_workflow_templates_in
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"placement": "{{ placement }}", 
-"id": "{{ id }}", 
-"version": {{ version }}, 
 "dagTimeout": "{{ dagTimeout }}", 
 "encryptionConfig": "{{ encryptionConfig }}", 
-"labels": "{{ labels }}", 
+"id": "{{ id }}", 
 "jobs": "{{ jobs }}", 
-"parameters": "{{ parameters }}"
+"labels": "{{ labels }}", 
+"parameters": "{{ parameters }}", 
+"placement": "{{ placement }}", 
+"version": {{ version }}
 }'
 ;
 ```
@@ -1160,9 +1290,9 @@ EXEC google.dataproc.workflow_templates.projects_regions_workflow_templates_inst
 @workflowTemplatesId='{{ workflowTemplatesId }}' --required 
 @@json=
 '{
+"parameters": "{{ parameters }}", 
 "requestId": "{{ requestId }}", 
-"version": {{ version }}, 
-"parameters": "{{ parameters }}"
+"version": {{ version }}
 }'
 ;
 ```
@@ -1178,14 +1308,14 @@ EXEC google.dataproc.workflow_templates.projects_regions_workflow_templates_inst
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"placement": "{{ placement }}", 
-"id": "{{ id }}", 
-"version": {{ version }}, 
 "dagTimeout": "{{ dagTimeout }}", 
 "encryptionConfig": "{{ encryptionConfig }}", 
-"labels": "{{ labels }}", 
+"id": "{{ id }}", 
 "jobs": "{{ jobs }}", 
-"parameters": "{{ parameters }}"
+"labels": "{{ labels }}", 
+"parameters": "{{ parameters }}", 
+"placement": "{{ placement }}", 
+"version": {{ version }}
 }'
 ;
 ```

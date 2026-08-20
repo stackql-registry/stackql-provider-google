@@ -98,10 +98,10 @@ EXEC google.databasecenter.projects.aggregate_query_stats
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"orderBy": "{{ orderBy }}", 
-"pageToken": "{{ pageToken }}", 
 "filter": "{{ filter }}", 
-"pageSize": {{ pageSize }}
+"orderBy": "{{ orderBy }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}"
 }'
 ;
 ```

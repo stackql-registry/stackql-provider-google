@@ -98,10 +98,10 @@ EXEC google.databasecenter.folders.aggregate_query_stats
 @foldersId='{{ foldersId }}' --required 
 @@json=
 '{
-"orderBy": "{{ orderBy }}", 
-"pageToken": "{{ pageToken }}", 
 "filter": "{{ filter }}", 
-"pageSize": {{ pageSize }}
+"orderBy": "{{ orderBy }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}"
 }'
 ;
 ```

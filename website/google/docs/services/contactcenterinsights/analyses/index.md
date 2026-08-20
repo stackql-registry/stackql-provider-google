@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists analyses.</td>
 </tr>
 <tr>
@@ -259,9 +259,9 @@ FROM google.contactcenterinsights.analyses
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -283,15 +283,15 @@ Creates an analysis. The long running operation is done when the analysis has co
 
 ```sql
 INSERT INTO google.contactcenterinsights.analyses (
-data__name,
 data__annotatorSelector,
+data__name,
 projectsId,
 locationsId,
 conversationsId
 )
 SELECT 
-'{{ name }}',
 '{{ annotatorSelector }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ conversationsId }}'
@@ -318,36 +318,36 @@ response
     - name: conversationsId
       value: "{{ conversationsId }}"
       description: Required parameter for the analyses resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The resource name of the analysis. Format: projects/{project}/locations/{location}/conversations/{conversation}/analyses/{analysis}
     - name: annotatorSelector
       description: |
         To select the annotators to run and the phrase matchers to use (if any). If not specified, all annotators will be run.
       value:
-        runPhraseMatcherAnnotator: {{ runPhraseMatcherAnnotator }}
-        summarizationConfig:
-          summarizationModel: "{{ summarizationModel }}"
-          generator: "{{ generator }}"
-          conversationProfile: "{{ conversationProfile }}"
-        runEntityAnnotator: {{ runEntityAnnotator }}
-        runSummarizationAnnotator: {{ runSummarizationAnnotator }}
-        runInterruptionAnnotator: {{ runInterruptionAnnotator }}
+        issueModels:
+          - "{{ issueModels }}"
         phraseMatchers:
           - "{{ phraseMatchers }}"
-        runSentimentAnnotator: {{ runSentimentAnnotator }}
-        runQaAnnotator: {{ runQaAnnotator }}
-        runIssueModelAnnotator: {{ runIssueModelAnnotator }}
-        runSilenceAnnotator: {{ runSilenceAnnotator }}
-        runAutoLabelingAnnotator: {{ runAutoLabelingAnnotator }}
         qaConfig:
           scorecardList:
             qaScorecardRevisions:
               - "{{ qaScorecardRevisions }}"
-        issueModels:
-          - "{{ issueModels }}"
+        runAutoLabelingAnnotator: {{ runAutoLabelingAnnotator }}
+        runEntityAnnotator: {{ runEntityAnnotator }}
         runIntentAnnotator: {{ runIntentAnnotator }}
+        runInterruptionAnnotator: {{ runInterruptionAnnotator }}
+        runIssueModelAnnotator: {{ runIssueModelAnnotator }}
+        runPhraseMatcherAnnotator: {{ runPhraseMatcherAnnotator }}
+        runQaAnnotator: {{ runQaAnnotator }}
+        runSentimentAnnotator: {{ runSentimentAnnotator }}
+        runSilenceAnnotator: {{ runSilenceAnnotator }}
+        runSummarizationAnnotator: {{ runSummarizationAnnotator }}
+        summarizationConfig:
+          conversationProfile: "{{ conversationProfile }}"
+          generator: "{{ generator }}"
+          summarizationModel: "{{ summarizationModel }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the analysis. Format: projects/{project}/locations/{location}/conversations/{conversation}/analyses/{analysis}
 `}</CodeBlock>
 
 </TabItem>

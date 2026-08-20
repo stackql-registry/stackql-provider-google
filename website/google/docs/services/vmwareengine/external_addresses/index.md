@@ -175,21 +175,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists external IP addresses assigned to VMware workload VMs in a given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-externalAddressId"><code>externalAddressId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-externalAddressId"><code>externalAddressId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new `ExternalAddress` resource in a given private cloud. The network policy that corresponds to the private cloud must have the external IP address network service enabled (`NetworkPolicy.external_ip`).</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-externalAddressesId"><code>externalAddressesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single external IP address. Only fields specified in `update_mask` are applied. During operation processing, the resource is temporarily in the `ACTIVE` state before the operation fully completes. For that period of time, you can't update the resource. Use the operation status to determine when the processing fully completes.</td>
 </tr>
 <tr>
@@ -329,8 +329,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -352,23 +352,23 @@ Creates a new `ExternalAddress` resource in a given private cloud. The network p
 
 ```sql
 INSERT INTO google.vmwareengine.external_addresses (
-data__internalIp,
 data__description,
+data__internalIp,
 projectsId,
 locationsId,
 privateCloudsId,
-requestId,
 externalAddressId,
+requestId,
 validateOnly
 )
 SELECT 
-'{{ internalIp }}',
 '{{ description }}',
+'{{ internalIp }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
-'{{ requestId }}',
 '{{ externalAddressId }}',
+'{{ requestId }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -393,18 +393,18 @@ response
     - name: privateCloudsId
       value: "{{ privateCloudsId }}"
       description: Required parameter for the external_addresses resource.
-    - name: internalIp
-      value: "{{ internalIp }}"
-      description: |
-        The internal IP address of a workload VM.
     - name: description
       value: "{{ description }}"
       description: |
         User-provided description for this resource.
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: internalIp
+      value: "{{ internalIp }}"
+      description: |
+        The internal IP address of a workload VM.
     - name: externalAddressId
       value: "{{ externalAddressId }}"
+    - name: requestId
+      value: "{{ requestId }}"
     - name: validateOnly
       value: {{ validateOnly }}
 `}</CodeBlock>
@@ -428,16 +428,16 @@ Updates the parameters of a single external IP address. Only fields specified in
 ```sql
 UPDATE google.vmwareengine.external_addresses
 SET 
-data__internalIp = '{{ internalIp }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__internalIp = '{{ internalIp }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
 AND externalAddressesId = '{{ externalAddressesId }}' --required
-AND validateOnly = {{ validateOnly}}
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,

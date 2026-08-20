@@ -354,28 +354,28 @@ Creates a new GatewaySecurityPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.rules (
-data__description,
 data__applicationMatcher,
+data__basicProfile,
+data__description,
+data__enabled,
 data__name,
+data__priority,
 data__sessionMatcher,
 data__tlsInspectionEnabled,
-data__enabled,
-data__basicProfile,
-data__priority,
 projectsId,
 locationsId,
 gatewaySecurityPoliciesId,
 gatewaySecurityPolicyRuleId
 )
 SELECT 
-'{{ description }}',
 '{{ applicationMatcher }}',
+'{{ basicProfile }}',
+'{{ description }}',
+{{ enabled }},
 '{{ name }}',
+{{ priority }},
 '{{ sessionMatcher }}',
 {{ tlsInspectionEnabled }},
-{{ enabled }},
-'{{ basicProfile }}',
-{{ priority }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ gatewaySecurityPoliciesId }}',
@@ -403,18 +403,31 @@ response
     - name: gatewaySecurityPoliciesId
       value: "{{ gatewaySecurityPoliciesId }}"
       description: Required parameter for the rules resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Free-text description of the resource.
     - name: applicationMatcher
       value: "{{ applicationMatcher }}"
       description: |
         Optional. CEL expression for matching on L7/application level criteria.
+    - name: basicProfile
+      value: "{{ basicProfile }}"
+      description: |
+        Required. Profile which tells what the primitive action should be.
+      valid_values: ['BASIC_PROFILE_UNSPECIFIED', 'ALLOW', 'DENY']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Free-text description of the resource.
+    - name: enabled
+      value: {{ enabled }}
+      description: |
+        Required. Whether the rule is enforced.
     - name: name
       value: "{{ name }}"
       description: |
         Required. Immutable. Name of the resource. ame is the full resource name so projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy}/rules/{rule} rule should match the pattern: (^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
+    - name: priority
+      value: {{ priority }}
+      description: |
+        Required. Priority of the rule. Lower number corresponds to higher precedence.
     - name: sessionMatcher
       value: "{{ sessionMatcher }}"
       description: |
@@ -423,19 +436,6 @@ response
       value: {{ tlsInspectionEnabled }}
       description: |
         Optional. Flag to enable TLS inspection of traffic matching on , can only be true if the parent GatewaySecurityPolicy references a TLSInspectionConfig.
-    - name: enabled
-      value: {{ enabled }}
-      description: |
-        Required. Whether the rule is enforced.
-    - name: basicProfile
-      value: "{{ basicProfile }}"
-      description: |
-        Required. Profile which tells what the primitive action should be.
-      valid_values: ['BASIC_PROFILE_UNSPECIFIED', 'ALLOW', 'DENY']
-    - name: priority
-      value: {{ priority }}
-      description: |
-        Required. Priority of the rule. Lower number corresponds to higher precedence.
     - name: gatewaySecurityPolicyRuleId
       value: "{{ gatewaySecurityPolicyRuleId }}"
 `}</CodeBlock>
@@ -459,14 +459,14 @@ Updates the parameters of a single GatewaySecurityPolicyRule.
 ```sql
 UPDATE google.networksecurity.rules
 SET 
-data__description = '{{ description }}',
 data__applicationMatcher = '{{ applicationMatcher }}',
-data__name = '{{ name }}',
-data__sessionMatcher = '{{ sessionMatcher }}',
-data__tlsInspectionEnabled = {{ tlsInspectionEnabled }},
-data__enabled = {{ enabled }},
 data__basicProfile = '{{ basicProfile }}',
-data__priority = {{ priority }}
+data__description = '{{ description }}',
+data__enabled = {{ enabled }},
+data__name = '{{ name }}',
+data__priority = {{ priority }},
+data__sessionMatcher = '{{ sessionMatcher }}',
+data__tlsInspectionEnabled = {{ tlsInspectionEnabled }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

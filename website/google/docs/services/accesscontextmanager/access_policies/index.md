@@ -274,16 +274,16 @@ Creates an access policy. This method fails if the organization already has an a
 
 ```sql
 INSERT INTO google.accesscontextmanager.access_policies (
-data__scopes,
+data__name,
 data__parent,
-data__title,
-data__name
+data__scopes,
+data__title
 )
 SELECT 
-'{{ scopes }}',
+'{{ name }}',
 '{{ parent }}',
-'{{ title }}',
-'{{ name }}'
+'{{ scopes }}',
+'{{ title }}'
 RETURNING
 name,
 done,
@@ -298,23 +298,23 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: access_policies
   props:
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Output only. Identifier. Resource name of the \`AccessPolicy\`. Format: \`accessPolicies/{access_policy}\`
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Required. The parent of this \`AccessPolicy\` in the Cloud Resource Hierarchy. Currently immutable once created. Format: \`organizations/{organization_id}\`
     - name: scopes
       value:
         - "{{ scopes }}"
       description: |
         The scopes of the AccessPolicy. Scopes define which resources a policy can restrict and where its resources can be referenced. For example, policy A with \`scopes=["folders/123"]\` has the following behavior: - ServicePerimeter can only restrict projects within \`folders/123\`. - ServicePerimeter within policy A can only reference access levels defined within policy A. - Only one policy can include a given scope; thus, attempting to create a second policy which includes \`folders/123\` will result in an error. If no scopes are provided, then any resource within the organization can be restricted. Scopes cannot be modified after a policy is created. Policies can only have a single scope. Format: list of \`folders/{folder_number}\` or \`projects/{project_number}\`
-    - name: parent
-      value: "{{ parent }}"
-      description: |
-        Required. The parent of this \`AccessPolicy\` in the Cloud Resource Hierarchy. Currently immutable once created. Format: \`organizations/{organization_id}\`
     - name: title
       value: "{{ title }}"
       description: |
         Required. Human readable title. Does not affect behavior.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Output only. Identifier. Resource name of the \`AccessPolicy\`. Format: \`accessPolicies/{access_policy}\`
 `}</CodeBlock>
 
 </TabItem>
@@ -336,10 +336,10 @@ Updates an access policy. The long-running operation from this RPC has a success
 ```sql
 UPDATE google.accesscontextmanager.access_policies
 SET 
-data__scopes = '{{ scopes }}',
+data__name = '{{ name }}',
 data__parent = '{{ parent }}',
-data__title = '{{ title }}',
-data__name = '{{ name }}'
+data__scopes = '{{ scopes }}',
+data__title = '{{ title }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 AND updateMask = '{{ updateMask}}'

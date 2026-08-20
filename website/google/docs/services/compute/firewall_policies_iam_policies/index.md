@@ -87,21 +87,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_iam_policy"><CopyableCode code="get_iam_policy" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-resource"><code>resource</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
     <td><a href="#parameter-optionsRequestedPolicyVersion"><code>optionsRequestedPolicyVersion</code></a></td>
     <td>Gets the access control policy for a resource. May be empty if no such<br />policy or resource exists.</td>
 </tr>
 <tr>
     <td><a href="#set_iam_policy"><CopyableCode code="set_iam_policy" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-resource"><code>resource</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
     <td></td>
     <td>Sets the access control policy on the specified resource.<br />Replaces any existing policy.</td>
 </tr>
 <tr>
     <td><a href="#test_iam_permissions"><CopyableCode code="test_iam_permissions" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-resource"><code>resource</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
     <td></td>
     <td>Returns permissions that a caller has on the specified resource.</td>
 </tr>
@@ -121,6 +121,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-project">
+    <td><CopyableCode code="project" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-resource">
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
@@ -152,7 +157,8 @@ condition,
 members,
 role
 FROM google.compute.firewall_policies_iam_policies
-WHERE resource = '{{ resource }}' -- required
+WHERE project = '{{ project }}' -- required
+AND resource = '{{ resource }}' -- required
 AND optionsRequestedPolicyVersion = '{{ optionsRequestedPolicyVersion }}'
 ;
 ```
@@ -179,7 +185,8 @@ data__bindings = '{{ bindings }}',
 data__etag = '{{ etag }}',
 data__policy = '{{ policy }}'
 WHERE 
-resource = '{{ resource }}' --required
+project = '{{ project }}' --required
+AND resource = '{{ resource }}' --required
 RETURNING
 auditConfigs,
 bindings,
@@ -204,6 +211,7 @@ Returns permissions that a caller has on the specified resource.
 
 ```sql
 EXEC google.compute.firewall_policies_iam_policies.test_iam_permissions 
+@project='{{ project }}' --required, 
 @resource='{{ resource }}' --required 
 @@json=
 '{

@@ -106,9 +106,9 @@ Updates the backup configuration for an ONTAP-mode volume.
 ```sql
 UPDATE google.netapp.storage_pools_backup_config
 SET 
-data__volumeUuid = '{{ volumeUuid }}',
 data__backupConfig = '{{ backupConfig }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__volumeUuid = '{{ volumeUuid }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

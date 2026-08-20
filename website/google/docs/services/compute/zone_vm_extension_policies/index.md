@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists all VM extension policies within a specific zone for a project.</td>
 </tr>
 <tr>
@@ -346,11 +346,11 @@ warning
 FROM google.compute.zone_vm_extension_policies
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -372,21 +372,21 @@ Creates a new zone-level VM extension policy within a project.
 
 ```sql
 INSERT INTO google.compute.zone_vm_extension_policies (
-data__priority,
-data__name,
-data__instanceSelectors,
 data__description,
 data__extensionPolicies,
+data__instanceSelectors,
+data__name,
+data__priority,
 project,
 zone,
 requestId
 )
 SELECT 
-{{ priority }},
-'{{ name }}',
-'{{ instanceSelectors }}',
 '{{ description }}',
 '{{ extensionPolicies }}',
+'{{ instanceSelectors }}',
+'{{ name }}',
+{{ priority }},
 '{{ project }}',
 '{{ zone }}',
 '{{ requestId }}'
@@ -432,15 +432,23 @@ zone
     - name: zone
       value: "{{ zone }}"
       description: Required parameter for the zone_vm_extension_policies resource.
-    - name: priority
-      value: {{ priority }}
+    - name: description
+      value: "{{ description }}"
       description: |
-        Optional. Priority of this policy. Used to resolve conflicts when multiple policies
-        apply to the same extension.
-        The policy priority is an integer from 0 to 65535, inclusive. Lower
-        integers indicate higher priorities. If you do not specify a priority when
-        creating a rule, it is assigned a priority of 1000. If priorities are
-        equal, the policy with the most recent creation timestamp takes precedence.
+        An optional description of this resource.
+    - name: extensionPolicies
+      value: "{{ extensionPolicies }}"
+      description: |
+        Required. A map of extension names (for example, "ops-agent") to their corresponding
+        policy configurations.
+    - name: instanceSelectors
+      description: |
+        Optional. Selectors to target VMs for this policy. VMs are selected if they match
+        *any* of the provided selectors (logical OR). If this list is empty, the
+        policy applies to all VMs.
+      value:
+        - labelSelector:
+            inclusionLabels: "{{ inclusionLabels }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -451,23 +459,15 @@ zone
         which means the first character must be a lowercase letter, and all
         following characters must be a dash, lowercase letter, or digit, except
         the last character, which cannot be a dash.
-    - name: instanceSelectors
+    - name: priority
+      value: {{ priority }}
       description: |
-        Optional. Selectors to target VMs for this policy. VMs are selected if they match
-        *any* of the provided selectors (logical OR). If this list is empty, the
-        policy applies to all VMs.
-      value:
-        - labelSelector:
-            inclusionLabels: "{{ inclusionLabels }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource.
-    - name: extensionPolicies
-      value: "{{ extensionPolicies }}"
-      description: |
-        Required. A map of extension names (for example, "ops-agent") to their corresponding
-        policy configurations.
+        Optional. Priority of this policy. Used to resolve conflicts when multiple policies
+        apply to the same extension.
+        The policy priority is an integer from 0 to 65535, inclusive. Lower
+        integers indicate higher priorities. If you do not specify a priority when
+        creating a rule, it is assigned a priority of 1000. If priorities are
+        equal, the policy with the most recent creation timestamp takes precedence.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -491,11 +491,11 @@ Modifies an existing zone VM extension policy within a project.
 ```sql
 UPDATE google.compute.zone_vm_extension_policies
 SET 
-data__priority = {{ priority }},
-data__name = '{{ name }}',
-data__instanceSelectors = '{{ instanceSelectors }}',
 data__description = '{{ description }}',
-data__extensionPolicies = '{{ extensionPolicies }}'
+data__extensionPolicies = '{{ extensionPolicies }}',
+data__instanceSelectors = '{{ instanceSelectors }}',
+data__name = '{{ name }}',
+data__priority = {{ priority }}
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required

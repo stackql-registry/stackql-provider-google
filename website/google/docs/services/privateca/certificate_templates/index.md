@@ -185,21 +185,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists CertificateTemplates.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-certificateTemplateId"><code>certificateTemplateId</code></a></td>
+    <td><a href="#parameter-certificateTemplateId"><code>certificateTemplateId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a new CertificateTemplate in a given Project and Location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-certificateTemplatesId"><code>certificateTemplatesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a CertificateTemplate.</td>
 </tr>
 <tr>
@@ -327,10 +327,10 @@ updateTime
 FROM google.privateca.certificate_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -352,30 +352,30 @@ Create a new CertificateTemplate in a given Project and Location.
 
 ```sql
 INSERT INTO google.privateca.certificate_templates (
-data__identityConstraints,
-data__passthroughExtensions,
 data__description,
-data__maximumLifetime,
-data__predefinedValues,
-data__name,
+data__identityConstraints,
 data__labels,
+data__maximumLifetime,
+data__name,
+data__passthroughExtensions,
+data__predefinedValues,
 projectsId,
 locationsId,
-requestId,
-certificateTemplateId
+certificateTemplateId,
+requestId
 )
 SELECT 
-'{{ identityConstraints }}',
-'{{ passthroughExtensions }}',
 '{{ description }}',
-'{{ maximumLifetime }}',
-'{{ predefinedValues }}',
-'{{ name }}',
+'{{ identityConstraints }}',
 '{{ labels }}',
+'{{ maximumLifetime }}',
+'{{ name }}',
+'{{ passthroughExtensions }}',
+'{{ predefinedValues }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ certificateTemplateId }}'
+'{{ certificateTemplateId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -396,17 +396,33 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the certificate_templates resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A human-readable description of scenarios this template is intended for.
     - name: identityConstraints
       description: |
         Optional. Describes constraints on identities that may be appear in Certificates issued using this template. If this is omitted, then this template will not add restrictions on a certificate's identity.
       value:
-        allowSubjectPassthrough: {{ allowSubjectPassthrough }}
         allowSubjectAltNamesPassthrough: {{ allowSubjectAltNamesPassthrough }}
+        allowSubjectPassthrough: {{ allowSubjectPassthrough }}
         celExpression:
-          expression: "{{ expression }}"
           description: "{{ description }}"
+          expression: "{{ expression }}"
           location: "{{ location }}"
           title: "{{ title }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels with user-defined metadata.
+    - name: maximumLifetime
+      value: "{{ maximumLifetime }}"
+      description: |
+        Optional. The maximum lifetime allowed for issued Certificates that use this template. If the issuing CaPool resource's IssuancePolicy specifies a maximum_lifetime the minimum of the two durations will be the maximum lifetime for issued Certificates. Note that if the issuing CertificateAuthority expires before a Certificate's requested maximum_lifetime, the effective lifetime will be explicitly truncated to match it.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name for this CertificateTemplate in the format \`projects/*/locations/*/certificateTemplates/*\`.
     - name: passthroughExtensions
       description: |
         Optional. Describes the set of X.509 extensions that may appear in a Certificate issued using this CertificateTemplate. If a certificate request sets extensions that don't appear in the passthrough_extensions, those extensions will be dropped. If the issuing CaPool's IssuancePolicy defines baseline_values that don't appear here, the certificate issuance request will fail. If this is omitted, then this template will not add restrictions on a certificate's X.509 extensions. These constraints do not apply to X.509 extensions set in this CertificateTemplate's predefined_values.
@@ -415,81 +431,65 @@ response
           - objectIdPath: "{{ objectIdPath }}"
         knownExtensions:
           - "{{ knownExtensions }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. A human-readable description of scenarios this template is intended for.
-    - name: maximumLifetime
-      value: "{{ maximumLifetime }}"
-      description: |
-        Optional. The maximum lifetime allowed for issued Certificates that use this template. If the issuing CaPool resource's IssuancePolicy specifies a maximum_lifetime the minimum of the two durations will be the maximum lifetime for issued Certificates. Note that if the issuing CertificateAuthority expires before a Certificate's requested maximum_lifetime, the effective lifetime will be explicitly truncated to match it.
     - name: predefinedValues
       description: |
         Optional. A set of X.509 values that will be applied to all issued certificates that use this template. If the certificate request includes conflicting values for the same properties, they will be overwritten by the values defined here. If the issuing CaPool's IssuancePolicy defines conflicting baseline_values for the same properties, the certificate issuance request will fail.
       value:
-        caOptions:
-          isCa: {{ isCa }}
-          maxIssuerPathLength: {{ maxIssuerPathLength }}
-        aiaOcspServers:
-          - "{{ aiaOcspServers }}"
         additionalExtensions:
           - critical: {{ critical }}
             objectId:
               objectIdPath:
                 - {{ objectIdPath }}
             value: "{{ value }}"
-        policyIds:
-          - objectIdPath: "{{ objectIdPath }}"
-        nameConstraints:
-          critical: {{ critical }}
-          excludedIpRanges:
-            - "{{ excludedIpRanges }}"
-          permittedEmailAddresses:
-            - "{{ permittedEmailAddresses }}"
-          excludedDnsNames:
-            - "{{ excludedDnsNames }}"
-          permittedUris:
-            - "{{ permittedUris }}"
-          excludedEmailAddresses:
-            - "{{ excludedEmailAddresses }}"
-          excludedUris:
-            - "{{ excludedUris }}"
-          permittedIpRanges:
-            - "{{ permittedIpRanges }}"
-          permittedDnsNames:
-            - "{{ permittedDnsNames }}"
+        aiaOcspServers:
+          - "{{ aiaOcspServers }}"
+        caOptions:
+          isCa: {{ isCa }}
+          maxIssuerPathLength: {{ maxIssuerPathLength }}
         keyUsage:
           baseKeyUsage:
-            keyEncipherment: {{ keyEncipherment }}
             certSign: {{ certSign }}
-            digitalSignature: {{ digitalSignature }}
             contentCommitment: {{ contentCommitment }}
-            encipherOnly: {{ encipherOnly }}
-            decipherOnly: {{ decipherOnly }}
-            dataEncipherment: {{ dataEncipherment }}
             crlSign: {{ crlSign }}
+            dataEncipherment: {{ dataEncipherment }}
+            decipherOnly: {{ decipherOnly }}
+            digitalSignature: {{ digitalSignature }}
+            encipherOnly: {{ encipherOnly }}
             keyAgreement: {{ keyAgreement }}
+            keyEncipherment: {{ keyEncipherment }}
           extendedKeyUsage:
-            serverAuth: {{ serverAuth }}
             clientAuth: {{ clientAuth }}
+            codeSigning: {{ codeSigning }}
             emailProtection: {{ emailProtection }}
             ocspSigning: {{ ocspSigning }}
-            codeSigning: {{ codeSigning }}
+            serverAuth: {{ serverAuth }}
             timeStamping: {{ timeStamping }}
           unknownExtendedKeyUsages:
             - objectIdPath: "{{ objectIdPath }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name for this CertificateTemplate in the format \`projects/*/locations/*/certificateTemplates/*\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels with user-defined metadata.
-    - name: requestId
-      value: "{{ requestId }}"
+        nameConstraints:
+          critical: {{ critical }}
+          excludedDnsNames:
+            - "{{ excludedDnsNames }}"
+          excludedEmailAddresses:
+            - "{{ excludedEmailAddresses }}"
+          excludedIpRanges:
+            - "{{ excludedIpRanges }}"
+          excludedUris:
+            - "{{ excludedUris }}"
+          permittedDnsNames:
+            - "{{ permittedDnsNames }}"
+          permittedEmailAddresses:
+            - "{{ permittedEmailAddresses }}"
+          permittedIpRanges:
+            - "{{ permittedIpRanges }}"
+          permittedUris:
+            - "{{ permittedUris }}"
+        policyIds:
+          - objectIdPath: "{{ objectIdPath }}"
     - name: certificateTemplateId
       value: "{{ certificateTemplateId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -511,19 +511,19 @@ Update a CertificateTemplate.
 ```sql
 UPDATE google.privateca.certificate_templates
 SET 
-data__identityConstraints = '{{ identityConstraints }}',
-data__passthroughExtensions = '{{ passthroughExtensions }}',
 data__description = '{{ description }}',
+data__identityConstraints = '{{ identityConstraints }}',
+data__labels = '{{ labels }}',
 data__maximumLifetime = '{{ maximumLifetime }}',
-data__predefinedValues = '{{ predefinedValues }}',
 data__name = '{{ name }}',
-data__labels = '{{ labels }}'
+data__passthroughExtensions = '{{ passthroughExtensions }}',
+data__predefinedValues = '{{ predefinedValues }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND certificateTemplatesId = '{{ certificateTemplatesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

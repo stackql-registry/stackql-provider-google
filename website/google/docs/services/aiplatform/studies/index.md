@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the studies in a region for an associated project.</td>
 </tr>
 <tr>
@@ -266,8 +266,8 @@ studySpec
 FROM google.aiplatform.studies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -289,14 +289,14 @@ Creates a Study. A resource name will be generated after creation of the Study.
 
 ```sql
 INSERT INTO google.aiplatform.studies (
-data__studySpec,
 data__displayName,
+data__studySpec,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ studySpec }}',
 '{{ displayName }}',
+'{{ studySpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -320,66 +320,66 @@ studySpec
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the studies resource.
-    - name: studySpec
-      description: |
-        Required. Configuration of the Study.
-      value:
-        convexAutomatedStoppingSpec:
-          minStepCount: "{{ minStepCount }}"
-          updateAllStoppedTrials: {{ updateAllStoppedTrials }}
-          useElapsedDuration: {{ useElapsedDuration }}
-          minMeasurementCount: "{{ minMeasurementCount }}"
-          learningRateParameterName: "{{ learningRateParameterName }}"
-          maxStepCount: "{{ maxStepCount }}"
-        medianAutomatedStoppingSpec:
-          useElapsedDuration: {{ useElapsedDuration }}
-        measurementSelectionType: "{{ measurementSelectionType }}"
-        algorithm: "{{ algorithm }}"
-        metrics:
-          - safetyConfig:
-              safetyThreshold: {{ safetyThreshold }}
-              desiredMinSafeTrialsFraction: {{ desiredMinSafeTrialsFraction }}
-            goal: "{{ goal }}"
-            metricId: "{{ metricId }}"
-        studyStoppingConfig:
-          minNumTrials: {{ minNumTrials }}
-          shouldStopAsap: {{ shouldStopAsap }}
-          maxNumTrialsNoProgress: {{ maxNumTrialsNoProgress }}
-          minimumRuntimeConstraint:
-            maxDuration: "{{ maxDuration }}"
-            endTime: "{{ endTime }}"
-          maxNumTrials: {{ maxNumTrials }}
-          maxDurationNoProgress: "{{ maxDurationNoProgress }}"
-          maximumRuntimeConstraint:
-            maxDuration: "{{ maxDuration }}"
-            endTime: "{{ endTime }}"
-        decayCurveStoppingSpec:
-          useElapsedDuration: {{ useElapsedDuration }}
-        observationNoise: "{{ observationNoise }}"
-        parameters:
-          - doubleValueSpec:
-              defaultValue: {{ defaultValue }}
-              minValue: {{ minValue }}
-              maxValue: {{ maxValue }}
-            categoricalValueSpec:
-              values:
-                - "{{ values }}"
-              defaultValue: "{{ defaultValue }}"
-            scaleType: "{{ scaleType }}"
-            discreteValueSpec:
-              values:
-                - {{ values }}
-              defaultValue: {{ defaultValue }}
-            parameterId: "{{ parameterId }}"
-            integerValueSpec:
-              defaultValue: "{{ defaultValue }}"
-              minValue: "{{ minValue }}"
-              maxValue: "{{ maxValue }}"
-            conditionalParameterSpecs: "{{ conditionalParameterSpecs }}"
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Required. Describes the Study, default value is empty string.
+    - name: studySpec
+      description: |
+        Required. Configuration of the Study.
+      value:
+        algorithm: "{{ algorithm }}"
+        convexAutomatedStoppingSpec:
+          learningRateParameterName: "{{ learningRateParameterName }}"
+          maxStepCount: "{{ maxStepCount }}"
+          minMeasurementCount: "{{ minMeasurementCount }}"
+          minStepCount: "{{ minStepCount }}"
+          updateAllStoppedTrials: {{ updateAllStoppedTrials }}
+          useElapsedDuration: {{ useElapsedDuration }}
+        decayCurveStoppingSpec:
+          useElapsedDuration: {{ useElapsedDuration }}
+        measurementSelectionType: "{{ measurementSelectionType }}"
+        medianAutomatedStoppingSpec:
+          useElapsedDuration: {{ useElapsedDuration }}
+        metrics:
+          - goal: "{{ goal }}"
+            metricId: "{{ metricId }}"
+            safetyConfig:
+              desiredMinSafeTrialsFraction: {{ desiredMinSafeTrialsFraction }}
+              safetyThreshold: {{ safetyThreshold }}
+        observationNoise: "{{ observationNoise }}"
+        parameters:
+          - categoricalValueSpec:
+              defaultValue: "{{ defaultValue }}"
+              values:
+                - "{{ values }}"
+            conditionalParameterSpecs: "{{ conditionalParameterSpecs }}"
+            discreteValueSpec:
+              defaultValue: {{ defaultValue }}
+              values:
+                - {{ values }}
+            doubleValueSpec:
+              defaultValue: {{ defaultValue }}
+              maxValue: {{ maxValue }}
+              minValue: {{ minValue }}
+            integerValueSpec:
+              defaultValue: "{{ defaultValue }}"
+              maxValue: "{{ maxValue }}"
+              minValue: "{{ minValue }}"
+            parameterId: "{{ parameterId }}"
+            scaleType: "{{ scaleType }}"
+        studyStoppingConfig:
+          maxDurationNoProgress: "{{ maxDurationNoProgress }}"
+          maxNumTrials: {{ maxNumTrials }}
+          maxNumTrialsNoProgress: {{ maxNumTrialsNoProgress }}
+          maximumRuntimeConstraint:
+            endTime: "{{ endTime }}"
+            maxDuration: "{{ maxDuration }}"
+          minNumTrials: {{ minNumTrials }}
+          minimumRuntimeConstraint:
+            endTime: "{{ endTime }}"
+            maxDuration: "{{ maxDuration }}"
+          shouldStopAsap: {{ shouldStopAsap }}
 `}</CodeBlock>
 
 </TabItem>

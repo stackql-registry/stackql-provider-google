@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-certificateMapsId"><code>certificateMapsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists CertificateMapEntries in a given project and location.</td>
 </tr>
 <tr>
@@ -329,10 +329,10 @@ FROM google.certificatemanager.certificate_map_entries
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND certificateMapsId = '{{ certificateMapsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -354,11 +354,11 @@ Creates a new CertificateMapEntry in a given project and location.
 
 ```sql
 INSERT INTO google.certificatemanager.certificate_map_entries (
-data__labels,
 data__certificates,
 data__description,
-data__matcher,
 data__hostname,
+data__labels,
+data__matcher,
 data__name,
 projectsId,
 locationsId,
@@ -366,11 +366,11 @@ certificateMapsId,
 certificateMapEntryId
 )
 SELECT 
-'{{ labels }}',
 '{{ certificates }}',
 '{{ description }}',
-'{{ matcher }}',
 '{{ hostname }}',
+'{{ labels }}',
+'{{ matcher }}',
 '{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -399,10 +399,6 @@ response
     - name: certificateMapsId
       value: "{{ certificateMapsId }}"
       description: Required parameter for the certificate_map_entries resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of labels associated with a Certificate Map Entry.
     - name: certificates
       value:
         - "{{ certificates }}"
@@ -412,15 +408,19 @@ response
       value: "{{ description }}"
       description: |
         Optional. One or more paragraphs of text description of a certificate map entry.
+    - name: hostname
+      value: "{{ hostname }}"
+      description: |
+        A Hostname (FQDN, e.g. \`example.com\`) or a wildcard hostname expression (\`*.example.com\`) for a set of hostnames with common suffix. Used as Server Name Indication (SNI) for selecting a proper certificate.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of labels associated with a Certificate Map Entry.
     - name: matcher
       value: "{{ matcher }}"
       description: |
         A predefined matcher for particular cases, other than SNI selection.
       valid_values: ['MATCHER_UNSPECIFIED', 'PRIMARY']
-    - name: hostname
-      value: "{{ hostname }}"
-      description: |
-        A Hostname (FQDN, e.g. \`example.com\`) or a wildcard hostname expression (\`*.example.com\`) for a set of hostnames with common suffix. Used as Server Name Indication (SNI) for selecting a proper certificate.
     - name: name
       value: "{{ name }}"
       description: |
@@ -448,11 +448,11 @@ Updates a CertificateMapEntry.
 ```sql
 UPDATE google.certificatemanager.certificate_map_entries
 SET 
-data__labels = '{{ labels }}',
 data__certificates = '{{ certificates }}',
 data__description = '{{ description }}',
-data__matcher = '{{ matcher }}',
 data__hostname = '{{ hostname }}',
+data__labels = '{{ labels }}',
+data__matcher = '{{ matcher }}',
 data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

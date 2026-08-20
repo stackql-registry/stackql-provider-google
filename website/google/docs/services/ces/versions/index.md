@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all app versions in the given app.</td>
 </tr>
 <tr>
@@ -305,10 +305,10 @@ FROM google.ces.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND appsId = '{{ appsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -330,18 +330,18 @@ Creates a new app version in the given app.
 
 ```sql
 INSERT INTO google.ces.versions (
-data__name,
-data__displayName,
 data__description,
+data__displayName,
+data__name,
 projectsId,
 locationsId,
 appsId,
 appVersionId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ appsId }}',
@@ -371,18 +371,18 @@ snapshot
     - name: appsId
       value: "{{ appsId }}"
       description: Required parameter for the versions resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The unique identifier of the app version. Format: \`projects/{project}/locations/{location}/apps/{app}/versions/{version}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. The display name of the app version.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. The description of the app version.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The display name of the app version.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The unique identifier of the app version. Format: \`projects/{project}/locations/{location}/apps/{app}/versions/{version}\`
     - name: appVersionId
       value: "{{ appVersionId }}"
 `}</CodeBlock>

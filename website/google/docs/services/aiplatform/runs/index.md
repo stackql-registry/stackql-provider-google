@@ -165,15 +165,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists TensorboardRuns in a Location.</td>
-</tr>
-<tr>
-    <td><a href="#create"><CopyableCode code="create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
-    <td><a href="#parameter-tensorboardRunId"><code>tensorboardRunId</code></a></td>
-    <td>Creates a TensorboardRun.</td>
 </tr>
 <tr>
     <td><a href="#batch_create"><CopyableCode code="batch_create" /></a></td>
@@ -181,6 +174,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
     <td></td>
     <td>Batch create TensorboardRuns.</td>
+</tr>
+<tr>
+    <td><a href="#create"><CopyableCode code="create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
+    <td><a href="#parameter-tensorboardRunId"><code>tensorboardRunId</code></a></td>
+    <td>Creates a TensorboardRun.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
@@ -331,11 +331,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND tensorboardsId = '{{ tensorboardsId }}' -- required
 AND experimentsId = '{{ experimentsId }}' -- required
-AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -345,13 +345,36 @@ AND filter = '{{ filter }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="create"
+    defaultValue="batch_create"
     values={[
-        { label: 'create', value: 'create' },
         { label: 'batch_create', value: 'batch_create' },
+        { label: 'create', value: 'create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
+<TabItem value="batch_create">
+
+Batch create TensorboardRuns.
+
+```sql
+INSERT INTO google.aiplatform.runs (
+data__requests,
+projectsId,
+locationsId,
+tensorboardsId,
+experimentsId
+)
+SELECT 
+'{{ requests }}',
+'{{ projectsId }}',
+'{{ locationsId }}',
+'{{ tensorboardsId }}',
+'{{ experimentsId }}'
+RETURNING
+tensorboardRuns
+;
+```
+</TabItem>
 <TabItem value="create">
 
 Creates a TensorboardRun.
@@ -389,29 +412,6 @@ updateTime
 ;
 ```
 </TabItem>
-<TabItem value="batch_create">
-
-Batch create TensorboardRuns.
-
-```sql
-INSERT INTO google.aiplatform.runs (
-data__requests,
-projectsId,
-locationsId,
-tensorboardsId,
-experimentsId
-)
-SELECT 
-'{{ requests }}',
-'{{ projectsId }}',
-'{{ locationsId }}',
-'{{ tensorboardsId }}',
-'{{ experimentsId }}'
-RETURNING
-tensorboardRuns
-;
-```
-</TabItem>
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
@@ -429,6 +429,20 @@ tensorboardRuns
     - name: experimentsId
       value: "{{ experimentsId }}"
       description: Required parameter for the runs resource.
+    - name: requests
+      description: |
+        Required. The request message specifying the TensorboardRuns to create. A maximum of 1000 TensorboardRuns can be created in a batch.
+      value:
+        - parent: "{{ parent }}"
+          tensorboardRun:
+            createTime: "{{ createTime }}"
+            description: "{{ description }}"
+            displayName: "{{ displayName }}"
+            etag: "{{ etag }}"
+            labels: "{{ labels }}"
+            name: "{{ name }}"
+            updateTime: "{{ updateTime }}"
+          tensorboardRunId: "{{ tensorboardRunId }}"
     - name: description
       value: "{{ description }}"
       description: |
@@ -445,20 +459,6 @@ tensorboardRuns
       value: "{{ labels }}"
       description: |
         The labels with user-defined metadata to organize your TensorboardRuns. This field will be used to filter and visualize Runs in the Tensorboard UI. For example, a Vertex AI training job can set a label aiplatform.googleapis.com/training_job_id=xxxxx to all the runs created within that job. An end user can set a label experiment_id=xxxxx for all the runs produced in a Jupyter notebook. These runs can be grouped by a label value and visualized together in the Tensorboard UI. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one TensorboardRun (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-    - name: requests
-      description: |
-        Required. The request message specifying the TensorboardRuns to create. A maximum of 1000 TensorboardRuns can be created in a batch.
-      value:
-        - tensorboardRunId: "{{ tensorboardRunId }}"
-          parent: "{{ parent }}"
-          tensorboardRun:
-            name: "{{ name }}"
-            createTime: "{{ createTime }}"
-            description: "{{ description }}"
-            updateTime: "{{ updateTime }}"
-            displayName: "{{ displayName }}"
-            etag: "{{ etag }}"
-            labels: "{{ labels }}"
     - name: tensorboardRunId
       value: "{{ tensorboardRunId }}"
 `}</CodeBlock>
@@ -552,8 +552,8 @@ EXEC google.aiplatform.runs.write
 @runsId='{{ runsId }}' --required 
 @@json=
 '{
-"timeSeriesData": "{{ timeSeriesData }}", 
-"tensorboardRun": "{{ tensorboardRun }}"
+"tensorboardRun": "{{ tensorboardRun }}", 
+"timeSeriesData": "{{ timeSeriesData }}"
 }'
 ;
 ```

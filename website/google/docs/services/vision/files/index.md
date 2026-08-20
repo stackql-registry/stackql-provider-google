@@ -51,16 +51,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_files_annotate"><CopyableCode code="projects_locations_files_annotate" /></a></td>
+    <td><a href="#files_annotate"><CopyableCode code="files_annotate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
     <td></td>
     <td>Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_files_async_batch_annotate"><CopyableCode code="projects_locations_files_async_batch_annotate" /></a></td>
+    <td><a href="#files_async_batch_annotate"><CopyableCode code="files_async_batch_annotate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
     <td></td>
     <td>Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).</td>
 </tr>
@@ -79,16 +79,16 @@ The following methods are available for this resource:
     <td>Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).</td>
 </tr>
 <tr>
-    <td><a href="#files_annotate"><CopyableCode code="files_annotate" /></a></td>
+    <td><a href="#projects_locations_files_annotate"><CopyableCode code="projects_locations_files_annotate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.</td>
 </tr>
 <tr>
-    <td><a href="#files_async_batch_annotate"><CopyableCode code="files_async_batch_annotate" /></a></td>
+    <td><a href="#projects_locations_files_async_batch_annotate"><CopyableCode code="projects_locations_files_async_batch_annotate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).</td>
 </tr>
@@ -124,16 +124,78 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_files_annotate"
+    defaultValue="files_annotate"
     values={[
-        { label: 'projects_locations_files_annotate', value: 'projects_locations_files_annotate' },
-        { label: 'projects_locations_files_async_batch_annotate', value: 'projects_locations_files_async_batch_annotate' },
+        { label: 'files_annotate', value: 'files_annotate' },
+        { label: 'files_async_batch_annotate', value: 'files_async_batch_annotate' },
         { label: 'projects_files_annotate', value: 'projects_files_annotate' },
         { label: 'projects_files_async_batch_annotate', value: 'projects_files_async_batch_annotate' },
-        { label: 'files_annotate', value: 'files_annotate' },
-        { label: 'files_async_batch_annotate', value: 'files_async_batch_annotate' }
+        { label: 'projects_locations_files_annotate', value: 'projects_locations_files_annotate' },
+        { label: 'projects_locations_files_async_batch_annotate', value: 'projects_locations_files_async_batch_annotate' }
     ]}
 >
+<TabItem value="files_annotate">
+
+Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.
+
+```sql
+EXEC google.vision.files.files_annotate 
+@@json=
+'{
+"labels": "{{ labels }}", 
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="files_async_batch_annotate">
+
+Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).
+
+```sql
+EXEC google.vision.files.files_async_batch_annotate 
+@@json=
+'{
+"labels": "{{ labels }}", 
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_files_annotate">
+
+Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.
+
+```sql
+EXEC google.vision.files.projects_files_annotate 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"labels": "{{ labels }}", 
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_files_async_batch_annotate">
+
+Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).
+
+```sql
+EXEC google.vision.files.projects_files_async_batch_annotate 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"labels": "{{ labels }}", 
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_files_annotate">
 
 Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.
@@ -144,9 +206,9 @@ EXEC google.vision.files.projects_locations_files_annotate
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"requests": "{{ requests }}", 
 "labels": "{{ labels }}", 
-"parent": "{{ parent }}"
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
 }'
 ;
 ```
@@ -161,71 +223,9 @@ EXEC google.vision.files.projects_locations_files_async_batch_annotate
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"parent": "{{ parent }}", 
-"requests": "{{ requests }}", 
-"labels": "{{ labels }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_files_annotate">
-
-Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.
-
-```sql
-EXEC google.vision.files.projects_files_annotate 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"requests": "{{ requests }}", 
 "labels": "{{ labels }}", 
-"parent": "{{ parent }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_files_async_batch_annotate">
-
-Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).
-
-```sql
-EXEC google.vision.files.projects_files_async_batch_annotate 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
 "parent": "{{ parent }}", 
-"requests": "{{ requests }}", 
-"labels": "{{ labels }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="files_annotate">
-
-Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.
-
-```sql
-EXEC google.vision.files.files_annotate 
-@@json=
-'{
-"requests": "{{ requests }}", 
-"labels": "{{ labels }}", 
-"parent": "{{ parent }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="files_async_batch_annotate">
-
-Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).
-
-```sql
-EXEC google.vision.files.files_async_batch_annotate 
-@@json=
-'{
-"parent": "{{ parent }}", 
-"requests": "{{ requests }}", 
-"labels": "{{ labels }}"
+"requests": "{{ requests }}"
 }'
 ;
 ```

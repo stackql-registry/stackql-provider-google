@@ -307,21 +307,21 @@ Creates a custom constraint. Returns a `google.rpc.Status` with `google.rpc.Code
 ```sql
 INSERT INTO google.orgpolicy.custom_constraints (
 data__actionType,
-data__displayName,
 data__condition,
-data__name,
-data__methodTypes,
 data__description,
+data__displayName,
+data__methodTypes,
+data__name,
 data__resourceTypes,
 organizationsId
 )
 SELECT 
 '{{ actionType }}',
-'{{ displayName }}',
 '{{ condition }}',
-'{{ name }}',
-'{{ methodTypes }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ methodTypes }}',
+'{{ name }}',
 '{{ resourceTypes }}',
 '{{ organizationsId }}'
 RETURNING
@@ -349,27 +349,27 @@ updateTime
       description: |
         Allow or deny type.
       valid_values: ['ACTION_TYPE_UNSPECIFIED', 'ALLOW', 'DENY']
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        One line display name for the UI. The max length of the display_name is 200 characters.
     - name: condition
       value: "{{ condition }}"
       description: |
         A Common Expression Language (CEL) condition which is used in the evaluation of the constraint. For example: \`resource.instanceName.matches("(production|test)_(.+_)?[d]+")\` or, \`resource.management.auto_upgrade == true\` The max length of the condition is 1000 characters.
-    - name: name
-      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Immutable. Name of the constraint. This is unique within the organization. The name must be of the form: * \`organizations/{organization_id}/customConstraints/{custom_constraint_id}\` Example: \`organizations/123/customConstraints/custom.createOnlyE2TypeVms\` The max length is 71 characters and the minimum length is 1. Note that the prefix \`organizations/{organization_id}/customConstraints/custom.\` is not counted.
+        Detailed information about this custom policy constraint. The max length of the description is 2000 characters.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        One line display name for the UI. The max length of the display_name is 200 characters.
     - name: methodTypes
       value:
         - "{{ methodTypes }}"
       description: |
         All the operations being applied for this constraint.
-    - name: description
-      value: "{{ description }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Detailed information about this custom policy constraint. The max length of the description is 2000 characters.
+        Immutable. Name of the constraint. This is unique within the organization. The name must be of the form: * \`organizations/{organization_id}/customConstraints/{custom_constraint_id}\` Example: \`organizations/123/customConstraints/custom.createOnlyE2TypeVms\` The max length is 71 characters and the minimum length is 1. Note that the prefix \`organizations/{organization_id}/customConstraints/custom.\` is not counted.
     - name: resourceTypes
       value:
         - "{{ resourceTypes }}"
@@ -397,11 +397,11 @@ Updates a custom constraint. Returns a `google.rpc.Status` with `google.rpc.Code
 UPDATE google.orgpolicy.custom_constraints
 SET 
 data__actionType = '{{ actionType }}',
-data__displayName = '{{ displayName }}',
 data__condition = '{{ condition }}',
-data__name = '{{ name }}',
-data__methodTypes = '{{ methodTypes }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__methodTypes = '{{ methodTypes }}',
+data__name = '{{ name }}',
 data__resourceTypes = '{{ resourceTypes }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

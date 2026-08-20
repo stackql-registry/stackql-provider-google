@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_engines_assistants_list"><CopyableCode code="projects_locations_collections_engines_assistants_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all Assistants under an Engine.</td>
 </tr>
 <tr>
@@ -345,8 +345,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND enginesId = '{{ enginesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -368,14 +368,14 @@ Creates an Assistant.
 
 ```sql
 INSERT INTO google.discoveryengine.assistants (
-data__enabledTools,
 data__customerPolicy,
-data__description,
-data__webGroundingType,
-data__generationConfig,
 data__defaultWebGroundingToggleOff,
-data__name,
+data__description,
 data__displayName,
+data__enabledTools,
+data__generationConfig,
+data__name,
+data__webGroundingType,
 projectsId,
 locationsId,
 collectionsId,
@@ -383,14 +383,14 @@ enginesId,
 assistantId
 )
 SELECT 
-'{{ enabledTools }}',
 '{{ customerPolicy }}',
-'{{ description }}',
-'{{ webGroundingType }}',
-'{{ generationConfig }}',
 {{ defaultWebGroundingToggleOff }},
-'{{ name }}',
+'{{ description }}',
 '{{ displayName }}',
+'{{ enabledTools }}',
+'{{ generationConfig }}',
+'{{ name }}',
+'{{ webGroundingType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -427,31 +427,34 @@ webGroundingType
     - name: enginesId
       value: "{{ enginesId }}"
       description: Required parameter for the assistants resource.
-    - name: enabledTools
-      value: "{{ enabledTools }}"
-      description: |
-        Optional. Note: not implemented yet. Use enabled_actions instead. The enabled tools on this assistant. The keys are connector name, for example "projects/{projectId}/locations/{locationId}/collections/{collectionId}/dataconnector The values consist of admin enabled tools towards the connector instance. Admin can selectively enable multiple tools on any of the connector instances that they created in the project. For example {"jira1ConnectorName": [(toolId1, "createTicket"), (toolId2, "transferTicket")], "gmail1ConnectorName": [(toolId3, "sendEmail"),..] }
     - name: customerPolicy
       description: |
         Optional. Customer policy for the assistant.
       value:
-        modelArmorConfig:
-          userPromptTemplate: "{{ userPromptTemplate }}"
-          responseTemplate: "{{ responseTemplate }}"
-          failureMode: "{{ failureMode }}"
         bannedPhrases:
           - ignoreDiacritics: {{ ignoreDiacritics }}
             matchType: "{{ matchType }}"
             phrase: "{{ phrase }}"
+        modelArmorConfig:
+          failureMode: "{{ failureMode }}"
+          responseTemplate: "{{ responseTemplate }}"
+          userPromptTemplate: "{{ userPromptTemplate }}"
+    - name: defaultWebGroundingToggleOff
+      value: {{ defaultWebGroundingToggleOff }}
+      description: |
+        Optional. This field controls the default web grounding toggle for end users if \`web_grounding_type\` is set to \`WEB_GROUNDING_TYPE_GOOGLE_SEARCH\` or \`WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH\`. By default, this field is set to false. If \`web_grounding_type\` is \`WEB_GROUNDING_TYPE_GOOGLE_SEARCH\` or \`WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH\`, end users will have web grounding enabled by default on UI. If true, grounding toggle will be disabled by default on UI. End users can still enable web grounding in the UI if web grounding is enabled.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. Description for additional information. Expected to be shown on the configuration UI, not to the users of the assistant.
-    - name: webGroundingType
-      value: "{{ webGroundingType }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Optional. The type of web grounding to use.
-      valid_values: ['WEB_GROUNDING_TYPE_UNSPECIFIED', 'WEB_GROUNDING_TYPE_DISABLED', 'WEB_GROUNDING_TYPE_GOOGLE_SEARCH', 'WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH']
+        Required. The assistant display name. It must be a UTF-8 encoded string with a length limit of 128 characters.
+    - name: enabledTools
+      value: "{{ enabledTools }}"
+      description: |
+        Optional. Note: not implemented yet. Use enabled_actions instead. The enabled tools on this assistant. The keys are connector name, for example "projects/{projectId}/locations/{locationId}/collections/{collectionId}/dataconnector The values consist of admin enabled tools towards the connector instance. Admin can selectively enable multiple tools on any of the connector instances that they created in the project. For example {"jira1ConnectorName": [(toolId1, "createTicket"), (toolId2, "transferTicket")], "gmail1ConnectorName": [(toolId3, "sendEmail"),..] }
     - name: generationConfig
       description: |
         Optional. Configuration for the generation of the assistant response.
@@ -462,18 +465,15 @@ webGroundingType
         defaultModelId: "{{ defaultModelId }}"
         systemInstruction:
           additionalSystemInstruction: "{{ additionalSystemInstruction }}"
-    - name: defaultWebGroundingToggleOff
-      value: {{ defaultWebGroundingToggleOff }}
-      description: |
-        Optional. This field controls the default web grounding toggle for end users if \`web_grounding_type\` is set to \`WEB_GROUNDING_TYPE_GOOGLE_SEARCH\` or \`WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH\`. By default, this field is set to false. If \`web_grounding_type\` is \`WEB_GROUNDING_TYPE_GOOGLE_SEARCH\` or \`WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH\`, end users will have web grounding enabled by default on UI. If true, grounding toggle will be disabled by default on UI. End users can still enable web grounding in the UI if web grounding is enabled.
     - name: name
       value: "{{ name }}"
       description: |
         Immutable. Resource name of the assistant. Format: \`projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}\` It must be a UTF-8 encoded string with a length limit of 1024 characters.
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: webGroundingType
+      value: "{{ webGroundingType }}"
       description: |
-        Required. The assistant display name. It must be a UTF-8 encoded string with a length limit of 128 characters.
+        Optional. The type of web grounding to use.
+      valid_values: ['WEB_GROUNDING_TYPE_UNSPECIFIED', 'WEB_GROUNDING_TYPE_DISABLED', 'WEB_GROUNDING_TYPE_GOOGLE_SEARCH', 'WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH']
     - name: assistantId
       value: "{{ assistantId }}"
 `}</CodeBlock>
@@ -497,14 +497,14 @@ Updates an Assistant
 ```sql
 UPDATE google.discoveryengine.assistants
 SET 
-data__enabledTools = '{{ enabledTools }}',
 data__customerPolicy = '{{ customerPolicy }}',
-data__description = '{{ description }}',
-data__webGroundingType = '{{ webGroundingType }}',
-data__generationConfig = '{{ generationConfig }}',
 data__defaultWebGroundingToggleOff = {{ defaultWebGroundingToggleOff }},
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__enabledTools = '{{ enabledTools }}',
+data__generationConfig = '{{ generationConfig }}',
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__webGroundingType = '{{ webGroundingType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -574,11 +574,11 @@ EXEC google.discoveryengine.assistants.projects_locations_collections_engines_as
 @assistantsId='{{ assistantsId }}' --required 
 @@json=
 '{
+"generationSpec": "{{ generationSpec }}", 
 "query": "{{ query }}", 
 "session": "{{ session }}", 
 "toolsSpec": "{{ toolsSpec }}", 
-"userMetadata": "{{ userMetadata }}", 
-"generationSpec": "{{ generationSpec }}"
+"userMetadata": "{{ userMetadata }}"
 }'
 ;
 ```

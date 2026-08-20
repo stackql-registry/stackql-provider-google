@@ -148,7 +148,7 @@ response
       description: Required parameter for the workload_identity_pools_attestation_rule resource.
     - name: attestationRule
       description: |
-        Defines which workloads can receive an identity within a pool. When an AttestationRule is defined under a managed identity, matching workloads may receive that identity.
+        Required. The attestation rule to be added.
       value:
         googleCloudResource: "{{ googleCloudResource }}"
 `}</CodeBlock>

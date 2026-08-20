@@ -93,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="timeZone" /></td>
     <td><code>string</code></td>
-    <td>Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is UTC.</td>
+    <td>Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the [time zone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is `UTC`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -157,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="timeZone" /></td>
     <td><code>string</code></td>
-    <td>Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is UTC.</td>
+    <td>Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the [time zone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is `UTC`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -354,24 +354,24 @@ Creates a new WorkflowConfig in a given Repository.
 
 ```sql
 INSERT INTO google.dataform.workflow_configs (
-data__invocationConfig,
 data__cronSchedule,
 data__disabled,
-data__timeZone,
-data__releaseConfig,
+data__invocationConfig,
 data__name,
+data__releaseConfig,
+data__timeZone,
 projectsId,
 locationsId,
 repositoriesId,
 workflowConfigId
 )
 SELECT 
-'{{ invocationConfig }}',
 '{{ cronSchedule }}',
 {{ disabled }},
-'{{ timeZone }}',
-'{{ releaseConfig }}',
+'{{ invocationConfig }}',
 '{{ name }}',
+'{{ releaseConfig }}',
+'{{ timeZone }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -404,21 +404,6 @@ updateTime
     - name: repositoriesId
       value: "{{ repositoriesId }}"
       description: Required parameter for the workflow_configs resource.
-    - name: invocationConfig
-      description: |
-        Optional. If left unset, a default InvocationConfig will be used.
-      value:
-        includedTags:
-          - "{{ includedTags }}"
-        transitiveDependentsIncluded: {{ transitiveDependentsIncluded }}
-        queryPriority: "{{ queryPriority }}"
-        includedTargets:
-          - database: "{{ database }}"
-            name: "{{ name }}"
-            schema: "{{ schema }}"
-        fullyRefreshIncrementalTablesEnabled: {{ fullyRefreshIncrementalTablesEnabled }}
-        transitiveDependenciesIncluded: {{ transitiveDependenciesIncluded }}
-        serviceAccount: "{{ serviceAccount }}"
     - name: cronSchedule
       value: "{{ cronSchedule }}"
       description: |
@@ -427,18 +412,33 @@ updateTime
       value: {{ disabled }}
       description: |
         Optional. Disables automatic creation of workflow invocations.
-    - name: timeZone
-      value: "{{ timeZone }}"
+    - name: invocationConfig
       description: |
-        Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is UTC.
-    - name: releaseConfig
-      value: "{{ releaseConfig }}"
-      description: |
-        Required. The name of the release config whose release_compilation_result should be executed. Must be in the format \`projects/*/locations/*/repositories/*/releaseConfigs/*\`.
+        Optional. If left unset, a default InvocationConfig will be used.
+      value:
+        fullyRefreshIncrementalTablesEnabled: {{ fullyRefreshIncrementalTablesEnabled }}
+        includedTags:
+          - "{{ includedTags }}"
+        includedTargets:
+          - database: "{{ database }}"
+            name: "{{ name }}"
+            schema: "{{ schema }}"
+        queryPriority: "{{ queryPriority }}"
+        serviceAccount: "{{ serviceAccount }}"
+        transitiveDependenciesIncluded: {{ transitiveDependenciesIncluded }}
+        transitiveDependentsIncluded: {{ transitiveDependentsIncluded }}
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. The workflow config's name.
+    - name: releaseConfig
+      value: "{{ releaseConfig }}"
+      description: |
+        Required. The name of the release config whose release_compilation_result should be executed. Must be in the format \`projects/*/locations/*/repositories/*/releaseConfigs/*\`.
+    - name: timeZone
+      value: "{{ timeZone }}"
+      description: |
+        Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the [time zone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is \`UTC\`.
     - name: workflowConfigId
       value: "{{ workflowConfigId }}"
 `}</CodeBlock>
@@ -462,12 +462,12 @@ Updates a single WorkflowConfig. **Note:** *This method does not fully implement
 ```sql
 UPDATE google.dataform.workflow_configs
 SET 
-data__invocationConfig = '{{ invocationConfig }}',
 data__cronSchedule = '{{ cronSchedule }}',
 data__disabled = {{ disabled }},
-data__timeZone = '{{ timeZone }}',
+data__invocationConfig = '{{ invocationConfig }}',
+data__name = '{{ name }}',
 data__releaseConfig = '{{ releaseConfig }}',
-data__name = '{{ name }}'
+data__timeZone = '{{ timeZone }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

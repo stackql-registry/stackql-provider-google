@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists EkmConnections.</td>
 </tr>
 <tr>
@@ -286,10 +286,10 @@ serviceResolvers
 FROM google.cloudkms.ekm_connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -311,18 +311,18 @@ Creates a new EkmConnection in a given Project and Location.
 
 ```sql
 INSERT INTO google.cloudkms.ekm_connections (
+data__cryptoSpacePath,
 data__etag,
 data__keyManagementMode,
-data__cryptoSpacePath,
 data__serviceResolvers,
 projectsId,
 locationsId,
 ekmConnectionId
 )
 SELECT 
+'{{ cryptoSpacePath }}',
 '{{ etag }}',
 '{{ keyManagementMode }}',
-'{{ cryptoSpacePath }}',
 '{{ serviceResolvers }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -348,6 +348,10 @@ serviceResolvers
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the ekm_connections resource.
+    - name: cryptoSpacePath
+      value: "{{ cryptoSpacePath }}"
+      description: |
+        Optional. Identifies the EKM Crypto Space that this EkmConnection maps to. Note: This field is required if KeyManagementMode is CLOUD_KMS.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -357,18 +361,14 @@ serviceResolvers
       description: |
         Optional. Describes who can perform control plane operations on the EKM. If unset, this defaults to MANUAL.
       valid_values: ['KEY_MANAGEMENT_MODE_UNSPECIFIED', 'MANUAL', 'CLOUD_KMS']
-    - name: cryptoSpacePath
-      value: "{{ cryptoSpacePath }}"
-      description: |
-        Optional. Identifies the EKM Crypto Space that this EkmConnection maps to. Note: This field is required if KeyManagementMode is CLOUD_KMS.
     - name: serviceResolvers
       description: |
         Optional. A list of ServiceResolvers where the EKM can be reached. There should be one ServiceResolver per EKM replica. Currently, only a single ServiceResolver is supported.
       value:
-        - serverCertificates: "{{ serverCertificates }}"
-          serviceDirectoryService: "{{ serviceDirectoryService }}"
+        - endpointFilter: "{{ endpointFilter }}"
           hostname: "{{ hostname }}"
-          endpointFilter: "{{ endpointFilter }}"
+          serverCertificates: "{{ serverCertificates }}"
+          serviceDirectoryService: "{{ serviceDirectoryService }}"
     - name: ekmConnectionId
       value: "{{ ekmConnectionId }}"
 `}</CodeBlock>
@@ -392,9 +392,9 @@ Updates an EkmConnection's metadata.
 ```sql
 UPDATE google.cloudkms.ekm_connections
 SET 
+data__cryptoSpacePath = '{{ cryptoSpacePath }}',
 data__etag = '{{ etag }}',
 data__keyManagementMode = '{{ keyManagementMode }}',
-data__cryptoSpacePath = '{{ cryptoSpacePath }}',
 data__serviceResolvers = '{{ serviceResolvers }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

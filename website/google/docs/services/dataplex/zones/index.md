@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_zones_list"><CopyableCode code="projects_locations_lakes_zones_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists zone resources in a lake.</td>
 </tr>
 <tr>
@@ -370,10 +370,10 @@ FROM google.dataplex.zones
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -395,12 +395,12 @@ Creates a zone resource within a lake.
 
 ```sql
 INSERT INTO google.dataplex.zones (
-data__labels,
-data__displayName,
-data__discoverySpec,
-data__type,
-data__resourceSpec,
 data__description,
+data__discoverySpec,
+data__displayName,
+data__labels,
+data__resourceSpec,
+data__type,
 projectsId,
 locationsId,
 lakesId,
@@ -408,12 +408,12 @@ validateOnly,
 zoneId
 )
 SELECT 
-'{{ labels }}',
-'{{ displayName }}',
-'{{ discoverySpec }}',
-'{{ type }}',
-'{{ resourceSpec }}',
 '{{ description }}',
+'{{ discoverySpec }}',
+'{{ displayName }}',
+'{{ labels }}',
+'{{ resourceSpec }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lakesId }}',
@@ -442,46 +442,46 @@ response
     - name: lakesId
       value: "{{ lakesId }}"
       description: Required parameter for the zones resource.
-    - name: labels
-      value: "{{ labels }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Optional. User defined labels for the zone.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. User friendly display name.
+        Optional. Description of the zone.
     - name: discoverySpec
       description: |
         Optional. Specification of the discovery feature applied to data in this zone.
       value:
+        csvOptions:
+          delimiter: "{{ delimiter }}"
+          disableTypeInference: {{ disableTypeInference }}
+          encoding: "{{ encoding }}"
+          headerRows: {{ headerRows }}
+        enabled: {{ enabled }}
         excludePatterns:
           - "{{ excludePatterns }}"
-        schedule: "{{ schedule }}"
-        csvOptions:
-          headerRows: {{ headerRows }}
-          disableTypeInference: {{ disableTypeInference }}
-          delimiter: "{{ delimiter }}"
-          encoding: "{{ encoding }}"
         includePatterns:
           - "{{ includePatterns }}"
-        enabled: {{ enabled }}
         jsonOptions:
-          encoding: "{{ encoding }}"
           disableTypeInference: {{ disableTypeInference }}
-    - name: type
-      value: "{{ type }}"
+          encoding: "{{ encoding }}"
+        schedule: "{{ schedule }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Required. Immutable. The type of the zone.
-      valid_values: ['TYPE_UNSPECIFIED', 'RAW', 'CURATED']
+        Optional. User friendly display name.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User defined labels for the zone.
     - name: resourceSpec
       description: |
         Required. Specification of the resources that are referenced by the assets within this zone.
       value:
         locationType: "{{ locationType }}"
-    - name: description
-      value: "{{ description }}"
+    - name: type
+      value: "{{ type }}"
       description: |
-        Optional. Description of the zone.
+        Required. Immutable. The type of the zone.
+      valid_values: ['TYPE_UNSPECIFIED', 'RAW', 'CURATED']
     - name: validateOnly
       value: {{ validateOnly }}
     - name: zoneId
@@ -507,12 +507,12 @@ Updates a zone resource.
 ```sql
 UPDATE google.dataplex.zones
 SET 
-data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}',
+data__description = '{{ description }}',
 data__discoverySpec = '{{ discoverySpec }}',
-data__type = '{{ type }}',
+data__displayName = '{{ displayName }}',
+data__labels = '{{ labels }}',
 data__resourceSpec = '{{ resourceSpec }}',
-data__description = '{{ description }}'
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

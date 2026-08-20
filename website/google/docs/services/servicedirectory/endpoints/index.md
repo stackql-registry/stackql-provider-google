@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-namespacesId"><code>namespacesId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all endpoints.</td>
 </tr>
 <tr>
@@ -301,8 +301,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND namespacesId = '{{ namespacesId }}' -- required
 AND servicesId = '{{ servicesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -325,11 +325,11 @@ Creates an endpoint, and returns the new endpoint.
 
 ```sql
 INSERT INTO google.servicedirectory.endpoints (
+data__address,
+data__annotations,
 data__name,
 data__network,
-data__address,
 data__port,
-data__annotations,
 projectsId,
 locationsId,
 namespacesId,
@@ -337,11 +337,11 @@ servicesId,
 endpointId
 )
 SELECT 
+'{{ address }}',
+'{{ annotations }}',
 '{{ name }}',
 '{{ network }}',
-'{{ address }}',
 {{ port }},
-'{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ namespacesId }}',
@@ -374,6 +374,14 @@ uid
     - name: servicesId
       value: "{{ servicesId }}"
       description: Required parameter for the endpoints resource.
+    - name: address
+      value: "{{ address }}"
+      description: |
+        Optional. An IPv4 or IPv6 address. Service Directory rejects bad addresses like: * \`8.8.8\` * \`8.8.8.8:53\` * \`test:bad:address\` * \`[::1]\` * \`[::1]:8080\` Limited to 45 characters.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Annotations for the endpoint. This data can be consumed by service clients. Restrictions: * The entire annotations dictionary may contain up to 512 characters, spread accoss all key-value pairs. Annotations that go beyond this limit are rejected * Valid annotation keys have two segments: an optional prefix and name, separated by a slash (/). The name segment is required and must be 63 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between. The prefix is optional. If specified, the prefix must be a DNS subdomain: a series of DNS labels separated by dots (.), not longer than 253 characters in total, followed by a slash (/) Annotations that fails to meet these requirements are rejected. Note: This field is equivalent to the \`metadata\` field in the v1beta1 API. They have the same syntax and read/write to the same location in Service Directory.
     - name: name
       value: "{{ name }}"
       description: |
@@ -382,18 +390,10 @@ uid
       value: "{{ network }}"
       description: |
         Immutable. The Google Compute Engine network (VPC) of the endpoint in the format \`projects//locations/global/networks/*\`. The project must be specified by project number (project id is rejected). Incorrectly formatted networks are rejected, we also check to make sure that you have the servicedirectory.networks.attach permission on the project specified.
-    - name: address
-      value: "{{ address }}"
-      description: |
-        Optional. An IPv4 or IPv6 address. Service Directory rejects bad addresses like: * \`8.8.8\` * \`8.8.8.8:53\` * \`test:bad:address\` * \`[::1]\` * \`[::1]:8080\` Limited to 45 characters.
     - name: port
       value: {{ port }}
       description: |
         Optional. Service Directory rejects values outside of \`[0, 65535]\`.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. Annotations for the endpoint. This data can be consumed by service clients. Restrictions: * The entire annotations dictionary may contain up to 512 characters, spread accoss all key-value pairs. Annotations that go beyond this limit are rejected * Valid annotation keys have two segments: an optional prefix and name, separated by a slash (/). The name segment is required and must be 63 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between. The prefix is optional. If specified, the prefix must be a DNS subdomain: a series of DNS labels separated by dots (.), not longer than 253 characters in total, followed by a slash (/) Annotations that fails to meet these requirements are rejected. Note: This field is equivalent to the \`metadata\` field in the v1beta1 API. They have the same syntax and read/write to the same location in Service Directory.
     - name: endpointId
       value: "{{ endpointId }}"
 `}</CodeBlock>
@@ -417,11 +417,11 @@ Updates an endpoint.
 ```sql
 UPDATE google.servicedirectory.endpoints
 SET 
+data__address = '{{ address }}',
+data__annotations = '{{ annotations }}',
 data__name = '{{ name }}',
 data__network = '{{ network }}',
-data__address = '{{ address }}',
-data__port = {{ port }},
-data__annotations = '{{ annotations }}'
+data__port = {{ port }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

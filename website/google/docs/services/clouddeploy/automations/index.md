@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Automations in a given project and location.</td>
 </tr>
 <tr>
@@ -229,7 +229,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-automationsId"><code>automationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single Automation resource.</td>
 </tr>
 <tr>
@@ -386,9 +386,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -410,13 +410,13 @@ Creates a new Automation in a given project and location.
 
 ```sql
 INSERT INTO google.clouddeploy.automations (
-data__labels,
 data__annotations,
-data__etag,
-data__rules,
-data__serviceAccount,
-data__selector,
 data__description,
+data__etag,
+data__labels,
+data__rules,
+data__selector,
+data__serviceAccount,
 data__suspended,
 projectsId,
 locationsId,
@@ -426,13 +426,13 @@ requestId,
 validateOnly
 )
 SELECT 
-'{{ labels }}',
 '{{ annotations }}',
-'{{ etag }}',
-'{{ rules }}',
-'{{ serviceAccount }}',
-'{{ selector }}',
 '{{ description }}',
+'{{ etag }}',
+'{{ labels }}',
+'{{ rules }}',
+'{{ selector }}',
+'{{ serviceAccount }}',
 {{ suspended }},
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -463,55 +463,70 @@ response
     - name: deliveryPipelinesId
       value: "{{ deliveryPipelinesId }}"
       description: Required parameter for the automations resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 63 characters.
     - name: annotations
       value: "{{ annotations }}"
       description: |
         Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. Annotations must meet the following constraints: * Annotations are key/value pairs. * Valid annotation keys have two segments: an optional prefix and name, separated by a slash (\`/\`). * The name segment is required and must be 63 characters or less, beginning and ending with an alphanumeric character (\`[a-z0-9A-Z]\`) with dashes (\`-\`), underscores (\`_\`), dots (\`.\`), and alphanumerics between. * The prefix is optional. If specified, the prefix must be a DNS subdomain: a series of DNS labels separated by dots(\`.\`), not longer than 253 characters in total, followed by a slash (\`/\`). See https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set for more details.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the \`Automation\`. Max length is 255 characters.
     - name: etag
       value: "{{ etag }}"
       description: |
         Optional. The weak etag of the \`Automation\` resource. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 63 characters.
     - name: rules
       description: |
         Required. List of Automation rules associated with the Automation resource. Must have at least one rule and limited to 250 rules per Delivery Pipeline. Note: the order of the rules here is not the same as the order of execution.
       value:
-        - promoteReleaseRule:
+        - advanceRolloutRule:
+            condition:
+              targetsPresentCondition:
+                missingTargets:
+                  - "{{ missingTargets }}"
+                status: {{ status }}
+                updateTime: "{{ updateTime }}"
+              timedPromoteReleaseCondition:
+                nextPromotionTime: "{{ nextPromotionTime }}"
+                targetsList:
+                  - destinationTargetId: "{{ destinationTargetId }}"
+                    sourceTargetId: "{{ sourceTargetId }}"
+            id: "{{ id }}"
+            sourcePhases:
+              - "{{ sourcePhases }}"
+            wait: "{{ wait }}"
+          promoteReleaseRule:
+            condition:
+              targetsPresentCondition:
+                missingTargets:
+                  - "{{ missingTargets }}"
+                status: {{ status }}
+                updateTime: "{{ updateTime }}"
+              timedPromoteReleaseCondition:
+                nextPromotionTime: "{{ nextPromotionTime }}"
+                targetsList:
+                  - destinationTargetId: "{{ destinationTargetId }}"
+                    sourceTargetId: "{{ sourceTargetId }}"
             destinationPhase: "{{ destinationPhase }}"
             destinationTargetId: "{{ destinationTargetId }}"
             id: "{{ id }}"
-            condition:
-              targetsPresentCondition:
-                status: {{ status }}
-                updateTime: "{{ updateTime }}"
-                missingTargets:
-                  - "{{ missingTargets }}"
-              timedPromoteReleaseCondition:
-                nextPromotionTime: "{{ nextPromotionTime }}"
-                targetsList:
-                  - sourceTargetId: "{{ sourceTargetId }}"
-                    destinationTargetId: "{{ destinationTargetId }}"
             wait: "{{ wait }}"
-          advanceRolloutRule:
-            id: "{{ id }}"
-            wait: "{{ wait }}"
-            sourcePhases:
-              - "{{ sourcePhases }}"
-            condition:
-              targetsPresentCondition:
-                status: {{ status }}
-                updateTime: "{{ updateTime }}"
-                missingTargets:
-                  - "{{ missingTargets }}"
-              timedPromoteReleaseCondition:
-                nextPromotionTime: "{{ nextPromotionTime }}"
-                targetsList:
-                  - sourceTargetId: "{{ sourceTargetId }}"
-                    destinationTargetId: "{{ destinationTargetId }}"
           repairRolloutRule:
+            condition:
+              targetsPresentCondition:
+                missingTargets:
+                  - "{{ missingTargets }}"
+                status: {{ status }}
+                updateTime: "{{ updateTime }}"
+              timedPromoteReleaseCondition:
+                nextPromotionTime: "{{ nextPromotionTime }}"
+                targetsList:
+                  - destinationTargetId: "{{ destinationTargetId }}"
+                    sourceTargetId: "{{ sourceTargetId }}"
             id: "{{ id }}"
             jobs:
               - "{{ jobs }}"
@@ -520,43 +535,28 @@ response
             repairPhases:
               - retry:
                   attempts: "{{ attempts }}"
-                  wait: "{{ wait }}"
                   backoffMode: "{{ backoffMode }}"
+                  wait: "{{ wait }}"
                 rollback:
                   destinationPhase: "{{ destinationPhase }}"
                   disableRollbackIfRolloutPending: {{ disableRollbackIfRolloutPending }}
+          timedPromoteReleaseRule:
             condition:
               targetsPresentCondition:
-                status: {{ status }}
-                updateTime: "{{ updateTime }}"
                 missingTargets:
                   - "{{ missingTargets }}"
+                status: {{ status }}
+                updateTime: "{{ updateTime }}"
               timedPromoteReleaseCondition:
                 nextPromotionTime: "{{ nextPromotionTime }}"
                 targetsList:
-                  - sourceTargetId: "{{ sourceTargetId }}"
-                    destinationTargetId: "{{ destinationTargetId }}"
-          timedPromoteReleaseRule:
-            timeZone: "{{ timeZone }}"
+                  - destinationTargetId: "{{ destinationTargetId }}"
+                    sourceTargetId: "{{ sourceTargetId }}"
             destinationPhase: "{{ destinationPhase }}"
             destinationTargetId: "{{ destinationTargetId }}"
-            schedule: "{{ schedule }}"
             id: "{{ id }}"
-            condition:
-              targetsPresentCondition:
-                status: {{ status }}
-                updateTime: "{{ updateTime }}"
-                missingTargets:
-                  - "{{ missingTargets }}"
-              timedPromoteReleaseCondition:
-                nextPromotionTime: "{{ nextPromotionTime }}"
-                targetsList:
-                  - sourceTargetId: "{{ sourceTargetId }}"
-                    destinationTargetId: "{{ destinationTargetId }}"
-    - name: serviceAccount
-      value: "{{ serviceAccount }}"
-      description: |
-        Required. Email address of the user-managed IAM service account that creates Cloud Deploy release and rollout resources.
+            schedule: "{{ schedule }}"
+            timeZone: "{{ timeZone }}"
     - name: selector
       description: |
         Required. Selected resources to which the automation will be applied.
@@ -564,10 +564,10 @@ response
         targets:
           - id: "{{ id }}"
             labels: "{{ labels }}"
-    - name: description
-      value: "{{ description }}"
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
       description: |
-        Optional. Description of the \`Automation\`. Max length is 255 characters.
+        Required. Email address of the user-managed IAM service account that creates Cloud Deploy release and rollout resources.
     - name: suspended
       value: {{ suspended }}
       description: |
@@ -599,23 +599,23 @@ Updates the parameters of a single Automation resource.
 ```sql
 UPDATE google.clouddeploy.automations
 SET 
-data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}',
-data__etag = '{{ etag }}',
-data__rules = '{{ rules }}',
-data__serviceAccount = '{{ serviceAccount }}',
-data__selector = '{{ selector }}',
 data__description = '{{ description }}',
+data__etag = '{{ etag }}',
+data__labels = '{{ labels }}',
+data__rules = '{{ rules }}',
+data__selector = '{{ selector }}',
+data__serviceAccount = '{{ serviceAccount }}',
 data__suspended = {{ suspended }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' --required
 AND automationsId = '{{ automationsId }}' --required
+AND allowMissing = {{ allowMissing}}
+AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
-AND requestId = '{{ requestId}}'
-AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 done,

@@ -83,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cmekConfig" /></td>
     <td><code>object</code></td>
-    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+    <td>Output only. CMEK-related information for the Engine. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="commonConfig" /></td>
@@ -123,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="features" /></td>
     <td><code>object</code></td>
-    <td>Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `disable-projects` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence`</td>
+    <td>Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications`</td>
 </tr>
 <tr>
     <td><CopyableCode code="industryVertical" /></td>
@@ -222,7 +222,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cmekConfig" /></td>
     <td><code>object</code></td>
-    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+    <td>Output only. CMEK-related information for the Engine. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="commonConfig" /></td>
@@ -262,7 +262,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="features" /></td>
     <td><code>object</code></td>
-    <td>Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `disable-projects` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence`</td>
+    <td>Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications`</td>
 </tr>
 <tr>
     <td><CopyableCode code="industryVertical" /></td>
@@ -345,7 +345,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_engines_list"><CopyableCode code="projects_locations_collections_engines_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the Engines associated with the project.</td>
 </tr>
 <tr>
@@ -516,9 +516,9 @@ FROM google.discoveryengine.engines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -540,52 +540,52 @@ Creates an Engine.
 
 ```sql
 INSERT INTO google.discoveryengine.engines (
-data__configurableBillingApproach,
-data__mediaRecommendationEngineConfig,
-data__marketplaceAgentVisibility,
-data__procurementContactEmails,
-data__name,
-data__industryVertical,
-data__modelConfigs,
-data__solutionType,
-data__knowledgeGraphConfig,
-data__dataStoreIds,
-data__observabilityConfig,
-data__displayName,
-data__appType,
-data__disableAnalytics,
-data__chatEngineConfig,
-data__connectorTenantInfo,
 data__agentGatewaySetting,
-data__searchEngineConfig,
-data__features,
+data__appType,
+data__chatEngineConfig,
 data__commonConfig,
+data__configurableBillingApproach,
+data__connectorTenantInfo,
+data__dataStoreIds,
+data__disableAnalytics,
+data__displayName,
+data__features,
+data__industryVertical,
+data__knowledgeGraphConfig,
+data__marketplaceAgentVisibility,
+data__mediaRecommendationEngineConfig,
+data__modelConfigs,
+data__name,
+data__observabilityConfig,
+data__procurementContactEmails,
+data__searchEngineConfig,
+data__solutionType,
 projectsId,
 locationsId,
 collectionsId,
 engineId
 )
 SELECT 
-'{{ configurableBillingApproach }}',
-'{{ mediaRecommendationEngineConfig }}',
-'{{ marketplaceAgentVisibility }}',
-'{{ procurementContactEmails }}',
-'{{ name }}',
-'{{ industryVertical }}',
-'{{ modelConfigs }}',
-'{{ solutionType }}',
-'{{ knowledgeGraphConfig }}',
-'{{ dataStoreIds }}',
-'{{ observabilityConfig }}',
-'{{ displayName }}',
-'{{ appType }}',
-{{ disableAnalytics }},
-'{{ chatEngineConfig }}',
-'{{ connectorTenantInfo }}',
 '{{ agentGatewaySetting }}',
-'{{ searchEngineConfig }}',
-'{{ features }}',
+'{{ appType }}',
+'{{ chatEngineConfig }}',
 '{{ commonConfig }}',
+'{{ configurableBillingApproach }}',
+'{{ connectorTenantInfo }}',
+'{{ dataStoreIds }}',
+{{ disableAnalytics }},
+'{{ displayName }}',
+'{{ features }}',
+'{{ industryVertical }}',
+'{{ knowledgeGraphConfig }}',
+'{{ marketplaceAgentVisibility }}',
+'{{ mediaRecommendationEngineConfig }}',
+'{{ modelConfigs }}',
+'{{ name }}',
+'{{ observabilityConfig }}',
+'{{ procurementContactEmails }}',
+'{{ searchEngineConfig }}',
+'{{ solutionType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -613,11 +613,84 @@ response
     - name: collectionsId
       value: "{{ collectionsId }}"
       description: Required parameter for the engines resource.
+    - name: agentGatewaySetting
+      description: |
+        Optional. The agent gateway setting for the engine.
+      value:
+        defaultEgressAgentGateway:
+          name: "{{ name }}"
+    - name: appType
+      value: "{{ appType }}"
+      description: |
+        Optional. Immutable. This the application type which this engine resource represents. NOTE: this is a new concept independ of existing industry vertical or solution type.
+      valid_values: ['APP_TYPE_UNSPECIFIED', 'APP_TYPE_INTRANET']
+    - name: chatEngineConfig
+      description: |
+        Configurations for the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT.
+      value:
+        agentCreationConfig:
+          business: "{{ business }}"
+          defaultLanguageCode: "{{ defaultLanguageCode }}"
+          location: "{{ location }}"
+          timeZone: "{{ timeZone }}"
+        allowCrossRegion: {{ allowCrossRegion }}
+        dialogflowAgentToLink: "{{ dialogflowAgentToLink }}"
+    - name: commonConfig
+      description: |
+        Common config spec that specifies the metadata of the engine.
+      value:
+        companyName: "{{ companyName }}"
     - name: configurableBillingApproach
       value: "{{ configurableBillingApproach }}"
       description: |
         Optional. Configuration for configurable billing approach.
       valid_values: ['CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED', 'CONFIGURABLE_BILLING_APPROACH_ENABLED']
+    - name: connectorTenantInfo
+      value: "{{ connectorTenantInfo }}"
+      description: |
+        Optional. Maps a connector ID (e.g., "hybrid-github", "shopify") to tenant-specific information required for that connector. The structure of the tenant information string is connector-dependent.
+    - name: dataStoreIds
+      value:
+        - "{{ dataStoreIds }}"
+      description: |
+        Optional. The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.
+    - name: disableAnalytics
+      value: {{ disableAnalytics }}
+      description: |
+        Optional. Whether to disable analytics for searches performed on this engine.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the engine. Should be human readable. UTF-8 encoded string with limit of 1024 characters.
+    - name: features
+      value: "{{ features }}"
+      description: |
+        Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * \`*\`: all features, if it's present, all other feature state settings are ignored. * \`agent-gallery\` * \`no-code-agent-builder\` * \`prompt-gallery\` * \`model-selector\` * \`notebook-lm\` * \`people-search\` * \`people-search-org-chart\` * \`bi-directional-audio\` * \`speech-to-text\` * \`feedback\` * \`session-sharing\` * \`personalization-memory\` * \`personalization-suggested-highlights\` * \`mobile-app-access\` * \`disable-agent-sharing\` * \`disable-image-generation\` * \`disable-video-generation\` * \`disable-onedrive-upload\` * \`disable-talk-to-content\` * \`disable-google-drive-upload\` * \`disable-welcome-emails\` * \`disable-canvas\` * \`canvas-workspace\` * \`skills\` * \`skill-sharing\` * \`skill-sharing-without-admin-approval\` * \`disable-projects\` * \`sobi\` * \`enable-end-user-sharing-with-groups\` * \`single-agent-orchestration\` * \`multi-agent-orchestration\` * \`cross-product-intelligence\` * \`workflow-agents\` * \`in-app-notifications\`
+    - name: industryVertical
+      value: "{{ industryVertical }}"
+      description: |
+        Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.
+      valid_values: ['INDUSTRY_VERTICAL_UNSPECIFIED', 'GENERIC', 'MEDIA', 'HEALTHCARE_FHIR']
+    - name: knowledgeGraphConfig
+      description: |
+        Optional. Configurations for the Knowledge Graph. Only applicable if solution_type is SOLUTION_TYPE_SEARCH.
+      value:
+        cloudKnowledgeGraphTypes:
+          - "{{ cloudKnowledgeGraphTypes }}"
+        enableCloudKnowledgeGraph: {{ enableCloudKnowledgeGraph }}
+        enablePrivateKnowledgeGraph: {{ enablePrivateKnowledgeGraph }}
+        featureConfig:
+          disablePrivateKgAutoComplete: {{ disablePrivateKgAutoComplete }}
+          disablePrivateKgEnrichment: {{ disablePrivateKgEnrichment }}
+          disablePrivateKgQueryUiChips: {{ disablePrivateKgQueryUiChips }}
+          disablePrivateKgQueryUnderstanding: {{ disablePrivateKgQueryUnderstanding }}
+        privateKnowledgeGraphTypes:
+          - "{{ privateKnowledgeGraphTypes }}"
+    - name: marketplaceAgentVisibility
+      value: "{{ marketplaceAgentVisibility }}"
+      description: |
+        Optional. The visibility of marketplace agents in the agent gallery.
+      valid_values: ['MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED', 'SHOW_AVAILABLE_AGENTS_ONLY', 'SHOW_AGENTS_ALREADY_INTEGRATED', 'SHOW_AGENTS_ALREADY_PURCHASED', 'SHOW_ALL_AGENTS']
     - name: mediaRecommendationEngineConfig
       description: |
         Configurations for the Media Engine. Only applicable on the data stores with solution_type SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -631,113 +704,40 @@ response
         optimizationObjectiveConfig:
           targetField: "{{ targetField }}"
           targetFieldValueFloat: {{ targetFieldValueFloat }}
-        type: "{{ type }}"
         trainingState: "{{ trainingState }}"
-    - name: marketplaceAgentVisibility
-      value: "{{ marketplaceAgentVisibility }}"
-      description: |
-        Optional. The visibility of marketplace agents in the agent gallery.
-      valid_values: ['MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED', 'SHOW_AVAILABLE_AGENTS_ONLY', 'SHOW_AGENTS_ALREADY_INTEGRATED', 'SHOW_AGENTS_ALREADY_PURCHASED', 'SHOW_ALL_AGENTS']
-    - name: procurementContactEmails
-      value:
-        - "{{ procurementContactEmails }}"
-      description: |
-        Optional. The emails of the procurement contacts.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: \`projects/{project}/locations/{location}/collections/{collection}/engines/{engine}\` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
-    - name: industryVertical
-      value: "{{ industryVertical }}"
-      description: |
-        Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.
-      valid_values: ['INDUSTRY_VERTICAL_UNSPECIFIED', 'GENERIC', 'MEDIA', 'HEALTHCARE_FHIR']
+        type: "{{ type }}"
     - name: modelConfigs
       value: "{{ modelConfigs }}"
       description: |
         Optional. Maps a model name to its specific configuration for this engine. This allows admin users to turn on/off individual models. This only stores models whose states are overridden by the admin. When the state is unspecified, or model_configs is empty for this model, the system will decide if this model should be available or not based on the default configuration. For example, a preview model should be disabled by default if the admin has not chosen to enable it.
-    - name: solutionType
-      value: "{{ solutionType }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Required. The solutions of the engine.
-      valid_values: ['SOLUTION_TYPE_UNSPECIFIED', 'SOLUTION_TYPE_RECOMMENDATION', 'SOLUTION_TYPE_SEARCH', 'SOLUTION_TYPE_CHAT', 'SOLUTION_TYPE_GENERATIVE_CHAT', 'SOLUTION_TYPE_AI_MODE']
-    - name: knowledgeGraphConfig
-      description: |
-        Optional. Configurations for the Knowledge Graph. Only applicable if solution_type is SOLUTION_TYPE_SEARCH.
-      value:
-        featureConfig:
-          disablePrivateKgAutoComplete: {{ disablePrivateKgAutoComplete }}
-          disablePrivateKgQueryUiChips: {{ disablePrivateKgQueryUiChips }}
-          disablePrivateKgEnrichment: {{ disablePrivateKgEnrichment }}
-          disablePrivateKgQueryUnderstanding: {{ disablePrivateKgQueryUnderstanding }}
-        cloudKnowledgeGraphTypes:
-          - "{{ cloudKnowledgeGraphTypes }}"
-        enableCloudKnowledgeGraph: {{ enableCloudKnowledgeGraph }}
-        enablePrivateKnowledgeGraph: {{ enablePrivateKnowledgeGraph }}
-        privateKnowledgeGraphTypes:
-          - "{{ privateKnowledgeGraphTypes }}"
-    - name: dataStoreIds
-      value:
-        - "{{ dataStoreIds }}"
-      description: |
-        Optional. The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.
+        Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: \`projects/{project}/locations/{location}/collections/{collection}/engines/{engine}\` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
     - name: observabilityConfig
       description: |
         Optional. Observability config for the engine.
       value:
         observabilityEnabled: {{ observabilityEnabled }}
         sensitiveLoggingEnabled: {{ sensitiveLoggingEnabled }}
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the engine. Should be human readable. UTF-8 encoded string with limit of 1024 characters.
-    - name: appType
-      value: "{{ appType }}"
-      description: |
-        Optional. Immutable. This the application type which this engine resource represents. NOTE: this is a new concept independ of existing industry vertical or solution type.
-      valid_values: ['APP_TYPE_UNSPECIFIED', 'APP_TYPE_INTRANET']
-    - name: disableAnalytics
-      value: {{ disableAnalytics }}
-      description: |
-        Optional. Whether to disable analytics for searches performed on this engine.
-    - name: chatEngineConfig
-      description: |
-        Configurations for the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT.
+    - name: procurementContactEmails
       value:
-        allowCrossRegion: {{ allowCrossRegion }}
-        agentCreationConfig:
-          location: "{{ location }}"
-          defaultLanguageCode: "{{ defaultLanguageCode }}"
-          business: "{{ business }}"
-          timeZone: "{{ timeZone }}"
-        dialogflowAgentToLink: "{{ dialogflowAgentToLink }}"
-    - name: connectorTenantInfo
-      value: "{{ connectorTenantInfo }}"
+        - "{{ procurementContactEmails }}"
       description: |
-        Optional. Maps a connector ID (e.g., "hybrid-github", "shopify") to tenant-specific information required for that connector. The structure of the tenant information string is connector-dependent.
-    - name: agentGatewaySetting
-      description: |
-        Optional. The agent gateway setting for the engine.
-      value:
-        defaultEgressAgentGateway:
-          name: "{{ name }}"
+        Optional. The emails of the procurement contacts.
     - name: searchEngineConfig
       description: |
         Configurations for the Search Engine. Only applicable if solution_type is SOLUTION_TYPE_SEARCH.
       value:
-        searchTier: "{{ searchTier }}"
+        requiredSubscriptionTier: "{{ requiredSubscriptionTier }}"
         searchAddOns:
           - "{{ searchAddOns }}"
-        requiredSubscriptionTier: "{{ requiredSubscriptionTier }}"
-    - name: features
-      value: "{{ features }}"
+        searchTier: "{{ searchTier }}"
+    - name: solutionType
+      value: "{{ solutionType }}"
       description: |
-        Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * \`*\`: all features, if it's present, all other feature state settings are ignored. * \`agent-gallery\` * \`no-code-agent-builder\` * \`prompt-gallery\` * \`model-selector\` * \`notebook-lm\` * \`people-search\` * \`people-search-org-chart\` * \`bi-directional-audio\` * \`feedback\` * \`session-sharing\` * \`personalization-memory\` * \`personalization-suggested-highlights\` * \`mobile-app-access\` * \`disable-agent-sharing\` * \`disable-image-generation\` * \`disable-video-generation\` * \`disable-onedrive-upload\` * \`disable-talk-to-content\` * \`disable-google-drive-upload\` * \`disable-welcome-emails\` * \`disable-canvas\` * \`canvas-workspace\` * \`disable-skills\` * \`disable-projects\` * \`enable-end-user-sharing-with-groups\` * \`single-agent-orchestration\` * \`multi-agent-orchestration\` * \`cross-product-intelligence\`
-    - name: commonConfig
-      description: |
-        Common config spec that specifies the metadata of the engine.
-      value:
-        companyName: "{{ companyName }}"
+        Required. The solutions of the engine.
+      valid_values: ['SOLUTION_TYPE_UNSPECIFIED', 'SOLUTION_TYPE_RECOMMENDATION', 'SOLUTION_TYPE_SEARCH', 'SOLUTION_TYPE_CHAT', 'SOLUTION_TYPE_GENERATIVE_CHAT', 'SOLUTION_TYPE_AI_MODE']
     - name: engineId
       value: "{{ engineId }}"
 `}</CodeBlock>
@@ -761,26 +761,26 @@ Updates an Engine
 ```sql
 UPDATE google.discoveryengine.engines
 SET 
-data__configurableBillingApproach = '{{ configurableBillingApproach }}',
-data__mediaRecommendationEngineConfig = '{{ mediaRecommendationEngineConfig }}',
-data__marketplaceAgentVisibility = '{{ marketplaceAgentVisibility }}',
-data__procurementContactEmails = '{{ procurementContactEmails }}',
-data__name = '{{ name }}',
-data__industryVertical = '{{ industryVertical }}',
-data__modelConfigs = '{{ modelConfigs }}',
-data__solutionType = '{{ solutionType }}',
-data__knowledgeGraphConfig = '{{ knowledgeGraphConfig }}',
-data__dataStoreIds = '{{ dataStoreIds }}',
-data__observabilityConfig = '{{ observabilityConfig }}',
-data__displayName = '{{ displayName }}',
-data__appType = '{{ appType }}',
-data__disableAnalytics = {{ disableAnalytics }},
-data__chatEngineConfig = '{{ chatEngineConfig }}',
-data__connectorTenantInfo = '{{ connectorTenantInfo }}',
 data__agentGatewaySetting = '{{ agentGatewaySetting }}',
-data__searchEngineConfig = '{{ searchEngineConfig }}',
+data__appType = '{{ appType }}',
+data__chatEngineConfig = '{{ chatEngineConfig }}',
+data__commonConfig = '{{ commonConfig }}',
+data__configurableBillingApproach = '{{ configurableBillingApproach }}',
+data__connectorTenantInfo = '{{ connectorTenantInfo }}',
+data__dataStoreIds = '{{ dataStoreIds }}',
+data__disableAnalytics = {{ disableAnalytics }},
+data__displayName = '{{ displayName }}',
 data__features = '{{ features }}',
-data__commonConfig = '{{ commonConfig }}'
+data__industryVertical = '{{ industryVertical }}',
+data__knowledgeGraphConfig = '{{ knowledgeGraphConfig }}',
+data__marketplaceAgentVisibility = '{{ marketplaceAgentVisibility }}',
+data__mediaRecommendationEngineConfig = '{{ mediaRecommendationEngineConfig }}',
+data__modelConfigs = '{{ modelConfigs }}',
+data__name = '{{ name }}',
+data__observabilityConfig = '{{ observabilityConfig }}',
+data__procurementContactEmails = '{{ procurementContactEmails }}',
+data__searchEngineConfig = '{{ searchEngineConfig }}',
+data__solutionType = '{{ solutionType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

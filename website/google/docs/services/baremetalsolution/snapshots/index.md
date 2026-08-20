@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieves the list of snapshots for the specified volume. Returns a response with an empty list of snapshots if called for a non-boot volume.</td>
 </tr>
 <tr>
@@ -273,8 +273,8 @@ FROM google.baremetalsolution.snapshots
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND volumesId = '{{ volumesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -296,15 +296,15 @@ Takes a snapshot of a boot volume. Returns INVALID_ARGUMENT if called for a non-
 
 ```sql
 INSERT INTO google.baremetalsolution.snapshots (
-data__name,
 data__description,
+data__name,
 projectsId,
 locationsId,
 volumesId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ volumesId }}'
@@ -332,14 +332,14 @@ type
     - name: volumesId
       value: "{{ volumesId }}"
       description: Required parameter for the snapshots resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of the snapshot.
     - name: description
       value: "{{ description }}"
       description: |
         The description of the snapshot.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the snapshot.
 `}</CodeBlock>
 
 </TabItem>

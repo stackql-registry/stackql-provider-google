@@ -342,25 +342,25 @@ Creates an auto labeling rule.
 
 ```sql
 INSERT INTO google.contactcenterinsights.auto_labeling_rules (
-data__description,
 data__active,
-data__labelKeyType,
-data__labelKey,
-data__name,
 data__conditions,
+data__description,
 data__displayName,
+data__labelKey,
+data__labelKeyType,
+data__name,
 projectsId,
 locationsId,
 autoLabelingRuleId
 )
 SELECT 
-'{{ description }}',
 {{ active }},
-'{{ labelKeyType }}',
-'{{ labelKey }}',
-'{{ name }}',
 '{{ conditions }}',
+'{{ description }}',
 '{{ displayName }}',
+'{{ labelKey }}',
+'{{ labelKeyType }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ autoLabelingRuleId }}'
@@ -388,37 +388,37 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the auto_labeling_rules resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        The description of the rule.
     - name: active
       value: {{ active }}
       description: |
         Whether the rule is active.
-    - name: labelKeyType
-      value: "{{ labelKeyType }}"
-      description: |
-        The type of the label key.
-      valid_values: ['LABEL_KEY_TYPE_UNSPECIFIED', 'LABEL_KEY_TYPE_CUSTOM']
-    - name: labelKey
-      value: "{{ labelKey }}"
-      description: |
-        The label key. This is also the {auto_labeling_rule} in the resource name. Only settable if label_key_type is LABEL_KEY_TYPE_CUSTOM.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the auto-labeling rule. Format: projects/{project}/locations/{location}/autoLabelingRules/{auto_labeling_rule}
     - name: conditions
       description: |
         Conditions to apply for auto-labeling the label_key. Representing sequential block of if .. else if .. else statements. The value of the first matching condition will be used.
       value:
         - condition: "{{ condition }}"
           value: "{{ value }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The description of the rule.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The user-provided display name of the rule.
+    - name: labelKey
+      value: "{{ labelKey }}"
+      description: |
+        The label key. This is also the {auto_labeling_rule} in the resource name. Only settable if label_key_type is LABEL_KEY_TYPE_CUSTOM.
+    - name: labelKeyType
+      value: "{{ labelKeyType }}"
+      description: |
+        The type of the label key.
+      valid_values: ['LABEL_KEY_TYPE_UNSPECIFIED', 'LABEL_KEY_TYPE_CUSTOM']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the auto-labeling rule. Format: projects/{project}/locations/{location}/autoLabelingRules/{auto_labeling_rule}
     - name: autoLabelingRuleId
       value: "{{ autoLabelingRuleId }}"
 `}</CodeBlock>
@@ -442,13 +442,13 @@ Updates an auto labeling rule.
 ```sql
 UPDATE google.contactcenterinsights.auto_labeling_rules
 SET 
-data__description = '{{ description }}',
 data__active = {{ active }},
-data__labelKeyType = '{{ labelKeyType }}',
-data__labelKey = '{{ labelKey }}',
-data__name = '{{ name }}',
 data__conditions = '{{ conditions }}',
-data__displayName = '{{ displayName }}'
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__labelKey = '{{ labelKey }}',
+data__labelKeyType = '{{ labelKeyType }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -510,8 +510,8 @@ EXEC google.contactcenterinsights.auto_labeling_rules.test
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"conversation": "{{ conversation }}", 
-"autoLabelingRule": "{{ autoLabelingRule }}"
+"autoLabelingRule": "{{ autoLabelingRule }}", 
+"conversation": "{{ conversation }}"
 }'
 ;
 ```

@@ -98,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#projects_aggregated_usable_subnetworks_list"><CopyableCode code="projects_aggregated_usable_subnetworks_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists subnetworks that are usable for creating clusters in a project.</td>
 </tr>
 </tbody>
@@ -161,8 +161,8 @@ statusMessage,
 subnetwork
 FROM google.container.usable_subnetworks
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```

@@ -112,28 +112,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List Notes.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
     <td></td>
     <td>Create Note.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update Note.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
     <td></td>
     <td>Deletes a Note.</td>
 </tr>
@@ -155,6 +155,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-assessmentsId">
     <td><CopyableCode code="assessmentsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-authorizedViewSetsId">
+    <td><CopyableCode code="authorizedViewSetsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-authorizedViewsId">
+    <td><CopyableCode code="authorizedViewsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -221,6 +231,8 @@ updateTime
 FROM google.contactcenterinsights.notes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
+AND authorizedViewsId = '{{ authorizedViewsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND assessmentsId = '{{ assessmentsId }}' -- required
 AND pageSize = '{{ pageSize }}'
@@ -248,22 +260,26 @@ Create Note.
 INSERT INTO google.contactcenterinsights.notes (
 data__assessmentNote,
 data__content,
-data__qaQuestionNote,
 data__conversationTurnNote,
 data__name,
+data__qaQuestionNote,
 projectsId,
 locationsId,
+authorizedViewSetsId,
+authorizedViewsId,
 conversationsId,
 assessmentsId
 )
 SELECT 
 '{{ assessmentNote }}',
 '{{ content }}',
-'{{ qaQuestionNote }}',
 '{{ conversationTurnNote }}',
 '{{ name }}',
+'{{ qaQuestionNote }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ authorizedViewSetsId }}',
+'{{ authorizedViewsId }}',
 '{{ conversationsId }}',
 '{{ assessmentsId }}'
 RETURNING
@@ -289,6 +305,12 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the notes resource.
+    - name: authorizedViewSetsId
+      value: "{{ authorizedViewSetsId }}"
+      description: Required parameter for the notes resource.
+    - name: authorizedViewsId
+      value: "{{ authorizedViewsId }}"
+      description: Required parameter for the notes resource.
     - name: conversationsId
       value: "{{ conversationsId }}"
       description: Required parameter for the notes resource.
@@ -303,11 +325,6 @@ updateTime
       value: "{{ content }}"
       description: |
         The note content.
-    - name: qaQuestionNote
-      description: |
-        The note is associated with a QA question in one of the conversation's scorecard results.
-      value:
-        qaQuestion: "{{ qaQuestion }}"
     - name: conversationTurnNote
       description: |
         The note is associated with a conversation turn.
@@ -317,6 +334,11 @@ updateTime
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the note. Format: projects/{project}/locations/{location}/conversations/{conversation}/assessments/{assessment}/notes/{note}
+    - name: qaQuestionNote
+      description: |
+        The note is associated with a QA question in one of the conversation's scorecard results.
+      value:
+        qaQuestion: "{{ qaQuestion }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -340,12 +362,14 @@ UPDATE google.contactcenterinsights.notes
 SET 
 data__assessmentNote = '{{ assessmentNote }}',
 data__content = '{{ content }}',
-data__qaQuestionNote = '{{ qaQuestionNote }}',
 data__conversationTurnNote = '{{ conversationTurnNote }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__qaQuestionNote = '{{ qaQuestionNote }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
+AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' --required
+AND authorizedViewsId = '{{ authorizedViewsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
 AND assessmentsId = '{{ assessmentsId }}' --required
 AND notesId = '{{ notesId }}' --required
@@ -380,6 +404,8 @@ Deletes a Note.
 DELETE FROM google.contactcenterinsights.notes
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
+AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' --required
+AND authorizedViewsId = '{{ authorizedViewsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
 AND assessmentsId = '{{ assessmentsId }}' --required
 AND notesId = '{{ notesId }}' --required

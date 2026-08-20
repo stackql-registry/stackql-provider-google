@@ -88,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gatewayType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of the gateway. (GATEWAY_TYPE_UNSPECIFIED, APIGEE_X_AND_HYBRID, APIGEE_EDGE_PUBLIC_CLOUD, APIGEE_EDGE_PRIVATE_CLOUD, CLOUD_API_GATEWAY, CLOUD_ENDPOINTS, API_DISCOVERY, OTHERS, AWS_API_GATEWAY)</td>
+    <td>Optional. The type of the gateway. (GATEWAY_TYPE_UNSPECIFIED, APIGEE_X_AND_HYBRID, APIGEE_EDGE_PUBLIC_CLOUD, APIGEE_EDGE_PRIVATE_CLOUD, CLOUD_API_GATEWAY, CLOUD_ENDPOINTS, API_DISCOVERY, OTHERS, AWS_API_GATEWAY, AZURE_API_MANAGEMENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="hostingService" /></td>
@@ -172,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gatewayType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of the gateway. (GATEWAY_TYPE_UNSPECIFIED, APIGEE_X_AND_HYBRID, APIGEE_EDGE_PUBLIC_CLOUD, APIGEE_EDGE_PRIVATE_CLOUD, CLOUD_API_GATEWAY, CLOUD_ENDPOINTS, API_DISCOVERY, OTHERS, AWS_API_GATEWAY)</td>
+    <td>Optional. The type of the gateway. (GATEWAY_TYPE_UNSPECIFIED, APIGEE_X_AND_HYBRID, APIGEE_EDGE_PUBLIC_CLOUD, APIGEE_EDGE_PRIVATE_CLOUD, CLOUD_API_GATEWAY, CLOUD_ENDPOINTS, API_DISCOVERY, OTHERS, AWS_API_GATEWAY, AZURE_API_MANAGEMENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="hostingService" /></td>
@@ -253,18 +253,18 @@ The following methods are available for this resource:
     <td>Delete a Plugin in API hub. Note, only user owned plugins can be deleted via this method.</td>
 </tr>
 <tr>
-    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pluginsId"><code>pluginsId</code></a></td>
-    <td></td>
-    <td>Enables a plugin. The `state` of the plugin after enabling is `ENABLED`</td>
-</tr>
-<tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pluginsId"><code>pluginsId</code></a></td>
     <td></td>
     <td>Disables a plugin. The `state` of the plugin after disabling is `DISABLED`</td>
+</tr>
+<tr>
+    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pluginsId"><code>pluginsId</code></a></td>
+    <td></td>
+    <td>Enables a plugin. The `state` of the plugin after enabling is `ENABLED`</td>
 </tr>
 </tbody>
 </table>
@@ -403,31 +403,31 @@ Create an API Hub plugin resource in the API hub. Once a plugin is created, it c
 
 ```sql
 INSERT INTO google.apihub.plugins (
-data__displayName,
-data__hostingService,
 data__actionsConfig,
-data__type,
-data__gatewayType,
-data__pluginCategory,
-data__name,
-data__description,
 data__configTemplate,
+data__description,
+data__displayName,
 data__documentation,
+data__gatewayType,
+data__hostingService,
+data__name,
+data__pluginCategory,
+data__type,
 projectsId,
 locationsId,
 pluginId
 )
 SELECT 
-'{{ displayName }}',
-'{{ hostingService }}',
 '{{ actionsConfig }}',
-'{{ type }}',
-'{{ gatewayType }}',
-'{{ pluginCategory }}',
-'{{ name }}',
-'{{ description }}',
 '{{ configTemplate }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ documentation }}',
+'{{ gatewayType }}',
+'{{ hostingService }}',
+'{{ name }}',
+'{{ pluginCategory }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ pluginId }}'
@@ -460,23 +460,63 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the plugins resource.
+    - name: actionsConfig
+      description: |
+        Optional. The configuration of actions supported by the plugin. **REQUIRED**: This field must be provided when creating or updating a Plugin. The server will reject requests if this field is missing.
+      value:
+        - description: "{{ description }}"
+          displayName: "{{ displayName }}"
+          id: "{{ id }}"
+          triggerMode: "{{ triggerMode }}"
+    - name: configTemplate
+      description: |
+        Optional. The configuration template for the plugin.
+      value:
+        additionalConfigTemplate:
+          - description: "{{ description }}"
+            enumOptions: "{{ enumOptions }}"
+            id: "{{ id }}"
+            multiSelectOptions: "{{ multiSelectOptions }}"
+            required: {{ required }}
+            validationRegex: "{{ validationRegex }}"
+            valueType: "{{ valueType }}"
+        authConfigTemplate:
+          serviceAccount:
+            serviceAccount: "{{ serviceAccount }}"
+          supportedAuthTypes:
+            - "{{ supportedAuthTypes }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The plugin description. Max length is 2000 characters (Unicode code points).
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Required. The display name of the plugin. Max length is 50 characters (Unicode code points).
+    - name: documentation
+      description: |
+        Optional. The documentation of the plugin, that explains how to set up and use the plugin.
+      value:
+        externalUri: "{{ externalUri }}"
+    - name: gatewayType
+      value: "{{ gatewayType }}"
+      description: |
+        Optional. The type of the gateway.
+      valid_values: ['GATEWAY_TYPE_UNSPECIFIED', 'APIGEE_X_AND_HYBRID', 'APIGEE_EDGE_PUBLIC_CLOUD', 'APIGEE_EDGE_PRIVATE_CLOUD', 'CLOUD_API_GATEWAY', 'CLOUD_ENDPOINTS', 'API_DISCOVERY', 'OTHERS', 'AWS_API_GATEWAY', 'AZURE_API_MANAGEMENT']
     - name: hostingService
       description: |
         Optional. This field is optional. It is used to notify the plugin hosting service for any lifecycle changes of the plugin instance and trigger execution of plugin instance actions in case of API hub managed actions. This field should be provided if the plugin instance lifecycle of the developed plugin needs to be managed from API hub. Also, in this case the plugin hosting service interface needs to be implemented. This field should not be provided if the plugin wants to manage plugin instance lifecycle events outside of hub interface and use plugin framework for only registering of plugin and plugin instances to capture the source of data into hub. Note, in this case the plugin hosting service interface is not required to be implemented. Also, the plugin instance lifecycle actions will be disabled from API hub's UI.
       value:
         serviceUri: "{{ serviceUri }}"
-    - name: actionsConfig
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. The configuration of actions supported by the plugin. **REQUIRED**: This field must be provided when creating or updating a Plugin. The server will reject requests if this field is missing.
-      value:
-        - displayName: "{{ displayName }}"
-          triggerMode: "{{ triggerMode }}"
-          description: "{{ description }}"
-          id: "{{ id }}"
+        Identifier. The name of the plugin. Format: \`projects/{project}/locations/{location}/plugins/{plugin}\`
+    - name: pluginCategory
+      value: "{{ pluginCategory }}"
+      description: |
+        Optional. The category of the plugin, identifying its primary category or purpose. This field is required for all plugins.
+      valid_values: ['PLUGIN_CATEGORY_UNSPECIFIED', 'API_GATEWAY', 'API_PRODUCER']
     - name: type
       description: |
         The attribute values associated with resource.
@@ -485,58 +525,18 @@ updateTime
         enumValues:
           values:
             - description: "{{ description }}"
-              id: "{{ id }}"
               displayName: "{{ displayName }}"
+              id: "{{ id }}"
               immutable: {{ immutable }}
-        stringValues:
+        jsonValues:
           values:
             - "{{ values }}"
-        jsonValues:
+        stringValues:
           values:
             - "{{ values }}"
         uriValues:
           values:
             - "{{ values }}"
-    - name: gatewayType
-      value: "{{ gatewayType }}"
-      description: |
-        Optional. The type of the gateway.
-      valid_values: ['GATEWAY_TYPE_UNSPECIFIED', 'APIGEE_X_AND_HYBRID', 'APIGEE_EDGE_PUBLIC_CLOUD', 'APIGEE_EDGE_PRIVATE_CLOUD', 'CLOUD_API_GATEWAY', 'CLOUD_ENDPOINTS', 'API_DISCOVERY', 'OTHERS', 'AWS_API_GATEWAY']
-    - name: pluginCategory
-      value: "{{ pluginCategory }}"
-      description: |
-        Optional. The category of the plugin, identifying its primary category or purpose. This field is required for all plugins.
-      valid_values: ['PLUGIN_CATEGORY_UNSPECIFIED', 'API_GATEWAY', 'API_PRODUCER']
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the plugin. Format: \`projects/{project}/locations/{location}/plugins/{plugin}\`
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The plugin description. Max length is 2000 characters (Unicode code points).
-    - name: configTemplate
-      description: |
-        Optional. The configuration template for the plugin.
-      value:
-        authConfigTemplate:
-          serviceAccount:
-            serviceAccount: "{{ serviceAccount }}"
-          supportedAuthTypes:
-            - "{{ supportedAuthTypes }}"
-        additionalConfigTemplate:
-          - valueType: "{{ valueType }}"
-            validationRegex: "{{ validationRegex }}"
-            description: "{{ description }}"
-            required: {{ required }}
-            id: "{{ id }}"
-            enumOptions: "{{ enumOptions }}"
-            multiSelectOptions: "{{ multiSelectOptions }}"
-    - name: documentation
-      description: |
-        Optional. The documentation of the plugin, that explains how to set up and use the plugin.
-      value:
-        externalUri: "{{ externalUri }}"
     - name: pluginId
       value: "{{ pluginId }}"
 `}</CodeBlock>
@@ -571,30 +571,30 @@ AND pluginsId = '{{ pluginsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="enable"
+    defaultValue="disable"
     values={[
-        { label: 'enable', value: 'enable' },
-        { label: 'disable', value: 'disable' }
+        { label: 'disable', value: 'disable' },
+        { label: 'enable', value: 'enable' }
     ]}
 >
-<TabItem value="enable">
-
-Enables a plugin. The `state` of the plugin after enabling is `ENABLED`
-
-```sql
-EXEC google.apihub.plugins.enable 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@pluginsId='{{ pluginsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="disable">
 
 Disables a plugin. The `state` of the plugin after disabling is `DISABLED`
 
 ```sql
 EXEC google.apihub.plugins.disable 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@pluginsId='{{ pluginsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="enable">
+
+Enables a plugin. The `state` of the plugin after enabling is `ENABLED`
+
+```sql
+EXEC google.apihub.plugins.enable 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @pluginsId='{{ pluginsId }}' --required

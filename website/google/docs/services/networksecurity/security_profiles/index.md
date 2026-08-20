@@ -33,83 +33,14 @@ Creates, updates, deletes, gets or lists a <code>security_profiles</code> resour
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_security_profiles_get"
+    defaultValue="organizations_locations_security_profiles_get"
     values={[
-        { label: 'projects_locations_security_profiles_get', value: 'projects_locations_security_profiles_get' },
         { label: 'organizations_locations_security_profiles_get', value: 'organizations_locations_security_profiles_get' },
-        { label: 'projects_locations_security_profiles_list', value: 'projects_locations_security_profiles_list' },
-        { label: 'organizations_locations_security_profiles_list', value: 'organizations_locations_security_profiles_list' }
+        { label: 'projects_locations_security_profiles_get', value: 'projects_locations_security_profiles_get' },
+        { label: 'organizations_locations_security_profiles_list', value: 'organizations_locations_security_profiles_list' },
+        { label: 'projects_locations_security_profiles_list', value: 'projects_locations_security_profiles_list' }
     ]}
 >
-<TabItem value="projects_locations_security_profiles_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. Identifier. Name of the SecurityProfile resource. It matches pattern `projects|organizations/*/locations/&#123;location&#125;/securityProfiles/&#123;security_profile&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Resource creation timestamp.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="customInterceptProfile" /></td>
-    <td><code>object</code></td>
-    <td>The custom TPPI configuration for the SecurityProfile. (id: CustomInterceptProfile)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="customMirroringProfile" /></td>
-    <td><code>object</code></td>
-    <td>The custom Packet Mirroring v2 configuration for the SecurityProfile. (id: CustomMirroringProfile)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. An optional description of the profile. Max length 512 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Output only. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="threatPreventionProfile" /></td>
-    <td><code>object</code></td>
-    <td>The threat prevention configuration for the SecurityProfile. (id: ThreatPreventionProfile)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The single ProfileType that the SecurityProfile resource configures. (PROFILE_TYPE_UNSPECIFIED, THREAT_PREVENTION, CUSTOM_MIRRORING, CUSTOM_INTERCEPT, URL_FILTERING)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Last resource update timestamp.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="urlFilteringProfile" /></td>
-    <td><code>object</code></td>
-    <td>The URL filtering configuration for the SecurityProfile. (id: UrlFilteringProfile)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_security_profiles_get">
 
 <table>
@@ -179,7 +110,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_security_profiles_list">
+<TabItem value="projects_locations_security_profiles_get">
 
 <table>
 <thead>
@@ -249,6 +180,75 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="organizations_locations_security_profiles_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Identifier. Name of the SecurityProfile resource. It matches pattern `projects|organizations/*/locations/&#123;location&#125;/securityProfiles/&#123;security_profile&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Resource creation timestamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customInterceptProfile" /></td>
+    <td><code>object</code></td>
+    <td>The custom TPPI configuration for the SecurityProfile. (id: CustomInterceptProfile)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customMirroringProfile" /></td>
+    <td><code>object</code></td>
+    <td>The custom Packet Mirroring v2 configuration for the SecurityProfile. (id: CustomMirroringProfile)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. An optional description of the profile. Max length 512 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Output only. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels as key value pairs.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="threatPreventionProfile" /></td>
+    <td><code>object</code></td>
+    <td>The threat prevention configuration for the SecurityProfile. (id: ThreatPreventionProfile)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The single ProfileType that the SecurityProfile resource configures. (PROFILE_TYPE_UNSPECIFIED, THREAT_PREVENTION, CUSTOM_MIRRORING, CUSTOM_INTERCEPT, URL_FILTERING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Last resource update timestamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="urlFilteringProfile" /></td>
+    <td><code>object</code></td>
+    <td>The URL filtering configuration for the SecurityProfile. (id: UrlFilteringProfile)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_security_profiles_list">
 
 <table>
 <thead>
@@ -335,13 +335,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_security_profiles_get"><CopyableCode code="projects_locations_security_profiles_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a></td>
-    <td></td>
-    <td>Gets details of a single SecurityProfile.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_security_profiles_get"><CopyableCode code="organizations_locations_security_profiles_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a></td>
@@ -349,11 +342,11 @@ The following methods are available for this resource:
     <td>Gets details of a single SecurityProfile.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_security_profiles_list"><CopyableCode code="projects_locations_security_profiles_list" /></a></td>
+    <td><a href="#projects_locations_security_profiles_get"><CopyableCode code="projects_locations_security_profiles_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists SecurityProfiles in a given project and location.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a></td>
+    <td></td>
+    <td>Gets details of a single SecurityProfile.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_security_profiles_list"><CopyableCode code="organizations_locations_security_profiles_list" /></a></td>
@@ -363,11 +356,11 @@ The following methods are available for this resource:
     <td>Lists SecurityProfiles in a given organization and location.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_security_profiles_create"><CopyableCode code="projects_locations_security_profiles_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
+    <td><a href="#projects_locations_security_profiles_list"><CopyableCode code="projects_locations_security_profiles_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-securityProfileId"><code>securityProfileId</code></a></td>
-    <td>Creates a new SecurityProfile in a given project and location.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists SecurityProfiles in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_security_profiles_create"><CopyableCode code="organizations_locations_security_profiles_create" /></a></td>
@@ -377,11 +370,11 @@ The following methods are available for this resource:
     <td>Creates a new SecurityProfile in a given organization and location.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_security_profiles_patch"><CopyableCode code="projects_locations_security_profiles_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the parameters of a single SecurityProfile.</td>
+    <td><a href="#projects_locations_security_profiles_create"><CopyableCode code="projects_locations_security_profiles_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-securityProfileId"><code>securityProfileId</code></a></td>
+    <td>Creates a new SecurityProfile in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_security_profiles_patch"><CopyableCode code="organizations_locations_security_profiles_patch" /></a></td>
@@ -391,16 +384,23 @@ The following methods are available for this resource:
     <td>Updates the parameters of a single SecurityProfile.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_security_profiles_delete"><CopyableCode code="projects_locations_security_profiles_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#projects_locations_security_profiles_patch"><CopyableCode code="projects_locations_security_profiles_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a></td>
-    <td>Deletes a single SecurityProfile.</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates the parameters of a single SecurityProfile.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_security_profiles_delete"><CopyableCode code="organizations_locations_security_profiles_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a></td>
+    <td>Deletes a single SecurityProfile.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_security_profiles_delete"><CopyableCode code="projects_locations_security_profiles_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a></td>
     <td><a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes a single SecurityProfile.</td>
 </tr>
@@ -471,38 +471,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_security_profiles_get"
+    defaultValue="organizations_locations_security_profiles_get"
     values={[
-        { label: 'projects_locations_security_profiles_get', value: 'projects_locations_security_profiles_get' },
         { label: 'organizations_locations_security_profiles_get', value: 'organizations_locations_security_profiles_get' },
-        { label: 'projects_locations_security_profiles_list', value: 'projects_locations_security_profiles_list' },
-        { label: 'organizations_locations_security_profiles_list', value: 'organizations_locations_security_profiles_list' }
+        { label: 'projects_locations_security_profiles_get', value: 'projects_locations_security_profiles_get' },
+        { label: 'organizations_locations_security_profiles_list', value: 'organizations_locations_security_profiles_list' },
+        { label: 'projects_locations_security_profiles_list', value: 'projects_locations_security_profiles_list' }
     ]}
 >
-<TabItem value="projects_locations_security_profiles_get">
-
-Gets details of a single SecurityProfile.
-
-```sql
-SELECT
-name,
-createTime,
-customInterceptProfile,
-customMirroringProfile,
-description,
-etag,
-labels,
-threatPreventionProfile,
-type,
-updateTime,
-urlFilteringProfile
-FROM google.networksecurity.security_profiles
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND securityProfilesId = '{{ securityProfilesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_security_profiles_get">
 
 Gets details of a single SecurityProfile.
@@ -527,9 +503,9 @@ AND securityProfilesId = '{{ securityProfilesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_security_profiles_list">
+<TabItem value="projects_locations_security_profiles_get">
 
-Lists SecurityProfiles in a given project and location.
+Gets details of a single SecurityProfile.
 
 ```sql
 SELECT
@@ -547,8 +523,7 @@ urlFilteringProfile
 FROM google.networksecurity.security_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND securityProfilesId = '{{ securityProfilesId }}' -- required
 ;
 ```
 </TabItem>
@@ -577,47 +552,72 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_security_profiles_list">
+
+Lists SecurityProfiles in a given project and location.
+
+```sql
+SELECT
+name,
+createTime,
+customInterceptProfile,
+customMirroringProfile,
+description,
+etag,
+labels,
+threatPreventionProfile,
+type,
+updateTime,
+urlFilteringProfile
+FROM google.networksecurity.security_profiles
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_security_profiles_create"
+    defaultValue="organizations_locations_security_profiles_create"
     values={[
-        { label: 'projects_locations_security_profiles_create', value: 'projects_locations_security_profiles_create' },
         { label: 'organizations_locations_security_profiles_create', value: 'organizations_locations_security_profiles_create' },
+        { label: 'projects_locations_security_profiles_create', value: 'projects_locations_security_profiles_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_security_profiles_create">
+<TabItem value="organizations_locations_security_profiles_create">
 
-Creates a new SecurityProfile in a given project and location.
+Creates a new SecurityProfile in a given organization and location.
 
 ```sql
 INSERT INTO google.networksecurity.security_profiles (
-data__urlFilteringProfile,
-data__threatPreventionProfile,
-data__name,
-data__type,
-data__description,
-data__customMirroringProfile,
 data__customInterceptProfile,
+data__customMirroringProfile,
+data__description,
 data__labels,
-projectsId,
+data__name,
+data__threatPreventionProfile,
+data__type,
+data__urlFilteringProfile,
+organizationsId,
 locationsId,
 securityProfileId
 )
 SELECT 
-'{{ urlFilteringProfile }}',
-'{{ threatPreventionProfile }}',
-'{{ name }}',
-'{{ type }}',
-'{{ description }}',
-'{{ customMirroringProfile }}',
 '{{ customInterceptProfile }}',
+'{{ customMirroringProfile }}',
+'{{ description }}',
 '{{ labels }}',
-'{{ projectsId }}',
+'{{ name }}',
+'{{ threatPreventionProfile }}',
+'{{ type }}',
+'{{ urlFilteringProfile }}',
+'{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ securityProfileId }}'
 RETURNING
@@ -629,34 +629,34 @@ response
 ;
 ```
 </TabItem>
-<TabItem value="organizations_locations_security_profiles_create">
+<TabItem value="projects_locations_security_profiles_create">
 
-Creates a new SecurityProfile in a given organization and location.
+Creates a new SecurityProfile in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.security_profiles (
-data__urlFilteringProfile,
-data__threatPreventionProfile,
-data__name,
-data__type,
-data__description,
-data__customMirroringProfile,
 data__customInterceptProfile,
+data__customMirroringProfile,
+data__description,
 data__labels,
-organizationsId,
+data__name,
+data__threatPreventionProfile,
+data__type,
+data__urlFilteringProfile,
+projectsId,
 locationsId,
 securityProfileId
 )
 SELECT 
-'{{ urlFilteringProfile }}',
-'{{ threatPreventionProfile }}',
-'{{ name }}',
-'{{ type }}',
-'{{ description }}',
-'{{ customMirroringProfile }}',
 '{{ customInterceptProfile }}',
+'{{ customMirroringProfile }}',
+'{{ description }}',
 '{{ labels }}',
-'{{ organizationsId }}',
+'{{ name }}',
+'{{ threatPreventionProfile }}',
+'{{ type }}',
+'{{ urlFilteringProfile }}',
+'{{ projectsId }}',
 '{{ locationsId }}',
 '{{ securityProfileId }}'
 RETURNING
@@ -673,64 +673,64 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: security_profiles
   props:
-    - name: projectsId
-      value: "{{ projectsId }}"
+    - name: organizationsId
+      value: "{{ organizationsId }}"
       description: Required parameter for the security_profiles resource.
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the security_profiles resource.
-    - name: organizationsId
-      value: "{{ organizationsId }}"
+    - name: projectsId
+      value: "{{ projectsId }}"
       description: Required parameter for the security_profiles resource.
-    - name: urlFilteringProfile
-      description: |
-        The URL filtering configuration for the SecurityProfile.
-      value:
-        urlFilters:
-          - urls: "{{ urls }}"
-            priority: {{ priority }}
-            filteringAction: "{{ filteringAction }}"
-    - name: threatPreventionProfile
-      description: |
-        The threat prevention configuration for the SecurityProfile.
-      value:
-        antivirusOverrides:
-          - protocol: "{{ protocol }}"
-            action: "{{ action }}"
-        severityOverrides:
-          - severity: "{{ severity }}"
-            action: "{{ action }}"
-        threatOverrides:
-          - type: "{{ type }}"
-            action: "{{ action }}"
-            threatId: "{{ threatId }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Identifier. Name of the SecurityProfile resource. It matches pattern \`projects|organizations/*/locations/{location}/securityProfiles/{security_profile}\`.
-    - name: type
-      value: "{{ type }}"
-      description: |
-        Immutable. The single ProfileType that the SecurityProfile resource configures.
-      valid_values: ['PROFILE_TYPE_UNSPECIFIED', 'THREAT_PREVENTION', 'CUSTOM_MIRRORING', 'CUSTOM_INTERCEPT', 'URL_FILTERING']
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. An optional description of the profile. Max length 512 characters.
-    - name: customMirroringProfile
-      description: |
-        The custom Packet Mirroring v2 configuration for the SecurityProfile.
-      value:
-        mirroringEndpointGroup: "{{ mirroringEndpointGroup }}"
     - name: customInterceptProfile
       description: |
         The custom TPPI configuration for the SecurityProfile.
       value:
         interceptEndpointGroup: "{{ interceptEndpointGroup }}"
+    - name: customMirroringProfile
+      description: |
+        The custom Packet Mirroring v2 configuration for the SecurityProfile.
+      value:
+        mirroringEndpointGroup: "{{ mirroringEndpointGroup }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. An optional description of the profile. Max length 512 characters.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Labels as key value pairs.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. Name of the SecurityProfile resource. It matches pattern \`projects|organizations/*/locations/{location}/securityProfiles/{security_profile}\`.
+    - name: threatPreventionProfile
+      description: |
+        The threat prevention configuration for the SecurityProfile.
+      value:
+        antivirusOverrides:
+          - action: "{{ action }}"
+            protocol: "{{ protocol }}"
+        severityOverrides:
+          - action: "{{ action }}"
+            severity: "{{ severity }}"
+        threatOverrides:
+          - action: "{{ action }}"
+            threatId: "{{ threatId }}"
+            type: "{{ type }}"
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Immutable. The single ProfileType that the SecurityProfile resource configures.
+      valid_values: ['PROFILE_TYPE_UNSPECIFIED', 'THREAT_PREVENTION', 'CUSTOM_MIRRORING', 'CUSTOM_INTERCEPT', 'URL_FILTERING']
+    - name: urlFilteringProfile
+      description: |
+        The URL filtering configuration for the SecurityProfile.
+      value:
+        urlFilters:
+          - filteringAction: "{{ filteringAction }}"
+            priority: {{ priority }}
+            urls: "{{ urls }}"
     - name: securityProfileId
       value: "{{ securityProfileId }}"
 `}</CodeBlock>
@@ -742,29 +742,29 @@ response
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_locations_security_profiles_patch"
+    defaultValue="organizations_locations_security_profiles_patch"
     values={[
-        { label: 'projects_locations_security_profiles_patch', value: 'projects_locations_security_profiles_patch' },
-        { label: 'organizations_locations_security_profiles_patch', value: 'organizations_locations_security_profiles_patch' }
+        { label: 'organizations_locations_security_profiles_patch', value: 'organizations_locations_security_profiles_patch' },
+        { label: 'projects_locations_security_profiles_patch', value: 'projects_locations_security_profiles_patch' }
     ]}
 >
-<TabItem value="projects_locations_security_profiles_patch">
+<TabItem value="organizations_locations_security_profiles_patch">
 
 Updates the parameters of a single SecurityProfile.
 
 ```sql
 UPDATE google.networksecurity.security_profiles
 SET 
-data__urlFilteringProfile = '{{ urlFilteringProfile }}',
-data__threatPreventionProfile = '{{ threatPreventionProfile }}',
-data__name = '{{ name }}',
-data__type = '{{ type }}',
-data__description = '{{ description }}',
-data__customMirroringProfile = '{{ customMirroringProfile }}',
 data__customInterceptProfile = '{{ customInterceptProfile }}',
-data__labels = '{{ labels }}'
+data__customMirroringProfile = '{{ customMirroringProfile }}',
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__threatPreventionProfile = '{{ threatPreventionProfile }}',
+data__type = '{{ type }}',
+data__urlFilteringProfile = '{{ urlFilteringProfile }}'
 WHERE 
-projectsId = '{{ projectsId }}' --required
+organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND securityProfilesId = '{{ securityProfilesId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -776,23 +776,23 @@ metadata,
 response;
 ```
 </TabItem>
-<TabItem value="organizations_locations_security_profiles_patch">
+<TabItem value="projects_locations_security_profiles_patch">
 
 Updates the parameters of a single SecurityProfile.
 
 ```sql
 UPDATE google.networksecurity.security_profiles
 SET 
-data__urlFilteringProfile = '{{ urlFilteringProfile }}',
-data__threatPreventionProfile = '{{ threatPreventionProfile }}',
-data__name = '{{ name }}',
-data__type = '{{ type }}',
-data__description = '{{ description }}',
-data__customMirroringProfile = '{{ customMirroringProfile }}',
 data__customInterceptProfile = '{{ customInterceptProfile }}',
-data__labels = '{{ labels }}'
+data__customMirroringProfile = '{{ customMirroringProfile }}',
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__threatPreventionProfile = '{{ threatPreventionProfile }}',
+data__type = '{{ type }}',
+data__urlFilteringProfile = '{{ urlFilteringProfile }}'
 WHERE 
-organizationsId = '{{ organizationsId }}' --required
+projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND securityProfilesId = '{{ securityProfilesId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -810,25 +810,12 @@ response;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_locations_security_profiles_delete"
+    defaultValue="organizations_locations_security_profiles_delete"
     values={[
-        { label: 'projects_locations_security_profiles_delete', value: 'projects_locations_security_profiles_delete' },
-        { label: 'organizations_locations_security_profiles_delete', value: 'organizations_locations_security_profiles_delete' }
+        { label: 'organizations_locations_security_profiles_delete', value: 'organizations_locations_security_profiles_delete' },
+        { label: 'projects_locations_security_profiles_delete', value: 'projects_locations_security_profiles_delete' }
     ]}
 >
-<TabItem value="projects_locations_security_profiles_delete">
-
-Deletes a single SecurityProfile.
-
-```sql
-DELETE FROM google.networksecurity.security_profiles
-WHERE projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND securityProfilesId = '{{ securityProfilesId }}' --required
-AND etag = '{{ etag }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_security_profiles_delete">
 
 Deletes a single SecurityProfile.
@@ -836,6 +823,19 @@ Deletes a single SecurityProfile.
 ```sql
 DELETE FROM google.networksecurity.security_profiles
 WHERE organizationsId = '{{ organizationsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND securityProfilesId = '{{ securityProfilesId }}' --required
+AND etag = '{{ etag }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_security_profiles_delete">
+
+Deletes a single SecurityProfile.
+
+```sql
+DELETE FROM google.networksecurity.security_profiles
+WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND securityProfilesId = '{{ securityProfilesId }}' --required
 AND etag = '{{ etag }}'

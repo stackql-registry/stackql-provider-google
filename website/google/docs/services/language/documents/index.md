@@ -58,18 +58,18 @@ The following methods are available for this resource:
     <td>Finds named entities (currently proper names and common nouns) in the text along with entity types, probability, mentions for each entity, and other properties.</td>
 </tr>
 <tr>
+    <td><a href="#analyze_sentiment"><CopyableCode code="analyze_sentiment" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Analyzes the sentiment of the provided text.</td>
+</tr>
+<tr>
     <td><a href="#annotate_text"><CopyableCode code="annotate_text" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>A convenience method that provides all features in one call.</td>
-</tr>
-<tr>
-    <td><a href="#moderate_text"><CopyableCode code="moderate_text" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Moderates a document for harmful and sensitive categories.</td>
 </tr>
 <tr>
     <td><a href="#classify_text"><CopyableCode code="classify_text" /></a></td>
@@ -79,11 +79,11 @@ The following methods are available for this resource:
     <td>Classifies a document into categories.</td>
 </tr>
 <tr>
-    <td><a href="#analyze_sentiment"><CopyableCode code="analyze_sentiment" /></a></td>
+    <td><a href="#moderate_text"><CopyableCode code="moderate_text" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>Analyzes the sentiment of the provided text.</td>
+    <td>Moderates a document for harmful and sensitive categories.</td>
 </tr>
 </tbody>
 </table>
@@ -110,10 +110,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="analyze_entities"
     values={[
         { label: 'analyze_entities', value: 'analyze_entities' },
+        { label: 'analyze_sentiment', value: 'analyze_sentiment' },
         { label: 'annotate_text', value: 'annotate_text' },
-        { label: 'moderate_text', value: 'moderate_text' },
         { label: 'classify_text', value: 'classify_text' },
-        { label: 'analyze_sentiment', value: 'analyze_sentiment' }
+        { label: 'moderate_text', value: 'moderate_text' }
     ]}
 >
 <TabItem value="analyze_entities">
@@ -130,6 +130,20 @@ EXEC google.language.documents.analyze_entities
 ;
 ```
 </TabItem>
+<TabItem value="analyze_sentiment">
+
+Analyzes the sentiment of the provided text.
+
+```sql
+EXEC google.language.documents.analyze_sentiment 
+@@json=
+'{
+"document": "{{ document }}", 
+"encodingType": "{{ encodingType }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="annotate_text">
 
 A convenience method that provides all features in one call.
@@ -138,23 +152,9 @@ A convenience method that provides all features in one call.
 EXEC google.language.documents.annotate_text 
 @@json=
 '{
-"features": "{{ features }}", 
 "document": "{{ document }}", 
-"encodingType": "{{ encodingType }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="moderate_text">
-
-Moderates a document for harmful and sensitive categories.
-
-```sql
-EXEC google.language.documents.moderate_text 
-@@json=
-'{
-"modelVersion": "{{ modelVersion }}", 
-"document": "{{ document }}"
+"encodingType": "{{ encodingType }}", 
+"features": "{{ features }}"
 }'
 ;
 ```
@@ -172,16 +172,16 @@ EXEC google.language.documents.classify_text
 ;
 ```
 </TabItem>
-<TabItem value="analyze_sentiment">
+<TabItem value="moderate_text">
 
-Analyzes the sentiment of the provided text.
+Moderates a document for harmful and sensitive categories.
 
 ```sql
-EXEC google.language.documents.analyze_sentiment 
+EXEC google.language.documents.moderate_text 
 @@json=
 '{
 "document": "{{ document }}", 
-"encodingType": "{{ encodingType }}"
+"modelVersion": "{{ modelVersion }}"
 }'
 ;
 ```

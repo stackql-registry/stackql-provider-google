@@ -307,24 +307,24 @@ Creates a new Response Policy
 
 ```sql
 INSERT INTO google.dns.response_policies (
-data__responsePolicyName,
+data__description,
 data__gkeClusters,
+data__id,
+data__kind,
 data__labels,
 data__networks,
-data__description,
-data__kind,
-data__id,
+data__responsePolicyName,
 project,
 clientOperationId
 )
 SELECT 
-'{{ responsePolicyName }}',
+'{{ description }}',
 '{{ gkeClusters }}',
+'{{ id }}',
+'{{ kind }}',
 '{{ labels }}',
 '{{ networks }}',
-'{{ description }}',
-'{{ kind }}',
-'{{ id }}',
+'{{ responsePolicyName }}',
 '{{ project }}',
 '{{ clientOperationId }}'
 RETURNING
@@ -346,16 +346,23 @@ responsePolicyName
     - name: project
       value: "{{ project }}"
       description: Required parameter for the response_policies resource.
-    - name: responsePolicyName
-      value: "{{ responsePolicyName }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        User assigned name for this Response Policy.
+        User-provided description for this Response Policy.
     - name: gkeClusters
       description: |
         The list of Google Kubernetes Engine clusters to which this response policy is applied.
       value:
         - gkeClusterName: "{{ gkeClusterName }}"
           kind: "{{ kind }}"
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Unique identifier for the resource; defined by the server (output only).
+    - name: kind
+      value: "{{ kind }}"
+      default: dns#responsePolicy
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -364,19 +371,12 @@ responsePolicyName
       description: |
         List of network names specifying networks to which this policy is applied.
       value:
-        - networkUrl: "{{ networkUrl }}"
-          kind: "{{ kind }}"
-    - name: description
-      value: "{{ description }}"
+        - kind: "{{ kind }}"
+          networkUrl: "{{ networkUrl }}"
+    - name: responsePolicyName
+      value: "{{ responsePolicyName }}"
       description: |
-        User-provided description for this Response Policy.
-    - name: kind
-      value: "{{ kind }}"
-      default: dns#responsePolicy
-    - name: id
-      value: "{{ id }}"
-      description: |
-        Unique identifier for the resource; defined by the server (output only).
+        User assigned name for this Response Policy.
     - name: clientOperationId
       value: "{{ clientOperationId }}"
 `}</CodeBlock>
@@ -400,13 +400,13 @@ Applies a partial update to an existing Response Policy.
 ```sql
 UPDATE google.dns.response_policies
 SET 
-data__responsePolicyName = '{{ responsePolicyName }}',
+data__description = '{{ description }}',
 data__gkeClusters = '{{ gkeClusters }}',
+data__id = '{{ id }}',
+data__kind = '{{ kind }}',
 data__labels = '{{ labels }}',
 data__networks = '{{ networks }}',
-data__description = '{{ description }}',
-data__kind = '{{ kind }}',
-data__id = '{{ id }}'
+data__responsePolicyName = '{{ responsePolicyName }}'
 WHERE 
 project = '{{ project }}' --required
 AND responsePolicy = '{{ responsePolicy }}' --required
@@ -433,13 +433,13 @@ Updates an existing Response Policy.
 ```sql
 REPLACE google.dns.response_policies
 SET 
-data__responsePolicyName = '{{ responsePolicyName }}',
+data__description = '{{ description }}',
 data__gkeClusters = '{{ gkeClusters }}',
+data__id = '{{ id }}',
+data__kind = '{{ kind }}',
 data__labels = '{{ labels }}',
 data__networks = '{{ networks }}',
-data__description = '{{ description }}',
-data__kind = '{{ kind }}',
-data__id = '{{ id }}'
+data__responsePolicyName = '{{ responsePolicyName }}'
 WHERE 
 project = '{{ project }}' --required
 AND responsePolicy = '{{ responsePolicy }}' --required

@@ -197,18 +197,18 @@ The following methods are available for this resource:
     <td>Delete a dataset.</td>
 </tr>
 <tr>
-    <td><a href="#bulk_upload_feedback_labels"><CopyableCode code="bulk_upload_feedback_labels" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td></td>
-    <td>Upload feedback labels from an external source in bulk. Currently supports labeling Quality AI example conversations.</td>
-</tr>
-<tr>
     <td><a href="#bulk_download_feedback_labels"><CopyableCode code="bulk_download_feedback_labels" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
     <td></td>
     <td>Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.</td>
+</tr>
+<tr>
+    <td><a href="#bulk_upload_feedback_labels"><CopyableCode code="bulk_upload_feedback_labels" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
+    <td></td>
+    <td>Upload feedback labels from an external source in bulk. Currently supports labeling Quality AI example conversations.</td>
 </tr>
 <tr>
     <td><a href="#export"><CopyableCode code="export" /></a></td>
@@ -345,21 +345,21 @@ Creates a dataset.
 
 ```sql
 INSERT INTO google.contactcenterinsights.datasets (
-data__name,
-data__type,
 data__description,
-data__ttl,
 data__displayName,
+data__name,
+data__ttl,
+data__type,
 projectsId,
 locationsId,
 datasetId
 )
 SELECT 
-'{{ name }}',
-'{{ type }}',
 '{{ description }}',
-'{{ ttl }}',
 '{{ displayName }}',
+'{{ name }}',
+'{{ ttl }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetId }}'
@@ -385,27 +385,27 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the datasets resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Dataset description.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Display name for the dataaset
     - name: name
       value: "{{ name }}"
       description: |
         Immutable. Identifier. Resource name of the dataset. Format: projects/{project}/locations/{location}/datasets/{dataset}
+    - name: ttl
+      value: "{{ ttl }}"
+      description: |
+        Optional. Option TTL for the dataset.
     - name: type
       value: "{{ type }}"
       description: |
         Dataset usage type.
       valid_values: ['TYPE_UNSPECIFIED', 'EVAL', 'LIVE']
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Dataset description.
-    - name: ttl
-      value: "{{ ttl }}"
-      description: |
-        Optional. Option TTL for the dataset.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Display name for the dataaset
     - name: datasetId
       value: "{{ datasetId }}"
 `}</CodeBlock>
@@ -429,11 +429,11 @@ Updates a dataset.
 ```sql
 UPDATE google.contactcenterinsights.datasets
 SET 
-data__name = '{{ name }}',
-data__type = '{{ type }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__ttl = '{{ ttl }}',
-data__displayName = '{{ displayName }}'
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -491,31 +491,13 @@ AND datasetsId = '{{ datasetsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="bulk_upload_feedback_labels"
+    defaultValue="bulk_download_feedback_labels"
     values={[
-        { label: 'bulk_upload_feedback_labels', value: 'bulk_upload_feedback_labels' },
         { label: 'bulk_download_feedback_labels', value: 'bulk_download_feedback_labels' },
+        { label: 'bulk_upload_feedback_labels', value: 'bulk_upload_feedback_labels' },
         { label: 'export', value: 'export' }
     ]}
 >
-<TabItem value="bulk_upload_feedback_labels">
-
-Upload feedback labels from an external source in bulk. Currently supports labeling Quality AI example conversations.
-
-```sql
-EXEC google.contactcenterinsights.datasets.bulk_upload_feedback_labels 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required 
-@@json=
-'{
-"sheetsSource": "{{ sheetsSource }}", 
-"gcsSource": "{{ gcsSource }}", 
-"validateOnly": {{ validateOnly }}
-}'
-;
-```
-</TabItem>
 <TabItem value="bulk_download_feedback_labels">
 
 Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.
@@ -527,14 +509,32 @@ EXEC google.contactcenterinsights.datasets.bulk_download_feedback_labels
 @datasetsId='{{ datasetsId }}' --required 
 @@json=
 '{
-"gcsDestination": "{{ gcsDestination }}", 
-"parent": "{{ parent }}", 
-"maxDownloadCount": {{ maxDownloadCount }}, 
+"conversationFilter": "{{ conversationFilter }}", 
 "feedbackLabelType": "{{ feedbackLabelType }}", 
 "filter": "{{ filter }}", 
-"templateQaScorecardId": "{{ templateQaScorecardId }}", 
+"gcsDestination": "{{ gcsDestination }}", 
+"maxDownloadCount": {{ maxDownloadCount }}, 
+"parent": "{{ parent }}", 
 "sheetsDestination": "{{ sheetsDestination }}", 
-"conversationFilter": "{{ conversationFilter }}"
+"templateQaScorecardId": "{{ templateQaScorecardId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="bulk_upload_feedback_labels">
+
+Upload feedback labels from an external source in bulk. Currently supports labeling Quality AI example conversations.
+
+```sql
+EXEC google.contactcenterinsights.datasets.bulk_upload_feedback_labels 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@datasetsId='{{ datasetsId }}' --required 
+@@json=
+'{
+"gcsSource": "{{ gcsSource }}", 
+"sheetsSource": "{{ sheetsSource }}", 
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```
@@ -550,12 +550,12 @@ EXEC google.contactcenterinsights.datasets.export
 @datasetsId='{{ datasetsId }}' --required 
 @@json=
 '{
-"parent": "{{ parent }}", 
-"kmsKey": "{{ kmsKey }}", 
-"writeDisposition": "{{ writeDisposition }}", 
+"bigQueryDestination": "{{ bigQueryDestination }}", 
 "exportSchemaVersion": "{{ exportSchemaVersion }}", 
 "filter": "{{ filter }}", 
-"bigQueryDestination": "{{ bigQueryDestination }}"
+"kmsKey": "{{ kmsKey }}", 
+"parent": "{{ parent }}", 
+"writeDisposition": "{{ writeDisposition }}"
 }'
 ;
 ```

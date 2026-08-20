@@ -33,37 +33,13 @@ Creates, updates, deletes, gets or lists a <code>repositories</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="query_directory_contents"
+    defaultValue="get"
     values={[
-        { label: 'query_directory_contents', value: 'query_directory_contents' },
         { label: 'get', value: 'get' },
+        { label: 'query_directory_contents', value: 'query_directory_contents' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_directory_contents">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="directoryEntries" /></td>
-    <td><code>array</code></td>
-    <td>List of entries in the directory.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nextPageToken" /></td>
-    <td><code>string</code></td>
-    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="get">
 
 <table>
@@ -144,6 +120,30 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="workspaceCompilationOverrides" /></td>
     <td><code>object</code></td>
     <td>Optional. If set, fields of `workspace_compilation_overrides` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for `WorkspaceCompilationOverrides` for more information. (id: WorkspaceCompilationOverrides)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="query_directory_contents">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="directoryEntries" /></td>
+    <td><code>array</code></td>
+    <td>List of entries in the directory.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
 </tr>
 </tbody>
 </table>
@@ -250,13 +250,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#query_directory_contents"><CopyableCode code="query_directory_contents" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-commitSha"><code>commitSha</code></a>, <a href="#parameter-path"><code>path</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.</td>
-</tr>
-<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
@@ -264,10 +257,17 @@ The following methods are available for this resource:
     <td>Fetches a single Repository.</td>
 </tr>
 <tr>
+    <td><a href="#query_directory_contents"><CopyableCode code="query_directory_contents" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td><a href="#parameter-commitSha"><code>commitSha</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-path"><code>path</code></a></td>
+    <td>Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.</td>
+</tr>
+<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Repositories in a given project and location. **Note:** *This method can return repositories not shown in the [Dataform UI](https://console.cloud.google.com/bigquery/dataform)*.</td>
 </tr>
 <tr>
@@ -292,6 +292,13 @@ The following methods are available for this resource:
     <td>Deletes a single Repository.</td>
 </tr>
 <tr>
+    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td></td>
+    <td>Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.</td>
+</tr>
+<tr>
     <td><a href="#compute_access_token_status"><CopyableCode code="compute_access_token_status" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
@@ -311,13 +318,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
     <td><a href="#parameter-commitSha"><code>commitSha</code></a>, <a href="#parameter-path"><code>path</code></a></td>
     <td>Returns the contents of a file (inside a Repository). The Repository must not have a value for `git_remote_settings.url`.</td>
-</tr>
-<tr>
-    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td></td>
-    <td>Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.</td>
 </tr>
 </tbody>
 </table>
@@ -401,32 +401,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="query_directory_contents"
+    defaultValue="get"
     values={[
-        { label: 'query_directory_contents', value: 'query_directory_contents' },
         { label: 'get', value: 'get' },
+        { label: 'query_directory_contents', value: 'query_directory_contents' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_directory_contents">
-
-Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.
-
-```sql
-SELECT
-directoryEntries,
-nextPageToken
-FROM google.dataform.repositories
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND repositoriesId = '{{ repositoriesId }}' -- required
-AND commitSha = '{{ commitSha }}'
-AND path = '{{ path }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="get">
 
 Fetches a single Repository.
@@ -454,6 +435,25 @@ AND repositoriesId = '{{ repositoriesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="query_directory_contents">
+
+Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.
+
+```sql
+SELECT
+directoryEntries,
+nextPageToken
+FROM google.dataform.repositories
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND repositoriesId = '{{ repositoriesId }}' -- required
+AND commitSha = '{{ commitSha }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND path = '{{ path }}'
+;
+```
+</TabItem>
 <TabItem value="list">
 
 Lists Repositories in a given project and location. **Note:** *This method can return repositories not shown in the [Dataform UI](https://console.cloud.google.com/bigquery/dataform)*.
@@ -477,10 +477,10 @@ workspaceCompilationOverrides
 FROM google.dataform.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -502,31 +502,31 @@ Creates a new Repository in a given project and location.
 
 ```sql
 INSERT INTO google.dataform.repositories (
-data__displayName,
 data__containingFolder,
-data__npmrcEnvironmentVariablesSecretVersion,
-data__workspaceCompilationOverrides,
-data__kmsKeyName,
-data__name,
+data__displayName,
 data__gitRemoteSettings,
+data__kmsKeyName,
 data__labels,
+data__name,
+data__npmrcEnvironmentVariablesSecretVersion,
 data__serviceAccount,
 data__setAuthenticatedUserAdmin,
+data__workspaceCompilationOverrides,
 projectsId,
 locationsId,
 repositoryId
 )
 SELECT 
-'{{ displayName }}',
 '{{ containingFolder }}',
-'{{ npmrcEnvironmentVariablesSecretVersion }}',
-'{{ workspaceCompilationOverrides }}',
-'{{ kmsKeyName }}',
-'{{ name }}',
+'{{ displayName }}',
 '{{ gitRemoteSettings }}',
+'{{ kmsKeyName }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ npmrcEnvironmentVariablesSecretVersion }}',
 '{{ serviceAccount }}',
 {{ setAuthenticatedUserAdmin }},
+'{{ workspaceCompilationOverrides }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoryId }}'
@@ -559,50 +559,43 @@ workspaceCompilationOverrides
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the repositories resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. The repository's user-friendly name.
     - name: containingFolder
       value: "{{ containingFolder }}"
       description: |
         Optional. The name of the containing folder of the repository. The field is immutable and it can be modified via a MoveRepository operation. Format: \`projects/*/locations/*/folders/*\`. or \`projects/*/locations/*/teamFolders/*\`.
-    - name: npmrcEnvironmentVariablesSecretVersion
-      value: "{{ npmrcEnvironmentVariablesSecretVersion }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Optional. The name of the Secret Manager secret version to be used to interpolate variables into the .npmrc file for package installation operations. Must be in the format \`projects/*/secrets/*/versions/*\`. The file itself must be in a JSON format.
-    - name: workspaceCompilationOverrides
-      description: |
-        Optional. If set, fields of \`workspace_compilation_overrides\` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for \`WorkspaceCompilationOverrides\` for more information.
-      value:
-        schemaSuffix: "{{ schemaSuffix }}"
-        defaultDatabase: "{{ defaultDatabase }}"
-        tablePrefix: "{{ tablePrefix }}"
-    - name: kmsKeyName
-      value: "{{ kmsKeyName }}"
-      description: |
-        Optional. The reference to a KMS encryption key. If provided, it will be used to encrypt user data in the repository and all child resources. It is not possible to add or update the encryption key after the repository is created. Example: \`projects/{kms_project}/locations/{location}/keyRings/{key_location}/cryptoKeys/{key}\`
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The repository's name.
+        Optional. The repository's user-friendly name.
     - name: gitRemoteSettings
       description: |
         Optional. If set, configures this repository to be linked to a Git remote.
       value:
+        authenticationTokenSecretVersion: "{{ authenticationTokenSecretVersion }}"
         defaultBranch: "{{ defaultBranch }}"
-        url: "{{ url }}"
         effectiveDefaultBranch: "{{ effectiveDefaultBranch }}"
         gitRepositoryLink: "{{ gitRepositoryLink }}"
-        tokenStatus: "{{ tokenStatus }}"
         sshAuthenticationConfig:
-          userPrivateKeySecretVersion: "{{ userPrivateKeySecretVersion }}"
           hostPublicKey: "{{ hostPublicKey }}"
-        authenticationTokenSecretVersion: "{{ authenticationTokenSecretVersion }}"
+          userPrivateKeySecretVersion: "{{ userPrivateKeySecretVersion }}"
+        tokenStatus: "{{ tokenStatus }}"
+        url: "{{ url }}"
+    - name: kmsKeyName
+      value: "{{ kmsKeyName }}"
+      description: |
+        Optional. The reference to a KMS encryption key. If provided, it will be used to encrypt user data in the repository and all child resources. It is not possible to add or update the encryption key after the repository is created. Example: \`projects/{kms_project}/locations/{location}/keyRings/{key_location}/cryptoKeys/{key}\`
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Repository user labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The repository's name.
+    - name: npmrcEnvironmentVariablesSecretVersion
+      value: "{{ npmrcEnvironmentVariablesSecretVersion }}"
+      description: |
+        Optional. The name of the Secret Manager secret version to be used to interpolate variables into the .npmrc file for package installation operations. Must be in the format \`projects/*/secrets/*/versions/*\`. The file itself must be in a JSON format.
     - name: serviceAccount
       value: "{{ serviceAccount }}"
       description: |
@@ -611,6 +604,13 @@ workspaceCompilationOverrides
       value: {{ setAuthenticatedUserAdmin }}
       description: |
         Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository.
+    - name: workspaceCompilationOverrides
+      description: |
+        Optional. If set, fields of \`workspace_compilation_overrides\` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for \`WorkspaceCompilationOverrides\` for more information.
+      value:
+        defaultDatabase: "{{ defaultDatabase }}"
+        schemaSuffix: "{{ schemaSuffix }}"
+        tablePrefix: "{{ tablePrefix }}"
     - name: repositoryId
       value: "{{ repositoryId }}"
 `}</CodeBlock>
@@ -634,16 +634,16 @@ Updates a single Repository. **Note:** *This method does not fully implement [AI
 ```sql
 UPDATE google.dataform.repositories
 SET 
-data__displayName = '{{ displayName }}',
 data__containingFolder = '{{ containingFolder }}',
-data__npmrcEnvironmentVariablesSecretVersion = '{{ npmrcEnvironmentVariablesSecretVersion }}',
-data__workspaceCompilationOverrides = '{{ workspaceCompilationOverrides }}',
-data__kmsKeyName = '{{ kmsKeyName }}',
-data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__gitRemoteSettings = '{{ gitRemoteSettings }}',
+data__kmsKeyName = '{{ kmsKeyName }}',
 data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__npmrcEnvironmentVariablesSecretVersion = '{{ npmrcEnvironmentVariablesSecretVersion }}',
 data__serviceAccount = '{{ serviceAccount }}',
-data__setAuthenticatedUserAdmin = {{ setAuthenticatedUserAdmin }}
+data__setAuthenticatedUserAdmin = {{ setAuthenticatedUserAdmin }},
+data__workspaceCompilationOverrides = '{{ workspaceCompilationOverrides }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -696,14 +696,32 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="compute_access_token_status"
+    defaultValue="commit"
     values={[
+        { label: 'commit', value: 'commit' },
         { label: 'compute_access_token_status', value: 'compute_access_token_status' },
         { label: 'move', value: 'move' },
-        { label: 'read_file', value: 'read_file' },
-        { label: 'commit', value: 'commit' }
+        { label: 'read_file', value: 'read_file' }
     ]}
 >
+<TabItem value="commit">
+
+Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.
+
+```sql
+EXEC google.dataform.repositories.commit 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required 
+@@json=
+'{
+"commitMetadata": "{{ commitMetadata }}", 
+"fileOperations": "{{ fileOperations }}", 
+"requiredHeadCommitSha": "{{ requiredHeadCommitSha }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="compute_access_token_status">
 
 Computes a Repository's Git access token status.
@@ -743,24 +761,6 @@ EXEC google.dataform.repositories.read_file
 @repositoriesId='{{ repositoriesId }}' --required, 
 @commitSha='{{ commitSha }}', 
 @path='{{ path }}'
-;
-```
-</TabItem>
-<TabItem value="commit">
-
-Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.
-
-```sql
-EXEC google.dataform.repositories.commit 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required 
-@@json=
-'{
-"commitMetadata": "{{ commitMetadata }}", 
-"requiredHeadCommitSha": "{{ requiredHeadCommitSha }}", 
-"fileOperations": "{{ fileOperations }}"
-}'
 ;
 ```
 </TabItem>

@@ -94,6 +94,36 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The name of the OdbSubnet resource in the following format: projects/&#123;project&#125;/locations/&#123;location&#125;/odbNetworks/&#123;odb_network&#125;/odbSubnets/&#123;odb_subnet&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cidrRange" /></td>
+    <td><code>string</code></td>
+    <td>Required. The CIDR range of the subnet.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The date and time that the OdbNetwork was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels or tags associated with the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="purpose" /></td>
+    <td><code>string</code></td>
+    <td>Required. Purpose of the subnet. (PURPOSE_UNSPECIFIED, CLIENT_SUBNET, BACKUP_SUBNET)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State of the ODB Subnet. (STATE_UNSPECIFIED, PROVISIONING, AVAILABLE, TERMINATING, FAILED)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -125,14 +155,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-odbNetworksId"><code>odbNetworksId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the ODB Subnets in a given ODB Network.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-odbNetworksId"><code>odbNetworksId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-odbSubnetId"><code>odbSubnetId</code></a></td>
+    <td><a href="#parameter-odbSubnetId"><code>odbSubnetId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new ODB Subnet in a given ODB Network.</td>
 </tr>
 <tr>
@@ -246,15 +276,20 @@ Lists all the ODB Subnets in a given ODB Network.
 
 ```sql
 SELECT
-*
+name,
+cidrRange,
+createTime,
+labels,
+purpose,
+state
 FROM google.oracledatabase.odb_subnets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND odbNetworksId = '{{ odbNetworksId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -276,26 +311,26 @@ Creates a new ODB Subnet in a given ODB Network.
 
 ```sql
 INSERT INTO google.oracledatabase.odb_subnets (
-data__name,
-data__labels,
-data__purpose,
 data__cidrRange,
+data__labels,
+data__name,
+data__purpose,
 projectsId,
 locationsId,
 odbNetworksId,
-requestId,
-odbSubnetId
+odbSubnetId,
+requestId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ purpose }}',
 '{{ cidrRange }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ purpose }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ odbNetworksId }}',
-'{{ requestId }}',
-'{{ odbSubnetId }}'
+'{{ odbSubnetId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -319,27 +354,27 @@ response
     - name: odbNetworksId
       value: "{{ odbNetworksId }}"
       description: Required parameter for the odb_subnets resource.
-    - name: name
-      value: "{{ name }}"
+    - name: cidrRange
+      value: "{{ cidrRange }}"
       description: |
-        Identifier. The name of the OdbSubnet resource in the following format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+        Required. The CIDR range of the subnet.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Labels or tags associated with the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the OdbSubnet resource in the following format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
     - name: purpose
       value: "{{ purpose }}"
       description: |
         Required. Purpose of the subnet.
       valid_values: ['PURPOSE_UNSPECIFIED', 'CLIENT_SUBNET', 'BACKUP_SUBNET']
-    - name: cidrRange
-      value: "{{ cidrRange }}"
-      description: |
-        Required. The CIDR range of the subnet.
-    - name: requestId
-      value: "{{ requestId }}"
     - name: odbSubnetId
       value: "{{ odbSubnetId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>

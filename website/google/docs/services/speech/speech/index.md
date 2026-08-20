@@ -51,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#recognize"><CopyableCode code="recognize" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Performs synchronous speech recognition: receive results after all audio has been sent and processed.</td>
-</tr>
-<tr>
     <td><a href="#longrunningrecognize"><CopyableCode code="longrunningrecognize" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Performs asynchronous speech recognition: receive results via the google.longrunning.Operations interface. Returns either an `Operation.error` or an `Operation.response` which contains a `LongRunningRecognizeResponse` message. For more information on asynchronous speech recognition, see the [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).</td>
+</tr>
+<tr>
+    <td><a href="#recognize"><CopyableCode code="recognize" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Performs synchronous speech recognition: receive results after all audio has been sent and processed.</td>
 </tr>
 </tbody>
 </table>
@@ -86,12 +86,27 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="recognize"
+    defaultValue="longrunningrecognize"
     values={[
-        { label: 'recognize', value: 'recognize' },
-        { label: 'longrunningrecognize', value: 'longrunningrecognize' }
+        { label: 'longrunningrecognize', value: 'longrunningrecognize' },
+        { label: 'recognize', value: 'recognize' }
     ]}
 >
+<TabItem value="longrunningrecognize">
+
+Performs asynchronous speech recognition: receive results via the google.longrunning.Operations interface. Returns either an `Operation.error` or an `Operation.response` which contains a `LongRunningRecognizeResponse` message. For more information on asynchronous speech recognition, see the [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).
+
+```sql
+EXEC google.speech.speech.longrunningrecognize 
+@@json=
+'{
+"audio": "{{ audio }}", 
+"config": "{{ config }}", 
+"outputConfig": "{{ outputConfig }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="recognize">
 
 Performs synchronous speech recognition: receive results after all audio has been sent and processed.
@@ -102,21 +117,6 @@ EXEC google.speech.speech.recognize
 '{
 "audio": "{{ audio }}", 
 "config": "{{ config }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="longrunningrecognize">
-
-Performs asynchronous speech recognition: receive results via the google.longrunning.Operations interface. Returns either an `Operation.error` or an `Operation.response` which contains a `LongRunningRecognizeResponse` message. For more information on asynchronous speech recognition, see the [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).
-
-```sql
-EXEC google.speech.speech.longrunningrecognize 
-@@json=
-'{
-"config": "{{ config }}", 
-"audio": "{{ audio }}", 
-"outputConfig": "{{ outputConfig }}"
 }'
 ;
 ```

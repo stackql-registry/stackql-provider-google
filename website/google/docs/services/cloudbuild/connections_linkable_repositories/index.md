@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_connections_fetch_linkable_repositories"><CopyableCode code="projects_locations_connections_fetch_linkable_repositories" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>FetchLinkableRepositories get repositories from SCM that are accessible and could be added to the connection.</td>
 </tr>
 </tbody>
@@ -150,8 +150,8 @@ FROM google.cloudbuild.connections_linkable_repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

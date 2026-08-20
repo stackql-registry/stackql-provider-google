@@ -107,18 +107,18 @@ The following methods are available for this resource:
     <td>Get the current state of a task from the agent.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe"><CopyableCode code="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-assistantsId"><code>assistantsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a></td>
-    <td></td>
-    <td>TaskSubscription is a streaming call that will return a stream of task update events. This attaches the stream to an existing in process task. If the task is complete the stream will return the completed task (like GetTask) and close the stream.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel"><CopyableCode code="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-assistantsId"><code>assistantsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a></td>
     <td></td>
     <td>Cancel a task from the agent. If supported one should expect no more task updates for the task.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe"><CopyableCode code="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-assistantsId"><code>assistantsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a></td>
+    <td></td>
+    <td>TaskSubscription is a streaming call that will return a stream of task update events. This attaches the stream to an existing in process task. If the task is complete the stream will return the completed task (like GetTask) and close the stream.</td>
 </tr>
 </tbody>
 </table>
@@ -217,18 +217,18 @@ AND historyLength = '{{ historyLength }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe"
+    defaultValue="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel"
     values={[
-        { label: 'projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe', value: 'projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe' },
-        { label: 'projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel', value: 'projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel' }
+        { label: 'projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel', value: 'projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel' },
+        { label: 'projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe', value: 'projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe' }
     ]}
 >
-<TabItem value="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe">
+<TabItem value="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel">
 
-TaskSubscription is a streaming call that will return a stream of task update events. This attaches the stream to an existing in process task. If the task is complete the stream will return the completed task (like GetTask) and close the stream.
+Cancel a task from the agent. If supported one should expect no more task updates for the task.
 
 ```sql
-EXEC google.discoveryengine.tasks.projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe 
+EXEC google.discoveryengine.tasks.projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @collectionsId='{{ collectionsId }}' --required, 
@@ -239,12 +239,12 @@ EXEC google.discoveryengine.tasks.projects_locations_collections_engines_assista
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel">
+<TabItem value="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe">
 
-Cancel a task from the agent. If supported one should expect no more task updates for the task.
+TaskSubscription is a streaming call that will return a stream of task update events. This attaches the stream to an existing in process task. If the task is complete the stream will return the completed task (like GetTask) and close the stream.
 
 ```sql
-EXEC google.discoveryengine.tasks.projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_cancel 
+EXEC google.discoveryengine.tasks.projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_subscribe 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @collectionsId='{{ collectionsId }}' --required, 

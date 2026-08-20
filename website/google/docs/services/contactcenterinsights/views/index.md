@@ -282,15 +282,15 @@ Creates a view.
 
 ```sql
 INSERT INTO google.contactcenterinsights.views (
-data__name,
 data__displayName,
+data__name,
 data__value,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ value }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -314,14 +314,14 @@ value
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the views resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The resource name of the view. Format: projects/{project}/locations/{location}/views/{view}
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The human-readable display name of the view.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the view. Format: projects/{project}/locations/{location}/views/{view}
     - name: value
       value: "{{ value }}"
       description: |
@@ -347,8 +347,8 @@ Updates a view.
 ```sql
 UPDATE google.contactcenterinsights.views
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__value = '{{ value }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

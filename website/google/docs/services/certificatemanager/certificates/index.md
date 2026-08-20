@@ -235,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Certificates in a given project and location.</td>
 </tr>
 <tr>
@@ -383,9 +383,9 @@ FROM google.certificatemanager.certificates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -407,27 +407,27 @@ Creates a new Certificate in a given project and location.
 
 ```sql
 INSERT INTO google.certificatemanager.certificates (
+data__description,
+data__labels,
+data__managed,
+data__managedIdentity,
+data__name,
+data__scope,
 data__selfManaged,
 data__tags,
-data__description,
-data__managed,
-data__labels,
-data__name,
-data__managedIdentity,
-data__scope,
 projectsId,
 locationsId,
 certificateId
 )
 SELECT 
+'{{ description }}',
+'{{ labels }}',
+'{{ managed }}',
+'{{ managedIdentity }}',
+'{{ name }}',
+'{{ scope }}',
 '{{ selfManaged }}',
 '{{ tags }}',
-'{{ description }}',
-'{{ managed }}',
-'{{ labels }}',
-'{{ name }}',
-'{{ managedIdentity }}',
-'{{ scope }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ certificateId }}'
@@ -451,6 +451,66 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the certificates resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. One or more paragraphs of text description of a certificate.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of labels associated with a Certificate.
+    - name: managed
+      description: |
+        If set, contains configuration and state of a managed certificate.
+      value:
+        authorizationAttemptInfo:
+          - attemptTime: "{{ attemptTime }}"
+            details: "{{ details }}"
+            domain: "{{ domain }}"
+            failureReason: "{{ failureReason }}"
+            state: "{{ state }}"
+            troubleshooting:
+              cname:
+                expectedData: "{{ expectedData }}"
+                name: "{{ name }}"
+                resolvedData:
+                  - "{{ resolvedData }}"
+              ips:
+                resolved:
+                  - "{{ resolved }}"
+                serving:
+                  - "{{ serving }}"
+                servingOnAltPorts:
+                  - "{{ servingOnAltPorts }}"
+              issues:
+                - "{{ issues }}"
+        dnsAuthorizations:
+          - "{{ dnsAuthorizations }}"
+        domains:
+          - "{{ domains }}"
+        issuanceConfig: "{{ issuanceConfig }}"
+        provisioningIssue:
+          details: "{{ details }}"
+          reason: "{{ reason }}"
+        state: "{{ state }}"
+    - name: managedIdentity
+      description: |
+        If set, contains configuration and state of a managed identity certificate.
+      value:
+        identity: "{{ identity }}"
+        provisioningIssue:
+          details: "{{ details }}"
+          reason: "{{ reason }}"
+        state: "{{ state }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. A user-defined name of the certificate. Certificate names must be unique globally and match pattern \`projects/*/locations/*/certificates/*\`.
+    - name: scope
+      value: "{{ scope }}"
+      description: |
+        Optional. Immutable. The scope of the certificate.
+      valid_values: ['DEFAULT', 'EDGE_CACHE', 'ALL_REGIONS', 'CLIENT_AUTH']
     - name: selfManaged
       description: |
         If set, defines data of a self-managed certificate.
@@ -461,66 +521,6 @@ response
       value: "{{ tags }}"
       description: |
         Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. One or more paragraphs of text description of a certificate.
-    - name: managed
-      description: |
-        If set, contains configuration and state of a managed certificate.
-      value:
-        dnsAuthorizations:
-          - "{{ dnsAuthorizations }}"
-        state: "{{ state }}"
-        authorizationAttemptInfo:
-          - state: "{{ state }}"
-            troubleshooting:
-              issues:
-                - "{{ issues }}"
-              cname:
-                name: "{{ name }}"
-                resolvedData:
-                  - "{{ resolvedData }}"
-                expectedData: "{{ expectedData }}"
-              ips:
-                serving:
-                  - "{{ serving }}"
-                servingOnAltPorts:
-                  - "{{ servingOnAltPorts }}"
-                resolved:
-                  - "{{ resolved }}"
-            details: "{{ details }}"
-            domain: "{{ domain }}"
-            attemptTime: "{{ attemptTime }}"
-            failureReason: "{{ failureReason }}"
-        issuanceConfig: "{{ issuanceConfig }}"
-        domains:
-          - "{{ domains }}"
-        provisioningIssue:
-          reason: "{{ reason }}"
-          details: "{{ details }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of labels associated with a Certificate.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. A user-defined name of the certificate. Certificate names must be unique globally and match pattern \`projects/*/locations/*/certificates/*\`.
-    - name: managedIdentity
-      description: |
-        If set, contains configuration and state of a managed identity certificate.
-      value:
-        state: "{{ state }}"
-        identity: "{{ identity }}"
-        provisioningIssue:
-          reason: "{{ reason }}"
-          details: "{{ details }}"
-    - name: scope
-      value: "{{ scope }}"
-      description: |
-        Optional. Immutable. The scope of the certificate.
-      valid_values: ['DEFAULT', 'EDGE_CACHE', 'ALL_REGIONS', 'CLIENT_AUTH']
     - name: certificateId
       value: "{{ certificateId }}"
 `}</CodeBlock>
@@ -544,14 +544,14 @@ Updates a Certificate.
 ```sql
 UPDATE google.certificatemanager.certificates
 SET 
-data__selfManaged = '{{ selfManaged }}',
-data__tags = '{{ tags }}',
 data__description = '{{ description }}',
-data__managed = '{{ managed }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}',
+data__managed = '{{ managed }}',
 data__managedIdentity = '{{ managedIdentity }}',
-data__scope = '{{ scope }}'
+data__name = '{{ name }}',
+data__scope = '{{ scope }}',
+data__selfManaged = '{{ selfManaged }}',
+data__tags = '{{ tags }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
-    <td><a href="#parameter-source"><code>source</code></a>, <a href="#parameter-sources"><code>sources</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-source"><code>source</code></a>, <a href="#parameter-sources"><code>sources</code></a></td>
     <td>Lists conversations in the given app.</td>
 </tr>
 <tr>
@@ -366,11 +366,11 @@ FROM google.ces.conversations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND appsId = '{{ appsId }}' -- required
-AND source = '{{ source }}'
-AND sources = '{{ sources }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND source = '{{ source }}'
+AND sources = '{{ sources }}'
 ;
 ```
 </TabItem>

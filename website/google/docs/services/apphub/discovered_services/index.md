@@ -79,6 +79,21 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the discovered service. Format: `"projects/&#123;host-project-id&#125;/locations/&#123;location&#125;/discoveredServices/&#123;uuid&#125;"`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Properties of an underlying compute resource that can comprise a Service. These are immutable. (id: ServiceProperties)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceReference" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Reference to an underlying networking resource that can comprise a Service. These are immutable. (id: ServiceReference)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -110,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Discovered Services that can be added to an Application in a host project and location.</td>
 </tr>
 <tr>
@@ -210,14 +225,16 @@ Lists Discovered Services that can be added to an Application in a host project 
 
 ```sql
 SELECT
-*
+name,
+serviceProperties,
+serviceReference
 FROM google.apphub.discovered_services
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

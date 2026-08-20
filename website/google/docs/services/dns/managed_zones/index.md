@@ -265,7 +265,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-dnsName"><code>dnsName</code></a></td>
+    <td><a href="#parameter-dnsName"><code>dnsName</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Enumerates ManagedZones that have been created but not yet deleted.</td>
 </tr>
 <tr>
@@ -409,9 +409,9 @@ serviceDirectoryConfig,
 visibility
 FROM google.dns.managed_zones
 WHERE project = '{{ project }}' -- required
+AND dnsName = '{{ dnsName }}'
 AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
-AND dnsName = '{{ dnsName }}'
 ;
 ```
 </TabItem>
@@ -433,44 +433,44 @@ Creates a new ManagedZone. Note: While `dns.managedZones.create` is the baseline
 
 ```sql
 INSERT INTO google.dns.managed_zones (
-data__nameServerSet,
-data__dnsName,
-data__forwardingConfig,
-data__serviceDirectoryConfig,
-data__privateVisibilityConfig,
 data__cloudLoggingConfig,
-data__nameServers,
+data__creationTime,
 data__description,
-data__peeringConfig,
-data__kind,
-data__id,
+data__dnsName,
 data__dnssecConfig,
+data__forwardingConfig,
+data__id,
+data__kind,
 data__labels,
 data__name,
-data__visibility,
-data__creationTime,
+data__nameServerSet,
+data__nameServers,
+data__peeringConfig,
+data__privateVisibilityConfig,
 data__reverseLookupConfig,
+data__serviceDirectoryConfig,
+data__visibility,
 project,
 clientOperationId
 )
 SELECT 
-'{{ nameServerSet }}',
-'{{ dnsName }}',
-'{{ forwardingConfig }}',
-'{{ serviceDirectoryConfig }}',
-'{{ privateVisibilityConfig }}',
 '{{ cloudLoggingConfig }}',
-'{{ nameServers }}',
+'{{ creationTime }}',
 '{{ description }}',
-'{{ peeringConfig }}',
-'{{ kind }}',
-'{{ id }}',
+'{{ dnsName }}',
 '{{ dnssecConfig }}',
+'{{ forwardingConfig }}',
+'{{ id }}',
+'{{ kind }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ visibility }}',
-'{{ creationTime }}',
+'{{ nameServerSet }}',
+'{{ nameServers }}',
+'{{ peeringConfig }}',
+'{{ privateVisibilityConfig }}',
 '{{ reverseLookupConfig }}',
+'{{ serviceDirectoryConfig }}',
+'{{ visibility }}',
 '{{ project }}',
 '{{ clientOperationId }}'
 RETURNING
@@ -502,88 +502,54 @@ visibility
     - name: project
       value: "{{ project }}"
       description: Required parameter for the managed_zones resource.
-    - name: nameServerSet
-      value: "{{ nameServerSet }}"
-      description: |
-        Optionally specifies the NameServerSet for this ManagedZone. A NameServerSet is a set of DNS name servers that all host the same ManagedZones. Most users leave this field unset. If you need to use this field, contact your account team.
-    - name: dnsName
-      value: "{{ dnsName }}"
-      description: |
-        The DNS name of this managed zone, for instance "example.com.".
-    - name: forwardingConfig
-      description: |
-        The presence for this field indicates that outbound forwarding is enabled for this zone. The value of this field contains the set of destinations to forward to.
-      value:
-        targetNameServers:
-          - kind: "{{ kind }}"
-            ipv4Address: "{{ ipv4Address }}"
-            forwardingPath: "{{ forwardingPath }}"
-            ipv6Address: "{{ ipv6Address }}"
-            domainName: "{{ domainName }}"
-        kind: "{{ kind }}"
-    - name: serviceDirectoryConfig
-      description: |
-        This field links to the associated service directory namespace. Do not set this field for public zones or forwarding zones.
-      value:
-        namespace:
-          namespaceUrl: "{{ namespaceUrl }}"
-          deletionTime: "{{ deletionTime }}"
-          kind: "{{ kind }}"
-        kind: "{{ kind }}"
-    - name: privateVisibilityConfig
-      description: |
-        For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
-      value:
-        gkeClusters:
-          - kind: "{{ kind }}"
-            gkeClusterName: "{{ gkeClusterName }}"
-        networks:
-          - networkUrl: "{{ networkUrl }}"
-            kind: "{{ kind }}"
-        kind: "{{ kind }}"
     - name: cloudLoggingConfig
       description: |
         Cloud Logging configurations for publicly visible zones.
       value:
         enableLogging: {{ enableLogging }}
         kind: "{{ kind }}"
-    - name: nameServers
-      value:
-        - "{{ nameServers }}"
+    - name: creationTime
+      value: "{{ creationTime }}"
       description: |
-        Delegate your managed_zone to these virtual name servers; defined by the server (output only)
+        The time that this resource was created on the server. This is in RFC3339 text format. Output only.
     - name: description
       value: "{{ description }}"
       description: |
         A mutable string of at most 1024 characters associated with this resource for the user's convenience. Has no effect on the managed zone's function.
-    - name: peeringConfig
+    - name: dnsName
+      value: "{{ dnsName }}"
       description: |
-        The presence of this field indicates that DNS Peering is enabled for this zone. The value of this field contains the network to peer with.
-      value:
-        targetNetwork:
-          kind: "{{ kind }}"
-          networkUrl: "{{ networkUrl }}"
-          deactivateTime: "{{ deactivateTime }}"
-        kind: "{{ kind }}"
-    - name: kind
-      value: "{{ kind }}"
-      default: dns#managedZone
-    - name: id
-      value: "{{ id }}"
-      description: |
-        Unique identifier for the resource; defined by the server (output only)
+        The DNS name of this managed zone, for instance "example.com.".
     - name: dnssecConfig
       description: |
         DNSSEC configuration.
       value:
         defaultKeySpecs:
-          - keyLength: {{ keyLength }}
-            kind: "{{ kind }}"
+          - algorithm: "{{ algorithm }}"
+            keyLength: {{ keyLength }}
             keyType: "{{ keyType }}"
-            algorithm: "{{ algorithm }}"
+            kind: "{{ kind }}"
         kind: "{{ kind }}"
-        state: "{{ state }}"
         nonExistence: "{{ nonExistence }}"
+        state: "{{ state }}"
+    - name: forwardingConfig
+      description: |
+        The presence for this field indicates that outbound forwarding is enabled for this zone. The value of this field contains the set of destinations to forward to.
+      value:
+        kind: "{{ kind }}"
+        targetNameServers:
+          - domainName: "{{ domainName }}"
+            forwardingPath: "{{ forwardingPath }}"
+            ipv4Address: "{{ ipv4Address }}"
+            ipv6Address: "{{ ipv6Address }}"
+            kind: "{{ kind }}"
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Unique identifier for the resource; defined by the server (output only)
+    - name: kind
+      value: "{{ kind }}"
+      default: dns#managedZone
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -592,20 +558,54 @@ visibility
       value: "{{ name }}"
       description: |
         User assigned name for this resource. Must be unique within the project. The name must be 1-63 characters long, must begin with a letter, end with a letter or digit, and only contain lowercase letters, digits or dashes.
-    - name: visibility
-      value: "{{ visibility }}"
+    - name: nameServerSet
+      value: "{{ nameServerSet }}"
       description: |
-        The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
-      valid_values: ['public', 'private']
-    - name: creationTime
-      value: "{{ creationTime }}"
+        Optionally specifies the NameServerSet for this ManagedZone. A NameServerSet is a set of DNS name servers that all host the same ManagedZones. Most users leave this field unset. If you need to use this field, contact your account team.
+    - name: nameServers
+      value:
+        - "{{ nameServers }}"
       description: |
-        The time that this resource was created on the server. This is in RFC3339 text format. Output only.
+        Delegate your managed_zone to these virtual name servers; defined by the server (output only)
+    - name: peeringConfig
+      description: |
+        The presence of this field indicates that DNS Peering is enabled for this zone. The value of this field contains the network to peer with.
+      value:
+        kind: "{{ kind }}"
+        targetNetwork:
+          deactivateTime: "{{ deactivateTime }}"
+          kind: "{{ kind }}"
+          networkUrl: "{{ networkUrl }}"
+    - name: privateVisibilityConfig
+      description: |
+        For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+      value:
+        gkeClusters:
+          - gkeClusterName: "{{ gkeClusterName }}"
+            kind: "{{ kind }}"
+        kind: "{{ kind }}"
+        networks:
+          - kind: "{{ kind }}"
+            networkUrl: "{{ networkUrl }}"
     - name: reverseLookupConfig
       description: |
         The presence of this field indicates that this is a managed reverse lookup zone and Cloud DNS resolves reverse lookup queries using automatically configured records for VPC resources. This only applies to networks listed under private_visibility_config.
       value:
         kind: "{{ kind }}"
+    - name: serviceDirectoryConfig
+      description: |
+        This field links to the associated service directory namespace. Do not set this field for public zones or forwarding zones.
+      value:
+        kind: "{{ kind }}"
+        namespace:
+          deletionTime: "{{ deletionTime }}"
+          kind: "{{ kind }}"
+          namespaceUrl: "{{ namespaceUrl }}"
+    - name: visibility
+      value: "{{ visibility }}"
+      description: |
+        The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+      valid_values: ['public', 'private']
     - name: clientOperationId
       value: "{{ clientOperationId }}"
 `}</CodeBlock>
@@ -629,23 +629,23 @@ Applies a partial update to an existing ManagedZone.
 ```sql
 UPDATE google.dns.managed_zones
 SET 
-data__nameServerSet = '{{ nameServerSet }}',
-data__dnsName = '{{ dnsName }}',
-data__forwardingConfig = '{{ forwardingConfig }}',
-data__serviceDirectoryConfig = '{{ serviceDirectoryConfig }}',
-data__privateVisibilityConfig = '{{ privateVisibilityConfig }}',
 data__cloudLoggingConfig = '{{ cloudLoggingConfig }}',
-data__nameServers = '{{ nameServers }}',
+data__creationTime = '{{ creationTime }}',
 data__description = '{{ description }}',
-data__peeringConfig = '{{ peeringConfig }}',
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
+data__dnsName = '{{ dnsName }}',
 data__dnssecConfig = '{{ dnssecConfig }}',
+data__forwardingConfig = '{{ forwardingConfig }}',
+data__id = '{{ id }}',
+data__kind = '{{ kind }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__visibility = '{{ visibility }}',
-data__creationTime = '{{ creationTime }}',
-data__reverseLookupConfig = '{{ reverseLookupConfig }}'
+data__nameServerSet = '{{ nameServerSet }}',
+data__nameServers = '{{ nameServers }}',
+data__peeringConfig = '{{ peeringConfig }}',
+data__privateVisibilityConfig = '{{ privateVisibilityConfig }}',
+data__reverseLookupConfig = '{{ reverseLookupConfig }}',
+data__serviceDirectoryConfig = '{{ serviceDirectoryConfig }}',
+data__visibility = '{{ visibility }}'
 WHERE 
 project = '{{ project }}' --required
 AND managedZone = '{{ managedZone }}' --required
@@ -679,23 +679,23 @@ Updates an existing ManagedZone.
 ```sql
 REPLACE google.dns.managed_zones
 SET 
-data__nameServerSet = '{{ nameServerSet }}',
-data__dnsName = '{{ dnsName }}',
-data__forwardingConfig = '{{ forwardingConfig }}',
-data__serviceDirectoryConfig = '{{ serviceDirectoryConfig }}',
-data__privateVisibilityConfig = '{{ privateVisibilityConfig }}',
 data__cloudLoggingConfig = '{{ cloudLoggingConfig }}',
-data__nameServers = '{{ nameServers }}',
+data__creationTime = '{{ creationTime }}',
 data__description = '{{ description }}',
-data__peeringConfig = '{{ peeringConfig }}',
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
+data__dnsName = '{{ dnsName }}',
 data__dnssecConfig = '{{ dnssecConfig }}',
+data__forwardingConfig = '{{ forwardingConfig }}',
+data__id = '{{ id }}',
+data__kind = '{{ kind }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__visibility = '{{ visibility }}',
-data__creationTime = '{{ creationTime }}',
-data__reverseLookupConfig = '{{ reverseLookupConfig }}'
+data__nameServerSet = '{{ nameServerSet }}',
+data__nameServers = '{{ nameServers }}',
+data__peeringConfig = '{{ peeringConfig }}',
+data__privateVisibilityConfig = '{{ privateVisibilityConfig }}',
+data__reverseLookupConfig = '{{ reverseLookupConfig }}',
+data__serviceDirectoryConfig = '{{ serviceDirectoryConfig }}',
+data__visibility = '{{ visibility }}'
 WHERE 
 project = '{{ project }}' --required
 AND managedZone = '{{ managedZone }}' --required

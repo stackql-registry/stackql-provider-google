@@ -58,22 +58,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="apiFunctionalRequirements" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The api functional requirements associated with the API resource. Carinality is 1 for this attribute. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-api-functional-requirements` attribute. The value of the attribute should be a proper URI, and in case of Cloud Storage URI, it should point to a Cloud Storage object, not a directory. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="apiRequirements" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The api requirement doc associated with the API resource. Carinality is 1 for this attribute. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-api-requirements` attribute. The value of the attribute should be a proper URI, and in case of Cloud Storage URI, it should point to a Cloud Storage object, not a directory. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="apiStyle" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The style of the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-api-style` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="apiTechnicalRequirements" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The api technical requirements associated with the API resource. Carinality is 1 for this attribute. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-api-technical-requirements` attribute. The value of the attribute should be a proper URI, and in case of Cloud Storage URI, it should point to a Cloud Storage object, not a directory. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="attributes" /></td>
@@ -172,22 +172,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="apiFunctionalRequirements" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The api functional requirements associated with the API resource. Carinality is 1 for this attribute. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-api-functional-requirements` attribute. The value of the attribute should be a proper URI, and in case of Cloud Storage URI, it should point to a Cloud Storage object, not a directory. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="apiRequirements" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The api requirement doc associated with the API resource. Carinality is 1 for this attribute. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-api-requirements` attribute. The value of the attribute should be a proper URI, and in case of Cloud Storage URI, it should point to a Cloud Storage object, not a directory. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="apiStyle" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The style of the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-api-style` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="apiTechnicalRequirements" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The api technical requirements associated with the API resource. Carinality is 1 for this attribute. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-api-technical-requirements` attribute. The value of the attribute should be a proper URI, and in case of Cloud Storage URI, it should point to a Cloud Storage object, not a directory. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="attributes" /></td>
@@ -295,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List API resources in the API hub.</td>
 </tr>
 <tr>
@@ -454,9 +454,9 @@ versions
 FROM google.apihub.apis
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -478,43 +478,43 @@ Create an API resource in the API hub. Once an API resource is created, versions
 
 ```sql
 INSERT INTO google.apihub.apis (
-data__name,
-data__description,
-data__owner,
-data__apiRequirements,
-data__documentation,
-data__selectedVersion,
-data__displayName,
-data__team,
-data__maturityLevel,
-data__fingerprint,
 data__apiFunctionalRequirements,
-data__attributes,
+data__apiRequirements,
 data__apiStyle,
-data__businessUnit,
-data__targetUser,
 data__apiTechnicalRequirements,
+data__attributes,
+data__businessUnit,
+data__description,
+data__displayName,
+data__documentation,
+data__fingerprint,
+data__maturityLevel,
+data__name,
+data__owner,
+data__selectedVersion,
+data__targetUser,
+data__team,
 projectsId,
 locationsId,
 apiId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ owner }}',
-'{{ apiRequirements }}',
-'{{ documentation }}',
-'{{ selectedVersion }}',
-'{{ displayName }}',
-'{{ team }}',
-'{{ maturityLevel }}',
-'{{ fingerprint }}',
 '{{ apiFunctionalRequirements }}',
-'{{ attributes }}',
+'{{ apiRequirements }}',
 '{{ apiStyle }}',
-'{{ businessUnit }}',
-'{{ targetUser }}',
 '{{ apiTechnicalRequirements }}',
+'{{ attributes }}',
+'{{ businessUnit }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ documentation }}',
+'{{ fingerprint }}',
+'{{ maturityLevel }}',
+'{{ name }}',
+'{{ owner }}',
+'{{ selectedVersion }}',
+'{{ targetUser }}',
+'{{ team }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apiId }}'
@@ -553,112 +553,81 @@ versions
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the apis resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the API resource in the API Hub. Format: \`projects/{project}/locations/{location}/apis/{api}\`
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the API resource.
-    - name: owner
-      description: |
-        Optional. Owner details for the API resource.
-      value:
-        email: "{{ email }}"
-        displayName: "{{ displayName }}"
-    - name: apiRequirements
-      description: |
-        The attribute values associated with resource.
-      value:
-        attribute: "{{ attribute }}"
-        enumValues:
-          values:
-            - description: "{{ description }}"
-              id: "{{ id }}"
-              displayName: "{{ displayName }}"
-              immutable: {{ immutable }}
-        stringValues:
-          values:
-            - "{{ values }}"
-        jsonValues:
-          values:
-            - "{{ values }}"
-        uriValues:
-          values:
-            - "{{ values }}"
-    - name: documentation
-      description: |
-        Optional. The documentation for the API resource.
-      value:
-        externalUri: "{{ externalUri }}"
-    - name: selectedVersion
-      value: "{{ selectedVersion }}"
-      description: |
-        Optional. The selected version for an API resource. This can be used when special handling is needed on client side for particular version of the API. Format is \`projects/{project}/locations/{location}/apis/{api}/versions/{version}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the API resource.
-    - name: team
-      description: |
-        The attribute values associated with resource.
-      value:
-        attribute: "{{ attribute }}"
-        enumValues:
-          values:
-            - description: "{{ description }}"
-              id: "{{ id }}"
-              displayName: "{{ displayName }}"
-              immutable: {{ immutable }}
-        stringValues:
-          values:
-            - "{{ values }}"
-        jsonValues:
-          values:
-            - "{{ values }}"
-        uriValues:
-          values:
-            - "{{ values }}"
-    - name: maturityLevel
-      description: |
-        The attribute values associated with resource.
-      value:
-        attribute: "{{ attribute }}"
-        enumValues:
-          values:
-            - description: "{{ description }}"
-              id: "{{ id }}"
-              displayName: "{{ displayName }}"
-              immutable: {{ immutable }}
-        stringValues:
-          values:
-            - "{{ values }}"
-        jsonValues:
-          values:
-            - "{{ values }}"
-        uriValues:
-          values:
-            - "{{ values }}"
-    - name: fingerprint
-      value: "{{ fingerprint }}"
-      description: |
-        Optional. Fingerprint of the API resource. This must be unique for each API resource. It can neither be unset nor be updated to an existing fingerprint of another API resource.
     - name: apiFunctionalRequirements
       description: |
-        The attribute values associated with resource.
+        Optional. The api functional requirements associated with the API resource. Carinality is 1 for this attribute. This maps to the following system defined attribute: \`projects/{project}/locations/{location}/attributes/system-api-functional-requirements\` attribute. The value of the attribute should be a proper URI, and in case of Cloud Storage URI, it should point to a Cloud Storage object, not a directory.
       value:
         attribute: "{{ attribute }}"
         enumValues:
           values:
             - description: "{{ description }}"
-              id: "{{ id }}"
               displayName: "{{ displayName }}"
+              id: "{{ id }}"
               immutable: {{ immutable }}
+        jsonValues:
+          values:
+            - "{{ values }}"
         stringValues:
           values:
             - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: apiRequirements
+      description: |
+        Optional. The api requirement doc associated with the API resource. Carinality is 1 for this attribute. This maps to the following system defined attribute: \`projects/{project}/locations/{location}/attributes/system-api-requirements\` attribute. The value of the attribute should be a proper URI, and in case of Cloud Storage URI, it should point to a Cloud Storage object, not a directory.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              id: "{{ id }}"
+              immutable: {{ immutable }}
         jsonValues:
+          values:
+            - "{{ values }}"
+        stringValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: apiStyle
+      description: |
+        Optional. The style of the API. This maps to the following system defined attribute: \`projects/{project}/locations/{location}/attributes/system-api-style\` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              id: "{{ id }}"
+              immutable: {{ immutable }}
+        jsonValues:
+          values:
+            - "{{ values }}"
+        stringValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: apiTechnicalRequirements
+      description: |
+        Optional. The api technical requirements associated with the API resource. Carinality is 1 for this attribute. This maps to the following system defined attribute: \`projects/{project}/locations/{location}/attributes/system-api-technical-requirements\` attribute. The value of the attribute should be a proper URI, and in case of Cloud Storage URI, it should point to a Cloud Storage object, not a directory.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              id: "{{ id }}"
+              immutable: {{ immutable }}
+        jsonValues:
+          values:
+            - "{{ values }}"
+        stringValues:
           values:
             - "{{ values }}"
         uriValues:
@@ -668,26 +637,6 @@ versions
       value: "{{ attributes }}"
       description: |
         Optional. The list of user defined attributes associated with the API resource. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
-    - name: apiStyle
-      description: |
-        The attribute values associated with resource.
-      value:
-        attribute: "{{ attribute }}"
-        enumValues:
-          values:
-            - description: "{{ description }}"
-              id: "{{ id }}"
-              displayName: "{{ displayName }}"
-              immutable: {{ immutable }}
-        stringValues:
-          values:
-            - "{{ values }}"
-        jsonValues:
-          values:
-            - "{{ values }}"
-        uriValues:
-          values:
-            - "{{ values }}"
     - name: businessUnit
       description: |
         The attribute values associated with resource.
@@ -696,18 +645,69 @@ versions
         enumValues:
           values:
             - description: "{{ description }}"
-              id: "{{ id }}"
               displayName: "{{ displayName }}"
+              id: "{{ id }}"
               immutable: {{ immutable }}
-        stringValues:
+        jsonValues:
           values:
             - "{{ values }}"
-        jsonValues:
+        stringValues:
           values:
             - "{{ values }}"
         uriValues:
           values:
             - "{{ values }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the API resource.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the API resource.
+    - name: documentation
+      description: |
+        Optional. The documentation for the API resource.
+      value:
+        externalUri: "{{ externalUri }}"
+    - name: fingerprint
+      value: "{{ fingerprint }}"
+      description: |
+        Optional. Fingerprint of the API resource. This must be unique for each API resource. It can neither be unset nor be updated to an existing fingerprint of another API resource.
+    - name: maturityLevel
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              id: "{{ id }}"
+              immutable: {{ immutable }}
+        jsonValues:
+          values:
+            - "{{ values }}"
+        stringValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the API resource in the API Hub. Format: \`projects/{project}/locations/{location}/apis/{api}\`
+    - name: owner
+      description: |
+        Optional. Owner details for the API resource.
+      value:
+        displayName: "{{ displayName }}"
+        email: "{{ email }}"
+    - name: selectedVersion
+      value: "{{ selectedVersion }}"
+      description: |
+        Optional. The selected version for an API resource. This can be used when special handling is needed on client side for particular version of the API. Format is \`projects/{project}/locations/{location}/apis/{api}/versions/{version}\`
     - name: targetUser
       description: |
         The attribute values associated with resource.
@@ -716,19 +716,19 @@ versions
         enumValues:
           values:
             - description: "{{ description }}"
-              id: "{{ id }}"
               displayName: "{{ displayName }}"
+              id: "{{ id }}"
               immutable: {{ immutable }}
-        stringValues:
+        jsonValues:
           values:
             - "{{ values }}"
-        jsonValues:
+        stringValues:
           values:
             - "{{ values }}"
         uriValues:
           values:
             - "{{ values }}"
-    - name: apiTechnicalRequirements
+    - name: team
       description: |
         The attribute values associated with resource.
       value:
@@ -736,13 +736,13 @@ versions
         enumValues:
           values:
             - description: "{{ description }}"
-              id: "{{ id }}"
               displayName: "{{ displayName }}"
+              id: "{{ id }}"
               immutable: {{ immutable }}
-        stringValues:
+        jsonValues:
           values:
             - "{{ values }}"
-        jsonValues:
+        stringValues:
           values:
             - "{{ values }}"
         uriValues:
@@ -771,22 +771,22 @@ Update an API resource in the API hub. The following fields in the API can be up
 ```sql
 UPDATE google.apihub.apis
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__owner = '{{ owner }}',
-data__apiRequirements = '{{ apiRequirements }}',
-data__documentation = '{{ documentation }}',
-data__selectedVersion = '{{ selectedVersion }}',
-data__displayName = '{{ displayName }}',
-data__team = '{{ team }}',
-data__maturityLevel = '{{ maturityLevel }}',
-data__fingerprint = '{{ fingerprint }}',
 data__apiFunctionalRequirements = '{{ apiFunctionalRequirements }}',
-data__attributes = '{{ attributes }}',
+data__apiRequirements = '{{ apiRequirements }}',
 data__apiStyle = '{{ apiStyle }}',
+data__apiTechnicalRequirements = '{{ apiTechnicalRequirements }}',
+data__attributes = '{{ attributes }}',
 data__businessUnit = '{{ businessUnit }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__documentation = '{{ documentation }}',
+data__fingerprint = '{{ fingerprint }}',
+data__maturityLevel = '{{ maturityLevel }}',
+data__name = '{{ name }}',
+data__owner = '{{ owner }}',
+data__selectedVersion = '{{ selectedVersion }}',
 data__targetUser = '{{ targetUser }}',
-data__apiTechnicalRequirements = '{{ apiTechnicalRequirements }}'
+data__team = '{{ team }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

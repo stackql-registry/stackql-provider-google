@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_license_configs_list"><CopyableCode code="projects_locations_license_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the LicenseConfigs associated with the project.</td>
 </tr>
 <tr>
@@ -358,9 +358,9 @@ subscriptionTier
 FROM google.discoveryengine.license_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -382,29 +382,29 @@ Creates a LicenseConfig This method should only be used for creating NotebookLm 
 
 ```sql
 INSERT INTO google.discoveryengine.license_configs (
-data__subscriptionTerm,
 data__autoRenew,
-data__freeTrial,
-data__name,
-data__licenseCount,
-data__subscriptionTier,
 data__endDate,
-data__startDate,
+data__freeTrial,
 data__lastUserUpdateTime,
+data__licenseCount,
+data__name,
+data__startDate,
+data__subscriptionTerm,
+data__subscriptionTier,
 projectsId,
 locationsId,
 licenseConfigId
 )
 SELECT 
-'{{ subscriptionTerm }}',
 {{ autoRenew }},
-{{ freeTrial }},
-'{{ name }}',
-'{{ licenseCount }}',
-'{{ subscriptionTier }}',
 '{{ endDate }}',
-'{{ startDate }}',
+{{ freeTrial }},
 '{{ lastUserUpdateTime }}',
+'{{ licenseCount }}',
+'{{ name }}',
+'{{ startDate }}',
+'{{ subscriptionTerm }}',
+'{{ subscriptionTier }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ licenseConfigId }}'
@@ -436,50 +436,50 @@ subscriptionTier
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the license_configs resource.
+    - name: autoRenew
+      value: {{ autoRenew }}
+      description: |
+        Optional. Whether the license config should be auto renewed when it reaches the end date.
+    - name: endDate
+      description: |
+        Optional. The planed end date.
+      value:
+        day: {{ day }}
+        month: {{ month }}
+        year: {{ year }}
+    - name: freeTrial
+      value: {{ freeTrial }}
+      description: |
+        Optional. Whether the license config is for free trial.
+    - name: lastUserUpdateTime
+      value: "{{ lastUserUpdateTime }}"
+      description: |
+        Optional. Timestamp of the most recent user-initiated update (seat count change or subscription term change). Unlike \`update_time\`, this field is only stamped when a customer explicitly updates the license (e.g. via the UI), and is not touched by system-driven writes (subscription pipeline, BALC propagation, etc.).
+    - name: licenseCount
+      value: "{{ licenseCount }}"
+      description: |
+        Required. Number of licenses purchased.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The fully qualified resource name of the license config. Format: \`projects/{project}/locations/{location}/licenseConfigs/{license_config}\`
+    - name: startDate
+      description: |
+        Required. The start date.
+      value:
+        day: {{ day }}
+        month: {{ month }}
+        year: {{ year }}
     - name: subscriptionTerm
       value: "{{ subscriptionTerm }}"
       description: |
         Required. Subscription term.
       valid_values: ['SUBSCRIPTION_TERM_UNSPECIFIED', 'SUBSCRIPTION_TERM_ONE_MONTH', 'SUBSCRIPTION_TERM_ONE_YEAR', 'SUBSCRIPTION_TERM_THREE_YEARS', 'SUBSCRIPTION_TERM_CUSTOM']
-    - name: autoRenew
-      value: {{ autoRenew }}
-      description: |
-        Optional. Whether the license config should be auto renewed when it reaches the end date.
-    - name: freeTrial
-      value: {{ freeTrial }}
-      description: |
-        Optional. Whether the license config is for free trial.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Identifier. The fully qualified resource name of the license config. Format: \`projects/{project}/locations/{location}/licenseConfigs/{license_config}\`
-    - name: licenseCount
-      value: "{{ licenseCount }}"
-      description: |
-        Required. Number of licenses purchased.
     - name: subscriptionTier
       value: "{{ subscriptionTier }}"
       description: |
         Required. Subscription tier information for the license config.
       valid_values: ['SUBSCRIPTION_TIER_UNSPECIFIED', 'SUBSCRIPTION_TIER_SEARCH', 'SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT', 'SUBSCRIPTION_TIER_NOTEBOOK_LM', 'SUBSCRIPTION_TIER_FRONTLINE_WORKER', 'SUBSCRIPTION_TIER_AGENTSPACE_STARTER', 'SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS', 'SUBSCRIPTION_TIER_ENTERPRISE', 'SUBSCRIPTION_TIER_ENTERPRISE_EMERGING', 'SUBSCRIPTION_TIER_EDU', 'SUBSCRIPTION_TIER_EDU_PRO', 'SUBSCRIPTION_TIER_EDU_EMERGING', 'SUBSCRIPTION_TIER_EDU_PRO_EMERGING', 'SUBSCRIPTION_TIER_FRONTLINE_STARTER', 'SUBSCRIPTION_TIER_CONSUMPTION_ONLY', 'SUBSCRIPTION_TIER_EDU_GOV_EMERGING']
-    - name: endDate
-      description: |
-        Optional. The planed end date.
-      value:
-        year: {{ year }}
-        month: {{ month }}
-        day: {{ day }}
-    - name: startDate
-      description: |
-        Required. The start date.
-      value:
-        year: {{ year }}
-        month: {{ month }}
-        day: {{ day }}
-    - name: lastUserUpdateTime
-      value: "{{ lastUserUpdateTime }}"
-      description: |
-        Optional. Timestamp of the most recent user-initiated update (seat count change or subscription term change). Unlike \`update_time\`, this field is only stamped when a customer explicitly updates the license (e.g. via the UI), and is not touched by system-driven writes (subscription pipeline, BALC propagation, etc.).
     - name: licenseConfigId
       value: "{{ licenseConfigId }}"
 `}</CodeBlock>
@@ -503,15 +503,15 @@ Updates the LicenseConfig
 ```sql
 UPDATE google.discoveryengine.license_configs
 SET 
-data__subscriptionTerm = '{{ subscriptionTerm }}',
 data__autoRenew = {{ autoRenew }},
-data__freeTrial = {{ freeTrial }},
-data__name = '{{ name }}',
-data__licenseCount = '{{ licenseCount }}',
-data__subscriptionTier = '{{ subscriptionTier }}',
 data__endDate = '{{ endDate }}',
+data__freeTrial = {{ freeTrial }},
+data__lastUserUpdateTime = '{{ lastUserUpdateTime }}',
+data__licenseCount = '{{ licenseCount }}',
+data__name = '{{ name }}',
 data__startDate = '{{ startDate }}',
-data__lastUserUpdateTime = '{{ lastUserUpdateTime }}'
+data__subscriptionTerm = '{{ subscriptionTerm }}',
+data__subscriptionTier = '{{ subscriptionTier }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

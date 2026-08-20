@@ -245,28 +245,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List pipelines.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-pipelineId"><code>pipelineId</code></a></td>
+    <td><a href="#parameter-pipelineId"><code>pipelineId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Create a new Pipeline in a particular project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pipelinesId"><code>pipelinesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Update a single pipeline.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pipelinesId"><code>pipelinesId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Delete a single pipeline.</td>
 </tr>
 </tbody>
@@ -409,9 +409,9 @@ updateTime
 FROM google.eventarc.pipelines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -435,35 +435,35 @@ Create a new Pipeline in a particular project and location.
 ```sql
 INSERT INTO google.eventarc.pipelines (
 data__annotations,
-data__retryPolicy,
-data__displayName,
-data__destinations,
-data__loggingConfig,
 data__cryptoKeyName,
-data__labels,
+data__destinations,
+data__displayName,
 data__inputPayloadFormat,
+data__labels,
+data__loggingConfig,
 data__mediations,
 data__name,
+data__retryPolicy,
 projectsId,
 locationsId,
-validateOnly,
-pipelineId
+pipelineId,
+validateOnly
 )
 SELECT 
 '{{ annotations }}',
-'{{ retryPolicy }}',
-'{{ displayName }}',
-'{{ destinations }}',
-'{{ loggingConfig }}',
 '{{ cryptoKeyName }}',
-'{{ labels }}',
+'{{ destinations }}',
+'{{ displayName }}',
 '{{ inputPayloadFormat }}',
+'{{ labels }}',
+'{{ loggingConfig }}',
 '{{ mediations }}',
 '{{ name }}',
+'{{ retryPolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ pipelineId }}'
+'{{ pipelineId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -488,55 +488,39 @@ response
       value: "{{ annotations }}"
       description: |
         Optional. User-defined annotations. See https://google.aip.dev/128#annotations.
-    - name: retryPolicy
+    - name: cryptoKeyName
+      value: "{{ cryptoKeyName }}"
       description: |
-        Optional. The retry policy to use in the pipeline.
-      value:
-        maxAttempts: {{ maxAttempts }}
-        minRetryDelay: "{{ minRetryDelay }}"
-        maxRetryDelay: "{{ maxRetryDelay }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. Display name of resource.
+        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt the event data. If not set, an internal Google-owned key will be used to encrypt messages. It must match the pattern "projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}".
     - name: destinations
       description: |
         Required. List of destinations to which messages will be forwarded. Currently, exactly one destination is supported per Pipeline.
       value:
-        - workflow: "{{ workflow }}"
-          topic: "{{ topic }}"
-          networkConfig:
-            networkAttachment: "{{ networkAttachment }}"
-          messageBus: "{{ messageBus }}"
-          httpEndpoint:
-            uri: "{{ uri }}"
-            messageBindingTemplate: "{{ messageBindingTemplate }}"
-          authenticationConfig:
+        - authenticationConfig:
             googleOidc:
-              serviceAccount: "{{ serviceAccount }}"
               audience: "{{ audience }}"
+              serviceAccount: "{{ serviceAccount }}"
             oauthToken:
               scope: "{{ scope }}"
               serviceAccount: "{{ serviceAccount }}"
+          httpEndpoint:
+            messageBindingTemplate: "{{ messageBindingTemplate }}"
+            uri: "{{ uri }}"
+          messageBus: "{{ messageBus }}"
+          networkConfig:
+            networkAttachment: "{{ networkAttachment }}"
           outputPayloadFormat:
             avro:
               schemaDefinition: "{{ schemaDefinition }}"
             json: "{{ json }}"
             protobuf:
               schemaDefinition: "{{ schemaDefinition }}"
-    - name: loggingConfig
+          topic: "{{ topic }}"
+          workflow: "{{ workflow }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Optional. Config to control Platform Logging for Pipelines.
-      value:
-        logSeverity: "{{ logSeverity }}"
-    - name: cryptoKeyName
-      value: "{{ cryptoKeyName }}"
-      description: |
-        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt the event data. If not set, an internal Google-owned key will be used to encrypt messages. It must match the pattern "projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}".
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User labels attached to the Pipeline that can be used to group resources. An object containing a list of "key": value pairs. Example: { "name": "wrench", "mass": "1.3kg", "count": "3" }.
+        Optional. Display name of resource.
     - name: inputPayloadFormat
       description: |
         Optional. The payload format expected for the messages received by the Pipeline. If input_payload_format is set then any messages not matching this format will be treated as persistent errors. If input_payload_format is not set, then the message data will be treated as an opaque binary and no output format can be set on the Pipeline through the Pipeline.Destination.output_payload_format field. Any Mediations on the Pipeline that involve access to the data field will fail as persistent errors.
@@ -546,6 +530,15 @@ response
         json: "{{ json }}"
         protobuf:
           schemaDefinition: "{{ schemaDefinition }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User labels attached to the Pipeline that can be used to group resources. An object containing a list of "key": value pairs. Example: { "name": "wrench", "mass": "1.3kg", "count": "3" }.
+    - name: loggingConfig
+      description: |
+        Optional. Config to control Platform Logging for Pipelines.
+      value:
+        logSeverity: "{{ logSeverity }}"
     - name: mediations
       description: |
         Optional. List of mediation operations to be performed on the message. Currently, only one Transformation operation is allowed in each Pipeline.
@@ -556,10 +549,17 @@ response
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the Pipeline. Must be unique within the location of the project and must be in \`projects/{project}/locations/{location}/pipelines/{pipeline}\` format.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: retryPolicy
+      description: |
+        Optional. The retry policy to use in the pipeline.
+      value:
+        maxAttempts: {{ maxAttempts }}
+        maxRetryDelay: "{{ maxRetryDelay }}"
+        minRetryDelay: "{{ minRetryDelay }}"
     - name: pipelineId
       value: "{{ pipelineId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -582,22 +582,22 @@ Update a single pipeline.
 UPDATE google.eventarc.pipelines
 SET 
 data__annotations = '{{ annotations }}',
-data__retryPolicy = '{{ retryPolicy }}',
-data__displayName = '{{ displayName }}',
-data__destinations = '{{ destinations }}',
-data__loggingConfig = '{{ loggingConfig }}',
 data__cryptoKeyName = '{{ cryptoKeyName }}',
-data__labels = '{{ labels }}',
+data__destinations = '{{ destinations }}',
+data__displayName = '{{ displayName }}',
 data__inputPayloadFormat = '{{ inputPayloadFormat }}',
+data__labels = '{{ labels }}',
+data__loggingConfig = '{{ loggingConfig }}',
 data__mediations = '{{ mediations }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__retryPolicy = '{{ retryPolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND pipelinesId = '{{ pipelinesId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -627,8 +627,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND pipelinesId = '{{ pipelinesId }}' --required
 AND allowMissing = '{{ allowMissing }}'
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

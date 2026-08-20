@@ -310,7 +310,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of Interconnects available to the specified project.</td>
 </tr>
 <tr>
@@ -477,11 +477,11 @@ selfLink,
 warning
 FROM google.compute.interconnects
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -503,50 +503,50 @@ Creates an Interconnect in the specified project using<br />the data included in
 
 ```sql
 INSERT INTO google.compute.interconnects (
-data__subzone,
-data__interconnectType,
-data__adminEnabled,
-data__requestedFeatures,
-data__macsecEnabled,
-data__linkType,
-data__requestedLinkCount,
-data__location,
-data__labelFingerprint,
-data__params,
-data__labels,
 data__aaiEnabled,
-data__nocContactEmail,
-data__customerName,
-data__macsec,
-data__availableFeatures,
+data__adminEnabled,
 data__applicationAwareInterconnect,
-data__name,
-data__remoteLocation,
+data__availableFeatures,
+data__customerName,
 data__description,
+data__interconnectType,
+data__labelFingerprint,
+data__labels,
+data__linkType,
+data__location,
+data__macsec,
+data__macsecEnabled,
+data__name,
+data__nocContactEmail,
+data__params,
+data__remoteLocation,
+data__requestedFeatures,
+data__requestedLinkCount,
+data__subzone,
 project,
 requestId
 )
 SELECT 
-'{{ subzone }}',
-'{{ interconnectType }}',
-{{ adminEnabled }},
-'{{ requestedFeatures }}',
-{{ macsecEnabled }},
-'{{ linkType }}',
-{{ requestedLinkCount }},
-'{{ location }}',
-'{{ labelFingerprint }}',
-'{{ params }}',
-'{{ labels }}',
 {{ aaiEnabled }},
-'{{ nocContactEmail }}',
-'{{ customerName }}',
-'{{ macsec }}',
-'{{ availableFeatures }}',
+{{ adminEnabled }},
 '{{ applicationAwareInterconnect }}',
-'{{ name }}',
-'{{ remoteLocation }}',
+'{{ availableFeatures }}',
+'{{ customerName }}',
 '{{ description }}',
+'{{ interconnectType }}',
+'{{ labelFingerprint }}',
+'{{ labels }}',
+'{{ linkType }}',
+'{{ location }}',
+'{{ macsec }}',
+{{ macsecEnabled }},
+'{{ name }}',
+'{{ nocContactEmail }}',
+'{{ params }}',
+'{{ remoteLocation }}',
+'{{ requestedFeatures }}',
+{{ requestedLinkCount }},
+'{{ subzone }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -588,21 +588,11 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the interconnects resource.
-    - name: subzone
-      value: "{{ subzone }}"
+    - name: aaiEnabled
+      value: {{ aaiEnabled }}
       description: |
-        To be deprecated.
-      valid_values: ['SUBZONE_A', 'SUBZONE_B']
-    - name: interconnectType
-      value: "{{ interconnectType }}"
-      description: |
-        Type of interconnect, which can take one of the following values:
-        - PARTNER: A partner-managed interconnection shared between customers
-        though a partner.
-        - DEDICATED: A dedicated physical interconnection with the
-        customer.
-        Note that a value IT_PRIVATE has been deprecated in favor of DEDICATED.
-      valid_values: ['DEDICATED', 'IT_PRIVATE', 'PARTNER']
+        Enable or disable the application awareness feature on this Cloud
+        Interconnect.
     - name: adminEnabled
       value: {{ adminEnabled }}
       description: |
@@ -610,94 +600,20 @@ zone
         Interconnect is functional and can carry traffic.
         When set to false, no packets can be carried over the interconnect and
         no BGP routes are exchanged over it. By default, the status is set to true.
-    - name: requestedFeatures
-      value:
-        - "{{ requestedFeatures }}"
+    - name: applicationAwareInterconnect
       description: |
-        Optional. This parameter can be provided only with Interconnect INSERT. It
-        isn't valid for Interconnect PATCH. List of features requested for this
-        Interconnect connection, which can take one of the following values:
-        - IF_MACSEC: If specified, then the connection is created on MACsec
-        capable hardware ports. If not specified, non-MACsec capable ports will
-        also be considered.
-        - IF_CROSS_SITE_NETWORK: If specified, then the connection is created
-        exclusively for Cross-Site Networking. The connection can not be used for
-        Cross-Site Networking unless this feature is specified.
-    - name: macsecEnabled
-      value: {{ macsecEnabled }}
-      description: |
-        Enable or disable MACsec on this Interconnect connection. MACsec enablement
-        fails if the MACsec object is not specified.
-    - name: linkType
-      value: "{{ linkType }}"
-      description: |
-        Type of link requested, which can take one of the following values:
-        - LINK_TYPE_ETHERNET_10G_LR: A 10G Ethernet with LR optics
-        - LINK_TYPE_ETHERNET_100G_LR: A 100G Ethernet with LR optics.
-        - LINK_TYPE_ETHERNET_400G_LR4: A 400G Ethernet with LR4 optics.
-        Note that this field indicates the speed of each of
-        the links in the bundle, not the speed of the entire bundle.
-      valid_values: ['LINK_TYPE_ETHERNET_100G_LR', 'LINK_TYPE_ETHERNET_10G_LR', 'LINK_TYPE_ETHERNET_400G_LR4']
-    - name: requestedLinkCount
-      value: {{ requestedLinkCount }}
-      description: |
-        Target number of physical links in the link bundle, as requested by the
-        customer.
-    - name: location
-      value: "{{ location }}"
-      description: |
-        URL of the InterconnectLocation object that represents where this
-        connection is to be provisioned.
-    - name: labelFingerprint
-      value: "{{ labelFingerprint }}"
-      description: |
-        A fingerprint for the labels being applied to this Interconnect, which
-        is essentially a hash of the labels set used for optimistic locking. The
-        fingerprint is initially generated by Compute Engine and changes after
-        every request to modify or update labels. You must always provide an
-        up-to-date fingerprint hash in order to update or change labels,
-        otherwise the request will fail with error412 conditionNotMet.
-        To see the latest fingerprint, make a get() request to
-        retrieve an Interconnect.
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
-        Label values may be empty.
-    - name: aaiEnabled
-      value: {{ aaiEnabled }}
-      description: |
-        Enable or disable the application awareness feature on this Cloud
+        Configuration information for application awareness on this Cloud
         Interconnect.
-    - name: nocContactEmail
-      value: "{{ nocContactEmail }}"
-      description: |
-        Email address to contact the customer NOC for operations and maintenance
-        notifications regarding this Interconnect. If specified, this will be used
-        for notifications in addition to all other forms described, such as
-        Cloud Monitoring logs alerting and Cloud Notifications. This field is
-        required for users who sign up for Cloud Interconnect using
-        workforce identity federation.
-    - name: customerName
-      value: "{{ customerName }}"
-      description: |
-        Customer name, to put in the Letter of Authorization as the party
-        authorized to request a crossconnect.
-    - name: macsec
-      description: |
-        Configuration that enables Media Access Control security (MACsec) on the
-        Cloud Interconnect connection between Google and your on-premises router.
       value:
-        failOpen: {{ failOpen }}
-        preSharedKeys:
-          - startTime: "{{ startTime }}"
-            name: "{{ name }}"
+        bandwidthPercentagePolicy:
+          bandwidthPercentages:
+            - percentage: {{ percentage }}
+              trafficClass: "{{ trafficClass }}"
+        profileDescription: "{{ profileDescription }}"
+        shapeAveragePercentages:
+          - percentage: {{ percentage }}
+            trafficClass: "{{ trafficClass }}"
+        strictPriorityPolicy: "{{ strictPriorityPolicy }}"
     - name: availableFeatures
       value:
         - "{{ availableFeatures }}"
@@ -713,20 +629,71 @@ zone
         VLAN attachments will fail. If not present, then the Interconnect
         connection is not provisioned for Cross-Site Networking. Any attempt to use
         it for Cross-Site Networking will fail.
-    - name: applicationAwareInterconnect
+    - name: customerName
+      value: "{{ customerName }}"
       description: |
-        Configuration information for application awareness on this Cloud
-        Interconnect.
+        Customer name, to put in the Letter of Authorization as the party
+        authorized to request a crossconnect.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: interconnectType
+      value: "{{ interconnectType }}"
+      description: |
+        Type of interconnect, which can take one of the following values:
+        - PARTNER: A partner-managed interconnection shared between customers
+        though a partner.
+        - DEDICATED: A dedicated physical interconnection with the
+        customer.
+        Note that a value IT_PRIVATE has been deprecated in favor of DEDICATED.
+      valid_values: ['DEDICATED', 'IT_PRIVATE', 'PARTNER']
+    - name: labelFingerprint
+      value: "{{ labelFingerprint }}"
+      description: |
+        A fingerprint for the labels being applied to this Interconnect, which
+        is essentially a hash of the labels set used for optimistic locking. The
+        fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update labels. You must always provide an
+        up-to-date fingerprint hash in order to update or change labels,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve an Interconnect.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
+        Label values may be empty.
+    - name: linkType
+      value: "{{ linkType }}"
+      description: |
+        Type of link requested, which can take one of the following values:
+        - LINK_TYPE_ETHERNET_10G_LR: A 10G Ethernet with LR optics
+        - LINK_TYPE_ETHERNET_100G_LR: A 100G Ethernet with LR optics.
+        - LINK_TYPE_ETHERNET_400G_LR4: A 400G Ethernet with LR4 optics.
+        Note that this field indicates the speed of each of
+        the links in the bundle, not the speed of the entire bundle.
+      valid_values: ['LINK_TYPE_ETHERNET_100G_LR', 'LINK_TYPE_ETHERNET_10G_LR', 'LINK_TYPE_ETHERNET_400G_LR4']
+    - name: location
+      value: "{{ location }}"
+      description: |
+        URL of the InterconnectLocation object that represents where this
+        connection is to be provisioned.
+    - name: macsec
+      description: |
+        Configuration that enables Media Access Control security (MACsec) on the
+        Cloud Interconnect connection between Google and your on-premises router.
       value:
-        strictPriorityPolicy: "{{ strictPriorityPolicy }}"
-        profileDescription: "{{ profileDescription }}"
-        shapeAveragePercentages:
-          - percentage: {{ percentage }}
-            trafficClass: "{{ trafficClass }}"
-        bandwidthPercentagePolicy:
-          bandwidthPercentages:
-            - percentage: {{ percentage }}
-              trafficClass: "{{ trafficClass }}"
+        failOpen: {{ failOpen }}
+        preSharedKeys:
+          - name: "{{ name }}"
+            startTime: "{{ startTime }}"
+    - name: macsecEnabled
+      value: {{ macsecEnabled }}
+      description: |
+        Enable or disable MACsec on this Interconnect connection. MACsec enablement
+        fails if the MACsec object is not specified.
     - name: name
       value: "{{ name }}"
       description: |
@@ -737,16 +704,49 @@ zone
         character must be a lowercase letter, and all following characters must be
         a dash, lowercase letter, or digit, except the last character, which cannot
         be a dash.
+    - name: nocContactEmail
+      value: "{{ nocContactEmail }}"
+      description: |
+        Email address to contact the customer NOC for operations and maintenance
+        notifications regarding this Interconnect. If specified, this will be used
+        for notifications in addition to all other forms described, such as
+        Cloud Monitoring logs alerting and Cloud Notifications. This field is
+        required for users who sign up for Cloud Interconnect using
+        workforce identity federation.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: remoteLocation
       value: "{{ remoteLocation }}"
       description: |
         Indicates that this is a Cross-Cloud Interconnect. This field specifies the
         location outside of Google's network that the interconnect is connected to.
-    - name: description
-      value: "{{ description }}"
+    - name: requestedFeatures
+      value:
+        - "{{ requestedFeatures }}"
       description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
+        Optional. This parameter can be provided only with Interconnect INSERT. It
+        isn't valid for Interconnect PATCH. List of features requested for this
+        Interconnect connection, which can take one of the following values:
+        - IF_MACSEC: If specified, then the connection is created on MACsec
+        capable hardware ports. If not specified, non-MACsec capable ports will
+        also be considered.
+        - IF_CROSS_SITE_NETWORK: If specified, then the connection is created
+        exclusively for Cross-Site Networking. The connection can not be used for
+        Cross-Site Networking unless this feature is specified.
+    - name: requestedLinkCount
+      value: {{ requestedLinkCount }}
+      description: |
+        Target number of physical links in the link bundle, as requested by the
+        customer.
+    - name: subzone
+      value: "{{ subzone }}"
+      description: |
+        To be deprecated.
+      valid_values: ['SUBZONE_A', 'SUBZONE_B']
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -770,26 +770,26 @@ Updates the specified Interconnect with the data included in the request.<br />T
 ```sql
 UPDATE google.compute.interconnects
 SET 
-data__subzone = '{{ subzone }}',
-data__interconnectType = '{{ interconnectType }}',
-data__adminEnabled = {{ adminEnabled }},
-data__requestedFeatures = '{{ requestedFeatures }}',
-data__macsecEnabled = {{ macsecEnabled }},
-data__linkType = '{{ linkType }}',
-data__requestedLinkCount = {{ requestedLinkCount }},
-data__location = '{{ location }}',
-data__labelFingerprint = '{{ labelFingerprint }}',
-data__params = '{{ params }}',
-data__labels = '{{ labels }}',
 data__aaiEnabled = {{ aaiEnabled }},
-data__nocContactEmail = '{{ nocContactEmail }}',
-data__customerName = '{{ customerName }}',
-data__macsec = '{{ macsec }}',
-data__availableFeatures = '{{ availableFeatures }}',
+data__adminEnabled = {{ adminEnabled }},
 data__applicationAwareInterconnect = '{{ applicationAwareInterconnect }}',
+data__availableFeatures = '{{ availableFeatures }}',
+data__customerName = '{{ customerName }}',
+data__description = '{{ description }}',
+data__interconnectType = '{{ interconnectType }}',
+data__labelFingerprint = '{{ labelFingerprint }}',
+data__labels = '{{ labels }}',
+data__linkType = '{{ linkType }}',
+data__location = '{{ location }}',
+data__macsec = '{{ macsec }}',
+data__macsecEnabled = {{ macsecEnabled }},
 data__name = '{{ name }}',
+data__nocContactEmail = '{{ nocContactEmail }}',
+data__params = '{{ params }}',
 data__remoteLocation = '{{ remoteLocation }}',
-data__description = '{{ description }}'
+data__requestedFeatures = '{{ requestedFeatures }}',
+data__requestedLinkCount = {{ requestedLinkCount }},
+data__subzone = '{{ subzone }}'
 WHERE 
 project = '{{ project }}' --required
 AND interconnect = '{{ interconnect }}' --required
@@ -868,8 +868,8 @@ EXEC google.compute.interconnects.set_labels
 @resource='{{ resource }}' --required 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

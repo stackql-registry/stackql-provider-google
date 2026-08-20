@@ -110,9 +110,9 @@ EXEC google.artifactregistry.generic_artifacts.upload
 @repositoriesId='{{ repositoriesId }}' --required 
 @@json=
 '{
-"versionId": "{{ versionId }}", 
+"filename": "{{ filename }}", 
 "packageId": "{{ packageId }}", 
-"filename": "{{ filename }}"
+"versionId": "{{ versionId }}"
 }'
 ;
 ```

@@ -108,17 +108,17 @@ Creates an Assessment of the likelihood an event is legitimate.
 
 ```sql
 INSERT INTO google.recaptchaenterprise.assessments (
-data__assessmentEnvironment,
 data__accountVerification,
-data__privatePasswordLeakVerification,
+data__assessmentEnvironment,
 data__event,
+data__privatePasswordLeakVerification,
 projectsId
 )
 SELECT 
-'{{ assessmentEnvironment }}',
 '{{ accountVerification }}',
-'{{ privatePasswordLeakVerification }}',
+'{{ assessmentEnvironment }}',
 '{{ event }}',
+'{{ privatePasswordLeakVerification }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -145,107 +145,107 @@ tokenProperties
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the assessments resource.
+    - name: accountVerification
+      description: |
+        Optional. Account verification information for identity verification. The assessment event must include a token and site key to use this feature.
+      value:
+        endpoints:
+          - emailAddress: "{{ emailAddress }}"
+            lastVerificationTime: "{{ lastVerificationTime }}"
+            phoneNumber: "{{ phoneNumber }}"
+            requestToken: "{{ requestToken }}"
+        languageCode: "{{ languageCode }}"
+        latestVerificationResult: "{{ latestVerificationResult }}"
+        username: "{{ username }}"
     - name: assessmentEnvironment
       description: |
         Optional. The environment creating the assessment. This describes your environment (the system invoking CreateAssessment), NOT the environment of your user.
       value:
         client: "{{ client }}"
         version: "{{ version }}"
-    - name: accountVerification
-      description: |
-        Optional. Account verification information for identity verification. The assessment event must include a token and site key to use this feature.
-      value:
-        languageCode: "{{ languageCode }}"
-        latestVerificationResult: "{{ latestVerificationResult }}"
-        username: "{{ username }}"
-        endpoints:
-          - lastVerificationTime: "{{ lastVerificationTime }}"
-            emailAddress: "{{ emailAddress }}"
-            phoneNumber: "{{ phoneNumber }}"
-            requestToken: "{{ requestToken }}"
-    - name: privatePasswordLeakVerification
-      description: |
-        Optional. The private password leak verification field contains the parameters that are used to to check for leaks privately without sharing user credentials.
-      value:
-        encryptedUserCredentialsHash: "{{ encryptedUserCredentialsHash }}"
-        encryptedLeakMatchPrefixes:
-          - "{{ encryptedLeakMatchPrefixes }}"
-        lookupHashPrefix: "{{ lookupHashPrefix }}"
-        reencryptedUserCredentialsHash: "{{ reencryptedUserCredentialsHash }}"
     - name: event
       description: |
         Optional. The event being assessed.
       value:
+        expectedAction: "{{ expectedAction }}"
+        express: {{ express }}
+        firewallPolicyEvaluation: {{ firewallPolicyEvaluation }}
+        fraudPrevention: "{{ fraudPrevention }}"
         hashedAccountId: "{{ hashedAccountId }}"
+        headers:
+          - "{{ headers }}"
         ja3: "{{ ja3 }}"
-        userAgent: "{{ userAgent }}"
+        ja4: "{{ ja4 }}"
+        requestedUri: "{{ requestedUri }}"
+        siteKey: "{{ siteKey }}"
+        token: "{{ token }}"
         transactionData:
-          paymentMethod: "{{ paymentMethod }}"
-          items:
-            - name: "{{ name }}"
-              quantity: "{{ quantity }}"
-              merchantAccountId: "{{ merchantAccountId }}"
-              value: {{ value }}
-          user:
-            emailVerified: {{ emailVerified }}
-            phoneNumber: "{{ phoneNumber }}"
-            accountId: "{{ accountId }}"
-            phoneVerified: {{ phoneVerified }}
-            email: "{{ email }}"
-            creationMs: "{{ creationMs }}"
-          shippingAddress:
-            address:
-              - "{{ address }}"
-            locality: "{{ locality }}"
-            administrativeArea: "{{ administrativeArea }}"
-            regionCode: "{{ regionCode }}"
-            postalCode: "{{ postalCode }}"
-            recipient: "{{ recipient }}"
-          merchants:
-            - emailVerified: {{ emailVerified }}
-              phoneNumber: "{{ phoneNumber }}"
-              accountId: "{{ accountId }}"
-              phoneVerified: {{ phoneVerified }}
-              email: "{{ email }}"
-              creationMs: "{{ creationMs }}"
-          currencyCode: "{{ currencyCode }}"
-          transactionId: "{{ transactionId }}"
-          gatewayInfo:
-            gatewayResponseCode: "{{ gatewayResponseCode }}"
-            cvvResponseCode: "{{ cvvResponseCode }}"
-            avsResponseCode: "{{ avsResponseCode }}"
-            name: "{{ name }}"
-          cardBin: "{{ cardBin }}"
-          cardLastFour: "{{ cardLastFour }}"
           billingAddress:
             address:
               - "{{ address }}"
-            locality: "{{ locality }}"
             administrativeArea: "{{ administrativeArea }}"
-            regionCode: "{{ regionCode }}"
+            locality: "{{ locality }}"
             postalCode: "{{ postalCode }}"
             recipient: "{{ recipient }}"
-          value: {{ value }}
+            regionCode: "{{ regionCode }}"
+          cardBin: "{{ cardBin }}"
+          cardLastFour: "{{ cardLastFour }}"
+          currencyCode: "{{ currencyCode }}"
+          gatewayInfo:
+            avsResponseCode: "{{ avsResponseCode }}"
+            cvvResponseCode: "{{ cvvResponseCode }}"
+            gatewayResponseCode: "{{ gatewayResponseCode }}"
+            name: "{{ name }}"
+          items:
+            - merchantAccountId: "{{ merchantAccountId }}"
+              name: "{{ name }}"
+              quantity: "{{ quantity }}"
+              value: {{ value }}
+          merchants:
+            - accountId: "{{ accountId }}"
+              creationMs: "{{ creationMs }}"
+              email: "{{ email }}"
+              emailVerified: {{ emailVerified }}
+              phoneNumber: "{{ phoneNumber }}"
+              phoneVerified: {{ phoneVerified }}
+          paymentMethod: "{{ paymentMethod }}"
+          shippingAddress:
+            address:
+              - "{{ address }}"
+            administrativeArea: "{{ administrativeArea }}"
+            locality: "{{ locality }}"
+            postalCode: "{{ postalCode }}"
+            recipient: "{{ recipient }}"
+            regionCode: "{{ regionCode }}"
           shippingValue: {{ shippingValue }}
-        firewallPolicyEvaluation: {{ firewallPolicyEvaluation }}
-        ja4: "{{ ja4 }}"
-        expectedAction: "{{ expectedAction }}"
-        requestedUri: "{{ requestedUri }}"
-        siteKey: "{{ siteKey }}"
-        express: {{ express }}
-        headers:
-          - "{{ headers }}"
-        token: "{{ token }}"
+          transactionId: "{{ transactionId }}"
+          user:
+            accountId: "{{ accountId }}"
+            creationMs: "{{ creationMs }}"
+            email: "{{ email }}"
+            emailVerified: {{ emailVerified }}
+            phoneNumber: "{{ phoneNumber }}"
+            phoneVerified: {{ phoneVerified }}
+          value: {{ value }}
+        userAgent: "{{ userAgent }}"
         userInfo:
+          accountId: "{{ accountId }}"
           createAccountTime: "{{ createAccountTime }}"
           userIds:
             - email: "{{ email }}"
               phoneNumber: "{{ phoneNumber }}"
               username: "{{ username }}"
-          accountId: "{{ accountId }}"
-        wafTokenAssessment: {{ wafTokenAssessment }}
-        fraudPrevention: "{{ fraudPrevention }}"
         userIpAddress: "{{ userIpAddress }}"
+        wafTokenAssessment: {{ wafTokenAssessment }}
+    - name: privatePasswordLeakVerification
+      description: |
+        Optional. The private password leak verification field contains the parameters that are used to to check for leaks privately without sharing user credentials.
+      value:
+        encryptedLeakMatchPrefixes:
+          - "{{ encryptedLeakMatchPrefixes }}"
+        encryptedUserCredentialsHash: "{{ encryptedUserCredentialsHash }}"
+        lookupHashPrefix: "{{ lookupHashPrefix }}"
+        reencryptedUserCredentialsHash: "{{ reencryptedUserCredentialsHash }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -270,11 +270,11 @@ EXEC google.recaptchaenterprise.assessments.annotate
 @assessmentsId='{{ assessmentsId }}' --required 
 @@json=
 '{
-"reasons": "{{ reasons }}", 
+"accountId": "{{ accountId }}", 
 "annotation": "{{ annotation }}", 
 "hashedAccountId": "{{ hashedAccountId }}", 
-"accountId": "{{ accountId }}", 
 "phoneAuthenticationEvent": "{{ phoneAuthenticationEvent }}", 
+"reasons": "{{ reasons }}", 
 "transactionEvent": "{{ transactionEvent }}"
 }'
 ;

@@ -311,21 +311,21 @@ Creates an assessment rule.
 
 ```sql
 INSERT INTO google.contactcenterinsights.assessment_rules (
-data__name,
+data__active,
 data__displayName,
+data__name,
 data__sampleRule,
 data__scheduleInfo,
-data__active,
 projectsId,
 locationsId,
 assessmentRuleId
 )
 SELECT 
-'{{ name }}',
+{{ active }},
 '{{ displayName }}',
+'{{ name }}',
 '{{ sampleRule }}',
 '{{ scheduleInfo }}',
-{{ active }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ assessmentRuleId }}'
@@ -351,34 +351,34 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the assessment_rules resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the assessment rule. Format: projects/{project}/locations/{location}/assessmentRules/{assessment_rule}
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Display Name of the assessment rule.
-    - name: sampleRule
-      description: |
-        The sample rule for the assessment rule.
-      value:
-        sampleRow: "{{ sampleRow }}"
-        conversationFilter: "{{ conversationFilter }}"
-        samplePercentage: {{ samplePercentage }}
-        dimension: "{{ dimension }}"
-    - name: scheduleInfo
-      description: |
-        Schedule info for the assessment rule.
-      value:
-        startTime: "{{ startTime }}"
-        endTime: "{{ endTime }}"
-        schedule: "{{ schedule }}"
-        timeZone: "{{ timeZone }}"
     - name: active
       value: {{ active }}
       description: |
         If true, apply this rule to conversations. Otherwise, this rule is inactive.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Display Name of the assessment rule.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the assessment rule. Format: projects/{project}/locations/{location}/assessmentRules/{assessment_rule}
+    - name: sampleRule
+      description: |
+        The sample rule for the assessment rule.
+      value:
+        conversationFilter: "{{ conversationFilter }}"
+        dimension: "{{ dimension }}"
+        samplePercentage: {{ samplePercentage }}
+        sampleRow: "{{ sampleRow }}"
+    - name: scheduleInfo
+      description: |
+        Schedule info for the assessment rule.
+      value:
+        endTime: "{{ endTime }}"
+        schedule: "{{ schedule }}"
+        startTime: "{{ startTime }}"
+        timeZone: "{{ timeZone }}"
     - name: assessmentRuleId
       value: "{{ assessmentRuleId }}"
 `}</CodeBlock>
@@ -402,11 +402,11 @@ Updates an assessment rule.
 ```sql
 UPDATE google.contactcenterinsights.assessment_rules
 SET 
-data__name = '{{ name }}',
+data__active = {{ active }},
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__sampleRule = '{{ sampleRule }}',
-data__scheduleInfo = '{{ scheduleInfo }}',
-data__active = {{ active }}
+data__scheduleInfo = '{{ scheduleInfo }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

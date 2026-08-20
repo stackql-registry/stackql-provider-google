@@ -33,14 +33,14 @@ Creates, updates, deletes, gets or lists an <code>access_approval_settings</code
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_get_access_approval_settings"
+    defaultValue="folders_get_access_approval_settings"
     values={[
-        { label: 'projects_get_access_approval_settings', value: 'projects_get_access_approval_settings' },
+        { label: 'folders_get_access_approval_settings', value: 'folders_get_access_approval_settings' },
         { label: 'organizations_get_access_approval_settings', value: 'organizations_get_access_approval_settings' },
-        { label: 'folders_get_access_approval_settings', value: 'folders_get_access_approval_settings' }
+        { label: 'projects_get_access_approval_settings', value: 'projects_get_access_approval_settings' }
     ]}
 >
-<TabItem value="projects_get_access_approval_settings">
+<TabItem value="folders_get_access_approval_settings">
 
 <table>
 <thead>
@@ -218,7 +218,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_get_access_approval_settings">
+<TabItem value="projects_get_access_approval_settings">
 
 <table>
 <thead>
@@ -325,9 +325,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_get_access_approval_settings"><CopyableCode code="projects_get_access_approval_settings" /></a></td>
+    <td><a href="#folders_get_access_approval_settings"><CopyableCode code="folders_get_access_approval_settings" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
     <td>Gets the Access Approval settings associated with a project, folder, or organization.</td>
 </tr>
@@ -339,16 +339,16 @@ The following methods are available for this resource:
     <td>Gets the Access Approval settings associated with a project, folder, or organization.</td>
 </tr>
 <tr>
-    <td><a href="#folders_get_access_approval_settings"><CopyableCode code="folders_get_access_approval_settings" /></a></td>
+    <td><a href="#projects_get_access_approval_settings"><CopyableCode code="projects_get_access_approval_settings" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Gets the Access Approval settings associated with a project, folder, or organization.</td>
 </tr>
 <tr>
-    <td><a href="#projects_update_access_approval_settings"><CopyableCode code="projects_update_access_approval_settings" /></a></td>
+    <td><a href="#folders_update_access_approval_settings"><CopyableCode code="folders_update_access_approval_settings" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the settings associated with a project, folder, or organization. Settings to update are determined by the value of field_mask.</td>
 </tr>
@@ -360,16 +360,16 @@ The following methods are available for this resource:
     <td>Updates the settings associated with a project, folder, or organization. Settings to update are determined by the value of field_mask.</td>
 </tr>
 <tr>
-    <td><a href="#folders_update_access_approval_settings"><CopyableCode code="folders_update_access_approval_settings" /></a></td>
+    <td><a href="#projects_update_access_approval_settings"><CopyableCode code="projects_update_access_approval_settings" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the settings associated with a project, folder, or organization. Settings to update are determined by the value of field_mask.</td>
 </tr>
 <tr>
-    <td><a href="#projects_delete_access_approval_settings"><CopyableCode code="projects_delete_access_approval_settings" /></a></td>
+    <td><a href="#folders_delete_access_approval_settings"><CopyableCode code="folders_delete_access_approval_settings" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
     <td>Deletes the settings associated with a project, folder, or organization. This will have the effect of disabling Access Approval for the resource. Access Approval may remain active based on parent resource settings. To confirm the effective settings, call GetAccessApprovalSettings and verify effective setting is disabled.</td>
 </tr>
@@ -381,9 +381,9 @@ The following methods are available for this resource:
     <td>Deletes the settings associated with a project, folder, or organization. This will have the effect of disabling Access Approval for the resource. Access Approval may remain active based on parent resource settings. To confirm the effective settings, call GetAccessApprovalSettings and verify effective setting is disabled.</td>
 </tr>
 <tr>
-    <td><a href="#folders_delete_access_approval_settings"><CopyableCode code="folders_delete_access_approval_settings" /></a></td>
+    <td><a href="#projects_delete_access_approval_settings"><CopyableCode code="projects_delete_access_approval_settings" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Deletes the settings associated with a project, folder, or organization. This will have the effect of disabling Access Approval for the resource. Access Approval may remain active based on parent resource settings. To confirm the effective settings, call GetAccessApprovalSettings and verify effective setting is disabled.</td>
 </tr>
@@ -429,14 +429,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_get_access_approval_settings"
+    defaultValue="folders_get_access_approval_settings"
     values={[
-        { label: 'projects_get_access_approval_settings', value: 'projects_get_access_approval_settings' },
+        { label: 'folders_get_access_approval_settings', value: 'folders_get_access_approval_settings' },
         { label: 'organizations_get_access_approval_settings', value: 'organizations_get_access_approval_settings' },
-        { label: 'folders_get_access_approval_settings', value: 'folders_get_access_approval_settings' }
+        { label: 'projects_get_access_approval_settings', value: 'projects_get_access_approval_settings' }
     ]}
 >
-<TabItem value="projects_get_access_approval_settings">
+<TabItem value="folders_get_access_approval_settings">
 
 Gets the Access Approval settings associated with a project, folder, or organization.
 
@@ -458,7 +458,7 @@ preferredRequestExpirationDays,
 requestScopeMaxWidthPreference,
 requireCustomerVisibleJustification
 FROM google.accessapproval.access_approval_settings
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE foldersId = '{{ foldersId }}' -- required
 ;
 ```
 </TabItem>
@@ -488,7 +488,7 @@ WHERE organizationsId = '{{ organizationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="folders_get_access_approval_settings">
+<TabItem value="projects_get_access_approval_settings">
 
 Gets the Access Approval settings associated with a project, folder, or organization.
 
@@ -510,7 +510,7 @@ preferredRequestExpirationDays,
 requestScopeMaxWidthPreference,
 requireCustomerVisibleJustification
 FROM google.accessapproval.access_approval_settings
-WHERE foldersId = '{{ foldersId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 ;
 ```
 </TabItem>
@@ -520,32 +520,32 @@ WHERE foldersId = '{{ foldersId }}' -- required
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_update_access_approval_settings"
+    defaultValue="folders_update_access_approval_settings"
     values={[
-        { label: 'projects_update_access_approval_settings', value: 'projects_update_access_approval_settings' },
+        { label: 'folders_update_access_approval_settings', value: 'folders_update_access_approval_settings' },
         { label: 'organizations_update_access_approval_settings', value: 'organizations_update_access_approval_settings' },
-        { label: 'folders_update_access_approval_settings', value: 'folders_update_access_approval_settings' }
+        { label: 'projects_update_access_approval_settings', value: 'projects_update_access_approval_settings' }
     ]}
 >
-<TabItem value="projects_update_access_approval_settings">
+<TabItem value="folders_update_access_approval_settings">
 
 Updates the settings associated with a project, folder, or organization. Settings to update are determined by the value of field_mask.
 
 ```sql
 UPDATE google.accessapproval.access_approval_settings
 SET 
-data__requireCustomerVisibleJustification = {{ requireCustomerVisibleJustification }},
-data__approvalPolicy = '{{ approvalPolicy }}',
-data__notificationEmails = '{{ notificationEmails }}',
-data__preferredRequestExpirationDays = {{ preferredRequestExpirationDays }},
-data__enrolledServices = '{{ enrolledServices }}',
-data__requestScopeMaxWidthPreference = '{{ requestScopeMaxWidthPreference }}',
 data__activeKeyVersion = '{{ activeKeyVersion }}',
-data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__approvalPolicy = '{{ approvalPolicy }}',
+data__enrolledServices = '{{ enrolledServices }}',
 data__name = '{{ name }}',
-data__preferNoBroadApprovalRequests = {{ preferNoBroadApprovalRequests }}
+data__notificationEmails = '{{ notificationEmails }}',
+data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__preferNoBroadApprovalRequests = {{ preferNoBroadApprovalRequests }},
+data__preferredRequestExpirationDays = {{ preferredRequestExpirationDays }},
+data__requestScopeMaxWidthPreference = '{{ requestScopeMaxWidthPreference }}',
+data__requireCustomerVisibleJustification = {{ requireCustomerVisibleJustification }}
 WHERE 
-projectsId = '{{ projectsId }}' --required
+foldersId = '{{ foldersId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
@@ -572,16 +572,16 @@ Updates the settings associated with a project, folder, or organization. Setting
 ```sql
 UPDATE google.accessapproval.access_approval_settings
 SET 
-data__requireCustomerVisibleJustification = {{ requireCustomerVisibleJustification }},
-data__approvalPolicy = '{{ approvalPolicy }}',
-data__notificationEmails = '{{ notificationEmails }}',
-data__preferredRequestExpirationDays = {{ preferredRequestExpirationDays }},
-data__enrolledServices = '{{ enrolledServices }}',
-data__requestScopeMaxWidthPreference = '{{ requestScopeMaxWidthPreference }}',
 data__activeKeyVersion = '{{ activeKeyVersion }}',
-data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__approvalPolicy = '{{ approvalPolicy }}',
+data__enrolledServices = '{{ enrolledServices }}',
 data__name = '{{ name }}',
-data__preferNoBroadApprovalRequests = {{ preferNoBroadApprovalRequests }}
+data__notificationEmails = '{{ notificationEmails }}',
+data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__preferNoBroadApprovalRequests = {{ preferNoBroadApprovalRequests }},
+data__preferredRequestExpirationDays = {{ preferredRequestExpirationDays }},
+data__requestScopeMaxWidthPreference = '{{ requestScopeMaxWidthPreference }}',
+data__requireCustomerVisibleJustification = {{ requireCustomerVisibleJustification }}
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -603,25 +603,25 @@ requestScopeMaxWidthPreference,
 requireCustomerVisibleJustification;
 ```
 </TabItem>
-<TabItem value="folders_update_access_approval_settings">
+<TabItem value="projects_update_access_approval_settings">
 
 Updates the settings associated with a project, folder, or organization. Settings to update are determined by the value of field_mask.
 
 ```sql
 UPDATE google.accessapproval.access_approval_settings
 SET 
-data__requireCustomerVisibleJustification = {{ requireCustomerVisibleJustification }},
-data__approvalPolicy = '{{ approvalPolicy }}',
-data__notificationEmails = '{{ notificationEmails }}',
-data__preferredRequestExpirationDays = {{ preferredRequestExpirationDays }},
-data__enrolledServices = '{{ enrolledServices }}',
-data__requestScopeMaxWidthPreference = '{{ requestScopeMaxWidthPreference }}',
 data__activeKeyVersion = '{{ activeKeyVersion }}',
-data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__approvalPolicy = '{{ approvalPolicy }}',
+data__enrolledServices = '{{ enrolledServices }}',
 data__name = '{{ name }}',
-data__preferNoBroadApprovalRequests = {{ preferNoBroadApprovalRequests }}
+data__notificationEmails = '{{ notificationEmails }}',
+data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__preferNoBroadApprovalRequests = {{ preferNoBroadApprovalRequests }},
+data__preferredRequestExpirationDays = {{ preferredRequestExpirationDays }},
+data__requestScopeMaxWidthPreference = '{{ requestScopeMaxWidthPreference }}',
+data__requireCustomerVisibleJustification = {{ requireCustomerVisibleJustification }}
 WHERE 
-foldersId = '{{ foldersId }}' --required
+projectsId = '{{ projectsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
@@ -647,20 +647,20 @@ requireCustomerVisibleJustification;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_delete_access_approval_settings"
+    defaultValue="folders_delete_access_approval_settings"
     values={[
-        { label: 'projects_delete_access_approval_settings', value: 'projects_delete_access_approval_settings' },
+        { label: 'folders_delete_access_approval_settings', value: 'folders_delete_access_approval_settings' },
         { label: 'organizations_delete_access_approval_settings', value: 'organizations_delete_access_approval_settings' },
-        { label: 'folders_delete_access_approval_settings', value: 'folders_delete_access_approval_settings' }
+        { label: 'projects_delete_access_approval_settings', value: 'projects_delete_access_approval_settings' }
     ]}
 >
-<TabItem value="projects_delete_access_approval_settings">
+<TabItem value="folders_delete_access_approval_settings">
 
 Deletes the settings associated with a project, folder, or organization. This will have the effect of disabling Access Approval for the resource. Access Approval may remain active based on parent resource settings. To confirm the effective settings, call GetAccessApprovalSettings and verify effective setting is disabled.
 
 ```sql
 DELETE FROM google.accessapproval.access_approval_settings
-WHERE projectsId = '{{ projectsId }}' --required
+WHERE foldersId = '{{ foldersId }}' --required
 ;
 ```
 </TabItem>
@@ -674,13 +674,13 @@ WHERE organizationsId = '{{ organizationsId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="folders_delete_access_approval_settings">
+<TabItem value="projects_delete_access_approval_settings">
 
 Deletes the settings associated with a project, folder, or organization. This will have the effect of disabling Access Approval for the resource. Access Approval may remain active based on parent resource settings. To confirm the effective settings, call GetAccessApprovalSettings and verify effective setting is disabled.
 
 ```sql
 DELETE FROM google.accessapproval.access_approval_settings
-WHERE foldersId = '{{ foldersId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
 ;
 ```
 </TabItem>

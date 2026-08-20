@@ -33,128 +33,14 @@ Creates, updates, deletes, gets or lists a <code>column_data_profiles</code> res
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_column_data_profiles_get"
+    defaultValue="organizations_locations_column_data_profiles_get"
     values={[
-        { label: 'projects_locations_column_data_profiles_get', value: 'projects_locations_column_data_profiles_get' },
         { label: 'organizations_locations_column_data_profiles_get', value: 'organizations_locations_column_data_profiles_get' },
-        { label: 'projects_locations_column_data_profiles_list', value: 'projects_locations_column_data_profiles_list' },
-        { label: 'organizations_locations_column_data_profiles_list', value: 'organizations_locations_column_data_profiles_list' }
+        { label: 'projects_locations_column_data_profiles_get', value: 'projects_locations_column_data_profiles_get' },
+        { label: 'organizations_locations_column_data_profiles_list', value: 'organizations_locations_column_data_profiles_list' },
+        { label: 'projects_locations_column_data_profiles_list', value: 'projects_locations_column_data_profiles_list' }
     ]}
 >
-<TabItem value="projects_locations_column_data_profiles_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The name of the profile.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="column" /></td>
-    <td><code>string</code></td>
-    <td>The name of the column.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="columnInfoType" /></td>
-    <td><code>object</code></td>
-    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="columnType" /></td>
-    <td><code>string</code></td>
-    <td>The data type of a given column. (COLUMN_DATA_TYPE_UNSPECIFIED, TYPE_INT64, TYPE_BOOL, TYPE_FLOAT64, TYPE_STRING, TYPE_BYTES, TYPE_TIMESTAMP, TYPE_DATE, TYPE_TIME, TYPE_DATETIME, TYPE_GEOGRAPHY, TYPE_NUMERIC, TYPE_RECORD, TYPE_BIGNUMERIC, TYPE_JSON, TYPE_INTERVAL, TYPE_RANGE_DATE, TYPE_RANGE_DATETIME, TYPE_RANGE_TIMESTAMP)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dataRiskLevel" /></td>
-    <td><code>object</code></td>
-    <td>The data risk level for this column. (id: GooglePrivacyDlpV2DataRiskLevel)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="datasetId" /></td>
-    <td><code>string</code></td>
-    <td>The BigQuery dataset ID, if the resource profiled is a BigQuery table.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="datasetLocation" /></td>
-    <td><code>string</code></td>
-    <td>If supported, the location where the dataset's data is stored. See https://docs.cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="datasetProjectId" /></td>
-    <td><code>string</code></td>
-    <td>The Google Cloud project ID that owns the profiled resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="estimatedNullPercentage" /></td>
-    <td><code>string</code></td>
-    <td>Approximate percentage of entries being null in the column. (NULL_PERCENTAGE_LEVEL_UNSPECIFIED, NULL_PERCENTAGE_VERY_LOW, NULL_PERCENTAGE_LOW, NULL_PERCENTAGE_MEDIUM, NULL_PERCENTAGE_HIGH)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="estimatedUniquenessScore" /></td>
-    <td><code>string</code></td>
-    <td>Approximate uniqueness of the column. (UNIQUENESS_SCORE_LEVEL_UNSPECIFIED, UNIQUENESS_SCORE_LOW, UNIQUENESS_SCORE_MEDIUM, UNIQUENESS_SCORE_HIGH)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="freeTextScore" /></td>
-    <td><code>number (double)</code></td>
-    <td>The likelihood that this column contains free-form text. A value close to 1 may indicate the column is likely to contain free-form or natural language text. Range in 0-1.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="otherMatches" /></td>
-    <td><code>array</code></td>
-    <td>Other types found within this column. List will be unordered.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="policyState" /></td>
-    <td><code>string</code></td>
-    <td>Indicates if a policy tag has been applied to the column. (COLUMN_POLICY_STATE_UNSPECIFIED, COLUMN_POLICY_TAGGED)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="profileLastGenerated" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>The last time the profile was generated.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="profileStatus" /></td>
-    <td><code>object</code></td>
-    <td>Success or error status from the most recent profile generation attempt. May be empty if the profile is still being generated. (id: GooglePrivacyDlpV2ProfileStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sensitivityScore" /></td>
-    <td><code>object</code></td>
-    <td>The sensitivity of this column. (id: GooglePrivacyDlpV2SensitivityScore)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>State of a profile. (STATE_UNSPECIFIED, RUNNING, DONE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tableDataProfile" /></td>
-    <td><code>string</code></td>
-    <td>The resource name of the table data profile.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tableFullResource" /></td>
-    <td><code>string</code></td>
-    <td>The resource name of the resource this column is within.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tableId" /></td>
-    <td><code>string</code></td>
-    <td>The table ID.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_column_data_profiles_get">
 
 <table>
@@ -179,7 +65,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
@@ -269,7 +155,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_column_data_profiles_list">
+<TabItem value="projects_locations_column_data_profiles_get">
 
 <table>
 <thead>
@@ -293,7 +179,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
@@ -407,7 +293,121 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="columnType" /></td>
+    <td><code>string</code></td>
+    <td>The data type of a given column. (COLUMN_DATA_TYPE_UNSPECIFIED, TYPE_INT64, TYPE_BOOL, TYPE_FLOAT64, TYPE_STRING, TYPE_BYTES, TYPE_TIMESTAMP, TYPE_DATE, TYPE_TIME, TYPE_DATETIME, TYPE_GEOGRAPHY, TYPE_NUMERIC, TYPE_RECORD, TYPE_BIGNUMERIC, TYPE_JSON, TYPE_INTERVAL, TYPE_RANGE_DATE, TYPE_RANGE_DATETIME, TYPE_RANGE_TIMESTAMP)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataRiskLevel" /></td>
+    <td><code>object</code></td>
+    <td>The data risk level for this column. (id: GooglePrivacyDlpV2DataRiskLevel)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="datasetId" /></td>
+    <td><code>string</code></td>
+    <td>The BigQuery dataset ID, if the resource profiled is a BigQuery table.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="datasetLocation" /></td>
+    <td><code>string</code></td>
+    <td>If supported, the location where the dataset's data is stored. See https://docs.cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="datasetProjectId" /></td>
+    <td><code>string</code></td>
+    <td>The Google Cloud project ID that owns the profiled resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="estimatedNullPercentage" /></td>
+    <td><code>string</code></td>
+    <td>Approximate percentage of entries being null in the column. (NULL_PERCENTAGE_LEVEL_UNSPECIFIED, NULL_PERCENTAGE_VERY_LOW, NULL_PERCENTAGE_LOW, NULL_PERCENTAGE_MEDIUM, NULL_PERCENTAGE_HIGH)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="estimatedUniquenessScore" /></td>
+    <td><code>string</code></td>
+    <td>Approximate uniqueness of the column. (UNIQUENESS_SCORE_LEVEL_UNSPECIFIED, UNIQUENESS_SCORE_LOW, UNIQUENESS_SCORE_MEDIUM, UNIQUENESS_SCORE_HIGH)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="freeTextScore" /></td>
+    <td><code>number (double)</code></td>
+    <td>The likelihood that this column contains free-form text. A value close to 1 may indicate the column is likely to contain free-form or natural language text. Range in 0-1.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="otherMatches" /></td>
+    <td><code>array</code></td>
+    <td>Other types found within this column. List will be unordered.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="policyState" /></td>
+    <td><code>string</code></td>
+    <td>Indicates if a policy tag has been applied to the column. (COLUMN_POLICY_STATE_UNSPECIFIED, COLUMN_POLICY_TAGGED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="profileLastGenerated" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>The last time the profile was generated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="profileStatus" /></td>
+    <td><code>object</code></td>
+    <td>Success or error status from the most recent profile generation attempt. May be empty if the profile is still being generated. (id: GooglePrivacyDlpV2ProfileStatus)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sensitivityScore" /></td>
+    <td><code>object</code></td>
+    <td>The sensitivity of this column. (id: GooglePrivacyDlpV2SensitivityScore)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>State of a profile. (STATE_UNSPECIFIED, RUNNING, DONE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tableDataProfile" /></td>
+    <td><code>string</code></td>
+    <td>The resource name of the table data profile.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tableFullResource" /></td>
+    <td><code>string</code></td>
+    <td>The resource name of the resource this column is within.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tableId" /></td>
+    <td><code>string</code></td>
+    <td>The table ID.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_column_data_profiles_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>The name of the profile.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="column" /></td>
+    <td><code>string</code></td>
+    <td>The name of the column.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="columnInfoType" /></td>
+    <td><code>object</code></td>
+    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
@@ -515,13 +515,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_column_data_profiles_get"><CopyableCode code="projects_locations_column_data_profiles_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-columnDataProfilesId"><code>columnDataProfilesId</code></a></td>
-    <td></td>
-    <td>Gets a column data profile.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_column_data_profiles_get"><CopyableCode code="organizations_locations_column_data_profiles_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-columnDataProfilesId"><code>columnDataProfilesId</code></a></td>
@@ -529,17 +522,24 @@ The following methods are available for this resource:
     <td>Gets a column data profile.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_column_data_profiles_list"><CopyableCode code="projects_locations_column_data_profiles_list" /></a></td>
+    <td><a href="#projects_locations_column_data_profiles_get"><CopyableCode code="projects_locations_column_data_profiles_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists column data profiles for an organization.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-columnDataProfilesId"><code>columnDataProfilesId</code></a></td>
+    <td></td>
+    <td>Gets a column data profile.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_column_data_profiles_list"><CopyableCode code="organizations_locations_column_data_profiles_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists column data profiles for an organization.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_column_data_profiles_list"><CopyableCode code="projects_locations_column_data_profiles_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists column data profiles for an organization.</td>
 </tr>
 </tbody>
@@ -604,47 +604,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_column_data_profiles_get"
+    defaultValue="organizations_locations_column_data_profiles_get"
     values={[
-        { label: 'projects_locations_column_data_profiles_get', value: 'projects_locations_column_data_profiles_get' },
         { label: 'organizations_locations_column_data_profiles_get', value: 'organizations_locations_column_data_profiles_get' },
-        { label: 'projects_locations_column_data_profiles_list', value: 'projects_locations_column_data_profiles_list' },
-        { label: 'organizations_locations_column_data_profiles_list', value: 'organizations_locations_column_data_profiles_list' }
+        { label: 'projects_locations_column_data_profiles_get', value: 'projects_locations_column_data_profiles_get' },
+        { label: 'organizations_locations_column_data_profiles_list', value: 'organizations_locations_column_data_profiles_list' },
+        { label: 'projects_locations_column_data_profiles_list', value: 'projects_locations_column_data_profiles_list' }
     ]}
 >
-<TabItem value="projects_locations_column_data_profiles_get">
-
-Gets a column data profile.
-
-```sql
-SELECT
-name,
-column,
-columnInfoType,
-columnType,
-dataRiskLevel,
-datasetId,
-datasetLocation,
-datasetProjectId,
-estimatedNullPercentage,
-estimatedUniquenessScore,
-freeTextScore,
-otherMatches,
-policyState,
-profileLastGenerated,
-profileStatus,
-sensitivityScore,
-state,
-tableDataProfile,
-tableFullResource,
-tableId
-FROM google.dlp.column_data_profiles
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND columnDataProfilesId = '{{ columnDataProfilesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_column_data_profiles_get">
 
 Gets a column data profile.
@@ -678,9 +645,9 @@ AND columnDataProfilesId = '{{ columnDataProfilesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_column_data_profiles_list">
+<TabItem value="projects_locations_column_data_profiles_get">
 
-Lists column data profiles for an organization.
+Gets a column data profile.
 
 ```sql
 SELECT
@@ -707,10 +674,7 @@ tableId
 FROM google.dlp.column_data_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
+AND columnDataProfilesId = '{{ columnDataProfilesId }}' -- required
 ;
 ```
 </TabItem>
@@ -743,10 +707,46 @@ tableId
 FROM google.dlp.column_data_profiles
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_column_data_profiles_list">
+
+Lists column data profiles for an organization.
+
+```sql
+SELECT
+name,
+column,
+columnInfoType,
+columnType,
+dataRiskLevel,
+datasetId,
+datasetLocation,
+datasetProjectId,
+estimatedNullPercentage,
+estimatedUniquenessScore,
+freeTextScore,
+otherMatches,
+policyState,
+profileLastGenerated,
+profileStatus,
+sensitivityScore,
+state,
+tableDataProfile,
+tableFullResource,
+tableId
+FROM google.dlp.column_data_profiles
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

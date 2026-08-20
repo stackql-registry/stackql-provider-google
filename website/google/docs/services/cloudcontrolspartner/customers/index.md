@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists customers of a partner identified by its Google Cloud organization ID</td>
 </tr>
 <tr>
@@ -274,10 +274,10 @@ organizationDomain
 FROM google.cloudcontrolspartner.customers
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -299,15 +299,15 @@ Creates a new customer.
 
 ```sql
 INSERT INTO google.cloudcontrolspartner.customers (
-data__name,
 data__displayName,
+data__name,
 organizationsId,
 locationsId,
 customerId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ customerId }}'
@@ -331,14 +331,14 @@ organizationDomain
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the customers resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Format: \`organizations/{organization}/locations/{location}/customers/{customer}\`
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Required. Display name for the customer
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Format: \`organizations/{organization}/locations/{location}/customers/{customer}\`
     - name: customerId
       value: "{{ customerId }}"
 `}</CodeBlock>
@@ -362,8 +362,8 @@ Update details of a single customer
 ```sql
 UPDATE google.cloudcontrolspartner.customers
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

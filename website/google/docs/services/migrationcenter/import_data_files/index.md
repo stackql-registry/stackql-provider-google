@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-importJobsId"><code>importJobsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List import data files.</td>
 </tr>
 <tr>
@@ -287,9 +287,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND importJobsId = '{{ importJobsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -312,8 +312,8 @@ Creates an import data file.
 ```sql
 INSERT INTO google.migrationcenter.import_data_files (
 data__displayName,
-data__uploadFileInfo,
 data__format,
+data__uploadFileInfo,
 projectsId,
 locationsId,
 importJobsId,
@@ -322,8 +322,8 @@ requestId
 )
 SELECT 
 '{{ displayName }}',
-'{{ uploadFileInfo }}',
 '{{ format }}',
+'{{ uploadFileInfo }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ importJobsId }}',
@@ -356,18 +356,18 @@ response
       value: "{{ displayName }}"
       description: |
         Optional. User-friendly display name. Maximum length is 63 characters.
-    - name: uploadFileInfo
-      description: |
-        Information about a file that is uploaded to a storage service.
-      value:
-        signedUri: "{{ signedUri }}"
-        headers: "{{ headers }}"
-        uriExpirationTime: "{{ uriExpirationTime }}"
     - name: format
       value: "{{ format }}"
       description: |
         Required. The payload format.
       valid_values: ['IMPORT_JOB_FORMAT_UNSPECIFIED', 'IMPORT_JOB_FORMAT_RVTOOLS_XLSX', 'IMPORT_JOB_FORMAT_RVTOOLS_CSV', 'IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV', 'IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV', 'IMPORT_JOB_FORMAT_STRATOZONE_CSV', 'IMPORT_JOB_FORMAT_DATABASE_ZIP']
+    - name: uploadFileInfo
+      description: |
+        Information about a file that is uploaded to a storage service.
+      value:
+        headers: "{{ headers }}"
+        signedUri: "{{ signedUri }}"
+        uriExpirationTime: "{{ uriExpirationTime }}"
     - name: importDataFileId
       value: "{{ importDataFileId }}"
     - name: requestId

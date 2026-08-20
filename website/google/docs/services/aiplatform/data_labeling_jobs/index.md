@@ -275,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists DataLabelingJobs in a Location.</td>
 </tr>
 <tr>
@@ -425,11 +425,11 @@ updateTime
 FROM google.aiplatform.data_labeling_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -451,32 +451,32 @@ Creates a DataLabelingJob.
 
 ```sql
 INSERT INTO google.aiplatform.data_labeling_jobs (
-data__labels,
-data__encryptionSpec,
-data__labelerCount,
-data__instructionUri,
-data__inputsSchemaUri,
-data__inputs,
-data__specialistPools,
 data__activeLearningConfig,
+data__annotationLabels,
 data__datasets,
 data__displayName,
-data__annotationLabels,
+data__encryptionSpec,
+data__inputs,
+data__inputsSchemaUri,
+data__instructionUri,
+data__labelerCount,
+data__labels,
+data__specialistPools,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ labels }}',
-'{{ encryptionSpec }}',
-{{ labelerCount }},
-'{{ instructionUri }}',
-'{{ inputsSchemaUri }}',
-'{{ inputs }}',
-'{{ specialistPools }}',
 '{{ activeLearningConfig }}',
+'{{ annotationLabels }}',
 '{{ datasets }}',
 '{{ displayName }}',
-'{{ annotationLabels }}',
+'{{ encryptionSpec }}',
+'{{ inputs }}',
+'{{ inputsSchemaUri }}',
+'{{ instructionUri }}',
+{{ labelerCount }},
+'{{ labels }}',
+'{{ specialistPools }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -512,48 +512,22 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the data_labeling_jobs resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The labels with user-defined metadata to organize your DataLabelingJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable. Following system labels exist for each DataLabelingJob: * "aiplatform.googleapis.com/schema": output only, its value is the inputs_schema's title.
-    - name: encryptionSpec
-      description: |
-        Customer-managed encryption key spec for a DataLabelingJob. If set, this DataLabelingJob will be secured by this key. Note: Annotations created in the DataLabelingJob are associated with the EncryptionSpec of the Dataset they are exported to.
-      value:
-        kmsKeyName: "{{ kmsKeyName }}"
-    - name: labelerCount
-      value: {{ labelerCount }}
-      description: |
-        Required. Number of labelers to work on each DataItem.
-    - name: instructionUri
-      value: "{{ instructionUri }}"
-      description: |
-        Required. The Google Cloud Storage location of the instruction pdf. This pdf is shared with labelers, and provides detailed description on how to label DataItems in Datasets.
-    - name: inputsSchemaUri
-      value: "{{ inputsSchemaUri }}"
-      description: |
-        Required. Points to a YAML file stored on Google Cloud Storage describing the config for a specific type of DataLabelingJob. The schema files that can be used here are found in the https://storage.googleapis.com/google-cloud-aiplatform bucket in the /schema/datalabelingjob/inputs/ folder.
-    - name: inputs
-      value: "{{ inputs }}"
-      description: |
-        Required. Input config parameters for the DataLabelingJob.
-    - name: specialistPools
-      value:
-        - "{{ specialistPools }}"
-      description: |
-        The SpecialistPools' resource names associated with this job.
     - name: activeLearningConfig
       description: |
         Parameters that configure the active learning pipeline. Active learning will label the data incrementally via several iterations. For every iteration, it will select a batch of data based on the sampling strategy.
       value:
-        maxDataItemPercentage: {{ maxDataItemPercentage }}
         maxDataItemCount: "{{ maxDataItemCount }}"
+        maxDataItemPercentage: {{ maxDataItemPercentage }}
         sampleConfig:
           followingBatchSamplePercentage: {{ followingBatchSamplePercentage }}
-          sampleStrategy: "{{ sampleStrategy }}"
           initialBatchSamplePercentage: {{ initialBatchSamplePercentage }}
+          sampleStrategy: "{{ sampleStrategy }}"
         trainingConfig:
           timeoutTrainingMilliHours: "{{ timeoutTrainingMilliHours }}"
+    - name: annotationLabels
+      value: "{{ annotationLabels }}"
+      description: |
+        Labels to assign to annotations generated by this DataLabelingJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
     - name: datasets
       value:
         - "{{ datasets }}"
@@ -563,10 +537,36 @@ updateTime
       value: "{{ displayName }}"
       description: |
         Required. The user-defined name of the DataLabelingJob. The name can be up to 128 characters long and can consist of any UTF-8 characters. Display name of a DataLabelingJob.
-    - name: annotationLabels
-      value: "{{ annotationLabels }}"
+    - name: encryptionSpec
       description: |
-        Labels to assign to annotations generated by this DataLabelingJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        Customer-managed encryption key spec for a DataLabelingJob. If set, this DataLabelingJob will be secured by this key. Note: Annotations created in the DataLabelingJob are associated with the EncryptionSpec of the Dataset they are exported to.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: inputs
+      value: "{{ inputs }}"
+      description: |
+        Required. Input config parameters for the DataLabelingJob.
+    - name: inputsSchemaUri
+      value: "{{ inputsSchemaUri }}"
+      description: |
+        Required. Points to a YAML file stored on Google Cloud Storage describing the config for a specific type of DataLabelingJob. The schema files that can be used here are found in the https://storage.googleapis.com/google-cloud-aiplatform bucket in the /schema/datalabelingjob/inputs/ folder.
+    - name: instructionUri
+      value: "{{ instructionUri }}"
+      description: |
+        Required. The Google Cloud Storage location of the instruction pdf. This pdf is shared with labelers, and provides detailed description on how to label DataItems in Datasets.
+    - name: labelerCount
+      value: {{ labelerCount }}
+      description: |
+        Required. Number of labelers to work on each DataItem.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your DataLabelingJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable. Following system labels exist for each DataLabelingJob: * "aiplatform.googleapis.com/schema": output only, its value is the inputs_schema's title.
+    - name: specialistPools
+      value:
+        - "{{ specialistPools }}"
+      description: |
+        The SpecialistPools' resource names associated with this job.
 `}</CodeBlock>
 
 </TabItem>

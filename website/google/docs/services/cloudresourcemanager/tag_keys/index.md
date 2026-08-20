@@ -219,7 +219,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-tagKeysId"><code>tagKeysId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the attributes of the TagKey resource.</td>
 </tr>
 <tr>
@@ -356,25 +356,25 @@ Creates a new TagKey. If another request with the same parameters is sent while 
 
 ```sql
 INSERT INTO google.cloudresourcemanager.tag_keys (
+data__allowedValuesRegex,
 data__description,
+data__etag,
+data__name,
+data__parent,
+data__purpose,
 data__purposeData,
 data__shortName,
-data__parent,
-data__etag,
-data__purpose,
-data__allowedValuesRegex,
-data__name,
 validateOnly
 )
 SELECT 
+'{{ allowedValuesRegex }}',
 '{{ description }}',
+'{{ etag }}',
+'{{ name }}',
+'{{ parent }}',
+'{{ purpose }}',
 '{{ purposeData }}',
 '{{ shortName }}',
-'{{ parent }}',
-'{{ etag }}',
-'{{ purpose }}',
-'{{ allowedValuesRegex }}',
-'{{ name }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -390,10 +390,31 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tag_keys
   props:
+    - name: allowedValuesRegex
+      value: "{{ allowedValuesRegex }}"
+      description: |
+        Optional. Regular expression constraint for freeform tag values. If present, it implicitly allows freeform values (constrained by the regex).
     - name: description
       value: "{{ description }}"
       description: |
         Optional. User-assigned description of the TagKey. Must not exceed 256 characters. Read-write.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagKeyRequest for details.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name for a TagKey. Must be in the format \`tagKeys/{tag_key_id}\`, where \`tag_key_id\` is the generated numeric id for the TagKey.
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Immutable. The resource name of the TagKey's parent. A TagKey can be parented by an Organization or a Project. For a TagKey parented by an Organization, its parent must be in the form \`organizations/{org_id}\`. For a TagKey parented by a Project, its parent can be in the form \`projects/{project_id}\` or \`projects/{project_number}\`.
+    - name: purpose
+      value: "{{ purpose }}"
+      description: |
+        Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set.
+      valid_values: ['PURPOSE_UNSPECIFIED', 'GCE_FIREWALL', 'DATA_GOVERNANCE']
     - name: purposeData
       value: "{{ purposeData }}"
       description: |
@@ -402,27 +423,6 @@ response
       value: "{{ shortName }}"
       description: |
         Required. Immutable. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace. The short name must be 1-256 characters, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
-    - name: parent
-      value: "{{ parent }}"
-      description: |
-        Immutable. The resource name of the TagKey's parent. A TagKey can be parented by an Organization or a Project. For a TagKey parented by an Organization, its parent must be in the form \`organizations/{org_id}\`. For a TagKey parented by a Project, its parent can be in the form \`projects/{project_id}\` or \`projects/{project_number}\`.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagKeyRequest for details.
-    - name: purpose
-      value: "{{ purpose }}"
-      description: |
-        Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set.
-      valid_values: ['PURPOSE_UNSPECIFIED', 'GCE_FIREWALL', 'DATA_GOVERNANCE']
-    - name: allowedValuesRegex
-      value: "{{ allowedValuesRegex }}"
-      description: |
-        Optional. Regular expression constraint for freeform tag values. If present, it implicitly allows freeform values (constrained by the regex).
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The resource name for a TagKey. Must be in the format \`tagKeys/{tag_key_id}\`, where \`tag_key_id\` is the generated numeric id for the TagKey.
     - name: validateOnly
       value: {{ validateOnly }}
 `}</CodeBlock>
@@ -446,18 +446,18 @@ Updates the attributes of the TagKey resource.
 ```sql
 UPDATE google.cloudresourcemanager.tag_keys
 SET 
-data__description = '{{ description }}',
-data__purposeData = '{{ purposeData }}',
-data__shortName = '{{ shortName }}',
-data__parent = '{{ parent }}',
-data__etag = '{{ etag }}',
-data__purpose = '{{ purpose }}',
 data__allowedValuesRegex = '{{ allowedValuesRegex }}',
-data__name = '{{ name }}'
+data__description = '{{ description }}',
+data__etag = '{{ etag }}',
+data__name = '{{ name }}',
+data__parent = '{{ parent }}',
+data__purpose = '{{ purpose }}',
+data__purposeData = '{{ purposeData }}',
+data__shortName = '{{ shortName }}'
 WHERE 
 tagKeysId = '{{ tagKeysId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,

@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Sessions in a given reasoning engine.</td>
 </tr>
 <tr>
@@ -215,6 +215,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
     <td>Appends an event to a given session.</td>
+</tr>
+<tr>
+    <td><a href="#compact"><CopyableCode code="compact" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td></td>
+    <td>Compacts the event history of a given Session, which may run an LLM summarization call and rewrite the full event history. Compaction is a storage-side rewrite that can apply a stackable pipeline of rules (event-horizon preservation, tool-response truncation, thought stripping, and LLM summarization etc.)</td>
 </tr>
 </tbody>
 </table>
@@ -337,9 +344,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -361,26 +368,26 @@ Creates a new Session.
 
 ```sql
 INSERT INTO google.aiplatform.sessions (
-data__name,
-data__labels,
-data__expireTime,
-data__ttl,
-data__sessionState,
-data__userId,
 data__displayName,
+data__expireTime,
+data__labels,
+data__name,
+data__sessionState,
+data__ttl,
+data__userId,
 projectsId,
 locationsId,
 reasoningEnginesId,
 sessionId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ expireTime }}',
-'{{ ttl }}',
-'{{ sessionState }}',
-'{{ userId }}',
 '{{ displayName }}',
+'{{ expireTime }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ sessionState }}',
+'{{ ttl }}',
+'{{ userId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ reasoningEnginesId }}',
@@ -408,34 +415,34 @@ response
     - name: reasoningEnginesId
       value: "{{ reasoningEnginesId }}"
       description: Required parameter for the sessions resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the session. Format: 'projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}'.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The labels with user-defined metadata to organize your Sessions. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-    - name: expireTime
-      value: "{{ expireTime }}"
-      description: |
-        Optional. Timestamp of when this session is considered expired. This is *always* provided on output, regardless of what was sent on input. The minimum value is 24 hours from the time of creation.
-    - name: ttl
-      value: "{{ ttl }}"
-      description: |
-        Optional. Input only. The TTL for this session. The minimum value is 24 hours.
-    - name: sessionState
-      value: "{{ sessionState }}"
-      description: |
-        Optional. Session specific memory which stores key conversation points.
-    - name: userId
-      value: "{{ userId }}"
-      description: |
-        Required. Immutable. String id provided by the user
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. The display name of the session.
+    - name: expireTime
+      value: "{{ expireTime }}"
+      description: |
+        Optional. Timestamp of when this session is considered expired. This is *always* provided on output, regardless of what was sent on input. The minimum value is 24 hours from the time of creation.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your Sessions. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the session. Format: 'projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}'.
+    - name: sessionState
+      value: "{{ sessionState }}"
+      description: |
+        Optional. Session specific memory which stores key conversation points.
+    - name: ttl
+      value: "{{ ttl }}"
+      description: |
+        Optional. Input only. The TTL for this session. The minimum value is 24 hours.
+    - name: userId
+      value: "{{ userId }}"
+      description: |
+        Required. Immutable. String id provided by the user
     - name: sessionId
       value: "{{ sessionId }}"
 `}</CodeBlock>
@@ -459,13 +466,13 @@ Updates the specific Session.
 ```sql
 UPDATE google.aiplatform.sessions
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
+data__displayName = '{{ displayName }}',
 data__expireTime = '{{ expireTime }}',
-data__ttl = '{{ ttl }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__sessionState = '{{ sessionState }}',
-data__userId = '{{ userId }}',
-data__displayName = '{{ displayName }}'
+data__ttl = '{{ ttl }}',
+data__userId = '{{ userId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -516,7 +523,8 @@ AND sessionsId = '{{ sessionsId }}' --required
 <Tabs
     defaultValue="append_event"
     values={[
-        { label: 'append_event', value: 'append_event' }
+        { label: 'append_event', value: 'append_event' },
+        { label: 'compact', value: 'compact' }
     ]}
 >
 <TabItem value="append_event">
@@ -531,16 +539,33 @@ EXEC google.aiplatform.sessions.append_event
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"errorCode": "{{ errorCode }}", 
-"invocationId": "{{ invocationId }}", 
-"timestamp": "{{ timestamp }}", 
-"eventMetadata": "{{ eventMetadata }}", 
+"actions": "{{ actions }}", 
+"author": "{{ author }}", 
 "content": "{{ content }}", 
+"errorCode": "{{ errorCode }}", 
+"errorMessage": "{{ errorMessage }}", 
+"eventMetadata": "{{ eventMetadata }}", 
+"invocationId": "{{ invocationId }}", 
 "name": "{{ name }}", 
 "rawEvent": "{{ rawEvent }}", 
-"actions": "{{ actions }}", 
-"errorMessage": "{{ errorMessage }}", 
-"author": "{{ author }}"
+"timestamp": "{{ timestamp }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="compact">
+
+Compacts the event history of a given Session, which may run an LLM summarization call and rewrite the full event history. Compaction is a storage-side rewrite that can apply a stackable pipeline of rules (event-horizon preservation, tool-response truncation, thought stripping, and LLM summarization etc.)
+
+```sql
+EXEC google.aiplatform.sessions.compact 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@reasoningEnginesId='{{ reasoningEnginesId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"compaction": "{{ compaction }}"
 }'
 ;
 ```

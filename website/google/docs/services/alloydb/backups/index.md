@@ -335,28 +335,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists Backups in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-backupId"><code>backupId</code></a></td>
+    <td><a href="#parameter-backupId"><code>backupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new Backup in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupsId"><code>backupsId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single Backup.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupsId"><code>backupsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single Backup.</td>
 </tr>
 </tbody>
@@ -529,10 +529,10 @@ FROM google.alloydb.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND view = '{{ view }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -554,36 +554,36 @@ Creates a new Backup in a given project and location.
 
 ```sql
 INSERT INTO google.alloydb.backups (
-data__tags,
-data__description,
-data__clusterName,
-data__etag,
-data__encryptionConfig,
-data__displayName,
-data__type,
 data__annotations,
+data__clusterName,
+data__description,
+data__displayName,
+data__encryptionConfig,
+data__etag,
 data__labels,
+data__tags,
+data__type,
 projectsId,
 locationsId,
+backupId,
 requestId,
-validateOnly,
-backupId
+validateOnly
 )
 SELECT 
-'{{ tags }}',
-'{{ description }}',
-'{{ clusterName }}',
-'{{ etag }}',
-'{{ encryptionConfig }}',
-'{{ displayName }}',
-'{{ type }}',
 '{{ annotations }}',
+'{{ clusterName }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ encryptionConfig }}',
+'{{ etag }}',
 '{{ labels }}',
+'{{ tags }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ backupId }}',
 '{{ requestId }}',
-'{{ validateOnly }}',
-'{{ backupId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -604,50 +604,50 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the backups resource.
-    - name: tags
-      value: "{{ tags }}"
+    - name: annotations
+      value: "{{ annotations }}"
       description: |
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \`\`\` "123/environment": "production", "123/costCenter": "marketing" \`\`\`
-    - name: description
-      value: "{{ description }}"
-      description: |
-        User-provided description of the backup.
+        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
     - name: clusterName
       value: "{{ clusterName }}"
       description: |
         Required. The full resource name of the backup source cluster (e.g., projects/{project}/locations/{region}/clusters/{cluster_id}).
-    - name: etag
-      value: "{{ etag }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        For Resource freshness validation (https://google.aip.dev/154)
+        User-provided description of the backup.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User-settable and human-readable display name for the Backup.
     - name: encryptionConfig
       description: |
         Optional. The encryption config can be specified to encrypt the backup with a customer-managed encryption key (CMEK). When this field is not specified, the backup will then use default encryption scheme to protect the user data.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: etag
+      value: "{{ etag }}"
       description: |
-        User-settable and human-readable display name for the Backup.
+        For Resource freshness validation (https://google.aip.dev/154)
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \`\`\` "123/environment": "production", "123/costCenter": "marketing" \`\`\`
     - name: type
       value: "{{ type }}"
       description: |
         The backup type, which suggests the trigger for the backup.
       valid_values: ['TYPE_UNSPECIFIED', 'ON_DEMAND', 'AUTOMATED', 'CONTINUOUS']
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels as key value pairs
+    - name: backupId
+      value: "{{ backupId }}"
     - name: requestId
       value: "{{ requestId }}"
     - name: validateOnly
       value: {{ validateOnly }}
-    - name: backupId
-      value: "{{ backupId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -669,23 +669,23 @@ Updates the parameters of a single Backup.
 ```sql
 UPDATE google.alloydb.backups
 SET 
-data__tags = '{{ tags }}',
-data__description = '{{ description }}',
-data__clusterName = '{{ clusterName }}',
-data__etag = '{{ etag }}',
-data__encryptionConfig = '{{ encryptionConfig }}',
-data__displayName = '{{ displayName }}',
-data__type = '{{ type }}',
 data__annotations = '{{ annotations }}',
-data__labels = '{{ labels }}'
+data__clusterName = '{{ clusterName }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__encryptionConfig = '{{ encryptionConfig }}',
+data__etag = '{{ etag }}',
+data__labels = '{{ labels }}',
+data__tags = '{{ tags }}',
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupsId = '{{ backupsId }}' --required
 AND allowMissing = {{ allowMissing}}
 AND requestId = '{{ requestId}}'
-AND validateOnly = {{ validateOnly}}
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -714,9 +714,9 @@ DELETE FROM google.alloydb.backups
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupsId = '{{ backupsId }}' --required
+AND etag = '{{ etag }}'
 AND requestId = '{{ requestId }}'
 AND validateOnly = '{{ validateOnly }}'
-AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

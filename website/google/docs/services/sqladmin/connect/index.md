@@ -117,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serverCaCert" /></td>
     <td><code>object</code></td>
-    <td>SslCerts Resource (id: SslCert)</td>
+    <td>SSL configuration. (id: SslCert)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serverCaMode" /></td>
@@ -152,18 +152,18 @@ The following methods are available for this resource:
     <td>Retrieves connect settings about a Cloud SQL instance.</td>
 </tr>
 <tr>
-    <td><a href="#resolve"><CopyableCode code="resolve" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-location"><code>location</code></a>, <a href="#parameter-dnsName"><code>dnsName</code></a></td>
-    <td></td>
-    <td>Retrieves connect settings about a Cloud SQL instance using the instance DNS name.</td>
-</tr>
-<tr>
     <td><a href="#generate_ephemeral"><CopyableCode code="generate_ephemeral" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td></td>
     <td>Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.</td>
+</tr>
+<tr>
+    <td><a href="#resolve"><CopyableCode code="resolve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-location"><code>location</code></a>, <a href="#parameter-dnsName"><code>dnsName</code></a></td>
+    <td></td>
+    <td>Retrieves connect settings about a Cloud SQL instance using the instance DNS name.</td>
 </tr>
 </tbody>
 </table>
@@ -251,23 +251,12 @@ AND readTime = '{{ readTime }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="resolve"
+    defaultValue="generate_ephemeral"
     values={[
-        { label: 'resolve', value: 'resolve' },
-        { label: 'generate_ephemeral', value: 'generate_ephemeral' }
+        { label: 'generate_ephemeral', value: 'generate_ephemeral' },
+        { label: 'resolve', value: 'resolve' }
     ]}
 >
-<TabItem value="resolve">
-
-Retrieves connect settings about a Cloud SQL instance using the instance DNS name.
-
-```sql
-EXEC google.sqladmin.connect.resolve 
-@location='{{ location }}' --required, 
-@dnsName='{{ dnsName }}' --required
-;
-```
-</TabItem>
 <TabItem value="generate_ephemeral">
 
 Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.
@@ -278,11 +267,22 @@ EXEC google.sqladmin.connect.generate_ephemeral
 @instance='{{ instance }}' --required 
 @@json=
 '{
-"validDuration": "{{ validDuration }}", 
-"public_key": "{{ public_key }}", 
 "access_token": "{{ access_token }}", 
-"readTime": "{{ readTime }}"
+"public_key": "{{ public_key }}", 
+"readTime": "{{ readTime }}", 
+"validDuration": "{{ validDuration }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="resolve">
+
+Retrieves connect settings about a Cloud SQL instance using the instance DNS name.
+
+```sql
+EXEC google.sqladmin.connect.resolve 
+@location='{{ location }}' --required, 
+@dnsName='{{ dnsName }}' --required
 ;
 ```
 </TabItem>

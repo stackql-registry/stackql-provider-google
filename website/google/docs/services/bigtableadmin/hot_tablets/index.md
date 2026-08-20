@@ -108,7 +108,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
     <td>Lists hot tablets in a cluster, within the time range provided. Hot tablets are ordered based on CPU usage.</td>
 </tr>
 </tbody>
@@ -192,8 +192,8 @@ AND instancesId = '{{ instancesId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
 AND endTime = '{{ endTime }}'
 AND pageSize = '{{ pageSize }}'
-AND startTime = '{{ startTime }}'
 AND pageToken = '{{ pageToken }}'
+AND startTime = '{{ startTime }}'
 ;
 ```
 </TabItem>

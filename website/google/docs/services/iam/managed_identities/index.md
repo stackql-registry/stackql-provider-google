@@ -321,8 +321,8 @@ Creates a new WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoolNames
 
 ```sql
 INSERT INTO google.iam.managed_identities (
-data__disabled,
 data__description,
+data__disabled,
 data__name,
 projectsId,
 locationsId,
@@ -331,8 +331,8 @@ namespacesId,
 workloadIdentityPoolManagedIdentityId
 )
 SELECT 
-{{ disabled }},
 '{{ description }}',
+{{ disabled }},
 '{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -365,14 +365,14 @@ response
     - name: namespacesId
       value: "{{ namespacesId }}"
       description: Required parameter for the managed_identities resource.
-    - name: disabled
-      value: {{ disabled }}
-      description: |
-        Optional. Whether the managed identity is disabled. If disabled, credentials may no longer be issued for the identity, however existing credentials will still be accepted until they expire.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A description of the managed identity. Cannot exceed 256 characters.
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. Whether the managed identity is disabled. If disabled, credentials may no longer be issued for the identity, however existing credentials will still be accepted until they expire.
     - name: name
       value: "{{ name }}"
       description: |
@@ -400,8 +400,8 @@ Updates an existing WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoo
 ```sql
 UPDATE google.iam.managed_identities
 SET 
-data__disabled = {{ disabled }},
 data__description = '{{ description }}',
+data__disabled = {{ disabled }},
 data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

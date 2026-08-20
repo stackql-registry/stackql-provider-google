@@ -78,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="source" /></td>
     <td><code>string</code></td>
-    <td>Output only. The source of the scorecard. (QA_SCORECARD_SOURCE_UNSPECIFIED, QA_SCORECARD_SOURCE_CUSTOMER_DEFINED, QA_SCORECARD_SOURCE_DISCOVERY_ENGINE)</td>
+    <td>Output only. The source of the scorecard. (QA_SCORECARD_SOURCE_UNSPECIFIED, QA_SCORECARD_SOURCE_CUSTOMER_DEFINED, QA_SCORECARD_SOURCE_DISCOVERY_ENGINE, QA_SCORECARD_SOURCE_INTENT_TAXONOMY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -127,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="source" /></td>
     <td><code>string</code></td>
-    <td>Output only. The source of the scorecard. (QA_SCORECARD_SOURCE_UNSPECIFIED, QA_SCORECARD_SOURCE_CUSTOMER_DEFINED, QA_SCORECARD_SOURCE_DISCOVERY_ENGINE)</td>
+    <td>Output only. The source of the scorecard. (QA_SCORECARD_SOURCE_UNSPECIFIED, QA_SCORECARD_SOURCE_CUSTOMER_DEFINED, QA_SCORECARD_SOURCE_DISCOVERY_ENGINE, QA_SCORECARD_SOURCE_INTENT_TAXONOMY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -322,18 +322,18 @@ Create a QaScorecard.
 
 ```sql
 INSERT INTO google.contactcenterinsights.qa_scorecards (
-data__isDefault,
-data__displayName,
 data__description,
+data__displayName,
+data__isDefault,
 data__name,
 projectsId,
 locationsId,
 qaScorecardId
 )
 SELECT 
-{{ isDefault }},
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
+{{ isDefault }},
 '{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -360,18 +360,18 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the qa_scorecards resource.
-    - name: isDefault
-      value: {{ isDefault }}
-      description: |
-        Whether the scorecard is the default one for the project. A default scorecard cannot be deleted and will always appear first in scorecard selector.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        The user-specified display name of the scorecard.
     - name: description
       value: "{{ description }}"
       description: |
         A text description explaining the intent of the scorecard.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The user-specified display name of the scorecard.
+    - name: isDefault
+      value: {{ isDefault }}
+      description: |
+        Whether the scorecard is the default one for the project. A default scorecard cannot be deleted and will always appear first in scorecard selector.
     - name: name
       value: "{{ name }}"
       description: |
@@ -399,9 +399,9 @@ Updates a QaScorecard.
 ```sql
 UPDATE google.contactcenterinsights.qa_scorecards
 SET 
-data__isDefault = {{ isDefault }},
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__isDefault = {{ isDefault }},
 data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

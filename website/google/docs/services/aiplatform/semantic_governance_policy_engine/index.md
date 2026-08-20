@@ -210,8 +210,8 @@ Updates a SemanticGovernancePolicyEngine. This method performs an upsert operati
 ```sql
 UPDATE google.aiplatform.semantic_governance_policy_engine
 SET 
-data__name = '{{ name }}',
-data__gatewayConfigs = '{{ gatewayConfigs }}'
+data__gatewayConfigs = '{{ gatewayConfigs }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

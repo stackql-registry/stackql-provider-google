@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_list"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists bare metal node pools in a given project, location and bare metal cluster.</td>
 </tr>
 <tr>
@@ -246,7 +246,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_delete"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a>, <a href="#parameter-bareMetalNodePoolsId"><code>bareMetalNodePoolsId</code></a></td>
-    <td><a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single bare metal node pool.</td>
 </tr>
 <tr>
@@ -260,7 +260,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a>, <a href="#parameter-bareMetalNodePoolsId"><code>bareMetalNodePoolsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Unenrolls a bare metal node pool from Anthos On-Prem API.</td>
 </tr>
 </tbody>
@@ -407,9 +407,9 @@ FROM google.gkeonprem.bare_metal_node_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND bareMetalClustersId = '{{ bareMetalClustersId }}' -- required
-AND view = '{{ view }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -431,12 +431,12 @@ Creates a new bare metal node pool in a given project, location and Bare Metal c
 
 ```sql
 INSERT INTO google.gkeonprem.bare_metal_node_pools (
-data__displayName,
-data__name,
-data__upgradePolicy,
-data__nodePoolConfig,
 data__annotations,
+data__displayName,
 data__etag,
+data__name,
+data__nodePoolConfig,
+data__upgradePolicy,
 projectsId,
 locationsId,
 bareMetalClustersId,
@@ -444,12 +444,12 @@ bareMetalNodePoolId,
 validateOnly
 )
 SELECT 
-'{{ displayName }}',
-'{{ name }}',
-'{{ upgradePolicy }}',
-'{{ nodePoolConfig }}',
 '{{ annotations }}',
+'{{ displayName }}',
 '{{ etag }}',
+'{{ name }}',
+'{{ nodePoolConfig }}',
+'{{ upgradePolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ bareMetalClustersId }}',
@@ -478,46 +478,46 @@ response
     - name: bareMetalClustersId
       value: "{{ bareMetalClustersId }}"
       description: Required parameter for the bare_metal_node_pools resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations on the bare metal node pool. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The display name for the bare metal node pool.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
     - name: name
       value: "{{ name }}"
       description: |
         Immutable. The bare metal node pool resource name.
+    - name: nodePoolConfig
+      description: |
+        Required. Node pool configuration.
+      value:
+        kubeletConfig:
+          registryBurst: {{ registryBurst }}
+          registryPullQps: {{ registryPullQps }}
+          serializeImagePullsDisabled: {{ serializeImagePullsDisabled }}
+        labels: "{{ labels }}"
+        nodeConfigs:
+          - labels: "{{ labels }}"
+            nodeIp: "{{ nodeIp }}"
+        operatingSystem: "{{ operatingSystem }}"
+        taints:
+          - effect: "{{ effect }}"
+            key: "{{ key }}"
+            value: "{{ value }}"
     - name: upgradePolicy
       description: |
         The worker node pool upgrade policy.
       value:
         parallelUpgradeConfig:
-          minimumAvailableNodes: {{ minimumAvailableNodes }}
           concurrentNodes: {{ concurrentNodes }}
-    - name: nodePoolConfig
-      description: |
-        Required. Node pool configuration.
-      value:
-        labels: "{{ labels }}"
-        kubeletConfig:
-          registryPullQps: {{ registryPullQps }}
-          registryBurst: {{ registryBurst }}
-          serializeImagePullsDisabled: {{ serializeImagePullsDisabled }}
-        operatingSystem: "{{ operatingSystem }}"
-        nodeConfigs:
-          - labels: "{{ labels }}"
-            nodeIp: "{{ nodeIp }}"
-        taints:
-          - key: "{{ key }}"
-            value: "{{ value }}"
-            effect: "{{ effect }}"
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Annotations on the bare metal node pool. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
+          minimumAvailableNodes: {{ minimumAvailableNodes }}
     - name: bareMetalNodePoolId
       value: "{{ bareMetalNodePoolId }}"
     - name: validateOnly
@@ -543,12 +543,12 @@ Updates the parameters of a single bare metal node pool.
 ```sql
 UPDATE google.gkeonprem.bare_metal_node_pools
 SET 
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}',
-data__upgradePolicy = '{{ upgradePolicy }}',
-data__nodePoolConfig = '{{ nodePoolConfig }}',
 data__annotations = '{{ annotations }}',
-data__etag = '{{ etag }}'
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
+data__name = '{{ name }}',
+data__nodePoolConfig = '{{ nodePoolConfig }}',
+data__upgradePolicy = '{{ upgradePolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -586,10 +586,10 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bareMetalClustersId = '{{ bareMetalClustersId }}' --required
 AND bareMetalNodePoolsId = '{{ bareMetalNodePoolsId }}' --required
-AND ignoreErrors = '{{ ignoreErrors }}'
-AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND allowMissing = '{{ allowMissing }}'
+AND etag = '{{ etag }}'
+AND ignoreErrors = '{{ ignoreErrors }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -632,9 +632,9 @@ EXEC google.gkeonprem.bare_metal_node_pools.projects_locations_bare_metal_cluste
 @locationsId='{{ locationsId }}' --required, 
 @bareMetalClustersId='{{ bareMetalClustersId }}' --required, 
 @bareMetalNodePoolsId='{{ bareMetalNodePoolsId }}' --required, 
+@allowMissing={{ allowMissing }}, 
 @etag='{{ etag }}', 
-@validateOnly={{ validateOnly }}, 
-@allowMissing={{ allowMissing }}
+@validateOnly={{ validateOnly }}
 ;
 ```
 </TabItem>

@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-appsId"><code>appsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the services in the application.</td>
 </tr>
 <tr>
@@ -277,8 +277,8 @@ networkSettings,
 split
 FROM google.appengine.services
 WHERE appsId = '{{ appsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -300,10 +300,10 @@ Updates the configuration of the specified service.
 ```sql
 UPDATE google.appengine.services
 SET 
-data__networkSettings = '{{ networkSettings }}',
 data__generatedCustomerMetadata = '{{ generatedCustomerMetadata }}',
-data__split = '{{ split }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__networkSettings = '{{ networkSettings }}',
+data__split = '{{ split }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

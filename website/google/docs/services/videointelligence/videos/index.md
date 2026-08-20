@@ -92,12 +92,12 @@ Performs asynchronous video annotation. Progress and results can be retrieved th
 EXEC google.videointelligence.videos.videos_annotate 
 @@json=
 '{
-"inputUri": "{{ inputUri }}", 
-"inputContent": "{{ inputContent }}", 
-"locationId": "{{ locationId }}", 
 "features": "{{ features }}", 
-"videoContext": "{{ videoContext }}", 
-"outputUri": "{{ outputUri }}"
+"inputContent": "{{ inputContent }}", 
+"inputUri": "{{ inputUri }}", 
+"locationId": "{{ locationId }}", 
+"outputUri": "{{ outputUri }}", 
+"videoContext": "{{ videoContext }}"
 }'
 ;
 ```

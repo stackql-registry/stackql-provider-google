@@ -215,22 +215,22 @@ Creates DNS peering on the given resource.
 
 ```sql
 INSERT INTO google.datafusion.dns_peerings (
+data__description,
 data__domain,
-data__targetProject,
 data__name,
 data__targetNetwork,
-data__description,
+data__targetProject,
 projectsId,
 locationsId,
 instancesId,
 dnsPeeringId
 )
 SELECT 
+'{{ description }}',
 '{{ domain }}',
-'{{ targetProject }}',
 '{{ name }}',
 '{{ targetNetwork }}',
-'{{ description }}',
+'{{ targetProject }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instancesId }}',
@@ -258,14 +258,14 @@ targetProject
     - name: instancesId
       value: "{{ instancesId }}"
       description: Required parameter for the dns_peerings resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Optional description of the dns zone.
     - name: domain
       value: "{{ domain }}"
       description: |
         Required. The dns name suffix of the zone.
-    - name: targetProject
-      value: "{{ targetProject }}"
-      description: |
-        Optional. Optional target project to which dns peering should happen.
     - name: name
       value: "{{ name }}"
       description: |
@@ -274,10 +274,10 @@ targetProject
       value: "{{ targetNetwork }}"
       description: |
         Optional. Optional target network to which dns peering should happen.
-    - name: description
-      value: "{{ description }}"
+    - name: targetProject
+      value: "{{ targetProject }}"
       description: |
-        Optional. Optional description of the dns zone.
+        Optional. Optional target project to which dns peering should happen.
     - name: dnsPeeringId
       value: "{{ dnsPeeringId }}"
 `}</CodeBlock>

@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists RolloutPlans in a given project and location.</td>
 </tr>
 <tr>
@@ -298,8 +298,8 @@ FROM google.compute.rollout_plans
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -322,18 +322,18 @@ Creates a new RolloutPlan in a given project and location.
 
 ```sql
 INSERT INTO google.compute.rollout_plans (
-data__locationScope,
 data__description,
-data__waves,
+data__locationScope,
 data__name,
+data__waves,
 project,
 requestId
 )
 SELECT 
-'{{ locationScope }}',
 '{{ description }}',
-'{{ waves }}',
+'{{ locationScope }}',
 '{{ name }}',
+'{{ waves }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -375,35 +375,17 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the rollout_plans resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: locationScope
       value: "{{ locationScope }}"
       description: |
         The location scope of the rollout plan. If not specified, the location
         scope is considered as ZONAL.
       valid_values: ['LOCATION_SCOPE_UNSPECIFIED', 'REGIONAL', 'ZONAL']
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: waves
-      description: |
-        Required. The waves included in this rollout plan.
-      value:
-        - displayName: "{{ displayName }}"
-          selectors: "{{ selectors }}"
-          validation:
-            timeBasedValidationMetadata:
-              waitDuration: "{{ waitDuration }}"
-            type: "{{ type }}"
-          orchestrationOptions:
-            maxConcurrentLocations: "{{ maxConcurrentLocations }}"
-            delays:
-              - delimiter: "{{ delimiter }}"
-                type: "{{ type }}"
-                duration: "{{ duration }}"
-            maxConcurrentResourcesPerLocation: "{{ maxConcurrentResourcesPerLocation }}"
-          number: "{{ number }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -414,6 +396,24 @@ zone
         which means the first character must be a lowercase letter, and all
         following characters must be a dash, lowercase letter, or digit, except
         the last character, which cannot be a dash.
+    - name: waves
+      description: |
+        Required. The waves included in this rollout plan.
+      value:
+        - displayName: "{{ displayName }}"
+          number: "{{ number }}"
+          orchestrationOptions:
+            delays:
+              - delimiter: "{{ delimiter }}"
+                duration: "{{ duration }}"
+                type: "{{ type }}"
+            maxConcurrentLocations: "{{ maxConcurrentLocations }}"
+            maxConcurrentResourcesPerLocation: "{{ maxConcurrentResourcesPerLocation }}"
+          selectors: "{{ selectors }}"
+          validation:
+            timeBasedValidationMetadata:
+              waitDuration: "{{ waitDuration }}"
+            type: "{{ type }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

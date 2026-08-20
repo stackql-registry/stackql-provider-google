@@ -236,7 +236,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-toolsetsId"><code>toolsetsId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes the specified toolset.</td>
 </tr>
 </tbody>
@@ -400,32 +400,32 @@ Creates a new toolset in the given app.
 
 ```sql
 INSERT INTO google.ces.toolsets (
-data__name,
-data__displayName,
-data__mcpToolset,
-data__timeout,
-data__description,
 data__connectorToolset,
-data__toolFakeConfig,
+data__description,
+data__displayName,
 data__etag,
 data__executionType,
+data__mcpToolset,
+data__name,
 data__openApiToolset,
+data__timeout,
+data__toolFakeConfig,
 projectsId,
 locationsId,
 appsId,
 toolsetId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ mcpToolset }}',
-'{{ timeout }}',
-'{{ description }}',
 '{{ connectorToolset }}',
-'{{ toolFakeConfig }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ etag }}',
 '{{ executionType }}',
+'{{ mcpToolset }}',
+'{{ name }}',
 '{{ openApiToolset }}',
+'{{ timeout }}',
+'{{ toolFakeConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ appsId }}',
@@ -460,433 +460,33 @@ updateTime
     - name: appsId
       value: "{{ appsId }}"
       description: Required parameter for the toolsets resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The unique identifier of the toolset. Format: \`projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. The display name of the toolset. Must be unique within the same app.
-    - name: mcpToolset
-      description: |
-        Optional. A toolset that contains a list of tools that are offered by the MCP server.
-      value:
-        serverAddress: "{{ serverAddress }}"
-        customHeaders: "{{ customHeaders }}"
-        tlsConfig:
-          caCerts:
-            - displayName: "{{ displayName }}"
-              cert: "{{ cert }}"
-        serviceDirectoryConfig:
-          service: "{{ service }}"
-        apiAuthentication:
-          bearerTokenConfig:
-            token: "{{ token }}"
-          serviceAccountAuthConfig:
-            serviceAccount: "{{ serviceAccount }}"
-            scopes:
-              - "{{ scopes }}"
-          apiKeyConfig:
-            keyName: "{{ keyName }}"
-            requestLocation: "{{ requestLocation }}"
-            apiKeySecretVersion: "{{ apiKeySecretVersion }}"
-          oauthConfig:
-            tokenEndpoint: "{{ tokenEndpoint }}"
-            oauthGrantType: "{{ oauthGrantType }}"
-            clientId: "{{ clientId }}"
-            clientSecretVersion: "{{ clientSecretVersion }}"
-            scopes:
-              - "{{ scopes }}"
-          serviceAgentIdTokenAuthConfig: "{{ serviceAgentIdTokenAuthConfig }}"
-        toolOverrides:
-          - descriptionOverride: "{{ descriptionOverride }}"
-            snapshot:
-              description: "{{ description }}"
-              inputSchema:
-                type: "{{ type }}"
-                minimum: {{ minimum }}
-                items:
-                  type: "{{ type }}"
-                  minimum: {{ minimum }}
-                  items: "{{ items }}"
-                  nullable: {{ nullable }}
-                  maximum: {{ maximum }}
-                  description: "{{ description }}"
-                  default: "{{ default }}"
-                  ref: "{{ ref }}"
-                  minItems: "{{ minItems }}"
-                  anyOf: "{{ anyOf }}"
-                  enum: "{{ enum }}"
-                  required: "{{ required }}"
-                  properties: "{{ properties }}"
-                  prefixItems: "{{ prefixItems }}"
-                  defs: "{{ defs }}"
-                  maxItems: "{{ maxItems }}"
-                  uniqueItems: {{ uniqueItems }}
-                  additionalProperties: "{{ additionalProperties }}"
-                  title: "{{ title }}"
-                nullable: {{ nullable }}
-                maximum: {{ maximum }}
-                description: "{{ description }}"
-                default: "{{ default }}"
-                ref: "{{ ref }}"
-                minItems: "{{ minItems }}"
-                anyOf:
-                  - type: "{{ type }}"
-                    minimum: {{ minimum }}
-                    items:
-                      type: "{{ type }}"
-                      minimum: {{ minimum }}
-                      items: "{{ items }}"
-                      nullable: {{ nullable }}
-                      maximum: {{ maximum }}
-                      description: "{{ description }}"
-                      default: "{{ default }}"
-                      ref: "{{ ref }}"
-                      minItems: "{{ minItems }}"
-                      anyOf: "{{ anyOf }}"
-                      enum: "{{ enum }}"
-                      required: "{{ required }}"
-                      properties: "{{ properties }}"
-                      prefixItems: "{{ prefixItems }}"
-                      defs: "{{ defs }}"
-                      maxItems: "{{ maxItems }}"
-                      uniqueItems: {{ uniqueItems }}
-                      additionalProperties: "{{ additionalProperties }}"
-                      title: "{{ title }}"
-                    nullable: {{ nullable }}
-                    maximum: {{ maximum }}
-                    description: "{{ description }}"
-                    default: "{{ default }}"
-                    ref: "{{ ref }}"
-                    minItems: "{{ minItems }}"
-                    anyOf: "{{ anyOf }}"
-                    enum: "{{ enum }}"
-                    required: "{{ required }}"
-                    properties: "{{ properties }}"
-                    prefixItems: "{{ prefixItems }}"
-                    defs: "{{ defs }}"
-                    maxItems: "{{ maxItems }}"
-                    uniqueItems: {{ uniqueItems }}
-                    additionalProperties:
-                      type: "{{ type }}"
-                      minimum: {{ minimum }}
-                      items: "{{ items }}"
-                      nullable: {{ nullable }}
-                      maximum: {{ maximum }}
-                      description: "{{ description }}"
-                      default: "{{ default }}"
-                      ref: "{{ ref }}"
-                      minItems: "{{ minItems }}"
-                      anyOf: "{{ anyOf }}"
-                      enum: "{{ enum }}"
-                      required: "{{ required }}"
-                      properties: "{{ properties }}"
-                      prefixItems: "{{ prefixItems }}"
-                      defs: "{{ defs }}"
-                      maxItems: "{{ maxItems }}"
-                      uniqueItems: {{ uniqueItems }}
-                      additionalProperties: "{{ additionalProperties }}"
-                      title: "{{ title }}"
-                    title: "{{ title }}"
-                enum:
-                  - "{{ enum }}"
-                required:
-                  - "{{ required }}"
-                properties: "{{ properties }}"
-                prefixItems:
-                  - type: "{{ type }}"
-                    minimum: {{ minimum }}
-                    items:
-                      type: "{{ type }}"
-                      minimum: {{ minimum }}
-                      items: "{{ items }}"
-                      nullable: {{ nullable }}
-                      maximum: {{ maximum }}
-                      description: "{{ description }}"
-                      default: "{{ default }}"
-                      ref: "{{ ref }}"
-                      minItems: "{{ minItems }}"
-                      anyOf: "{{ anyOf }}"
-                      enum: "{{ enum }}"
-                      required: "{{ required }}"
-                      properties: "{{ properties }}"
-                      prefixItems: "{{ prefixItems }}"
-                      defs: "{{ defs }}"
-                      maxItems: "{{ maxItems }}"
-                      uniqueItems: {{ uniqueItems }}
-                      additionalProperties: "{{ additionalProperties }}"
-                      title: "{{ title }}"
-                    nullable: {{ nullable }}
-                    maximum: {{ maximum }}
-                    description: "{{ description }}"
-                    default: "{{ default }}"
-                    ref: "{{ ref }}"
-                    minItems: "{{ minItems }}"
-                    anyOf: "{{ anyOf }}"
-                    enum: "{{ enum }}"
-                    required: "{{ required }}"
-                    properties: "{{ properties }}"
-                    prefixItems: "{{ prefixItems }}"
-                    defs: "{{ defs }}"
-                    maxItems: "{{ maxItems }}"
-                    uniqueItems: {{ uniqueItems }}
-                    additionalProperties:
-                      type: "{{ type }}"
-                      minimum: {{ minimum }}
-                      items: "{{ items }}"
-                      nullable: {{ nullable }}
-                      maximum: {{ maximum }}
-                      description: "{{ description }}"
-                      default: "{{ default }}"
-                      ref: "{{ ref }}"
-                      minItems: "{{ minItems }}"
-                      anyOf: "{{ anyOf }}"
-                      enum: "{{ enum }}"
-                      required: "{{ required }}"
-                      properties: "{{ properties }}"
-                      prefixItems: "{{ prefixItems }}"
-                      defs: "{{ defs }}"
-                      maxItems: "{{ maxItems }}"
-                      uniqueItems: {{ uniqueItems }}
-                      additionalProperties: "{{ additionalProperties }}"
-                      title: "{{ title }}"
-                    title: "{{ title }}"
-                defs: "{{ defs }}"
-                maxItems: "{{ maxItems }}"
-                uniqueItems: {{ uniqueItems }}
-                additionalProperties:
-                  type: "{{ type }}"
-                  minimum: {{ minimum }}
-                  items: "{{ items }}"
-                  nullable: {{ nullable }}
-                  maximum: {{ maximum }}
-                  description: "{{ description }}"
-                  default: "{{ default }}"
-                  ref: "{{ ref }}"
-                  minItems: "{{ minItems }}"
-                  anyOf: "{{ anyOf }}"
-                  enum: "{{ enum }}"
-                  required: "{{ required }}"
-                  properties: "{{ properties }}"
-                  prefixItems: "{{ prefixItems }}"
-                  defs: "{{ defs }}"
-                  maxItems: "{{ maxItems }}"
-                  uniqueItems: {{ uniqueItems }}
-                  additionalProperties: "{{ additionalProperties }}"
-                  title: "{{ title }}"
-                title: "{{ title }}"
-              outputSchema:
-                type: "{{ type }}"
-                minimum: {{ minimum }}
-                items:
-                  type: "{{ type }}"
-                  minimum: {{ minimum }}
-                  items: "{{ items }}"
-                  nullable: {{ nullable }}
-                  maximum: {{ maximum }}
-                  description: "{{ description }}"
-                  default: "{{ default }}"
-                  ref: "{{ ref }}"
-                  minItems: "{{ minItems }}"
-                  anyOf: "{{ anyOf }}"
-                  enum: "{{ enum }}"
-                  required: "{{ required }}"
-                  properties: "{{ properties }}"
-                  prefixItems: "{{ prefixItems }}"
-                  defs: "{{ defs }}"
-                  maxItems: "{{ maxItems }}"
-                  uniqueItems: {{ uniqueItems }}
-                  additionalProperties: "{{ additionalProperties }}"
-                  title: "{{ title }}"
-                nullable: {{ nullable }}
-                maximum: {{ maximum }}
-                description: "{{ description }}"
-                default: "{{ default }}"
-                ref: "{{ ref }}"
-                minItems: "{{ minItems }}"
-                anyOf:
-                  - type: "{{ type }}"
-                    minimum: {{ minimum }}
-                    items:
-                      type: "{{ type }}"
-                      minimum: {{ minimum }}
-                      items: "{{ items }}"
-                      nullable: {{ nullable }}
-                      maximum: {{ maximum }}
-                      description: "{{ description }}"
-                      default: "{{ default }}"
-                      ref: "{{ ref }}"
-                      minItems: "{{ minItems }}"
-                      anyOf: "{{ anyOf }}"
-                      enum: "{{ enum }}"
-                      required: "{{ required }}"
-                      properties: "{{ properties }}"
-                      prefixItems: "{{ prefixItems }}"
-                      defs: "{{ defs }}"
-                      maxItems: "{{ maxItems }}"
-                      uniqueItems: {{ uniqueItems }}
-                      additionalProperties: "{{ additionalProperties }}"
-                      title: "{{ title }}"
-                    nullable: {{ nullable }}
-                    maximum: {{ maximum }}
-                    description: "{{ description }}"
-                    default: "{{ default }}"
-                    ref: "{{ ref }}"
-                    minItems: "{{ minItems }}"
-                    anyOf: "{{ anyOf }}"
-                    enum: "{{ enum }}"
-                    required: "{{ required }}"
-                    properties: "{{ properties }}"
-                    prefixItems: "{{ prefixItems }}"
-                    defs: "{{ defs }}"
-                    maxItems: "{{ maxItems }}"
-                    uniqueItems: {{ uniqueItems }}
-                    additionalProperties:
-                      type: "{{ type }}"
-                      minimum: {{ minimum }}
-                      items: "{{ items }}"
-                      nullable: {{ nullable }}
-                      maximum: {{ maximum }}
-                      description: "{{ description }}"
-                      default: "{{ default }}"
-                      ref: "{{ ref }}"
-                      minItems: "{{ minItems }}"
-                      anyOf: "{{ anyOf }}"
-                      enum: "{{ enum }}"
-                      required: "{{ required }}"
-                      properties: "{{ properties }}"
-                      prefixItems: "{{ prefixItems }}"
-                      defs: "{{ defs }}"
-                      maxItems: "{{ maxItems }}"
-                      uniqueItems: {{ uniqueItems }}
-                      additionalProperties: "{{ additionalProperties }}"
-                      title: "{{ title }}"
-                    title: "{{ title }}"
-                enum:
-                  - "{{ enum }}"
-                required:
-                  - "{{ required }}"
-                properties: "{{ properties }}"
-                prefixItems:
-                  - type: "{{ type }}"
-                    minimum: {{ minimum }}
-                    items:
-                      type: "{{ type }}"
-                      minimum: {{ minimum }}
-                      items: "{{ items }}"
-                      nullable: {{ nullable }}
-                      maximum: {{ maximum }}
-                      description: "{{ description }}"
-                      default: "{{ default }}"
-                      ref: "{{ ref }}"
-                      minItems: "{{ minItems }}"
-                      anyOf: "{{ anyOf }}"
-                      enum: "{{ enum }}"
-                      required: "{{ required }}"
-                      properties: "{{ properties }}"
-                      prefixItems: "{{ prefixItems }}"
-                      defs: "{{ defs }}"
-                      maxItems: "{{ maxItems }}"
-                      uniqueItems: {{ uniqueItems }}
-                      additionalProperties: "{{ additionalProperties }}"
-                      title: "{{ title }}"
-                    nullable: {{ nullable }}
-                    maximum: {{ maximum }}
-                    description: "{{ description }}"
-                    default: "{{ default }}"
-                    ref: "{{ ref }}"
-                    minItems: "{{ minItems }}"
-                    anyOf: "{{ anyOf }}"
-                    enum: "{{ enum }}"
-                    required: "{{ required }}"
-                    properties: "{{ properties }}"
-                    prefixItems: "{{ prefixItems }}"
-                    defs: "{{ defs }}"
-                    maxItems: "{{ maxItems }}"
-                    uniqueItems: {{ uniqueItems }}
-                    additionalProperties:
-                      type: "{{ type }}"
-                      minimum: {{ minimum }}
-                      items: "{{ items }}"
-                      nullable: {{ nullable }}
-                      maximum: {{ maximum }}
-                      description: "{{ description }}"
-                      default: "{{ default }}"
-                      ref: "{{ ref }}"
-                      minItems: "{{ minItems }}"
-                      anyOf: "{{ anyOf }}"
-                      enum: "{{ enum }}"
-                      required: "{{ required }}"
-                      properties: "{{ properties }}"
-                      prefixItems: "{{ prefixItems }}"
-                      defs: "{{ defs }}"
-                      maxItems: "{{ maxItems }}"
-                      uniqueItems: {{ uniqueItems }}
-                      additionalProperties: "{{ additionalProperties }}"
-                      title: "{{ title }}"
-                    title: "{{ title }}"
-                defs: "{{ defs }}"
-                maxItems: "{{ maxItems }}"
-                uniqueItems: {{ uniqueItems }}
-                additionalProperties:
-                  type: "{{ type }}"
-                  minimum: {{ minimum }}
-                  items: "{{ items }}"
-                  nullable: {{ nullable }}
-                  maximum: {{ maximum }}
-                  description: "{{ description }}"
-                  default: "{{ default }}"
-                  ref: "{{ ref }}"
-                  minItems: "{{ minItems }}"
-                  anyOf: "{{ anyOf }}"
-                  enum: "{{ enum }}"
-                  required: "{{ required }}"
-                  properties: "{{ properties }}"
-                  prefixItems: "{{ prefixItems }}"
-                  defs: "{{ defs }}"
-                  maxItems: "{{ maxItems }}"
-                  uniqueItems: {{ uniqueItems }}
-                  additionalProperties: "{{ additionalProperties }}"
-                  title: "{{ title }}"
-                title: "{{ title }}"
-            tool: "{{ tool }}"
-            nameOverride: "{{ nameOverride }}"
-    - name: timeout
-      value: "{{ timeout }}"
-      description: |
-        Optional. The timeout for the toolset execution. If not set, the default timeout is 30 seconds for \`SYNCHRONOUS\` toolsets and 60 seconds for \`ASYNCHRONOUS\` toolsets.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the toolset.
     - name: connectorToolset
       description: |
         Optional. A toolset that generates tools from an Integration Connectors Connection.
       value:
-        connection: "{{ connection }}"
         authConfig:
           oauth2AuthCodeConfig:
             oauthToken: "{{ oauthToken }}"
           oauth2JwtBearerConfig:
+            clientKey: "{{ clientKey }}"
             issuer: "{{ issuer }}"
             subject: "{{ subject }}"
-            clientKey: "{{ clientKey }}"
+        connection: "{{ connection }}"
         connectorActions:
-          - inputFields: "{{ inputFields }}"
-            connectionActionId: "{{ connectionActionId }}"
+          - connectionActionId: "{{ connectionActionId }}"
             entityOperation:
-              operation: "{{ operation }}"
               entityId: "{{ entityId }}"
+              operation: "{{ operation }}"
+            inputFields: "{{ inputFields }}"
             outputFields: "{{ outputFields }}"
-    - name: toolFakeConfig
+    - name: description
+      value: "{{ description }}"
       description: |
-        Optional. Configuration for tools behavior in fake mode.
-      value:
-        codeBlock:
-          pythonCode: "{{ pythonCode }}"
-        enableFakeMode: {{ enableFakeMode }}
+        Optional. The description of the toolset.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The display name of the toolset. Must be unique within the same app.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -896,38 +496,438 @@ updateTime
       description: |
         Optional. The execution type of the tools in the toolset.
       valid_values: ['EXECUTION_TYPE_UNSPECIFIED', 'SYNCHRONOUS', 'ASYNCHRONOUS']
-    - name: openApiToolset
+    - name: mcpToolset
       description: |
-        Optional. A toolset that contains a list of tools that are defined by an OpenAPI schema.
+        Optional. A toolset that contains a list of tools that are offered by the MCP server.
       value:
+        apiAuthentication:
+          apiKeyConfig:
+            apiKeySecretVersion: "{{ apiKeySecretVersion }}"
+            keyName: "{{ keyName }}"
+            requestLocation: "{{ requestLocation }}"
+          bearerTokenConfig:
+            token: "{{ token }}"
+          oauthConfig:
+            clientId: "{{ clientId }}"
+            clientSecretVersion: "{{ clientSecretVersion }}"
+            oauthGrantType: "{{ oauthGrantType }}"
+            scopes:
+              - "{{ scopes }}"
+            tokenEndpoint: "{{ tokenEndpoint }}"
+          serviceAccountAuthConfig:
+            scopes:
+              - "{{ scopes }}"
+            serviceAccount: "{{ serviceAccount }}"
+          serviceAgentIdTokenAuthConfig: "{{ serviceAgentIdTokenAuthConfig }}"
+        customHeaders: "{{ customHeaders }}"
+        serverAddress: "{{ serverAddress }}"
         serviceDirectoryConfig:
           service: "{{ service }}"
         tlsConfig:
           caCerts:
-            - displayName: "{{ displayName }}"
-              cert: "{{ cert }}"
-        url: "{{ url }}"
+            - cert: "{{ cert }}"
+              displayName: "{{ displayName }}"
+        toolOverrides:
+          - descriptionOverride: "{{ descriptionOverride }}"
+            nameOverride: "{{ nameOverride }}"
+            snapshot:
+              description: "{{ description }}"
+              inputSchema:
+                additionalProperties:
+                  additionalProperties: "{{ additionalProperties }}"
+                  anyOf: "{{ anyOf }}"
+                  default: "{{ default }}"
+                  defs: "{{ defs }}"
+                  description: "{{ description }}"
+                  enum: "{{ enum }}"
+                  items: "{{ items }}"
+                  maxItems: "{{ maxItems }}"
+                  maximum: {{ maximum }}
+                  minItems: "{{ minItems }}"
+                  minimum: {{ minimum }}
+                  nullable: {{ nullable }}
+                  prefixItems: "{{ prefixItems }}"
+                  properties: "{{ properties }}"
+                  ref: "{{ ref }}"
+                  required: "{{ required }}"
+                  title: "{{ title }}"
+                  type: "{{ type }}"
+                  uniqueItems: {{ uniqueItems }}
+                anyOf:
+                  - additionalProperties:
+                      additionalProperties: "{{ additionalProperties }}"
+                      anyOf: "{{ anyOf }}"
+                      default: "{{ default }}"
+                      defs: "{{ defs }}"
+                      description: "{{ description }}"
+                      enum: "{{ enum }}"
+                      items: "{{ items }}"
+                      maxItems: "{{ maxItems }}"
+                      maximum: {{ maximum }}
+                      minItems: "{{ minItems }}"
+                      minimum: {{ minimum }}
+                      nullable: {{ nullable }}
+                      prefixItems: "{{ prefixItems }}"
+                      properties: "{{ properties }}"
+                      ref: "{{ ref }}"
+                      required: "{{ required }}"
+                      title: "{{ title }}"
+                      type: "{{ type }}"
+                      uniqueItems: {{ uniqueItems }}
+                    anyOf: "{{ anyOf }}"
+                    default: "{{ default }}"
+                    defs: "{{ defs }}"
+                    description: "{{ description }}"
+                    enum: "{{ enum }}"
+                    items:
+                      additionalProperties: "{{ additionalProperties }}"
+                      anyOf: "{{ anyOf }}"
+                      default: "{{ default }}"
+                      defs: "{{ defs }}"
+                      description: "{{ description }}"
+                      enum: "{{ enum }}"
+                      items: "{{ items }}"
+                      maxItems: "{{ maxItems }}"
+                      maximum: {{ maximum }}
+                      minItems: "{{ minItems }}"
+                      minimum: {{ minimum }}
+                      nullable: {{ nullable }}
+                      prefixItems: "{{ prefixItems }}"
+                      properties: "{{ properties }}"
+                      ref: "{{ ref }}"
+                      required: "{{ required }}"
+                      title: "{{ title }}"
+                      type: "{{ type }}"
+                      uniqueItems: {{ uniqueItems }}
+                    maxItems: "{{ maxItems }}"
+                    maximum: {{ maximum }}
+                    minItems: "{{ minItems }}"
+                    minimum: {{ minimum }}
+                    nullable: {{ nullable }}
+                    prefixItems: "{{ prefixItems }}"
+                    properties: "{{ properties }}"
+                    ref: "{{ ref }}"
+                    required: "{{ required }}"
+                    title: "{{ title }}"
+                    type: "{{ type }}"
+                    uniqueItems: {{ uniqueItems }}
+                default: "{{ default }}"
+                defs: "{{ defs }}"
+                description: "{{ description }}"
+                enum:
+                  - "{{ enum }}"
+                items:
+                  additionalProperties: "{{ additionalProperties }}"
+                  anyOf: "{{ anyOf }}"
+                  default: "{{ default }}"
+                  defs: "{{ defs }}"
+                  description: "{{ description }}"
+                  enum: "{{ enum }}"
+                  items: "{{ items }}"
+                  maxItems: "{{ maxItems }}"
+                  maximum: {{ maximum }}
+                  minItems: "{{ minItems }}"
+                  minimum: {{ minimum }}
+                  nullable: {{ nullable }}
+                  prefixItems: "{{ prefixItems }}"
+                  properties: "{{ properties }}"
+                  ref: "{{ ref }}"
+                  required: "{{ required }}"
+                  title: "{{ title }}"
+                  type: "{{ type }}"
+                  uniqueItems: {{ uniqueItems }}
+                maxItems: "{{ maxItems }}"
+                maximum: {{ maximum }}
+                minItems: "{{ minItems }}"
+                minimum: {{ minimum }}
+                nullable: {{ nullable }}
+                prefixItems:
+                  - additionalProperties:
+                      additionalProperties: "{{ additionalProperties }}"
+                      anyOf: "{{ anyOf }}"
+                      default: "{{ default }}"
+                      defs: "{{ defs }}"
+                      description: "{{ description }}"
+                      enum: "{{ enum }}"
+                      items: "{{ items }}"
+                      maxItems: "{{ maxItems }}"
+                      maximum: {{ maximum }}
+                      minItems: "{{ minItems }}"
+                      minimum: {{ minimum }}
+                      nullable: {{ nullable }}
+                      prefixItems: "{{ prefixItems }}"
+                      properties: "{{ properties }}"
+                      ref: "{{ ref }}"
+                      required: "{{ required }}"
+                      title: "{{ title }}"
+                      type: "{{ type }}"
+                      uniqueItems: {{ uniqueItems }}
+                    anyOf: "{{ anyOf }}"
+                    default: "{{ default }}"
+                    defs: "{{ defs }}"
+                    description: "{{ description }}"
+                    enum: "{{ enum }}"
+                    items:
+                      additionalProperties: "{{ additionalProperties }}"
+                      anyOf: "{{ anyOf }}"
+                      default: "{{ default }}"
+                      defs: "{{ defs }}"
+                      description: "{{ description }}"
+                      enum: "{{ enum }}"
+                      items: "{{ items }}"
+                      maxItems: "{{ maxItems }}"
+                      maximum: {{ maximum }}
+                      minItems: "{{ minItems }}"
+                      minimum: {{ minimum }}
+                      nullable: {{ nullable }}
+                      prefixItems: "{{ prefixItems }}"
+                      properties: "{{ properties }}"
+                      ref: "{{ ref }}"
+                      required: "{{ required }}"
+                      title: "{{ title }}"
+                      type: "{{ type }}"
+                      uniqueItems: {{ uniqueItems }}
+                    maxItems: "{{ maxItems }}"
+                    maximum: {{ maximum }}
+                    minItems: "{{ minItems }}"
+                    minimum: {{ minimum }}
+                    nullable: {{ nullable }}
+                    prefixItems: "{{ prefixItems }}"
+                    properties: "{{ properties }}"
+                    ref: "{{ ref }}"
+                    required: "{{ required }}"
+                    title: "{{ title }}"
+                    type: "{{ type }}"
+                    uniqueItems: {{ uniqueItems }}
+                properties: "{{ properties }}"
+                ref: "{{ ref }}"
+                required:
+                  - "{{ required }}"
+                title: "{{ title }}"
+                type: "{{ type }}"
+                uniqueItems: {{ uniqueItems }}
+              outputSchema:
+                additionalProperties:
+                  additionalProperties: "{{ additionalProperties }}"
+                  anyOf: "{{ anyOf }}"
+                  default: "{{ default }}"
+                  defs: "{{ defs }}"
+                  description: "{{ description }}"
+                  enum: "{{ enum }}"
+                  items: "{{ items }}"
+                  maxItems: "{{ maxItems }}"
+                  maximum: {{ maximum }}
+                  minItems: "{{ minItems }}"
+                  minimum: {{ minimum }}
+                  nullable: {{ nullable }}
+                  prefixItems: "{{ prefixItems }}"
+                  properties: "{{ properties }}"
+                  ref: "{{ ref }}"
+                  required: "{{ required }}"
+                  title: "{{ title }}"
+                  type: "{{ type }}"
+                  uniqueItems: {{ uniqueItems }}
+                anyOf:
+                  - additionalProperties:
+                      additionalProperties: "{{ additionalProperties }}"
+                      anyOf: "{{ anyOf }}"
+                      default: "{{ default }}"
+                      defs: "{{ defs }}"
+                      description: "{{ description }}"
+                      enum: "{{ enum }}"
+                      items: "{{ items }}"
+                      maxItems: "{{ maxItems }}"
+                      maximum: {{ maximum }}
+                      minItems: "{{ minItems }}"
+                      minimum: {{ minimum }}
+                      nullable: {{ nullable }}
+                      prefixItems: "{{ prefixItems }}"
+                      properties: "{{ properties }}"
+                      ref: "{{ ref }}"
+                      required: "{{ required }}"
+                      title: "{{ title }}"
+                      type: "{{ type }}"
+                      uniqueItems: {{ uniqueItems }}
+                    anyOf: "{{ anyOf }}"
+                    default: "{{ default }}"
+                    defs: "{{ defs }}"
+                    description: "{{ description }}"
+                    enum: "{{ enum }}"
+                    items:
+                      additionalProperties: "{{ additionalProperties }}"
+                      anyOf: "{{ anyOf }}"
+                      default: "{{ default }}"
+                      defs: "{{ defs }}"
+                      description: "{{ description }}"
+                      enum: "{{ enum }}"
+                      items: "{{ items }}"
+                      maxItems: "{{ maxItems }}"
+                      maximum: {{ maximum }}
+                      minItems: "{{ minItems }}"
+                      minimum: {{ minimum }}
+                      nullable: {{ nullable }}
+                      prefixItems: "{{ prefixItems }}"
+                      properties: "{{ properties }}"
+                      ref: "{{ ref }}"
+                      required: "{{ required }}"
+                      title: "{{ title }}"
+                      type: "{{ type }}"
+                      uniqueItems: {{ uniqueItems }}
+                    maxItems: "{{ maxItems }}"
+                    maximum: {{ maximum }}
+                    minItems: "{{ minItems }}"
+                    minimum: {{ minimum }}
+                    nullable: {{ nullable }}
+                    prefixItems: "{{ prefixItems }}"
+                    properties: "{{ properties }}"
+                    ref: "{{ ref }}"
+                    required: "{{ required }}"
+                    title: "{{ title }}"
+                    type: "{{ type }}"
+                    uniqueItems: {{ uniqueItems }}
+                default: "{{ default }}"
+                defs: "{{ defs }}"
+                description: "{{ description }}"
+                enum:
+                  - "{{ enum }}"
+                items:
+                  additionalProperties: "{{ additionalProperties }}"
+                  anyOf: "{{ anyOf }}"
+                  default: "{{ default }}"
+                  defs: "{{ defs }}"
+                  description: "{{ description }}"
+                  enum: "{{ enum }}"
+                  items: "{{ items }}"
+                  maxItems: "{{ maxItems }}"
+                  maximum: {{ maximum }}
+                  minItems: "{{ minItems }}"
+                  minimum: {{ minimum }}
+                  nullable: {{ nullable }}
+                  prefixItems: "{{ prefixItems }}"
+                  properties: "{{ properties }}"
+                  ref: "{{ ref }}"
+                  required: "{{ required }}"
+                  title: "{{ title }}"
+                  type: "{{ type }}"
+                  uniqueItems: {{ uniqueItems }}
+                maxItems: "{{ maxItems }}"
+                maximum: {{ maximum }}
+                minItems: "{{ minItems }}"
+                minimum: {{ minimum }}
+                nullable: {{ nullable }}
+                prefixItems:
+                  - additionalProperties:
+                      additionalProperties: "{{ additionalProperties }}"
+                      anyOf: "{{ anyOf }}"
+                      default: "{{ default }}"
+                      defs: "{{ defs }}"
+                      description: "{{ description }}"
+                      enum: "{{ enum }}"
+                      items: "{{ items }}"
+                      maxItems: "{{ maxItems }}"
+                      maximum: {{ maximum }}
+                      minItems: "{{ minItems }}"
+                      minimum: {{ minimum }}
+                      nullable: {{ nullable }}
+                      prefixItems: "{{ prefixItems }}"
+                      properties: "{{ properties }}"
+                      ref: "{{ ref }}"
+                      required: "{{ required }}"
+                      title: "{{ title }}"
+                      type: "{{ type }}"
+                      uniqueItems: {{ uniqueItems }}
+                    anyOf: "{{ anyOf }}"
+                    default: "{{ default }}"
+                    defs: "{{ defs }}"
+                    description: "{{ description }}"
+                    enum: "{{ enum }}"
+                    items:
+                      additionalProperties: "{{ additionalProperties }}"
+                      anyOf: "{{ anyOf }}"
+                      default: "{{ default }}"
+                      defs: "{{ defs }}"
+                      description: "{{ description }}"
+                      enum: "{{ enum }}"
+                      items: "{{ items }}"
+                      maxItems: "{{ maxItems }}"
+                      maximum: {{ maximum }}
+                      minItems: "{{ minItems }}"
+                      minimum: {{ minimum }}
+                      nullable: {{ nullable }}
+                      prefixItems: "{{ prefixItems }}"
+                      properties: "{{ properties }}"
+                      ref: "{{ ref }}"
+                      required: "{{ required }}"
+                      title: "{{ title }}"
+                      type: "{{ type }}"
+                      uniqueItems: {{ uniqueItems }}
+                    maxItems: "{{ maxItems }}"
+                    maximum: {{ maximum }}
+                    minItems: "{{ minItems }}"
+                    minimum: {{ minimum }}
+                    nullable: {{ nullable }}
+                    prefixItems: "{{ prefixItems }}"
+                    properties: "{{ properties }}"
+                    ref: "{{ ref }}"
+                    required: "{{ required }}"
+                    title: "{{ title }}"
+                    type: "{{ type }}"
+                    uniqueItems: {{ uniqueItems }}
+                properties: "{{ properties }}"
+                ref: "{{ ref }}"
+                required:
+                  - "{{ required }}"
+                title: "{{ title }}"
+                type: "{{ type }}"
+                uniqueItems: {{ uniqueItems }}
+            tool: "{{ tool }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The unique identifier of the toolset. Format: \`projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}\`
+    - name: openApiToolset
+      description: |
+        Optional. A toolset that contains a list of tools that are defined by an OpenAPI schema.
+      value:
         apiAuthentication:
-          bearerTokenConfig:
-            token: "{{ token }}"
-          serviceAccountAuthConfig:
-            serviceAccount: "{{ serviceAccount }}"
-            scopes:
-              - "{{ scopes }}"
           apiKeyConfig:
+            apiKeySecretVersion: "{{ apiKeySecretVersion }}"
             keyName: "{{ keyName }}"
             requestLocation: "{{ requestLocation }}"
-            apiKeySecretVersion: "{{ apiKeySecretVersion }}"
+          bearerTokenConfig:
+            token: "{{ token }}"
           oauthConfig:
-            tokenEndpoint: "{{ tokenEndpoint }}"
-            oauthGrantType: "{{ oauthGrantType }}"
             clientId: "{{ clientId }}"
             clientSecretVersion: "{{ clientSecretVersion }}"
+            oauthGrantType: "{{ oauthGrantType }}"
             scopes:
               - "{{ scopes }}"
+            tokenEndpoint: "{{ tokenEndpoint }}"
+          serviceAccountAuthConfig:
+            scopes:
+              - "{{ scopes }}"
+            serviceAccount: "{{ serviceAccount }}"
           serviceAgentIdTokenAuthConfig: "{{ serviceAgentIdTokenAuthConfig }}"
-        openApiSchema: "{{ openApiSchema }}"
         ignoreUnknownFields: {{ ignoreUnknownFields }}
+        openApiSchema: "{{ openApiSchema }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
+        tlsConfig:
+          caCerts:
+            - cert: "{{ cert }}"
+              displayName: "{{ displayName }}"
+        url: "{{ url }}"
+    - name: timeout
+      value: "{{ timeout }}"
+      description: |
+        Optional. The timeout for the toolset execution. If not set, the default timeout is 30 seconds for \`SYNCHRONOUS\` toolsets and 60 seconds for \`ASYNCHRONOUS\` toolsets.
+    - name: toolFakeConfig
+      description: |
+        Optional. Configuration for tools behavior in fake mode.
+      value:
+        codeBlock:
+          pythonCode: "{{ pythonCode }}"
+        enableFakeMode: {{ enableFakeMode }}
     - name: toolsetId
       value: "{{ toolsetId }}"
 `}</CodeBlock>
@@ -951,16 +951,16 @@ Updates the specified toolset.
 ```sql
 UPDATE google.ces.toolsets
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__mcpToolset = '{{ mcpToolset }}',
-data__timeout = '{{ timeout }}',
-data__description = '{{ description }}',
 data__connectorToolset = '{{ connectorToolset }}',
-data__toolFakeConfig = '{{ toolFakeConfig }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__etag = '{{ etag }}',
 data__executionType = '{{ executionType }}',
-data__openApiToolset = '{{ openApiToolset }}'
+data__mcpToolset = '{{ mcpToolset }}',
+data__name = '{{ name }}',
+data__openApiToolset = '{{ openApiToolset }}',
+data__timeout = '{{ timeout }}',
+data__toolFakeConfig = '{{ toolFakeConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1003,8 +1003,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND appsId = '{{ appsId }}' --required
 AND toolsetsId = '{{ toolsetsId }}' --required
-AND force = '{{ force }}'
 AND etag = '{{ etag }}'
+AND force = '{{ force }}'
 ;
 ```
 </TabItem>

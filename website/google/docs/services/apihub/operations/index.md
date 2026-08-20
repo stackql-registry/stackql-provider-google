@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 <tr>
@@ -291,8 +291,8 @@ response
 FROM google.apihub.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -371,29 +371,29 @@ updateTime
         Optional. Operation details. Note: Even though this field is optional, it is required for CreateApiOperation API and we will fail the request if not provided.
       value:
         deprecated: {{ deprecated }}
-        mcpTool:
-          title: "{{ title }}"
-          inputSchema:
-            jsonSchema: "{{ jsonSchema }}"
-          outputSchema:
-            jsonSchema: "{{ jsonSchema }}"
-          description: "{{ description }}"
-          name: "{{ name }}"
-          annotations:
-            title: "{{ title }}"
-            readOnlyHint: {{ readOnlyHint }}
-            idempotentHint: {{ idempotentHint }}
-            additionalHints: "{{ additionalHints }}"
-            destructiveHint: {{ destructiveHint }}
-            openWorldHint: {{ openWorldHint }}
         description: "{{ description }}"
-        httpOperation:
-          path:
-            path: "{{ path }}"
-            description: "{{ description }}"
-          method: "{{ method }}"
         documentation:
           externalUri: "{{ externalUri }}"
+        httpOperation:
+          method: "{{ method }}"
+          path:
+            description: "{{ description }}"
+            path: "{{ path }}"
+        mcpTool:
+          annotations:
+            additionalHints: "{{ additionalHints }}"
+            destructiveHint: {{ destructiveHint }}
+            idempotentHint: {{ idempotentHint }}
+            openWorldHint: {{ openWorldHint }}
+            readOnlyHint: {{ readOnlyHint }}
+            title: "{{ title }}"
+          description: "{{ description }}"
+          inputSchema:
+            jsonSchema: "{{ jsonSchema }}"
+          name: "{{ name }}"
+          outputSchema:
+            jsonSchema: "{{ jsonSchema }}"
+          title: "{{ title }}"
     - name: name
       value: "{{ name }}"
       description: |

@@ -98,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#scans_list"><CopyableCode code="scans_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Return available scans given a Database-specific resource name.</td>
 </tr>
 </tbody>
@@ -160,10 +160,10 @@ endTime,
 scanData,
 startTime
 FROM google.spanner.scans
-WHERE view = '{{ view }}'
-AND filter = '{{ filter }}'
+WHERE filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>

@@ -56,6 +56,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. Name of the AgentGateway resource. It matches pattern `projects/*/locations/*/agentGateways/`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="agentConnectivityTemplate" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The resource name of the AgentConnectivityTemplate. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/agentConnectivityTemplates/&#123;template&#125;</td>
+</tr>
+<tr>
     <td><CopyableCode code="agentGatewayCard" /></td>
     <td><code>object</code></td>
     <td>Output only. Field for populated AgentGateway card. (id: AgentGatewayAgentGatewayOutputCard)</td>
@@ -128,6 +133,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Identifier. Name of the AgentGateway resource. It matches pattern `projects/*/locations/*/agentGateways/`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="agentConnectivityTemplate" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The resource name of the AgentConnectivityTemplate. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/agentConnectivityTemplates/&#123;template&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="agentGatewayCard" /></td>
@@ -319,6 +329,7 @@ Gets details of a single AgentGateway.
 ```sql
 SELECT
 name,
+agentConnectivityTemplate,
 agentGatewayCard,
 createTime,
 description,
@@ -344,6 +355,7 @@ Lists AgentGateways in a given project and location.
 ```sql
 SELECT
 name,
+agentConnectivityTemplate,
 agentGatewayCard,
 createTime,
 description,
@@ -382,29 +394,31 @@ Creates a new AgentGateway in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.agent_gateways (
-data__googleManaged,
-data__selfManaged,
-data__name,
-data__labels,
+data__agentConnectivityTemplate,
 data__description,
 data__etag,
+data__googleManaged,
+data__labels,
+data__name,
+data__networkConfig,
 data__protocols,
 data__registries,
-data__networkConfig,
+data__selfManaged,
 projectsId,
 locationsId,
 agentGatewayId
 )
 SELECT 
-'{{ googleManaged }}',
-'{{ selfManaged }}',
-'{{ name }}',
-'{{ labels }}',
+'{{ agentConnectivityTemplate }}',
 '{{ description }}',
 '{{ etag }}',
+'{{ googleManaged }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ networkConfig }}',
 '{{ protocols }}',
 '{{ registries }}',
-'{{ networkConfig }}',
+'{{ selfManaged }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentGatewayId }}'
@@ -428,26 +442,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the agent_gateways resource.
-    - name: googleManaged
+    - name: agentConnectivityTemplate
+      value: "{{ agentConnectivityTemplate }}"
       description: |
-        Optional. Proxy is orchestrated and managed by GoogleCloud in a tenant project.
-      value:
-        governedAccessPath: "{{ governedAccessPath }}"
-    - name: selfManaged
-      description: |
-        Optional. Attach to existing Application Load Balancers or Secure Web Proxies.
-      value:
-        resourceUri: "{{ resourceUri }}"
-        resourceUris:
-          - "{{ resourceUris }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the AgentGateway resource. It matches pattern \`projects/*/locations/*/agentGateways/\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of label tags associated with the AgentGateway resource.
+        Optional. The resource name of the AgentConnectivityTemplate. Format: projects/{project}/locations/{location}/agentConnectivityTemplates/{template}
     - name: description
       value: "{{ description }}"
       description: |
@@ -456,6 +454,30 @@ response
       value: "{{ etag }}"
       description: |
         Optional. Etag of the resource. If this is provided, it must match the server's etag. If the provided etag does not match the server's etag, the request will fail with a 409 ABORTED error.
+    - name: googleManaged
+      description: |
+        Optional. Proxy is orchestrated and managed by GoogleCloud in a tenant project.
+      value:
+        governedAccessPath: "{{ governedAccessPath }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the AgentGateway resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the AgentGateway resource. It matches pattern \`projects/*/locations/*/agentGateways/\`.
+    - name: networkConfig
+      description: |
+        Optional. Network configuration for the AgentGateway.
+      value:
+        dnsPeeringConfig:
+          domains:
+            - "{{ domains }}"
+          targetNetwork: "{{ targetNetwork }}"
+          targetProject: "{{ targetProject }}"
+        egress:
+          networkAttachment: "{{ networkAttachment }}"
     - name: protocols
       value:
         - "{{ protocols }}"
@@ -466,17 +488,13 @@ response
         - "{{ registries }}"
       description: |
         Optional. A list of Agent registries containing the agents, MCP servers and tools governed by the Agent Gateway. Note: Currently limited to project-scoped registries Must be of format \`//agentregistry.googleapis.com/projects/{project}/locations/{location}/\`
-    - name: networkConfig
+    - name: selfManaged
       description: |
-        Optional. Network configuration for the AgentGateway.
+        Optional. Attach to existing Application Load Balancers or Secure Web Proxies.
       value:
-        egress:
-          networkAttachment: "{{ networkAttachment }}"
-        dnsPeeringConfig:
-          domains:
-            - "{{ domains }}"
-          targetProject: "{{ targetProject }}"
-          targetNetwork: "{{ targetNetwork }}"
+        resourceUri: "{{ resourceUri }}"
+        resourceUris:
+          - "{{ resourceUris }}"
     - name: agentGatewayId
       value: "{{ agentGatewayId }}"
 `}</CodeBlock>
@@ -500,15 +518,16 @@ Updates the parameters of a single AgentGateway.
 ```sql
 UPDATE google.networkservices.agent_gateways
 SET 
-data__googleManaged = '{{ googleManaged }}',
-data__selfManaged = '{{ selfManaged }}',
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
+data__agentConnectivityTemplate = '{{ agentConnectivityTemplate }}',
 data__description = '{{ description }}',
 data__etag = '{{ etag }}',
+data__googleManaged = '{{ googleManaged }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__networkConfig = '{{ networkConfig }}',
 data__protocols = '{{ protocols }}',
 data__registries = '{{ registries }}',
-data__networkConfig = '{{ networkConfig }}'
+data__selfManaged = '{{ selfManaged }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

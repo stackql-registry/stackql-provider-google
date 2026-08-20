@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the indexes that match the specified filters. Datastore uses an eventually consistent query to fetch the list of indexes and may occasionally return stale results.</td>
 </tr>
 <tr>
@@ -257,9 +257,9 @@ properties,
 state
 FROM google.datastore.indexes
 WHERE projectId = '{{ projectId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -281,14 +281,14 @@ Creates the specified index. A newly created index's initial state is `CREATING`
 
 ```sql
 INSERT INTO google.datastore.indexes (
-data__kind,
 data__ancestor,
+data__kind,
 data__properties,
 projectId
 )
 SELECT 
-'{{ kind }}',
 '{{ ancestor }}',
+'{{ kind }}',
 '{{ properties }}',
 '{{ projectId }}'
 RETURNING
@@ -308,21 +308,21 @@ response
     - name: projectId
       value: "{{ projectId }}"
       description: Required parameter for the indexes resource.
-    - name: kind
-      value: "{{ kind }}"
-      description: |
-        Required. The entity kind to which this index applies.
     - name: ancestor
       value: "{{ ancestor }}"
       description: |
         Required. The index's ancestor mode. Must not be ANCESTOR_MODE_UNSPECIFIED.
       valid_values: ['ANCESTOR_MODE_UNSPECIFIED', 'NONE', 'ALL_ANCESTORS']
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        Required. The entity kind to which this index applies.
     - name: properties
       description: |
         Required. An ordered sequence of property names and their index attributes. Requires: * A maximum of 100 properties.
       value:
-        - name: "{{ name }}"
-          direction: "{{ direction }}"
+        - direction: "{{ direction }}"
+          name: "{{ name }}"
 `}</CodeBlock>
 
 </TabItem>

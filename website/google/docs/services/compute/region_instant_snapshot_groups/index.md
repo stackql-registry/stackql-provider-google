@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>retrieves the list of InstantSnapshotGroup resources contained within<br />the specified region.</td>
 </tr>
 <tr>
@@ -332,10 +332,10 @@ warning
 FROM google.compute.region_instant_snapshot_groups
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -358,18 +358,18 @@ creates a Regional InstantSnapshotGroup resource
 
 ```sql
 INSERT INTO google.compute.region_instant_snapshot_groups (
-data__sourceConsistencyGroup,
 data__description,
 data__name,
+data__sourceConsistencyGroup,
 project,
 region,
 requestId,
 sourceConsistencyGroup
 )
 SELECT 
-'{{ sourceConsistencyGroup }}',
 '{{ description }}',
 '{{ name }}',
+'{{ sourceConsistencyGroup }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}',
@@ -416,8 +416,6 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the region_instant_snapshot_groups resource.
-    - name: sourceConsistencyGroup
-      value: "{{ sourceConsistencyGroup }}"
     - name: description
       value: "{{ description }}"
       description: |
@@ -433,6 +431,8 @@ zone
         character must be a lowercase letter, and all following characters must be
         a dash, lowercase letter, or digit, except the last character, which cannot
         be a dash.
+    - name: sourceConsistencyGroup
+      value: "{{ sourceConsistencyGroup }}"
     - name: requestId
       value: "{{ requestId }}"
     - name: sourceConsistencyGroup

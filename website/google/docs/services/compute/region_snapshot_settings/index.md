@@ -172,8 +172,8 @@ Patch region snapshot settings.
 ```sql
 UPDATE google.compute.region_snapshot_settings
 SET 
-data__storageLocation = '{{ storageLocation }}',
-data__accessLocation = '{{ accessLocation }}'
+data__accessLocation = '{{ accessLocation }}',
+data__storageLocation = '{{ storageLocation }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required

@@ -179,8 +179,8 @@ Updates the AttributesConfig. The catalog attributes in the request will be upda
 ```sql
 UPDATE google.retail.catalogs_attributes_config
 SET 
-data__name = '{{ name }}',
-data__catalogAttributes = '{{ catalogAttributes }}'
+data__catalogAttributes = '{{ catalogAttributes }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -49,6 +49,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The name of the Goldengate Deployment Environment resource with the format: projects/&#123;project&#125;/locations/&#123;location&#125;/goldengateDeploymentEnvironments/&#123;goldengate_deployment_environment&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="autoScalingEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Whether auto scaling is enabled by default for the Goldengate Deployment Environment resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="category" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The category of the Goldengate Deployment Environment resource. (DEPLOYMENT_CATEGORY_UNSPECIFIED, DATA_REPLICATION_CATEGORY, DATA_TRANSFORMS_CATEGORY)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="defaultCpuCoreCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The default CPU core count of the Goldengate Deployment Environment resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The display name of the Goldengate Deployment Environment resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="environmentType" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The environment type of the Goldengate Deployment Environment resource. (DEPLOYMENT_ENVIRONMENT_TYPE_UNSPECIFIED, PRODUCTION, DEVELOPMENT_OR_TESTING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maxCpuCoreCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The max CPU core count of the Goldengate Deployment Environment resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="memoryGbPerCpuCore" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The memory per CPU core in GBs of the Goldengate Deployment Environment resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="minCpuCoreCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The min CPU core count of the Goldengate Deployment Environment resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="networkBandwidthGbpsPerCpuCore" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The network bandwidth per CPU core in Gbps of the Goldengate Deployment Environment resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="storageUsageLimitGbPerCpuCore" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The storage usage limit per CPU core in GBs of the Goldengate Deployment Environment resource.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -73,7 +128,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists GoldengateDeploymentEnvironments in a given project and location.</td>
 </tr>
 </tbody>
@@ -129,12 +184,22 @@ Lists GoldengateDeploymentEnvironments in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+autoScalingEnabled,
+category,
+defaultCpuCoreCount,
+displayName,
+environmentType,
+maxCpuCoreCount,
+memoryGbPerCpuCore,
+minCpuCoreCount,
+networkBandwidthGbpsPerCpuCore,
+storageUsageLimitGbPerCpuCore
 FROM google.oracledatabase.goldengate_deployment_environments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

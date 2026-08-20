@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists backups in a service.</td>
 </tr>
 <tr>
@@ -298,10 +298,10 @@ FROM google.metastore.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND servicesId = '{{ servicesId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -323,8 +323,8 @@ Creates a new backup in a given project and location.
 
 ```sql
 INSERT INTO google.metastore.backups (
-data__name,
 data__description,
+data__name,
 projectsId,
 locationsId,
 servicesId,
@@ -332,8 +332,8 @@ backupId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ servicesId }}',
@@ -362,14 +362,14 @@ response
     - name: servicesId
       value: "{{ servicesId }}"
       description: Required parameter for the backups resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Identifier. The relative resource name of the backup, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/backups/{backup_id}
     - name: description
       value: "{{ description }}"
       description: |
         Optional. The description of the backup.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The relative resource name of the backup, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/backups/{backup_id}
     - name: backupId
       value: "{{ backupId }}"
     - name: requestId

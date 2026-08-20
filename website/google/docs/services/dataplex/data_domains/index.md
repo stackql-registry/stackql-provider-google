@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_domains_list"><CopyableCode code="projects_locations_data_domains_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DataDomain resources in a project and location.</td>
 </tr>
 <tr>
@@ -339,10 +339,10 @@ updateTime
 FROM google.dataplex.data_domains
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -364,24 +364,24 @@ Creates a DataDomain resource.
 
 ```sql
 INSERT INTO google.dataplex.data_domains (
-data__labels,
 data__contacts,
-data__displayName,
-data__parentDataDomain,
-data__name,
 data__description,
+data__displayName,
+data__labels,
+data__name,
+data__parentDataDomain,
 projectsId,
 locationsId,
 dataDomainId,
 validateOnly
 )
 SELECT 
-'{{ labels }}',
 '{{ contacts }}',
-'{{ displayName }}',
-'{{ parentDataDomain }}',
-'{{ name }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ parentDataDomain }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataDomainId }}',
@@ -406,34 +406,34 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the data_domains resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels for the DataDomain.
     - name: contacts
       description: |
         Required. Contact info for the Data Domains.
       value:
         identities:
-          - contactRole: "{{ contactRole }}"
+          - contactId: "{{ contactId }}"
             contactName: "{{ contactName }}"
-            contactId: "{{ contactId }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. User-friendly display name.
-    - name: parentDataDomain
-      value: "{{ parentDataDomain }}"
-      description: |
-        Optional. Immutable. The resource name of the parent DataDomain. Empty if this is a top-level DataDomain. Format: projects/{project_id_or_number}/locations/{location}/dataDomains/{parent_data_domain_id} This field is immutable after creation.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The relative resource name of the DataDomain, of the form: projects/{project_id_or_number}/locations/{location_id}/dataDomains/{data_domain_id}
+            contactRole: "{{ contactRole }}"
     - name: description
       value: "{{ description }}"
       description: |
         Optional. User-provided description of the DataDomain.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. User-friendly display name.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the DataDomain.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The relative resource name of the DataDomain, of the form: projects/{project_id_or_number}/locations/{location_id}/dataDomains/{data_domain_id}
+    - name: parentDataDomain
+      value: "{{ parentDataDomain }}"
+      description: |
+        Optional. Immutable. The resource name of the parent DataDomain. Empty if this is a top-level DataDomain. Format: projects/{project_id_or_number}/locations/{location}/dataDomains/{parent_data_domain_id} This field is immutable after creation.
     - name: dataDomainId
       value: "{{ dataDomainId }}"
     - name: validateOnly
@@ -459,12 +459,12 @@ Updates a DataDomain resource.
 ```sql
 UPDATE google.dataplex.data_domains
 SET 
-data__labels = '{{ labels }}',
 data__contacts = '{{ contacts }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__parentDataDomain = '{{ parentDataDomain }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__parentDataDomain = '{{ parentDataDomain }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#get_nat_mapping_info"><CopyableCode code="get_nat_mapping_info" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-natName"><code>natName</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-natName"><code>natName</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves runtime Nat mapping information of VM endpoints.</td>
 </tr>
 </tbody>
@@ -170,12 +170,12 @@ FROM google.compute.router_nat_mapping_info
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND router = '{{ router }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND natName = '{{ natName }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND natName = '{{ natName }}'
 ;
 ```
 </TabItem>

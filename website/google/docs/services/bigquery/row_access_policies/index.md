@@ -147,37 +147,44 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a>, <a href="#parameter-+policyId"><code>+policyId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a>, <a href="#parameter-tableId"><code>tableId</code></a>, <a href="#parameter-policyId"><code>policyId</code></a></td>
     <td></td>
     <td>Gets the specified row access policy by policy ID. # IAM Permissions Requires the `bigquery.rowAccessPolicies.get` permission on the table.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a>, <a href="#parameter-tableId"><code>tableId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all row access policies on the specified table. # IAM Permissions Requires the `bigquery.rowAccessPolicies.list` permission on the table.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a>, <a href="#parameter-tableId"><code>tableId</code></a></td>
     <td></td>
     <td>Creates a row access policy. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.create` - `bigquery.rowAccessPolicies.setIamPolicy` - `bigquery.tables.getData`</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a>, <a href="#parameter-+policyId"><code>+policyId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a>, <a href="#parameter-tableId"><code>tableId</code></a>, <a href="#parameter-policyId"><code>policyId</code></a></td>
     <td></td>
     <td>Updates a row access policy. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.update` - `bigquery.rowAccessPolicies.setIamPolicy` - `bigquery.tables.getData`</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a>, <a href="#parameter-+policyId"><code>+policyId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a>, <a href="#parameter-tableId"><code>tableId</code></a>, <a href="#parameter-policyId"><code>policyId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes a row access policy. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.delete` - `bigquery.rowAccessPolicies.setIamPolicy`</td>
+</tr>
+<tr>
+    <td><a href="#batch_delete"><CopyableCode code="batch_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a>, <a href="#parameter-tableId"><code>tableId</code></a></td>
+    <td></td>
+    <td>Deletes provided row access policies. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.delete` - `bigquery.rowAccessPolicies.setIamPolicy`</td>
 </tr>
 </tbody>
 </table>
@@ -195,23 +202,23 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-+datasetId">
-    <td><CopyableCode code="+datasetId" /></td>
+<tr id="parameter-datasetId">
+    <td><CopyableCode code="datasetId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-+policyId">
-    <td><CopyableCode code="+policyId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-+tableId">
-    <td><CopyableCode code="+tableId" /></td>
+<tr id="parameter-policyId">
+    <td><CopyableCode code="policyId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
 <tr id="parameter-projectId">
     <td><CopyableCode code="projectId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-tableId">
+    <td><CopyableCode code="tableId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -256,9 +263,9 @@ lastModifiedTime,
 rowAccessPolicyReference
 FROM google.bigquery.row_access_policies
 WHERE projectId = '{{ projectId }}' -- required
-AND +datasetId = '{{ +datasetId }}' -- required
-AND +tableId = '{{ +tableId }}' -- required
-AND +policyId = '{{ +policyId }}' -- required
+AND datasetId = '{{ datasetId }}' -- required
+AND tableId = '{{ tableId }}' -- required
+AND policyId = '{{ policyId }}' -- required
 ;
 ```
 </TabItem>
@@ -276,10 +283,10 @@ lastModifiedTime,
 rowAccessPolicyReference
 FROM google.bigquery.row_access_policies
 WHERE projectId = '{{ projectId }}' -- required
-AND +datasetId = '{{ +datasetId }}' -- required
-AND +tableId = '{{ +tableId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND datasetId = '{{ datasetId }}' -- required
+AND tableId = '{{ tableId }}' -- required
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -301,20 +308,20 @@ Creates a row access policy. # IAM Permissions Requires the following IAM permis
 
 ```sql
 INSERT INTO google.bigquery.row_access_policies (
+data__filterPredicate,
 data__grantees,
 data__rowAccessPolicyReference,
-data__filterPredicate,
 projectId,
-+datasetId,
-+tableId
+datasetId,
+tableId
 )
 SELECT 
+'{{ filterPredicate }}',
 '{{ grantees }}',
 '{{ rowAccessPolicyReference }}',
-'{{ filterPredicate }}',
 '{{ projectId }}',
-'{{ +datasetId }}',
-'{{ +tableId }}'
+'{{ datasetId }}',
+'{{ tableId }}'
 RETURNING
 creationTime,
 etag,
@@ -333,12 +340,16 @@ rowAccessPolicyReference
     - name: projectId
       value: "{{ projectId }}"
       description: Required parameter for the row_access_policies resource.
-    - name: +datasetId
-      value: "{{ +datasetId }}"
+    - name: datasetId
+      value: "{{ datasetId }}"
       description: Required parameter for the row_access_policies resource.
-    - name: +tableId
-      value: "{{ +tableId }}"
+    - name: tableId
+      value: "{{ tableId }}"
       description: Required parameter for the row_access_policies resource.
+    - name: filterPredicate
+      value: "{{ filterPredicate }}"
+      description: |
+        Required. A SQL boolean expression that represents the rows defined by this row access policy, similar to the boolean expression in a WHERE clause of a SELECT query on a table. References to other tables, routines, and temporary functions are not supported. Examples: region="EU" date_field = CAST('2019-9-27' as DATE) nullable_field is not NULL numeric_field BETWEEN 1.0 AND 5.0
     - name: grantees
       value:
         - "{{ grantees }}"
@@ -348,14 +359,10 @@ rowAccessPolicyReference
       description: |
         Required. Reference describing the ID of this row access policy.
       value:
-        projectId: "{{ projectId }}"
         datasetId: "{{ datasetId }}"
         policyId: "{{ policyId }}"
+        projectId: "{{ projectId }}"
         tableId: "{{ tableId }}"
-    - name: filterPredicate
-      value: "{{ filterPredicate }}"
-      description: |
-        Required. A SQL boolean expression that represents the rows defined by this row access policy, similar to the boolean expression in a WHERE clause of a SELECT query on a table. References to other tables, routines, and temporary functions are not supported. Examples: region="EU" date_field = CAST('2019-9-27' as DATE) nullable_field is not NULL numeric_field BETWEEN 1.0 AND 5.0
 `}</CodeBlock>
 
 </TabItem>
@@ -377,14 +384,14 @@ Updates a row access policy. # IAM Permissions Requires the following IAM permis
 ```sql
 REPLACE google.bigquery.row_access_policies
 SET 
+data__filterPredicate = '{{ filterPredicate }}',
 data__grantees = '{{ grantees }}',
-data__rowAccessPolicyReference = '{{ rowAccessPolicyReference }}',
-data__filterPredicate = '{{ filterPredicate }}'
+data__rowAccessPolicyReference = '{{ rowAccessPolicyReference }}'
 WHERE 
 projectId = '{{ projectId }}' --required
-AND +datasetId = '{{ +datasetId }}' --required
-AND +tableId = '{{ +tableId }}' --required
-AND +policyId = '{{ +policyId }}' --required
+AND datasetId = '{{ datasetId }}' --required
+AND tableId = '{{ tableId }}' --required
+AND policyId = '{{ policyId }}' --required
 RETURNING
 creationTime,
 etag,
@@ -402,7 +409,8 @@ rowAccessPolicyReference;
 <Tabs
     defaultValue="delete"
     values={[
-        { label: 'delete', value: 'delete' }
+        { label: 'delete', value: 'delete' },
+        { label: 'batch_delete', value: 'batch_delete' }
     ]}
 >
 <TabItem value="delete">
@@ -412,10 +420,22 @@ Deletes a row access policy. # IAM Permissions Requires the following IAM permis
 ```sql
 DELETE FROM google.bigquery.row_access_policies
 WHERE projectId = '{{ projectId }}' --required
-AND +datasetId = '{{ +datasetId }}' --required
-AND +tableId = '{{ +tableId }}' --required
-AND +policyId = '{{ +policyId }}' --required
+AND datasetId = '{{ datasetId }}' --required
+AND tableId = '{{ tableId }}' --required
+AND policyId = '{{ policyId }}' --required
 AND force = '{{ force }}'
+;
+```
+</TabItem>
+<TabItem value="batch_delete">
+
+Deletes provided row access policies. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.delete` - `bigquery.rowAccessPolicies.setIamPolicy`
+
+```sql
+DELETE FROM google.bigquery.row_access_policies
+WHERE projectId = '{{ projectId }}' --required
+AND datasetId = '{{ datasetId }}' --required
+AND tableId = '{{ tableId }}' --required
 ;
 ```
 </TabItem>

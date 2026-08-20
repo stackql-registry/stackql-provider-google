@@ -346,7 +346,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes the specified agent.</td>
 </tr>
 </tbody>
@@ -532,50 +532,50 @@ Creates a new agent in the given app.
 
 ```sql
 INSERT INTO google.ces.agents (
-data__beforeToolCallbacks,
-data__remoteDialogflowAgent,
-data__description,
+data__afterAgentCallbacks,
 data__afterModelCallbacks,
-data__instruction,
-data__tools,
+data__afterToolCallbacks,
 data__beforeAgentCallbacks,
+data__beforeModelCallbacks,
+data__beforeToolCallbacks,
+data__childAgents,
+data__description,
+data__displayName,
 data__etag,
 data__guardrails,
+data__instruction,
+data__llmAgent,
+data__modelSettings,
 data__name,
-data__displayName,
-data__beforeModelCallbacks,
-data__childAgents,
-data__afterToolCallbacks,
-data__afterAgentCallbacks,
+data__remoteDialogflowAgent,
+data__tools,
 data__toolsets,
 data__transferRules,
-data__modelSettings,
-data__llmAgent,
 projectsId,
 locationsId,
 appsId,
 agentId
 )
 SELECT 
-'{{ beforeToolCallbacks }}',
-'{{ remoteDialogflowAgent }}',
-'{{ description }}',
+'{{ afterAgentCallbacks }}',
 '{{ afterModelCallbacks }}',
-'{{ instruction }}',
-'{{ tools }}',
+'{{ afterToolCallbacks }}',
 '{{ beforeAgentCallbacks }}',
+'{{ beforeModelCallbacks }}',
+'{{ beforeToolCallbacks }}',
+'{{ childAgents }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ etag }}',
 '{{ guardrails }}',
+'{{ instruction }}',
+'{{ llmAgent }}',
+'{{ modelSettings }}',
 '{{ name }}',
-'{{ displayName }}',
-'{{ beforeModelCallbacks }}',
-'{{ childAgents }}',
-'{{ afterToolCallbacks }}',
-'{{ afterAgentCallbacks }}',
+'{{ remoteDialogflowAgent }}',
+'{{ tools }}',
 '{{ toolsets }}',
 '{{ transferRules }}',
-'{{ modelSettings }}',
-'{{ llmAgent }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ appsId }}',
@@ -621,54 +621,67 @@ validationErrors
     - name: appsId
       value: "{{ appsId }}"
       description: Required parameter for the agents resource.
-    - name: beforeToolCallbacks
+    - name: afterAgentCallbacks
       description: |
-        Optional. The callbacks to execute before the tool is invoked. If there are multiple tool invocations, the callback will be executed multiple times. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
+        Optional. The callbacks to execute after the agent is called. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
       value:
-        - pythonCode: "{{ pythonCode }}"
+        - description: "{{ description }}"
           disabled: {{ disabled }}
-          description: "{{ description }}"
           proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
-    - name: remoteDialogflowAgent
-      description: |
-        Optional. The remote [Dialogflow](https://cloud.google.com/dialogflow/cx/docs/concept/console-conversational-agents) agent to be used for the agent execution. If this field is set, all other agent level properties will be ignored. Note: If the Dialogflow agent is in a different project from the app, you should grant \`roles/dialogflow.client\` to the CES service agent \`service-@gcp-sa-ces.iam.gserviceaccount.com\`.
-      value:
-        environmentId: "{{ environmentId }}"
-        inputVariableMapping: "{{ inputVariableMapping }}"
-        outputVariableMapping: "{{ outputVariableMapping }}"
-        languageCodeVariable: "{{ languageCodeVariable }}"
-        flowId: "{{ flowId }}"
-        agent: "{{ agent }}"
-        respectResponseInterruptionSettings: {{ respectResponseInterruptionSettings }}
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Human-readable description of the agent.
+          pythonCode: "{{ pythonCode }}"
     - name: afterModelCallbacks
       description: |
         Optional. The callbacks to execute after the model is called. If there are multiple calls to the model, the callback will be executed multiple times. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
       value:
-        - pythonCode: "{{ pythonCode }}"
+        - description: "{{ description }}"
           disabled: {{ disabled }}
-          description: "{{ description }}"
           proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
-    - name: instruction
-      value: "{{ instruction }}"
+          pythonCode: "{{ pythonCode }}"
+    - name: afterToolCallbacks
       description: |
-        Optional. Instructions for the LLM model to guide the agent's behavior.
-    - name: tools
+        Optional. The callbacks to execute after the tool is invoked. If there are multiple tool invocations, the callback will be executed multiple times. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
       value:
-        - "{{ tools }}"
-      description: |
-        Optional. List of available tools for the agent. Format: \`projects/{project}/locations/{location}/apps/{app}/tools/{tool}\`
+        - description: "{{ description }}"
+          disabled: {{ disabled }}
+          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
+          pythonCode: "{{ pythonCode }}"
     - name: beforeAgentCallbacks
       description: |
         Optional. The callbacks to execute before the agent is called. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
       value:
-        - pythonCode: "{{ pythonCode }}"
+        - description: "{{ description }}"
           disabled: {{ disabled }}
-          description: "{{ description }}"
           proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
+          pythonCode: "{{ pythonCode }}"
+    - name: beforeModelCallbacks
+      description: |
+        Optional. The callbacks to execute before the model is called. If there are multiple calls to the model, the callback will be executed multiple times. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
+      value:
+        - description: "{{ description }}"
+          disabled: {{ disabled }}
+          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
+          pythonCode: "{{ pythonCode }}"
+    - name: beforeToolCallbacks
+      description: |
+        Optional. The callbacks to execute before the tool is invoked. If there are multiple tool invocations, the callback will be executed multiple times. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
+      value:
+        - description: "{{ description }}"
+          disabled: {{ disabled }}
+          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
+          pythonCode: "{{ pythonCode }}"
+    - name: childAgents
+      value:
+        - "{{ childAgents }}"
+      description: |
+        Optional. List of child agents in the agent tree. Format: \`projects/{project}/locations/{location}/apps/{app}/agents/{agent}\`
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Human-readable description of the agent.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name of the agent.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -678,73 +691,60 @@ validationErrors
         - "{{ guardrails }}"
       description: |
         Optional. List of guardrails for the agent. Format: \`projects/{project}/locations/{location}/apps/{app}/guardrails/{guardrail}\`
-    - name: name
-      value: "{{ name }}"
+    - name: instruction
+      value: "{{ instruction }}"
       description: |
-        Identifier. The unique identifier of the agent. Format: \`projects/{project}/locations/{location}/apps/{app}/agents/{agent}\`
-    - name: displayName
-      value: "{{ displayName }}"
+        Optional. Instructions for the LLM model to guide the agent's behavior.
+    - name: llmAgent
+      value: "{{ llmAgent }}"
       description: |
-        Required. Display name of the agent.
-    - name: beforeModelCallbacks
-      description: |
-        Optional. The callbacks to execute before the model is called. If there are multiple calls to the model, the callback will be executed multiple times. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
-      value:
-        - pythonCode: "{{ pythonCode }}"
-          disabled: {{ disabled }}
-          description: "{{ description }}"
-          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
-    - name: childAgents
-      value:
-        - "{{ childAgents }}"
-      description: |
-        Optional. List of child agents in the agent tree. Format: \`projects/{project}/locations/{location}/apps/{app}/agents/{agent}\`
-    - name: afterToolCallbacks
-      description: |
-        Optional. The callbacks to execute after the tool is invoked. If there are multiple tool invocations, the callback will be executed multiple times. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
-      value:
-        - pythonCode: "{{ pythonCode }}"
-          disabled: {{ disabled }}
-          description: "{{ description }}"
-          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
-    - name: afterAgentCallbacks
-      description: |
-        Optional. The callbacks to execute after the agent is called. The provided callbacks are executed sequentially in the exact order they are given in the list. If a callback returns an overridden response, execution stops and any remaining callbacks are skipped.
-      value:
-        - pythonCode: "{{ pythonCode }}"
-          disabled: {{ disabled }}
-          description: "{{ description }}"
-          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
-    - name: toolsets
-      description: |
-        Optional. List of toolsets for the agent.
-      value:
-        - toolset: "{{ toolset }}"
-          toolIds: "{{ toolIds }}"
-    - name: transferRules
-      description: |
-        Optional. Agent transfer rules. If multiple rules match, the first one in the list will be used.
-      value:
-        - disablePlannerTransfer:
-            expressionCondition:
-              expression: "{{ expression }}"
-          deterministicTransfer:
-            pythonCodeCondition:
-              pythonCode: "{{ pythonCode }}"
-            expressionCondition:
-              expression: "{{ expression }}"
-          childAgent: "{{ childAgent }}"
-          direction: "{{ direction }}"
+        Optional. The default agent type.
     - name: modelSettings
       description: |
         Optional. Configurations for the LLM model.
       value:
         model: "{{ model }}"
         temperature: {{ temperature }}
-    - name: llmAgent
-      value: "{{ llmAgent }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. The default agent type.
+        Identifier. The unique identifier of the agent. Format: \`projects/{project}/locations/{location}/apps/{app}/agents/{agent}\`
+    - name: remoteDialogflowAgent
+      description: |
+        Optional. The remote [Dialogflow](https://cloud.google.com/dialogflow/cx/docs/concept/console-conversational-agents) agent to be used for the agent execution. If this field is set, all other agent level properties will be ignored. Note: If the Dialogflow agent is in a different project from the app, you should grant \`roles/dialogflow.client\` to the CES service agent \`service-@gcp-sa-ces.iam.gserviceaccount.com\`.
+      value:
+        agent: "{{ agent }}"
+        environmentId: "{{ environmentId }}"
+        flowId: "{{ flowId }}"
+        inputVariableMapping: "{{ inputVariableMapping }}"
+        languageCodeVariable: "{{ languageCodeVariable }}"
+        outputVariableMapping: "{{ outputVariableMapping }}"
+        respectResponseInterruptionSettings: {{ respectResponseInterruptionSettings }}
+    - name: tools
+      value:
+        - "{{ tools }}"
+      description: |
+        Optional. List of available tools for the agent. Format: \`projects/{project}/locations/{location}/apps/{app}/tools/{tool}\`
+    - name: toolsets
+      description: |
+        Optional. List of toolsets for the agent.
+      value:
+        - toolIds: "{{ toolIds }}"
+          toolset: "{{ toolset }}"
+    - name: transferRules
+      description: |
+        Optional. Agent transfer rules. If multiple rules match, the first one in the list will be used.
+      value:
+        - childAgent: "{{ childAgent }}"
+          deterministicTransfer:
+            expressionCondition:
+              expression: "{{ expression }}"
+            pythonCodeCondition:
+              pythonCode: "{{ pythonCode }}"
+          direction: "{{ direction }}"
+          disablePlannerTransfer:
+            expressionCondition:
+              expression: "{{ expression }}"
     - name: agentId
       value: "{{ agentId }}"
 `}</CodeBlock>
@@ -768,25 +768,25 @@ Updates the specified agent.
 ```sql
 UPDATE google.ces.agents
 SET 
-data__beforeToolCallbacks = '{{ beforeToolCallbacks }}',
-data__remoteDialogflowAgent = '{{ remoteDialogflowAgent }}',
-data__description = '{{ description }}',
+data__afterAgentCallbacks = '{{ afterAgentCallbacks }}',
 data__afterModelCallbacks = '{{ afterModelCallbacks }}',
-data__instruction = '{{ instruction }}',
-data__tools = '{{ tools }}',
+data__afterToolCallbacks = '{{ afterToolCallbacks }}',
 data__beforeAgentCallbacks = '{{ beforeAgentCallbacks }}',
+data__beforeModelCallbacks = '{{ beforeModelCallbacks }}',
+data__beforeToolCallbacks = '{{ beforeToolCallbacks }}',
+data__childAgents = '{{ childAgents }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__etag = '{{ etag }}',
 data__guardrails = '{{ guardrails }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__beforeModelCallbacks = '{{ beforeModelCallbacks }}',
-data__childAgents = '{{ childAgents }}',
-data__afterToolCallbacks = '{{ afterToolCallbacks }}',
-data__afterAgentCallbacks = '{{ afterAgentCallbacks }}',
-data__toolsets = '{{ toolsets }}',
-data__transferRules = '{{ transferRules }}',
+data__instruction = '{{ instruction }}',
+data__llmAgent = '{{ llmAgent }}',
 data__modelSettings = '{{ modelSettings }}',
-data__llmAgent = '{{ llmAgent }}'
+data__name = '{{ name }}',
+data__remoteDialogflowAgent = '{{ remoteDialogflowAgent }}',
+data__tools = '{{ tools }}',
+data__toolsets = '{{ toolsets }}',
+data__transferRules = '{{ transferRules }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -840,8 +840,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND appsId = '{{ appsId }}' --required
 AND agentsId = '{{ agentsId }}' --required
-AND force = '{{ force }}'
 AND etag = '{{ etag }}'
+AND force = '{{ force }}'
 ;
 ```
 </TabItem>

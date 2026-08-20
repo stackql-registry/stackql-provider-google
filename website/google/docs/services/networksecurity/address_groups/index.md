@@ -33,78 +33,14 @@ Creates, updates, deletes, gets or lists an <code>address_groups</code> resource
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_address_groups_get"
+    defaultValue="organizations_locations_address_groups_get"
     values={[
-        { label: 'projects_locations_address_groups_get', value: 'projects_locations_address_groups_get' },
         { label: 'organizations_locations_address_groups_get', value: 'organizations_locations_address_groups_get' },
-        { label: 'projects_locations_address_groups_list', value: 'projects_locations_address_groups_list' },
-        { label: 'organizations_locations_address_groups_list', value: 'organizations_locations_address_groups_list' }
+        { label: 'projects_locations_address_groups_get', value: 'projects_locations_address_groups_get' },
+        { label: 'organizations_locations_address_groups_list', value: 'organizations_locations_address_groups_list' },
+        { label: 'projects_locations_address_groups_list', value: 'projects_locations_address_groups_list' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Required. Name of the AddressGroup resource. It matches pattern `projects/*/locations/&#123;location&#125;/addressGroups/`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="capacity" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Required. Capacity of the Address Group</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Free-text description of the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="items" /></td>
-    <td><code>array</code></td>
-    <td>Optional. List of items.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Set of label tags associated with the AddressGroup resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="purpose" /></td>
-    <td><code>array</code></td>
-    <td>Optional. List of supported purposes of the Address Group.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selfLink" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-defined fully-qualified URL for this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>Required. The type of the Address Group. Possible values are "IPv4" or "IPV6". (TYPE_UNSPECIFIED, IPV4, IPV6)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was updated.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_address_groups_get">
 
 <table>
@@ -169,7 +105,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_address_groups_list">
+<TabItem value="projects_locations_address_groups_get">
 
 <table>
 <thead>
@@ -234,6 +170,70 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="organizations_locations_address_groups_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Required. Name of the AddressGroup resource. It matches pattern `projects/*/locations/&#123;location&#125;/addressGroups/`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="capacity" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Required. Capacity of the Address Group</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Free-text description of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="items" /></td>
+    <td><code>array</code></td>
+    <td>Optional. List of items.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Set of label tags associated with the AddressGroup resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="purpose" /></td>
+    <td><code>array</code></td>
+    <td>Optional. List of supported purposes of the Address Group.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Server-defined fully-qualified URL for this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td>Required. The type of the Address Group. Possible values are "IPv4" or "IPV6". (TYPE_UNSPECIFIED, IPV4, IPV6)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was updated.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_address_groups_list">
 
 <table>
 <thead>
@@ -315,13 +315,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_address_groups_get"><CopyableCode code="projects_locations_address_groups_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
-    <td></td>
-    <td>Gets details of a single address group.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_address_groups_get"><CopyableCode code="organizations_locations_address_groups_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
@@ -329,11 +322,11 @@ The following methods are available for this resource:
     <td>Gets details of a single address group.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_address_groups_list"><CopyableCode code="projects_locations_address_groups_list" /></a></td>
+    <td><a href="#projects_locations_address_groups_get"><CopyableCode code="projects_locations_address_groups_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Lists address groups in a given project and location.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
+    <td></td>
+    <td>Gets details of a single address group.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_address_groups_list"><CopyableCode code="organizations_locations_address_groups_list" /></a></td>
@@ -343,25 +336,25 @@ The following methods are available for this resource:
     <td>Lists address groups in a given project and location.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_address_groups_create"><CopyableCode code="projects_locations_address_groups_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
+    <td><a href="#projects_locations_address_groups_list"><CopyableCode code="projects_locations_address_groups_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-addressGroupId"><code>addressGroupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a new address group in a given project and location.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists address groups in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_address_groups_create"><CopyableCode code="organizations_locations_address_groups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-addressGroupId"><code>addressGroupId</code></a></td>
+    <td><a href="#parameter-addressGroupId"><code>addressGroupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new address group in a given project and location.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_address_groups_patch"><CopyableCode code="projects_locations_address_groups_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates the parameters of a single address group.</td>
+    <td><a href="#projects_locations_address_groups_create"><CopyableCode code="projects_locations_address_groups_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-addressGroupId"><code>addressGroupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Creates a new address group in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_address_groups_patch"><CopyableCode code="organizations_locations_address_groups_patch" /></a></td>
@@ -371,11 +364,11 @@ The following methods are available for this resource:
     <td>Updates parameters of an address group.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_address_groups_delete"><CopyableCode code="projects_locations_address_groups_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#projects_locations_address_groups_patch"><CopyableCode code="projects_locations_address_groups_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Deletes a single address group.</td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates the parameters of a single address group.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_address_groups_delete"><CopyableCode code="organizations_locations_address_groups_delete" /></a></td>
@@ -385,16 +378,23 @@ The following methods are available for this resource:
     <td>Deletes an address group.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_address_groups_clone_items"><CopyableCode code="projects_locations_address_groups_clone_items" /></a></td>
-    <td><CopyableCode code="exec" /></td>
+    <td><a href="#projects_locations_address_groups_delete"><CopyableCode code="projects_locations_address_groups_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
-    <td></td>
-    <td>Clones items from one address group to another.</td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Deletes a single address group.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_address_groups_clone_items"><CopyableCode code="organizations_locations_address_groups_clone_items" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
+    <td></td>
+    <td>Clones items from one address group to another.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_address_groups_clone_items"><CopyableCode code="projects_locations_address_groups_clone_items" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
     <td></td>
     <td>Clones items from one address group to another.</td>
 </tr>
@@ -470,37 +470,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_address_groups_get"
+    defaultValue="organizations_locations_address_groups_get"
     values={[
-        { label: 'projects_locations_address_groups_get', value: 'projects_locations_address_groups_get' },
         { label: 'organizations_locations_address_groups_get', value: 'organizations_locations_address_groups_get' },
-        { label: 'projects_locations_address_groups_list', value: 'projects_locations_address_groups_list' },
-        { label: 'organizations_locations_address_groups_list', value: 'organizations_locations_address_groups_list' }
+        { label: 'projects_locations_address_groups_get', value: 'projects_locations_address_groups_get' },
+        { label: 'organizations_locations_address_groups_list', value: 'organizations_locations_address_groups_list' },
+        { label: 'projects_locations_address_groups_list', value: 'projects_locations_address_groups_list' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_get">
-
-Gets details of a single address group.
-
-```sql
-SELECT
-name,
-capacity,
-createTime,
-description,
-items,
-labels,
-purpose,
-selfLink,
-type,
-updateTime
-FROM google.networksecurity.address_groups
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND addressGroupsId = '{{ addressGroupsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_address_groups_get">
 
 Gets details of a single address group.
@@ -524,9 +501,9 @@ AND addressGroupsId = '{{ addressGroupsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_address_groups_list">
+<TabItem value="projects_locations_address_groups_get">
 
-Lists address groups in a given project and location.
+Gets details of a single address group.
 
 ```sql
 SELECT
@@ -543,9 +520,7 @@ updateTime
 FROM google.networksecurity.address_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND addressGroupsId = '{{ addressGroupsId }}' -- required
 ;
 ```
 </TabItem>
@@ -574,46 +549,71 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_address_groups_list">
+
+Lists address groups in a given project and location.
+
+```sql
+SELECT
+name,
+capacity,
+createTime,
+description,
+items,
+labels,
+purpose,
+selfLink,
+type,
+updateTime
+FROM google.networksecurity.address_groups
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_address_groups_create"
+    defaultValue="organizations_locations_address_groups_create"
     values={[
-        { label: 'projects_locations_address_groups_create', value: 'projects_locations_address_groups_create' },
         { label: 'organizations_locations_address_groups_create', value: 'organizations_locations_address_groups_create' },
+        { label: 'projects_locations_address_groups_create', value: 'projects_locations_address_groups_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_create">
+<TabItem value="organizations_locations_address_groups_create">
 
 Creates a new address group in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.address_groups (
 data__capacity,
-data__purpose,
 data__description,
-data__name,
-data__type,
 data__items,
 data__labels,
-projectsId,
+data__name,
+data__purpose,
+data__type,
+organizationsId,
 locationsId,
 addressGroupId,
 requestId
 )
 SELECT 
 {{ capacity }},
-'{{ purpose }}',
 '{{ description }}',
-'{{ name }}',
-'{{ type }}',
 '{{ items }}',
 '{{ labels }}',
-'{{ projectsId }}',
+'{{ name }}',
+'{{ purpose }}',
+'{{ type }}',
+'{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ addressGroupId }}',
 '{{ requestId }}'
@@ -626,36 +626,36 @@ response
 ;
 ```
 </TabItem>
-<TabItem value="organizations_locations_address_groups_create">
+<TabItem value="projects_locations_address_groups_create">
 
 Creates a new address group in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.address_groups (
 data__capacity,
-data__purpose,
 data__description,
-data__name,
-data__type,
 data__items,
 data__labels,
-organizationsId,
+data__name,
+data__purpose,
+data__type,
+projectsId,
 locationsId,
-requestId,
-addressGroupId
+addressGroupId,
+requestId
 )
 SELECT 
 {{ capacity }},
-'{{ purpose }}',
 '{{ description }}',
-'{{ name }}',
-'{{ type }}',
 '{{ items }}',
 '{{ labels }}',
-'{{ organizationsId }}',
+'{{ name }}',
+'{{ purpose }}',
+'{{ type }}',
+'{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ addressGroupId }}'
+'{{ addressGroupId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -670,37 +670,23 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: address_groups
   props:
-    - name: projectsId
-      value: "{{ projectsId }}"
+    - name: organizationsId
+      value: "{{ organizationsId }}"
       description: Required parameter for the address_groups resource.
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the address_groups resource.
-    - name: organizationsId
-      value: "{{ organizationsId }}"
+    - name: projectsId
+      value: "{{ projectsId }}"
       description: Required parameter for the address_groups resource.
     - name: capacity
       value: {{ capacity }}
       description: |
         Required. Capacity of the Address Group
-    - name: purpose
-      value:
-        - "{{ purpose }}"
-      description: |
-        Optional. List of supported purposes of the Address Group.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. Free-text description of the resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Name of the AddressGroup resource. It matches pattern \`projects/*/locations/{location}/addressGroups/\`.
-    - name: type
-      value: "{{ type }}"
-      description: |
-        Required. The type of the Address Group. Possible values are "IPv4" or "IPV6".
-      valid_values: ['TYPE_UNSPECIFIED', 'IPV4', 'IPV6']
     - name: items
       value:
         - "{{ items }}"
@@ -710,6 +696,20 @@ response
       value: "{{ labels }}"
       description: |
         Optional. Set of label tags associated with the AddressGroup resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Name of the AddressGroup resource. It matches pattern \`projects/*/locations/{location}/addressGroups/\`.
+    - name: purpose
+      value:
+        - "{{ purpose }}"
+      description: |
+        Optional. List of supported purposes of the Address Group.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The type of the Address Group. Possible values are "IPv4" or "IPV6".
+      valid_values: ['TYPE_UNSPECIFIED', 'IPV4', 'IPV6']
     - name: addressGroupId
       value: "{{ addressGroupId }}"
     - name: requestId
@@ -723,40 +723,12 @@ response
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_locations_address_groups_patch"
+    defaultValue="organizations_locations_address_groups_patch"
     values={[
-        { label: 'projects_locations_address_groups_patch', value: 'projects_locations_address_groups_patch' },
-        { label: 'organizations_locations_address_groups_patch', value: 'organizations_locations_address_groups_patch' }
+        { label: 'organizations_locations_address_groups_patch', value: 'organizations_locations_address_groups_patch' },
+        { label: 'projects_locations_address_groups_patch', value: 'projects_locations_address_groups_patch' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_patch">
-
-Updates the parameters of a single address group.
-
-```sql
-UPDATE google.networksecurity.address_groups
-SET 
-data__capacity = {{ capacity }},
-data__purpose = '{{ purpose }}',
-data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__type = '{{ type }}',
-data__items = '{{ items }}',
-data__labels = '{{ labels }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND addressGroupsId = '{{ addressGroupsId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response;
-```
-</TabItem>
 <TabItem value="organizations_locations_address_groups_patch">
 
 Updates parameters of an address group.
@@ -765,14 +737,42 @@ Updates parameters of an address group.
 UPDATE google.networksecurity.address_groups
 SET 
 data__capacity = {{ capacity }},
-data__purpose = '{{ purpose }}',
 data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__type = '{{ type }}',
 data__items = '{{ items }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__purpose = '{{ purpose }}',
+data__type = '{{ type }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND addressGroupsId = '{{ addressGroupsId }}' --required
+AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
+```
+</TabItem>
+<TabItem value="projects_locations_address_groups_patch">
+
+Updates the parameters of a single address group.
+
+```sql
+UPDATE google.networksecurity.address_groups
+SET 
+data__capacity = {{ capacity }},
+data__description = '{{ description }}',
+data__items = '{{ items }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__purpose = '{{ purpose }}',
+data__type = '{{ type }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND addressGroupsId = '{{ addressGroupsId }}' --required
 AND requestId = '{{ requestId}}'
@@ -791,25 +791,12 @@ response;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_locations_address_groups_delete"
+    defaultValue="organizations_locations_address_groups_delete"
     values={[
-        { label: 'projects_locations_address_groups_delete', value: 'projects_locations_address_groups_delete' },
-        { label: 'organizations_locations_address_groups_delete', value: 'organizations_locations_address_groups_delete' }
+        { label: 'organizations_locations_address_groups_delete', value: 'organizations_locations_address_groups_delete' },
+        { label: 'projects_locations_address_groups_delete', value: 'projects_locations_address_groups_delete' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_delete">
-
-Deletes a single address group.
-
-```sql
-DELETE FROM google.networksecurity.address_groups
-WHERE projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND addressGroupsId = '{{ addressGroupsId }}' --required
-AND requestId = '{{ requestId }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_address_groups_delete">
 
 Deletes an address group.
@@ -823,25 +810,38 @@ AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_address_groups_delete">
+
+Deletes a single address group.
+
+```sql
+DELETE FROM google.networksecurity.address_groups
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND addressGroupsId = '{{ addressGroupsId }}' --required
+AND requestId = '{{ requestId }}'
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_address_groups_clone_items"
+    defaultValue="organizations_locations_address_groups_clone_items"
     values={[
-        { label: 'projects_locations_address_groups_clone_items', value: 'projects_locations_address_groups_clone_items' },
-        { label: 'organizations_locations_address_groups_clone_items', value: 'organizations_locations_address_groups_clone_items' }
+        { label: 'organizations_locations_address_groups_clone_items', value: 'organizations_locations_address_groups_clone_items' },
+        { label: 'projects_locations_address_groups_clone_items', value: 'projects_locations_address_groups_clone_items' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_clone_items">
+<TabItem value="organizations_locations_address_groups_clone_items">
 
 Clones items from one address group to another.
 
 ```sql
-EXEC google.networksecurity.address_groups.projects_locations_address_groups_clone_items 
-@projectsId='{{ projectsId }}' --required, 
+EXEC google.networksecurity.address_groups.organizations_locations_address_groups_clone_items 
+@organizationsId='{{ organizationsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @addressGroupsId='{{ addressGroupsId }}' --required 
 @@json=
@@ -852,13 +852,13 @@ EXEC google.networksecurity.address_groups.projects_locations_address_groups_clo
 ;
 ```
 </TabItem>
-<TabItem value="organizations_locations_address_groups_clone_items">
+<TabItem value="projects_locations_address_groups_clone_items">
 
 Clones items from one address group to another.
 
 ```sql
-EXEC google.networksecurity.address_groups.organizations_locations_address_groups_clone_items 
-@organizationsId='{{ organizationsId }}' --required, 
+EXEC google.networksecurity.address_groups.projects_locations_address_groups_clone_items 
+@projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @addressGroupsId='{{ addressGroupsId }}' --required 
 @@json=

@@ -349,16 +349,16 @@ Create an instance within a project. Note that exactly one of Cluster.serve_node
 ```sql
 INSERT INTO google.bigtableadmin.instances (
 data__clusters,
-data__parent,
-data__instanceId,
 data__instance,
+data__instanceId,
+data__parent,
 projectsId
 )
 SELECT 
 '{{ clusters }}',
-'{{ parent }}',
-'{{ instanceId }}',
 '{{ instance }}',
+'{{ instanceId }}',
+'{{ parent }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -381,29 +381,29 @@ response
       value: "{{ clusters }}"
       description: |
         Required. The clusters to be created within the instance, mapped by desired cluster ID, e.g., just \`mycluster\` rather than \`projects/myproject/instances/myinstance/clusters/mycluster\`. Fields marked \`OutputOnly\` must be left blank.
-    - name: parent
-      value: "{{ parent }}"
-      description: |
-        Required. The unique name of the project in which to create the new instance. Values are of the form \`projects/{project}\`.
-    - name: instanceId
-      value: "{{ instanceId }}"
-      description: |
-        Required. The ID to be used when referring to the new instance within its project, e.g., just \`myinstance\` rather than \`projects/myproject/instances/myinstance\`.
     - name: instance
       description: |
         Required. The instance to create. Fields marked \`OutputOnly\` must be left blank.
       value:
-        satisfiesPzi: {{ satisfiesPzi }}
-        tags: "{{ tags }}"
-        edition: "{{ edition }}"
-        labels: "{{ labels }}"
-        knowledgeCatalogRegion: "{{ knowledgeCatalogRegion }}"
-        type: "{{ type }}"
         createTime: "{{ createTime }}"
+        displayName: "{{ displayName }}"
+        edition: "{{ edition }}"
+        knowledgeCatalogRegion: "{{ knowledgeCatalogRegion }}"
+        labels: "{{ labels }}"
+        name: "{{ name }}"
+        satisfiesPzi: {{ satisfiesPzi }}
         satisfiesPzs: {{ satisfiesPzs }}
         state: "{{ state }}"
-        name: "{{ name }}"
-        displayName: "{{ displayName }}"
+        tags: "{{ tags }}"
+        type: "{{ type }}"
+    - name: instanceId
+      value: "{{ instanceId }}"
+      description: |
+        Required. The ID to be used when referring to the new instance within its project, e.g., just \`myinstance\` rather than \`projects/myproject/instances/myinstance\`.
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Required. The unique name of the project in which to create the new instance. Values are of the form \`projects/{project}\`.
 `}</CodeBlock>
 
 </TabItem>
@@ -425,12 +425,12 @@ Updates an instance within a project. This method updates only the display name 
 ```sql
 REPLACE google.bigtableadmin.instances
 SET 
-data__tags = '{{ tags }}',
+data__displayName = '{{ displayName }}',
 data__edition = '{{ edition }}',
 data__labels = '{{ labels }}',
-data__type = '{{ type }}',
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__tags = '{{ tags }}',
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -492,12 +492,12 @@ EXEC google.bigtableadmin.instances.partial_update_instance
 @updateMask='{{ updateMask }}' 
 @@json=
 '{
-"tags": "{{ tags }}", 
+"displayName": "{{ displayName }}", 
 "edition": "{{ edition }}", 
 "labels": "{{ labels }}", 
-"type": "{{ type }}", 
 "name": "{{ name }}", 
-"displayName": "{{ displayName }}"
+"tags": "{{ tags }}", 
+"type": "{{ type }}"
 }'
 ;
 ```

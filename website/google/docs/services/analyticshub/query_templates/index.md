@@ -83,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="proposer" /></td>
     <td><code>string</code></td>
-    <td>Optional. Will be deprecated. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.</td>
+    <td>Optional. Deprecated: Use `primary_contact` instead. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.</td>
 </tr>
 <tr>
     <td><CopyableCode code="routine" /></td>
@@ -147,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="proposer" /></td>
     <td><code>string</code></td>
-    <td>Optional. Will be deprecated. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.</td>
+    <td>Optional. Deprecated: Use `primary_contact` instead. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.</td>
 </tr>
 <tr>
     <td><CopyableCode code="routine" /></td>
@@ -368,24 +368,24 @@ Creates a new QueryTemplate
 
 ```sql
 INSERT INTO google.analyticshub.query_templates (
+data__description,
 data__displayName,
 data__documentation,
-data__description,
 data__primaryContact,
-data__routine,
 data__proposer,
+data__routine,
 projectsId,
 locationsId,
 dataExchangesId,
 queryTemplateId
 )
 SELECT 
+'{{ description }}',
 '{{ displayName }}',
 '{{ documentation }}',
-'{{ description }}',
 '{{ primaryContact }}',
-'{{ routine }}',
 '{{ proposer }}',
+'{{ routine }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataExchangesId }}',
@@ -418,6 +418,10 @@ updateTime
     - name: dataExchangesId
       value: "{{ dataExchangesId }}"
       description: Required parameter for the query_templates resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Short description of the QueryTemplate. The description must not contain Unicode non-characters and C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -426,24 +430,20 @@ updateTime
       value: "{{ documentation }}"
       description: |
         Optional. Documentation describing the QueryTemplate.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Short description of the QueryTemplate. The description must not contain Unicode non-characters and C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
     - name: primaryContact
       value: "{{ primaryContact }}"
       description: |
         Optional. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
+    - name: proposer
+      value: "{{ proposer }}"
+      description: |
+        Optional. Deprecated: Use \`primary_contact\` instead. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
     - name: routine
       description: |
         Optional. The routine associated with the QueryTemplate.
       value:
-        routineType: "{{ routineType }}"
         definitionBody: "{{ definitionBody }}"
-    - name: proposer
-      value: "{{ proposer }}"
-      description: |
-        Optional. Will be deprecated. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
+        routineType: "{{ routineType }}"
     - name: queryTemplateId
       value: "{{ queryTemplateId }}"
 `}</CodeBlock>
@@ -467,12 +467,12 @@ Updates an existing QueryTemplate
 ```sql
 UPDATE google.analyticshub.query_templates
 SET 
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
 data__documentation = '{{ documentation }}',
-data__description = '{{ description }}',
 data__primaryContact = '{{ primaryContact }}',
-data__routine = '{{ routine }}',
-data__proposer = '{{ proposer }}'
+data__proposer = '{{ proposer }}',
+data__routine = '{{ routine }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -205,14 +205,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List channels.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-channelId"><code>channelId</code></a></td>
+    <td><a href="#parameter-channelId"><code>channelId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Create a new channel in a particular project and location.</td>
 </tr>
 <tr>
@@ -346,9 +346,9 @@ updateTime
 FROM google.eventarc.channels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -370,24 +370,24 @@ Create a new channel in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.channels (
-data__labels,
 data__cryptoKeyName,
-data__provider,
+data__labels,
 data__name,
+data__provider,
 projectsId,
 locationsId,
-validateOnly,
-channelId
+channelId,
+validateOnly
 )
 SELECT 
-'{{ labels }}',
 '{{ cryptoKeyName }}',
-'{{ provider }}',
+'{{ labels }}',
 '{{ name }}',
+'{{ provider }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ channelId }}'
+'{{ channelId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -408,26 +408,26 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the channels resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Resource labels.
     - name: cryptoKeyName
       value: "{{ cryptoKeyName }}"
       description: |
         Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern \`projects/*/locations/*/keyRings/*/cryptoKeys/*\`.
-    - name: provider
-      value: "{{ provider }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        The name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: \`projects/{project}/locations/{location}/providers/{provider_id}\`.
+        Optional. Resource labels.
     - name: name
       value: "{{ name }}"
       description: |
         Required. The resource name of the channel. Must be unique within the location on the project and must be in \`projects/{project}/locations/{location}/channels/{channel_id}\` format.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: provider
+      value: "{{ provider }}"
+      description: |
+        The name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: \`projects/{project}/locations/{location}/providers/{provider_id}\`.
     - name: channelId
       value: "{{ channelId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -449,10 +449,10 @@ Update a single channel.
 ```sql
 UPDATE google.eventarc.channels
 SET 
-data__labels = '{{ labels }}',
 data__cryptoKeyName = '{{ cryptoKeyName }}',
-data__provider = '{{ provider }}',
-data__name = '{{ name }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__provider = '{{ provider }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

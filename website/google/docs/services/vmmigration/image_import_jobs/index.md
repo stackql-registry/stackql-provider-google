@@ -119,6 +119,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource path of the ImageImportJob.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudStorageUri" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The path to the Cloud Storage file from which the image should be imported.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time the image import was created (as an API call, not when it was actually created in the target).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createdResources" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The resource paths of the resources created by the image import job.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="diskImageTargetDetails" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Target details used to import a disk image. (id: DiskImageTargetDetails)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time the image import was ended.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="errors" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Provides details on the error that led to the image import state in case of an error.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="machineImageTargetDetails" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Target details used to import a machine image. (id: MachineImageTargetDetails)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The state of the image import. (STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLING, CANCELLED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="steps" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The image import steps list representing its progress.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="warnings" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Warnings that occurred during the image import.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -150,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-imageImportsId"><code>imageImportsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ImageImportJobs in a given project.</td>
 </tr>
 <tr>
@@ -259,13 +314,23 @@ Lists ImageImportJobs in a given project.
 
 ```sql
 SELECT
-*
+name,
+cloudStorageUri,
+createTime,
+createdResources,
+diskImageTargetDetails,
+endTime,
+errors,
+machineImageTargetDetails,
+state,
+steps,
+warnings
 FROM google.vmmigration.image_import_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND imageImportsId = '{{ imageImportsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;

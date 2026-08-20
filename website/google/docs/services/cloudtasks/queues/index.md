@@ -200,6 +200,13 @@ The following methods are available for this resource:
     <td>Deletes a queue. This command will delete the queue even if it has tasks in it. Note: If you delete a queue, you may be prevented from creating a new queue with the same name as the deleted queue for a tombstone window of up to 3 days. During this window, the CreateQueue operation may appear to recreate the queue, but this can be misleading. If you attempt to create a queue with the same name as one that is in the tombstone window, run GetQueue to confirm that the queue creation was successful. If GetQueue returns 200 response code, your queue was successfully created with the name of the previously deleted queue. Otherwise, your queue did not successfully recreate. WARNING: Using this method may have unintended side effects if you are using an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this method.</td>
 </tr>
 <tr>
+    <td><a href="#pause"><CopyableCode code="pause" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuesId"><code>queuesId</code></a></td>
+    <td></td>
+    <td>Pauses the queue. If a queue is paused then the system will stop dispatching tasks until the queue is resumed via ResumeQueue. Tasks can still be added when the queue is paused. A queue is paused if its state is PAUSED.</td>
+</tr>
+<tr>
     <td><a href="#purge"><CopyableCode code="purge" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuesId"><code>queuesId</code></a></td>
@@ -212,13 +219,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuesId"><code>queuesId</code></a></td>
     <td></td>
     <td>Resume a queue. This method resumes a queue after it has been PAUSED or DISABLED. The state of a queue is stored in the queue's state; after calling this method it will be set to RUNNING. WARNING: Resuming many high-QPS queues at the same time can lead to target overloading. If you are resuming high-QPS queues, follow the 500/50/5 pattern described in [Managing Cloud Tasks Scaling Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).</td>
-</tr>
-<tr>
-    <td><a href="#pause"><CopyableCode code="pause" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuesId"><code>queuesId</code></a></td>
-    <td></td>
-    <td>Pauses the queue. If a queue is paused then the system will stop dispatching tasks until the queue is resumed via ResumeQueue. Tasks can still be added when the queue is paused. A queue is paused if its state is PAUSED.</td>
 </tr>
 </tbody>
 </table>
@@ -345,26 +345,26 @@ Creates a queue. Queues created with this method allow tasks to live for a maxim
 
 ```sql
 INSERT INTO google.cloudtasks.queues (
-data__httpTarget,
-data__stackdriverLoggingConfig,
-data__rateLimits,
-data__purgeTime,
-data__name,
 data__appEngineRoutingOverride,
-data__state,
+data__httpTarget,
+data__name,
+data__purgeTime,
+data__rateLimits,
 data__retryConfig,
+data__stackdriverLoggingConfig,
+data__state,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ httpTarget }}',
-'{{ stackdriverLoggingConfig }}',
-'{{ rateLimits }}',
-'{{ purgeTime }}',
-'{{ name }}',
 '{{ appEngineRoutingOverride }}',
-'{{ state }}',
+'{{ httpTarget }}',
+'{{ name }}',
+'{{ purgeTime }}',
+'{{ rateLimits }}',
 '{{ retryConfig }}',
+'{{ stackdriverLoggingConfig }}',
+'{{ state }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -390,72 +390,72 @@ state
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the queues resource.
+    - name: appEngineRoutingOverride
+      description: |
+        Overrides for task-level app_engine_routing. These settings apply only to App Engine tasks in this queue. Http tasks are not affected. If set, \`app_engine_routing_override\` is used for all App Engine tasks in the queue, no matter what the setting is for the task-level app_engine_routing.
+      value:
+        host: "{{ host }}"
+        instance: "{{ instance }}"
+        service: "{{ service }}"
+        version: "{{ version }}"
     - name: httpTarget
       description: |
         Modifies HTTP target for HTTP tasks.
       value:
-        httpMethod: "{{ httpMethod }}"
-        oidcToken:
-          serviceAccountEmail: "{{ serviceAccountEmail }}"
-          audience: "{{ audience }}"
-        uriOverride:
-          port: "{{ port }}"
-          queryOverride:
-            queryParams: "{{ queryParams }}"
-          uriOverrideEnforceMode: "{{ uriOverrideEnforceMode }}"
-          scheme: "{{ scheme }}"
-          pathOverride:
-            path: "{{ path }}"
-          host: "{{ host }}"
         headerOverrides:
           - header:
               key: "{{ key }}"
               value: "{{ value }}"
+        httpMethod: "{{ httpMethod }}"
         oauthToken:
-          serviceAccountEmail: "{{ serviceAccountEmail }}"
           scope: "{{ scope }}"
-    - name: stackdriverLoggingConfig
+          serviceAccountEmail: "{{ serviceAccountEmail }}"
+        oidcToken:
+          audience: "{{ audience }}"
+          serviceAccountEmail: "{{ serviceAccountEmail }}"
+        uriOverride:
+          host: "{{ host }}"
+          pathOverride:
+            path: "{{ path }}"
+          port: "{{ port }}"
+          queryOverride:
+            queryParams: "{{ queryParams }}"
+          scheme: "{{ scheme }}"
+          uriOverrideEnforceMode: "{{ uriOverrideEnforceMode }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Configuration options for writing logs to [Stackdriver Logging](https://cloud.google.com/logging/docs/). If this field is unset, then no logs are written.
-      value:
-        samplingRatio: {{ samplingRatio }}
+        Caller-specified and required in CreateQueue, after which it becomes output only. The queue name. The queue name must have the following format: \`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID\` * \`PROJECT_ID\` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), or periods (.). For more information, see [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects) * \`LOCATION_ID\` is the canonical ID for the queue's location. The list of available locations can be obtained by calling ListLocations. For more information, see https://cloud.google.com/about/locations/. * \`QUEUE_ID\` can contain letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum length is 100 characters.
+    - name: purgeTime
+      value: "{{ purgeTime }}"
+      description: |
+        Output only. The last time this queue was purged. All tasks that were created before this time were purged. A queue can be purged using PurgeQueue, the [App Engine Task Queue SDK, or the Cloud Console](https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/deleting-tasks-and-queues#purging_all_tasks_from_a_queue). Purge time will be truncated to the nearest microsecond. Purge time will be unset if the queue has never been purged.
     - name: rateLimits
       description: |
         Rate limits for task dispatches. rate_limits and retry_config are related because they both control task attempts. However they control task attempts in different ways: * rate_limits controls the total rate of dispatches from a queue (i.e. all traffic dispatched from the queue, regardless of whether the dispatch is from a first attempt or a retry). * retry_config controls what happens to a particular task after its first attempt fails. That is, retry_config controls task retries (the second attempt, third attempt, etc). The queue's actual dispatch rate is the result of: * Number of tasks in the queue * User-specified throttling: rate_limits, retry_config, and the queue's state. * System throttling due to \`429\` (Too Many Requests) or \`503\` (Service Unavailable) responses from the worker, high error rates, or to smooth sudden large traffic spikes.
       value:
         maxBurstSize: {{ maxBurstSize }}
-        maxDispatchesPerSecond: {{ maxDispatchesPerSecond }}
         maxConcurrentDispatches: {{ maxConcurrentDispatches }}
-    - name: purgeTime
-      value: "{{ purgeTime }}"
+        maxDispatchesPerSecond: {{ maxDispatchesPerSecond }}
+    - name: retryConfig
       description: |
-        Output only. The last time this queue was purged. All tasks that were created before this time were purged. A queue can be purged using PurgeQueue, the [App Engine Task Queue SDK, or the Cloud Console](https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/deleting-tasks-and-queues#purging_all_tasks_from_a_queue). Purge time will be truncated to the nearest microsecond. Purge time will be unset if the queue has never been purged.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Caller-specified and required in CreateQueue, after which it becomes output only. The queue name. The queue name must have the following format: \`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID\` * \`PROJECT_ID\` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), or periods (.). For more information, see [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects) * \`LOCATION_ID\` is the canonical ID for the queue's location. The list of available locations can be obtained by calling ListLocations. For more information, see https://cloud.google.com/about/locations/. * \`QUEUE_ID\` can contain letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum length is 100 characters.
-    - name: appEngineRoutingOverride
-      description: |
-        Overrides for task-level app_engine_routing. These settings apply only to App Engine tasks in this queue. Http tasks are not affected. If set, \`app_engine_routing_override\` is used for all App Engine tasks in the queue, no matter what the setting is for the task-level app_engine_routing.
+        Settings that determine the retry behavior. * For tasks created using Cloud Tasks: the queue-level retry settings apply to all tasks in the queue that were created using Cloud Tasks. Retry settings cannot be set on individual tasks. * For tasks created using the App Engine SDK: the queue-level retry settings apply to all tasks in the queue which do not have retry settings explicitly set on the task and were created by the App Engine SDK. See [App Engine documentation](https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/retrying-tasks).
       value:
-        version: "{{ version }}"
-        host: "{{ host }}"
-        service: "{{ service }}"
-        instance: "{{ instance }}"
+        maxAttempts: {{ maxAttempts }}
+        maxBackoff: "{{ maxBackoff }}"
+        maxDoublings: {{ maxDoublings }}
+        maxRetryDuration: "{{ maxRetryDuration }}"
+        minBackoff: "{{ minBackoff }}"
+    - name: stackdriverLoggingConfig
+      description: |
+        Configuration options for writing logs to [Stackdriver Logging](https://cloud.google.com/logging/docs/). If this field is unset, then no logs are written.
+      value:
+        samplingRatio: {{ samplingRatio }}
     - name: state
       value: "{{ state }}"
       description: |
         Output only. The state of the queue. \`state\` can only be changed by calling PauseQueue, ResumeQueue, or uploading [queue.yaml/xml](https://cloud.google.com/appengine/docs/python/config/queueref). UpdateQueue cannot be used to change \`state\`.
       valid_values: ['STATE_UNSPECIFIED', 'RUNNING', 'PAUSED', 'DISABLED']
-    - name: retryConfig
-      description: |
-        Settings that determine the retry behavior. * For tasks created using Cloud Tasks: the queue-level retry settings apply to all tasks in the queue that were created using Cloud Tasks. Retry settings cannot be set on individual tasks. * For tasks created using the App Engine SDK: the queue-level retry settings apply to all tasks in the queue which do not have retry settings explicitly set on the task and were created by the App Engine SDK. See [App Engine documentation](https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/retrying-tasks).
-      value:
-        maxBackoff: "{{ maxBackoff }}"
-        maxDoublings: {{ maxDoublings }}
-        maxAttempts: {{ maxAttempts }}
-        minBackoff: "{{ minBackoff }}"
-        maxRetryDuration: "{{ maxRetryDuration }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -477,14 +477,14 @@ Updates a queue. This method creates the queue if it does not exist and updates 
 ```sql
 UPDATE google.cloudtasks.queues
 SET 
-data__httpTarget = '{{ httpTarget }}',
-data__stackdriverLoggingConfig = '{{ stackdriverLoggingConfig }}',
-data__rateLimits = '{{ rateLimits }}',
-data__purgeTime = '{{ purgeTime }}',
-data__name = '{{ name }}',
 data__appEngineRoutingOverride = '{{ appEngineRoutingOverride }}',
-data__state = '{{ state }}',
-data__retryConfig = '{{ retryConfig }}'
+data__httpTarget = '{{ httpTarget }}',
+data__name = '{{ name }}',
+data__purgeTime = '{{ purgeTime }}',
+data__rateLimits = '{{ rateLimits }}',
+data__retryConfig = '{{ retryConfig }}',
+data__stackdriverLoggingConfig = '{{ stackdriverLoggingConfig }}',
+data__state = '{{ state }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -530,13 +530,25 @@ AND queuesId = '{{ queuesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="purge"
+    defaultValue="pause"
     values={[
+        { label: 'pause', value: 'pause' },
         { label: 'purge', value: 'purge' },
-        { label: 'resume', value: 'resume' },
-        { label: 'pause', value: 'pause' }
+        { label: 'resume', value: 'resume' }
     ]}
 >
+<TabItem value="pause">
+
+Pauses the queue. If a queue is paused then the system will stop dispatching tasks until the queue is resumed via ResumeQueue. Tasks can still be added when the queue is paused. A queue is paused if its state is PAUSED.
+
+```sql
+EXEC google.cloudtasks.queues.pause 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@queuesId='{{ queuesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="purge">
 
 Purges a queue by deleting all of its tasks. All tasks created before this method is called are permanently deleted. Purge operations can take up to one minute to take effect. Tasks might be dispatched before the purge takes effect. A purge is irreversible.
@@ -555,18 +567,6 @@ Resume a queue. This method resumes a queue after it has been PAUSED or DISABLED
 
 ```sql
 EXEC google.cloudtasks.queues.resume 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@queuesId='{{ queuesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="pause">
-
-Pauses the queue. If a queue is paused then the system will stop dispatching tasks until the queue is resumed via ResumeQueue. Tasks can still be added when the queue is paused. A queue is paused if its state is PAUSED.
-
-```sql
-EXEC google.cloudtasks.queues.pause 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @queuesId='{{ queuesId }}' --required

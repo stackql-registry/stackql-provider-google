@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the capacity commitments for the admin project.</td>
 </tr>
 <tr>
@@ -230,18 +230,18 @@ The following methods are available for this resource:
     <td>Deletes a capacity commitment. Attempting to delete capacity commitment before its commitment_end_time will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.</td>
 </tr>
 <tr>
-    <td><a href="#split"><CopyableCode code="split" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-capacityCommitmentsId"><code>capacityCommitmentsId</code></a></td>
-    <td></td>
-    <td>Splits capacity commitment to two commitments of the same plan and `commitment_end_time`. A common use case is to enable downgrading commitments. For example, in order to downgrade from 10000 slots to 8000, you might split a 10000 capacity commitment into commitments of 2000 and 8000. Then, you delete the first one after the commitment end time passes.</td>
-</tr>
-<tr>
     <td><a href="#merge"><CopyableCode code="merge" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Merges capacity commitments of the same plan into a single commitment. The resulting capacity commitment has the greater commitment_end_time out of the to-be-merged capacity commitments. Attempting to merge capacity commitments of different plan will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.</td>
+</tr>
+<tr>
+    <td><a href="#split"><CopyableCode code="split" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-capacityCommitmentsId"><code>capacityCommitmentsId</code></a></td>
+    <td></td>
+    <td>Splits capacity commitment to two commitments of the same plan and `commitment_end_time`. A common use case is to enable downgrading commitments. For example, in order to downgrade from 10000 slots to 8000, you might split a 10000 capacity commitment into commitments of 2000 and 8000. Then, you delete the first one after the commitment end time passes.</td>
 </tr>
 </tbody>
 </table>
@@ -360,8 +360,8 @@ state
 FROM google.bigqueryreservation.capacity_commitments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -383,22 +383,22 @@ Creates a new capacity commitment resource.
 
 ```sql
 INSERT INTO google.bigqueryreservation.capacity_commitments (
-data__renewalPlan,
 data__edition,
-data__slotCount,
-data__plan,
 data__multiRegionAuxiliary,
+data__plan,
+data__renewalPlan,
+data__slotCount,
 projectsId,
 locationsId,
 capacityCommitmentId,
 enforceSingleAdminProjectPerOrg
 )
 SELECT 
-'{{ renewalPlan }}',
 '{{ edition }}',
-'{{ slotCount }}',
-'{{ plan }}',
 {{ multiRegionAuxiliary }},
+'{{ plan }}',
+'{{ renewalPlan }}',
+'{{ slotCount }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ capacityCommitmentId }}',
@@ -429,29 +429,29 @@ state
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the capacity_commitments resource.
-    - name: renewalPlan
-      value: "{{ renewalPlan }}"
-      description: |
-        Optional. The plan this capacity commitment is converted to after commitment_end_time passes. Once the plan is changed, committed period is extended according to commitment plan. Only applicable for ANNUAL and TRIAL commitments.
-      valid_values: ['COMMITMENT_PLAN_UNSPECIFIED', 'FLEX', 'FLEX_FLAT_RATE', 'TRIAL', 'MONTHLY', 'MONTHLY_FLAT_RATE', 'ANNUAL', 'ANNUAL_FLAT_RATE', 'THREE_YEAR', 'NONE']
     - name: edition
       value: "{{ edition }}"
       description: |
         Optional. Edition of the capacity commitment.
       valid_values: ['EDITION_UNSPECIFIED', 'STANDARD', 'ENTERPRISE', 'ENTERPRISE_PLUS']
-    - name: slotCount
-      value: "{{ slotCount }}"
+    - name: multiRegionAuxiliary
+      value: {{ multiRegionAuxiliary }}
       description: |
-        Optional. Number of slots in this commitment.
+        Applicable only for commitments located within one of the BigQuery multi-regions (US or EU). If set to true, this commitment is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this commitment is placed in the organization's default region. NOTE: this is a preview feature. Project must be allow-listed in order to set this field.
     - name: plan
       value: "{{ plan }}"
       description: |
         Optional. Capacity commitment commitment plan.
       valid_values: ['COMMITMENT_PLAN_UNSPECIFIED', 'FLEX', 'FLEX_FLAT_RATE', 'TRIAL', 'MONTHLY', 'MONTHLY_FLAT_RATE', 'ANNUAL', 'ANNUAL_FLAT_RATE', 'THREE_YEAR', 'NONE']
-    - name: multiRegionAuxiliary
-      value: {{ multiRegionAuxiliary }}
+    - name: renewalPlan
+      value: "{{ renewalPlan }}"
       description: |
-        Applicable only for commitments located within one of the BigQuery multi-regions (US or EU). If set to true, this commitment is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this commitment is placed in the organization's default region. NOTE: this is a preview feature. Project must be allow-listed in order to set this field.
+        Optional. The plan this capacity commitment is converted to after commitment_end_time passes. Once the plan is changed, committed period is extended according to commitment plan. Only applicable for ANNUAL and TRIAL commitments.
+      valid_values: ['COMMITMENT_PLAN_UNSPECIFIED', 'FLEX', 'FLEX_FLAT_RATE', 'TRIAL', 'MONTHLY', 'MONTHLY_FLAT_RATE', 'ANNUAL', 'ANNUAL_FLAT_RATE', 'THREE_YEAR', 'NONE']
+    - name: slotCount
+      value: "{{ slotCount }}"
+      description: |
+        Optional. Number of slots in this commitment.
     - name: capacityCommitmentId
       value: "{{ capacityCommitmentId }}"
     - name: enforceSingleAdminProjectPerOrg
@@ -477,11 +477,11 @@ Updates an existing capacity commitment. Only `plan` and `renewal_plan` fields c
 ```sql
 UPDATE google.bigqueryreservation.capacity_commitments
 SET 
-data__renewalPlan = '{{ renewalPlan }}',
 data__edition = '{{ edition }}',
-data__slotCount = '{{ slotCount }}',
+data__multiRegionAuxiliary = {{ multiRegionAuxiliary }},
 data__plan = '{{ plan }}',
-data__multiRegionAuxiliary = {{ multiRegionAuxiliary }}
+data__renewalPlan = '{{ renewalPlan }}',
+data__slotCount = '{{ slotCount }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -531,28 +531,12 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="split"
+    defaultValue="merge"
     values={[
-        { label: 'split', value: 'split' },
-        { label: 'merge', value: 'merge' }
+        { label: 'merge', value: 'merge' },
+        { label: 'split', value: 'split' }
     ]}
 >
-<TabItem value="split">
-
-Splits capacity commitment to two commitments of the same plan and `commitment_end_time`. A common use case is to enable downgrading commitments. For example, in order to downgrade from 10000 slots to 8000, you might split a 10000 capacity commitment into commitments of 2000 and 8000. Then, you delete the first one after the commitment end time passes.
-
-```sql
-EXEC google.bigqueryreservation.capacity_commitments.split 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@capacityCommitmentsId='{{ capacityCommitmentsId }}' --required 
-@@json=
-'{
-"slotCount": "{{ slotCount }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="merge">
 
 Merges capacity commitments of the same plan into a single commitment. The resulting capacity commitment has the greater commitment_end_time out of the to-be-merged capacity commitments. Attempting to merge capacity commitments of different plan will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.
@@ -565,6 +549,22 @@ EXEC google.bigqueryreservation.capacity_commitments.merge
 '{
 "capacityCommitmentId": "{{ capacityCommitmentId }}", 
 "capacityCommitmentIds": "{{ capacityCommitmentIds }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="split">
+
+Splits capacity commitment to two commitments of the same plan and `commitment_end_time`. A common use case is to enable downgrading commitments. For example, in order to downgrade from 10000 slots to 8000, you might split a 10000 capacity commitment into commitments of 2000 and 8000. Then, you delete the first one after the commitment end time passes.
+
+```sql
+EXEC google.bigqueryreservation.capacity_commitments.split 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@capacityCommitmentsId='{{ capacityCommitmentsId }}' --required 
+@@json=
+'{
+"slotCount": "{{ slotCount }}"
 }'
 ;
 ```

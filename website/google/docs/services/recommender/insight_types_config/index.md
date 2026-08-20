@@ -33,14 +33,14 @@ Creates, updates, deletes, gets or lists an <code>insight_types_config</code> re
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_locations_insight_types_get_config"
+    defaultValue="billing_accounts_locations_insight_types_get_config"
     values={[
-        { label: 'organizations_locations_insight_types_get_config', value: 'organizations_locations_insight_types_get_config' },
         { label: 'billing_accounts_locations_insight_types_get_config', value: 'billing_accounts_locations_insight_types_get_config' },
+        { label: 'organizations_locations_insight_types_get_config', value: 'organizations_locations_insight_types_get_config' },
         { label: 'projects_locations_insight_types_get_config', value: 'projects_locations_insight_types_get_config' }
     ]}
 >
-<TabItem value="organizations_locations_insight_types_get_config">
+<TabItem value="billing_accounts_locations_insight_types_get_config">
 
 <table>
 <thead>
@@ -89,7 +89,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="billing_accounts_locations_insight_types_get_config">
+<TabItem value="organizations_locations_insight_types_get_config">
 
 <table>
 <thead>
@@ -205,16 +205,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_locations_insight_types_get_config"><CopyableCode code="organizations_locations_insight_types_get_config" /></a></td>
+    <td><a href="#billing_accounts_locations_insight_types_get_config"><CopyableCode code="billing_accounts_locations_insight_types_get_config" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightTypesId"><code>insightTypesId</code></a></td>
+    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightTypesId"><code>insightTypesId</code></a></td>
     <td></td>
     <td>Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.</td>
 </tr>
 <tr>
-    <td><a href="#billing_accounts_locations_insight_types_get_config"><CopyableCode code="billing_accounts_locations_insight_types_get_config" /></a></td>
+    <td><a href="#organizations_locations_insight_types_get_config"><CopyableCode code="organizations_locations_insight_types_get_config" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightTypesId"><code>insightTypesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightTypesId"><code>insightTypesId</code></a></td>
     <td></td>
     <td>Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.</td>
 </tr>
@@ -226,16 +226,16 @@ The following methods are available for this resource:
     <td>Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_insight_types_update_config"><CopyableCode code="organizations_locations_insight_types_update_config" /></a></td>
+    <td><a href="#billing_accounts_locations_insight_types_update_config"><CopyableCode code="billing_accounts_locations_insight_types_update_config" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightTypesId"><code>insightTypesId</code></a></td>
+    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightTypesId"><code>insightTypesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates an InsightTypeConfig change. This will create a new revision of the config.</td>
 </tr>
 <tr>
-    <td><a href="#billing_accounts_locations_insight_types_update_config"><CopyableCode code="billing_accounts_locations_insight_types_update_config" /></a></td>
+    <td><a href="#organizations_locations_insight_types_update_config"><CopyableCode code="organizations_locations_insight_types_update_config" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightTypesId"><code>insightTypesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightTypesId"><code>insightTypesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates an InsightTypeConfig change. This will create a new revision of the config.</td>
 </tr>
@@ -303,33 +303,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_locations_insight_types_get_config"
+    defaultValue="billing_accounts_locations_insight_types_get_config"
     values={[
-        { label: 'organizations_locations_insight_types_get_config', value: 'organizations_locations_insight_types_get_config' },
         { label: 'billing_accounts_locations_insight_types_get_config', value: 'billing_accounts_locations_insight_types_get_config' },
+        { label: 'organizations_locations_insight_types_get_config', value: 'organizations_locations_insight_types_get_config' },
         { label: 'projects_locations_insight_types_get_config', value: 'projects_locations_insight_types_get_config' }
     ]}
 >
-<TabItem value="organizations_locations_insight_types_get_config">
-
-Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.
-
-```sql
-SELECT
-name,
-annotations,
-displayName,
-etag,
-insightTypeGenerationConfig,
-revisionId,
-updateTime
-FROM google.recommender.insight_types_config
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND insightTypesId = '{{ insightTypesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="billing_accounts_locations_insight_types_get_config">
 
 Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.
@@ -345,6 +325,26 @@ revisionId,
 updateTime
 FROM google.recommender.insight_types_config
 WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND insightTypesId = '{{ insightTypesId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_locations_insight_types_get_config">
+
+Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.
+
+```sql
+SELECT
+name,
+annotations,
+displayName,
+etag,
+insightTypeGenerationConfig,
+revisionId,
+updateTime
+FROM google.recommender.insight_types_config
+WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND insightTypesId = '{{ insightTypesId }}' -- required
 ;
@@ -376,28 +376,28 @@ AND insightTypesId = '{{ insightTypesId }}' -- required
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="organizations_locations_insight_types_update_config"
+    defaultValue="billing_accounts_locations_insight_types_update_config"
     values={[
-        { label: 'organizations_locations_insight_types_update_config', value: 'organizations_locations_insight_types_update_config' },
         { label: 'billing_accounts_locations_insight_types_update_config', value: 'billing_accounts_locations_insight_types_update_config' },
+        { label: 'organizations_locations_insight_types_update_config', value: 'organizations_locations_insight_types_update_config' },
         { label: 'projects_locations_insight_types_update_config', value: 'projects_locations_insight_types_update_config' }
     ]}
 >
-<TabItem value="organizations_locations_insight_types_update_config">
+<TabItem value="billing_accounts_locations_insight_types_update_config">
 
 Updates an InsightTypeConfig change. This will create a new revision of the config.
 
 ```sql
 UPDATE google.recommender.insight_types_config
 SET 
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
-data__updateTime = '{{ updateTime }}',
 data__annotations = '{{ annotations }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
 data__insightTypeGenerationConfig = '{{ insightTypeGenerationConfig }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}',
+data__updateTime = '{{ updateTime }}'
 WHERE 
-organizationsId = '{{ organizationsId }}' --required
+billingAccountsId = '{{ billingAccountsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND insightTypesId = '{{ insightTypesId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -412,21 +412,21 @@ revisionId,
 updateTime;
 ```
 </TabItem>
-<TabItem value="billing_accounts_locations_insight_types_update_config">
+<TabItem value="organizations_locations_insight_types_update_config">
 
 Updates an InsightTypeConfig change. This will create a new revision of the config.
 
 ```sql
 UPDATE google.recommender.insight_types_config
 SET 
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
-data__updateTime = '{{ updateTime }}',
 data__annotations = '{{ annotations }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
 data__insightTypeGenerationConfig = '{{ insightTypeGenerationConfig }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}',
+data__updateTime = '{{ updateTime }}'
 WHERE 
-billingAccountsId = '{{ billingAccountsId }}' --required
+organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND insightTypesId = '{{ insightTypesId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -448,12 +448,12 @@ Updates an InsightTypeConfig change. This will create a new revision of the conf
 ```sql
 UPDATE google.recommender.insight_types_config
 SET 
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
-data__updateTime = '{{ updateTime }}',
 data__annotations = '{{ annotations }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
 data__insightTypeGenerationConfig = '{{ insightTypeGenerationConfig }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}',
+data__updateTime = '{{ updateTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

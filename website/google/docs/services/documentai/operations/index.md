@@ -36,11 +36,50 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_operations_get"
     values={[
         { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
-        { label: 'projects_operations_get', value: 'projects_operations_get' },
-        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' }
+        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
+        { label: 'projects_operations_get', value: 'projects_operations_get' }
     ]}
 >
 <TabItem value="projects_locations_operations_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="done" /></td>
+    <td><code>boolean</code></td>
+    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="error" /></td>
+    <td><code>object</code></td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="response" /></td>
+    <td><code>object</code></td>
+    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_operations_list">
 
 <table>
 <thead>
@@ -118,20 +157,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_operations_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</TabItem>
 </Tabs>
 
 ## Methods
@@ -157,18 +182,18 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_operations_list"><CopyableCode code="projects_locations_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
     <td><a href="#projects_operations_get"><CopyableCode code="projects_operations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_operations_list"><CopyableCode code="projects_locations_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 <tr>
     <td><a href="#operations_delete"><CopyableCode code="operations_delete" /></a></td>
@@ -244,8 +269,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_operations_get"
     values={[
         { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
-        { label: 'projects_operations_get', value: 'projects_operations_get' },
-        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' }
+        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
+        { label: 'projects_operations_get', value: 'projects_operations_get' }
     ]}
 >
 <TabItem value="projects_locations_operations_get">
@@ -266,6 +291,27 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+
+```sql
+SELECT
+name,
+done,
+error,
+metadata,
+response
+FROM google.documentai.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
 <TabItem value="projects_operations_get">
 
 Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
@@ -280,23 +326,6 @@ response
 FROM google.documentai.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND operationsId = '{{ operationsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_operations_list">
-
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
-
-```sql
-SELECT
-*
-FROM google.documentai.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

@@ -115,7 +115,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists user workloads Secrets. This method is supported for Cloud Composer environments in versions composer-3-airflow-*.*.*-build.* and newer.</td>
 </tr>
 <tr>
@@ -225,8 +225,8 @@ FROM google.composer.user_workloads_secrets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -248,15 +248,15 @@ Creates a user workloads Secret. This method is supported for Cloud Composer env
 
 ```sql
 INSERT INTO google.composer.user_workloads_secrets (
-data__name,
 data__data,
+data__name,
 projectsId,
 locationsId,
 environmentsId
 )
 SELECT 
-'{{ name }}',
 '{{ data }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ environmentsId }}'
@@ -280,14 +280,14 @@ data
     - name: environmentsId
       value: "{{ environmentsId }}"
       description: Required parameter for the user_workloads_secrets resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the Secret, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}"
     - name: data
       value: "{{ data }}"
       description: |
         Optional. The "data" field of Kubernetes Secret, organized in key-value pairs, which can contain sensitive values such as a password, a token, or a key. The values for all keys have to be base64-encoded strings. For details see: https://kubernetes.io/docs/concepts/configuration/secret/ Example: { "example": "ZXhhbXBsZV92YWx1ZQ==", "another-example": "YW5vdGhlcl9leGFtcGxlX3ZhbHVl" }
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the Secret, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}"
 `}</CodeBlock>
 
 </TabItem>
@@ -309,8 +309,8 @@ Updates a user workloads Secret. This method is supported for Cloud Composer env
 ```sql
 REPLACE google.composer.user_workloads_secrets
 SET 
-data__name = '{{ name }}',
-data__data = '{{ data }}'
+data__data = '{{ data }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

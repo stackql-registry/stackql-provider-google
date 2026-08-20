@@ -109,6 +109,51 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The name of the GoldengateConnection resource in the following format: projects/&#123;project&#125;/locations/&#123;region&#125;/goldengateConnections/&#123;goldengate_connection&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The date and time that the GoldengateConnection was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="entitlementId" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The ID of the subscription entitlement associated with the GoldengateConnection.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gcpOracleZone" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The GCP Oracle zone where Oracle GoldengateConnection is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The labels or tags associated with the GoldengateConnection.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ociUrl" /></td>
+    <td><code>string</code></td>
+    <td>Output only. HTTPS link to OCI resources exposed to Customer via UI Interface.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="odbNetwork" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The name of the OdbNetwork associated with the GoldengateConnection. The format is projects/&#123;project&#125;/locations/&#123;location&#125;/odbNetworks/&#123;odb_network&#125;. It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="odbSubnet" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The name of the OdbSubnet associated with the GoldengateConnection for IP allocation. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/odbNetworks/&#123;odb_network&#125;/odbSubnets/&#123;odb_subnet&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="properties" /></td>
+    <td><code>object</code></td>
+    <td>Required. The properties of the GoldengateConnection. (id: GoldengateConnectionProperties)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -140,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the GoldengateConnections for the given project and location.</td>
 </tr>
 <tr>
@@ -258,14 +303,22 @@ Lists all the GoldengateConnections for the given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+entitlementId,
+gcpOracleZone,
+labels,
+ociUrl,
+odbNetwork,
+odbSubnet,
+properties
 FROM google.oracledatabase.goldengate_connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -287,24 +340,24 @@ Creates a new GoldengateConnection in a given project and location.
 
 ```sql
 INSERT INTO google.oracledatabase.goldengate_connections (
-data__properties,
-data__odbSubnet,
-data__odbNetwork,
-data__name,
 data__gcpOracleZone,
 data__labels,
+data__name,
+data__odbNetwork,
+data__odbSubnet,
+data__properties,
 projectsId,
 locationsId,
 goldengateConnectionId,
 requestId
 )
 SELECT 
-'{{ properties }}',
-'{{ odbSubnet }}',
-'{{ odbNetwork }}',
-'{{ name }}',
 '{{ gcpOracleZone }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ odbNetwork }}',
+'{{ odbSubnet }}',
+'{{ properties }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ goldengateConnectionId }}',
@@ -329,350 +382,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the goldengate_connections resource.
-    - name: properties
-      description: |
-        Required. The properties of the GoldengateConnection.
-      value:
-        googleBigQueryConnectionProperties:
-          technologyType: "{{ technologyType }}"
-          serviceAccountKeyFile: "{{ serviceAccountKeyFile }}"
-        oracleNosqlConnectionProperties:
-          technologyType: "{{ technologyType }}"
-          privateKeyPassphraseSecret: "{{ privateKeyPassphraseSecret }}"
-          tenancyId: "{{ tenancyId }}"
-          publicKeyFingerprint: "{{ publicKeyFingerprint }}"
-          privateKeyFile: "{{ privateKeyFile }}"
-          useResourcePrincipal: {{ useResourcePrincipal }}
-          region: "{{ region }}"
-          userId: "{{ userId }}"
-        googleCloudStorageConnectionProperties:
-          serviceAccountKeyFile: "{{ serviceAccountKeyFile }}"
-          technologyType: "{{ technologyType }}"
-        mysqlConnectionProperties:
-          technologyType: "{{ technologyType }}"
-          sslCertFile: "{{ sslCertFile }}"
-          sslCaFile: "{{ sslCaFile }}"
-          sslCrlFile: "{{ sslCrlFile }}"
-          username: "{{ username }}"
-          securityProtocol: "{{ securityProtocol }}"
-          database: "{{ database }}"
-          host: "{{ host }}"
-          dbSystemId: "{{ dbSystemId }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          sslKeyFile: "{{ sslKeyFile }}"
-          port: {{ port }}
-          password: "{{ password }}"
-          sslMode: "{{ sslMode }}"
-          additionalAttributes:
-            - key: "{{ key }}"
-              value: "{{ value }}"
-        kafkaSchemaRegistryConnectionProperties:
-          keyStorePassword: "{{ keyStorePassword }}"
-          technologyType: "{{ technologyType }}"
-          username: "{{ username }}"
-          authenticationType: "{{ authenticationType }}"
-          url: "{{ url }}"
-          keyStoreFile: "{{ keyStoreFile }}"
-          trustStoreFile: "{{ trustStoreFile }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          trustStorePassword: "{{ trustStorePassword }}"
-          sslKeyPassword: "{{ sslKeyPassword }}"
-          password: "{{ password }}"
-          keyStorePasswordSecretVersion: "{{ keyStorePasswordSecretVersion }}"
-          trustStorePasswordSecretVersion: "{{ trustStorePasswordSecretVersion }}"
-          sslKeyPasswordSecretVersion: "{{ sslKeyPasswordSecretVersion }}"
-        microsoftFabricConnectionProperties:
-          tenantId: "{{ tenantId }}"
-          endpoint: "{{ endpoint }}"
-          clientId: "{{ clientId }}"
-          technologyType: "{{ technologyType }}"
-          clientSecret: "{{ clientSecret }}"
-        lifecycleDetails: "{{ lifecycleDetails }}"
-        javaMessageServiceConnectionProperties:
-          trustStoreFile: "{{ trustStoreFile }}"
-          keyStoreFile: "{{ keyStoreFile }}"
-          jndiConnectionFactory: "{{ jndiConnectionFactory }}"
-          authenticationType: "{{ authenticationType }}"
-          jndiInitialContextFactory: "{{ jndiInitialContextFactory }}"
-          username: "{{ username }}"
-          securityProtocol: "{{ securityProtocol }}"
-          jndiSecurityCredentialsSecret: "{{ jndiSecurityCredentialsSecret }}"
-          keyStorePassword: "{{ keyStorePassword }}"
-          technologyType: "{{ technologyType }}"
-          connectionUrl: "{{ connectionUrl }}"
-          trustStorePasswordSecretVersion: "{{ trustStorePasswordSecretVersion }}"
-          useJndi: {{ useJndi }}
-          jndiProviderUrl: "{{ jndiProviderUrl }}"
-          sslKeyPasswordSecretVersion: "{{ sslKeyPasswordSecretVersion }}"
-          connectionFactory: "{{ connectionFactory }}"
-          keyStorePasswordSecretVersion: "{{ keyStorePasswordSecretVersion }}"
-          jndiSecurityPrincipal: "{{ jndiSecurityPrincipal }}"
-          password: "{{ password }}"
-          sslKeyPassword: "{{ sslKeyPassword }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          trustStorePassword: "{{ trustStorePassword }}"
-        postgresqlConnectionProperties:
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          sslKeyFile: "{{ sslKeyFile }}"
-          port: {{ port }}
-          password: "{{ password }}"
-          additionalAttributes:
-            - key: "{{ key }}"
-              value: "{{ value }}"
-          sslMode: "{{ sslMode }}"
-          sslCrlFile: "{{ sslCrlFile }}"
-          technologyType: "{{ technologyType }}"
-          sslCertFile: "{{ sslCertFile }}"
-          sslCaFile: "{{ sslCaFile }}"
-          username: "{{ username }}"
-          securityProtocol: "{{ securityProtocol }}"
-          host: "{{ host }}"
-          dbSystemId: "{{ dbSystemId }}"
-          database: "{{ database }}"
-        microsoftSqlserverConnectionProperties:
-          additionalAttributes:
-            - key: "{{ key }}"
-              value: "{{ value }}"
-          password: "{{ password }}"
-          host: "{{ host }}"
-          database: "{{ database }}"
-          port: {{ port }}
-          serverCertificateValidationRequired: {{ serverCertificateValidationRequired }}
-          username: "{{ username }}"
-          securityProtocol: "{{ securityProtocol }}"
-          sslCaFile: "{{ sslCaFile }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-        goldengateConnectionProperties:
-          username: "{{ username }}"
-          port: {{ port }}
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-          goldengateDeploymentId: "{{ goldengateDeploymentId }}"
-          password: "{{ password }}"
-          host: "{{ host }}"
-        routingMethod: "{{ routingMethod }}"
-        azureDataLakeStorageConnectionProperties:
-          azureTenantId: "{{ azureTenantId }}"
-          clientId: "{{ clientId }}"
-          account: "{{ account }}"
-          endpoint: "{{ endpoint }}"
-          authenticationType: "{{ authenticationType }}"
-          accountKeySecret: "{{ accountKeySecret }}"
-          azureAuthorityHost: "{{ azureAuthorityHost }}"
-          sasTokenSecret: "{{ sasTokenSecret }}"
-          technologyType: "{{ technologyType }}"
-          clientSecret: "{{ clientSecret }}"
-        elasticsearchConnectionProperties:
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-          password: "{{ password }}"
-          servers: "{{ servers }}"
-          authenticationType: "{{ authenticationType }}"
-          securityProtocol: "{{ securityProtocol }}"
-          username: "{{ username }}"
-          fingerprint: "{{ fingerprint }}"
-        connectionType: "{{ connectionType }}"
-        googlePubsubConnectionProperties:
-          technologyType: "{{ technologyType }}"
-          serviceAccountKeyFile: "{{ serviceAccountKeyFile }}"
-        genericConnectionProperties:
-          technologyType: "{{ technologyType }}"
-          host: "{{ host }}"
-        hdfsConnectionProperties:
-          technologyType: "{{ technologyType }}"
-          coreSiteXml: "{{ coreSiteXml }}"
-        kafkaConnectionProperties:
-          streamPoolId: "{{ streamPoolId }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          trustStorePassword: "{{ trustStorePassword }}"
-          sslKeyPassword: "{{ sslKeyPassword }}"
-          bootstrapServers:
-            - privateIpAddress: "{{ privateIpAddress }}"
-              host: "{{ host }}"
-              port: {{ port }}
-          password: "{{ password }}"
-          keyStorePasswordSecretVersion: "{{ keyStorePasswordSecretVersion }}"
-          trustStorePasswordSecretVersion: "{{ trustStorePasswordSecretVersion }}"
-          sslKeyPasswordSecretVersion: "{{ sslKeyPasswordSecretVersion }}"
-          producerPropertiesFile: "{{ producerPropertiesFile }}"
-          keyStorePassword: "{{ keyStorePassword }}"
-          technologyType: "{{ technologyType }}"
-          clusterId: "{{ clusterId }}"
-          useResourcePrincipal: {{ useResourcePrincipal }}
-          securityProtocol: "{{ securityProtocol }}"
-          username: "{{ username }}"
-          keyStoreFile: "{{ keyStoreFile }}"
-          consumerPropertiesFile: "{{ consumerPropertiesFile }}"
-          trustStoreFile: "{{ trustStoreFile }}"
-        description: "{{ description }}"
-        oracleConnectionProperties:
-          authenticationMode: "{{ authenticationMode }}"
-          password: "{{ password }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-          sessionMode: "{{ sessionMode }}"
-          gcpOracleDatabaseId: "{{ gcpOracleDatabaseId }}"
-          connectionString: "{{ connectionString }}"
-          username: "{{ username }}"
-          walletFile: "{{ walletFile }}"
-        mongodbConnectionProperties:
-          tlsCertificateKeyFilePasswordSecretVersion: "{{ tlsCertificateKeyFilePasswordSecretVersion }}"
-          password: "{{ password }}"
-          tlsCertificateKeyFile: "{{ tlsCertificateKeyFile }}"
-          username: "{{ username }}"
-          securityProtocol: "{{ securityProtocol }}"
-          tlsCaFile: "{{ tlsCaFile }}"
-          connectionString: "{{ connectionString }}"
-          databaseId: "{{ databaseId }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-          tlsCertificateKeyFilePassword: "{{ tlsCertificateKeyFilePassword }}"
-        db2ConnectionProperties:
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-          port: {{ port }}
-          sslServerCertificateFile: "{{ sslServerCertificateFile }}"
-          username: "{{ username }}"
-          securityProtocol: "{{ securityProtocol }}"
-          sslClientKeystashFile: "{{ sslClientKeystashFile }}"
-          password: "{{ password }}"
-          host: "{{ host }}"
-          database: "{{ database }}"
-          additionalAttributes:
-            - key: "{{ key }}"
-              value: "{{ value }}"
-          sslClientKeystoredbFile: "{{ sslClientKeystoredbFile }}"
-        redisConnectionProperties:
-          authenticationType: "{{ authenticationType }}"
-          trustStoreFile: "{{ trustStoreFile }}"
-          redisClusterId: "{{ redisClusterId }}"
-          keyStoreFile: "{{ keyStoreFile }}"
-          technologyType: "{{ technologyType }}"
-          keyStorePassword: "{{ keyStorePassword }}"
-          securityProtocol: "{{ securityProtocol }}"
-          username: "{{ username }}"
-          keyStorePasswordSecretVersion: "{{ keyStorePasswordSecretVersion }}"
-          password: "{{ password }}"
-          trustStorePasswordSecretVersion: "{{ trustStorePasswordSecretVersion }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          trustStorePassword: "{{ trustStorePassword }}"
-          servers: "{{ servers }}"
-        amazonKinesisConnectionProperties:
-          secretAccessKeySecret: "{{ secretAccessKeySecret }}"
-          awsRegion: "{{ awsRegion }}"
-          accessKeyId: "{{ accessKeyId }}"
-          endpoint: "{{ endpoint }}"
-          technologyType: "{{ technologyType }}"
-        ociObjectStorageConnectionProperties:
-          technologyType: "{{ technologyType }}"
-          privateKeyPassphraseSecret: "{{ privateKeyPassphraseSecret }}"
-          tenancyId: "{{ tenancyId }}"
-          publicKeyFingerprint: "{{ publicKeyFingerprint }}"
-          privateKeyFile: "{{ privateKeyFile }}"
-          useResourcePrincipal: {{ useResourcePrincipal }}
-          region: "{{ region }}"
-          userId: "{{ userId }}"
-        amazonS3ConnectionProperties:
-          region: "{{ region }}"
-          secretAccessKeySecret: "{{ secretAccessKeySecret }}"
-          accessKeyId: "{{ accessKeyId }}"
-          endpoint: "{{ endpoint }}"
-          technologyType: "{{ technologyType }}"
-        updateTime: "{{ updateTime }}"
-        amazonRedshiftConnectionProperties:
-          connectionUrl: "{{ connectionUrl }}"
-          username: "{{ username }}"
-          password: "{{ password }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-        azureSynapseAnalyticsConnectionProperties:
-          connectionString: "{{ connectionString }}"
-          username: "{{ username }}"
-          password: "{{ password }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-        databricksConnectionProperties:
-          clientId: "{{ clientId }}"
-          connectionUrl: "{{ connectionUrl }}"
-          storageCredential: "{{ storageCredential }}"
-          authenticationType: "{{ authenticationType }}"
-          password: "{{ password }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-          clientSecret: "{{ clientSecret }}"
-        lifecycleState: "{{ lifecycleState }}"
-        ingressIpAddresses:
-          - "{{ ingressIpAddresses }}"
-        ocid: "{{ ocid }}"
-        snowflakeConnectionProperties:
-          connectionUrl: "{{ connectionUrl }}"
-          username: "{{ username }}"
-          privateKeyFile: "{{ privateKeyFile }}"
-          password: "{{ password }}"
-          authenticationType: "{{ authenticationType }}"
-          passwordSecretVersion: "{{ passwordSecretVersion }}"
-          technologyType: "{{ technologyType }}"
-          privateKeyPassphraseSecret: "{{ privateKeyPassphraseSecret }}"
-        icebergConnectionProperties:
-          storage:
-            googleCloudStorageIcebergStorage:
-              bucket: "{{ bucket }}"
-              projectId: "{{ projectId }}"
-              serviceAccountKeyFile: "{{ serviceAccountKeyFile }}"
-            storageType: "{{ storageType }}"
-            amazonS3IcebergStorage:
-              schemeType: "{{ schemeType }}"
-              secretAccessKeySecret: "{{ secretAccessKeySecret }}"
-              region: "{{ region }}"
-              endpoint: "{{ endpoint }}"
-              accessKeyId: "{{ accessKeyId }}"
-              bucket: "{{ bucket }}"
-            azureDataLakeStorageIcebergStorage:
-              container: "{{ container }}"
-              accountKeySecret: "{{ accountKeySecret }}"
-              azureAccount: "{{ azureAccount }}"
-              endpoint: "{{ endpoint }}"
-          technologyType: "{{ technologyType }}"
-          catalog:
-            polarisIcebergCatalog:
-              clientSecret: "{{ clientSecret }}"
-              uri: "{{ uri }}"
-              principalRole: "{{ principalRole }}"
-              clientId: "{{ clientId }}"
-              polarisCatalog: "{{ polarisCatalog }}"
-            catalogType: "{{ catalogType }}"
-            glueIcebergCatalog:
-              glueId: "{{ glueId }}"
-            nessieIcebergCatalog:
-              uri: "{{ uri }}"
-              branch: "{{ branch }}"
-            restIcebergCatalog:
-              uri: "{{ uri }}"
-              properties: "{{ properties }}"
-        displayName: "{{ displayName }}"
-        oracleAiDataPlatformConnectionProperties:
-          tenancyId: "{{ tenancyId }}"
-          technologyType: "{{ technologyType }}"
-          privateKeyPassphraseSecret: "{{ privateKeyPassphraseSecret }}"
-          publicKeyFingerprint: "{{ publicKeyFingerprint }}"
-          userId: "{{ userId }}"
-          useResourcePrincipal: {{ useResourcePrincipal }}
-          connectionUrl: "{{ connectionUrl }}"
-          privateKeyFile: "{{ privateKeyFile }}"
-          region: "{{ region }}"
-    - name: odbSubnet
-      value: "{{ odbSubnet }}"
-      description: |
-        Optional. The name of the OdbSubnet associated with the GoldengateConnection for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
-    - name: odbNetwork
-      value: "{{ odbNetwork }}"
-      description: |
-        Optional. The name of the OdbNetwork associated with the GoldengateConnection. The format is projects/{project}/locations/{location}/odbNetworks/{odb_network}. It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the GoldengateConnection resource in the following format: projects/{project}/locations/{region}/goldengateConnections/{goldengate_connection}
     - name: gcpOracleZone
       value: "{{ gcpOracleZone }}"
       description: |
@@ -681,6 +390,350 @@ response
       value: "{{ labels }}"
       description: |
         Optional. The labels or tags associated with the GoldengateConnection.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the GoldengateConnection resource in the following format: projects/{project}/locations/{region}/goldengateConnections/{goldengate_connection}
+    - name: odbNetwork
+      value: "{{ odbNetwork }}"
+      description: |
+        Optional. The name of the OdbNetwork associated with the GoldengateConnection. The format is projects/{project}/locations/{location}/odbNetworks/{odb_network}. It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.
+    - name: odbSubnet
+      value: "{{ odbSubnet }}"
+      description: |
+        Optional. The name of the OdbSubnet associated with the GoldengateConnection for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+    - name: properties
+      description: |
+        Required. The properties of the GoldengateConnection.
+      value:
+        amazonKinesisConnectionProperties:
+          accessKeyId: "{{ accessKeyId }}"
+          awsRegion: "{{ awsRegion }}"
+          endpoint: "{{ endpoint }}"
+          secretAccessKeySecret: "{{ secretAccessKeySecret }}"
+          technologyType: "{{ technologyType }}"
+        amazonRedshiftConnectionProperties:
+          connectionUrl: "{{ connectionUrl }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+        amazonS3ConnectionProperties:
+          accessKeyId: "{{ accessKeyId }}"
+          endpoint: "{{ endpoint }}"
+          region: "{{ region }}"
+          secretAccessKeySecret: "{{ secretAccessKeySecret }}"
+          technologyType: "{{ technologyType }}"
+        azureDataLakeStorageConnectionProperties:
+          account: "{{ account }}"
+          accountKeySecret: "{{ accountKeySecret }}"
+          authenticationType: "{{ authenticationType }}"
+          azureAuthorityHost: "{{ azureAuthorityHost }}"
+          azureTenantId: "{{ azureTenantId }}"
+          clientId: "{{ clientId }}"
+          clientSecret: "{{ clientSecret }}"
+          endpoint: "{{ endpoint }}"
+          sasTokenSecret: "{{ sasTokenSecret }}"
+          technologyType: "{{ technologyType }}"
+        azureSynapseAnalyticsConnectionProperties:
+          connectionString: "{{ connectionString }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+        connectionType: "{{ connectionType }}"
+        databricksConnectionProperties:
+          authenticationType: "{{ authenticationType }}"
+          clientId: "{{ clientId }}"
+          clientSecret: "{{ clientSecret }}"
+          connectionUrl: "{{ connectionUrl }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          storageCredential: "{{ storageCredential }}"
+          technologyType: "{{ technologyType }}"
+        db2ConnectionProperties:
+          additionalAttributes:
+            - key: "{{ key }}"
+              value: "{{ value }}"
+          database: "{{ database }}"
+          host: "{{ host }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          port: {{ port }}
+          securityProtocol: "{{ securityProtocol }}"
+          sslClientKeystashFile: "{{ sslClientKeystashFile }}"
+          sslClientKeystoredbFile: "{{ sslClientKeystoredbFile }}"
+          sslServerCertificateFile: "{{ sslServerCertificateFile }}"
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+        description: "{{ description }}"
+        displayName: "{{ displayName }}"
+        elasticsearchConnectionProperties:
+          authenticationType: "{{ authenticationType }}"
+          fingerprint: "{{ fingerprint }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          securityProtocol: "{{ securityProtocol }}"
+          servers: "{{ servers }}"
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+        genericConnectionProperties:
+          host: "{{ host }}"
+          technologyType: "{{ technologyType }}"
+        goldengateConnectionProperties:
+          goldengateDeploymentId: "{{ goldengateDeploymentId }}"
+          host: "{{ host }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          port: {{ port }}
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+        googleBigQueryConnectionProperties:
+          serviceAccountKeyFile: "{{ serviceAccountKeyFile }}"
+          technologyType: "{{ technologyType }}"
+        googleCloudStorageConnectionProperties:
+          serviceAccountKeyFile: "{{ serviceAccountKeyFile }}"
+          technologyType: "{{ technologyType }}"
+        googlePubsubConnectionProperties:
+          serviceAccountKeyFile: "{{ serviceAccountKeyFile }}"
+          technologyType: "{{ technologyType }}"
+        hdfsConnectionProperties:
+          coreSiteXml: "{{ coreSiteXml }}"
+          technologyType: "{{ technologyType }}"
+        icebergConnectionProperties:
+          catalog:
+            catalogType: "{{ catalogType }}"
+            glueIcebergCatalog:
+              glueId: "{{ glueId }}"
+            nessieIcebergCatalog:
+              branch: "{{ branch }}"
+              uri: "{{ uri }}"
+            polarisIcebergCatalog:
+              clientId: "{{ clientId }}"
+              clientSecret: "{{ clientSecret }}"
+              polarisCatalog: "{{ polarisCatalog }}"
+              principalRole: "{{ principalRole }}"
+              uri: "{{ uri }}"
+            restIcebergCatalog:
+              properties: "{{ properties }}"
+              uri: "{{ uri }}"
+          storage:
+            amazonS3IcebergStorage:
+              accessKeyId: "{{ accessKeyId }}"
+              bucket: "{{ bucket }}"
+              endpoint: "{{ endpoint }}"
+              region: "{{ region }}"
+              schemeType: "{{ schemeType }}"
+              secretAccessKeySecret: "{{ secretAccessKeySecret }}"
+            azureDataLakeStorageIcebergStorage:
+              accountKeySecret: "{{ accountKeySecret }}"
+              azureAccount: "{{ azureAccount }}"
+              container: "{{ container }}"
+              endpoint: "{{ endpoint }}"
+            googleCloudStorageIcebergStorage:
+              bucket: "{{ bucket }}"
+              projectId: "{{ projectId }}"
+              serviceAccountKeyFile: "{{ serviceAccountKeyFile }}"
+            storageType: "{{ storageType }}"
+          technologyType: "{{ technologyType }}"
+        ingressIpAddresses:
+          - "{{ ingressIpAddresses }}"
+        javaMessageServiceConnectionProperties:
+          authenticationType: "{{ authenticationType }}"
+          connectionFactory: "{{ connectionFactory }}"
+          connectionUrl: "{{ connectionUrl }}"
+          jndiConnectionFactory: "{{ jndiConnectionFactory }}"
+          jndiInitialContextFactory: "{{ jndiInitialContextFactory }}"
+          jndiProviderUrl: "{{ jndiProviderUrl }}"
+          jndiSecurityCredentialsSecret: "{{ jndiSecurityCredentialsSecret }}"
+          jndiSecurityPrincipal: "{{ jndiSecurityPrincipal }}"
+          keyStoreFile: "{{ keyStoreFile }}"
+          keyStorePassword: "{{ keyStorePassword }}"
+          keyStorePasswordSecretVersion: "{{ keyStorePasswordSecretVersion }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          securityProtocol: "{{ securityProtocol }}"
+          sslKeyPassword: "{{ sslKeyPassword }}"
+          sslKeyPasswordSecretVersion: "{{ sslKeyPasswordSecretVersion }}"
+          technologyType: "{{ technologyType }}"
+          trustStoreFile: "{{ trustStoreFile }}"
+          trustStorePassword: "{{ trustStorePassword }}"
+          trustStorePasswordSecretVersion: "{{ trustStorePasswordSecretVersion }}"
+          useJndi: {{ useJndi }}
+          username: "{{ username }}"
+        kafkaConnectionProperties:
+          bootstrapServers:
+            - host: "{{ host }}"
+              port: {{ port }}
+              privateIpAddress: "{{ privateIpAddress }}"
+          clusterId: "{{ clusterId }}"
+          consumerPropertiesFile: "{{ consumerPropertiesFile }}"
+          keyStoreFile: "{{ keyStoreFile }}"
+          keyStorePassword: "{{ keyStorePassword }}"
+          keyStorePasswordSecretVersion: "{{ keyStorePasswordSecretVersion }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          producerPropertiesFile: "{{ producerPropertiesFile }}"
+          securityProtocol: "{{ securityProtocol }}"
+          sslKeyPassword: "{{ sslKeyPassword }}"
+          sslKeyPasswordSecretVersion: "{{ sslKeyPasswordSecretVersion }}"
+          streamPoolId: "{{ streamPoolId }}"
+          technologyType: "{{ technologyType }}"
+          trustStoreFile: "{{ trustStoreFile }}"
+          trustStorePassword: "{{ trustStorePassword }}"
+          trustStorePasswordSecretVersion: "{{ trustStorePasswordSecretVersion }}"
+          useResourcePrincipal: {{ useResourcePrincipal }}
+          username: "{{ username }}"
+        kafkaSchemaRegistryConnectionProperties:
+          authenticationType: "{{ authenticationType }}"
+          keyStoreFile: "{{ keyStoreFile }}"
+          keyStorePassword: "{{ keyStorePassword }}"
+          keyStorePasswordSecretVersion: "{{ keyStorePasswordSecretVersion }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          sslKeyPassword: "{{ sslKeyPassword }}"
+          sslKeyPasswordSecretVersion: "{{ sslKeyPasswordSecretVersion }}"
+          technologyType: "{{ technologyType }}"
+          trustStoreFile: "{{ trustStoreFile }}"
+          trustStorePassword: "{{ trustStorePassword }}"
+          trustStorePasswordSecretVersion: "{{ trustStorePasswordSecretVersion }}"
+          url: "{{ url }}"
+          username: "{{ username }}"
+        lifecycleDetails: "{{ lifecycleDetails }}"
+        lifecycleState: "{{ lifecycleState }}"
+        microsoftFabricConnectionProperties:
+          clientId: "{{ clientId }}"
+          clientSecret: "{{ clientSecret }}"
+          endpoint: "{{ endpoint }}"
+          technologyType: "{{ technologyType }}"
+          tenantId: "{{ tenantId }}"
+        microsoftSqlserverConnectionProperties:
+          additionalAttributes:
+            - key: "{{ key }}"
+              value: "{{ value }}"
+          database: "{{ database }}"
+          host: "{{ host }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          port: {{ port }}
+          securityProtocol: "{{ securityProtocol }}"
+          serverCertificateValidationRequired: {{ serverCertificateValidationRequired }}
+          sslCaFile: "{{ sslCaFile }}"
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+        mongodbConnectionProperties:
+          connectionString: "{{ connectionString }}"
+          databaseId: "{{ databaseId }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          securityProtocol: "{{ securityProtocol }}"
+          technologyType: "{{ technologyType }}"
+          tlsCaFile: "{{ tlsCaFile }}"
+          tlsCertificateKeyFile: "{{ tlsCertificateKeyFile }}"
+          tlsCertificateKeyFilePassword: "{{ tlsCertificateKeyFilePassword }}"
+          tlsCertificateKeyFilePasswordSecretVersion: "{{ tlsCertificateKeyFilePasswordSecretVersion }}"
+          username: "{{ username }}"
+        mysqlConnectionProperties:
+          additionalAttributes:
+            - key: "{{ key }}"
+              value: "{{ value }}"
+          database: "{{ database }}"
+          dbSystemId: "{{ dbSystemId }}"
+          host: "{{ host }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          port: {{ port }}
+          securityProtocol: "{{ securityProtocol }}"
+          sslCaFile: "{{ sslCaFile }}"
+          sslCertFile: "{{ sslCertFile }}"
+          sslCrlFile: "{{ sslCrlFile }}"
+          sslKeyFile: "{{ sslKeyFile }}"
+          sslMode: "{{ sslMode }}"
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+        ociObjectStorageConnectionProperties:
+          privateKeyFile: "{{ privateKeyFile }}"
+          privateKeyPassphraseSecret: "{{ privateKeyPassphraseSecret }}"
+          publicKeyFingerprint: "{{ publicKeyFingerprint }}"
+          region: "{{ region }}"
+          technologyType: "{{ technologyType }}"
+          tenancyId: "{{ tenancyId }}"
+          useResourcePrincipal: {{ useResourcePrincipal }}
+          userId: "{{ userId }}"
+        ocid: "{{ ocid }}"
+        oracleAiDataPlatformConnectionProperties:
+          connectionUrl: "{{ connectionUrl }}"
+          privateKeyFile: "{{ privateKeyFile }}"
+          privateKeyPassphraseSecret: "{{ privateKeyPassphraseSecret }}"
+          publicKeyFingerprint: "{{ publicKeyFingerprint }}"
+          region: "{{ region }}"
+          technologyType: "{{ technologyType }}"
+          tenancyId: "{{ tenancyId }}"
+          useResourcePrincipal: {{ useResourcePrincipal }}
+          userId: "{{ userId }}"
+        oracleConnectionProperties:
+          authenticationMode: "{{ authenticationMode }}"
+          connectionString: "{{ connectionString }}"
+          gcpOracleDatabaseId: "{{ gcpOracleDatabaseId }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          sessionMode: "{{ sessionMode }}"
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+          walletFile: "{{ walletFile }}"
+        oracleNosqlConnectionProperties:
+          privateKeyFile: "{{ privateKeyFile }}"
+          privateKeyPassphraseSecret: "{{ privateKeyPassphraseSecret }}"
+          publicKeyFingerprint: "{{ publicKeyFingerprint }}"
+          region: "{{ region }}"
+          technologyType: "{{ technologyType }}"
+          tenancyId: "{{ tenancyId }}"
+          useResourcePrincipal: {{ useResourcePrincipal }}
+          userId: "{{ userId }}"
+        postgresqlConnectionProperties:
+          additionalAttributes:
+            - key: "{{ key }}"
+              value: "{{ value }}"
+          database: "{{ database }}"
+          dbSystemId: "{{ dbSystemId }}"
+          host: "{{ host }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          port: {{ port }}
+          securityProtocol: "{{ securityProtocol }}"
+          sslCaFile: "{{ sslCaFile }}"
+          sslCertFile: "{{ sslCertFile }}"
+          sslCrlFile: "{{ sslCrlFile }}"
+          sslKeyFile: "{{ sslKeyFile }}"
+          sslMode: "{{ sslMode }}"
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+        redisConnectionProperties:
+          authenticationType: "{{ authenticationType }}"
+          keyStoreFile: "{{ keyStoreFile }}"
+          keyStorePassword: "{{ keyStorePassword }}"
+          keyStorePasswordSecretVersion: "{{ keyStorePasswordSecretVersion }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          redisClusterId: "{{ redisClusterId }}"
+          securityProtocol: "{{ securityProtocol }}"
+          servers: "{{ servers }}"
+          technologyType: "{{ technologyType }}"
+          trustStoreFile: "{{ trustStoreFile }}"
+          trustStorePassword: "{{ trustStorePassword }}"
+          trustStorePasswordSecretVersion: "{{ trustStorePasswordSecretVersion }}"
+          username: "{{ username }}"
+        routingMethod: "{{ routingMethod }}"
+        snowflakeConnectionProperties:
+          authenticationType: "{{ authenticationType }}"
+          connectionUrl: "{{ connectionUrl }}"
+          password: "{{ password }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+          privateKeyFile: "{{ privateKeyFile }}"
+          privateKeyPassphraseSecret: "{{ privateKeyPassphraseSecret }}"
+          technologyType: "{{ technologyType }}"
+          username: "{{ username }}"
+        updateTime: "{{ updateTime }}"
     - name: goldengateConnectionId
       value: "{{ goldengateConnectionId }}"
     - name: requestId

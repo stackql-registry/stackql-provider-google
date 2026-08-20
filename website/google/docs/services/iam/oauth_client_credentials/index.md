@@ -253,8 +253,8 @@ Creates a new OauthClientCredential.
 ```sql
 INSERT INTO google.iam.oauth_client_credentials (
 data__disabled,
-data__name,
 data__displayName,
+data__name,
 projectsId,
 locationsId,
 oauthClientsId,
@@ -262,8 +262,8 @@ oauthClientCredentialId
 )
 SELECT 
 {{ disabled }},
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ oauthClientsId }}',
@@ -294,14 +294,14 @@ displayName
       value: {{ disabled }}
       description: |
         Optional. Whether the OauthClientCredential is disabled. You cannot use a disabled OauthClientCredential.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Identifier. The resource name of the OauthClientCredential. Format: \`projects/{project}/locations/{location}/oauthClients/{oauth_client}/credentials/{credential}\`
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. A user-specified display name of the OauthClientCredential. Cannot exceed 32 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of the OauthClientCredential. Format: \`projects/{project}/locations/{location}/oauthClients/{oauth_client}/credentials/{credential}\`
     - name: oauthClientCredentialId
       value: "{{ oauthClientCredentialId }}"
 `}</CodeBlock>
@@ -326,8 +326,8 @@ Updates an existing OauthClientCredential.
 UPDATE google.iam.oauth_client_credentials
 SET 
 data__disabled = {{ disabled }},
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

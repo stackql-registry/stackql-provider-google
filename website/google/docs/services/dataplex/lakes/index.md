@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_list"><CopyableCode code="projects_locations_lakes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists lake resources in a project and location.</td>
 </tr>
 <tr>
@@ -363,10 +363,10 @@ updateTime
 FROM google.dataplex.lakes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -390,8 +390,8 @@ Creates a lake resource.
 INSERT INTO google.dataplex.lakes (
 data__description,
 data__displayName,
-data__metastore,
 data__labels,
+data__metastore,
 projectsId,
 locationsId,
 lakeId,
@@ -400,8 +400,8 @@ validateOnly
 SELECT 
 '{{ description }}',
 '{{ displayName }}',
-'{{ metastore }}',
 '{{ labels }}',
+'{{ metastore }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lakeId }}',
@@ -434,15 +434,15 @@ response
       value: "{{ displayName }}"
       description: |
         Optional. User friendly display name.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the lake.
     - name: metastore
       description: |
         Optional. Settings to manage lake and Dataproc Metastore service instance association.
       value:
         service: "{{ service }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels for the lake.
     - name: lakeId
       value: "{{ lakeId }}"
     - name: validateOnly
@@ -470,8 +470,8 @@ UPDATE google.dataplex.lakes
 SET 
 data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__metastore = '{{ metastore }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__metastore = '{{ metastore }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

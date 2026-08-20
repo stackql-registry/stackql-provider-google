@@ -104,6 +104,46 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the EncryptionConfig. Format: organizations/&#123;organization&#125;/locations/&#123;location&#125;/encryptionConfigs/&#123;encryption_config&#125; Global location is not supported.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the Encryption configuration was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="enableMetastoreEncryption" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Represent the state of CMEK opt-in for metastore.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionState" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The state of encryption of the databases. (ENCRYPTION_STATE_UNSPECIFIED, ENCRYPTING, COMPLETED, FAILED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Etag of the EncryptionConfig. This is a strong etag.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="failureDetails" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Details of the failure if anything related to Cmek db fails. (id: GoogleCloudDataplexV1EncryptionConfigFailureDetails)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="key" /></td>
+    <td><code>string</code></td>
+    <td>Optional. If a key is chosen, it means that the customer is using CMEK. If a key is not chosen, it means that the customer is using Google managed encryption.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the Encryption configuration was last updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -135,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_encryption_configs_list"><CopyableCode code="organizations_locations_encryption_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List EncryptionConfigs.</td>
 </tr>
 <tr>
@@ -264,13 +304,20 @@ List EncryptionConfigs.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+enableMetastoreEncryption,
+encryptionState,
+etag,
+failureDetails,
+key,
+updateTime
 FROM google.dataplex.encryption_configs
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -293,19 +340,19 @@ Create an EncryptionConfig.
 
 ```sql
 INSERT INTO google.dataplex.encryption_configs (
-data__name,
 data__enableMetastoreEncryption,
-data__key,
 data__etag,
+data__key,
+data__name,
 organizationsId,
 locationsId,
 encryptionConfigId
 )
 SELECT 
-'{{ name }}',
 {{ enableMetastoreEncryption }},
-'{{ key }}',
 '{{ etag }}',
+'{{ key }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ encryptionConfigId }}'
@@ -329,22 +376,22 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the encryption_configs resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the EncryptionConfig. Format: organizations/{organization}/locations/{location}/encryptionConfigs/{encryption_config} Global location is not supported.
     - name: enableMetastoreEncryption
       value: {{ enableMetastoreEncryption }}
       description: |
         Optional. Represent the state of CMEK opt-in for metastore.
-    - name: key
-      value: "{{ key }}"
-      description: |
-        Optional. If a key is chosen, it means that the customer is using CMEK. If a key is not chosen, it means that the customer is using Google managed encryption.
     - name: etag
       value: "{{ etag }}"
       description: |
         Etag of the EncryptionConfig. This is a strong etag.
+    - name: key
+      value: "{{ key }}"
+      description: |
+        Optional. If a key is chosen, it means that the customer is using CMEK. If a key is not chosen, it means that the customer is using Google managed encryption.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the EncryptionConfig. Format: organizations/{organization}/locations/{location}/encryptionConfigs/{encryption_config} Global location is not supported.
     - name: encryptionConfigId
       value: "{{ encryptionConfigId }}"
 `}</CodeBlock>
@@ -368,10 +415,10 @@ Update an EncryptionConfig.
 ```sql
 UPDATE google.dataplex.encryption_configs
 SET 
-data__name = '{{ name }}',
 data__enableMetastoreEncryption = {{ enableMetastoreEncryption }},
+data__etag = '{{ etag }}',
 data__key = '{{ key }}',
-data__etag = '{{ etag }}'
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

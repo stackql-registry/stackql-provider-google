@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_refs"><CopyableCode code="fetch_refs" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-type"><code>type</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-type"><code>type</code></a></td>
     <td>Fetches git references from a repository.</td>
 </tr>
 </tbody>
@@ -155,9 +155,9 @@ FROM google.securesourcemanager.repositories_refs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND type = '{{ type }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND type = '{{ type }}'
 ;
 ```
 </TabItem>

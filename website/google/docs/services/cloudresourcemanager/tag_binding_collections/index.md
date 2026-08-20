@@ -179,10 +179,10 @@ Updates tag bindings directly attached to a GCP resource. Update_mask can be kep
 ```sql
 UPDATE google.cloudresourcemanager.tag_binding_collections
 SET 
-data__name = '{{ name }}',
-data__tags = '{{ tags }}',
 data__etag = '{{ etag }}',
-data__fullResourceName = '{{ fullResourceName }}'
+data__fullResourceName = '{{ fullResourceName }}',
+data__name = '{{ name }}',
+data__tags = '{{ tags }}'
 WHERE 
 locationsId = '{{ locationsId }}' --required
 AND tagBindingCollectionsId = '{{ tagBindingCollectionsId }}' --required

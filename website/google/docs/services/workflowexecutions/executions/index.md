@@ -255,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workflowsId"><code>workflowsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Returns a list of executions which belong to the workflow with the given name. The method returns executions of all workflow revisions. Returned executions are ordered by their start time (newest first).</td>
 </tr>
 <tr>
@@ -410,9 +410,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workflowsId = '{{ workflowsId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
 ;
 ```
@@ -435,21 +435,21 @@ Creates a new execution using the latest revision of the given workflow. For mor
 
 ```sql
 INSERT INTO google.workflowexecutions.executions (
+data__argument,
+data__callLogLevel,
 data__disableConcurrencyQuotaOverflowBuffering,
 data__executionHistoryLevel,
-data__argument,
 data__labels,
-data__callLogLevel,
 projectsId,
 locationsId,
 workflowsId
 )
 SELECT 
+'{{ argument }}',
+'{{ callLogLevel }}',
 {{ disableConcurrencyQuotaOverflowBuffering }},
 '{{ executionHistoryLevel }}',
-'{{ argument }}',
 '{{ labels }}',
-'{{ callLogLevel }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workflowsId }}'
@@ -487,6 +487,15 @@ workflowRevisionId
     - name: workflowsId
       value: "{{ workflowsId }}"
       description: Required parameter for the executions resource.
+    - name: argument
+      value: "{{ argument }}"
+      description: |
+        Input parameters of the execution represented as a JSON string. The size limit is 32KB. *Note*: If you are using the REST API directly to run your workflow, you must escape any JSON string value of \`argument\`. Example: \`'{"argument":"{"firstName":"FIRST","lastName":"LAST"}"}'\`
+    - name: callLogLevel
+      value: "{{ callLogLevel }}"
+      description: |
+        The call logging level associated to this execution.
+      valid_values: ['CALL_LOG_LEVEL_UNSPECIFIED', 'LOG_ALL_CALLS', 'LOG_ERRORS_ONLY', 'LOG_NONE']
     - name: disableConcurrencyQuotaOverflowBuffering
       value: {{ disableConcurrencyQuotaOverflowBuffering }}
       description: |
@@ -496,19 +505,10 @@ workflowRevisionId
       description: |
         Optional. Describes the execution history level to apply to this execution. If not specified, the execution history level is determined by its workflow's execution history level. If the levels are different, the executionHistoryLevel overrides the workflow's execution history level for this execution.
       valid_values: ['EXECUTION_HISTORY_LEVEL_UNSPECIFIED', 'EXECUTION_HISTORY_BASIC', 'EXECUTION_HISTORY_DETAILED']
-    - name: argument
-      value: "{{ argument }}"
-      description: |
-        Input parameters of the execution represented as a JSON string. The size limit is 32KB. *Note*: If you are using the REST API directly to run your workflow, you must escape any JSON string value of \`argument\`. Example: \`'{"argument":"{"firstName":"FIRST","lastName":"LAST"}"}'\`
     - name: labels
       value: "{{ labels }}"
       description: |
         Labels associated with this execution. Labels can contain at most 64 entries. Keys and values can be no longer than 63 characters and can only contain lowercase letters, numeric characters, underscores, and dashes. Label keys must start with a letter. International characters are allowed. By default, labels are inherited from the workflow but are overridden by any labels associated with the execution.
-    - name: callLogLevel
-      value: "{{ callLogLevel }}"
-      description: |
-        The call logging level associated to this execution.
-      valid_values: ['CALL_LOG_LEVEL_UNSPECIFIED', 'LOG_ALL_CALLS', 'LOG_ERRORS_ONLY', 'LOG_NONE']
 `}</CodeBlock>
 
 </TabItem>

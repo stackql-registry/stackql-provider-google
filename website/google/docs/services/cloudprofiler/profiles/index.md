@@ -108,7 +108,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists profiles which have been collected so far and for which the caller has permission to view.</td>
 </tr>
 <tr>
@@ -199,8 +199,8 @@ profileType,
 startTime
 FROM google.cloudprofiler.profiles
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -253,9 +253,9 @@ startTime
       description: |
         Deployment details.
       value:
-        target: "{{ target }}"
-        projectId: "{{ projectId }}"
         labels: "{{ labels }}"
+        projectId: "{{ projectId }}"
+        target: "{{ target }}"
     - name: profileType
       value:
         - "{{ profileType }}"
@@ -282,11 +282,11 @@ UpdateProfile updates the profile bytes and labels on the profile resource creat
 ```sql
 UPDATE google.cloudprofiler.profiles
 SET 
-data__profileType = '{{ profileType }}',
 data__deployment = '{{ deployment }}',
-data__profileBytes = '{{ profileBytes }}',
 data__duration = '{{ duration }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__profileBytes = '{{ profileBytes }}',
+data__profileType = '{{ profileType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND profilesId = '{{ profilesId }}' --required
@@ -321,11 +321,11 @@ EXEC google.cloudprofiler.profiles.create_offline
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"profileType": "{{ profileType }}", 
 "deployment": "{{ deployment }}", 
-"profileBytes": "{{ profileBytes }}", 
 "duration": "{{ duration }}", 
-"labels": "{{ labels }}"
+"labels": "{{ labels }}", 
+"profileBytes": "{{ profileBytes }}", 
+"profileType": "{{ profileType }}"
 }'
 ;
 ```

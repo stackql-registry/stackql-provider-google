@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ApiConfigs in a given project and location.</td>
 </tr>
 <tr>
@@ -359,10 +359,10 @@ FROM google.apigateway.configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -385,11 +385,11 @@ Creates a new ApiConfig in a given project and location.
 ```sql
 INSERT INTO google.apigateway.configs (
 data__displayName,
-data__openapiDocuments,
-data__grpcServices,
-data__managedServiceConfigs,
 data__gatewayServiceAccount,
+data__grpcServices,
 data__labels,
+data__managedServiceConfigs,
+data__openapiDocuments,
 projectsId,
 locationsId,
 apisId,
@@ -397,11 +397,11 @@ apiConfigId
 )
 SELECT 
 '{{ displayName }}',
-'{{ openapiDocuments }}',
-'{{ grpcServices }}',
-'{{ managedServiceConfigs }}',
 '{{ gatewayServiceAccount }}',
+'{{ grpcServices }}',
 '{{ labels }}',
+'{{ managedServiceConfigs }}',
+'{{ openapiDocuments }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -433,35 +433,35 @@ response
       value: "{{ displayName }}"
       description: |
         Optional. Display name.
-    - name: openapiDocuments
+    - name: gatewayServiceAccount
+      value: "{{ gatewayServiceAccount }}"
       description: |
-        Optional. OpenAPI specification documents. If specified, grpc_services and managed_service_configs must not be included.
-      value:
-        - document:
-            path: "{{ path }}"
-            contents: "{{ contents }}"
+        Immutable. The Google Cloud IAM Service Account that Gateways serving this config should use to authenticate to other services. This may either be the Service Account's email (\`{ACCOUNT_ID}@{PROJECT}.iam.gserviceaccount.com\`) or its full resource name (\`projects/{PROJECT}/accounts/{UNIQUE_ID}\`). This is most often used when the service is a GCP resource such as a Cloud Run Service or an IAP-secured service.
     - name: grpcServices
       description: |
         Optional. gRPC service definition files. If specified, openapi_documents must not be included.
       value:
         - fileDescriptorSet:
-            path: "{{ path }}"
             contents: "{{ contents }}"
+            path: "{{ path }}"
           source: "{{ source }}"
-    - name: managedServiceConfigs
-      description: |
-        Optional. Service Configuration files. At least one must be included when using gRPC service definitions. See https://cloud.google.com/endpoints/docs/grpc/grpc-service-config#service_configuration_overview for the expected file contents. If multiple files are specified, the files are merged with the following rules: * All singular scalar fields are merged using "last one wins" semantics in the order of the files uploaded. * Repeated fields are concatenated. * Singular embedded messages are merged using these rules for nested fields.
-      value:
-        - path: "{{ path }}"
-          contents: "{{ contents }}"
-    - name: gatewayServiceAccount
-      value: "{{ gatewayServiceAccount }}"
-      description: |
-        Immutable. The Google Cloud IAM Service Account that Gateways serving this config should use to authenticate to other services. This may either be the Service Account's email (\`{ACCOUNT_ID}@{PROJECT}.iam.gserviceaccount.com\`) or its full resource name (\`projects/{PROJECT}/accounts/{UNIQUE_ID}\`). This is most often used when the service is a GCP resource such as a Cloud Run Service or an IAP-secured service.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
+    - name: managedServiceConfigs
+      description: |
+        Optional. Service Configuration files. At least one must be included when using gRPC service definitions. See https://cloud.google.com/endpoints/docs/grpc/grpc-service-config#service_configuration_overview for the expected file contents. If multiple files are specified, the files are merged with the following rules: * All singular scalar fields are merged using "last one wins" semantics in the order of the files uploaded. * Repeated fields are concatenated. * Singular embedded messages are merged using these rules for nested fields.
+      value:
+        - contents: "{{ contents }}"
+          path: "{{ path }}"
+    - name: openapiDocuments
+      description: |
+        Optional. OpenAPI specification documents. If specified, grpc_services and managed_service_configs must not be included.
+      value:
+        - document:
+            contents: "{{ contents }}"
+            path: "{{ path }}"
     - name: apiConfigId
       value: "{{ apiConfigId }}"
 `}</CodeBlock>
@@ -486,11 +486,11 @@ Updates the parameters of a single ApiConfig.
 UPDATE google.apigateway.configs
 SET 
 data__displayName = '{{ displayName }}',
-data__openapiDocuments = '{{ openapiDocuments }}',
-data__grpcServices = '{{ grpcServices }}',
-data__managedServiceConfigs = '{{ managedServiceConfigs }}',
 data__gatewayServiceAccount = '{{ gatewayServiceAccount }}',
-data__labels = '{{ labels }}'
+data__grpcServices = '{{ grpcServices }}',
+data__labels = '{{ labels }}',
+data__managedServiceConfigs = '{{ managedServiceConfigs }}',
+data__openapiDocuments = '{{ openapiDocuments }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

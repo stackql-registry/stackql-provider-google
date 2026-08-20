@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists the folders that are direct descendants of supplied parent resource. `list()` provides a strongly consistent view of the folders underneath the specified parent resource. `list()` returns folders sorted based upon the (ascending) lexical ordering of their display_name. The caller must have `resourcemanager.folders.list` permission on the identified parent.</td>
 </tr>
 <tr>
@@ -230,18 +230,18 @@ The following methods are available for this resource:
     <td>Requests deletion of a folder. The folder is moved into the DELETE_REQUESTED state immediately, and is deleted approximately 30 days later. This method may only be called on an empty folder, where a folder is empty if it doesn't contain any folders or projects in the ACTIVE state. If called on a folder in DELETE_REQUESTED state the operation will result in a no-op success. The caller must have `resourcemanager.folders.delete` permission on the identified folder.</td>
 </tr>
 <tr>
-    <td><a href="#search"><CopyableCode code="search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
-    <td>Search for folders that match specific filter criteria. `search()` provides an eventually consistent view of the folders a user has access to which meet the specified filter criteria. This will only return folders on which the caller has the permission `resourcemanager.folders.get`.</td>
-</tr>
-<tr>
     <td><a href="#move"><CopyableCode code="move" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
     <td>Moves a folder under a new resource parent. Returns an `Operation` which can be used to track the progress of the folder move workflow. Upon success, the `Operation.response` field will be populated with the moved folder. Upon failure, a `FolderOperationError` categorizing the failure cause will be returned - if the failure occurs synchronously then the `FolderOperationError` will be returned in the `Status.details` field. If it occurs asynchronously, then the FolderOperation will be returned in the `Operation.error` field. In addition, the `Operation.metadata` field will be populated with a `FolderOperation` message as an aid to stateless clients. Folder moves will be rejected if they violate either the naming, height, or fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.move` permission on the folder's current and proposed new parent.</td>
+</tr>
+<tr>
+    <td><a href="#search"><CopyableCode code="search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td>Search for folders that match specific filter criteria. `search()` provides an eventually consistent view of the folders a user has access to which meet the specified filter criteria. This will only return folders on which the caller has the permission `resourcemanager.folders.get`.</td>
 </tr>
 <tr>
     <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
@@ -353,9 +353,9 @@ state,
 tags,
 updateTime
 FROM google.cloudresourcemanager.folders
-WHERE parent = '{{ parent }}'
-AND pageSize = '{{ pageSize }}'
+WHERE pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND parent = '{{ parent }}'
 AND showDeleted = '{{ showDeleted }}'
 ;
 ```
@@ -378,15 +378,15 @@ Creates a folder in the resource hierarchy. Returns an `Operation` which can be 
 
 ```sql
 INSERT INTO google.cloudresourcemanager.folders (
-data__parent,
-data__name,
 data__displayName,
+data__name,
+data__parent,
 data__tags
 )
 SELECT 
-'{{ parent }}',
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
+'{{ parent }}',
 '{{ tags }}'
 RETURNING
 name,
@@ -402,18 +402,18 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: folders
   props:
-    - name: parent
-      value: "{{ parent }}"
-      description: |
-        Required. The folder's parent's resource name. Updates to the folder's parent must be performed using MoveFolder.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the folder. Its format is \`folders/{folder_id}\`, for example: "folders/1234".
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The folder's display name. A folder's display name must be unique amongst its siblings. For example, no two folders with the same parent can share the same display name. The display name must start and end with a letter or digit, may contain letters, digits, spaces, hyphens and underscores and can be no longer than 30 characters. This is captured by the regular expression: \`[p{L}p{N}]([p{L}p{N}_- ]{0,28}[p{L}p{N}])?\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the folder. Its format is \`folders/{folder_id}\`, for example: "folders/1234".
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Required. The folder's parent's resource name. Updates to the folder's parent must be performed using MoveFolder.
     - name: tags
       value: "{{ tags }}"
       description: |
@@ -439,9 +439,9 @@ Updates a folder, changing its `display_name`. Changes to the folder `display_na
 ```sql
 UPDATE google.cloudresourcemanager.folders
 SET 
-data__parent = '{{ parent }}',
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__parent = '{{ parent }}',
 data__tags = '{{ tags }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
@@ -481,25 +481,13 @@ WHERE foldersId = '{{ foldersId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="search"
+    defaultValue="move"
     values={[
-        { label: 'search', value: 'search' },
         { label: 'move', value: 'move' },
+        { label: 'search', value: 'search' },
         { label: 'undelete', value: 'undelete' }
     ]}
 >
-<TabItem value="search">
-
-Search for folders that match specific filter criteria. `search()` provides an eventually consistent view of the folders a user has access to which meet the specified filter criteria. This will only return folders on which the caller has the permission `resourcemanager.folders.get`.
-
-```sql
-EXEC google.cloudresourcemanager.folders.search 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@query='{{ query }}'
-;
-```
-</TabItem>
 <TabItem value="move">
 
 Moves a folder under a new resource parent. Returns an `Operation` which can be used to track the progress of the folder move workflow. Upon success, the `Operation.response` field will be populated with the moved folder. Upon failure, a `FolderOperationError` categorizing the failure cause will be returned - if the failure occurs synchronously then the `FolderOperationError` will be returned in the `Status.details` field. If it occurs asynchronously, then the FolderOperation will be returned in the `Operation.error` field. In addition, the `Operation.metadata` field will be populated with a `FolderOperation` message as an aid to stateless clients. Folder moves will be rejected if they violate either the naming, height, or fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.move` permission on the folder's current and proposed new parent.
@@ -511,6 +499,18 @@ EXEC google.cloudresourcemanager.folders.move
 '{
 "destinationParent": "{{ destinationParent }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="search">
+
+Search for folders that match specific filter criteria. `search()` provides an eventually consistent view of the folders a user has access to which meet the specified filter criteria. This will only return folders on which the caller has the permission `resourcemanager.folders.get`.
+
+```sql
+EXEC google.cloudresourcemanager.folders.search 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@query='{{ query }}'
 ;
 ```
 </TabItem>

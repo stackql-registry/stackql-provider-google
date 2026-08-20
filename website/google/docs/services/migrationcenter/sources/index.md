@@ -205,14 +205,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the sources in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-sourceId"><code>sourceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sourceId"><code>sourceId</code></a></td>
     <td>Creates a new source in a given project and location.</td>
 </tr>
 <tr>
@@ -351,9 +351,9 @@ updateTime
 FROM google.migrationcenter.sources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -378,24 +378,24 @@ Creates a new source in a given project and location.
 INSERT INTO google.migrationcenter.sources (
 data__description,
 data__displayName,
+data__managed,
 data__priority,
 data__type,
-data__managed,
 projectsId,
 locationsId,
-sourceId,
-requestId
+requestId,
+sourceId
 )
 SELECT 
 '{{ description }}',
 '{{ displayName }}',
+{{ managed }},
 {{ priority }},
 '{{ type }}',
-{{ managed }},
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ sourceId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ sourceId }}'
 RETURNING
 name,
 done,
@@ -424,6 +424,10 @@ response
       value: "{{ displayName }}"
       description: |
         User-friendly display name.
+    - name: managed
+      value: {{ managed }}
+      description: |
+        If \`true\`, the source is managed by other service(s).
     - name: priority
       value: {{ priority }}
       description: |
@@ -433,14 +437,10 @@ response
       description: |
         Data source type.
       valid_values: ['SOURCE_TYPE_UNKNOWN', 'SOURCE_TYPE_UPLOAD', 'SOURCE_TYPE_GUEST_OS_SCAN', 'SOURCE_TYPE_INVENTORY_SCAN', 'SOURCE_TYPE_CUSTOM', 'SOURCE_TYPE_DISCOVERY_CLIENT']
-    - name: managed
-      value: {{ managed }}
-      description: |
-        If \`true\`, the source is managed by other service(s).
-    - name: sourceId
-      value: "{{ sourceId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: sourceId
+      value: "{{ sourceId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -464,9 +464,9 @@ UPDATE google.migrationcenter.sources
 SET 
 data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
+data__managed = {{ managed }},
 data__priority = {{ priority }},
-data__type = '{{ type }}',
-data__managed = {{ managed }}
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

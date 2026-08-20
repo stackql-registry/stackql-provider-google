@@ -58,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupPlanSnapshot" /></td>
     <td><code>object</code></td>
-    <td>A `BackupPlan` specifies some common fields, such as `description` as well as one or more `BackupRule` messages. Each `BackupRule` has a retention policy and defines a schedule by which the system is to perform backup workloads. (id: BackupPlan)</td>
+    <td>The Backup Plan being encompassed by this revision. (id: BackupPlan)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -97,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupPlanSnapshot" /></td>
     <td><code>object</code></td>
-    <td>A `BackupPlan` specifies some common fields, such as `description` as well as one or more `BackupRule` messages. Each `BackupRule` has a retention policy and defines a schedule by which the system is to perform backup workloads. (id: BackupPlan)</td>
+    <td>The Backup Plan being encompassed by this revision. (id: BackupPlan)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>

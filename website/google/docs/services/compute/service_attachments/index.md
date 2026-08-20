@@ -360,14 +360,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the ServiceAttachments for a project in the given scope.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all ServiceAttachment resources,<br />regional and global, available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -531,11 +531,11 @@ warning
 FROM google.compute.service_attachments
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -569,12 +569,12 @@ selfLink,
 targetService
 FROM google.compute.service_attachments
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
@@ -597,41 +597,41 @@ Creates a ServiceAttachment in the specified project in the given scope<br />usi
 
 ```sql
 INSERT INTO google.compute.service_attachments (
+data__connectionPreference,
+data__consumerAcceptLists,
+data__consumerRejectLists,
 data__description,
 data__domainNames,
-data__consumerAcceptLists,
 data__enableProxyProtocol,
+data__fingerprint,
+data__metadata,
 data__name,
 data__natIpsPerEndpoint,
-data__consumerRejectLists,
-data__connectionPreference,
-data__targetService,
-data__metadata,
-data__producerForwardingRule,
 data__natSubnets,
-data__reconcileConnections,
+data__producerForwardingRule,
 data__propagatedConnectionLimit,
-data__fingerprint,
+data__reconcileConnections,
+data__targetService,
 project,
 region,
 requestId
 )
 SELECT 
+'{{ connectionPreference }}',
+'{{ consumerAcceptLists }}',
+'{{ consumerRejectLists }}',
 '{{ description }}',
 '{{ domainNames }}',
-'{{ consumerAcceptLists }}',
 {{ enableProxyProtocol }},
+'{{ fingerprint }}',
+'{{ metadata }}',
 '{{ name }}',
 {{ natIpsPerEndpoint }},
-'{{ consumerRejectLists }}',
-'{{ connectionPreference }}',
-'{{ targetService }}',
-'{{ metadata }}',
-'{{ producerForwardingRule }}',
 '{{ natSubnets }}',
-{{ reconcileConnections }},
+'{{ producerForwardingRule }}',
 {{ propagatedConnectionLimit }},
-'{{ fingerprint }}',
+{{ reconcileConnections }},
+'{{ targetService }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -677,6 +677,37 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the service_attachments resource.
+    - name: connectionPreference
+      value: "{{ connectionPreference }}"
+      description: |
+        The connection preference of service attachment. The value can be set
+        to ACCEPT_AUTOMATIC. An ACCEPT_AUTOMATIC
+        service attachment is one that always accepts the connection from consumer
+        forwarding rules.
+      valid_values: ['ACCEPT_AUTOMATIC', 'ACCEPT_MANUAL', 'CONNECTION_PREFERENCE_UNSPECIFIED']
+    - name: consumerAcceptLists
+      description: |
+        Specifies which consumer projects or networks are allowed to connect to the
+        service attachment. Each project or network has a connection limit. A given
+        service attachment can manage connections at either the project or network
+        level. Therefore, both the accept and reject lists for a given service
+        attachment must contain either only projects or only networks or only
+        endpoints.
+      value:
+        - connectionLimit: {{ connectionLimit }}
+          endpointUrl: "{{ endpointUrl }}"
+          networkUrl: "{{ networkUrl }}"
+          projectIdOrNum: "{{ projectIdOrNum }}"
+    - name: consumerRejectLists
+      value:
+        - "{{ consumerRejectLists }}"
+      description: |
+        Specifies a list of projects or networks that are not allowed to connect to
+        this service attachment. The project can be specified using its project ID
+        or project number and the network can be specified using its URL. A given
+        service attachment can manage connections at either the project or network
+        level. Therefore, both the reject and accept lists for a given service
+        attachment must contain either only projects or only networks.
     - name: description
       value: "{{ description }}"
       description: |
@@ -690,25 +721,26 @@ zone
         the PSC connected endpoints and the Cloud DNS. For example, this is a valid
         domain name: "p.mycompany.com.". Current max number of domain names
         supported is 1.
-    - name: consumerAcceptLists
-      description: |
-        Specifies which consumer projects or networks are allowed to connect to the
-        service attachment. Each project or network has a connection limit. A given
-        service attachment can manage connections at either the project or network
-        level. Therefore, both the accept and reject lists for a given service
-        attachment must contain either only projects or only networks or only
-        endpoints.
-      value:
-        - endpointUrl: "{{ endpointUrl }}"
-          networkUrl: "{{ networkUrl }}"
-          projectIdOrNum: "{{ projectIdOrNum }}"
-          connectionLimit: {{ connectionLimit }}
     - name: enableProxyProtocol
       value: {{ enableProxyProtocol }}
       description: |
         If true, enable the proxy protocol which is for supplying client TCP/IP
         address data in TCP connections that traverse proxies on their way to
         destination servers.
+    - name: fingerprint
+      value: "{{ fingerprint }}"
+      description: |
+        Fingerprint of this resource. A hash of the contents stored in this object.
+        This field is used in optimistic locking. This field will be ignored when
+        inserting a ServiceAttachment. An up-to-date fingerprint must
+        be provided in order to patch/update the ServiceAttachment; otherwise, the
+        request will fail with error 412 conditionNotMet. To see the
+        latest fingerprint, make a get() request to retrieve the
+        ServiceAttachment.
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Metadata of the service attachment.
     - name: name
       value: "{{ name }}"
       description: |
@@ -724,57 +756,17 @@ zone
       description: |
         The number of NAT IP addresses to be allocated per connected endpoint.
         If not specified, the default value is 1.
-    - name: consumerRejectLists
-      value:
-        - "{{ consumerRejectLists }}"
-      description: |
-        Specifies a list of projects or networks that are not allowed to connect to
-        this service attachment. The project can be specified using its project ID
-        or project number and the network can be specified using its URL. A given
-        service attachment can manage connections at either the project or network
-        level. Therefore, both the reject and accept lists for a given service
-        attachment must contain either only projects or only networks.
-    - name: connectionPreference
-      value: "{{ connectionPreference }}"
-      description: |
-        The connection preference of service attachment. The value can be set
-        to ACCEPT_AUTOMATIC. An ACCEPT_AUTOMATIC
-        service attachment is one that always accepts the connection from consumer
-        forwarding rules.
-      valid_values: ['ACCEPT_AUTOMATIC', 'ACCEPT_MANUAL', 'CONNECTION_PREFERENCE_UNSPECIFIED']
-    - name: targetService
-      value: "{{ targetService }}"
-      description: |
-        The URL of a service serving the endpoint identified by this service
-        attachment.
-    - name: metadata
-      value: "{{ metadata }}"
-      description: |
-        Metadata of the service attachment.
-    - name: producerForwardingRule
-      value: "{{ producerForwardingRule }}"
-      description: |
-        The URL of a forwarding rule with loadBalancingScheme INTERNAL* that is
-        serving the endpoint identified by this service attachment.
     - name: natSubnets
       value:
         - "{{ natSubnets }}"
       description: |
         An array of URLs where each entry is the URL of a subnet provided
         by the service producer to use for NAT in this service attachment.
-    - name: reconcileConnections
-      value: {{ reconcileConnections }}
+    - name: producerForwardingRule
+      value: "{{ producerForwardingRule }}"
       description: |
-        This flag determines whether a consumer accept/reject list change can
-        reconcile the statuses of existing ACCEPTED or REJECTED PSC endpoints.
-        -  If false, connection policy update will only affect existing PENDING
-        PSC endpoints. Existing ACCEPTED/REJECTED endpoints will remain untouched
-        regardless how the connection policy is modified .
-        -  If true,
-        update will affect both PENDING and ACCEPTED/REJECTED PSC endpoints. For
-        example, an ACCEPTED PSC endpoint will be moved to REJECTED if its project
-        is added to the reject list.
-        For newly created service attachment, this boolean defaults to false.
+        The URL of a forwarding rule with loadBalancingScheme INTERNAL* that is
+        serving the endpoint identified by this service attachment.
     - name: propagatedConnectionLimit
       value: {{ propagatedConnectionLimit }}
       description: |
@@ -789,16 +781,24 @@ zone
         ACCEPT_AUTOMATIC, the limit applies to each project that contains a
         connected endpoint.
         If unspecified, the default propagated connection limit is 250.
-    - name: fingerprint
-      value: "{{ fingerprint }}"
+    - name: reconcileConnections
+      value: {{ reconcileConnections }}
       description: |
-        Fingerprint of this resource. A hash of the contents stored in this object.
-        This field is used in optimistic locking. This field will be ignored when
-        inserting a ServiceAttachment. An up-to-date fingerprint must
-        be provided in order to patch/update the ServiceAttachment; otherwise, the
-        request will fail with error 412 conditionNotMet. To see the
-        latest fingerprint, make a get() request to retrieve the
-        ServiceAttachment.
+        This flag determines whether a consumer accept/reject list change can
+        reconcile the statuses of existing ACCEPTED or REJECTED PSC endpoints.
+        -  If false, connection policy update will only affect existing PENDING
+        PSC endpoints. Existing ACCEPTED/REJECTED endpoints will remain untouched
+        regardless how the connection policy is modified .
+        -  If true,
+        update will affect both PENDING and ACCEPTED/REJECTED PSC endpoints. For
+        example, an ACCEPTED PSC endpoint will be moved to REJECTED if its project
+        is added to the reject list.
+        For newly created service attachment, this boolean defaults to false.
+    - name: targetService
+      value: "{{ targetService }}"
+      description: |
+        The URL of a service serving the endpoint identified by this service
+        attachment.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -822,21 +822,21 @@ Patches the specified ServiceAttachment resource with the data included in<br />
 ```sql
 UPDATE google.compute.service_attachments
 SET 
+data__connectionPreference = '{{ connectionPreference }}',
+data__consumerAcceptLists = '{{ consumerAcceptLists }}',
+data__consumerRejectLists = '{{ consumerRejectLists }}',
 data__description = '{{ description }}',
 data__domainNames = '{{ domainNames }}',
-data__consumerAcceptLists = '{{ consumerAcceptLists }}',
 data__enableProxyProtocol = {{ enableProxyProtocol }},
+data__fingerprint = '{{ fingerprint }}',
+data__metadata = '{{ metadata }}',
 data__name = '{{ name }}',
 data__natIpsPerEndpoint = {{ natIpsPerEndpoint }},
-data__consumerRejectLists = '{{ consumerRejectLists }}',
-data__connectionPreference = '{{ connectionPreference }}',
-data__targetService = '{{ targetService }}',
-data__metadata = '{{ metadata }}',
-data__producerForwardingRule = '{{ producerForwardingRule }}',
 data__natSubnets = '{{ natSubnets }}',
-data__reconcileConnections = {{ reconcileConnections }},
+data__producerForwardingRule = '{{ producerForwardingRule }}',
 data__propagatedConnectionLimit = {{ propagatedConnectionLimit }},
-data__fingerprint = '{{ fingerprint }}'
+data__reconcileConnections = {{ reconcileConnections }},
+data__targetService = '{{ targetService }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required

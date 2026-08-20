@@ -355,7 +355,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all instances in a project for either a specified location or for all locations.</td>
 </tr>
 <tr>
@@ -380,25 +380,11 @@ The following methods are available for this resource:
     <td>Deletes an instance.</td>
 </tr>
 <tr>
-    <td><a href="#revert"><CopyableCode code="revert" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Revert an existing instance's file system to a specified snapshot.</td>
-</tr>
-<tr>
     <td><a href="#pause_replica"><CopyableCode code="pause_replica" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Pause the standby instance (replica). WARNING: This operation makes the standby instance's NFS filesystem writable. Any data written to the standby instance while paused will be lost when the replica is resumed or promoted.</td>
-</tr>
-<tr>
-    <td><a href="#resume_replica"><CopyableCode code="resume_replica" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Resume the standby instance (replica). WARNING: Any data written to the standby instance while paused will be lost when the replica is resumed.</td>
 </tr>
 <tr>
     <td><a href="#promote_replica"><CopyableCode code="promote_replica" /></a></td>
@@ -413,6 +399,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Restores an existing instance's file share from a backup. The capacity of the instance needs to be equal to or larger than the capacity of the backup (and also equal to or larger than the minimum capacity of the tier).</td>
+</tr>
+<tr>
+    <td><a href="#resume_replica"><CopyableCode code="resume_replica" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Resume the standby instance (replica). WARNING: Any data written to the standby instance while paused will be lost when the replica is resumed.</td>
+</tr>
+<tr>
+    <td><a href="#revert"><CopyableCode code="revert" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Revert an existing instance's file system to a specified snapshot.</td>
 </tr>
 </tbody>
 </table>
@@ -566,8 +566,8 @@ tier
 FROM google.file.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
@@ -591,39 +591,39 @@ Creates an instance. When creating from a backup, the capacity of the new instan
 
 ```sql
 INSERT INTO google.file.instances (
+data__deletionProtectionEnabled,
+data__deletionProtectionReason,
+data__description,
+data__directoryServices,
+data__etag,
+data__fileShares,
+data__kmsKeyName,
 data__labels,
+data__networks,
 data__performanceConfig,
+data__protocol,
+data__replication,
 data__tags,
 data__tier,
-data__fileShares,
-data__replication,
-data__etag,
-data__deletionProtectionEnabled,
-data__protocol,
-data__directoryServices,
-data__description,
-data__deletionProtectionReason,
-data__kmsKeyName,
-data__networks,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
+{{ deletionProtectionEnabled }},
+'{{ deletionProtectionReason }}',
+'{{ description }}',
+'{{ directoryServices }}',
+'{{ etag }}',
+'{{ fileShares }}',
+'{{ kmsKeyName }}',
 '{{ labels }}',
+'{{ networks }}',
 '{{ performanceConfig }}',
+'{{ protocol }}',
+'{{ replication }}',
 '{{ tags }}',
 '{{ tier }}',
-'{{ fileShares }}',
-'{{ replication }}',
-'{{ etag }}',
-{{ deletionProtectionEnabled }},
-'{{ protocol }}',
-'{{ directoryServices }}',
-'{{ description }}',
-'{{ deletionProtectionReason }}',
-'{{ kmsKeyName }}',
-'{{ networks }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -647,10 +647,60 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
+    - name: deletionProtectionEnabled
+      value: {{ deletionProtectionEnabled }}
+      description: |
+        Optional. Indicates whether the instance is protected against deletion.
+    - name: deletionProtectionReason
+      value: "{{ deletionProtectionReason }}"
+      description: |
+        Optional. The reason for enabling deletion protection.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The description of the instance (2048 characters or less).
+    - name: directoryServices
+      description: |
+        Optional. Directory Services configuration for Kerberos-based authentication. Should only be set if protocol is "NFS_V4_1".
+      value:
+        ldap:
+          domain: "{{ domain }}"
+          groupsOu: "{{ groupsOu }}"
+          servers:
+            - "{{ servers }}"
+          usersOu: "{{ usersOu }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Server-specified ETag for the instance resource to prevent simultaneous updates from overwriting each other.
+    - name: fileShares
+      description: |
+        File system shares on the instance. For this version, only a single file share is supported.
+      value:
+        - capacityGb: "{{ capacityGb }}"
+          name: "{{ name }}"
+          nfsExportOptions: "{{ nfsExportOptions }}"
+          sourceBackup: "{{ sourceBackup }}"
+          sourceBackupdrBackup: "{{ sourceBackupdrBackup }}"
+    - name: kmsKeyName
+      value: "{{ kmsKeyName }}"
+      description: |
+        KMS key name used for data encryption.
     - name: labels
       value: "{{ labels }}"
       description: |
         Resource labels to represent user provided metadata.
+    - name: networks
+      description: |
+        VPC networks to which the instance is connected. For this version, only a single network is supported.
+      value:
+        - connectMode: "{{ connectMode }}"
+          ipAddresses: "{{ ipAddresses }}"
+          modes: "{{ modes }}"
+          network: "{{ network }}"
+          pscConfig:
+            endpointProject: "{{ endpointProject }}"
+          reservedIpRange: "{{ reservedIpRange }}"
     - name: performanceConfig
       description: |
         Optional. Used to configure performance.
@@ -659,6 +709,22 @@ response
           maxIops: "{{ maxIops }}"
         iopsPerTb:
           maxIopsPerTb: "{{ maxIopsPerTb }}"
+    - name: protocol
+      value: "{{ protocol }}"
+      description: |
+        Immutable. The protocol indicates the access protocol for all shares in the instance. This field is immutable and it cannot be changed after the instance has been created. Default value: \`NFS_V3\`.
+      valid_values: ['FILE_PROTOCOL_UNSPECIFIED', 'NFS_V3', 'NFS_V4_1']
+    - name: replication
+      description: |
+        Optional. Replication configuration.
+      value:
+        replicas:
+          - lastActiveSyncTime: "{{ lastActiveSyncTime }}"
+            peerInstance: "{{ peerInstance }}"
+            state: "{{ state }}"
+            stateReasons: "{{ stateReasons }}"
+            stateUpdateTime: "{{ stateUpdateTime }}"
+        role: "{{ role }}"
     - name: tags
       value: "{{ tags }}"
       description: |
@@ -668,72 +734,6 @@ response
       description: |
         The service tier of the instance.
       valid_values: ['TIER_UNSPECIFIED', 'STANDARD', 'PREMIUM', 'BASIC_HDD', 'BASIC_SSD', 'HIGH_SCALE_SSD', 'ENTERPRISE', 'ZONAL', 'REGIONAL']
-    - name: fileShares
-      description: |
-        File system shares on the instance. For this version, only a single file share is supported.
-      value:
-        - capacityGb: "{{ capacityGb }}"
-          sourceBackup: "{{ sourceBackup }}"
-          nfsExportOptions: "{{ nfsExportOptions }}"
-          name: "{{ name }}"
-          sourceBackupdrBackup: "{{ sourceBackupdrBackup }}"
-    - name: replication
-      description: |
-        Optional. Replication configuration.
-      value:
-        role: "{{ role }}"
-        replicas:
-          - stateReasons: "{{ stateReasons }}"
-            lastActiveSyncTime: "{{ lastActiveSyncTime }}"
-            state: "{{ state }}"
-            peerInstance: "{{ peerInstance }}"
-            stateUpdateTime: "{{ stateUpdateTime }}"
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Server-specified ETag for the instance resource to prevent simultaneous updates from overwriting each other.
-    - name: deletionProtectionEnabled
-      value: {{ deletionProtectionEnabled }}
-      description: |
-        Optional. Indicates whether the instance is protected against deletion.
-    - name: protocol
-      value: "{{ protocol }}"
-      description: |
-        Immutable. The protocol indicates the access protocol for all shares in the instance. This field is immutable and it cannot be changed after the instance has been created. Default value: \`NFS_V3\`.
-      valid_values: ['FILE_PROTOCOL_UNSPECIFIED', 'NFS_V3', 'NFS_V4_1']
-    - name: directoryServices
-      description: |
-        Optional. Directory Services configuration for Kerberos-based authentication. Should only be set if protocol is "NFS_V4_1".
-      value:
-        ldap:
-          servers:
-            - "{{ servers }}"
-          usersOu: "{{ usersOu }}"
-          domain: "{{ domain }}"
-          groupsOu: "{{ groupsOu }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        The description of the instance (2048 characters or less).
-    - name: deletionProtectionReason
-      value: "{{ deletionProtectionReason }}"
-      description: |
-        Optional. The reason for enabling deletion protection.
-    - name: kmsKeyName
-      value: "{{ kmsKeyName }}"
-      description: |
-        KMS key name used for data encryption.
-    - name: networks
-      description: |
-        VPC networks to which the instance is connected. For this version, only a single network is supported.
-      value:
-        - reservedIpRange: "{{ reservedIpRange }}"
-          network: "{{ network }}"
-          modes: "{{ modes }}"
-          ipAddresses: "{{ ipAddresses }}"
-          pscConfig:
-            endpointProject: "{{ endpointProject }}"
-          connectMode: "{{ connectMode }}"
     - name: instanceId
       value: "{{ instanceId }}"
 `}</CodeBlock>
@@ -757,20 +757,20 @@ Updates the settings of a specific instance.
 ```sql
 UPDATE google.file.instances
 SET 
-data__labels = '{{ labels }}',
-data__performanceConfig = '{{ performanceConfig }}',
-data__tags = '{{ tags }}',
-data__tier = '{{ tier }}',
-data__fileShares = '{{ fileShares }}',
-data__replication = '{{ replication }}',
-data__etag = '{{ etag }}',
 data__deletionProtectionEnabled = {{ deletionProtectionEnabled }},
-data__protocol = '{{ protocol }}',
-data__directoryServices = '{{ directoryServices }}',
-data__description = '{{ description }}',
 data__deletionProtectionReason = '{{ deletionProtectionReason }}',
+data__description = '{{ description }}',
+data__directoryServices = '{{ directoryServices }}',
+data__etag = '{{ etag }}',
+data__fileShares = '{{ fileShares }}',
 data__kmsKeyName = '{{ kmsKeyName }}',
-data__networks = '{{ networks }}'
+data__labels = '{{ labels }}',
+data__networks = '{{ networks }}',
+data__performanceConfig = '{{ performanceConfig }}',
+data__protocol = '{{ protocol }}',
+data__replication = '{{ replication }}',
+data__tags = '{{ tags }}',
+data__tier = '{{ tier }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -814,49 +814,21 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="revert"
+    defaultValue="pause_replica"
     values={[
-        { label: 'revert', value: 'revert' },
         { label: 'pause_replica', value: 'pause_replica' },
-        { label: 'resume_replica', value: 'resume_replica' },
         { label: 'promote_replica', value: 'promote_replica' },
-        { label: 'restore', value: 'restore' }
+        { label: 'restore', value: 'restore' },
+        { label: 'resume_replica', value: 'resume_replica' },
+        { label: 'revert', value: 'revert' }
     ]}
 >
-<TabItem value="revert">
-
-Revert an existing instance's file system to a specified snapshot.
-
-```sql
-EXEC google.file.instances.revert 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"targetSnapshotId": "{{ targetSnapshotId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="pause_replica">
 
 Pause the standby instance (replica). WARNING: This operation makes the standby instance's NFS filesystem writable. Any data written to the standby instance while paused will be lost when the replica is resumed or promoted.
 
 ```sql
 EXEC google.file.instances.pause_replica 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="resume_replica">
-
-Resume the standby instance (replica). WARNING: Any data written to the standby instance while paused will be lost when the replica is resumed.
-
-```sql
-EXEC google.file.instances.resume_replica 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @instancesId='{{ instancesId }}' --required
@@ -892,6 +864,34 @@ EXEC google.file.instances.restore
 '{
 "fileShare": "{{ fileShare }}", 
 "sourceBackup": "{{ sourceBackup }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="resume_replica">
+
+Resume the standby instance (replica). WARNING: Any data written to the standby instance while paused will be lost when the replica is resumed.
+
+```sql
+EXEC google.file.instances.resume_replica 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="revert">
+
+Revert an existing instance's file system to a specified snapshot.
+
+```sql
+EXEC google.file.instances.revert 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"targetSnapshotId": "{{ targetSnapshotId }}"
 }'
 ;
 ```

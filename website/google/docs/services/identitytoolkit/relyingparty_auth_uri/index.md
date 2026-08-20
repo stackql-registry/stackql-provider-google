@@ -91,39 +91,39 @@ Creates the URI used by the IdP to authenticate the user.
 
 ```sql
 INSERT INTO google.identitytoolkit.relyingparty_auth_uri (
-data__otaApp,
-data__hostedDomain,
-data__oauthScope,
-data__sessionId,
-data__customParameter,
-data__continueUri,
-data__context,
-data__identifier,
-data__oauthConsumerKey,
 data__appId,
 data__authFlowType,
-data__providerId,
-data__openidRealm,
-data__tenantId,
 data__clientId,
+data__context,
+data__continueUri,
+data__customParameter,
+data__hostedDomain,
+data__identifier,
+data__oauthConsumerKey,
+data__oauthScope,
+data__openidRealm,
+data__otaApp,
+data__providerId,
+data__sessionId,
+data__tenantId,
 data__tenantProjectNumber
 )
 SELECT 
-'{{ otaApp }}',
-'{{ hostedDomain }}',
-'{{ oauthScope }}',
-'{{ sessionId }}',
-'{{ customParameter }}',
-'{{ continueUri }}',
-'{{ context }}',
-'{{ identifier }}',
-'{{ oauthConsumerKey }}',
 '{{ appId }}',
 '{{ authFlowType }}',
-'{{ providerId }}',
-'{{ openidRealm }}',
-'{{ tenantId }}',
 '{{ clientId }}',
+'{{ context }}',
+'{{ continueUri }}',
+'{{ customParameter }}',
+'{{ hostedDomain }}',
+'{{ identifier }}',
+'{{ oauthConsumerKey }}',
+'{{ oauthScope }}',
+'{{ openidRealm }}',
+'{{ otaApp }}',
+'{{ providerId }}',
+'{{ sessionId }}',
+'{{ tenantId }}',
 '{{ tenantProjectNumber }}'
 RETURNING
 allProviders,
@@ -143,42 +143,6 @@ signinMethods
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: relyingparty_auth_uri
   props:
-    - name: otaApp
-      value: "{{ otaApp }}"
-      description: |
-        The native app package for OTA installation.
-    - name: hostedDomain
-      value: "{{ hostedDomain }}"
-      description: |
-        The hosted domain to restrict sign-in to accounts at that domain for Google Apps hosted accounts.
-    - name: oauthScope
-      value: "{{ oauthScope }}"
-      description: |
-        Additional oauth scopes, beyond the basid user profile, that the user would be prompted to grant
-    - name: sessionId
-      value: "{{ sessionId }}"
-      description: |
-        The session_id passed by client.
-    - name: customParameter
-      value: "{{ customParameter }}"
-      description: |
-        The query parameter that client can customize by themselves in auth url. The following parameters are reserved for server so that they cannot be customized by clients: client_id, response_type, scope, redirect_uri, state, oauth_token.
-    - name: continueUri
-      value: "{{ continueUri }}"
-      description: |
-        The URI to which the IDP redirects the user after the federated login flow.
-    - name: context
-      value: "{{ context }}"
-      description: |
-        The opaque value used by the client to maintain context info between the authentication request and the IDP callback.
-    - name: identifier
-      value: "{{ identifier }}"
-      description: |
-        The email or federated ID of the user.
-    - name: oauthConsumerKey
-      value: "{{ oauthConsumerKey }}"
-      description: |
-        The developer's consumer key for OpenId OAuth Extension
     - name: appId
       value: "{{ appId }}"
       description: |
@@ -187,22 +151,58 @@ signinMethods
       value: "{{ authFlowType }}"
       description: |
         Explicitly specify the auth flow type. Currently only support "CODE_FLOW" type. The field is only used for Google provider.
-    - name: providerId
-      value: "{{ providerId }}"
-      description: |
-        The IdP ID. For white listed IdPs it's a short domain name e.g. google.com, aol.com, live.net and yahoo.com. For other OpenID IdPs it's the OP identifier.
-    - name: openidRealm
-      value: "{{ openidRealm }}"
-      description: |
-        Optional realm for OpenID protocol. The sub string "scheme://domain:port" of the param "continueUri" is used if this is not set.
-    - name: tenantId
-      value: "{{ tenantId }}"
-      description: |
-        For multi-tenant use cases, in order to construct sign-in URL with the correct IDP parameters, Firebear needs to know which Tenant to retrieve IDP configs from.
     - name: clientId
       value: "{{ clientId }}"
       description: |
         The relying party OAuth client ID.
+    - name: context
+      value: "{{ context }}"
+      description: |
+        The opaque value used by the client to maintain context info between the authentication request and the IDP callback.
+    - name: continueUri
+      value: "{{ continueUri }}"
+      description: |
+        The URI to which the IDP redirects the user after the federated login flow.
+    - name: customParameter
+      value: "{{ customParameter }}"
+      description: |
+        The query parameter that client can customize by themselves in auth url. The following parameters are reserved for server so that they cannot be customized by clients: client_id, response_type, scope, redirect_uri, state, oauth_token.
+    - name: hostedDomain
+      value: "{{ hostedDomain }}"
+      description: |
+        The hosted domain to restrict sign-in to accounts at that domain for Google Apps hosted accounts.
+    - name: identifier
+      value: "{{ identifier }}"
+      description: |
+        The email or federated ID of the user.
+    - name: oauthConsumerKey
+      value: "{{ oauthConsumerKey }}"
+      description: |
+        The developer's consumer key for OpenId OAuth Extension
+    - name: oauthScope
+      value: "{{ oauthScope }}"
+      description: |
+        Additional oauth scopes, beyond the basid user profile, that the user would be prompted to grant
+    - name: openidRealm
+      value: "{{ openidRealm }}"
+      description: |
+        Optional realm for OpenID protocol. The sub string "scheme://domain:port" of the param "continueUri" is used if this is not set.
+    - name: otaApp
+      value: "{{ otaApp }}"
+      description: |
+        The native app package for OTA installation.
+    - name: providerId
+      value: "{{ providerId }}"
+      description: |
+        The IdP ID. For white listed IdPs it's a short domain name e.g. google.com, aol.com, live.net and yahoo.com. For other OpenID IdPs it's the OP identifier.
+    - name: sessionId
+      value: "{{ sessionId }}"
+      description: |
+        The session_id passed by client.
+    - name: tenantId
+      value: "{{ tenantId }}"
+      description: |
+        For multi-tenant use cases, in order to construct sign-in URL with the correct IDP parameters, Firebear needs to know which Tenant to retrieve IDP configs from.
     - name: tenantProjectNumber
       value: "{{ tenantProjectNumber }}"
       description: |

@@ -118,7 +118,7 @@ The following methods are available for this resource:
     <td><a href="#nodes_nodes_nodes_list"><CopyableCode code="nodes_nodes_nodes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists nodes.</td>
 </tr>
 <tr>
@@ -143,16 +143,16 @@ The following methods are available for this resource:
     <td>Creates a new node.</td>
 </tr>
 <tr>
-    <td><a href="#nodes_nodes_patch"><CopyableCode code="nodes_nodes_patch" /></a></td>
+    <td><a href="#customers_nodes_patch"><CopyableCode code="customers_nodes_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an existing node.</td>
 </tr>
 <tr>
-    <td><a href="#customers_nodes_patch"><CopyableCode code="customers_nodes_patch" /></a></td>
+    <td><a href="#nodes_nodes_patch"><CopyableCode code="nodes_nodes_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
+    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an existing node.</td>
 </tr>
@@ -164,16 +164,16 @@ The following methods are available for this resource:
     <td>Deletes a node.</td>
 </tr>
 <tr>
-    <td><a href="#nodes_nodes_move"><CopyableCode code="nodes_nodes_move" /></a></td>
+    <td><a href="#customers_nodes_move"><CopyableCode code="customers_nodes_move" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
     <td></td>
     <td>Moves a node under another node or customer.</td>
 </tr>
 <tr>
-    <td><a href="#customers_nodes_move"><CopyableCode code="customers_nodes_move" /></a></td>
+    <td><a href="#nodes_nodes_move"><CopyableCode code="nodes_nodes_move" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
+    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
     <td></td>
     <td>Moves a node under another node or customer.</td>
 </tr>
@@ -252,9 +252,9 @@ sasUserIds
 FROM google.sasportal.nodes
 WHERE nodesId = '{{ nodesId }}' -- required
 AND nodesId1 = '{{ nodesId1 }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -294,15 +294,15 @@ Creates a new node.
 
 ```sql
 INSERT INTO google.sasportal.nodes (
-data__name,
 data__displayName,
+data__name,
 data__sasUserIds,
 nodesId,
 nodesId1
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ sasUserIds }}',
 '{{ nodesId }}',
 '{{ nodesId1 }}'
@@ -319,14 +319,14 @@ Creates a new node.
 
 ```sql
 INSERT INTO google.sasportal.nodes (
-data__name,
 data__displayName,
+data__name,
 data__sasUserIds,
 nodesId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ sasUserIds }}',
 '{{ nodesId }}'
 RETURNING
@@ -347,14 +347,14 @@ sasUserIds
     - name: nodesId1
       value: "{{ nodesId1 }}"
       description: Required parameter for the nodes resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Output only. Resource name.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The node's display name.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Output only. Resource name.
     - name: sasUserIds
       value:
         - "{{ sasUserIds }}"
@@ -369,32 +369,12 @@ sasUserIds
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="nodes_nodes_patch"
+    defaultValue="customers_nodes_patch"
     values={[
-        { label: 'nodes_nodes_patch', value: 'nodes_nodes_patch' },
-        { label: 'customers_nodes_patch', value: 'customers_nodes_patch' }
+        { label: 'customers_nodes_patch', value: 'customers_nodes_patch' },
+        { label: 'nodes_nodes_patch', value: 'nodes_nodes_patch' }
     ]}
 >
-<TabItem value="nodes_nodes_patch">
-
-Updates an existing node.
-
-```sql
-UPDATE google.sasportal.nodes
-SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__sasUserIds = '{{ sasUserIds }}'
-WHERE 
-nodesId = '{{ nodesId }}' --required
-AND nodesId1 = '{{ nodesId1 }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-displayName,
-sasUserIds;
-```
-</TabItem>
 <TabItem value="customers_nodes_patch">
 
 Updates an existing node.
@@ -402,12 +382,32 @@ Updates an existing node.
 ```sql
 UPDATE google.sasportal.nodes
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__sasUserIds = '{{ sasUserIds }}'
 WHERE 
 customersId = '{{ customersId }}' --required
 AND nodesId = '{{ nodesId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+displayName,
+sasUserIds;
+```
+</TabItem>
+<TabItem value="nodes_nodes_patch">
+
+Updates an existing node.
+
+```sql
+UPDATE google.sasportal.nodes
+SET 
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__sasUserIds = '{{ sasUserIds }}'
+WHERE 
+nodesId = '{{ nodesId }}' --required
+AND nodesId1 = '{{ nodesId1 }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
@@ -443,27 +443,12 @@ AND nodesId1 = '{{ nodesId1 }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="nodes_nodes_move"
+    defaultValue="customers_nodes_move"
     values={[
-        { label: 'nodes_nodes_move', value: 'nodes_nodes_move' },
-        { label: 'customers_nodes_move', value: 'customers_nodes_move' }
+        { label: 'customers_nodes_move', value: 'customers_nodes_move' },
+        { label: 'nodes_nodes_move', value: 'nodes_nodes_move' }
     ]}
 >
-<TabItem value="nodes_nodes_move">
-
-Moves a node under another node or customer.
-
-```sql
-EXEC google.sasportal.nodes.nodes_nodes_move 
-@nodesId='{{ nodesId }}' --required, 
-@nodesId1='{{ nodesId1 }}' --required 
-@@json=
-'{
-"destination": "{{ destination }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="customers_nodes_move">
 
 Moves a node under another node or customer.
@@ -472,6 +457,21 @@ Moves a node under another node or customer.
 EXEC google.sasportal.nodes.customers_nodes_move 
 @customersId='{{ customersId }}' --required, 
 @nodesId='{{ nodesId }}' --required 
+@@json=
+'{
+"destination": "{{ destination }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="nodes_nodes_move">
+
+Moves a node under another node or customer.
+
+```sql
+EXEC google.sasportal.nodes.nodes_nodes_move 
+@nodesId='{{ nodesId }}' --required, 
+@nodesId1='{{ nodesId1 }}' --required 
 @@json=
 '{
 "destination": "{{ destination }}"

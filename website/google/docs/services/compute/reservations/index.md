@@ -142,6 +142,11 @@ The following fields are returned by `SELECT` queries:
     <td>Specify the reservation sharing policy. If unspecified, the reservation will not be shared with Google Cloud managed services. (id: AllocationReservationSharingPolicy)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="resourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. [Output Only] Contains standard resource metadata for an Allocation resource. It is populated for each instance of the Allocation resource, and includes the api_version the instance was retrieved through, and its canonical resource_type name. (id: ResourceMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="resourcePolicies" /></td>
     <td><code>object</code></td>
     <td>Resource policies to be added to this reservation. The key is defined by user, and the value is resource policy url. This is to define placement policy with reservation.</td>
@@ -340,6 +345,11 @@ The following fields are returned by `SELECT` queries:
     <td>Specify the reservation sharing policy. If unspecified, the reservation will not be shared with Google Cloud managed services. (id: AllocationReservationSharingPolicy)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="resourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. [Output Only] Contains standard resource metadata for an Allocation resource. It is populated for each instance of the Allocation resource, and includes the api_version the instance was retrieved through, and its canonical resource_type name. (id: ResourceMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="resourcePolicies" /></td>
     <td><code>object</code></td>
     <td>Resource policies to be added to this reservation. The key is defined by user, and the value is resource policy url. This is to define placement policy with reservation.</td>
@@ -420,14 +430,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>A list of all the reservations that have been configured for the<br />specified project in specified zone.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of reservations.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -583,6 +593,7 @@ linkedCommitments,
 params,
 protectionTier,
 reservationSharingPolicy,
+resourceMetadata,
 resourcePolicies,
 resourceStatus,
 satisfiesPzs,
@@ -617,8 +628,8 @@ WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -647,6 +658,7 @@ linkedCommitments,
 params,
 protectionTier,
 reservationSharingPolicy,
+resourceMetadata,
 resourcePolicies,
 resourceStatus,
 satisfiesPzs,
@@ -659,12 +671,12 @@ status,
 zone
 FROM google.compute.reservations
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
@@ -687,49 +699,49 @@ Creates a new reservation. For more information, readReserving zonal<br />resour
 
 ```sql
 INSERT INTO google.compute.reservations (
-data__deleteAtTime,
-data__name,
-data__confidentialComputeType,
-data__description,
-data__deleteAfterDuration,
-data__schedulingType,
-data__earlyAccessMaintenance,
-data__resourcePolicies,
 data__advancedDeploymentControl,
-data__deploymentType,
-data__protectionTier,
-data__shareSettings,
-data__reservationSharingPolicy,
-data__params,
-data__zone,
 data__aggregateReservation,
+data__confidentialComputeType,
+data__deleteAfterDuration,
+data__deleteAtTime,
+data__deploymentType,
+data__description,
+data__earlyAccessMaintenance,
 data__enableEmergentMaintenance,
+data__name,
+data__params,
+data__protectionTier,
+data__reservationSharingPolicy,
+data__resourcePolicies,
+data__schedulingType,
+data__shareSettings,
 data__specificReservation,
 data__specificReservationRequired,
+data__zone,
 project,
 zone,
 requestId
 )
 SELECT 
-'{{ deleteAtTime }}',
-'{{ name }}',
-'{{ confidentialComputeType }}',
-'{{ description }}',
-'{{ deleteAfterDuration }}',
-'{{ schedulingType }}',
-'{{ earlyAccessMaintenance }}',
-'{{ resourcePolicies }}',
 '{{ advancedDeploymentControl }}',
-'{{ deploymentType }}',
-'{{ protectionTier }}',
-'{{ shareSettings }}',
-'{{ reservationSharingPolicy }}',
-'{{ params }}',
-'{{ zone }}',
 '{{ aggregateReservation }}',
+'{{ confidentialComputeType }}',
+'{{ deleteAfterDuration }}',
+'{{ deleteAtTime }}',
+'{{ deploymentType }}',
+'{{ description }}',
+'{{ earlyAccessMaintenance }}',
 {{ enableEmergentMaintenance }},
+'{{ name }}',
+'{{ params }}',
+'{{ protectionTier }}',
+'{{ reservationSharingPolicy }}',
+'{{ resourcePolicies }}',
+'{{ schedulingType }}',
+'{{ shareSettings }}',
 '{{ specificReservation }}',
 {{ specificReservationRequired }},
+'{{ zone }}',
 '{{ project }}',
 '{{ zone }}',
 '{{ requestId }}'
@@ -775,11 +787,63 @@ zone
     - name: zone
       value: "{{ zone }}"
       description: Required parameter for the reservations resource.
+    - name: advancedDeploymentControl
+      description: |
+        Advanced control for cluster management, applicable only to DENSE
+        deployment type reservations.
+      value:
+        reservationOperationalMode: "{{ reservationOperationalMode }}"
+    - name: aggregateReservation
+      description: |
+        Reservation for aggregated resources, providing shape flexibility.
+      value:
+        inUseResources:
+          - accelerator:
+              acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
+        reservedResources:
+          - accelerator:
+              acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
+        vmFamily: "{{ vmFamily }}"
+        workloadType: "{{ workloadType }}"
+    - name: confidentialComputeType
+      value: "{{ confidentialComputeType }}"
+      valid_values: ['CONFIDENTIAL_COMPUTE_TYPE_TDX', 'CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED']
+    - name: deleteAfterDuration
+      description: |
+        Duration time relative to reservation creation when Compute Engine will
+        automatically delete this resource.
+      value:
+        nanos: {{ nanos }}
+        seconds: "{{ seconds }}"
     - name: deleteAtTime
       value: "{{ deleteAtTime }}"
       description: |
         Absolute time in future when the reservation will be
         auto-deleted by Compute Engine. Timestamp is represented inRFC3339 text format.
+    - name: deploymentType
+      value: "{{ deploymentType }}"
+      description: |
+        Specifies the deployment strategy for this reservation.
+      valid_values: ['DENSE', 'DEPLOYMENT_TYPE_UNSPECIFIED']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: earlyAccessMaintenance
+      value: "{{ earlyAccessMaintenance }}"
+      description: |
+        Indicates the early access maintenance for the reservation.
+        If this field is absent or set to NO_EARLY_ACCESS, the reservation is not
+        enrolled in early access maintenance and the standard notice applies.
+      valid_values: ['NO_EARLY_ACCESS', 'WAVE1', 'WAVE2']
+    - name: enableEmergentMaintenance
+      value: {{ enableEmergentMaintenance }}
+      description: |
+        Indicates whether Compute Engine allows unplanned maintenance for your VMs;
+        for example, to fix hardware errors.
     - name: name
       value: "{{ name }}"
       description: |
@@ -791,50 +855,12 @@ zone
         character must be a lowercase letter, and all following characters must be
         a dash, lowercase letter, or digit, except the last character, which cannot
         be a dash.
-    - name: confidentialComputeType
-      value: "{{ confidentialComputeType }}"
-      valid_values: ['CONFIDENTIAL_COMPUTE_TYPE_TDX', 'CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED']
-    - name: description
-      value: "{{ description }}"
+    - name: params
       description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: deleteAfterDuration
-      description: |
-        Duration time relative to reservation creation when Compute Engine will
-        automatically delete this resource.
+        Input only. Additional params passed with the request, but not persisted
+        as part of resource payload.
       value:
-        nanos: {{ nanos }}
-        seconds: "{{ seconds }}"
-    - name: schedulingType
-      value: "{{ schedulingType }}"
-      description: |
-        The type of maintenance for the reservation.
-      valid_values: ['GROUPED', 'GROUP_MAINTENANCE_TYPE_UNSPECIFIED', 'INDEPENDENT']
-    - name: earlyAccessMaintenance
-      value: "{{ earlyAccessMaintenance }}"
-      description: |
-        Indicates the early access maintenance for the reservation.
-        If this field is absent or set to NO_EARLY_ACCESS, the reservation is not
-        enrolled in early access maintenance and the standard notice applies.
-      valid_values: ['NO_EARLY_ACCESS', 'WAVE1', 'WAVE2']
-    - name: resourcePolicies
-      value: "{{ resourcePolicies }}"
-      description: |
-        Resource policies to be added to this reservation. The key is defined by
-        user, and the value is resource policy url. This is to define placement
-        policy with reservation.
-    - name: advancedDeploymentControl
-      description: |
-        Advanced control for cluster management, applicable only to DENSE
-        deployment type reservations.
-      value:
-        reservationOperationalMode: "{{ reservationOperationalMode }}"
-    - name: deploymentType
-      value: "{{ deploymentType }}"
-      description: |
-        Specifies the deployment strategy for this reservation.
-      valid_values: ['DENSE', 'DEPLOYMENT_TYPE_UNSPECIFIED']
+        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: protectionTier
       value: "{{ protectionTier }}"
       description: |
@@ -842,6 +868,23 @@ zone
         in the event of infrastructure failures at data center (e.g. power
         and/or cooling failures).
       valid_values: ['CAPACITY_OPTIMIZED', 'PROTECTION_TIER_UNSPECIFIED', 'STANDARD']
+    - name: reservationSharingPolicy
+      description: |
+        Specify the reservation sharing policy. If unspecified, the reservation
+        will not be shared with Google Cloud managed services.
+      value:
+        serviceShareType: "{{ serviceShareType }}"
+    - name: resourcePolicies
+      value: "{{ resourcePolicies }}"
+      description: |
+        Resource policies to be added to this reservation. The key is defined by
+        user, and the value is resource policy url. This is to define placement
+        policy with reservation.
+    - name: schedulingType
+      value: "{{ schedulingType }}"
+      description: |
+        The type of maintenance for the reservation.
+      valid_values: ['GROUPED', 'GROUP_MAINTENANCE_TYPE_UNSPECIFIED', 'INDEPENDENT']
     - name: shareSettings
       description: |
         Specify share-settings to create a shared reservation. This property is
@@ -849,68 +892,37 @@ zone
         field and its subfields, see the guide for creating
         a shared reservation.
       value:
-        shareType: "{{ shareType }}"
         projectMap: "{{ projectMap }}"
-    - name: reservationSharingPolicy
-      description: |
-        Specify the reservation sharing policy. If unspecified, the reservation
-        will not be shared with Google Cloud managed services.
-      value:
-        serviceShareType: "{{ serviceShareType }}"
-    - name: params
-      description: |
-        Input only. Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: zone
-      value: "{{ zone }}"
-      description: |
-        Zone in which the reservation resides. A zone must be provided if the
-        reservation is created within a commitment.
-    - name: aggregateReservation
-      description: |
-        Reservation for aggregated resources, providing shape flexibility.
-      value:
-        inUseResources:
-          - accelerator:
-              acceleratorCount: {{ acceleratorCount }}
-              acceleratorType: "{{ acceleratorType }}"
-        workloadType: "{{ workloadType }}"
-        vmFamily: "{{ vmFamily }}"
-        reservedResources:
-          - accelerator:
-              acceleratorCount: {{ acceleratorCount }}
-              acceleratorType: "{{ acceleratorType }}"
-    - name: enableEmergentMaintenance
-      value: {{ enableEmergentMaintenance }}
-      description: |
-        Indicates whether Compute Engine allows unplanned maintenance for your VMs;
-        for example, to fix hardware errors.
+        shareType: "{{ shareType }}"
     - name: specificReservation
       description: |
         Reservation for instances with specific machine shapes.
       value:
         assuredCount: "{{ assuredCount }}"
+        count: "{{ count }}"
+        inUseCount: "{{ inUseCount }}"
         instanceProperties:
-          minCpuPlatform: "{{ minCpuPlatform }}"
           guestAccelerators:
-            - acceleratorType: "{{ acceleratorType }}"
-              acceleratorCount: {{ acceleratorCount }}
+            - acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
           localSsds:
             - diskSizeGb: "{{ diskSizeGb }}"
               interface: "{{ interface }}"
-          machineType: "{{ machineType }}"
           locationHint: "{{ locationHint }}"
-        inUseCount: "{{ inUseCount }}"
+          machineType: "{{ machineType }}"
+          minCpuPlatform: "{{ minCpuPlatform }}"
         sourceInstanceTemplate: "{{ sourceInstanceTemplate }}"
-        count: "{{ count }}"
     - name: specificReservationRequired
       value: {{ specificReservationRequired }}
       description: |
         Indicates whether the reservation can be consumed by VMs with affinity
         for "any" reservation. If the field is set, then only VMs that target
         the reservation by name can consume from this reservation.
+    - name: zone
+      value: "{{ zone }}"
+      description: |
+        Zone in which the reservation resides. A zone must be provided if the
+        reservation is created within a commitment.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -934,25 +946,25 @@ Update share settings of the reservation.
 ```sql
 UPDATE google.compute.reservations
 SET 
-data__deleteAtTime = '{{ deleteAtTime }}',
-data__name = '{{ name }}',
-data__confidentialComputeType = '{{ confidentialComputeType }}',
-data__description = '{{ description }}',
-data__deleteAfterDuration = '{{ deleteAfterDuration }}',
-data__schedulingType = '{{ schedulingType }}',
-data__earlyAccessMaintenance = '{{ earlyAccessMaintenance }}',
-data__resourcePolicies = '{{ resourcePolicies }}',
 data__advancedDeploymentControl = '{{ advancedDeploymentControl }}',
-data__deploymentType = '{{ deploymentType }}',
-data__protectionTier = '{{ protectionTier }}',
-data__shareSettings = '{{ shareSettings }}',
-data__reservationSharingPolicy = '{{ reservationSharingPolicy }}',
-data__params = '{{ params }}',
-data__zone = '{{ zone }}',
 data__aggregateReservation = '{{ aggregateReservation }}',
+data__confidentialComputeType = '{{ confidentialComputeType }}',
+data__deleteAfterDuration = '{{ deleteAfterDuration }}',
+data__deleteAtTime = '{{ deleteAtTime }}',
+data__deploymentType = '{{ deploymentType }}',
+data__description = '{{ description }}',
+data__earlyAccessMaintenance = '{{ earlyAccessMaintenance }}',
 data__enableEmergentMaintenance = {{ enableEmergentMaintenance }},
+data__name = '{{ name }}',
+data__params = '{{ params }}',
+data__protectionTier = '{{ protectionTier }}',
+data__reservationSharingPolicy = '{{ reservationSharingPolicy }}',
+data__resourcePolicies = '{{ resourcePolicies }}',
+data__schedulingType = '{{ schedulingType }}',
+data__shareSettings = '{{ shareSettings }}',
 data__specificReservation = '{{ specificReservation }}',
-data__specificReservationRequired = {{ specificReservationRequired }}
+data__specificReservationRequired = {{ specificReservationRequired }},
+data__zone = '{{ zone }}'
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required

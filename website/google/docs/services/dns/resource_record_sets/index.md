@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-managedZone"><code>managedZone</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-type"><code>type</code></a></td>
     <td>Enumerates ResourceRecordSets that you have created but not yet deleted.</td>
 </tr>
 <tr>
@@ -305,11 +305,11 @@ type
 FROM google.dns.resource_record_sets
 WHERE project = '{{ project }}' -- required
 AND managedZone = '{{ managedZone }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND name = '{{ name }}'
-AND maxResults = '{{ maxResults }}'
-AND type = '{{ type }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND name = '{{ name }}'
+AND pageToken = '{{ pageToken }}'
+AND type = '{{ type }}'
 ;
 ```
 </TabItem>
@@ -331,25 +331,25 @@ Creates a new ResourceRecordSet.
 
 ```sql
 INSERT INTO google.dns.resource_record_sets (
-data__routingPolicy,
 data__kind,
-data__ttl,
+data__name,
+data__routingPolicy,
 data__rrdatas,
 data__signatureRrdatas,
+data__ttl,
 data__type,
-data__name,
 project,
 managedZone,
 clientOperationId
 )
 SELECT 
-'{{ routingPolicy }}',
 '{{ kind }}',
-{{ ttl }},
+'{{ name }}',
+'{{ routingPolicy }}',
 '{{ rrdatas }}',
 '{{ signatureRrdatas }}',
+{{ ttl }},
 '{{ type }}',
-'{{ name }}',
 '{{ project }}',
 '{{ managedZone }}',
 '{{ clientOperationId }}'
@@ -375,84 +375,84 @@ type
     - name: managedZone
       value: "{{ managedZone }}"
       description: Required parameter for the resource_record_sets resource.
+    - name: kind
+      value: "{{ kind }}"
+      default: dns#resourceRecordSet
+    - name: name
+      value: "{{ name }}"
+      description: |
+        For example, www.example.com.
     - name: routingPolicy
       description: |
         Configures dynamic query responses based on either the geo location of the querying user or a weighted round robin based routing policy. A valid \`ResourceRecordSet\` contains only \`rrdata\` (for static resolution) or a \`routing_policy\` (for dynamic resolution).
       value:
         geo:
           enableFencing: {{ enableFencing }}
-          kind: "{{ kind }}"
           items:
-            - kind: "{{ kind }}"
+            - healthCheckedTargets:
+                externalEndpoints:
+                  - "{{ externalEndpoints }}"
+                internalLoadBalancers:
+                  - ipAddress: "{{ ipAddress }}"
+                    ipProtocol: "{{ ipProtocol }}"
+                    kind: "{{ kind }}"
+                    loadBalancerType: "{{ loadBalancerType }}"
+                    networkUrl: "{{ networkUrl }}"
+                    port: "{{ port }}"
+                    project: "{{ project }}"
+                    region: "{{ region }}"
+              kind: "{{ kind }}"
               location: "{{ location }}"
               rrdatas: "{{ rrdatas }}"
               signatureRrdatas: "{{ signatureRrdatas }}"
-              healthCheckedTargets:
-                internalLoadBalancers:
-                  - ipAddress: "{{ ipAddress }}"
-                    kind: "{{ kind }}"
-                    ipProtocol: "{{ ipProtocol }}"
-                    region: "{{ region }}"
-                    project: "{{ project }}"
-                    loadBalancerType: "{{ loadBalancerType }}"
-                    networkUrl: "{{ networkUrl }}"
-                    port: "{{ port }}"
-                externalEndpoints:
-                  - "{{ externalEndpoints }}"
-        primaryBackup:
-          primaryTargets:
-            internalLoadBalancers:
-              - ipAddress: "{{ ipAddress }}"
-                kind: "{{ kind }}"
-                ipProtocol: "{{ ipProtocol }}"
-                region: "{{ region }}"
-                project: "{{ project }}"
-                loadBalancerType: "{{ loadBalancerType }}"
-                networkUrl: "{{ networkUrl }}"
-                port: "{{ port }}"
-            externalEndpoints:
-              - "{{ externalEndpoints }}"
           kind: "{{ kind }}"
-          trickleTraffic: {{ trickleTraffic }}
+        healthCheck: "{{ healthCheck }}"
+        kind: "{{ kind }}"
+        primaryBackup:
           backupGeoTargets:
             enableFencing: {{ enableFencing }}
-            kind: "{{ kind }}"
             items:
-              - kind: "{{ kind }}"
+              - healthCheckedTargets:
+                  externalEndpoints: "{{ externalEndpoints }}"
+                  internalLoadBalancers: "{{ internalLoadBalancers }}"
+                kind: "{{ kind }}"
                 location: "{{ location }}"
                 rrdatas: "{{ rrdatas }}"
                 signatureRrdatas: "{{ signatureRrdatas }}"
-                healthCheckedTargets:
-                  internalLoadBalancers: "{{ internalLoadBalancers }}"
-                  externalEndpoints: "{{ externalEndpoints }}"
-        healthCheck: "{{ healthCheck }}"
-        kind: "{{ kind }}"
+            kind: "{{ kind }}"
+          kind: "{{ kind }}"
+          primaryTargets:
+            externalEndpoints:
+              - "{{ externalEndpoints }}"
+            internalLoadBalancers:
+              - ipAddress: "{{ ipAddress }}"
+                ipProtocol: "{{ ipProtocol }}"
+                kind: "{{ kind }}"
+                loadBalancerType: "{{ loadBalancerType }}"
+                networkUrl: "{{ networkUrl }}"
+                port: "{{ port }}"
+                project: "{{ project }}"
+                region: "{{ region }}"
+          trickleTraffic: {{ trickleTraffic }}
         wrr:
           items:
-            - weight: {{ weight }}
-              kind: "{{ kind }}"
-              rrdatas: "{{ rrdatas }}"
-              signatureRrdatas: "{{ signatureRrdatas }}"
-              healthCheckedTargets:
+            - healthCheckedTargets:
+                externalEndpoints:
+                  - "{{ externalEndpoints }}"
                 internalLoadBalancers:
                   - ipAddress: "{{ ipAddress }}"
-                    kind: "{{ kind }}"
                     ipProtocol: "{{ ipProtocol }}"
-                    region: "{{ region }}"
-                    project: "{{ project }}"
+                    kind: "{{ kind }}"
                     loadBalancerType: "{{ loadBalancerType }}"
                     networkUrl: "{{ networkUrl }}"
                     port: "{{ port }}"
-                externalEndpoints:
-                  - "{{ externalEndpoints }}"
+                    project: "{{ project }}"
+                    region: "{{ region }}"
+              kind: "{{ kind }}"
+              rrdatas: "{{ rrdatas }}"
+              signatureRrdatas: "{{ signatureRrdatas }}"
+              weight: {{ weight }}
           kind: "{{ kind }}"
-    - name: kind
-      value: "{{ kind }}"
-      default: dns#resourceRecordSet
-    - name: ttl
-      value: {{ ttl }}
-      description: |
-        Number of seconds that this \`ResourceRecordSet\` can be cached by resolvers.
     - name: rrdatas
       value:
         - "{{ rrdatas }}"
@@ -463,14 +463,14 @@ type
         - "{{ signatureRrdatas }}"
       description: |
         As defined in RFC 4034 (section 3.2).
+    - name: ttl
+      value: {{ ttl }}
+      description: |
+        Number of seconds that this \`ResourceRecordSet\` can be cached by resolvers.
     - name: type
       value: "{{ type }}"
       description: |
         The identifier of a supported record type. See the list of Supported DNS record types.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        For example, www.example.com.
     - name: clientOperationId
       value: "{{ clientOperationId }}"
 `}</CodeBlock>
@@ -494,13 +494,13 @@ Applies a partial update to an existing ResourceRecordSet.
 ```sql
 UPDATE google.dns.resource_record_sets
 SET 
-data__routingPolicy = '{{ routingPolicy }}',
 data__kind = '{{ kind }}',
-data__ttl = {{ ttl }},
+data__name = '{{ name }}',
+data__routingPolicy = '{{ routingPolicy }}',
 data__rrdatas = '{{ rrdatas }}',
 data__signatureRrdatas = '{{ signatureRrdatas }}',
-data__type = '{{ type }}',
-data__name = '{{ name }}'
+data__ttl = {{ ttl }},
+data__type = '{{ type }}'
 WHERE 
 project = '{{ project }}' --required
 AND managedZone = '{{ managedZone }}' --required

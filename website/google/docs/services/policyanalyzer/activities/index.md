@@ -82,8 +82,8 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#query"><CopyableCode code="query" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-activityTypesId"><code>activityTypesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-activityTypesId"><code>activityTypesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Queries policy activities on Google Cloud resources.</td>
 </tr>
 </tbody>
@@ -112,8 +112,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-projectsId">
-    <td><CopyableCode code="projectsId" /></td>
+<tr id="parameter-organizationsId">
+    <td><CopyableCode code="organizationsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -152,12 +152,12 @@ SELECT
 activities,
 nextPageToken
 FROM google.policyanalyzer.activities
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND activityTypesId = '{{ activityTypesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

@@ -118,20 +118,20 @@ Incremental update: Adds an acl entry to an acl. Creates the acl if it does not 
 
 ```sql
 INSERT INTO google.managedkafka.acls_acl_entry (
-data__principal,
-data__permissionType,
-data__operation,
 data__host,
+data__operation,
+data__permissionType,
+data__principal,
 projectsId,
 locationsId,
 clustersId,
 aclsId
 )
 SELECT 
-'{{ principal }}',
-'{{ permissionType }}',
-'{{ operation }}',
 '{{ host }}',
+'{{ operation }}',
+'{{ permissionType }}',
+'{{ principal }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clustersId }}',
@@ -159,22 +159,22 @@ aclCreated
     - name: aclsId
       value: "{{ aclsId }}"
       description: Required parameter for the acls_acl_entry resource.
-    - name: principal
-      value: "{{ principal }}"
-      description: |
-        Required. The principal. Specified as Google Cloud account, with the Kafka StandardAuthorizer prefix "User:". For example: "User:test-kafka-client@test-project.iam.gserviceaccount.com". Can be the wildcard "User:*" to refer to all users.
-    - name: permissionType
-      value: "{{ permissionType }}"
-      description: |
-        Required. The permission type. Accepted values are (case insensitive): ALLOW, DENY.
-    - name: operation
-      value: "{{ operation }}"
-      description: |
-        Required. The operation type. Allowed values are (case insensitive): ALL, READ, WRITE, CREATE, DELETE, ALTER, DESCRIBE, CLUSTER_ACTION, DESCRIBE_CONFIGS, ALTER_CONFIGS, and IDEMPOTENT_WRITE. See https://kafka.apache.org/documentation/#operations_resources_and_protocols for valid combinations of resource_type and operation for different Kafka API requests.
     - name: host
       value: "{{ host }}"
       description: |
         Required. The host. Must be set to "*" for Managed Service for Apache Kafka.
+    - name: operation
+      value: "{{ operation }}"
+      description: |
+        Required. The operation type. Allowed values are (case insensitive): ALL, READ, WRITE, CREATE, DELETE, ALTER, DESCRIBE, CLUSTER_ACTION, DESCRIBE_CONFIGS, ALTER_CONFIGS, and IDEMPOTENT_WRITE. See https://kafka.apache.org/documentation/#operations_resources_and_protocols for valid combinations of resource_type and operation for different Kafka API requests.
+    - name: permissionType
+      value: "{{ permissionType }}"
+      description: |
+        Required. The permission type. Accepted values are (case insensitive): ALLOW, DENY.
+    - name: principal
+      value: "{{ principal }}"
+      description: |
+        Required. The principal. Specified as Google Cloud account, with the Kafka StandardAuthorizer prefix "User:". For example: "User:test-kafka-client@test-project.iam.gserviceaccount.com". Can be the wildcard "User:*" to refer to all users.
 `}</CodeBlock>
 
 </TabItem>

@@ -142,7 +142,7 @@ The following methods are available for this resource:
     <td><a href="#remove_rule"><CopyableCode code="remove_rule" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-priority"><code>priority</code></a></td>
+    <td><a href="#parameter-priority"><code>priority</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a rule at the specified priority.<br /><br />Use this API to modify Cloud Armor policies. Previously, alpha and beta<br />versions of this API were used to modify firewall policies. This usage is<br />now disabled for most organizations. Use firewallPolicies.removeRule<br />instead.</td>
 </tr>
 </tbody>
@@ -228,30 +228,30 @@ Inserts a rule into a security policy.<br /><br />Use this API to modify Cloud A
 
 ```sql
 INSERT INTO google.compute.organization_security_policies_rule (
-data__networkMatch,
+data__action,
 data__description,
+data__headerAction,
 data__match,
-data__preview,
+data__networkMatch,
 data__preconfiguredWafConfig,
+data__preview,
 data__priority,
 data__rateLimitOptions,
 data__redirectOptions,
-data__action,
-data__headerAction,
 securityPolicy,
 requestId
 )
 SELECT 
-'{{ networkMatch }}',
+'{{ action }}',
 '{{ description }}',
+'{{ headerAction }}',
 '{{ match }}',
-{{ preview }},
+'{{ networkMatch }}',
 '{{ preconfiguredWafConfig }}',
+{{ preview }},
 {{ priority }},
 '{{ rateLimitOptions }}',
 '{{ redirectOptions }}',
-'{{ action }}',
-'{{ headerAction }}',
 '{{ securityPolicy }}',
 '{{ requestId }}'
 RETURNING
@@ -293,6 +293,66 @@ zone
     - name: securityPolicy
       value: "{{ securityPolicy }}"
       description: Required parameter for the organization_security_policies_rule resource.
+    - name: action
+      value: "{{ action }}"
+      description: |
+        The Action to perform when the rule is matched.
+        The following are the valid actions:
+        - allow: allow access to target.
+        - deny(STATUS): deny access to target, returns the
+        HTTP response code specified. Valid values for \`STATUS\`
+        are 403, 404, and 502.
+        - rate_based_ban: limit client traffic to the configured
+        threshold and ban the client if the traffic exceeds the threshold.
+        Configure parameters for this action in RateLimitOptions. Requires
+        rate_limit_options to be set.
+        - redirect: redirect to a different target. This can
+        either be an internal reCAPTCHA redirect, or an external URL-based
+        redirect via a 302 response. Parameters for this action can be configured
+        via redirectOptions. This action is only supported in Global Security
+        Policies of type CLOUD_ARMOR.
+        - throttle: limit
+        client traffic to the configured threshold. Configure parameters for this
+        action in rateLimitOptions. Requires rate_limit_options to be set for
+        this.
+        - fairshare (preview only): when traffic reaches the
+        threshold limit, requests from the clients matching this rule begin to be
+        rate-limited using the Fair Share algorithm. This action is only allowed
+        in security policies of type \`CLOUD_ARMOR_INTERNAL_SERVICE\`.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: headerAction
+      description: |
+        Optional, additional actions that are performed on headers.
+        This field is only supported in Global Security Policies of type
+        CLOUD_ARMOR.
+      value:
+        requestHeadersToAdds:
+          - headerName: "{{ headerName }}"
+            headerValue: "{{ headerValue }}"
+    - name: match
+      description: |
+        A match condition that incoming traffic is evaluated against.
+        If it evaluates to true, the corresponding 'action' is enforced.
+      value:
+        config:
+          srcIpRanges:
+            - "{{ srcIpRanges }}"
+        expr:
+          description: "{{ description }}"
+          expression: "{{ expression }}"
+          location: "{{ location }}"
+          title: "{{ title }}"
+        exprOptions:
+          recaptchaOptions:
+            actionTokenSiteKeys:
+              - "{{ actionTokenSiteKeys }}"
+            sessionTokenSiteKeys:
+              - "{{ sessionTokenSiteKeys }}"
+        versionedExpr: "{{ versionedExpr }}"
     - name: networkMatch
       description: |
         A match condition that incoming packets are evaluated against for
@@ -326,52 +386,23 @@ zone
         192.0.2.0/24 or 198.51.100.0/24 and a user-defined field named
         "ipv4_fragment_offset" with a value between 1 and 0x1fff inclusive.
       value:
-        srcIpRanges:
-          - "{{ srcIpRanges }}"
-        userDefinedFields:
-          - name: "{{ name }}"
-            values: "{{ values }}"
-        srcRegionCodes:
-          - "{{ srcRegionCodes }}"
         destIpRanges:
           - "{{ destIpRanges }}"
-        srcAsns:
-          - {{ srcAsns }}
-        srcPorts:
-          - "{{ srcPorts }}"
         destPorts:
           - "{{ destPorts }}"
         ipProtocols:
           - "{{ ipProtocols }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: match
-      description: |
-        A match condition that incoming traffic is evaluated against.
-        If it evaluates to true, the corresponding 'action' is enforced.
-      value:
-        expr:
-          expression: "{{ expression }}"
-          title: "{{ title }}"
-          description: "{{ description }}"
-          location: "{{ location }}"
-        exprOptions:
-          recaptchaOptions:
-            sessionTokenSiteKeys:
-              - "{{ sessionTokenSiteKeys }}"
-            actionTokenSiteKeys:
-              - "{{ actionTokenSiteKeys }}"
-        versionedExpr: "{{ versionedExpr }}"
-        config:
-          srcIpRanges:
-            - "{{ srcIpRanges }}"
-    - name: preview
-      value: {{ preview }}
-      description: |
-        If set to true, the specified action is not enforced.
+        srcAsns:
+          - {{ srcAsns }}
+        srcIpRanges:
+          - "{{ srcIpRanges }}"
+        srcPorts:
+          - "{{ srcPorts }}"
+        srcRegionCodes:
+          - "{{ srcRegionCodes }}"
+        userDefinedFields:
+          - name: "{{ name }}"
+            values: "{{ values }}"
     - name: preconfiguredWafConfig
       description: |
         Preconfigured WAF configuration to be applied for the rule. If the rule
@@ -379,12 +410,16 @@ zone
         evaluatePreconfiguredWaf() is not used, this field will have no effect.
       value:
         exclusions:
-          - targetRuleIds: "{{ targetRuleIds }}"
+          - requestCookiesToExclude: "{{ requestCookiesToExclude }}"
             requestHeadersToExclude: "{{ requestHeadersToExclude }}"
             requestQueryParamsToExclude: "{{ requestQueryParamsToExclude }}"
-            targetRuleSet: "{{ targetRuleSet }}"
             requestUrisToExclude: "{{ requestUrisToExclude }}"
-            requestCookiesToExclude: "{{ requestCookiesToExclude }}"
+            targetRuleIds: "{{ targetRuleIds }}"
+            targetRuleSet: "{{ targetRuleSet }}"
+    - name: preview
+      value: {{ preview }}
+      description: |
+        If set to true, the specified action is not enforced.
     - name: priority
       value: {{ priority }}
       description: |
@@ -397,23 +432,23 @@ zone
         Must be specified if the action is "rate_based_ban" or "throttle" or
         "fairshare". Cannot be specified for any other actions.
       value:
-        exceedAction: "{{ exceedAction }}"
         banDurationSec: {{ banDurationSec }}
-        exceedRedirectOptions:
-          target: "{{ target }}"
-          type: "{{ type }}"
-        enforceOnKey: "{{ enforceOnKey }}"
-        enforceOnKeyName: "{{ enforceOnKeyName }}"
         banThreshold:
           count: {{ count }}
           intervalSec: {{ intervalSec }}
+        conformAction: "{{ conformAction }}"
+        enforceOnKey: "{{ enforceOnKey }}"
+        enforceOnKeyConfigs:
+          - enforceOnKeyName: "{{ enforceOnKeyName }}"
+            enforceOnKeyType: "{{ enforceOnKeyType }}"
+        enforceOnKeyName: "{{ enforceOnKeyName }}"
+        exceedAction: "{{ exceedAction }}"
+        exceedRedirectOptions:
+          target: "{{ target }}"
+          type: "{{ type }}"
         rateLimitThreshold:
           count: {{ count }}
           intervalSec: {{ intervalSec }}
-        conformAction: "{{ conformAction }}"
-        enforceOnKeyConfigs:
-          - enforceOnKeyType: "{{ enforceOnKeyType }}"
-            enforceOnKeyName: "{{ enforceOnKeyName }}"
     - name: redirectOptions
       description: |
         Parameters defining the redirect action. Cannot be specified for any
@@ -423,41 +458,6 @@ zone
       value:
         target: "{{ target }}"
         type: "{{ type }}"
-    - name: action
-      value: "{{ action }}"
-      description: |
-        The Action to perform when the rule is matched.
-        The following are the valid actions:
-        - allow: allow access to target.
-        - deny(STATUS): deny access to target, returns the
-        HTTP response code specified. Valid values for \`STATUS\`
-        are 403, 404, and 502.
-        - rate_based_ban: limit client traffic to the configured
-        threshold and ban the client if the traffic exceeds the threshold.
-        Configure parameters for this action in RateLimitOptions. Requires
-        rate_limit_options to be set.
-        - redirect: redirect to a different target. This can
-        either be an internal reCAPTCHA redirect, or an external URL-based
-        redirect via a 302 response. Parameters for this action can be configured
-        via redirectOptions. This action is only supported in Global Security
-        Policies of type CLOUD_ARMOR.
-        - throttle: limit
-        client traffic to the configured threshold. Configure parameters for this
-        action in rateLimitOptions. Requires rate_limit_options to be set for
-        this.
-        - fairshare (preview only): when traffic reaches the
-        threshold limit, requests from the clients matching this rule begin to be
-        rate-limited using the Fair Share algorithm. This action is only allowed
-        in security policies of type \`CLOUD_ARMOR_INTERNAL_SERVICE\`.
-    - name: headerAction
-      description: |
-        Optional, additional actions that are performed on headers.
-        This field is only supported in Global Security Policies of type
-        CLOUD_ARMOR.
-      value:
-        requestHeadersToAdds:
-          - headerName: "{{ headerName }}"
-            headerValue: "{{ headerValue }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -481,8 +481,8 @@ Deletes a rule at the specified priority.<br /><br />Use this API to modify Clou
 ```sql
 DELETE FROM google.compute.organization_security_policies_rule
 WHERE securityPolicy = '{{ securityPolicy }}' --required
-AND requestId = '{{ requestId }}'
 AND priority = '{{ priority }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

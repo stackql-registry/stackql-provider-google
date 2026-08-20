@@ -265,18 +265,18 @@ Creates a ruleset.
 
 ```sql
 INSERT INTO google.contentwarehouse.rule_sets (
-data__rules,
 data__description,
-data__source,
 data__name,
+data__rules,
+data__source,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ rules }}',
 '{{ description }}',
-'{{ source }}',
 '{{ name }}',
+'{{ rules }}',
+'{{ source }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -298,27 +298,27 @@ source
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the rule_sets resource.
-    - name: rules
-      description: |
-        List of rules given by the customer.
-      value:
-        - ruleId: "{{ ruleId }}"
-          description: "{{ description }}"
-          triggerType: "{{ triggerType }}"
-          condition: "{{ condition }}"
-          actions: "{{ actions }}"
     - name: description
       value: "{{ description }}"
       description: |
         Short description of the rule-set.
-    - name: source
-      value: "{{ source }}"
-      description: |
-        Source of the rules i.e., customer name.
     - name: name
       value: "{{ name }}"
       description: |
         The resource name of the rule set. Managed internally. Format: projects/{project_number}/locations/{location}/ruleSet/{rule_set_id}. The name is ignored when creating a rule set.
+    - name: rules
+      description: |
+        List of rules given by the customer.
+      value:
+        - actions: "{{ actions }}"
+          condition: "{{ condition }}"
+          description: "{{ description }}"
+          ruleId: "{{ ruleId }}"
+          triggerType: "{{ triggerType }}"
+    - name: source
+      value: "{{ source }}"
+      description: |
+        Source of the rules i.e., customer name.
 `}</CodeBlock>
 
 </TabItem>

@@ -88,7 +88,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_stats_get"><CopyableCode code="organizations_environments_stats_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-statsId"><code>statsId</code></a></td>
-    <td><a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-topk"><code>topk</code></a>, <a href="#parameter-timeRange"><code>timeRange</code></a>, <a href="#parameter-select"><code>select</code></a>, <a href="#parameter-sortby"><code>sortby</code></a>, <a href="#parameter-aggTable"><code>aggTable</code></a>, <a href="#parameter-timeUnit"><code>timeUnit</code></a>, <a href="#parameter-offset"><code>offset</code></a>, <a href="#parameter-accuracy"><code>accuracy</code></a>, <a href="#parameter-tsAscending"><code>tsAscending</code></a>, <a href="#parameter-realtime"><code>realtime</code></a>, <a href="#parameter-sort"><code>sort</code></a>, <a href="#parameter-sonar"><code>sonar</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-tzo"><code>tzo</code></a></td>
+    <td><a href="#parameter-accuracy"><code>accuracy</code></a>, <a href="#parameter-aggTable"><code>aggTable</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-offset"><code>offset</code></a>, <a href="#parameter-realtime"><code>realtime</code></a>, <a href="#parameter-select"><code>select</code></a>, <a href="#parameter-sonar"><code>sonar</code></a>, <a href="#parameter-sort"><code>sort</code></a>, <a href="#parameter-sortby"><code>sortby</code></a>, <a href="#parameter-timeRange"><code>timeRange</code></a>, <a href="#parameter-timeUnit"><code>timeUnit</code></a>, <a href="#parameter-topk"><code>topk</code></a>, <a href="#parameter-tsAscending"><code>tsAscending</code></a>, <a href="#parameter-tzo"><code>tzo</code></a></td>
     <td>Retrieve metrics grouped by dimensions. The types of metrics you can retrieve include traffic, message counts, API call latency, response size, and cache hits and counts. Dimensions let you view metrics in meaningful groups. You can optionally pass dimensions as path parameters to the `stats` API. If dimensions are not specified, the metrics are computed on the entire set of data for the given time range.</td>
 </tr>
 </tbody>
@@ -221,20 +221,20 @@ FROM google.apigee.stats
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
 AND statsId = '{{ statsId }}' -- required
-AND limit = '{{ limit }}'
-AND topk = '{{ topk }}'
-AND timeRange = '{{ timeRange }}'
-AND select = '{{ select }}'
-AND sortby = '{{ sortby }}'
-AND aggTable = '{{ aggTable }}'
-AND timeUnit = '{{ timeUnit }}'
-AND offset = '{{ offset }}'
 AND accuracy = '{{ accuracy }}'
-AND tsAscending = '{{ tsAscending }}'
-AND realtime = '{{ realtime }}'
-AND sort = '{{ sort }}'
-AND sonar = '{{ sonar }}'
+AND aggTable = '{{ aggTable }}'
 AND filter = '{{ filter }}'
+AND limit = '{{ limit }}'
+AND offset = '{{ offset }}'
+AND realtime = '{{ realtime }}'
+AND select = '{{ select }}'
+AND sonar = '{{ sonar }}'
+AND sort = '{{ sort }}'
+AND sortby = '{{ sortby }}'
+AND timeRange = '{{ timeRange }}'
+AND timeUnit = '{{ timeUnit }}'
+AND topk = '{{ topk }}'
+AND tsAscending = '{{ tsAscending }}'
 AND tzo = '{{ tzo }}'
 ;
 ```
