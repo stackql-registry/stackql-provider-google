@@ -91,7 +91,11 @@ or using PowerShell:
 $Auth = "{ 'google': { 'type': 'interactive' }}"
 stackql.exe shell --auth=$Auth
 ```
-## Compute inventory
+## Example Queries
+
+Try the following queries using `stackql shell`, or run them from a script or CI pipeline with `stackql exec`.
+
+### Compute inventory
 
 All virtual machines in a project across every zone, with their state:
 
@@ -114,7 +118,7 @@ WHERE project = 'my-project'
 GROUP BY status;
 ```
 
-## Open firewall audit
+### Open firewall audit
 
 Ingress rules open to the entire internet, and what they allow:
 
@@ -129,7 +133,7 @@ WHERE project = 'my-project'
 AND sourceRanges LIKE '%0.0.0.0/0%';
 ```
 
-## Storage bucket estate
+### Storage bucket estate
 
 Buckets by age, with location and storage class:
 
@@ -144,7 +148,7 @@ WHERE project = 'my-project'
 ORDER BY timeCreated DESC;
 ```
 
-## Service accounts
+### Service accounts
 
 Every service account in the project - review this list regularly:
 
@@ -157,7 +161,7 @@ FROM google.iam.service_accounts
 WHERE projectsId = 'my-project';
 ```
 
-## Enabled APIs
+### Enabled APIs
 
 Which services are switched on in the project (filtered server-side):
 
@@ -171,7 +175,7 @@ AND parentType = 'projects'
 AND filter = 'state:ENABLED';
 ```
 
-## Project metadata
+### Project metadata
 
 ```sql
 SELECT projectId, displayName, state
@@ -179,7 +183,7 @@ FROM google.cloudresourcemanager.projects
 WHERE projectsId = 'my-project';
 ```
 
-## Provision, mutate and tear down
+### Provision, mutate and tear down
 
 Mutations use the same SQL grammar - `INSERT` creates a resource, `UPDATE` patches it, `EXEC` invokes lifecycle methods and `DELETE` removes it. A bucket end to end:
 

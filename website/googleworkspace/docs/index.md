@@ -122,7 +122,11 @@ stackql.exe shell --auth=$Auth
 
 </details>
 
-## Find files in Drive
+## Example Queries
+
+Try the following queries using `stackql shell`, or run them from a script or CI pipeline with `stackql exec`.
+
+### Find files in Drive
 
 Drive queries are filtered server-side with the `q` parameter, using [Drive query syntax](https://developers.google.com/drive/api/guides/search-files):
 
@@ -144,14 +148,14 @@ FROM googleworkspace.drivev3.files
 WHERE q = "mimeType = 'application/vnd.google-apps.folder'";
 ```
 
-## Shared drives
+### Shared drives
 
 ```sql
 SELECT id, name, createdTime
 FROM googleworkspace.drivev3.drives;
 ```
 
-## Storage quota
+### Storage quota
 
 How much Drive storage is in use for the authenticated user:
 
@@ -163,7 +167,7 @@ SELECT
 FROM googleworkspace.drivev3.about;
 ```
 
-## File permissions
+### File permissions
 
 Who has access to a file:
 
