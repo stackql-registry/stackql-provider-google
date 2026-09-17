@@ -90,7 +90,11 @@ $Auth = "{ 'google': { 'type': 'interactive' }}"
 stackql.exe shell --auth=$Auth
 ```
 
-## Firebase projects
+## Example Queries
+
+Try the following queries using `stackql shell`, or run them from a script or CI pipeline with `stackql exec`.
+
+### Firebase projects
 
 All Firebase projects visible to the authenticated principal:
 
@@ -102,7 +106,7 @@ SELECT
 FROM firebase.firebase.projects;
 ```
 
-## Apps by platform
+### Apps by platform
 
 Android, iOS and web apps registered in a project:
 
@@ -120,7 +124,7 @@ FROM firebase.firebase.web_apps
 WHERE projectsId = 'my-project';
 ```
 
-## Web app config
+### Web app config
 
 The client config (API key, auth domain, storage bucket) for a registered web app:
 
@@ -135,7 +139,7 @@ WHERE projectsId = 'my-project'
 AND webAppsId = 'my-web-app-id';
 ```
 
-## Test results
+### Test results
 
 Test executions from Test Lab, most recent first:
 

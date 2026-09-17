@@ -120,7 +120,11 @@ stackql.exe shell --auth=$Auth
 
 </details>
 
-## User inventory
+## Example Queries
+
+Try the following queries using `stackql shell`, or run them from a script or CI pipeline with `stackql exec`.
+
+### User inventory
 
 All users in a domain, with admin status and last login:
 
@@ -145,7 +149,7 @@ AND lastLoginTime < '2026-01-01'
 ORDER BY lastLoginTime;
 ```
 
-## Groups and membership
+### Groups and membership
 
 Groups in the domain, largest first:
 
@@ -167,7 +171,7 @@ FROM googleadmin.directory.members
 WHERE groupKey = 'group-email@example.com';
 ```
 
-## User lifecycle
+### User lifecycle
 
 `INSERT` creates a user, `UPDATE` patches, `EXEC` invokes directory actions:
 
